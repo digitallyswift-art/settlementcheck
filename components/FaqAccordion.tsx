@@ -1,0 +1,56 @@
+'use client'
+
+import { useState } from 'react'
+
+const FAQS = [
+  {
+    q: 'Does it cost me anything?',
+    a: 'No. Your employer is required to contribute to your legal fees (typically £350–750). You pay nothing — that is the standard arrangement on a UK settlement agreement.',
+  },
+  {
+    q: 'Do I legally need a solicitor?',
+    a: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured solicitor. You cannot waive your rights without it.',
+  },
+  {
+    q: 'How accurate is the calculator?',
+    a: "The calculator gives a general estimate based on UK statutory rates and benchmarks from settlements we've seen. It is not legal advice — your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
+  },
+  {
+    q: 'How quickly will a solicitor contact me?',
+    a: 'All panel solicitors commit to responding within 24 hours of an introduction. Most reach out the same business day, often within a couple of hours during working hours.',
+  },
+  {
+    q: 'What if I want to negotiate a higher amount?',
+    a: 'Many employees do successfully negotiate more once a solicitor reviews their circumstances. A specialist will assess whether factors like length of service, discrimination, whistleblowing, or contract breaches justify a higher offer.',
+  },
+  {
+    q: 'Is my information shared?',
+    a: 'Only with the small panel of solicitors you choose to be introduced to — never with employers, recruiters, or third parties. You can withdraw at any point.',
+  },
+]
+
+export default function FaqAccordion() {
+  const [openIdx, setOpenIdx] = useState<number | null>(null)
+
+  return (
+    <div className="border-t border-rule">
+      {FAQS.map((faq, i) => (
+        <details
+          key={i}
+          className="faq-item"
+          open={openIdx === i}
+          onToggle={(e) => {
+            if ((e.currentTarget as HTMLDetailsElement).open) setOpenIdx(i)
+            else if (openIdx === i) setOpenIdx(null)
+          }}
+        >
+          <summary className="flex items-center justify-between gap-6 py-6 cursor-pointer list-none font-serif font-460 text-[19px] text-ink tracking-[-0.008em] select-none">
+            <span>{faq.q}</span>
+            <span className="faq-icon" aria-hidden="true">+</span>
+          </summary>
+          <p className="text-[15px] text-muted leading-[1.65] pb-6 max-w-[68ch]">{faq.a}</p>
+        </details>
+      ))}
+    </div>
+  )
+}

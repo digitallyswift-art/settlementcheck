@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(npx tailwindcss *)",
+      "Bash(npx --yes tailwindcss init -p)",
+      "Bash(npx tailwindcss@3 init -p)",
+      "Bash(npm list *)",
+      "Bash(npx next *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:3000/results?salary=45000&years=5&age=35&offer=8000&reason=redundancy&discrimination=no\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/for-solicitors)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/how-it-works)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/privacy)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -L http://localhost:3000/for-solicitors/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -L \"http://localhost:3000/results/?salary=45000&years=5&age=35&offer=8000&reason=redundancy&discrimination=no\")",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -L http://localhost:3000/)"
+    ]
+  }
+}

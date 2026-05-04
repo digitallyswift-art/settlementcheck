@@ -1,0 +1,266 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    background-color: #F7F4EE;
+    color: #0B1F3A;
+    font-family: var(--font-sans), Inter, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+}
+
+@layer components {
+  /* Container */
+  .sc-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  /* Type */
+  .sc-h1 {
+    font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
+    font-weight: 420;
+    font-size: clamp(40px, 5.6vw, 68px);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    color: #0B1F3A;
+    margin: 0;
+  }
+
+  .sc-h2 {
+    font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
+    font-weight: 420;
+    font-size: clamp(30px, 3.2vw, 44px);
+    line-height: 1.10;
+    letter-spacing: -0.018em;
+    color: #0B1F3A;
+    margin: 0;
+  }
+
+  .sc-h3 {
+    font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
+    font-weight: 460;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.010em;
+    color: #0B1F3A;
+    margin: 0;
+  }
+
+  .sc-eyebrow {
+    font-family: var(--font-sans), Inter, sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #5B6577;
+  }
+
+  .sc-lead {
+    font-size: 18px;
+    line-height: 1.55;
+    color: #5B6577;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid #0B1F3A;
+    background: #0B1F3A;
+    color: #fff;
+    transition: background 180ms ease, border-color 180ms ease;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: #1A2F4E; border-color: #1A2F4E; }
+
+  .btn-accent {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid #D9603B;
+    background: #D9603B;
+    color: #fff;
+    transition: background 180ms ease, border-color 180ms ease;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .btn-accent:hover { background: #B14A28; border-color: #B14A28; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid #C9C0AC;
+    background: transparent;
+    color: #0B1F3A;
+    transition: background 180ms ease, border-color 180ms ease;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .btn-ghost:hover { background: #EFEAE0; border-color: #0B1F3A; }
+
+  /* Input field */
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #F7F4EE;
+    border: 1px solid #E2DCCE;
+    border-radius: 6px;
+    transition: border-color 160ms ease, background 160ms ease;
+  }
+  .input-wrap:focus-within {
+    border-color: #0B1F3A;
+    background: #fff;
+  }
+
+  /* Pill radio */
+  .pill-radio {
+    display: inline-flex;
+    background: #F7F4EE;
+    border: 1px solid #E2DCCE;
+    border-radius: 999px;
+    padding: 3px;
+  }
+  .pill-radio-btn {
+    border: 0;
+    background: transparent;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #5B6577;
+    transition: background 160ms ease, color 160ms ease;
+    cursor: pointer;
+  }
+  .pill-radio-btn:hover { color: #0B1F3A; }
+  .pill-radio-btn[aria-pressed='true'] {
+    background: #0B1F3A;
+    color: #fff;
+  }
+
+  /* FAQ */
+  .faq-item { border-bottom: 1px solid #E2DCCE; }
+  .faq-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: 1px solid #C9C0AC;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    color: #5B6577;
+    transition: transform 220ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .faq-item[open] .faq-icon {
+    background: #0B1F3A;
+    border-color: #0B1F3A;
+    color: #fff;
+    transform: rotate(45deg);
+  }
+
+  /* Select arrow */
+  .sc-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image:
+      linear-gradient(45deg, transparent 50%, #5B6577 50%),
+      linear-gradient(135deg, #5B6577 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 19px,
+      calc(100% - 13px) 19px;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  /* Tooltip */
+  .sc-tip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    border: 1px solid #C9C0AC;
+    color: #5B6577;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: help;
+    position: relative;
+    margin-left: 6px;
+  }
+  .sc-tip::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0B1F3A;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 400;
+    padding: 8px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 160ms ease;
+    z-index: 10;
+  }
+  .sc-tip:hover::after { opacity: 1; }
+}
+
+@layer utilities {
+  .font-420 { font-weight: 420; }
+  .font-460 { font-weight: 460; }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sc-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
