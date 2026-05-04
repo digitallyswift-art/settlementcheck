@@ -79,25 +79,46 @@ export default function HomeClient() {
     <>
       <Nav />
       <main>
-        {/* HERO */}
         <section
           className="relative overflow-hidden"
-          style={{ background: '#F7F4EE', paddingTop: 56, paddingBottom: 80 }}
+          style={{ background: '#F7F4EE', paddingTop: 88, paddingBottom: 88 }}
         >
           <div className="sc-container relative">
             <div
-              className="grid gap-16 items-center max-[960px]:grid-cols-1"
-              style={{ gridTemplateColumns: '1fr 480px' }}
+              className="grid gap-16 items-center max-[1024px]:grid-cols-1"
+              style={{ gridTemplateColumns: '1.05fr 1fr' }}
             >
-              <div>
+              <div className="flex flex-col gap-8 max-w-[600px]">
+                {/* Hero Pill */}
+                <div className="flex">
+                  <span className="inline-flex items-center gap-2 border border-rule-strong rounded-full px-4 py-1.5 text-[12px] font-medium text-ink bg-white/40">
+                    <span className="w-1.5 h-1.5 rounded-full bg-coral" />
+                    Free · Confidential · No obligation
+                  </span>
+                </div>
+
                 <h1 className="sc-h1">
                   Is your settlement<br />
                   offer <em style={{ fontStyle: 'italic', color: '#D9603B' }}>fair</em>?
                 </h1>
-                <p className="sc-lead mt-6 max-w-[480px]">
-                  Use our free calculator to see how your offer compares to UK benchmarks, and get connected to a vetted solicitor in under 24 hours.
+
+                <p className="sc-lead text-[19px] leading-[1.6]">
+                  Find out in 60 seconds. Our free calculator estimates whether your employer&apos;s offer falls below, within, or above the typical UK range — then connects you with a specialist solicitor. Your employer pays their legal fees.
                 </p>
+
+                {/* Inline Stats */}
+                <div className="flex flex-wrap items-center gap-6 pt-2 text-[14px] text-muted">
+                  <div className="flex items-center gap-2">
+                    <span className="text-coral text-[15px] tracking-[0.1em]">★★★★★</span>
+                    <strong className="text-ink">4.9/5</strong>
+                  </div>
+                  <span className="text-rule-strong">|</span>
+                  <span><strong className="text-ink">2,400+</strong> employees helped</span>
+                  <span className="text-rule-strong">|</span>
+                  <span><strong className="text-ink">£0</strong> cost to you</span>
+                </div>
               </div>
+
               <div>
                 <Calculator onCalculate={handleCalculate} />
               </div>

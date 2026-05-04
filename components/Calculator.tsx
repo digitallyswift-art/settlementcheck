@@ -82,13 +82,13 @@ export default function Calculator({ onCalculate }: Props) {
       noValidate
       className="bg-card border border-rule rounded-[16px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)]"
     >
-      {/* Header with gradient — Build ID: v1.0.1 */}
+      {/* Header with deep vertical gradient */}
       <div
-        className="px-8 py-7 border-b border-rule"
-        style={{ background: 'linear-gradient(180deg, #F7F4EE 0%, #EFEAE0 100%)' }}
+        className="px-8 py-8 border-b border-rule"
+        style={{ background: 'linear-gradient(180deg, #F7F4EE 0%, #E6E0D3 100%)' }}
       >
-        <span className="sc-eyebrow text-[11px]">FREE CALCULATOR</span>
-        <h3 className="sc-h3 mt-2 text-[24px]">Check your offer</h3>
+        <span className="sc-eyebrow text-[11px] text-muted-2">FREE CALCULATOR</span>
+        <h3 className="sc-h3 mt-2 text-[26px]">Check your offer</h3>
         <p className="text-[14px] text-muted mt-2">Six questions. Sixty seconds. No email required.</p>
       </div>
 
