@@ -12,7 +12,7 @@ const STATS = [
   { n: '2,400+', l: 'Employees helped' },
   { n: '£0',     l: 'Your employer pays' },
   { n: '24 hrs', l: 'Solicitor response' },
-  { n: '4.9★',   l: 'Average rating' },
+  { n: 'SRA',    l: 'Regulated solicitors' },
 ]
 
 const STEPS = [
@@ -106,10 +106,12 @@ export default function HomeClient() {
                 </p>
 
                 {/* Inline Stats */}
-                <div className="flex flex-wrap items-center gap-6 pt-2 text-[14px] text-muted">
-                  <div className="flex items-center gap-2">
-                    <span className="text-coral text-[15px] tracking-[0.1em]">★★★★★</span>
-                    <strong className="text-ink">4.9/5</strong>
+                <div className="flex flex-wrap items-center gap-4 pt-2 text-[13px] text-muted">
+                  <div className="flex items-center gap-1.5">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                    <span>SRA-regulated solicitors only</span>
                   </div>
                   <span className="text-rule-strong">|</span>
                   <span><strong className="text-ink">2,400+</strong> employees helped</span>
