@@ -77,15 +77,15 @@ export default function Calculator({ onCalculate }: Props) {
 
   return (
     <form
-      id="calculator"
+      id="calculator-v2"
       onSubmit={submit}
       noValidate
       className="bg-card border border-rule rounded-[16px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)]"
     >
-      {/* Header with gradient */}
+      {/* Header with gradient — Build ID: v1.0.1 */}
       <div
         className="px-8 py-7 border-b border-rule"
-        style={{ background: 'linear-gradient(to bottom, #F7F4EE 0%, #F1EDE4 100%)' }}
+        style={{ background: 'linear-gradient(180deg, #F7F4EE 0%, #EFEAE0 100%)' }}
       >
         <span className="sc-eyebrow text-[11px]">FREE CALCULATOR</span>
         <h3 className="sc-h3 mt-2 text-[24px]">Check your offer</h3>
