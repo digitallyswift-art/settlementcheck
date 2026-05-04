@@ -4,14 +4,38 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Does it cost me anything?', acceptedAnswer: { '@type': 'Answer', text: 'No. Your employer is required by UK law to cover your legal fees for this process, typically £350 to £750. You pay nothing.' } },
+    { '@type': 'Question', name: 'Do I legally need a solicitor?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured solicitor.' } },
+    { '@type': 'Question', name: 'How quickly will a solicitor contact me?', acceptedAnswer: { '@type': 'Answer', text: 'All panel solicitors commit to responding within 24 hours of an introduction. Most reach out the same business day.' } },
+    { '@type': 'Question', name: 'What if I want to negotiate a higher amount?', acceptedAnswer: { '@type': 'Answer', text: 'Many employees do successfully negotiate more once a solicitor reviews their circumstances. A specialist will assess whether factors like length of service, discrimination, whistleblowing, or contract breaches justify a higher offer.' } },
+    { '@type': 'Question', name: 'Is my information shared?', acceptedAnswer: { '@type': 'Answer', text: 'Only with the small panel of solicitors you choose to be introduced to — never with employers, recruiters, or third parties.' } },
+    { '@type': 'Question', name: 'Why is your calculator independent when others are not?', acceptedAnswer: { '@type': 'Answer', text: 'Most settlement calculators are built by law firms. Our calculator is run by an independent platform with no firm to promote. The estimate you get reflects your actual situation.' } },
+  ],
+}
+
 export const metadata: Metadata = {
-  title: 'How It Works | SettlementCheck',
-  description: 'Learn how SettlementCheck helps you get a fair settlement agreement, matched with a vetted solicitor at no cost to you.',
+  title: 'How SettlementCheck Works | Settlement Agreement Advice UK | SettlementCheck',
+  description: 'Three steps: check your offer with our free calculator, get matched with a vetted SRA-regulated employment solicitor within 24 hours, and get honest advice. Your employer pays the fees.',
+  alternates: { canonical: 'https://settlementcheck.co.uk/how-it-works/' },
+  openGraph: {
+    title: 'How SettlementCheck Works',
+    description: 'Free settlement agreement calculator, vetted solicitor match within 24 hours, employer pays the legal fees.',
+    url: 'https://settlementcheck.co.uk/how-it-works/',
+    type: 'website',
+  },
 }
 
 export default function HowItWorks() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Nav />
       <main>
         {/* Hero */}

@@ -29,6 +29,7 @@ export default function Nav() {
         <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
           {[
             { href: '/#how', label: 'How it works' },
+            { href: '/guides/employer-recommended-solicitor', label: 'Guides' },
             { href: '/for-solicitors', label: 'For solicitors' },
             { href: '/how-it-works#about', label: 'About' },
           ].map(({ href, label }) => (
@@ -69,6 +70,7 @@ export default function Nav() {
         <div className="md:hidden border-t border-rule bg-paper/95 backdrop-blur-md px-5 py-4 flex flex-col gap-3">
           {[
             { href: '/#how', label: 'How it works' },
+            { href: '/guides/employer-recommended-solicitor', label: 'Guides' },
             { href: '/for-solicitors', label: 'For solicitors' },
             { href: '/how-it-works#about', label: 'About' },
           ].map(({ href, label }) => (

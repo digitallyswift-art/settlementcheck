@@ -2,7 +2,12 @@ import type { Metadata } from 'next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
-export const metadata: Metadata = { title: 'Calculator Disclaimer | SettlementCheck' }
+export const metadata: Metadata = {
+  title: 'Calculator Disclaimer | SettlementCheck',
+  description: 'The SettlementCheck calculator provides estimates only and does not constitute legal advice. You must obtain independent legal advice before signing a settlement agreement.',
+  alternates: { canonical: 'https://settlementcheck.co.uk/disclaimer/' },
+  robots: { index: true, follow: false },
+}
 
 export default function Disclaimer() {
   return (

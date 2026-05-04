@@ -2,7 +2,12 @@ import type { Metadata } from 'next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
-export const metadata: Metadata = { title: 'Privacy Policy | SettlementCheck' }
+export const metadata: Metadata = {
+  title: 'Privacy Policy | SettlementCheck',
+  description: 'How SettlementCheck collects, uses, and protects your personal data in accordance with UK GDPR.',
+  alternates: { canonical: 'https://settlementcheck.co.uk/privacy/' },
+  robots: { index: true, follow: false },
+}
 
 export default function Privacy() {
   return (

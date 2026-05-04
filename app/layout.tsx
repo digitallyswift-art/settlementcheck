@@ -25,6 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: {
     default: 'Settlement Agreement Calculator UK | Is Your Offer Fair? | SettlementCheck',
     template: '%s | SettlementCheck',
@@ -34,6 +35,11 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: 'SettlementCheck',
     locale: 'en_GB',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
   },
 }
 

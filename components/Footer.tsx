@@ -27,7 +27,7 @@ export default function Footer() {
                 { href: '/how-it-works', label: 'How it works' },
                 { href: '/#calculator', label: 'Check your offer' },
                 { href: '/how-it-works#faq', label: 'FAQs' },
-                { href: '/privacy', label: 'Privacy policy' },
+                { href: '/guides/employer-recommended-solicitor', label: 'Do I have to use my employer\'s solicitor?' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>
