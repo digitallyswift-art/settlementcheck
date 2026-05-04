@@ -10,6 +10,8 @@ export interface VerdictResult {
   redundancy: number;
   basicAward: number;
   notice: number;
+  noticeWeeksUsed: number;
+  noticeIsContractual: boolean;
   discriminationFlag: boolean;
 }
 
@@ -17,11 +19,12 @@ export interface VerdictResult {
 const WEEKLY_PAY_CAP = 719;
 
 // ERA 1996 s.162 — statutory redundancy pay.
-// Multiplier is applied per completed year of service, based on the employee's
-// age DURING that year (counting back from termination), not their current age.
-export function calcRedundancy(salary: number, years: number, age: number): number {
+// Takes total service in whole months for precision. Counts completed years only.
+// Multiplier applied per completed year based on employee's age DURING that year,
+// counting back from the termination date.
+export function calcRedundancy(salary: number, totalMonths: number, age: number): number {
   const weeklyPay = Math.min(salary / 52, WEEKLY_PAY_CAP);
-  const completedYears = Math.min(Math.floor(years), 20);
+  const completedYears = Math.min(Math.floor(totalMonths / 12), 20);
   let total = 0;
   for (let i = 0; i < completedYears; i++) {
     const ageInYear = age - i;
@@ -33,35 +36,52 @@ export function calcRedundancy(salary: number, years: number, age: number): numb
 
 // ERA 1996 s.118-119 — basic award for unfair dismissal.
 // Identical formula to statutory redundancy pay.
-export function calcBasicAward(salary: number, years: number, age: number): number {
-  return calcRedundancy(salary, years, age);
+export function calcBasicAward(salary: number, totalMonths: number, age: number): number {
+  return calcRedundancy(salary, totalMonths, age);
 }
 
-// ERA 1996 s.86 — statutory minimum notice.
-// Salaried employees: actual weekly pay (no cap) for the notice period.
-export function calcNotice(salary: number, years: number): number {
-  const weeklyPay = salary / 52; // no cap for salaried employees
-  const weeks =
-    years < (1 / 12) ? 0
-    : years < 2 ? 1
-    : Math.min(Math.floor(years), 12);
-  return Math.round(weeklyPay * weeks);
+// ERA 1996 s.86 — statutory minimum notice weeks.
+// < 1 month service → 0 weeks; 1 month to 2 years → 1 week;
+// 2+ years → 1 week per completed year, capped at 12.
+export function statutoryNoticeWeeks(totalMonths: number): number {
+  if (totalMonths < 1) return 0;
+  if (totalMonths < 24) return 1;
+  return Math.min(Math.floor(totalMonths / 12), 12);
+}
+
+// Notice pay uses actual weekly pay (no cap) for salaried employees (ERA s.86 + s.221).
+// Uses whichever is greater: statutory entitlement or contractual notice period.
+export function calcNotice(
+  salary: number,
+  totalMonths: number,
+  contractualNoticeWeeks: number,
+): { pay: number; weeksUsed: number; isContractual: boolean } {
+  const weeklyPay = salary / 52;
+  const statWeeks = statutoryNoticeWeeks(totalMonths);
+  const weeksUsed = Math.max(statWeeks, contractualNoticeWeeks);
+  return {
+    pay: Math.round(weeklyPay * weeksUsed),
+    weeksUsed,
+    isContractual: contractualNoticeWeeks > statWeeks,
+  };
 }
 
 export function getVerdict(
   salary: number,
-  years: number,
+  totalMonths: number,
   age: number,
   offer: number,
   reason: string,
   discrimination: string,
+  contractualNoticeWeeks: number,
 ): VerdictResult {
   const discriminationFlag = ['yes', 'not_sure'].includes(discrimination);
 
-  const redundancy = reason === 'redundancy' ? calcRedundancy(salary, years, age) : 0;
-  // Unfair dismissal carries a basic award (same formula as redundancy pay) + notice
-  const basicAward = reason === 'dismissal' ? calcBasicAward(salary, years, age) : 0;
-  const notice = calcNotice(salary, years);
+  const redundancy = reason === 'redundancy' ? calcRedundancy(salary, totalMonths, age) : 0;
+  const basicAward = reason === 'dismissal' ? calcBasicAward(salary, totalMonths, age) : 0;
+  const { pay: notice, weeksUsed: noticeWeeksUsed, isContractual: noticeIsContractual } =
+    calcNotice(salary, totalMonths, contractualNoticeWeeks);
+
   const minimum = redundancy + basicAward + notice;
 
   const monthSalary = salary / 12;
@@ -73,7 +93,6 @@ export function getVerdict(
     typicalHigh = Math.max(typicalHigh, monthSalary * 18);
   }
 
-  // BELOW_MINIMUM applies whenever there is a calculable statutory floor
   const hasStatutoryFloor = reason === 'redundancy' || reason === 'dismissal';
 
   let verdict: Verdict;
@@ -90,6 +109,8 @@ export function getVerdict(
     redundancy: Math.round(redundancy),
     basicAward: Math.round(basicAward),
     notice: Math.round(notice),
+    noticeWeeksUsed,
+    noticeIsContractual,
     discriminationFlag,
   };
 }

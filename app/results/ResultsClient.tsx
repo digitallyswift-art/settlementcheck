@@ -74,7 +74,7 @@ interface LeadPayload {
   verdict: string
   offer: number
   salary: number
-  years: number
+  totalMonths: number
 }
 
 function LeadForm({ payload }: { payload: LeadPayload }) {
@@ -116,7 +116,7 @@ function LeadForm({ payload }: { payload: LeadPayload }) {
           verdict: payload.verdict,
           offer_amount: payload.offer,
           salary: payload.salary,
-          years_service: payload.years,
+          months_service: payload.totalMonths,
         }),
       })
       setStatus('success')
@@ -248,17 +248,20 @@ function LeadForm({ payload }: { payload: LeadPayload }) {
 /* ── Results Content ─────────────────────────────────────────────── */
 function ResultsContent() {
   const searchParams = useSearchParams()
-  const salary = parseFloat(searchParams.get('salary') ?? '0')
-  const years  = parseFloat(searchParams.get('years')  ?? '0')
-  const age    = parseInt(searchParams.get('age')    ?? '0')
-  const offer  = parseFloat(searchParams.get('offer')  ?? '0')
-  const reason         = searchParams.get('reason')         ?? ''
-  const discrimination = searchParams.get('discrimination') ?? 'no'
+  const salary   = parseFloat(searchParams.get('salary')   ?? '0')
+  const yearsNum = parseFloat(searchParams.get('yearsNum') ?? '0')
+  const monthsNum = parseFloat(searchParams.get('monthsNum') ?? '0')
+  const totalMonths = (yearsNum * 12) + monthsNum
+  const age    = parseInt(searchParams.get('age')   ?? '0')
+  const offer  = parseFloat(searchParams.get('offer') ?? '0')
+  const reason             = searchParams.get('reason')             ?? ''
+  const discrimination     = searchParams.get('discrimination')     ?? 'no'
+  const contractualNoticeWeeks = parseInt(searchParams.get('contractualNotice') ?? '0')
 
   const valid = salary > 0 && age > 0 && offer >= 0 && reason !== ''
 
   const result: VerdictResult | null = valid
-    ? getVerdict(salary, years, age, offer, reason, discrimination)
+    ? getVerdict(salary, totalMonths, age, offer, reason, discrimination, contractualNoticeWeeks)
     : null
 
   const cfg = result ? VERDICT_CONFIG[result.verdict] : null
@@ -359,12 +362,18 @@ function ResultsContent() {
                     {[
                       result.redundancy > 0 && { label: 'Statutory redundancy pay', value: result.redundancy, highlight: false },
                       result.basicAward > 0  && { label: 'Basic award (unfair dismissal)', value: result.basicAward, highlight: false },
-                      { label: 'Statutory notice pay',  value: result.notice,     highlight: false },
+                      {
+                        label: result.noticeIsContractual
+                          ? `Notice pay (contractual — ${result.noticeWeeksUsed} weeks)`
+                          : `Notice pay (statutory — ${result.noticeWeeksUsed} week${result.noticeWeeksUsed !== 1 ? 's' : ''})`,
+                        value: result.notice,
+                        highlight: false,
+                      },
                       { label: 'Estimated minimum',     value: result.minimum,    highlight: true  },
                       { label: 'Typical low',           value: result.typicalLow, highlight: false },
                       { label: 'Typical high',          value: result.typicalHigh,highlight: false },
                       { label: 'Your offer',            value: offer,             highlight: true  },
-                    ].filter(Boolean).map((row, i, arr) => (
+                    ].filter((r): r is { label: string; value: number; highlight: boolean } => Boolean(r)).map((row, i, arr) => (
                       <tr
                         key={row.label}
                         className={row.highlight ? 'bg-paper' : ''}
@@ -383,7 +392,7 @@ function ResultsContent() {
               </div>
 
               {/* ── Lead form ── */}
-              <LeadForm payload={{ verdict: result.verdict, offer, salary, years }} />
+              <LeadForm payload={{ verdict: result.verdict, offer, salary, totalMonths }} />
 
               {/* Disclaimer */}
               <p className="text-[12px] text-muted-2 leading-[1.6] text-center px-4">

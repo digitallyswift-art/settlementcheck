@@ -6,11 +6,13 @@ import { getVerdict, VerdictResult } from '@/lib/calculations'
 export interface CalcPayload {
   inputs: {
     salary: string
-    years: string
+    yearsNum: string
+    monthsNum: string
     age: string
     offer: string
     reason: string
     discrimination: string
+    contractualNotice: string
   }
   result: VerdictResult
 }
@@ -28,9 +30,19 @@ const REASONS = [
   { value: 'other', label: 'Other' },
 ]
 
+// Contractual notice options as weeks for calculation precision
+const NOTICE_OPTIONS = [
+  { value: '0',  label: 'Statutory only' },
+  { value: '4',  label: '1 month' },
+  { value: '8',  label: '2 months' },
+  { value: '13', label: '3 months' },
+  { value: '26', label: '6 months' },
+  { value: '52', label: '12 months' },
+]
+
 interface Errors {
   salary?: string
-  years?: string
+  service?: string
   age?: string
   offer?: string
   reason?: string
@@ -85,27 +97,60 @@ const prefixStyle: React.CSSProperties = {
   fontFamily: 'var(--font-sans), Inter, sans-serif',
 }
 
+const suffixStyle: React.CSSProperties = {
+  padding: '0 14px 0 4px',
+  fontSize: 13,
+  fontWeight: 400,
+  color: '#9AA3AE',
+  flexShrink: 0,
+  lineHeight: 1,
+  fontFamily: 'var(--font-sans), Inter, sans-serif',
+}
+
+const selectStyle = (hasValue: boolean): React.CSSProperties => ({
+  ...inputStyle,
+  paddingLeft: 14,
+  width: '100%',
+  cursor: 'pointer',
+  appearance: 'none',
+  WebkitAppearance: 'none',
+  backgroundImage: `linear-gradient(45deg, transparent 50%, #9AA3AE 50%), linear-gradient(135deg, #9AA3AE 50%, transparent 50%)`,
+  backgroundPosition: 'calc(100% - 16px) 50%, calc(100% - 11px) 50%',
+  backgroundSize: '5px 5px, 5px 5px',
+  backgroundRepeat: 'no-repeat',
+  paddingRight: 36,
+  color: hasValue ? '#0B1F3A' : '#9AA3AE',
+})
+
 export default function Calculator({ onCalculate }: Props) {
   const [form, setForm] = useState({
     salary: '',
-    years: '',
+    yearsNum: '',
+    monthsNum: '',
     age: '',
     offer: '',
     reason: '',
     discrimination: 'no',
+    contractualNotice: '0',
   })
   const [errors, setErrors] = useState<Errors>({})
   const [focused, setFocused] = useState<string | null>(null)
 
   const update = (k: keyof typeof form, v: string) => {
     setForm(f => ({ ...f, [k]: v }))
-    if (errors[k as keyof Errors]) setErrors(e => ({ ...e, [k]: undefined }))
+    // Clear service error when either years or months changes
+    const serviceKey = (k === 'yearsNum' || k === 'monthsNum') ? 'service' : k
+    if (errors[serviceKey as keyof Errors]) setErrors(e => ({ ...e, [serviceKey]: undefined }))
   }
 
   const validate = (): boolean => {
     const e: Errors = {}
     if (!form.salary || +form.salary < 1000) e.salary = 'Enter your annual salary'
-    if (form.years === '' || +form.years < 0) e.years = 'Enter years (0 if under a year)'
+    const y = form.yearsNum === '' ? NaN : +form.yearsNum
+    const m = form.monthsNum === '' ? NaN : +form.monthsNum
+    if ((isNaN(y) && isNaN(m)) || (!isNaN(y) && y < 0) || (!isNaN(m) && (m < 0 || m > 11))) {
+      e.service = 'Enter years and/or months (0 years 0 months if under a month)'
+    }
     if (!form.age || +form.age < 16 || +form.age > 100) e.age = 'Enter a valid age'
     if (!form.offer || +form.offer < 0) e.offer = 'Enter the offered amount'
     if (!form.reason) e.reason = 'Select a reason'
@@ -116,7 +161,17 @@ export default function Calculator({ onCalculate }: Props) {
   const submit = (ev: React.FormEvent) => {
     ev.preventDefault()
     if (!validate()) return
-    const result = getVerdict(+form.salary, +form.years, +form.age, +form.offer, form.reason, form.discrimination)
+    const totalMonths = (+form.yearsNum || 0) * 12 + (+form.monthsNum || 0)
+    const contractualNoticeWeeks = +form.contractualNotice
+    const result = getVerdict(
+      +form.salary,
+      totalMonths,
+      +form.age,
+      +form.offer,
+      form.reason,
+      form.discrimination,
+      contractualNoticeWeeks,
+    )
     onCalculate({ inputs: form, result })
   }
 
@@ -124,6 +179,13 @@ export default function Calculator({ onCalculate }: Props) {
     ...inputWrapStyle,
     borderColor: focused === field ? '#0B1F3A' : errors[field as keyof Errors] ? '#C0392B' : 'rgba(11,31,58,0.14)',
     boxShadow: focused === field ? '0 0 0 3px rgba(11,31,58,0.08)' : 'none',
+  })
+
+  // Service field gets error highlight when either sub-field is focused or errored
+  const serviceWrap = (subField: string): React.CSSProperties => ({
+    ...inputWrapStyle,
+    borderColor: focused === subField ? '#0B1F3A' : errors.service ? '#C0392B' : 'rgba(11,31,58,0.14)',
+    boxShadow: focused === subField ? '0 0 0 3px rgba(11,31,58,0.08)' : 'none',
   })
 
   return (
@@ -169,21 +231,16 @@ export default function Calculator({ onCalculate }: Props) {
           Check your offer
         </h3>
         <p style={{ fontSize: 14, color: '#6B7280', margin: 0, lineHeight: 1.45 }}>
-          Six questions. Sixty seconds. No email required.
+          Seven questions. Sixty seconds. No email required.
         </p>
       </div>
 
-      {/* Form body — gradient continues through here */}
+      {/* Form body */}
       <div style={{ padding: '4px 32px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}>
 
-        {/* 2-col grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '14px 16px',
-        }}
-          className="calc-responsive-grid"
-        >
+        {/* Row 1: Salary + Age */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px 16px' }} className="calc-responsive-grid">
+
           {/* Salary */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label style={labelStyle}>Annual salary</label>
@@ -203,24 +260,6 @@ export default function Calculator({ onCalculate }: Props) {
             <FieldError msg={errors.salary} />
           </div>
 
-          {/* Years */}
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label style={labelStyle}>Years at employer</label>
-            <div style={wrapStyle('years')}>
-              <input
-                type="text"
-                inputMode="decimal"
-                style={{ ...inputStyle, paddingLeft: 14 }}
-                placeholder="6"
-                value={form.years}
-                onChange={e => update('years', e.target.value)}
-                onFocus={() => setFocused('years')}
-                onBlur={() => setFocused(null)}
-              />
-            </div>
-            <FieldError msg={errors.years} />
-          </div>
-
           {/* Age */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label style={labelStyle}>Your age when leaving</label>
@@ -238,6 +277,44 @@ export default function Calculator({ onCalculate }: Props) {
             </div>
             <FieldError msg={errors.age} />
           </div>
+        </div>
+
+        {/* Row 2: Length of service (years + months side by side) */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label style={labelStyle}>Length of service</label>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 10px' }}>
+            <div style={serviceWrap('yearsNum')}>
+              <input
+                type="text"
+                inputMode="numeric"
+                style={{ ...inputStyle, paddingLeft: 14 }}
+                placeholder="6"
+                value={form.yearsNum}
+                onChange={e => update('yearsNum', e.target.value)}
+                onFocus={() => setFocused('yearsNum')}
+                onBlur={() => setFocused(null)}
+              />
+              <span style={suffixStyle}>yrs</span>
+            </div>
+            <div style={serviceWrap('monthsNum')}>
+              <input
+                type="text"
+                inputMode="numeric"
+                style={{ ...inputStyle, paddingLeft: 14 }}
+                placeholder="4"
+                value={form.monthsNum}
+                onChange={e => update('monthsNum', e.target.value)}
+                onFocus={() => setFocused('monthsNum')}
+                onBlur={() => setFocused(null)}
+              />
+              <span style={suffixStyle}>mths</span>
+            </div>
+          </div>
+          <FieldError msg={errors.service} />
+        </div>
+
+        {/* Row 3: Offer + Contractual notice */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px 16px' }} className="calc-responsive-grid">
 
           {/* Offer */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -257,6 +334,37 @@ export default function Calculator({ onCalculate }: Props) {
             </div>
             <FieldError msg={errors.offer} />
           </div>
+
+          {/* Contractual notice */}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 6 }}>
+              Notice in your contract
+              <span
+                style={{
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: 16, height: 16, borderRadius: '50%',
+                  border: '1px solid rgba(11,31,58,0.2)', color: '#6B7280',
+                  fontSize: 10, fontWeight: 600, cursor: 'help',
+                }}
+                title="From your employment contract or offer letter. If unsure, choose Statutory only."
+              >
+                ?
+              </span>
+            </label>
+            <div style={wrapStyle('contractualNotice')}>
+              <select
+                style={selectStyle(true)}
+                value={form.contractualNotice}
+                onChange={e => update('contractualNotice', e.target.value)}
+                onFocus={() => setFocused('contractualNotice')}
+                onBlur={() => setFocused(null)}
+              >
+                {NOTICE_OPTIONS.map(o => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
 
         {/* Reason */}
@@ -264,20 +372,7 @@ export default function Calculator({ onCalculate }: Props) {
           <label style={labelStyle}>Reason for leaving</label>
           <div style={wrapStyle('reason')}>
             <select
-              style={{
-                ...inputStyle,
-                paddingLeft: 14,
-                width: '100%',
-                cursor: 'pointer',
-                appearance: 'none',
-                WebkitAppearance: 'none',
-                backgroundImage: `linear-gradient(45deg, transparent 50%, #9AA3AE 50%), linear-gradient(135deg, #9AA3AE 50%, transparent 50%)`,
-                backgroundPosition: 'calc(100% - 16px) 50%, calc(100% - 11px) 50%',
-                backgroundSize: '5px 5px, 5px 5px',
-                backgroundRepeat: 'no-repeat',
-                paddingRight: 36,
-                color: form.reason ? '#0B1F3A' : '#9AA3AE',
-              }}
+              style={selectStyle(!!form.reason)}
               value={form.reason}
               onChange={e => update('reason', e.target.value)}
               onFocus={() => setFocused('reason')}
@@ -293,24 +388,16 @@ export default function Calculator({ onCalculate }: Props) {
           <FieldError msg={errors.reason} />
         </div>
 
-        {/* Discrimination — subtle individual pills */}
+        {/* Discrimination */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 6 }}>
             Any discrimination involved?
             <span
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 16,
-                height: 16,
-                borderRadius: '50%',
-                border: '1px solid rgba(11,31,58,0.2)',
-                color: '#6B7280',
-                fontSize: 10,
-                fontWeight: 600,
-                cursor: 'help',
-                position: 'relative',
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                width: 16, height: 16, borderRadius: '50%',
+                border: '1px solid rgba(11,31,58,0.2)', color: '#6B7280',
+                fontSize: 10, fontWeight: 600, cursor: 'help',
               }}
               title="e.g. age, gender, race, disability, pregnancy"
             >
@@ -392,15 +479,7 @@ export default function Calculator({ onCalculate }: Props) {
         >
           Calculate my estimate →
         </button>
-        <p
-          style={{
-            fontSize: 11,
-            color: '#9AA3AE',
-            textAlign: 'center',
-            margin: 0,
-            lineHeight: 1.5,
-          }}
-        >
+        <p style={{ fontSize: 11, color: '#9AA3AE', textAlign: 'center', margin: 0, lineHeight: 1.5 }}>
           Estimate only. Not legal advice. Based on UK statutory rates 2025/26.
         </p>
       </div>
