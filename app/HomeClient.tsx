@@ -114,7 +114,7 @@ export default function HomeClient() {
                     <span>SRA-regulated</span>
                   </div>
                   <span className="text-rule-strong">|</span>
-                  <span><strong className="text-ink">2,400+</strong> helped</span>
+                  <span><strong className="text-ink">2,400+</strong> employees helped</span>
                   <span className="text-rule-strong">|</span>
                   <span>Employer <strong className="text-ink">pays fees</strong></span>
                 </div>
