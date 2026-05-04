@@ -53,23 +53,44 @@ export default function ForSolicitorsClient() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
-                  icon: '🎯',
+                  icon: (
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <circle cx="12" cy="12" r="6" />
+                      <circle cx="12" cy="12" r="2" fill="#D9603B" stroke="none" />
+                      <line x1="12" y1="2" x2="12" y2="5" />
+                      <line x1="12" y1="19" x2="12" y2="22" />
+                      <line x1="2" y1="12" x2="5" y2="12" />
+                      <line x1="19" y1="12" x2="22" y2="12" />
+                    </svg>
+                  ),
                   title: 'Pre-qualified leads',
                   body: 'Every enquiry has a known offer amount, salary, and years of service. You receive the full picture before the first call.',
                 },
                 {
-                  icon: '📍',
+                  icon: (
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                      <circle cx="12" cy="9" r="2.5" />
+                    </svg>
+                  ),
                   title: 'Your geography only',
                   body: 'We match by location and availability. You only receive leads relevant to where you practice.',
                 },
                 {
-                  icon: '💳',
+                  icon: (
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="6" width="20" height="14" rx="3" />
+                      <path d="M2 10h20" />
+                      <path d="M6 15h4" strokeWidth="2" />
+                    </svg>
+                  ),
                   title: 'No minimum spend',
                   body: 'Pay per lead or choose a monthly subscription. No lock-in, no hidden fees. Start and stop when you like.',
                 },
               ].map((card) => (
                 <div key={card.title} className="bg-card rounded-2xl border border-rule p-8">
-                  <div className="text-3xl mb-4">{card.icon}</div>
+                  <div className="mb-4">{card.icon}</div>
                   <h3 className="sc-h3 mb-2">{card.title}</h3>
                   <p className="text-sm text-muted leading-relaxed">{card.body}</p>
                 </div>
