@@ -257,6 +257,122 @@
   .font-460 { font-weight: 460; }
 }
 
+/* ── Calculator component styles ─────────────────────────────────── */
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+}
+@media (max-width: 520px) {
+  .calc-grid { grid-template-columns: 1fr; }
+}
+
+.calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calc-label {
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0B1F3A;
+  letter-spacing: -0.005em;
+}
+
+.calc-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid #D8D2C6;
+  border-radius: 9px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  overflow: hidden;
+}
+.calc-input-wrap:focus-within {
+  border-color: #0B1F3A;
+  box-shadow: 0 0 0 3px rgba(11, 31, 58, 0.07);
+}
+
+.calc-prefix {
+  padding: 0 4px 0 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #8A93A3;
+  flex-shrink: 0;
+  line-height: 1;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+}
+
+.calc-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: 15px;
+  color: #0B1F3A;
+  padding: 13px 14px;
+  min-width: 0;
+  -moz-appearance: textfield;
+}
+.calc-input::placeholder { color: #B0B7C3; }
+.calc-input::-webkit-inner-spin-button,
+.calc-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* Select inside calc-input-wrap */
+.calc-select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  width: 100%;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #8A93A3 50%),
+    linear-gradient(135deg, #8A93A3 50%, transparent 50%);
+  background-position:
+    calc(100% - 17px) 50%,
+    calc(100% - 12px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 38px;
+  color: #0B1F3A;
+}
+.calc-select option[value=''] { color: #B0B7C3; }
+
+/* Pill radio — full width */
+.calc-pill-radio {
+  display: flex;
+  width: 100%;
+  background: #F7F4EE;
+  border: 1.5px solid #D8D2C6;
+  border-radius: 9px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.calc-pill-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5B6577;
+  padding: 10px 8px;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+  white-space: nowrap;
+  text-align: center;
+}
+.calc-pill-btn:hover { color: #0B1F3A; background: rgba(11,31,58,0.05); }
+.calc-pill-btn[aria-pressed='true'] {
+  background: #0B1F3A;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(11,31,58,0.18);
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .sc-container {

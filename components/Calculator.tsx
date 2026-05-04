@@ -38,7 +38,7 @@ interface Errors {
 
 function FieldError({ msg }: { msg?: string }) {
   if (!msg) return null
-  return <span className="text-[12px] text-crimson mt-1">{msg}</span>
+  return <span className="text-[12px] text-crimson mt-1 block">{msg}</span>
 }
 
 export default function Calculator({ onCalculate }: Props) {
@@ -80,31 +80,68 @@ export default function Calculator({ onCalculate }: Props) {
       id="calculator-v2"
       onSubmit={submit}
       noValidate
-      className="bg-card border border-rule rounded-[16px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)]"
+      style={{
+        background: '#fff',
+        borderRadius: 20,
+        border: '1px solid #E2DCCE',
+        overflow: 'hidden',
+        boxShadow: '0 8px 40px -8px rgba(11,31,58,0.14), 0 2px 8px -2px rgba(11,31,58,0.06)',
+      }}
     >
-      {/* Header with deep vertical gradient */}
+      {/* Gradient header */}
       <div
-        className="px-8 py-8 border-b border-rule"
-        style={{ background: 'linear-gradient(180deg, #F7F4EE 0%, #E6E0D3 100%)' }}
+        style={{
+          background: 'linear-gradient(160deg, #F7F4EE 0%, #EDE8DE 55%, #E3DCD0 100%)',
+          padding: '32px 36px 28px',
+          borderBottom: '1px solid #E2DCCE',
+        }}
       >
-        <span className="sc-eyebrow text-[11px] text-muted-2">FREE CALCULATOR</span>
-        <h3 className="sc-h3 mt-2 text-[26px]">Check your offer</h3>
-        <p className="text-[14px] text-muted mt-2">Six questions. Sixty seconds. No email required.</p>
+        <span
+          style={{
+            display: 'block',
+            fontFamily: 'var(--font-sans), Inter, sans-serif',
+            fontWeight: 500,
+            fontSize: 11,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: '#8A93A3',
+            marginBottom: 10,
+          }}
+        >
+          Free Calculator
+        </span>
+        <h3
+          style={{
+            fontFamily: 'var(--font-serif), "Source Serif 4", Georgia, serif',
+            fontWeight: 460,
+            fontSize: 26,
+            lineHeight: 1.2,
+            letterSpacing: '-0.012em',
+            color: '#0B1F3A',
+            margin: '0 0 6px',
+          }}
+        >
+          Check your offer
+        </h3>
+        <p style={{ fontSize: 14, color: '#5B6577', margin: 0, lineHeight: 1.45 }}>
+          Six questions. Sixty seconds. No email required.
+        </p>
       </div>
 
-      {/* Body */}
-      <div className="px-8 py-8 flex flex-col gap-[20px]">
+      {/* Form body */}
+      <div style={{ padding: '28px 36px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+
         {/* 2-col grid */}
-        <div className="grid grid-cols-2 gap-x-5 gap-y-5 max-[520px]:grid-cols-1">
+        <div className="calc-grid">
           {/* Salary */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Annual salary</label>
-            <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
-              <span className="pl-4 pr-1 font-mono text-[14px] text-muted">£</span>
+          <div className="calc-field">
+            <label className="calc-label">Annual salary</label>
+            <div className="calc-input-wrap">
+              <span className="calc-prefix">£</span>
               <input
-                type="number"
+                type="text"
                 inputMode="numeric"
-                className="flex-1 border-0 bg-transparent outline-none py-3.5 px-3 text-[15px] text-ink placeholder-muted-2 pl-1.5"
+                className="calc-input"
                 placeholder="42,000"
                 value={form.salary}
                 onChange={e => update('salary', e.target.value)}
@@ -114,14 +151,13 @@ export default function Calculator({ onCalculate }: Props) {
           </div>
 
           {/* Years */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Years at employer</label>
-            <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
+          <div className="calc-field">
+            <label className="calc-label">Years at employer</label>
+            <div className="calc-input-wrap">
               <input
-                type="number"
-                inputMode="numeric"
-                step="0.5"
-                className="flex-1 border-0 bg-transparent outline-none py-3.5 px-4 text-[15px] text-ink placeholder-muted-2"
+                type="text"
+                inputMode="decimal"
+                className="calc-input"
                 placeholder="6"
                 value={form.years}
                 onChange={e => update('years', e.target.value)}
@@ -131,13 +167,13 @@ export default function Calculator({ onCalculate }: Props) {
           </div>
 
           {/* Age */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Your age when leaving</label>
-            <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
+          <div className="calc-field">
+            <label className="calc-label">Your age when leaving</label>
+            <div className="calc-input-wrap">
               <input
-                type="number"
+                type="text"
                 inputMode="numeric"
-                className="flex-1 border-0 bg-transparent outline-none py-3.5 px-4 text-[15px] text-ink placeholder-muted-2"
+                className="calc-input"
                 placeholder="38"
                 value={form.age}
                 onChange={e => update('age', e.target.value)}
@@ -147,14 +183,14 @@ export default function Calculator({ onCalculate }: Props) {
           </div>
 
           {/* Offer */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Settlement offered</label>
-            <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
-              <span className="pl-4 pr-1 font-mono text-[14px] text-muted">£</span>
+          <div className="calc-field">
+            <label className="calc-label">Settlement offered</label>
+            <div className="calc-input-wrap">
+              <span className="calc-prefix">£</span>
               <input
-                type="number"
+                type="text"
                 inputMode="numeric"
-                className="flex-1 border-0 bg-transparent outline-none py-3.5 px-3 text-[15px] text-ink placeholder-muted-2 pl-1.5"
+                className="calc-input"
                 placeholder="18,000"
                 value={form.offer}
                 onChange={e => update('offer', e.target.value)}
@@ -165,11 +201,11 @@ export default function Calculator({ onCalculate }: Props) {
         </div>
 
         {/* Reason */}
-        <div className="flex flex-col gap-1.5">
-          <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Reason for leaving</label>
-          <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
+        <div className="calc-field">
+          <label className="calc-label">Reason for leaving</label>
+          <div className="calc-input-wrap">
             <select
-              className="sc-select flex-1 border-0 bg-transparent outline-none py-3.5 px-4 text-[15px] text-ink"
+              className="calc-input calc-select"
               value={form.reason}
               onChange={e => update('reason', e.target.value)}
             >
@@ -182,17 +218,17 @@ export default function Calculator({ onCalculate }: Props) {
         </div>
 
         {/* Discrimination */}
-        <div className="flex flex-col gap-1.5">
-          <label className="text-[13px] font-medium text-ink tracking-[-0.005em] flex items-center">
+        <div className="calc-field">
+          <label className="calc-label" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             Any discrimination involved?
             <span className="sc-tip" data-tip="e.g. age, gender, race, disability, pregnancy">?</span>
           </label>
-          <div className="pill-radio" role="radiogroup" aria-label="Discrimination">
+          <div className="calc-pill-radio" role="radiogroup" aria-label="Discrimination">
             {(['no', 'yes', 'not_sure'] as const).map(v => (
               <button
                 key={v}
                 type="button"
-                className="pill-radio-btn"
+                className="calc-pill-btn"
                 aria-pressed={form.discrimination === v}
                 onClick={() => update('discrimination', v)}
               >
@@ -204,11 +240,41 @@ export default function Calculator({ onCalculate }: Props) {
       </div>
 
       {/* Footer */}
-      <div className="px-8 pb-8 flex flex-col gap-4">
-        <button type="submit" className="btn-accent w-full py-4 text-[16px] font-semibold rounded-[8px]">
+      <div style={{ padding: '0 36px 32px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <button
+          type="submit"
+          style={{
+            width: '100%',
+            background: '#D9603B',
+            border: '1px solid #D9603B',
+            color: '#fff',
+            fontFamily: 'var(--font-sans), Inter, sans-serif',
+            fontWeight: 600,
+            fontSize: 16,
+            letterSpacing: '-0.005em',
+            padding: '16px 24px',
+            borderRadius: 10,
+            cursor: 'pointer',
+            transition: 'background 160ms ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = '#B14A28')}
+          onMouseLeave={e => (e.currentTarget.style.background = '#D9603B')}
+        >
           Calculate my estimate →
         </button>
-        <p className="text-[12px] text-muted-2 text-center leading-relaxed px-4">
+        <p
+          style={{
+            fontSize: 12,
+            color: '#8A93A3',
+            textAlign: 'center',
+            margin: 0,
+            lineHeight: 1.5,
+            padding: '0 8px',
+          }}
+        >
           Estimate only. Not legal advice. Based on UK statutory rates 2024/25.
         </p>
       </div>
