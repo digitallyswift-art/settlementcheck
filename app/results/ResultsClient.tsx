@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { Suspense, useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -15,7 +15,7 @@ const VERDICT_CONFIG: Record<Verdict, {
   tagBorder: string
   tagColor: string
   tagText: string
-  icon: string
+  icon: string | React.ReactNode
   heading: string
   body: (r: VerdictResult, offer: number) => string
 }> = {
