@@ -42,8 +42,7 @@ export default function ForSolicitors() {
               Receive qualified settlement agreement leads
             </h1>
             <p className="sc-lead max-w-2xl mx-auto">
-              Every enquiry on SettlementCheck has completed our calculator, seen their estimate, and is ready to
-              speak to a solicitor. These are motivated, informed leads.
+              Every lead on SettlementCheck has used an independent calculator and already knows where their offer stands. They arrive informed, motivated, and with a verified email address. These are not cold enquiries.
             </p>
           </div>
         </section>

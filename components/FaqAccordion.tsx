@@ -5,7 +5,7 @@ import { useState } from 'react'
 const FAQS = [
   {
     q: 'Does it cost me anything?',
-    a: 'No. Your employer is required to contribute to your legal fees (typically £350–750). You pay nothing — that is the standard arrangement on a UK settlement agreement.',
+    a: 'No. Your employer is required by UK law to cover your legal fees for this process, typically £350 to £750. You pay nothing. This means you can choose a specialist who will genuinely advise you, not just whoever is cheapest.',
   },
   {
     q: 'Do I legally need a solicitor?',
@@ -26,6 +26,10 @@ const FAQS = [
   {
     q: 'Is my information shared?',
     a: 'Only with the small panel of solicitors you choose to be introduced to — never with employers, recruiters, or third parties. You can withdraw at any point.',
+  },
+  {
+    q: 'Why is your calculator independent when others are not?',
+    a: 'Most settlement calculators are built by law firms. The goal of those calculators is to capture your details so that firm can take on your case. Our calculator is run by an independent platform with no firm to promote. The estimate you get reflects your actual situation, not what a firm wants you to believe.',
   },
 ]
 

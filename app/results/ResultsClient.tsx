@@ -145,9 +145,9 @@ function LeadForm({ payload }: { payload: LeadPayload }) {
     <form onSubmit={submit} noValidate className="bg-card border border-rule rounded-lg p-7 flex flex-col gap-5">
       <div>
         <span className="sc-eyebrow">Step 2 of 2</span>
-        <h3 className="sc-h3 mt-1.5">Get free advice from a vetted solicitor</h3>
+        <h3 className="sc-h3 mt-1.5">Get matched with the right specialist</h3>
         <p className="text-muted text-[15px] mt-1.5 max-w-[54ch]">
-          Your employer covers the legal fees (typically £350–750). It costs you nothing.
+          Your employer is required to cover your legal fees. We will match you to a vetted employment solicitor within 24 hours. They handle settlement agreements regularly, not a general practice firm.
         </p>
       </div>
 

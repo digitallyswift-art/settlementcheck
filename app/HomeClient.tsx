@@ -10,7 +10,7 @@ import FaqAccordion from '@/components/FaqAccordion'
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
   { n: '2,400+', l: 'Employees helped' },
-  { n: '£0',     l: 'Cost to you' },
+  { n: '£0',     l: 'Your employer pays' },
   { n: '24 hrs', l: 'Solicitor response' },
   { n: '4.9★',   l: 'Average rating' },
 ]
@@ -24,19 +24,19 @@ const STEPS = [
   {
     n: '02',
     t: 'Match with a solicitor',
-    d: 'We introduce you to 2–3 vetted, SRA-regulated employment solicitors in your region within 24 hours. You decide who to speak with.',
+    d: 'We match you to a vetted employment specialist within 24 hours. Every solicitor on our panel handles settlement agreements regularly and is SRA-regulated.',
   },
   {
     n: '03',
-    t: 'Get advice — free to you',
-    d: 'Your employer is legally required to cover your legal fees (typically £350–750). You pay absolutely nothing for the advice.',
+    t: 'Get honest advice',
+    d: 'Your employer is required to cover your legal fees, typically £350 to £750. Your solicitor\'s job is to advise you honestly, not to push you to sign.',
   },
 ]
 
 const TRUST = [
   {
     t: 'Genuinely independent',
-    d: "We don't represent any single firm. The panel is curated, the introductions are unbiased.",
+    d: 'Every other settlement calculator online was built by a law firm that wants your case. Ours was not. We have no firm to push you towards. The result you get is honest.',
   },
   {
     t: 'Your employer pays',
@@ -48,7 +48,7 @@ const TRUST = [
   },
   {
     t: '24-hour response',
-    d: 'Every firm on the panel commits to making contact within 24 hours of an introduction.',
+    d: 'You have a deadline. All solicitors on our panel commit to responding within 24 hours. Most get back to you the same day.',
   },
 ]
 
@@ -93,7 +93,7 @@ export default function HomeClient() {
                 <div className="flex">
                   <span className="inline-flex items-center gap-2 border border-rule-strong rounded-full px-4 py-1.5 text-[12px] font-medium text-ink bg-white/40">
                     <span className="w-1.5 h-1.5 rounded-full bg-coral" />
-                    Free · Confidential · No obligation
+                    Independent · Not owned by a law firm · Free to use
                   </span>
                 </div>
 
@@ -103,7 +103,7 @@ export default function HomeClient() {
                 </h1>
 
                 <p className="sc-lead text-[19px] leading-[1.6]">
-                  Find out in 60 seconds. Our free calculator estimates whether your employer&apos;s offer falls below, within, or above the typical UK range — then connects you with a specialist solicitor. Your employer pays their legal fees.
+                  Most settlement calculators online are built by law firms trying to capture your case. Ours is not. Get an honest estimate of where your offer stands, then get matched with a vetted employment specialist within 24 hours. Your employer pays their legal fees.
                 </p>
 
                 {/* Inline Stats */}
@@ -115,8 +115,12 @@ export default function HomeClient() {
                   <span className="text-rule-strong">|</span>
                   <span><strong className="text-ink">2,400+</strong> employees helped</span>
                   <span className="text-rule-strong">|</span>
-                  <span><strong className="text-ink">£0</strong> cost to you</span>
+                  <span>Your employer <strong className="text-ink">pays the fees</strong></span>
                 </div>
+
+                <p className="text-[14px] text-muted leading-[1.55]">
+                  Most settlement agreements have a 10-day response window. We can have a specialist speaking with you within 24 hours.
+                </p>
               </div>
 
               <div>
@@ -251,7 +255,7 @@ export default function HomeClient() {
               <div>
                 <h2 className="sc-h2 text-white" style={{ maxWidth: '18ch' }}>Not sure if your offer is fair?</h2>
                 <p className="text-white/[0.78] text-[18px] mt-3" style={{ maxWidth: '46ch' }}>
-                  Use the free calculator. It takes about a minute, and there&apos;s no obligation to proceed.
+                  Our calculator is not run by a law firm. Get an honest estimate, then speak to a specialist within 24 hours.
                 </p>
               </div>
               <Link href="/#calculator" className="btn-accent whitespace-nowrap">
