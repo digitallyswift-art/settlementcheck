@@ -157,7 +157,7 @@ export default function EmployerRecommendedSolicitor() {
               <p className="text-muted text-sm leading-relaxed">
                 You can search for employment solicitors in your area through the{' '}
                 <a
-                  href="https://www.sra.org.uk/consumers/find-solicitor/"
+                  href="https://www.sra.org.uk/consumers/register/"
                   className="text-ink underline underline-offset-2 hover:text-coral transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
