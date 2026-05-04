@@ -13,7 +13,7 @@ const FAQS = [
   },
   {
     q: 'How accurate is the calculator?',
-    a: "The calculator gives a general estimate based on UK statutory rates and benchmarks from settlements we've seen. It is not legal advice — your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
+    a: "The calculator gives a general estimate based on UK statutory rates and benchmarks from settlements we've seen. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
   },
   {
     q: 'How quickly will a solicitor contact me?',
@@ -25,7 +25,7 @@ const FAQS = [
   },
   {
     q: 'Is my information shared?',
-    a: 'Only with the small panel of solicitors you choose to be introduced to — never with employers, recruiters, or third parties. You can withdraw at any point.',
+    a: 'Only with the small panel of solicitors you choose to be introduced to. Never with employers, recruiters, or third parties. You can withdraw at any point.',
   },
   {
     q: 'Why is your calculator independent when others are not?',
