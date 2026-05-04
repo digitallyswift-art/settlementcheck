@@ -338,7 +338,7 @@ export default function Calculator({ onCalculate }: Props) {
           {/* Contractual notice */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 6 }}>
-              Notice in your contract
+              Notice period in your contract
               <span
                 style={{
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
