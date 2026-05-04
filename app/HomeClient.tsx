@@ -82,15 +82,12 @@ export default function HomeClient() {
       <Nav />
       <main>
         <section
-          className="relative overflow-hidden"
-          style={{ background: '#F7F4EE', paddingTop: 72, paddingBottom: 72 }}
+          className="relative overflow-hidden py-14 md:py-[72px]"
+          style={{ background: '#F7F4EE' }}
         >
           <div className="sc-container relative">
-            <div
-              className="hero-grid grid gap-12 items-center"
-              style={{ gridTemplateColumns: '1.05fr 1fr' }}
-            >
-              <div className="flex flex-col gap-7" style={{ maxWidth: 600 }}>
+            <div className="hero-grid grid gap-10 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
+              <div className="flex flex-col gap-6 md:gap-7">
                 {/* Hero Pill */}
                 <div className="flex">
                   <span className="inline-flex items-center gap-2 border border-rule-strong rounded-full px-4 py-1.5 text-[12px] font-medium text-ink bg-white/40">
@@ -104,7 +101,7 @@ export default function HomeClient() {
                   offer <em style={{ fontStyle: 'italic', color: '#D9603B' }}>fair</em>?
                 </h1>
 
-                <p className="sc-lead text-[19px] leading-[1.6]">
+                <p className="sc-lead text-[17px] md:text-[19px] leading-[1.6]">
                   Most settlement calculators online are built by law firms trying to capture your case. Ours is not. Get an honest estimate of where your offer stands, then get matched with a vetted employment specialist within 24 hours. Your employer pays their legal fees.
                 </p>
 
@@ -135,16 +132,17 @@ export default function HomeClient() {
         {/* ── STATS BAR ─────────────────────────────────────────── */}
         <section className="bg-paper-2 border-y border-rule py-9">
           <div className="sc-container">
-            <div className="grid grid-cols-4 max-[720px]:grid-cols-2">
+            <div className="grid grid-cols-2 md:grid-cols-4">
               {STATS.map((s, i) => (
                 <div
                   key={i}
-                  className="flex flex-col pl-6 py-2 max-[720px]:py-4"
-                  style={{ borderLeft: i > 0 ? '1px solid #C9C0AC' : undefined }}
+                  className={`flex flex-col pl-6 py-4 md:py-2 border-rule ${
+                    i % 2 !== 0 ? 'border-l' : ''
+                  } md:border-l-0 ${i > 0 ? 'md:border-l' : ''}`}
                 >
                   <span
                     className="font-serif text-ink"
-                    style={{ fontSize: 44, fontWeight: 420, lineHeight: 1, letterSpacing: '-0.02em' }}
+                    style={{ fontSize: 40, fontWeight: 420, lineHeight: 1, letterSpacing: '-0.02em' }}
                   >
                     {s.n}
                   </span>
@@ -187,11 +185,8 @@ export default function HomeClient() {
         {/* ── TRUST ─────────────────────────────────────────────── */}
         <section id="about" className="py-section bg-paper-2 border-y border-rule">
           <div className="sc-container">
-            <div
-              className="grid gap-20 max-[900px]:grid-cols-1"
-              style={{ gridTemplateColumns: '1fr 1.05fr' }}
-            >
-              <div className="flex flex-col gap-3.5 max-w-[640px]">
+            <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.05fr]">
+              <div className="flex flex-col gap-3.5">
                 <span className="sc-eyebrow">Why SettlementCheck</span>
                 <h2 className="sc-h2">An introduction service built for the employee, not the employer.</h2>
                 <p className="sc-lead">
@@ -210,7 +205,7 @@ export default function HomeClient() {
                       <Check />
                     </div>
                     <div>
-                      <div className="font-serif text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3]">{it.t}</div>
+                      <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3]">{it.t}</div>
                       <div className="text-[15px] text-muted mt-1 leading-[1.55]">{it.d}</div>
                     </div>
                   </div>
@@ -223,11 +218,8 @@ export default function HomeClient() {
         {/* ── FAQ ───────────────────────────────────────────────── */}
         <section className="py-section bg-paper">
           <div className="sc-container">
-            <div
-              className="grid gap-20 max-[900px]:grid-cols-1"
-              style={{ gridTemplateColumns: '1fr 1.4fr' }}
-            >
-              <div className="flex flex-col gap-3.5 max-w-[480px]">
+            <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.4fr]">
+              <div className="flex flex-col gap-3.5">
                 <span className="sc-eyebrow">Common questions</span>
                 <h2 className="sc-h2">What people ask before they start.</h2>
                 <p className="sc-lead">Six things almost every employee wants to know before clicking &ldquo;calculate.&rdquo;</p>
@@ -239,8 +231,8 @@ export default function HomeClient() {
 
         {/* ── CTA BANNER ────────────────────────────────────────── */}
         <section
-          className="relative overflow-hidden"
-          style={{ background: '#0B1F3A', padding: '88px 32px' }}
+          className="relative overflow-hidden py-16 px-5 md:py-[88px] md:px-8"
+          style={{ background: '#0B1F3A' }}
         >
           <div
             aria-hidden="true"
@@ -250,17 +242,14 @@ export default function HomeClient() {
             }}
           />
           <div className="sc-container relative">
-            <div
-              className="grid items-center gap-10 max-[720px]:grid-cols-1"
-              style={{ gridTemplateColumns: '1.4fr auto' }}
-            >
+            <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:gap-10">
               <div>
                 <h2 className="sc-h2 text-white" style={{ maxWidth: '18ch' }}>Not sure if your offer is fair?</h2>
-                <p className="text-white/[0.78] text-[18px] mt-3" style={{ maxWidth: '46ch' }}>
+                <p className="text-white/[0.78] text-[17px] md:text-[18px] mt-3" style={{ maxWidth: '46ch' }}>
                   Our calculator is not run by a law firm. Get an honest estimate, then speak to a specialist within 24 hours.
                 </p>
               </div>
-              <Link href="/#calculator" className="btn-accent whitespace-nowrap">
+              <Link href="/#calculator" className="btn-accent whitespace-nowrap self-start md:self-auto">
                 Check my offer now →
               </Link>
             </div>

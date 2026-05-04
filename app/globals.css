@@ -388,16 +388,7 @@
   }
 }
 
-/* Hero section mobile stacking */
-@media (max-width: 1024px) {
-  .hero-grid {
-    grid-template-columns: 1fr !important;
-    gap: 40px !important;
-  }
-  .hero-grid > div:first-child {
-    max-width: 100% !important;
-  }
-}
+/* Hero section mobile stacking — handled by Tailwind lg: classes */
 
 /* Mobile section padding */
 @media (max-width: 768px) {
