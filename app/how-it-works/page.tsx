@@ -58,7 +58,16 @@ export default function HowItWorks() {
               {
                 step: '01',
                 title: 'Check your offer',
-                icon: '🧮',
+                icon: (
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="4" y="2" width="16" height="20" rx="2"/>
+                      <line x1="8" y1="7" x2="16" y2="7"/>
+                      <line x1="8" y1="11" x2="10" y2="11"/>
+                      <line x1="13" y1="11" x2="16" y2="11"/>
+                      <line x1="8" y1="15" x2="10" y2="15"/>
+                      <line x1="13" y1="15" x2="16" y2="15"/>
+                    </svg>
+                  ),
                 body: [
                   "Enter your salary, years of service, age, and the settlement amount your employer has offered. Our calculator uses the UK's statutory redundancy formula (2024/25 rates) to give you an instant estimate.",
                   'The calculator shows you whether your offer is below the legal minimum, below the typical range, within range, or above the typical range, in plain English, in seconds.',
@@ -68,7 +77,14 @@ export default function HowItWorks() {
               {
                 step: '02',
                 title: 'Match with a solicitor',
-                icon: '🤝',
+                icon: (
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                      <circle cx="9" cy="7" r="4"/>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                  ),
                 body: [
                   'After seeing your estimate, you can choose to be matched with 2–3 vetted employment law solicitors in your area. Every solicitor on our panel is SRA-regulated with specific experience in settlement agreements.',
                   "We share your situation details (offer amount, salary, years of service, and verdict) so solicitors arrive informed. You don't need to explain everything from scratch.",
@@ -78,7 +94,12 @@ export default function HowItWorks() {
               {
                 step: '03',
                 title: 'Get advice, free',
-                icon: '✅',
+                icon: (
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                      <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                  ),
                 body: [
                   'Under UK employment law, your employer is legally required to contribute to your legal fees for independent advice on a settlement agreement. The typical employer contribution is £350 to £750.',
                   'This means you pay nothing. Not for using SettlementCheck, and not for the solicitor\'s advice.',
@@ -95,7 +116,7 @@ export default function HowItWorks() {
                   {step.step}
                 </div>
                 <div className="flex-1 bg-card rounded-2xl border border-rule p-8">
-                  <div className="text-3xl mb-3">{step.icon}</div>
+                  <div className="mb-4">{step.icon}</div>
                   <h2 className="sc-section-h2 mb-4">{step.title}</h2>
                   <div className="space-y-3">
                     {step.body.map((para, i) => (

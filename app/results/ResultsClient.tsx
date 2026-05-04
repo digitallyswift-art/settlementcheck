@@ -50,7 +50,11 @@ const VERDICT_CONFIG: Record<Verdict, {
     tagBorder: '#BCD0BF',
     tagColor: '#4F7060',
     tagText: 'Within range',
-    icon: '✓',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    ),
     heading: 'Your offer appears within the typical range',
     body: (r) =>
       `For circumstances similar to yours, settlements typically fall between ${formatCurrency(r.typicalLow)} and ${formatCurrency(r.typicalHigh)}. A solicitor can confirm whether the structure (tax-free portion, references, restrictive covenants) is favourable.`,
@@ -129,7 +133,11 @@ function LeadForm({ payload }: { payload: LeadPayload }) {
   if (status === 'success') {
     return (
       <div className="bg-sage-tint border border-[#BCD0BF] rounded-lg p-7 flex flex-col items-center text-center gap-4">
-        <div className="w-14 h-14 rounded-full bg-sage flex items-center justify-center text-white text-2xl">✓</div>
+        <div className="w-14 h-14 rounded-full bg-sage flex items-center justify-center text-white">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
         <h3 className="sc-h3">Thank you, {form.first_name}.</h3>
         <p className="text-muted text-[15px] max-w-[52ch]">
           We&apos;ve received your details. A vetted employment solicitor will call you on{' '}
