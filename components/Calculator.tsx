@@ -401,7 +401,7 @@ export default function Calculator({ onCalculate }: Props) {
             lineHeight: 1.5,
           }}
         >
-          Estimate only. Not legal advice. Based on UK statutory rates 2024/25.
+          Estimate only. Not legal advice. Based on UK statutory rates 2025/26.
         </p>
       </div>
     </form>

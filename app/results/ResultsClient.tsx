@@ -357,13 +357,14 @@ function ResultsContent() {
                   </thead>
                   <tbody>
                     {[
-                      { label: 'Statutory redundancy', value: result.redundancy, highlight: false },
+                      result.redundancy > 0 && { label: 'Statutory redundancy pay', value: result.redundancy, highlight: false },
+                      result.basicAward > 0  && { label: 'Basic award (unfair dismissal)', value: result.basicAward, highlight: false },
                       { label: 'Statutory notice pay',  value: result.notice,     highlight: false },
                       { label: 'Estimated minimum',     value: result.minimum,    highlight: true  },
                       { label: 'Typical low',           value: result.typicalLow, highlight: false },
                       { label: 'Typical high',          value: result.typicalHigh,highlight: false },
                       { label: 'Your offer',            value: offer,             highlight: true  },
-                    ].map((row, i, arr) => (
+                    ].filter(Boolean).map((row, i, arr) => (
                       <tr
                         key={row.label}
                         className={row.highlight ? 'bg-paper' : ''}
@@ -386,7 +387,7 @@ function ResultsContent() {
 
               {/* Disclaimer */}
               <p className="text-[12px] text-muted-2 leading-[1.6] text-center px-4">
-                Estimate based on published UK statutory rates (weekly cap £643, 2024/25). Not legal advice.
+                Estimate based on published UK statutory rates (weekly pay cap £719, 2025/26). Not legal advice.
                 SettlementCheck connects you with SRA-regulated solicitors and is not a law firm.
               </p>
             </div>
