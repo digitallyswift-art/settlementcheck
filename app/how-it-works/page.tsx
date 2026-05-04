@@ -15,12 +15,12 @@ export default function HowItWorks() {
       <Nav />
       <main>
         {/* Hero */}
-        <section className="bg-white pt-16 pb-12">
+        <section className="bg-paper pt-16 pb-12">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-4">
+            <h1 className="sc-h1 mb-4">
               How SettlementCheck works
             </h1>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            <p className="sc-lead max-w-2xl mx-auto">
               From receiving a settlement offer to having specialist legal advice — most people complete the whole
               process in under an hour.
             </p>
@@ -28,7 +28,7 @@ export default function HowItWorks() {
         </section>
 
         {/* Steps detailed */}
-        <section className="bg-gray-50 py-16">
+        <section className="bg-paper-2 border-y border-rule py-16">
           <div className="max-w-3xl mx-auto px-4 space-y-12">
             {[
               {
@@ -63,15 +63,19 @@ export default function HowItWorks() {
               },
             ].map((step) => (
               <div key={step.step} className="flex gap-8">
-                <div className="hidden md:block text-7xl font-black text-green-100 leading-none pt-1 select-none">
+                <div
+                  className="hidden md:block font-serif leading-none pt-1 select-none"
+                  style={{ fontSize: 88, fontWeight: 420, color: '#E2DCCE' }}
+                  aria-hidden="true"
+                >
                   {step.step}
                 </div>
-                <div className="flex-1 bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+                <div className="flex-1 bg-card rounded-2xl border border-rule p-8">
                   <div className="text-3xl mb-3">{step.icon}</div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{step.title}</h2>
+                  <h2 className="sc-h2 mb-4">{step.title}</h2>
                   <div className="space-y-3">
                     {step.body.map((para, i) => (
-                      <p key={i} className="text-gray-600 text-sm leading-relaxed">{para}</p>
+                      <p key={i} className="text-muted text-sm leading-relaxed">{para}</p>
                     ))}
                   </div>
                 </div>
@@ -81,10 +85,10 @@ export default function HowItWorks() {
         </section>
 
         {/* About */}
-        <section id="about" className="bg-white py-16">
+        <section id="about" className="bg-paper py-16">
           <div className="max-w-3xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">About SettlementCheck</h2>
-            <div className="space-y-4 text-gray-600 text-sm leading-relaxed">
+            <h2 className="sc-h2 mb-6">About SettlementCheck</h2>
+            <div className="space-y-4 text-muted text-sm leading-relaxed">
               <p>
                 SettlementCheck was created to help employees navigate settlement agreements without the confusion,
                 delay, and uncertainty that typically surrounds them.
@@ -104,22 +108,19 @@ export default function HowItWorks() {
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="bg-gray-50 py-16">
+        <section id="faq" className="bg-paper-2 border-y border-rule py-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-10 tracking-tight">Common questions</h2>
+            <h2 className="sc-h2 mb-10">Common questions</h2>
             <FaqAccordion />
           </div>
         </section>
 
         {/* CTA */}
-        <section className="bg-green-800 py-16">
-          <div className="max-w-3xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-white mb-3">Ready to check your offer?</h2>
+        <section style={{ background: '#0B1F3A', padding: '64px 32px' }}>
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="sc-h2 text-white mb-3">Ready to check your offer?</h2>
             <p className="text-white/80 mb-6">Free, confidential, and takes 60 seconds.</p>
-            <Link
-              href="/#calculator"
-              className="inline-block bg-amber-500 hover:bg-amber-400 text-white font-bold px-8 py-4 rounded-xl text-base transition-colors"
-            >
+            <Link href="/#calculator" className="btn-accent">
               Check my offer now →
             </Link>
           </div>
