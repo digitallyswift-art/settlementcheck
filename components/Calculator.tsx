@@ -399,11 +399,14 @@ export default function Calculator({ onCalculate }: Props) {
                 border: '1px solid rgba(11,31,58,0.2)', color: '#6B7280',
                 fontSize: 10, fontWeight: 600, cursor: 'help',
               }}
-              title="e.g. age, gender, race, disability, pregnancy"
+              title="Discrimination includes being treated unfairly because of age, gender, race, disability, pregnancy, religion, or sexual orientation. These claims are uncapped and can significantly increase your settlement value."
             >
               ?
             </span>
           </label>
+          <p style={{ fontSize: 12, color: '#6B7280', marginTop: 4, marginBottom: 8, lineHeight: 1.5 }}>
+            Were you treated unfairly because of age, gender, race, disability, pregnancy, or another protected characteristic? If you&apos;re unsure, choose &ldquo;Not sure&rdquo; and a solicitor will assess it.
+          </p>
           <div
             role="radiogroup"
             aria-label="Discrimination"
