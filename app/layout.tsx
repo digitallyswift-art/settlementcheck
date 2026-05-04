@@ -25,7 +25,6 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: {
     default: 'Settlement Agreement Calculator UK | Is Your Offer Fair? | SettlementCheck',
     template: '%s | SettlementCheck',
