@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: '%s | SettlementCheck',
   },
   description:
-    'Free settlement agreement calculator. Find out if your offer is fair in 60 seconds. Get matched with a vetted employment solicitor — your employer pays the fees.',
+    'Free settlement agreement calculator. Find out if your offer is fair in 60 seconds. Get matched with a vetted employment solicitor. Your employer pays the fees.',
   openGraph: {
     siteName: 'SettlementCheck',
     locale: 'en_GB',

@@ -65,7 +65,7 @@ const VERDICT_CONFIG: Record<Verdict, {
     icon: '↑',
     heading: 'Your offer appears above the typical range',
     body: (r, offer) =>
-      `Your offer of ${formatCurrency(offer)} sits above the typical band of ${formatCurrency(r.typicalLow)}–${formatCurrency(r.typicalHigh)}. A solicitor should still review the structure and any waivers before you sign.`,
+      `Your offer of ${formatCurrency(offer)} sits above the typical band of ${formatCurrency(r.typicalLow)} to ${formatCurrency(r.typicalHigh)}. A solicitor should still review the structure and any waivers before you sign.`,
   },
 }
 
@@ -135,7 +135,7 @@ function LeadForm({ payload }: { payload: LeadPayload }) {
           We&apos;ve received your details. A vetted employment solicitor will call you on{' '}
           <strong className="text-ink">{form.phone}</strong> within{' '}
           <strong className="text-ink">24 hours</strong> ({form.contact_time.toLowerCase()} preferred).
-          The advice is free — your employer covers the cost.
+          The advice is free. Your employer covers the cost.
         </p>
       </div>
     )
@@ -284,7 +284,7 @@ function ResultsContent() {
 
           {!valid && (
             <div className="bg-amber-tint border border-[#E0CB94] rounded-lg p-6 mb-6">
-              <p className="text-amber font-medium">Missing details — please go back and complete the calculator.</p>
+              <p className="text-amber font-medium">Missing details. Please go back and complete the calculator.</p>
               <Link href="/" className="mt-3 inline-block text-[14px] text-ink underline underline-offset-4">
                 ← Return to calculator
               </Link>
@@ -332,7 +332,7 @@ function ResultsContent() {
                       className="font-serif text-ink"
                       style={{ fontSize: 28, fontWeight: 420, letterSpacing: '-0.015em' }}
                     >
-                      {formatCurrency(result.typicalLow)} – {formatCurrency(result.typicalHigh)}
+                      {formatCurrency(result.typicalLow)} to {formatCurrency(result.typicalHigh)}
                     </div>
                   </div>
                 </div>
@@ -364,8 +364,8 @@ function ResultsContent() {
                       result.basicAward > 0  && { label: 'Basic award (unfair dismissal)', value: result.basicAward, highlight: false },
                       {
                         label: result.noticeIsContractual
-                          ? `Notice pay (contractual — ${result.noticeWeeksUsed} weeks)`
-                          : `Notice pay (statutory — ${result.noticeWeeksUsed} week${result.noticeWeeksUsed !== 1 ? 's' : ''})`,
+                          ? `Notice pay (contractual, ${result.noticeWeeksUsed} weeks)`
+                          : `Notice pay (statutory, ${result.noticeWeeksUsed} week${result.noticeWeeksUsed !== 1 ? 's' : ''})`,
                         value: result.notice,
                         highlight: false,
                       },

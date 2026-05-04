@@ -4,7 +4,7 @@ import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Terms of Use | SettlementCheck',
-  description: 'Terms of use for SettlementCheck.co.uk — an independent introduction service connecting employees with SRA-regulated employment solicitors.',
+  description: 'Terms of use for SettlementCheck.co.uk, an independent introduction service connecting employees with SRA-regulated employment solicitors.',
   alternates: { canonical: 'https://settlementcheck.co.uk/terms/' },
   robots: { index: true, follow: false },
 }

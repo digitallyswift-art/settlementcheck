@@ -12,7 +12,7 @@ const faqSchema = {
     { '@type': 'Question', name: 'Do I legally need a solicitor?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured solicitor.' } },
     { '@type': 'Question', name: 'How quickly will a solicitor contact me?', acceptedAnswer: { '@type': 'Answer', text: 'All panel solicitors commit to responding within 24 hours of an introduction. Most reach out the same business day.' } },
     { '@type': 'Question', name: 'What if I want to negotiate a higher amount?', acceptedAnswer: { '@type': 'Answer', text: 'Many employees do successfully negotiate more once a solicitor reviews their circumstances. A specialist will assess whether factors like length of service, discrimination, whistleblowing, or contract breaches justify a higher offer.' } },
-    { '@type': 'Question', name: 'Is my information shared?', acceptedAnswer: { '@type': 'Answer', text: 'Only with the small panel of solicitors you choose to be introduced to — never with employers, recruiters, or third parties.' } },
+    { '@type': 'Question', name: 'Is my information shared?', acceptedAnswer: { '@type': 'Answer', text: 'Only with the small panel of solicitors you choose to be introduced to. Never with employers, recruiters, or third parties.' } },
     { '@type': 'Question', name: 'Why is your calculator independent when others are not?', acceptedAnswer: { '@type': 'Answer', text: 'Most settlement calculators are built by law firms. Our calculator is run by an independent platform with no firm to promote. The estimate you get reflects your actual situation.' } },
   ],
 }
@@ -45,7 +45,7 @@ export default function HowItWorks() {
               How SettlementCheck works
             </h1>
             <p className="sc-lead max-w-2xl mx-auto">
-              From receiving a settlement offer to having specialist legal advice — most people complete the whole
+              From receiving a settlement offer to having specialist legal advice. Most people complete the whole
               process in under an hour.
             </p>
           </div>
@@ -61,8 +61,8 @@ export default function HowItWorks() {
                 icon: '🧮',
                 body: [
                   "Enter your salary, years of service, age, and the settlement amount your employer has offered. Our calculator uses the UK's statutory redundancy formula (2024/25 rates) to give you an instant estimate.",
-                  'The calculator shows you whether your offer is below the legal minimum, below the typical range, within range, or above the typical range — in plain English, in seconds.',
-                  'If you indicate potential discrimination, we flag this separately — because discrimination claims are uncapped and can significantly increase your settlement value.',
+                  'The calculator shows you whether your offer is below the legal minimum, below the typical range, within range, or above the typical range, in plain English, in seconds.',
+                  'If you indicate potential discrimination, we flag this separately. Discrimination claims are uncapped and can significantly increase your settlement value.',
                 ],
               },
               {
@@ -77,11 +77,11 @@ export default function HowItWorks() {
               },
               {
                 step: '03',
-                title: 'Get advice — free',
+                title: 'Get advice, free',
                 icon: '✅',
                 body: [
-                  'Under UK employment law, your employer is legally required to contribute to your legal fees for independent advice on a settlement agreement. The typical employer contribution is £350–750.',
-                  'This means you pay nothing — not for using SettlementCheck, and not for the solicitor\'s advice.',
+                  'Under UK employment law, your employer is legally required to contribute to your legal fees for independent advice on a settlement agreement. The typical employer contribution is £350 to £750.',
+                  'This means you pay nothing. Not for using SettlementCheck, and not for the solicitor\'s advice.',
                   'The solicitor will review your agreement, advise you on your rights, and (if you choose) help you negotiate a better offer.',
                 ],
               },
@@ -118,7 +118,7 @@ export default function HowItWorks() {
                 delay, and uncertainty that typically surrounds them.
               </p>
               <p>
-                We are an introduction service — we connect employees with SRA-regulated employment law solicitors.
+                We are an introduction service. We connect employees with SRA-regulated employment law solicitors.
                 We are not a law firm and we do not provide legal advice. Every solicitor on our panel has been vetted
                 for their experience in settlement agreements.
               </p>

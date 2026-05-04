@@ -19,7 +19,7 @@ const STEPS = [
   {
     n: '01',
     t: 'Check your offer',
-    d: 'Enter six details and get an instant estimate of whether your offer is fair, below, or above the typical UK range — based on statutory rates.',
+    d: 'Enter six details and get an instant estimate of whether your offer is fair, below, or above the typical UK range. Based on statutory rates.',
   },
   {
     n: '02',
@@ -40,7 +40,7 @@ const TRUST = [
   },
   {
     t: 'Your employer pays',
-    d: 'Under UK practice, employers contribute £350–750 toward your independent legal advice on a settlement.',
+    d: 'Under UK practice, employers contribute £350 to £750 toward your independent legal advice on a settlement.',
   },
   {
     t: 'Vetted specialists only',
@@ -159,7 +159,7 @@ export default function HomeClient() {
             <div className="flex flex-col gap-3.5 max-w-[640px]">
               <span className="sc-eyebrow">How it works</span>
               <h2 className="sc-h2">Three steps. Sixty seconds. Zero cost.</h2>
-              <p className="sc-lead">From a quick check to a vetted solicitor on the phone — without paying a penny yourself.</p>
+              <p className="sc-lead">From a quick check to a vetted solicitor on the phone. No cost to you.</p>
             </div>
 
             <div className="grid grid-cols-3 gap-6 mt-14 max-[900px]:grid-cols-1">
@@ -190,7 +190,7 @@ export default function HomeClient() {
                 <span className="sc-eyebrow">Why SettlementCheck</span>
                 <h2 className="sc-h2">An introduction service built for the employee, not the employer.</h2>
                 <p className="sc-lead">
-                  Most settlement enquiries route to firms that pay for the lead. We don&apos;t take payment from firms — only from a small monthly subscription they pay for panel access. That keeps the introduction honest.
+                  Most settlement enquiries route to firms that pay for the lead. We don&apos;t take payment from firms. Solicitors pay a small monthly subscription for panel access. That keeps the introduction honest.
                 </p>
               </div>
 

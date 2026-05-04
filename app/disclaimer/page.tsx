@@ -39,7 +39,7 @@ export default function Disclaimer() {
             },
             {
               title: 'Discrimination claims',
-              body: 'If you have indicated potential discrimination in your situation, be aware that compensation for discrimination is uncapped in Employment Tribunals. The calculator cannot quantify discrimination claims — only a qualified solicitor can assess these.',
+              body: 'If you have indicated potential discrimination in your situation, be aware that compensation for discrimination is uncapped in Employment Tribunals. The calculator cannot quantify discrimination claims. Only a qualified solicitor can assess these.',
             },
             {
               title: 'Statutory rates',
