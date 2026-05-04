@@ -30,13 +30,12 @@ export default function Nav() {
           {[
             { href: '/#how', label: 'How it works' },
             { href: '/guides/employer-recommended-solicitor', label: 'Guides' },
-            { href: '/for-solicitors', label: 'For solicitors' },
             { href: '/how-it-works#about', label: 'About' },
           ].map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="text-[14px] text-muted hover:text-coral-ink transition-colors duration-[160ms]"
+              className="text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]"
             >
               {label}
             </Link>
@@ -45,11 +44,11 @@ export default function Nav() {
 
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-3">
-          <Link href="/#calculator" className="btn-ghost text-[14px] px-4 py-2">
-            Check my offer
+          <Link href="/for-solicitors" className="text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1">
+            For solicitors
           </Link>
-          <Link href="/for-solicitors" className="btn-primary text-[14px] px-4 py-2">
-            Find a solicitor →
+          <Link href="/#calculator" className="btn-accent text-[14px] px-5 py-2.5">
+            Check my offer →
           </Link>
         </div>
 
@@ -71,8 +70,8 @@ export default function Nav() {
           {[
             { href: '/#how', label: 'How it works' },
             { href: '/guides/employer-recommended-solicitor', label: 'Guides' },
-            { href: '/for-solicitors', label: 'For solicitors' },
             { href: '/how-it-works#about', label: 'About' },
+            { href: '/for-solicitors', label: 'For solicitors' },
           ].map(({ href, label }) => (
             <Link
               key={href}
@@ -84,11 +83,11 @@ export default function Nav() {
             </Link>
           ))}
           <Link
-            href="/for-solicitors"
-            className="btn-primary text-center mt-1"
+            href="/#calculator"
+            className="btn-accent text-center mt-1"
             onClick={() => setOpen(false)}
           >
-            Find a solicitor →
+            Check my offer →
           </Link>
         </div>
       )}
