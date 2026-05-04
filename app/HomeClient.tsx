@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import Calculator, { CalcPayload } from '@/components/Calculator'
+import FaqAccordion from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
@@ -68,26 +70,160 @@ export default function HomeClient() {
         {/* HERO */}
         <section
           className="relative overflow-hidden"
-          style={{ background: '#F7F4EE', paddingTop: 56, paddingBottom: 40 }}
+          style={{ background: '#F7F4EE', paddingTop: 56, paddingBottom: 80 }}
         >
           <div className="sc-container relative">
-            <div className="flex flex-col gap-6 max-w-[560px]">
-                <h1 className="sc-h1">Is your settlement offer fair?</h1>
-                <p className="sc-lead">Find out in 60 seconds with our free calculator.</p>
+            <div
+              className="grid gap-16 items-center max-[960px]:grid-cols-1"
+              style={{ gridTemplateColumns: '1fr 480px' }}
+            >
+              <div>
+                <h1 className="sc-h1">
+                  Is your settlement<br />
+                  offer <em style={{ fontStyle: 'italic', color: '#D9603B' }}>fair</em>?
+                </h1>
+                <p className="sc-lead mt-6 max-w-[480px]">
+                  Use our free calculator to see how your offer compares to UK benchmarks, and get connected to a vetted solicitor in under 24 hours.
+                </p>
+              </div>
+              <div>
+                <Calculator onCalculate={handleCalculate} />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* STATS */}
+        {/* ── STATS BAR ─────────────────────────────────────────── */}
         <section className="bg-paper-2 border-y border-rule py-9">
           <div className="sc-container">
             <div className="grid grid-cols-4 max-[720px]:grid-cols-2">
               {STATS.map((s, i) => (
-                <div key={i} className="flex flex-col pl-6 border-l border-rule-strong first:border-l-0">
-                  <span className="font-serif text-[40px] leading-none">{s.n}</span>
+                <div
+                  key={i}
+                  className="flex flex-col pl-6 py-2 max-[720px]:py-4"
+                  style={{ borderLeft: i > 0 ? '1px solid #C9C0AC' : undefined }}
+                >
+                  <span
+                    className="font-serif text-ink"
+                    style={{ fontSize: 44, fontWeight: 420, lineHeight: 1, letterSpacing: '-0.02em' }}
+                  >
+                    {s.n}
+                  </span>
                   <span className="text-[13px] text-muted mt-2">{s.l}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── HOW IT WORKS ──────────────────────────────────────── */}
+        <section id="how" className="py-section bg-paper">
+          <div className="sc-container">
+            <div className="flex flex-col gap-3.5 max-w-[640px]">
+              <span className="sc-eyebrow">How it works</span>
+              <h2 className="sc-h2">Three steps. Sixty seconds. Zero cost.</h2>
+              <p className="sc-lead">From a quick check to a vetted solicitor on the phone — without paying a penny yourself.</p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-6 mt-14 max-[900px]:grid-cols-1">
+              {STEPS.map((s, i) => (
+                <article
+                  key={i}
+                  className="bg-card border border-rule rounded-lg p-8 hover:border-rule-strong transition-colors duration-[160ms]"
+                >
+                  <div
+                    className="font-serif text-coral"
+                    style={{ fontSize: 56, fontWeight: 420, lineHeight: 1, letterSpacing: '-0.04em' }}
+                  >
+                    {s.n}
+                  </div>
+                  <h3 className="sc-h3 mt-7">{s.t}</h3>
+                  <p className="text-[15px] text-muted mt-3 leading-[1.55]">{s.d}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── TRUST ─────────────────────────────────────────────── */}
+        <section id="about" className="py-section bg-paper-2 border-y border-rule">
+          <div className="sc-container">
+            <div
+              className="grid gap-20 max-[900px]:grid-cols-1"
+              style={{ gridTemplateColumns: '1fr 1.05fr' }}
+            >
+              <div className="flex flex-col gap-3.5 max-w-[640px]">
+                <span className="sc-eyebrow">Why SettlementCheck</span>
+                <h2 className="sc-h2">An introduction service built for the employee, not the employer.</h2>
+                <p className="sc-lead">
+                  Most settlement enquiries route to firms that pay for the lead. We don&apos;t take payment from firms — only from a small monthly subscription they pay for panel access. That keeps the introduction honest.
+                </p>
+              </div>
+
+              <div className="flex flex-col">
+                {TRUST.map((it, i) => (
+                  <div
+                    key={i}
+                    className="grid gap-4 py-5 border-b border-rule items-start"
+                    style={{ gridTemplateColumns: '28px 1fr' }}
+                  >
+                    <div className="w-7 h-7 rounded-full bg-ink flex items-center justify-center text-white flex-shrink-0 mt-0.5">
+                      <Check />
+                    </div>
+                    <div>
+                      <div className="font-serif text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3]">{it.t}</div>
+                      <div className="text-[15px] text-muted mt-1 leading-[1.55]">{it.d}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── FAQ ───────────────────────────────────────────────── */}
+        <section className="py-section bg-paper">
+          <div className="sc-container">
+            <div
+              className="grid gap-20 max-[900px]:grid-cols-1"
+              style={{ gridTemplateColumns: '1fr 1.4fr' }}
+            >
+              <div className="flex flex-col gap-3.5 max-w-[480px]">
+                <span className="sc-eyebrow">Common questions</span>
+                <h2 className="sc-h2">What people ask before they start.</h2>
+                <p className="sc-lead">Six things almost every employee wants to know before clicking &ldquo;calculate.&rdquo;</p>
+              </div>
+              <FaqAccordion />
+            </div>
+          </div>
+        </section>
+
+        {/* ── CTA BANNER ────────────────────────────────────────── */}
+        <section
+          className="relative overflow-hidden"
+          style={{ background: '#0B1F3A', padding: '88px 32px' }}
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background: 'radial-gradient(ellipse 36% 80% at 90% 50%, rgba(217,96,59,0.18) 0%, transparent 70%)',
+            }}
+          />
+          <div className="sc-container relative">
+            <div
+              className="grid items-center gap-10 max-[720px]:grid-cols-1"
+              style={{ gridTemplateColumns: '1.4fr auto' }}
+            >
+              <div>
+                <h2 className="sc-h2 text-white" style={{ maxWidth: '18ch' }}>Not sure if your offer is fair?</h2>
+                <p className="text-white/[0.78] text-[18px] mt-3" style={{ maxWidth: '46ch' }}>
+                  Use the free calculator. It takes about a minute, and there&apos;s no obligation to proceed.
+                </p>
+              </div>
+              <Link href="/#calculator" className="btn-accent whitespace-nowrap">
+                Check my offer now →
+              </Link>
             </div>
           </div>
         </section>
