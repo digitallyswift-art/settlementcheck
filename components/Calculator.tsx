@@ -80,31 +80,31 @@ export default function Calculator({ onCalculate }: Props) {
       id="calculator"
       onSubmit={submit}
       noValidate
-      className="bg-card border border-rule rounded-lg overflow-hidden"
+      className="bg-card border border-rule rounded-[16px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)]"
     >
-      {/* Header */}
+      {/* Header with gradient */}
       <div
-        className="px-7 py-5 border-b border-rule"
-        style={{ background: 'linear-gradient(135deg, #F7F4EE 0%, #EFEAE0 100%)' }}
+        className="px-8 py-7 border-b border-rule"
+        style={{ background: 'linear-gradient(to bottom, #F7F4EE 0%, #F1EDE4 100%)' }}
       >
-        <span className="sc-eyebrow">Free calculator</span>
-        <h3 className="sc-h3 mt-1.5">Check your offer</h3>
-        <p className="text-[14px] text-muted mt-1.5">Six questions. Sixty seconds. No email required.</p>
+        <span className="sc-eyebrow text-[11px]">FREE CALCULATOR</span>
+        <h3 className="sc-h3 mt-2 text-[24px]">Check your offer</h3>
+        <p className="text-[14px] text-muted mt-2">Six questions. Sixty seconds. No email required.</p>
       </div>
 
       {/* Body */}
-      <div className="px-7 py-6 flex flex-col gap-[18px]">
+      <div className="px-8 py-8 flex flex-col gap-[20px]">
         {/* 2-col grid */}
-        <div className="grid grid-cols-2 gap-4 max-[520px]:grid-cols-1">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-5 max-[520px]:grid-cols-1">
           {/* Salary */}
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Annual salary</label>
-            <div className="input-wrap">
-              <span className="pl-3.5 pr-1 font-mono text-[14px] text-muted">£</span>
+            <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
+              <span className="pl-4 pr-1 font-mono text-[14px] text-muted">£</span>
               <input
                 type="number"
                 inputMode="numeric"
-                className="flex-1 border-0 bg-transparent outline-none py-3 px-3.5 text-[15px] text-ink placeholder-muted-2 pl-1.5"
+                className="flex-1 border-0 bg-transparent outline-none py-3.5 px-3 text-[15px] text-ink placeholder-muted-2 pl-1.5"
                 placeholder="42,000"
                 value={form.salary}
                 onChange={e => update('salary', e.target.value)}
@@ -116,12 +116,12 @@ export default function Calculator({ onCalculate }: Props) {
           {/* Years */}
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Years at employer</label>
-            <div className="input-wrap">
+            <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
               <input
                 type="number"
                 inputMode="numeric"
                 step="0.5"
-                className="flex-1 border-0 bg-transparent outline-none py-3 px-3.5 text-[15px] text-ink placeholder-muted-2"
+                className="flex-1 border-0 bg-transparent outline-none py-3.5 px-4 text-[15px] text-ink placeholder-muted-2"
                 placeholder="6"
                 value={form.years}
                 onChange={e => update('years', e.target.value)}
@@ -133,11 +133,11 @@ export default function Calculator({ onCalculate }: Props) {
           {/* Age */}
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Your age when leaving</label>
-            <div className="input-wrap">
+            <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
               <input
                 type="number"
                 inputMode="numeric"
-                className="flex-1 border-0 bg-transparent outline-none py-3 px-3.5 text-[15px] text-ink placeholder-muted-2"
+                className="flex-1 border-0 bg-transparent outline-none py-3.5 px-4 text-[15px] text-ink placeholder-muted-2"
                 placeholder="38"
                 value={form.age}
                 onChange={e => update('age', e.target.value)}
@@ -149,12 +149,12 @@ export default function Calculator({ onCalculate }: Props) {
           {/* Offer */}
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Settlement offered</label>
-            <div className="input-wrap">
-              <span className="pl-3.5 pr-1 font-mono text-[14px] text-muted">£</span>
+            <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
+              <span className="pl-4 pr-1 font-mono text-[14px] text-muted">£</span>
               <input
                 type="number"
                 inputMode="numeric"
-                className="flex-1 border-0 bg-transparent outline-none py-3 px-3.5 text-[15px] text-ink placeholder-muted-2 pl-1.5"
+                className="flex-1 border-0 bg-transparent outline-none py-3.5 px-3 text-[15px] text-ink placeholder-muted-2 pl-1.5"
                 placeholder="18,000"
                 value={form.offer}
                 onChange={e => update('offer', e.target.value)}
@@ -167,9 +167,9 @@ export default function Calculator({ onCalculate }: Props) {
         {/* Reason */}
         <div className="flex flex-col gap-1.5">
           <label className="text-[13px] font-medium text-ink tracking-[-0.005em]">Reason for leaving</label>
-          <div className="input-wrap">
+          <div className="input-wrap bg-[#F7F4EE]/50 border-[#E2DCCE] rounded-[8px]">
             <select
-              className="sc-select flex-1 border-0 bg-transparent outline-none py-3 px-3.5 text-[15px] text-ink"
+              className="sc-select flex-1 border-0 bg-transparent outline-none py-3.5 px-4 text-[15px] text-ink"
               value={form.reason}
               onChange={e => update('reason', e.target.value)}
             >
@@ -204,11 +204,11 @@ export default function Calculator({ onCalculate }: Props) {
       </div>
 
       {/* Footer */}
-      <div className="px-7 pb-7 flex flex-col gap-3">
-        <button type="submit" className="btn-accent w-full py-4 text-[16px]">
+      <div className="px-8 pb-8 flex flex-col gap-4">
+        <button type="submit" className="btn-accent w-full py-4 text-[16px] font-semibold rounded-[8px]">
           Calculate my estimate →
         </button>
-        <p className="text-[12px] text-muted-2 text-center">
+        <p className="text-[12px] text-muted-2 text-center leading-relaxed px-4">
           Estimate only. Not legal advice. Based on UK statutory rates 2024/25.
         </p>
       </div>
