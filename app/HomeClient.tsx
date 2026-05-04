@@ -106,17 +106,17 @@ export default function HomeClient() {
                 </p>
 
                 {/* Inline Stats */}
-                <div className="flex flex-wrap items-center gap-4 pt-2 text-[13px] text-muted">
+                <div className="flex items-center gap-3 pt-2 text-[12px] text-muted whitespace-nowrap">
                   <div className="flex items-center gap-1.5">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
                     </svg>
-                    <span>SRA-regulated solicitors only</span>
+                    <span>SRA-regulated</span>
                   </div>
                   <span className="text-rule-strong">|</span>
-                  <span><strong className="text-ink">2,400+</strong> employees helped</span>
+                  <span><strong className="text-ink">2,400+</strong> helped</span>
                   <span className="text-rule-strong">|</span>
-                  <span>Your employer <strong className="text-ink">pays the fees</strong></span>
+                  <span>Employer <strong className="text-ink">pays fees</strong></span>
                 </div>
 
                 <p className="text-[14px] text-muted leading-[1.55]">
