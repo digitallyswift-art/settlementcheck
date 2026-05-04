@@ -317,7 +317,18 @@ export default function Calculator({ onCalculate }: Props) {
               ?
             </span>
           </label>
-          <div style={{ display: 'flex', gap: 8 }} role="radiogroup" aria-label="Discrimination">
+          <div
+            role="radiogroup"
+            aria-label="Discrimination"
+            style={{
+              display: 'flex',
+              background: 'rgba(255,255,255,0.55)',
+              border: '1px solid rgba(11,31,58,0.14)',
+              borderRadius: 999,
+              padding: 4,
+              gap: 2,
+            }}
+          >
             {(['no', 'yes', 'not_sure'] as const).map(v => {
               const selected = form.discrimination === v
               return (
@@ -328,18 +339,17 @@ export default function Calculator({ onCalculate }: Props) {
                   onClick={() => update('discrimination', v)}
                   style={{
                     flex: 1,
-                    border: selected ? '1.5px solid #0B1F3A' : '1.5px solid rgba(11,31,58,0.18)',
-                    background: selected ? '#0B1F3A' : 'rgba(255,255,255,0.7)',
-                    color: selected ? '#ffffff' : '#4A5568',
-                    borderRadius: 8,
+                    border: 'none',
+                    background: selected ? '#0B1F3A' : 'transparent',
+                    color: selected ? '#ffffff' : '#6B7280',
+                    borderRadius: 999,
                     fontFamily: 'var(--font-sans), Inter, sans-serif',
                     fontSize: 14,
-                    fontWeight: 500,
-                    padding: '10px 8px',
+                    fontWeight: selected ? 600 : 400,
+                    padding: '9px 8px',
                     cursor: 'pointer',
-                    transition: 'all 150ms ease',
+                    transition: 'background 150ms ease, color 150ms ease',
                     textAlign: 'center',
-                    backdropFilter: 'blur(2px)',
                   }}
                 >
                   {v === 'no' ? 'No' : v === 'yes' ? 'Yes' : 'Not sure'}
