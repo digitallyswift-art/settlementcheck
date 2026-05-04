@@ -109,7 +109,7 @@ export default function HomeClient() {
 
                 <h1 className="sc-h1">
                   Is your settlement<br />
-                  offer <em style={{ fontStyle: 'italic', color: '#D9603B' }}>fair</em>?
+                  offer <em style={{ fontStyle: 'italic', color: '#D9603B' }}>truly fair</em>?
                 </h1>
 
                 <p className="sc-lead max-w-[56ch]">
