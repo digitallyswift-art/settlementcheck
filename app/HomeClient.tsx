@@ -81,14 +81,14 @@ export default function HomeClient() {
       <main>
         <section
           className="relative overflow-hidden"
-          style={{ background: '#F7F4EE', paddingTop: 88, paddingBottom: 88 }}
+          style={{ background: '#F7F4EE', paddingTop: 72, paddingBottom: 72 }}
         >
           <div className="sc-container relative">
             <div
-              className="grid gap-16 items-center max-[1024px]:grid-cols-1"
+              className="hero-grid grid gap-12 items-center"
               style={{ gridTemplateColumns: '1.05fr 1fr' }}
             >
-              <div className="flex flex-col gap-8 max-w-[600px]">
+              <div className="flex flex-col gap-7" style={{ maxWidth: 600 }}>
                 {/* Hero Pill */}
                 <div className="flex">
                   <span className="inline-flex items-center gap-2 border border-rule-strong rounded-full px-4 py-1.5 text-[12px] font-medium text-ink bg-white/40">

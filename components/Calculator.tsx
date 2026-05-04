@@ -38,7 +38,51 @@ interface Errors {
 
 function FieldError({ msg }: { msg?: string }) {
   if (!msg) return null
-  return <span className="text-[12px] text-crimson mt-1 block">{msg}</span>
+  return <span style={{ fontSize: 12, color: '#C0392B', marginTop: 4, display: 'block' }}>{msg}</span>
+}
+
+const inputStyle: React.CSSProperties = {
+  flex: 1,
+  border: 'none',
+  background: 'transparent',
+  outline: 'none',
+  fontFamily: 'var(--font-sans), Inter, sans-serif',
+  fontSize: 15,
+  color: '#0B1F3A',
+  padding: '12px 14px',
+  minWidth: 0,
+  MozAppearance: 'textfield' as React.CSSProperties['MozAppearance'],
+}
+
+const inputWrapStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  background: 'rgba(255,255,255,0.82)',
+  border: '1px solid rgba(11,31,58,0.14)',
+  borderRadius: 10,
+  backdropFilter: 'blur(2px)',
+  transition: 'border-color 150ms ease, box-shadow 150ms ease',
+  overflow: 'hidden',
+}
+
+const labelStyle: React.CSSProperties = {
+  fontFamily: 'var(--font-sans), Inter, sans-serif',
+  fontSize: 13,
+  fontWeight: 500,
+  color: '#4A5568',
+  letterSpacing: '-0.003em',
+  marginBottom: 6,
+  display: 'block',
+}
+
+const prefixStyle: React.CSSProperties = {
+  padding: '0 2px 0 14px',
+  fontSize: 15,
+  fontWeight: 400,
+  color: '#9AA3AE',
+  flexShrink: 0,
+  lineHeight: 1,
+  fontFamily: 'var(--font-sans), Inter, sans-serif',
 }
 
 export default function Calculator({ onCalculate }: Props) {
@@ -51,6 +95,7 @@ export default function Calculator({ onCalculate }: Props) {
     discrimination: 'no',
   })
   const [errors, setErrors] = useState<Errors>({})
+  const [focused, setFocused] = useState<string | null>(null)
 
   const update = (k: keyof typeof form, v: string) => {
     setForm(f => ({ ...f, [k]: v }))
@@ -75,37 +120,37 @@ export default function Calculator({ onCalculate }: Props) {
     onCalculate({ inputs: form, result })
   }
 
+  const wrapStyle = (field: string): React.CSSProperties => ({
+    ...inputWrapStyle,
+    borderColor: focused === field ? '#0B1F3A' : errors[field as keyof Errors] ? '#C0392B' : 'rgba(11,31,58,0.14)',
+    boxShadow: focused === field ? '0 0 0 3px rgba(11,31,58,0.08)' : 'none',
+  })
+
   return (
     <form
       id="calculator-v2"
       onSubmit={submit}
       noValidate
       style={{
-        background: '#fff',
         borderRadius: 20,
-        border: '1px solid #E2DCCE',
+        border: '1px solid rgba(11,31,58,0.10)',
         overflow: 'hidden',
-        boxShadow: '0 8px 40px -8px rgba(11,31,58,0.14), 0 2px 8px -2px rgba(11,31,58,0.06)',
+        boxShadow: '0 24px 60px -12px rgba(11,31,58,0.22), 0 8px 24px -6px rgba(11,31,58,0.10)',
+        background: 'linear-gradient(170deg, #F5F1E9 0%, #EDE8DF 30%, #E8E2D8 60%, #F0EDE6 100%)',
       }}
     >
-      {/* Gradient header */}
-      <div
-        style={{
-          background: 'linear-gradient(160deg, #F7F4EE 0%, #EDE8DE 55%, #E3DCD0 100%)',
-          padding: '32px 36px 28px',
-          borderBottom: '1px solid #E2DCCE',
-        }}
-      >
+      {/* Header */}
+      <div style={{ padding: '28px 32px 22px' }}>
         <span
           style={{
             display: 'block',
             fontFamily: 'var(--font-sans), Inter, sans-serif',
             fontWeight: 500,
-            fontSize: 11,
-            letterSpacing: '0.14em',
+            fontSize: 10,
+            letterSpacing: '0.16em',
             textTransform: 'uppercase',
             color: '#8A93A3',
-            marginBottom: 10,
+            marginBottom: 8,
           }}
         >
           Free Calculator
@@ -114,86 +159,100 @@ export default function Calculator({ onCalculate }: Props) {
           style={{
             fontFamily: 'var(--font-serif), "Source Serif 4", Georgia, serif',
             fontWeight: 460,
-            fontSize: 26,
+            fontSize: 28,
             lineHeight: 1.2,
-            letterSpacing: '-0.012em',
+            letterSpacing: '-0.014em',
             color: '#0B1F3A',
-            margin: '0 0 6px',
+            margin: '0 0 5px',
           }}
         >
           Check your offer
         </h3>
-        <p style={{ fontSize: 14, color: '#5B6577', margin: 0, lineHeight: 1.45 }}>
+        <p style={{ fontSize: 14, color: '#6B7280', margin: 0, lineHeight: 1.45 }}>
           Six questions. Sixty seconds. No email required.
         </p>
       </div>
 
-      {/* Form body */}
-      <div style={{ padding: '28px 36px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+      {/* Form body — gradient continues through here */}
+      <div style={{ padding: '4px 32px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}>
 
         {/* 2-col grid */}
-        <div className="calc-grid">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '14px 16px',
+        }}
+          className="calc-responsive-grid"
+        >
           {/* Salary */}
-          <div className="calc-field">
-            <label className="calc-label">Annual salary</label>
-            <div className="calc-input-wrap">
-              <span className="calc-prefix">£</span>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label style={labelStyle}>Annual salary</label>
+            <div style={wrapStyle('salary')}>
+              <span style={prefixStyle}>£</span>
               <input
                 type="text"
                 inputMode="numeric"
-                className="calc-input"
+                style={inputStyle}
                 placeholder="42,000"
                 value={form.salary}
                 onChange={e => update('salary', e.target.value)}
+                onFocus={() => setFocused('salary')}
+                onBlur={() => setFocused(null)}
               />
             </div>
             <FieldError msg={errors.salary} />
           </div>
 
           {/* Years */}
-          <div className="calc-field">
-            <label className="calc-label">Years at employer</label>
-            <div className="calc-input-wrap">
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label style={labelStyle}>Years at employer</label>
+            <div style={wrapStyle('years')}>
               <input
                 type="text"
                 inputMode="decimal"
-                className="calc-input"
+                style={{ ...inputStyle, paddingLeft: 14 }}
                 placeholder="6"
                 value={form.years}
                 onChange={e => update('years', e.target.value)}
+                onFocus={() => setFocused('years')}
+                onBlur={() => setFocused(null)}
               />
             </div>
             <FieldError msg={errors.years} />
           </div>
 
           {/* Age */}
-          <div className="calc-field">
-            <label className="calc-label">Your age when leaving</label>
-            <div className="calc-input-wrap">
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label style={labelStyle}>Your age when leaving</label>
+            <div style={wrapStyle('age')}>
               <input
                 type="text"
                 inputMode="numeric"
-                className="calc-input"
+                style={{ ...inputStyle, paddingLeft: 14 }}
                 placeholder="38"
                 value={form.age}
                 onChange={e => update('age', e.target.value)}
+                onFocus={() => setFocused('age')}
+                onBlur={() => setFocused(null)}
               />
             </div>
             <FieldError msg={errors.age} />
           </div>
 
           {/* Offer */}
-          <div className="calc-field">
-            <label className="calc-label">Settlement offered</label>
-            <div className="calc-input-wrap">
-              <span className="calc-prefix">£</span>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label style={labelStyle}>Settlement offered</label>
+            <div style={wrapStyle('offer')}>
+              <span style={prefixStyle}>£</span>
               <input
                 type="text"
                 inputMode="numeric"
-                className="calc-input"
+                style={inputStyle}
                 placeholder="18,000"
                 value={form.offer}
                 onChange={e => update('offer', e.target.value)}
+                onFocus={() => setFocused('offer')}
+                onBlur={() => setFocused(null)}
               />
             </div>
             <FieldError msg={errors.offer} />
@@ -201,78 +260,135 @@ export default function Calculator({ onCalculate }: Props) {
         </div>
 
         {/* Reason */}
-        <div className="calc-field">
-          <label className="calc-label">Reason for leaving</label>
-          <div className="calc-input-wrap">
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label style={labelStyle}>Reason for leaving</label>
+          <div style={wrapStyle('reason')}>
             <select
-              className="calc-input calc-select"
+              style={{
+                ...inputStyle,
+                paddingLeft: 14,
+                width: '100%',
+                cursor: 'pointer',
+                appearance: 'none',
+                WebkitAppearance: 'none',
+                backgroundImage: `linear-gradient(45deg, transparent 50%, #9AA3AE 50%), linear-gradient(135deg, #9AA3AE 50%, transparent 50%)`,
+                backgroundPosition: 'calc(100% - 16px) 50%, calc(100% - 11px) 50%',
+                backgroundSize: '5px 5px, 5px 5px',
+                backgroundRepeat: 'no-repeat',
+                paddingRight: 36,
+                color: form.reason ? '#0B1F3A' : '#9AA3AE',
+              }}
               value={form.reason}
               onChange={e => update('reason', e.target.value)}
+              onFocus={() => setFocused('reason')}
+              onBlur={() => setFocused(null)}
             >
               {REASONS.map(r => (
-                <option key={r.value} value={r.value}>{r.label}</option>
+                <option key={r.value} value={r.value} style={{ color: r.value ? '#0B1F3A' : '#9AA3AE' }}>
+                  {r.label}
+                </option>
               ))}
             </select>
           </div>
           <FieldError msg={errors.reason} />
         </div>
 
-        {/* Discrimination */}
-        <div className="calc-field">
-          <label className="calc-label" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        {/* Discrimination — subtle individual pills */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 6 }}>
             Any discrimination involved?
-            <span className="sc-tip" data-tip="e.g. age, gender, race, disability, pregnancy">?</span>
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 16,
+                height: 16,
+                borderRadius: '50%',
+                border: '1px solid rgba(11,31,58,0.2)',
+                color: '#6B7280',
+                fontSize: 10,
+                fontWeight: 600,
+                cursor: 'help',
+                position: 'relative',
+              }}
+              title="e.g. age, gender, race, disability, pregnancy"
+            >
+              ?
+            </span>
           </label>
-          <div className="calc-pill-radio" role="radiogroup" aria-label="Discrimination">
-            {(['no', 'yes', 'not_sure'] as const).map(v => (
-              <button
-                key={v}
-                type="button"
-                className="calc-pill-btn"
-                aria-pressed={form.discrimination === v}
-                onClick={() => update('discrimination', v)}
-              >
-                {v === 'no' ? 'No' : v === 'yes' ? 'Yes' : 'Not sure'}
-              </button>
-            ))}
+          <div style={{ display: 'flex', gap: 8 }} role="radiogroup" aria-label="Discrimination">
+            {(['no', 'yes', 'not_sure'] as const).map(v => {
+              const selected = form.discrimination === v
+              return (
+                <button
+                  key={v}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => update('discrimination', v)}
+                  style={{
+                    flex: 1,
+                    border: selected ? '1.5px solid #0B1F3A' : '1.5px solid rgba(11,31,58,0.18)',
+                    background: selected ? '#0B1F3A' : 'rgba(255,255,255,0.7)',
+                    color: selected ? '#ffffff' : '#4A5568',
+                    borderRadius: 8,
+                    fontFamily: 'var(--font-sans), Inter, sans-serif',
+                    fontSize: 14,
+                    fontWeight: 500,
+                    padding: '10px 8px',
+                    cursor: 'pointer',
+                    transition: 'all 150ms ease',
+                    textAlign: 'center',
+                    backdropFilter: 'blur(2px)',
+                  }}
+                >
+                  {v === 'no' ? 'No' : v === 'yes' ? 'Yes' : 'Not sure'}
+                </button>
+              )
+            })}
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <div style={{ padding: '0 36px 32px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div style={{ padding: '0 32px 28px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         <button
           type="submit"
           style={{
             width: '100%',
             background: '#D9603B',
-            border: '1px solid #D9603B',
+            border: 'none',
             color: '#fff',
             fontFamily: 'var(--font-sans), Inter, sans-serif',
             fontWeight: 600,
             fontSize: 16,
             letterSpacing: '-0.005em',
-            padding: '16px 24px',
+            padding: '15px 24px',
             borderRadius: 10,
             cursor: 'pointer',
-            transition: 'background 160ms ease',
+            transition: 'background 160ms ease, box-shadow 160ms ease',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onMouseEnter={e => (e.currentTarget.style.background = '#B14A28')}
-          onMouseLeave={e => (e.currentTarget.style.background = '#D9603B')}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = '#B14A28'
+            e.currentTarget.style.boxShadow = '0 4px 16px rgba(217,96,59,0.35)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = '#D9603B'
+            e.currentTarget.style.boxShadow = 'none'
+          }}
         >
           Calculate my estimate →
         </button>
         <p
           style={{
-            fontSize: 12,
-            color: '#8A93A3',
+            fontSize: 11,
+            color: '#9AA3AE',
             textAlign: 'center',
             margin: 0,
             lineHeight: 1.5,
-            padding: '0 8px',
           }}
         >
           Estimate only. Not legal advice. Based on UK statutory rates 2024/25.
