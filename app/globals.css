@@ -76,8 +76,44 @@
   }
 
   .sc-lead {
-    font-size: 18px;
-    line-height: 1.55;
+    font-size: clamp(16px, 1.8vw, 19px);
+    line-height: 1.6;
+    color: #5B6577;
+  }
+
+  /* Section-level h2 — for within-page sections (how it works, trust, FAQ, etc.)
+     Smaller than sc-h2 (page titles) to avoid visual collision with body copy */
+  .sc-section-h2 {
+    font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
+    font-weight: 420;
+    font-size: clamp(24px, 2.6vw, 34px);
+    line-height: 1.12;
+    letter-spacing: -0.018em;
+    color: #0B1F3A;
+    margin: 0;
+  }
+
+  /* Standard body copy — use instead of text-sm / text-[15px] scattered inline */
+  .sc-body {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #5B6577;
+  }
+
+  /* Guide / article prose */
+  .guide-h2 {
+    font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
+    font-weight: 460;
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.2;
+    letter-spacing: -0.014em;
+    color: #0B1F3A;
+    margin: 0;
+  }
+
+  .guide-body {
+    font-size: 16px;
+    line-height: 1.7;
     color: #5B6577;
   }
 

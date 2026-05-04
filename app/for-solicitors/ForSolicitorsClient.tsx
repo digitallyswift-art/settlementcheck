@@ -92,7 +92,7 @@ export default function ForSolicitorsClient() {
                 <div key={card.title} className="bg-card rounded-2xl border border-rule p-8">
                   <div className="mb-4">{card.icon}</div>
                   <h3 className="sc-h3 mb-2">{card.title}</h3>
-                  <p className="text-sm text-muted leading-relaxed">{card.body}</p>
+                  <p className="sc-body">{card.body}</p>
                 </div>
               ))}
             </div>
@@ -102,8 +102,8 @@ export default function ForSolicitorsClient() {
         {/* Application form */}
         <section id="contact" className="bg-paper py-16">
           <div className="max-w-xl mx-auto px-4">
-            <h2 className="sc-h2 text-center mb-2">Apply to join our panel</h2>
-            <p className="text-muted text-center mb-8">SRA-regulated employment law firms only.</p>
+            <h2 className="sc-section-h2 text-center mb-2">Apply to join our panel</h2>
+            <p className="sc-body text-center mb-8">SRA-regulated employment law firms only.</p>
 
             {submitted ? (
               <div className="text-center py-8 bg-paper-2 rounded-2xl border border-rule">

@@ -101,7 +101,7 @@ export default function HomeClient() {
                   offer <em style={{ fontStyle: 'italic', color: '#D9603B' }}>fair</em>?
                 </h1>
 
-                <p className="sc-lead text-[17px] md:text-[19px] leading-[1.6]">
+                <p className="sc-lead">
                   Most settlement calculators online are built by law firms trying to capture your case. Ours is not. Get an honest estimate of where your offer stands, then get matched with a vetted employment specialist within 24 hours. Your employer pays their legal fees.
                 </p>
 
@@ -119,7 +119,7 @@ export default function HomeClient() {
                   <span>Employer <strong className="text-ink">pays fees</strong></span>
                 </div>
 
-                <p className="text-[14px] text-muted leading-[1.55]">
+                <p className="sc-body">
                   Most settlement agreements have a 10-day response window. We can have a specialist speaking with you within 24 hours.
                 </p>
               </div>
@@ -160,7 +160,7 @@ export default function HomeClient() {
           <div className="sc-container">
             <div className="flex flex-col gap-3.5 max-w-[640px]">
               <span className="sc-eyebrow">How it works</span>
-              <h2 className="sc-h2">Three steps. Sixty seconds. Zero cost.</h2>
+              <h2 className="sc-section-h2">Three steps. Sixty seconds. Zero cost.</h2>
               <p className="sc-lead">From a quick check to a vetted solicitor on the phone. No cost to you.</p>
             </div>
 
@@ -177,7 +177,7 @@ export default function HomeClient() {
                     {s.n}
                   </div>
                   <h3 className="sc-h3 mt-7">{s.t}</h3>
-                  <p className="text-[15px] text-muted mt-3 leading-[1.55]">{s.d}</p>
+                  <p className="sc-body mt-3">{s.d}</p>
                 </article>
               ))}
             </div>
@@ -190,7 +190,7 @@ export default function HomeClient() {
             <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.05fr]">
               <div className="flex flex-col gap-3.5">
                 <span className="sc-eyebrow">Why SettlementCheck</span>
-                <h2 className="sc-h2">An introduction service built for the employee, not the employer.</h2>
+                <h2 className="sc-section-h2">An introduction service built for the employee, not the employer.</h2>
                 <p className="sc-lead">
                   Most settlement enquiries route to firms that pay for the lead. We don&apos;t take payment from firms. Solicitors pay a small monthly subscription for panel access. That keeps the introduction honest.
                 </p>
@@ -208,7 +208,7 @@ export default function HomeClient() {
                     </div>
                     <div>
                       <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3]">{it.t}</div>
-                      <div className="text-[15px] text-muted mt-1 leading-[1.55]">{it.d}</div>
+                      <div className="sc-body mt-1">{it.d}</div>
                     </div>
                   </div>
                 ))}
@@ -223,7 +223,7 @@ export default function HomeClient() {
             <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.4fr]">
               <div className="flex flex-col gap-3.5">
                 <span className="sc-eyebrow">Common questions</span>
-                <h2 className="sc-h2">What people ask before they start.</h2>
+                <h2 className="sc-section-h2">What people ask before they start.</h2>
                 <p className="sc-lead">Six things almost every employee wants to know before clicking &ldquo;calculate.&rdquo;</p>
               </div>
               <FaqAccordion />
@@ -246,8 +246,8 @@ export default function HomeClient() {
           <div className="sc-container relative">
             <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:gap-10">
               <div>
-                <h2 className="sc-h2 text-white" style={{ maxWidth: '18ch' }}>Not sure if your offer is fair?</h2>
-                <p className="text-white/[0.78] text-[17px] md:text-[18px] mt-3" style={{ maxWidth: '46ch' }}>
+                <h2 className="sc-section-h2 text-white" style={{ maxWidth: '18ch' }}>Not sure if your offer is fair?</h2>
+                <p className="sc-lead mt-3" style={{ color: 'rgba(247,244,238,0.78)', maxWidth: '46ch' }}>
                   Our calculator is not run by a law firm. Get an honest estimate, then speak to a specialist within 24 hours.
                 </p>
               </div>

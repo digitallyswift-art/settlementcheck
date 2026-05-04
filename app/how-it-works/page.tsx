@@ -96,10 +96,10 @@ export default function HowItWorks() {
                 </div>
                 <div className="flex-1 bg-card rounded-2xl border border-rule p-8">
                   <div className="text-3xl mb-3">{step.icon}</div>
-                  <h2 className="sc-h2 mb-4">{step.title}</h2>
+                  <h2 className="sc-section-h2 mb-4">{step.title}</h2>
                   <div className="space-y-3">
                     {step.body.map((para, i) => (
-                      <p key={i} className="text-muted text-sm leading-relaxed">{para}</p>
+                      <p key={i} className="sc-body">{para}</p>
                     ))}
                   </div>
                 </div>
@@ -111,8 +111,8 @@ export default function HowItWorks() {
         {/* About */}
         <section id="about" className="bg-paper py-16">
           <div className="max-w-3xl mx-auto px-4">
-            <h2 className="sc-h2 mb-6">About SettlementCheck</h2>
-            <div className="space-y-4 text-muted text-sm leading-relaxed">
+            <h2 className="sc-section-h2 mb-6">About SettlementCheck</h2>
+            <div className="space-y-4 sc-body">
               <p>
                 SettlementCheck was created to help employees navigate settlement agreements without the confusion,
                 delay, and uncertainty that typically surrounds them.
@@ -134,7 +134,7 @@ export default function HowItWorks() {
         {/* FAQ */}
         <section id="faq" className="bg-paper-2 border-y border-rule py-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="sc-h2 mb-10">Common questions</h2>
+            <h2 className="sc-section-h2 mb-10">Common questions</h2>
             <FaqAccordion />
           </div>
         </section>
@@ -142,8 +142,8 @@ export default function HowItWorks() {
         {/* CTA */}
         <section style={{ background: '#0B1F3A', padding: '64px 32px' }}>
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="sc-h2 text-white mb-3">Ready to check your offer?</h2>
-            <p className="text-white/80 mb-6">Free, confidential, and takes 60 seconds.</p>
+            <h2 className="sc-section-h2 text-white mb-3">Ready to check your offer?</h2>
+            <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.8)' }}>Free, confidential, and takes 60 seconds.</p>
             <Link href="/#calculator" className="btn-accent">
               Check my offer now →
             </Link>
