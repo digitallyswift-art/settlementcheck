@@ -60,7 +60,12 @@ function Check() {
   )
 }
 
-export default function HomeClient() {
+export interface HomeProps {
+  title?: React.ReactNode;
+  lead?: React.ReactNode;
+}
+
+export default function HomeClient({ title, lead }: HomeProps = {}) {
   const router = useRouter()
 
   function handleCalculate(payload: CalcPayload) {
@@ -97,12 +102,16 @@ export default function HomeClient() {
                 </div>
 
                 <h1 className="sc-h1">
-                  Is your settlement<br />
-                  offer <em style={{ fontStyle: 'italic', color: '#D9603B' }}>fair</em>?
+                  {title || (
+                    <>
+                      Is your settlement<br />
+                      offer <em style={{ fontStyle: 'italic', color: '#D9603B' }}>fair</em>?
+                    </>
+                  )}
                 </h1>
 
                 <p className="sc-lead">
-                  Most settlement calculators online are built by law firms trying to capture your case. Ours is not. Get an honest estimate of where your offer stands, then get matched with a vetted employment specialist within 24 hours. Your employer pays their legal fees.
+                  {lead || "Most settlement calculators online are built by law firms trying to capture your case. Ours is not. Get an honest estimate of where your offer stands, then get matched with a vetted employment specialist within 24 hours. Your employer pays their legal fees."}
                 </p>
 
                 {/* Inline Stats */}

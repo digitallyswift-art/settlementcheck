@@ -43,7 +43,7 @@ Is the solicitor my employer recommends likely to be biased? Not necessarily bia
 How much will a solicitor cost me? Your employer covers the solicitor's fees for reviewing a settlement agreement. The standard contribution is £350 to £750. You should not have to pay anything out of your own pocket for the initial advice.
 SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated.
 [AFFILIATE / INTERNAL LINK NOTES:]
-Link "SRA-regulated solicitors" to sra.org.uk/consumers/find-solicitor
+Link "SRA-regulated solicitors" to https://www.sra.org.uk/consumers/register/
 Link "SettlementCheck" calculator reference to settlementcheck.co.uk homepage
 Internal link from this article to: "Is my settlement agreement offer fair?" (once written)
 Internal link to: "Can I negotiate my settlement agreement?" (once written)
