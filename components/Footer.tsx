@@ -24,7 +24,7 @@ export default function Footer() {
             <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Calculators</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
-                { href: '/#calculator', label: 'Standard Calculator' },
+                { href: '/#calculator', label: 'Settlement Agreement Calculator' },
                 { href: '/redundancy-calculator', label: 'Redundancy Calculator' },
                 { href: '/unfair-dismissal-calculator', label: 'Unfair Dismissal Calculator' },
                 { href: '/constructive-dismissal-calculator', label: 'Constructive Dismissal Calculator' },
