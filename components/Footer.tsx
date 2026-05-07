@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="bg-ink text-white/[0.78]">
       <div className="sc-container pt-20 pb-10">
-        <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-14 max-[720px]:grid-cols-2 max-[520px]:grid-cols-1">
+        <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-8 max-[900px]:grid-cols-3 max-[520px]:grid-cols-1">
           {/* Brand */}
           <div>
             <div className="font-serif text-[22px] font-420 tracking-[-0.01em] mb-3">
@@ -19,14 +19,31 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* For employees */}
+          {/* Calculators */}
           <div>
-            <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">For employees</h4>
+            <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Calculators</h4>
+            <ul className="flex flex-col gap-2.5 text-[14px]">
+              {[
+                { href: '/#calculator', label: 'Standard Calculator' },
+                { href: '/redundancy-calculator', label: 'Redundancy Calculator' },
+                { href: '/unfair-dismissal-calculator', label: 'Unfair Dismissal Calculator' },
+                { href: '/constructive-dismissal-calculator', label: 'Constructive Dismissal Calculator' },
+              ].map(l => (
+                <li key={l.href}>
+                  <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Guides */}
+          <div>
+            <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Guides</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
                 { href: '/how-it-works', label: 'How it works' },
-                { href: '/#calculator', label: 'Check your offer' },
                 { href: '/how-it-works#faq', label: 'FAQs' },
+                { href: '/guides/how-to-negotiate-a-settlement-agreement', label: 'How to negotiate a settlement' },
                 { href: '/guides/employer-recommended-solicitor', label: 'Do I have to use my employer\'s solicitor?' },
               ].map(l => (
                 <li key={l.href}>
