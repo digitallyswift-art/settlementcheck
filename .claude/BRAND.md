@@ -19,12 +19,23 @@ Do not alarm them. Do not patronise them. Do not oversell.
 
 ## Writing principles
 
-- Write as a knowledgeable colleague, not a legal firm and not a salesperson
-- One idea per sentence. Keep sentences under 20 words where possible
-- Active voice. "Your employer pays your fees" not "Your fees are paid by your employer"
-- Plain UK English. If a simpler word exists, use it
-- Short paragraphs. Two to three sentences maximum per block
-- Be honest about what the calculator can and cannot tell them
+- Write as a knowledgeable colleague, not a legal firm and not a salesperson.
+- One idea per sentence. Keep sentences under 20 words where possible. Sentences must be short, to the point, and highly readable for a human.
+- Active voice. "Your employer pays your fees" not "Your fees are paid by your employer".
+- Plain UK English. Write in a human tone specifically targeting UK demographics.
+- Short paragraphs. Two to three sentences maximum per block.
+- **Never give legal advice.** State the objective facts (e.g., "Employees must receive independent legal advice..." instead of "You must get a solicitor...").
+- Be honest about what the calculator can and cannot tell them.
+
+---
+
+## Layout and Visual Design for Content
+
+- **Never produce a "wall of text."** 
+- Whenever pumping out any content, it must be visually appealing and scannable.
+- Use bullet points with icons (e.g., checkmarks) where applicable to make actionable steps easy to follow.
+- Use custom UI components (callout boxes, side-by-side grids, numbered timelines) to break down complex information.
+- Utilise Tailwind tokens (`bg-paper-2`, `border-coral`, `text-ink`) to highlight key metrics and core facts.
 
 ---
 
