@@ -9,8 +9,15 @@
 
 ## Current phase — May 2026
 
-**Done:** Homepage, results page, calculator, for-solicitors, how-it-works, nav, footer, mobile layout.  
-**Next:** Supabase integration, Resend OTP email verification, lead capture data layer.  
+**Done:** 
+- Core structure: Homepage, results page, calculator component, mobile layout.
+- Phase 1 SEO Strategy: Refactored `HomeClient` and created programmatic SEO landing pages (`/redundancy-calculator`, `/unfair-dismissal-calculator`, `/constructive-dismissal-calculator`).
+- Phase 2 SEO Strategy: Initiated Hub & Spoke content model. Created the "How to Negotiate a Settlement Agreement" guide using modern, visually appealing layout components (UI callouts, numbered timelines, no walls of text). 
+- Brand Guidelines updated: Enforced strict visual design rules and highly readable, factual UK-targeted language for all future AI content generation.
+- Component Refactoring: Made `FaqAccordion` dynamic and standard across all guides. Updated Footer and Nav for optimized internal linking.
+**Next:** 
+- Content Expansion: Generate additional core pillar guides using the newly established visual layout and copy rules.
+- Backend Infrastructure: Supabase integration, Resend OTP email verification, lead capture data layer.  
 **Not started:** API routes (`/api/send-otp`, `/api/verify-otp`), Supabase schema, Framer Motion animations.
 
 ---
