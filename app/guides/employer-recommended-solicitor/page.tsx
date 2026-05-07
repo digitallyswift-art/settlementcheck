@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
   title: 'Do I Have to Use the Solicitor My Employer Recommends? | SettlementCheck',
@@ -196,14 +197,7 @@ export default function EmployerRecommendedSolicitor() {
             {/* FAQ */}
             <div className="space-y-4 pt-2">
               <h2 className="guide-h2">Frequently asked questions</h2>
-              <div className="divide-y divide-rule border-t border-rule">
-                {FAQS.map(({ q, a }) => (
-                  <div key={q} className="py-5">
-                    <h3 className="font-serif text-[17px] font-[460] text-ink tracking-[-0.008em] leading-snug mb-2">{q}</h3>
-                    <p className="guide-body">{a}</p>
-                  </div>
-                ))}
-              </div>
+              <FaqAccordion faqs={FAQS} />
             </div>
 
             {/* Disclaimer */}

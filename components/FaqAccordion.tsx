@@ -2,7 +2,12 @@
 
 import { useState } from 'react'
 
-const FAQS = [
+export interface FaqItem {
+  q: string
+  a: string
+}
+
+const DEFAULT_FAQS: FaqItem[] = [
   {
     q: 'Does it cost me anything?',
     a: 'No. Your employer is required by UK law to cover your legal fees for this process, typically £350 to £750. You pay nothing. This means you can choose a specialist who will genuinely advise you, not just whoever is cheapest.',
@@ -33,12 +38,12 @@ const FAQS = [
   },
 ]
 
-export default function FaqAccordion() {
+export default function FaqAccordion({ faqs = DEFAULT_FAQS }: { faqs?: FaqItem[] } = {}) {
   const [openIdx, setOpenIdx] = useState<number | null>(null)
 
   return (
     <div className="border-t border-rule">
-      {FAQS.map((faq, i) => (
+      {faqs.map((faq, i) => (
         <details
           key={i}
           className="faq-item"

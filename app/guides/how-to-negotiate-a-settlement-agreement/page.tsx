@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
   title: 'How to Negotiate a Settlement Agreement | The Complete UK Guide',
@@ -339,13 +340,8 @@ export default function HowToNegotiateGuide() {
             {/* FAQ */}
             <div className="space-y-4 pt-10">
               <h2 className="guide-h2 text-[24px]">Frequently Asked Questions</h2>
-              <div className="divide-y divide-rule border-t border-rule mt-4">
-                {FAQS.map(({ q, a }) => (
-                  <div key={q} className="py-6">
-                    <h3 className="font-serif text-[18px] font-[460] text-ink tracking-[-0.008em] leading-snug mb-3">{q}</h3>
-                    <p className="text-[15px] text-muted leading-relaxed">{a}</p>
-                  </div>
-                ))}
+              <div className="mt-4">
+                <FaqAccordion faqs={FAQS} />
               </div>
             </div>
 
