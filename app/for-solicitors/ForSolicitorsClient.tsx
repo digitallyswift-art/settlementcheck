@@ -293,12 +293,14 @@ export default function ForSolicitorsClient() {
   const otpRefs = useRef<(HTMLInputElement | null)[]>([null, null, null, null, null, null])
 
   const currentSlide = SLIDES[slideIndex]
+  // Divide by TOTAL_STEPS + 1 so step 7 reaches ~88%, not 100%.
+  // 100% is reserved exclusively for the success slide.
   const progressPct =
     currentSlide.id === 'welcome'
       ? 0
       : currentSlide.id === 'success'
       ? 100
-      : Math.round(((currentSlide.stepNumber ?? 0) / TOTAL_STEPS) * 100)
+      : Math.round(((currentSlide.stepNumber ?? 0) / (TOTAL_STEPS + 1)) * 100)
 
   const showProgress = !['welcome', 'success'].includes(currentSlide.id)
   const showBack = slideIndex > 0 && currentSlide.id !== 'success'
