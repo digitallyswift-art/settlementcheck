@@ -151,7 +151,7 @@ function ProgressBar({ pct, stepNumber }: { pct: number; stepNumber?: number }) 
   const emoji = pct === 100 ? '🎉' : pct >= 85 ? '🔥' : pct >= 57 ? '⚡' : pct >= 28 ? '✨' : '🚀'
   const label =
     pct === 0
-      ? 'Let's get started!'
+      ? "Let's get started!"
       : pct === 100
       ? '🎉 Complete!'
       : `${pct}% complete ${emoji}`
