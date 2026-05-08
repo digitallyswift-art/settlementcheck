@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import { getVerdict, formatCurrency, VerdictResult, Verdict } from '@/lib/calculations'
+import EmployeeWaitlistCapture from '@/components/EmployeeWaitlistCapture'
 
 /* ── Verdict config ─────────────────────────────────────────────── */
 const VERDICT_CONFIG: Record<Verdict, {
@@ -401,6 +402,9 @@ function ResultsContent() {
 
               {/* ── Lead form ── */}
               <LeadForm payload={{ verdict: result.verdict, offer, salary, totalMonths }} />
+
+              {/* ── Employee waitlist capture ── */}
+              <EmployeeWaitlistCapture />
 
               {/* Disclaimer */}
               <p className="text-[12px] text-muted-2 leading-[1.6] text-center px-4">
