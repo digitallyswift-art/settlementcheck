@@ -1,4 +1,4 @@
-import { ImageResponse } from 'next/og'
+﻿import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 export const alt = 'SettlementCheck: Is your settlement offer fair?'
@@ -22,7 +22,7 @@ export default function OGImage() {
           overflow: 'hidden',
         }}
       >
-        {/* Radial glow — coral accent top-right */}
+        {/* Radial glow - coral accent top-right */}
         <div
           style={{
             position: 'absolute',

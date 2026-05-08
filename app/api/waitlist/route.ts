@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+﻿import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
 export async function POST(req: NextRequest) {
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })
     }
 
-    // Upsert to avoid duplicate errors — if already on list, update verified_at
+    // Upsert to avoid duplicate errors - if already on list, update verified_at
     const { error } = await supabase.from('employee_waitlist').upsert(
       {
         email,

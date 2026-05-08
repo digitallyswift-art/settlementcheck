@@ -31,20 +31,22 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
     if (Object.keys(errs).length > 0) return
     setLoading(true)
     try {
-      await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+      const res = await fetch('/api/lead', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName: form.firstName,
-          email: form.email,
-          phone: form.phone,
-          preferredContactTime: contact,
+          first_name:     form.firstName,
+          email:          form.email,
+          phone:          form.phone,
+          contact_time:   contact.charAt(0).toUpperCase() + contact.slice(1),
           verdict,
-          offer_amount: offer,
+          offer_amount:   offer,
           salary,
-          years_service: years,
+          months_service: Number(years) * 12,
+          consent:        form.consent,
         }),
       })
+      if (!res.ok) throw new Error('submit_failed')
       setSubmitted(true)
     } catch {
       setErrors({ form: 'Something went wrong. Please try again.' })
@@ -68,7 +70,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
           You&apos;re matched. A solicitor will contact you within 24 hours.
         </h3>
         <p className="text-sm text-muted">
-          Check your email — we&apos;ve sent you a confirmation with next steps.
+          Check your email. We have sent you a confirmation with next steps.
         </p>
       </div>
     )

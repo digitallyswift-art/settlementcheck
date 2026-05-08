@@ -201,7 +201,7 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
                 <span className="sc-eyebrow">Why SettlementCheck</span>
                 <h2 className="sc-section-h2">An introduction service built for the employee, not the employer.</h2>
                 <p className="sc-lead">
-                  Most settlement calculators online are built by law firms trying to capture your case. Ours is independent. Solicitors on our panel pay a small introduction fee per qualified lead — but we have no single firm to push you towards, and we curate the panel for quality, not volume.
+                  Most settlement calculators online are built by law firms trying to capture your case. Ours is independent. Solicitors on our panel pay a small introduction fee per qualified lead. We have no single firm to push you towards, and we curate the panel for quality, not volume.
                 </p>
               </div>
 

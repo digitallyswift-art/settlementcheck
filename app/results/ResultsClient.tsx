@@ -110,20 +110,22 @@ function LeadForm({ payload }: { payload: LeadPayload }) {
 
     setStatus('submitting')
     try {
-      await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+      const res = await fetch('/api/lead', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          first_name: form.first_name,
-          email: form.email,
-          phone: form.phone,
-          contact_time: form.contact_time,
-          verdict: payload.verdict,
-          offer_amount: payload.offer,
-          salary: payload.salary,
+          first_name:     form.first_name,
+          email:          form.email,
+          phone:          form.phone,
+          contact_time:   form.contact_time,
+          verdict:        payload.verdict,
+          offer_amount:   payload.offer,
+          salary:         payload.salary,
           months_service: payload.totalMonths,
+          consent:        form.consent,
         }),
       })
+      if (!res.ok) throw new Error('submit_failed')
       setStatus('success')
     } catch {
       setErrors({ form: 'Something went wrong. Please try again.' })

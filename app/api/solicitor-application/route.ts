@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Save to Supabase — this is the critical step
+    // Save to Supabase - this is the critical step
     const { error: insertError } = await supabase.from('solicitor_applications').insert({
       firm_name,
       contact_name,
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Emails are fire-and-forget — never let email failures block the success response.
+    // Emails are fire-and-forget - never let email failures block the success response.
     // If an email fails, it is logged server-side but the applicant still gets a success.
 
     // Notification to owner
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
         .send({
           from: 'SettlementCheck <noreply@settlementcheck.co.uk>',
           to: notificationEmail,
-          subject: `New solicitor application — ${firm_name}`,
+          subject: `New solicitor application: ${firm_name}`,
           html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 560px; margin: 0 auto; padding: 40px 24px;">
             <div style="margin-bottom: 24px;">
@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
       .send({
         from: 'SettlementCheck <noreply@settlementcheck.co.uk>',
         to: email,
-        subject: 'Application received — SettlementCheck',
+        subject: 'Application received - SettlementCheck',
         html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 40px 24px;">
           <div style="margin-bottom: 32px;">
@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
       })
       .catch((e: unknown) => console.error('Confirmation email threw:', e))
 
-    // Return success as soon as DB row is saved — emails fire in background
+    // Return success as soon as DB row is saved - emails fire in background
     return NextResponse.json({ success: true })
   } catch (err) {
     console.error('Application route error:', err)

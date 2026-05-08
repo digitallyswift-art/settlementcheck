@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -115,7 +115,7 @@ const SLIDES: SlideConfig[] = [
     id: 'phone',
     inputField: 'phone',
     question: 'Best phone number to reach you?',
-    hint: "Optional — we'll use email to start",
+    hint: "Optional - we'll use email to start",
     placeholder: '07700 900 000',
     type: 'tel',
     optional: true,
@@ -525,7 +525,7 @@ export default function ForSolicitorsClient() {
         position: 'relative',
       }}
     >
-      {/* ── Sticky header — matches main site Nav.tsx ──────────────────────── */}
+      {/* ── Sticky header - matches main site Nav.tsx ──────────────────────── */}
       <div
         style={{
           position: 'fixed',
@@ -544,7 +544,7 @@ export default function ForSolicitorsClient() {
           zIndex: 200,
         }}
       >
-        {/* Logo — left-aligned, coral checkmark SVG + two-tone wordmark */}
+        {/* Logo - left-aligned, coral checkmark SVG + two-tone wordmark */}
         <a
           href="/"
           style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}
@@ -565,7 +565,7 @@ export default function ForSolicitorsClient() {
           </span>
         </a>
 
-        {/* Back button — right side, shown from step 2 onwards */}
+        {/* Back button - right side, shown from step 2 onwards */}
         {showBack ? (
           <button
             onClick={goBack}
@@ -835,7 +835,7 @@ function WelcomeSlide({ onStart }: { onStart: () => void }) {
         ))}
       </div>
 
-      {/* Feature list — SVG icons, no card borders, clean dividers */}
+      {/* Feature list - SVG icons, no card borders, clean dividers */}
       <div style={{ marginBottom: 40 }}>
         {features.map((f, i) => (
           <div
@@ -906,7 +906,7 @@ function WelcomeSlide({ onStart }: { onStart: () => void }) {
         onMouseEnter={(e) => { e.currentTarget.style.background = C.accentHover }}
         onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
       >
-        Apply now — it&apos;s free
+        Apply now
         <svg
           width="16"
           height="16"

@@ -54,3 +54,29 @@ create table if not exists employee_waitlist (
 
 create index if not exists employee_waitlist_email_idx
   on employee_waitlist (email);
+
+-- ─── Leads ────────────────────────────────────────────────────────────────────
+-- Stores employee lead form submissions from the /results page.
+-- Captures calculator context so solicitors arrive informed.
+-- consent must be true before a row is accepted.
+
+create table if not exists leads (
+  id                uuid primary key default gen_random_uuid(),
+  first_name        text not null,
+  email             text not null,
+  phone             text not null,
+  contact_time      text not null default 'Morning' check (contact_time in ('Morning', 'Afternoon', 'Evening')),
+  verdict           text not null,
+  offer_amount      numeric(12,2),
+  salary            numeric(12,2),
+  months_service    integer,
+  consent           boolean not null default false,
+  status            text not null default 'new' check (status in ('new', 'contacted', 'matched', 'closed')),
+  created_at        timestamptz not null default now()
+);
+
+create index if not exists leads_status_idx
+  on leads (status);
+
+create index if not exists leads_created_at_idx
+  on leads (created_at desc);

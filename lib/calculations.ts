@@ -1,4 +1,4 @@
-export type Reason = 'redundancy' | 'dismissal' | 'resignation' | 'mutual' | 'other';
+﻿export type Reason = 'redundancy' | 'dismissal' | 'resignation' | 'mutual' | 'other';
 export type Discrimination = 'no' | 'yes' | 'not_sure';
 export type Verdict = 'BELOW_MINIMUM' | 'BELOW_TYPICAL' | 'WITHIN_RANGE' | 'ABOVE_TYPICAL';
 
@@ -15,10 +15,10 @@ export interface VerdictResult {
   discriminationFlag: boolean;
 }
 
-// ERA 1996 s.227 — weekly pay cap. Updated 6 April 2025.
+// ERA 1996 s.227 - weekly pay cap. Updated 6 April 2025.
 const WEEKLY_PAY_CAP = 719;
 
-// ERA 1996 s.162 — statutory redundancy pay.
+// ERA 1996 s.162 - statutory redundancy pay.
 // Takes total service in whole months for precision. Counts completed years only.
 // Multiplier applied per completed year based on employee's age DURING that year,
 // counting back from the termination date.
@@ -34,13 +34,13 @@ export function calcRedundancy(salary: number, totalMonths: number, age: number)
   return Math.round(total);
 }
 
-// ERA 1996 s.118-119 — basic award for unfair dismissal.
+// ERA 1996 s.118-119 - basic award for unfair dismissal.
 // Identical formula to statutory redundancy pay.
 export function calcBasicAward(salary: number, totalMonths: number, age: number): number {
   return calcRedundancy(salary, totalMonths, age);
 }
 
-// ERA 1996 s.86 — statutory minimum notice weeks.
+// ERA 1996 s.86 - statutory minimum notice weeks.
 // < 1 month service → 0 weeks; 1 month to 2 years → 1 week;
 // 2+ years → 1 week per completed year, capped at 12.
 export function statutoryNoticeWeeks(totalMonths: number): number {
@@ -88,7 +88,7 @@ export function getVerdict(
   let typicalLow = Math.max(minimum * 1.5, monthSalary * 2);
   let typicalHigh = Math.max(minimum * 4, monthSalary * 6);
 
-  // Discrimination awards are uncapped in tribunal — widen the typical high materially
+  // Discrimination awards are uncapped in tribunal - widen the typical high materially
   if (discriminationFlag) {
     typicalHigh = Math.max(typicalHigh, monthSalary * 18);
   }
@@ -116,6 +116,6 @@ export function getVerdict(
 }
 
 export function formatCurrency(n: number): string {
-  if (!isFinite(n)) return '£—';
+  if (!isFinite(n)) return '£-';
   return '£' + Math.round(n).toLocaleString('en-GB');
 }

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -141,7 +141,7 @@ export default function EmployerRecommendedSolicitor() {
               </div>
             ))}
 
-            {/* When to choose own solicitor — callout list */}
+            {/* When to choose own solicitor - callout list */}
             <div className="space-y-3">
               <h2 className="guide-h2">When to choose your own solicitor</h2>
               <p className="guide-body">Consider finding your own solicitor if:</p>

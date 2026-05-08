@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-// Lazy singleton — client is NOT created at module load time.
+// Lazy singleton - client is NOT created at module load time.
 // Next.js imports route modules during the build to collect page data,
 // but env vars only exist at runtime. Calling createClient() here would
 // crash the build with "supabaseUrl is required".
