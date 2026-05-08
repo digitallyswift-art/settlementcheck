@@ -18,11 +18,11 @@ const DEFAULT_FAQS: FaqItem[] = [
   },
   {
     q: 'How accurate is the calculator?',
-    a: "The calculator gives a general estimate based on UK statutory rates and benchmarks from settlements we've seen. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
+    a: "The calculator gives a general estimate based on UK statutory rates and typical UK settlement market data. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
   },
   {
-    q: 'How quickly will a solicitor contact me?',
-    a: 'All panel solicitors commit to responding within 24 hours of an introduction. Most reach out the same business day, often within a couple of hours during working hours.',
+    q: 'When will the solicitor matching service be available?',
+    a: 'The calculator is live and free to use today. The solicitor matching service is launching shortly. When live, panel solicitors will commit to responding within 24 hours of an introduction, often the same business day.',
   },
   {
     q: 'What if I want to negotiate a higher amount?',
@@ -30,7 +30,7 @@ const DEFAULT_FAQS: FaqItem[] = [
   },
   {
     q: 'Is my information shared?',
-    a: 'Only with the small panel of solicitors you choose to be introduced to. Never with employers, recruiters, or third parties. You can withdraw at any point.',
+    a: 'Only with vetted SRA-regulated solicitors you opt in to be introduced to once matching launches. Never with employers, recruiters, or third parties. You can withdraw consent at any point.',
   },
   {
     q: 'Why is your calculator independent when others are not?',

@@ -9,10 +9,10 @@ import FaqAccordion from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
-  { n: '2,400+', l: 'Employees helped' },
-  { n: '£0',     l: 'Your employer pays' },
-  { n: '24 hrs', l: 'Solicitor response' },
-  { n: 'SRA',    l: 'Regulated solicitors' },
+  { n: '£0',      l: 'No cost to you' },
+  { n: '£719',    l: 'Weekly pay cap 2025/26' },
+  { n: '10 days', l: 'Acas consideration window' },
+  { n: '£30k',    l: 'Tax-free under ITEPA 2003' },
 ]
 
 const STEPS = [
@@ -24,7 +24,7 @@ const STEPS = [
   {
     n: '02',
     t: 'Match with a solicitor',
-    d: 'We match you to a vetted employment specialist within 24 hours. Every solicitor on our panel handles settlement agreements regularly and is SRA-regulated.',
+    d: 'Solicitor matching is launching shortly. When live, we will introduce you to a vetted SRA-regulated employment specialist who handles settlement agreements regularly.',
   },
   {
     n: '03',
@@ -43,12 +43,12 @@ const TRUST = [
     d: 'Under UK practice, employers contribute £350 to £750 toward your independent legal advice on a settlement.',
   },
   {
-    t: 'Vetted specialists only',
-    d: 'Every panel solicitor is SRA-regulated and demonstrably specialised in employment settlements.',
+    t: 'Built on UK statute',
+    d: 'The calculator applies the Employment Rights Act 1996 sections on redundancy, notice, and unfair dismissal awards, plus the £30,000 tax-free rule under ITEPA 2003 section 403.',
   },
   {
-    t: '24-hour response',
-    d: 'You have a deadline. All solicitors on our panel commit to responding within 24 hours. Most get back to you the same day.',
+    t: 'Solicitor matching launching soon',
+    d: 'We are building a panel of vetted SRA-regulated employment specialists. The matching service launches shortly. The calculator is free to use today.',
   },
 ]
 
@@ -111,7 +111,7 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
                 </h1>
 
                 <p className="sc-lead">
-                  {lead || "Most settlement calculators online are built by law firms trying to capture your case. Ours is not. Get an honest estimate of where your offer stands, then get matched with a vetted employment specialist within 24 hours. Your employer pays their legal fees."}
+                  {lead || "Most settlement calculators online are built by law firms trying to capture your case. Ours is not. Get an honest estimate of where your offer stands, grounded in UK statute and current 2025/26 rates. Solicitor matching launches shortly."}
                 </p>
 
                 {/* Inline Stats */}
@@ -120,16 +120,16 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
                     </svg>
-                    <span>SRA-regulated</span>
+                    <span>UK statutory rates 2025/26</span>
                   </div>
                   <span className="text-rule-strong">|</span>
-                  <span><strong className="text-ink">2,400+</strong> employees helped</span>
+                  <span><strong className="text-ink">£30k</strong> tax-free</span>
                   <span className="text-rule-strong">|</span>
                   <span>Employer <strong className="text-ink">pays fees</strong></span>
                 </div>
 
                 <p className="sc-body">
-                  Most settlement agreements have a 10-day response window. We can have a specialist speaking with you within 24 hours.
+                  Most settlement agreements have a 10-day response window. Use the calculator to understand where your offer stands right away.
                 </p>
               </div>
 
@@ -257,7 +257,7 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
               <div>
                 <h2 className="sc-section-h2 text-white" style={{ maxWidth: '18ch' }}>Not sure if your offer is fair?</h2>
                 <p className="sc-lead mt-3" style={{ color: 'rgba(247,244,238,0.78)', maxWidth: '46ch' }}>
-                  Our calculator is not run by a law firm. Get an honest estimate, then speak to a specialist within 24 hours.
+                  Our calculator is not run by a law firm. Get an honest estimate of where your offer stands today. Solicitor matching launches shortly.
                 </p>
               </div>
               <Link href="/#calculator" className="btn-accent whitespace-nowrap self-start md:self-auto">

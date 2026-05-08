@@ -31,7 +31,7 @@ export default function Disclaimer() {
           {[
             {
               title: 'What the calculator does',
-              body: 'The SettlementCheck calculator applies the UK statutory redundancy formula (using 2024/25 rates, including a weekly pay cap of £643) and general market data to produce an estimate of the minimum statutory entitlement and typical settlement range for your situation.',
+              body: 'The SettlementCheck calculator applies the UK statutory redundancy formula (using 2025/26 rates, including a weekly pay cap of £719) and general market data to produce an estimate of the minimum statutory entitlement and typical settlement range for your situation.',
             },
             {
               title: 'What the calculator does not do',
@@ -43,7 +43,7 @@ export default function Disclaimer() {
             },
             {
               title: 'Statutory rates',
-              body: 'Statutory rates change annually. The calculator uses rates effective from April 2024. If you are reading this after April 2025, rates may have changed. Always confirm current rates with a solicitor.',
+              body: 'Statutory rates change annually. The calculator uses rates effective from April 2025. If you are reading this after April 2026, rates may have changed. Always confirm current rates with a solicitor.',
             },
             {
               title: 'No solicitor-client relationship',

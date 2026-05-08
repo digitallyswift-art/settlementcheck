@@ -23,6 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
+.env.*
 .env*.local
 
 # vercel
@@ -31,3 +33,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude Code local settings (not for commit)
+.claude/settings.local.json

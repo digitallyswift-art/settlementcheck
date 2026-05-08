@@ -1,8 +1,8 @@
 # Skill: Calculator & Data Layer
 
-## Statutory rates 2024/25
+## Statutory rates 2025/26
 
-- Weekly pay cap: **£643**
+- Weekly pay cap: **£719**
 - Redundancy multiplier by age: under 22 = 0.5×, 22–40 = 1.0×, 41+ = 1.5×
 - Max years counted: 20
 - Notice pay: <1 month = 0 weeks, <2 years = 1 week, 2–12 years = 1 week/year, 12+ years = capped at 12 weeks
