@@ -148,13 +148,12 @@ const slideTrans = {
 
 // ── Progress bar ──────────────────────────────────────────────────────────────
 function ProgressBar({ pct, stepNumber }: { pct: number; stepNumber?: number }) {
-  const emoji = pct === 100 ? '🎉' : pct >= 85 ? '🔥' : pct >= 57 ? '⚡' : pct >= 28 ? '✨' : '🚀'
   const label =
     pct === 0
-      ? "Let's get started!"
+      ? "Let's get started"
       : pct === 100
-      ? '🎉 Complete!'
-      : `${pct}% complete ${emoji}`
+      ? 'Application complete'
+      : `${pct}% complete`
 
   return (
     <div style={{ padding: '20px 24px 20px', maxWidth: 640, margin: '0 auto' }}>
@@ -524,24 +523,47 @@ export default function ForSolicitorsClient() {
         position: 'relative',
       }}
     >
-      {/* ── Sticky header ──────────────────────────────────────────────────── */}
+      {/* ── Sticky header — matches main site Nav.tsx ──────────────────────── */}
       <div
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
-          height: 56,
-          background: C.white,
+          height: 68,
+          background: 'rgba(247,244,238,0.88)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
           borderBottom: `1px solid ${C.border}`,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '0 20px',
+          padding: '0 24px',
           zIndex: 200,
-          boxShadow: '0 1px 6px rgba(11,31,58,0.06)',
         }}
       >
+        {/* Logo — left-aligned, coral checkmark SVG + two-tone wordmark */}
+        <a
+          href="/"
+          style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <rect x="1" y="1" width="20" height="20" rx="4" stroke="#D9603B" strokeWidth="1.5" />
+            <path
+              d="M6 11.5L9.5 15L16 7.5"
+              stroke="#D9603B"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span style={{ fontFamily: SERIF, fontSize: 20, letterSpacing: '-0.01em', lineHeight: 1 }}>
+            <span style={{ color: '#D9603B' }}>Settlement</span>
+            <span style={{ color: '#0B1F3A' }}>Check</span>
+          </span>
+        </a>
+
+        {/* Back button — right side, shown from step 2 onwards */}
         {showBack ? (
           <button
             onClick={goBack}
@@ -577,24 +599,8 @@ export default function ForSolicitorsClient() {
             Back
           </button>
         ) : (
-          <div style={{ width: 72 }} />
+          <div />
         )}
-
-        <a
-          href="/"
-          style={{
-            color: C.navy,
-            fontSize: 15,
-            fontWeight: 700,
-            letterSpacing: '-0.01em',
-            fontFamily: SERIF,
-            textDecoration: 'none',
-          }}
-        >
-          SettlementCheck
-        </a>
-
-        <div style={{ width: 72 }} />
       </div>
 
       {/* ── Progress bar (fixed below header) ─────────────────────────────── */}
@@ -602,7 +608,7 @@ export default function ForSolicitorsClient() {
         <div
           style={{
             position: 'fixed',
-            top: 56,
+            top: 68,
             left: 0,
             right: 0,
             background: C.white,
@@ -621,7 +627,7 @@ export default function ForSolicitorsClient() {
           alignItems: 'center',
           justifyContent: 'center',
           minHeight: '100vh',
-          padding: showProgress ? '180px 24px 60px' : '80px 24px 60px',
+          padding: showProgress ? '188px 24px 60px' : '96px 24px 60px',
         }}
       >
         <div style={{ width: '100%', maxWidth: 600, position: 'relative' }}>
@@ -693,12 +699,45 @@ export default function ForSolicitorsClient() {
 
 function WelcomeSlide({ onStart }: { onStart: () => void }) {
   const features = [
-    { icon: '📋', label: 'Pre-qualified leads', desc: 'Every enquiry includes offer amount, salary & years served' },
-    { icon: '✅', label: 'Verified email', desc: 'We verify every employee before passing the lead' },
-    { icon: '💷', label: '£60 per introduction', desc: 'Founding panel rate — pay only when we deliver' },
-    { icon: '🚫', label: 'No subscription', desc: 'No monthly fees, no commitment — pure pay-per-lead' },
-    { icon: '📍', label: 'Geographic matching', desc: 'We match leads to solicitors in the right location' },
-    { icon: '⚖️', label: 'SRA regulated only', desc: 'We only accept firms regulated to advise on settlement agreements' },
+    {
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+      ),
+      label: 'Pre-qualified leads',
+      desc: 'Every referral includes the offer amount, salary and years of service',
+    },
+    {
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22 4 12 14.01 9 11.01" />
+        </svg>
+      ),
+      label: 'Verified email contacts',
+      desc: 'Employee email is confirmed by OTP before any lead is passed to you',
+    },
+    {
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+      ),
+      label: 'Geographic matching',
+      desc: 'You only receive leads within the coverage area you specify',
+    },
+    {
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      ),
+      label: 'SRA regulated only',
+      desc: 'Panel reserved for firms authorised to advise on employment settlement agreements',
+    },
   ]
 
   return (
@@ -717,7 +756,7 @@ function WelcomeSlide({ onStart }: { onStart: () => void }) {
           fontSize: 12,
           fontWeight: 600,
           letterSpacing: '0.06em',
-          textTransform: 'uppercase',
+          textTransform: 'uppercase' as const,
           marginBottom: 24,
           fontFamily: SANS,
         }}
@@ -744,7 +783,7 @@ function WelcomeSlide({ onStart }: { onStart: () => void }) {
           fontSize: 17,
           lineHeight: 1.65,
           maxWidth: 480,
-          margin: '0 0 40px',
+          margin: '0 0 36px',
           fontFamily: SANS,
         }}
       >
@@ -752,34 +791,82 @@ function WelcomeSlide({ onStart }: { onStart: () => void }) {
         less than 3 minutes to apply.
       </p>
 
-      {/* Feature grid */}
+      {/* Stats row */}
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-          gap: 12,
-          marginBottom: 40,
+          display: 'flex',
+          marginBottom: 32,
+          background: C.white,
+          border: `1px solid ${C.border}`,
+          borderRadius: 10,
+          overflow: 'hidden',
         }}
       >
-        {features.map((f) => (
+        {[
+          { value: '£60', label: 'per introduction' },
+          { value: '100%', label: 'verified contacts' },
+          { value: 'Zero', label: 'subscription fees' },
+        ].map((stat, i) => (
+          <div
+            key={stat.label}
+            style={{
+              flex: 1,
+              padding: '18px 12px',
+              textAlign: 'center' as const,
+              borderRight: i < 2 ? `1px solid ${C.border}` : 'none',
+            }}
+          >
+            <div
+              style={{
+                color: C.accent,
+                fontSize: 22,
+                fontWeight: 700,
+                fontFamily: SERIF,
+                letterSpacing: '-0.02em',
+                marginBottom: 3,
+              }}
+            >
+              {stat.value}
+            </div>
+            <div style={{ color: C.muted, fontSize: 12, fontFamily: SANS }}>{stat.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Feature list — SVG icons, no card borders, clean dividers */}
+      <div style={{ marginBottom: 40 }}>
+        {features.map((f, i) => (
           <div
             key={f.label}
             style={{
-              background: C.white,
-              border: `1px solid ${C.border}`,
-              borderRadius: 10,
-              padding: '14px 16px',
               display: 'flex',
               alignItems: 'flex-start',
-              gap: 12,
+              gap: 14,
+              padding: '13px 0',
+              borderBottom: i < features.length - 1 ? `1px solid ${C.border}` : 'none',
             }}
           >
-            <span style={{ fontSize: 20, flexShrink: 0, lineHeight: 1.3 }}>{f.icon}</span>
+            <div
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: 8,
+                background: C.accentLight,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                color: C.accent,
+                marginTop: 1,
+              }}
+            >
+              {f.icon}
+            </div>
             <div>
               <div
                 style={{
                   color: C.navy,
-                  fontSize: 13,
+                  fontSize: 14,
                   fontWeight: 600,
                   fontFamily: SANS,
                   marginBottom: 2,
@@ -787,7 +874,7 @@ function WelcomeSlide({ onStart }: { onStart: () => void }) {
               >
                 {f.label}
               </div>
-              <div style={{ color: C.muted, fontSize: 12, lineHeight: 1.4, fontFamily: SANS }}>
+              <div style={{ color: C.muted, fontSize: 13, lineHeight: 1.45, fontFamily: SANS }}>
                 {f.desc}
               </div>
             </div>
@@ -817,7 +904,7 @@ function WelcomeSlide({ onStart }: { onStart: () => void }) {
         onMouseEnter={(e) => { e.currentTarget.style.background = C.accentHover }}
         onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
       >
-        Apply now — it's free
+        Apply now — it&apos;s free
         <svg
           width="16"
           height="16"
