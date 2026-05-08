@@ -3,8 +3,58 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ── Brand tokens (matches settlementcheck.co.uk) ─────────────────────────────
+const C = {
+  bg: '#F7F4EE',
+  white: '#FFFFFF',
+  navy: '#0B1F3A',
+  muted: '#5B6577',
+  border: '#E2DCCE',
+  borderStrong: '#C9C0AC',
+  accent: '#D9603B',
+  accentHover: '#B14A28',
+  accentLight: '#FDF0EB',
+  error: '#DC2626',
+  success: '#16a34a',
+}
+const SANS = "var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif)"
+const SERIF = "var(--font-serif, Georgia, 'Times New Roman', serif)"
 
+// ── GA4 / GTM funnel tracking ─────────────────────────────────────────────────
+// Fires on every step change. Works with GA4 direct, GTM, or no analytics yet.
+// Each step also updates the URL (?step=...) so GA auto-captures page_view events.
+function trackFormStep(stepId: string, stepNumber: number) {
+  if (typeof window === 'undefined') return
+  try {
+    const url = new URL(window.location.href)
+    if (stepId === 'welcome' || stepId === 'success') {
+      url.searchParams.delete('step')
+    } else {
+      url.searchParams.set('step', stepId)
+    }
+    window.history.replaceState(null, '', url.toString())
+  } catch {}
+  const w = window as any
+  if (typeof w.gtag === 'function') {
+    w.gtag('event', 'solicitor_form_step', {
+      event_category: 'solicitor_application',
+      step_id: stepId,
+      step_number: stepNumber,
+    })
+  }
+  if (Array.isArray(w.dataLayer)) {
+    w.dataLayer.push({ event: 'solicitor_form_step', stepId, stepNumber })
+  }
+}
+
+function trackEvent(name: string, params?: Record<string, unknown>) {
+  if (typeof window === 'undefined') return
+  const w = window as any
+  if (typeof w.gtag === 'function') w.gtag('event', name, params)
+  if (Array.isArray(w.dataLayer)) w.dataLayer.push({ event: name, ...params })
+}
+
+// ── Types ─────────────────────────────────────────────────────────────────────
 type SlideId =
   | 'welcome'
   | 'firmName'
@@ -32,84 +82,199 @@ interface SlideConfig {
   placeholder?: string
   type?: string
   optional?: boolean
-  stepLabel?: string
+  stepNumber?: number // 1–7 for GA tracking
 }
-
-// ─── Slide definitions ────────────────────────────────────────────────────────
 
 const SLIDES: SlideConfig[] = [
   { id: 'welcome' },
   {
     id: 'firmName',
     inputField: 'firmName',
-    question: 'What is your firm’s name?',
+    question: "What is your firm's name?",
     placeholder: 'Smith Employment Law',
-    stepLabel: 'Step 1 of 7',
+    stepNumber: 1,
   },
   {
     id: 'contactName',
     inputField: 'contactName',
     question: 'And your name?',
     placeholder: 'Jane Smith',
-    stepLabel: 'Step 2 of 7',
+    stepNumber: 2,
   },
   {
     id: 'email',
     inputField: 'email',
-    question: 'What’s your work email address?',
-    hint: 'We’ll send a 6-digit verification code',
+    question: "What's your work email?",
+    hint: "We'll send a 6-digit verification code",
     placeholder: 'jane@smithlaw.co.uk',
     type: 'email',
-    stepLabel: 'Step 3 of 7',
+    stepNumber: 3,
   },
-  { id: 'otp', stepLabel: 'Step 4 of 7' },
+  { id: 'otp', stepNumber: 4 },
   {
     id: 'phone',
     inputField: 'phone',
-    question: 'What’s the best phone number to reach you?',
-    hint: 'Optional — we’ll use email to start',
+    question: 'Best phone number to reach you?',
+    hint: 'Optional — we'll use email to start',
     placeholder: '07700 900 000',
     type: 'tel',
     optional: true,
-    stepLabel: 'Step 5 of 7',
+    stepNumber: 5,
   },
   {
     id: 'coverage',
     inputField: 'coverage',
-    question: 'Which geographic areas do you cover?',
+    question: 'Which areas do you cover?',
     placeholder: 'London, South East',
     hint: 'e.g. London, South East, Manchester',
-    stepLabel: 'Step 6 of 7',
+    stepNumber: 6,
   },
-  { id: 'sra', stepLabel: 'Step 7 of 7' },
+  { id: 'sra', stepNumber: 7 },
   { id: 'success' },
 ]
 
-// ─── Animation variants ────────────────────────────────────────────────────────
+const TOTAL_STEPS = 7
 
+// ── Slide animation ───────────────────────────────────────────────────────────
 const slideVariants = {
-  enter: (dir: number) => ({
-    y: dir > 0 ? 56 : -56,
-    opacity: 0,
-  }),
+  enter: (dir: number) => ({ y: dir > 0 ? 48 : -48, opacity: 0 }),
   center: { y: 0, opacity: 1 },
-  exit: (dir: number) => ({
-    y: dir > 0 ? -56 : 56,
-    opacity: 0,
-  }),
+  exit: (dir: number) => ({ y: dir > 0 ? -48 : 48, opacity: 0 }),
 }
-
 const slideTrans = {
-  duration: 0.38,
+  duration: 0.36,
   ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ── Progress bar ──────────────────────────────────────────────────────────────
+function ProgressBar({ pct, stepNumber }: { pct: number; stepNumber?: number }) {
+  const emoji = pct === 100 ? '🎉' : pct >= 85 ? '🔥' : pct >= 57 ? '⚡' : pct >= 28 ? '✨' : '🚀'
+  const label =
+    pct === 0
+      ? 'Let's get started!'
+      : pct === 100
+      ? '🎉 Complete!'
+      : `${pct}% complete ${emoji}`
 
+  return (
+    <div style={{ padding: '20px 24px 20px', maxWidth: 640, margin: '0 auto' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 10,
+        }}
+      >
+        {stepNumber ? (
+          <span
+            style={{
+              fontFamily: SANS,
+              color: C.muted,
+              fontSize: 12,
+              fontWeight: 600,
+              letterSpacing: '0.07em',
+              textTransform: 'uppercase',
+            }}
+          >
+            Step {stepNumber} of {TOTAL_STEPS}
+          </span>
+        ) : (
+          <span />
+        )}
+        <motion.span
+          key={pct}
+          initial={{ y: -6, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+          style={{
+            fontFamily: SANS,
+            color: C.accent,
+            fontSize: 15,
+            fontWeight: 700,
+            letterSpacing: '-0.01em',
+          }}
+        >
+          {label}
+        </motion.span>
+      </div>
+      {/* Track */}
+      <div
+        style={{
+          height: 18,
+          background: C.border,
+          borderRadius: 999,
+          overflow: 'visible',
+          position: 'relative',
+          boxShadow: 'inset 0 2px 4px rgba(11,31,58,0.08)',
+        }}
+      >
+        {/* Fill */}
+        <motion.div
+          animate={{ width: `${Math.max(pct, 0)}%` }}
+          transition={{ type: 'spring', stiffness: 90, damping: 18 }}
+          style={{
+            height: '100%',
+            background: `linear-gradient(90deg, ${C.accentHover} 0%, ${C.accent} 55%, #E8784A 100%)`,
+            borderRadius: 999,
+            position: 'relative',
+            minWidth: pct > 3 ? 18 : 0,
+            overflow: 'visible',
+          }}
+        >
+          {/* Pulsing leading dot */}
+          {pct > 0 && pct < 100 && (
+            <motion.div
+              animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+              style={{
+                position: 'absolute',
+                right: -5,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: 14,
+                height: 14,
+                borderRadius: '50%',
+                background: '#fff',
+                boxShadow: `0 0 0 3px ${C.accent}, 0 0 12px rgba(217,96,59,0.6)`,
+                zIndex: 2,
+              }}
+            />
+          )}
+        </motion.div>
+        {/* Shimmer overlay */}
+        {pct > 0 && pct < 100 && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              borderRadius: 999,
+              overflow: 'hidden',
+              pointerEvents: 'none',
+            }}
+          >
+            <motion.div
+              animate={{ x: ['-100%', '200%'] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'linear', repeatDelay: 1 }}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background:
+                  'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%)',
+                width: '40%',
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ── Main component ─────────────────────────────────────────────────────────────
 export default function ForSolicitorsClient() {
   const [slideIndex, setSlideIndex] = useState(0)
   const [dir, setDir] = useState(1)
-
   const [form, setForm] = useState<FormData>({
     firmName: '',
     contactName: '',
@@ -117,7 +282,6 @@ export default function ForSolicitorsClient() {
     phone: '',
     coverage: '',
   })
-
   const [fieldError, setFieldError] = useState('')
   const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', ''])
   const [otpError, setOtpError] = useState('')
@@ -130,35 +294,41 @@ export default function ForSolicitorsClient() {
   const otpRefs = useRef<(HTMLInputElement | null)[]>([null, null, null, null, null, null])
 
   const currentSlide = SLIDES[slideIndex]
-  const totalInputSlides = 7 // firm, contact, email, otp, phone, coverage, sra
   const progressPct =
-    currentSlide.id === 'welcome' || currentSlide.id === 'success'
-      ? currentSlide.id === 'success'
-        ? 100
-        : 0
-      : ((slideIndex - 1) / totalInputSlides) * 100
+    currentSlide.id === 'welcome'
+      ? 0
+      : currentSlide.id === 'success'
+      ? 100
+      : Math.round(((currentSlide.stepNumber ?? 0) / TOTAL_STEPS) * 100)
 
-  // Focus input when slide changes
+  const showProgress = !['welcome', 'success'].includes(currentSlide.id)
+  const showBack = slideIndex > 0 && currentSlide.id !== 'success'
+
+  // GA tracking on every slide change
+  useEffect(() => {
+    trackFormStep(currentSlide.id, currentSlide.stepNumber ?? 0)
+  }, [slideIndex]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Auto-focus
   useEffect(() => {
     const t = setTimeout(() => {
       if (currentSlide.id === 'otp') {
         otpRefs.current[0]?.focus()
-      } else if (currentSlide.id !== 'welcome' && currentSlide.id !== 'sra' && currentSlide.id !== 'success') {
+      } else if (!['welcome', 'sra', 'success'].includes(currentSlide.id)) {
         inputRef.current?.focus()
       }
     }, 420)
     return () => clearTimeout(t)
   }, [slideIndex, currentSlide.id])
 
-  // OTP resend countdown
+  // Resend cooldown
   useEffect(() => {
     if (resendCooldown <= 0) return
     const t = setTimeout(() => setResendCooldown((c) => c - 1), 1000)
     return () => clearTimeout(t)
   }, [resendCooldown])
 
-  // ─── Navigation ───────────────────────────────────────────────────────────
-
+  // ── Navigation ─────────────────────────────────────────────────────────────
   const advance = useCallback(() => {
     setDir(1)
     setFieldError('')
@@ -172,8 +342,7 @@ export default function ForSolicitorsClient() {
     setSlideIndex((i) => i - 1)
   }, [slideIndex])
 
-  // ─── OTP flow ─────────────────────────────────────────────────────────────
-
+  // ── OTP ────────────────────────────────────────────────────────────────────
   const sendOtp = useCallback(async (emailAddr: string) => {
     setOtpSending(true)
     try {
@@ -182,7 +351,7 @@ export default function ForSolicitorsClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: emailAddr, form_type: 'solicitor' }),
       })
-      if (!res.ok) throw new Error('send_failed')
+      if (!res.ok) throw new Error()
       setResendCooldown(30)
       return true
     } catch {
@@ -211,6 +380,7 @@ export default function ForSolicitorsClient() {
         })
         const data = await res.json()
         if (data.success) {
+          trackEvent('solicitor_email_verified')
           advance()
         } else {
           setOtpError(data.message || 'Incorrect code. Please try again.')
@@ -234,8 +404,6 @@ export default function ForSolicitorsClient() {
     otpRefs.current[0]?.focus()
   }, [resendCooldown, form.email, sendOtp])
 
-  // ─── OTP digit handlers ────────────────────────────────────────────────────
-
   const handleOtpChange = useCallback(
     (index: number, value: string) => {
       const digit = value.replace(/\D/g, '').slice(-1)
@@ -243,27 +411,17 @@ export default function ForSolicitorsClient() {
       next[index] = digit
       setOtpDigits(next)
       setOtpError('')
-      if (digit && index < 5) {
-        otpRefs.current[index + 1]?.focus()
-      }
-      if (digit && index === 5) {
-        const full = [...next]
-        if (full.every((d) => d)) {
-          setTimeout(() => verifyOtp(full), 80)
-        }
-      }
+      if (digit && index < 5) otpRefs.current[index + 1]?.focus()
+      if (digit && index === 5 && next.every((d) => d)) setTimeout(() => verifyOtp(next), 80)
     },
     [otpDigits, verifyOtp]
   )
 
   const handleOtpKeyDown = useCallback(
     (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Backspace' && !otpDigits[index] && index > 0) {
+      if (e.key === 'Backspace' && !otpDigits[index] && index > 0)
         otpRefs.current[index - 1]?.focus()
-      }
-      if (e.key === 'Enter' && otpDigits.join('').length === 6) {
-        verifyOtp()
-      }
+      if (e.key === 'Enter' && otpDigits.join('').length === 6) verifyOtp()
     },
     [otpDigits, verifyOtp]
   )
@@ -277,65 +435,36 @@ export default function ForSolicitorsClient() {
         next[i] = d
       })
       setOtpDigits(next)
-      const focusIdx = Math.min(pasted.length, 5)
-      otpRefs.current[focusIdx]?.focus()
-      if (pasted.length === 6) {
-        setTimeout(() => verifyOtp(next), 80)
-      }
+      otpRefs.current[Math.min(pasted.length, 5)]?.focus()
+      if (pasted.length === 6) setTimeout(() => verifyOtp(next), 80)
     },
     [verifyOtp]
   )
 
-  // ─── Per-slide advance logic ────────────────────────────────────────────────
-
+  // ── Per-slide next ─────────────────────────────────────────────────────────
   const handleNext = useCallback(async () => {
     setFieldError('')
     const id = currentSlide.id
-
     if (id === 'firmName') {
-      if (!form.firmName.trim()) {
-        setFieldError('Please enter your firm name')
-        return
-      }
+      if (!form.firmName.trim()) { setFieldError('Please enter your firm name'); return }
       advance()
-      return
-    }
-
-    if (id === 'contactName') {
-      if (!form.contactName.trim()) {
-        setFieldError('Please enter your name')
-        return
-      }
+    } else if (id === 'contactName') {
+      if (!form.contactName.trim()) { setFieldError('Please enter your name'); return }
       advance()
-      return
-    }
-
-    if (id === 'email') {
+    } else if (id === 'email') {
       if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-        setFieldError('Please enter a valid email address')
-        return
+        setFieldError('Please enter a valid email address'); return
       }
       const ok = await sendOtp(form.email)
       if (ok) advance()
-      return
-    }
-
-    if (id === 'phone') {
+    } else if (id === 'phone') {
       advance()
-      return
-    }
-
-    if (id === 'coverage') {
-      if (!form.coverage.trim()) {
-        setFieldError('Please enter your geographic coverage')
-        return
-      }
+    } else if (id === 'coverage') {
+      if (!form.coverage.trim()) { setFieldError('Please enter your geographic coverage'); return }
       advance()
-      return
     }
   }, [currentSlide.id, form, advance, sendOtp])
 
-  // Submit the full application
   const submitApplication = useCallback(async () => {
     setSubmitting(true)
     setFieldError('')
@@ -352,34 +481,28 @@ export default function ForSolicitorsClient() {
           sra_confirmed: true,
         }),
       })
-      if (!res.ok) throw new Error('submit_failed')
+      if (!res.ok) throw new Error()
+      trackEvent('solicitor_application_submitted', { firm: form.firmName })
       advance()
     } catch {
-      setFieldError('Something went wrong. Please try again.')
+      setFieldError(
+        'Something went wrong. Please try again or email us at hello@settlementcheck.co.uk'
+      )
     } finally {
       setSubmitting(false)
     }
   }, [form, advance])
 
-  const updateField = useCallback(
-    (field: keyof FormData, value: string) => {
-      setFieldError('')
-      setForm((f) => ({ ...f, [field]: value }))
-    },
-    []
-  )
-
-  // ─── Keyboard handler ──────────────────────────────────────────────────────
+  const updateField = useCallback((field: keyof FormData, value: string) => {
+    setFieldError('')
+    setForm((f) => ({ ...f, [field]: value }))
+  }, [])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      const id = currentSlide.id
       if (
         e.key === 'Enter' &&
-        id !== 'otp' &&
-        id !== 'sra' &&
-        id !== 'welcome' &&
-        id !== 'success'
+        !['otp', 'sra', 'welcome', 'success'].includes(currentSlide.id)
       ) {
         e.preventDefault()
         handleNext()
@@ -388,121 +511,120 @@ export default function ForSolicitorsClient() {
     [currentSlide.id, handleNext]
   )
 
-  // ─── Render ────────────────────────────────────────────────────────────────
-
-  const showBack = slideIndex > 0 && currentSlide.id !== 'success'
-  const showProgress = currentSlide.id !== 'welcome' && currentSlide.id !== 'success'
-
+  // ── Render ─────────────────────────────────────────────────────────────────
   return (
     <div
       onKeyDown={handleKeyDown}
       style={{
-        background: '#0f1117',
+        background: C.bg,
         minHeight: '100vh',
-        position: 'relative',
-        fontFamily:
-          '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+        fontFamily: SANS,
         WebkitFontSmoothing: 'antialiased',
         overflowX: 'hidden',
+        position: 'relative',
       }}
     >
-      {/* Progress bar */}
+      {/* ── Sticky header ──────────────────────────────────────────────────── */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 56,
+          background: C.white,
+          borderBottom: `1px solid ${C.border}`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 20px',
+          zIndex: 200,
+          boxShadow: '0 1px 6px rgba(11,31,58,0.06)',
+        }}
+      >
+        {showBack ? (
+          <button
+            onClick={goBack}
+            aria-label="Go back"
+            style={{
+              background: 'none',
+              border: `1px solid ${C.border}`,
+              borderRadius: 6,
+              padding: '6px 12px',
+              color: C.muted,
+              cursor: 'pointer',
+              fontSize: 13,
+              fontWeight: 500,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
+              fontFamily: SANS,
+              transition: 'border-color 0.15s ease',
+            }}
+          >
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back
+          </button>
+        ) : (
+          <div style={{ width: 72 }} />
+        )}
+
+        <a
+          href="/"
+          style={{
+            color: C.navy,
+            fontSize: 15,
+            fontWeight: 700,
+            letterSpacing: '-0.01em',
+            fontFamily: SERIF,
+            textDecoration: 'none',
+          }}
+        >
+          SettlementCheck
+        </a>
+
+        <div style={{ width: 72 }} />
+      </div>
+
+      {/* ── Progress bar (fixed below header) ─────────────────────────────── */}
       {showProgress && (
         <div
           style={{
             position: 'fixed',
-            top: 0,
+            top: 56,
             left: 0,
             right: 0,
-            height: 3,
-            background: 'rgba(255,255,255,0.08)',
+            background: C.white,
+            borderBottom: `1px solid ${C.border}`,
             zIndex: 100,
           }}
         >
-          <motion.div
-            animate={{ width: `${progressPct}%` }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            style={{
-              height: '100%',
-              background: '#f97316',
-              borderRadius: '0 2px 2px 0',
-            }}
-          />
+          <ProgressBar pct={progressPct} stepNumber={currentSlide.stepNumber} />
         </div>
       )}
 
-      {/* Back button */}
-      {showBack && (
-        <button
-          onClick={goBack}
-          aria-label="Go back"
-          style={{
-            position: 'fixed',
-            top: 20,
-            left: 20,
-            zIndex: 100,
-            background: 'rgba(255,255,255,0.07)',
-            border: '1px solid rgba(255,255,255,0.12)',
-            borderRadius: 8,
-            padding: '7px 14px',
-            color: 'rgba(255,255,255,0.55)',
-            cursor: 'pointer',
-            fontSize: 13,
-            fontWeight: 500,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            backdropFilter: 'blur(8px)',
-          }}
-        >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-          Back
-        </button>
-      )}
-
-      {/* Wordmark */}
-      <div
-        style={{
-          position: 'fixed',
-          top: 20,
-          right: 24,
-          zIndex: 100,
-        }}
-      >
-        <span
-          style={{
-            color: 'rgba(255,255,255,0.35)',
-            fontSize: 14,
-            fontWeight: 700,
-            letterSpacing: '-0.01em',
-          }}
-        >
-          SettlementCheck
-        </span>
-      </div>
-
-      {/* Slide container */}
+      {/* ── Slide container ────────────────────────────────────────────────── */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           minHeight: '100vh',
-          padding: '80px 24px 60px',
+          padding: showProgress ? '180px 24px 60px' : '80px 24px 60px',
         }}
       >
-        <div style={{ width: '100%', maxWidth: 640, position: 'relative' }}>
+        <div style={{ width: '100%', maxWidth: 600, position: 'relative' }}>
           <AnimatePresence mode="wait" custom={dir}>
             <motion.div
               key={currentSlide.id}
@@ -514,15 +636,11 @@ export default function ForSolicitorsClient() {
               transition={slideTrans}
               style={{ width: '100%' }}
             >
-              {/* ── WELCOME ─────────────────────────────────────────────── */}
               {currentSlide.id === 'welcome' && (
                 <WelcomeSlide onStart={() => { setDir(1); setSlideIndex(1) }} />
               )}
-
-              {/* ── TEXT INPUT SLIDES ────────────────────────────────────── */}
               {currentSlide.inputField && (
                 <TextInputSlide
-                  stepLabel={currentSlide.stepLabel}
                   question={currentSlide.question!}
                   hint={currentSlide.hint}
                   value={form[currentSlide.inputField]}
@@ -536,11 +654,8 @@ export default function ForSolicitorsClient() {
                   loading={otpSending}
                 />
               )}
-
-              {/* ── OTP ─────────────────────────────────────────────────── */}
               {currentSlide.id === 'otp' && (
                 <OtpSlide
-                  stepLabel={currentSlide.stepLabel!}
                   email={form.email}
                   digits={otpDigits}
                   error={otpError}
@@ -555,20 +670,17 @@ export default function ForSolicitorsClient() {
                   otpRefs={otpRefs}
                 />
               )}
-
-              {/* ── SRA CONFIRMATION ─────────────────────────────────────── */}
               {currentSlide.id === 'sra' && (
                 <SraSlide
-                  stepLabel={currentSlide.stepLabel!}
                   firmName={form.firmName}
                   submitting={submitting}
                   error={fieldError}
                   onConfirm={submitApplication}
                 />
               )}
-
-              {/* ── SUCCESS ──────────────────────────────────────────────── */}
-              {currentSlide.id === 'success' && <SuccessSlide />}
+              {currentSlide.id === 'success' && (
+                <SuccessSlide name={form.contactName} />
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -577,103 +689,138 @@ export default function ForSolicitorsClient() {
   )
 }
 
-// ─── Sub-components ────────────────────────────────────────────────────────────
+// ── Sub-components ─────────────────────────────────────────────────────────────
 
 function WelcomeSlide({ onStart }: { onStart: () => void }) {
+  const features = [
+    { icon: '📋', label: 'Pre-qualified leads', desc: 'Every enquiry includes offer amount, salary & years served' },
+    { icon: '✅', label: 'Verified email', desc: 'We verify every employee before passing the lead' },
+    { icon: '💷', label: '£60 per introduction', desc: 'Founding panel rate — pay only when we deliver' },
+    { icon: '🚫', label: 'No subscription', desc: 'No monthly fees, no commitment — pure pay-per-lead' },
+    { icon: '📍', label: 'Geographic matching', desc: 'We match leads to solicitors in the right location' },
+    { icon: '⚖️', label: 'SRA regulated only', desc: 'We only accept firms regulated to advise on settlement agreements' },
+  ]
+
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div>
+      {/* Badge */}
       <div
         style={{
           display: 'inline-flex',
           alignItems: 'center',
           gap: 6,
-          background: 'rgba(249,115,22,0.12)',
-          border: '1px solid rgba(249,115,22,0.25)',
+          background: C.accentLight,
+          border: `1px solid ${C.accent}30`,
           borderRadius: 24,
           padding: '5px 14px',
-          color: '#f97316',
+          color: C.accent,
           fontSize: 12,
           fontWeight: 600,
           letterSpacing: '0.06em',
           textTransform: 'uppercase',
-          marginBottom: 32,
+          marginBottom: 24,
+          fontFamily: SANS,
         }}
       >
         For solicitors
       </div>
+
       <h1
         style={{
-          color: '#fff',
-          fontSize: 'clamp(30px, 5.5vw, 52px)',
-          fontWeight: 800,
+          color: C.navy,
+          fontSize: 'clamp(28px, 5vw, 46px)',
+          fontWeight: 700,
           lineHeight: 1.1,
-          letterSpacing: '-0.03em',
-          margin: '0 0 20px',
+          letterSpacing: '-0.025em',
+          margin: '0 0 16px',
+          fontFamily: SERIF,
         }}
       >
         Join our solicitor panel
       </h1>
       <p
         style={{
-          color: 'rgba(255,255,255,0.5)',
-          fontSize: 18,
+          color: C.muted,
+          fontSize: 17,
           lineHeight: 1.65,
-          maxWidth: 460,
-          margin: '0 auto 48px',
+          maxWidth: 480,
+          margin: '0 0 40px',
+          fontFamily: SANS,
         }}
       >
-        Receive pre-qualified settlement agreement leads. Every enquiry includes
-        offer amount, salary, and years of service. You only pay when we deliver.
+        Receive pre-qualified settlement agreement leads direct to your inbox. Takes
+        less than 3 minutes to apply.
       </p>
+
+      {/* Feature grid */}
       <div
         style={{
-          display: 'flex',
-          flexWrap: 'wrap',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
           gap: 12,
-          justifyContent: 'center',
-          marginBottom: 48,
+          marginBottom: 40,
         }}
       >
-        {['Pre-qualified leads', 'Verified email', '£60 per introduction', 'No subscription'].map(
-          (item) => (
-            <span
-              key={item}
-              style={{
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: 20,
-                padding: '5px 12px',
-                color: 'rgba(255,255,255,0.6)',
-                fontSize: 13,
-              }}
-            >
-              {item}
-            </span>
-          )
-        )}
+        {features.map((f) => (
+          <div
+            key={f.label}
+            style={{
+              background: C.white,
+              border: `1px solid ${C.border}`,
+              borderRadius: 10,
+              padding: '14px 16px',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 12,
+            }}
+          >
+            <span style={{ fontSize: 20, flexShrink: 0, lineHeight: 1.3 }}>{f.icon}</span>
+            <div>
+              <div
+                style={{
+                  color: C.navy,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  fontFamily: SANS,
+                  marginBottom: 2,
+                }}
+              >
+                {f.label}
+              </div>
+              <div style={{ color: C.muted, fontSize: 12, lineHeight: 1.4, fontFamily: SANS }}>
+                {f.desc}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
+
       <button
         onClick={onStart}
         style={{
-          background: '#f97316',
+          background: C.accent,
           border: 'none',
-          borderRadius: 12,
-          padding: '16px 40px',
+          borderRadius: 8,
+          padding: '15px 36px',
           color: '#fff',
-          fontSize: 17,
-          fontWeight: 700,
+          fontSize: 16,
+          fontWeight: 600,
           cursor: 'pointer',
           letterSpacing: '-0.01em',
           display: 'inline-flex',
           alignItems: 'center',
           gap: 10,
-          boxShadow: '0 4px 20px rgba(249,115,22,0.35)',
+          fontFamily: SANS,
+          boxShadow: '0 4px 16px rgba(217,96,59,0.3)',
+          transition: 'background 0.15s ease',
         }}
+        onMouseEnter={(e) => { e.currentTarget.style.background = C.accentHover }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
       >
-        Apply now
+        Apply now — it's free
         <svg
-          width="18"
-          height="18"
+          width="16"
+          height="16"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -684,12 +831,15 @@ function WelcomeSlide({ onStart }: { onStart: () => void }) {
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </button>
+
+      <p style={{ color: C.borderStrong, fontSize: 12, margin: '14px 0 0', fontFamily: SANS }}>
+        No payment required · Takes under 3 minutes
+      </p>
     </div>
   )
 }
 
 interface TextInputSlideProps {
-  stepLabel?: string
   question: string
   hint?: string
   value: string
@@ -704,7 +854,6 @@ interface TextInputSlideProps {
 }
 
 function TextInputSlide({
-  stepLabel,
   question,
   hint,
   value,
@@ -721,28 +870,15 @@ function TextInputSlide({
 
   return (
     <div>
-      {stepLabel && (
-        <div
-          style={{
-            color: 'rgba(255,255,255,0.3)',
-            fontSize: 12,
-            fontWeight: 600,
-            letterSpacing: '0.09em',
-            textTransform: 'uppercase',
-            marginBottom: 20,
-          }}
-        >
-          {stepLabel}
-        </div>
-      )}
       <h2
         style={{
-          color: '#fff',
-          fontSize: 'clamp(22px, 4vw, 36px)',
+          color: C.navy,
+          fontSize: 'clamp(24px, 4vw, 38px)',
           fontWeight: 700,
           letterSpacing: '-0.025em',
           lineHeight: 1.2,
           margin: '0 0 8px',
+          fontFamily: SERIF,
         }}
       >
         {question}
@@ -750,16 +886,17 @@ function TextInputSlide({
       {hint && (
         <p
           style={{
-            color: 'rgba(255,255,255,0.38)',
+            color: C.muted,
             fontSize: 15,
-            margin: '0 0 32px',
+            margin: '0 0 28px',
             lineHeight: 1.5,
+            fontFamily: SANS,
           }}
         >
           {hint}
         </p>
       )}
-      {!hint && <div style={{ height: 32 }} />}
+      {!hint && <div style={{ height: 28 }} />}
 
       <input
         ref={inputRef}
@@ -781,25 +918,29 @@ function TextInputSlide({
           width: '100%',
           background: 'transparent',
           border: 'none',
-          borderBottom: `2px solid ${value ? '#f97316' : 'rgba(255,255,255,0.18)'}`,
+          borderBottom: `2.5px solid ${value ? C.accent : C.borderStrong}`,
           padding: '10px 0 14px',
-          fontSize: 'clamp(20px, 3.5vw, 28px)',
-          color: '#fff',
+          fontSize: 'clamp(22px, 3.5vw, 30px)',
+          color: C.navy,
           outline: 'none',
-          caretColor: '#f97316',
+          caretColor: C.accent,
           letterSpacing: '-0.01em',
           marginBottom: 8,
           boxSizing: 'border-box',
           transition: 'border-color 0.2s ease',
+          fontFamily: SANS,
         }}
+        onFocus={(e) => { e.currentTarget.style.borderBottomColor = C.accent }}
+        onBlur={(e) => { e.currentTarget.style.borderBottomColor = value ? C.accent : C.borderStrong }}
       />
 
       {error && (
         <p
           style={{
-            color: '#f87171',
+            color: C.error,
             fontSize: 13,
             margin: '0 0 16px',
+            fontFamily: SANS,
             letterSpacing: '-0.01em',
           }}
         >
@@ -813,20 +954,25 @@ function TextInputSlide({
           onClick={onNext}
           disabled={loading}
           style={{
-            background: '#f97316',
+            background: C.accent,
             border: 'none',
-            borderRadius: 10,
-            padding: '13px 28px',
+            borderRadius: 8,
+            padding: '12px 26px',
             color: '#fff',
             fontSize: 15,
-            fontWeight: 700,
+            fontWeight: 600,
             cursor: loading ? 'not-allowed' : 'pointer',
-            opacity: loading ? 0.65 : 1,
+            opacity: loading ? 0.7 : 1,
             display: 'flex',
             alignItems: 'center',
             gap: 8,
+            fontFamily: SANS,
             letterSpacing: '-0.01em',
+            boxShadow: loading ? 'none' : '0 2px 8px rgba(217,96,59,0.25)',
+            transition: 'background 0.15s ease, box-shadow 0.15s ease',
           }}
+          onMouseEnter={(e) => { if (!loading) e.currentTarget.style.background = C.accentHover }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
         >
           {loading ? (
             'Sending…'
@@ -836,8 +982,8 @@ function TextInputSlide({
             <>
               OK
               <svg
-                width="14"
-                height="14"
+                width="13"
+                height="13"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -850,17 +996,17 @@ function TextInputSlide({
             </>
           )}
         </button>
-        <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 12 }}>
+        <span style={{ color: C.borderStrong, fontSize: 12, fontFamily: SANS }}>
           press{' '}
           <kbd
             style={{
-              background: 'rgba(255,255,255,0.1)',
-              border: '1px solid rgba(255,255,255,0.15)',
+              background: C.bg,
+              border: `1px solid ${C.border}`,
               borderRadius: 4,
-              padding: '2px 7px',
-              fontFamily: 'inherit',
+              padding: '2px 6px',
+              fontFamily: SANS,
               fontSize: 11,
-              color: 'rgba(255,255,255,0.45)',
+              color: C.muted,
             }}
           >
             Enter
@@ -872,7 +1018,6 @@ function TextInputSlide({
 }
 
 interface OtpSlideProps {
-  stepLabel: string
   email: string
   digits: string[]
   error: string
@@ -888,7 +1033,6 @@ interface OtpSlideProps {
 }
 
 function OtpSlide({
-  stepLabel,
   email,
   digits,
   error,
@@ -906,53 +1050,37 @@ function OtpSlide({
 
   return (
     <div>
-      <div
-        style={{
-          color: 'rgba(255,255,255,0.3)',
-          fontSize: 12,
-          fontWeight: 600,
-          letterSpacing: '0.09em',
-          textTransform: 'uppercase',
-          marginBottom: 20,
-        }}
-      >
-        {stepLabel}
-      </div>
       <h2
         style={{
-          color: '#fff',
-          fontSize: 'clamp(22px, 4vw, 36px)',
+          color: C.navy,
+          fontSize: 'clamp(24px, 4vw, 38px)',
           fontWeight: 700,
           letterSpacing: '-0.025em',
           lineHeight: 1.2,
           margin: '0 0 10px',
+          fontFamily: SERIF,
         }}
       >
         Check your inbox
       </h2>
       <p
         style={{
-          color: 'rgba(255,255,255,0.4)',
+          color: C.muted,
           fontSize: 15,
-          margin: '0 0 36px',
+          margin: '0 0 32px',
           lineHeight: 1.55,
+          fontFamily: SANS,
         }}
       >
         We sent a 6-digit code to{' '}
-        <span style={{ color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>{email}</span>
+        <strong style={{ color: C.navy, fontWeight: 600 }}>{email}</strong>
       </p>
 
-      {/* Digit boxes */}
-      <div
-        onPaste={onPaste}
-        style={{ display: 'flex', gap: 10, marginBottom: 20 }}
-      >
+      <div onPaste={onPaste} style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
         {digits.map((digit, i) => (
           <input
             key={i}
-            ref={(el) => {
-              otpRefs.current[i] = el
-            }}
+            ref={(el) => { otpRefs.current[i] = el }}
             type="text"
             inputMode="numeric"
             maxLength={1}
@@ -961,49 +1089,55 @@ function OtpSlide({
             onKeyDown={(e) => onKeyDown(i, e)}
             aria-label={`Digit ${i + 1}`}
             style={{
-              width: 'clamp(42px, 10vw, 54px)',
-              height: 'clamp(52px, 12vw, 64px)',
+              width: 'clamp(44px, 11vw, 56px)',
+              height: 'clamp(54px, 13vw, 66px)',
               textAlign: 'center',
               fontSize: 'clamp(22px, 5vw, 30px)',
               fontWeight: 700,
-              color: '#fff',
-              background: digit ? 'rgba(249,115,22,0.12)' : 'rgba(255,255,255,0.05)',
-              border: `2px solid ${digit ? '#f97316' : 'rgba(255,255,255,0.12)'}`,
+              color: C.navy,
+              background: digit ? C.accentLight : C.white,
+              border: `2px solid ${digit ? C.accent : C.border}`,
               borderRadius: 10,
               outline: 'none',
-              caretColor: '#f97316',
+              caretColor: C.accent,
               transition: 'all 0.15s ease',
               fontVariantNumeric: 'tabular-nums',
+              fontFamily: SANS,
+              boxShadow: digit ? `0 0 0 3px ${C.accent}20` : 'none',
             }}
           />
         ))}
       </div>
 
       {error && (
-        <p style={{ color: '#f87171', fontSize: 13, margin: '0 0 16px' }}>{error}</p>
+        <p style={{ color: C.error, fontSize: 13, margin: '0 0 16px', fontFamily: SANS }}>
+          {error}
+        </p>
       )}
 
       <button
         onClick={onVerify}
         disabled={verifying || !filled}
         style={{
-          background: '#f97316',
+          background: C.accent,
           border: 'none',
-          borderRadius: 10,
-          padding: '13px 28px',
+          borderRadius: 8,
+          padding: '12px 26px',
           color: '#fff',
           fontSize: 15,
-          fontWeight: 700,
+          fontWeight: 600,
           cursor: verifying || !filled ? 'not-allowed' : 'pointer',
           opacity: verifying || !filled ? 0.5 : 1,
           marginBottom: 20,
+          fontFamily: SANS,
           letterSpacing: '-0.01em',
+          boxShadow: verifying || !filled ? 'none' : '0 2px 8px rgba(217,96,59,0.25)',
         }}
       >
         {verifying ? 'Verifying…' : 'Verify email'}
       </button>
 
-      <div style={{ color: 'rgba(255,255,255,0.32)', fontSize: 13 }}>
+      <div style={{ color: C.muted, fontSize: 13, fontFamily: SANS }}>
         Didn&apos;t receive it?{' '}
         <button
           onClick={onResend}
@@ -1012,14 +1146,11 @@ function OtpSlide({
             background: 'none',
             border: 'none',
             padding: 0,
-            color:
-              resendCooldown > 0
-                ? 'rgba(255,255,255,0.2)'
-                : 'rgba(255,255,255,0.55)',
+            color: resendCooldown > 0 ? C.border : C.accent,
             cursor: resendCooldown > 0 ? 'default' : 'pointer',
             fontSize: 13,
             textDecoration: 'underline',
-            letterSpacing: '-0.01em',
+            fontFamily: SANS,
           }}
         >
           {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend code'}
@@ -1030,83 +1161,141 @@ function OtpSlide({
 }
 
 interface SraSlideProps {
-  stepLabel: string
   firmName: string
   submitting: boolean
   error: string
   onConfirm: () => void
 }
 
-function SraSlide({ stepLabel, firmName, submitting, error, onConfirm }: SraSlideProps) {
+function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
   return (
     <div>
       <div
         style={{
-          color: 'rgba(255,255,255,0.3)',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 6,
+          background: '#F0FDF4',
+          border: '1px solid #BBF7D0',
+          borderRadius: 20,
+          padding: '4px 12px',
+          color: '#16a34a',
           fontSize: 12,
           fontWeight: 600,
-          letterSpacing: '0.09em',
+          letterSpacing: '0.05em',
           textTransform: 'uppercase',
           marginBottom: 20,
+          fontFamily: SANS,
         }}
       >
-        {stepLabel}
+        Almost there!
       </div>
       <h2
         style={{
-          color: '#fff',
-          fontSize: 'clamp(22px, 4vw, 36px)',
+          color: C.navy,
+          fontSize: 'clamp(24px, 4vw, 38px)',
           fontWeight: 700,
           letterSpacing: '-0.025em',
           lineHeight: 1.2,
           margin: '0 0 20px',
+          fontFamily: SERIF,
         }}
       >
-        One last thing
+        One last confirmation
       </h2>
+
+      {/* SRA declaration card */}
       <div
         style={{
-          background: 'rgba(255,255,255,0.04)',
-          border: '1px solid rgba(255,255,255,0.1)',
+          background: C.white,
+          border: `1.5px solid ${C.border}`,
           borderRadius: 12,
           padding: '20px 24px',
-          color: 'rgba(255,255,255,0.75)',
+          color: C.muted,
           fontSize: 16,
-          lineHeight: 1.65,
-          marginBottom: 36,
+          lineHeight: 1.7,
+          marginBottom: 28,
+          fontFamily: SANS,
         }}
       >
-        I confirm that{' '}
-        <strong style={{ color: '#fff', fontWeight: 600 }}>
-          {firmName || 'this firm'}
-        </strong>{' '}
-        is regulated by the Solicitors Regulation Authority (SRA) and authorised to
-        advise on settlement agreements.
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+          <div
+            style={{
+              width: 32,
+              height: 32,
+              borderRadius: '50%',
+              background: C.accentLight,
+              border: `1px solid ${C.accent}30`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              marginTop: 2,
+            }}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={C.accent}
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <p style={{ margin: 0, color: C.muted, fontSize: 15, lineHeight: 1.65 }}>
+            I confirm that{' '}
+            <strong style={{ color: C.navy, fontWeight: 600 }}>
+              {firmName || 'this firm'}
+            </strong>{' '}
+            is regulated by the Solicitors Regulation Authority (SRA) and authorised
+            to advise on employment settlement agreements.
+          </p>
+        </div>
       </div>
 
       {error && (
-        <p style={{ color: '#f87171', fontSize: 13, margin: '0 0 16px' }}>{error}</p>
+        <div
+          style={{
+            background: '#FEF2F2',
+            border: '1px solid #FECACA',
+            borderRadius: 8,
+            padding: '12px 16px',
+            marginBottom: 20,
+          }}
+        >
+          <p style={{ color: C.error, fontSize: 13, margin: 0, fontFamily: SANS }}>
+            {error}
+          </p>
+        </div>
       )}
 
       <button
         onClick={onConfirm}
         disabled={submitting}
         style={{
-          background: '#f97316',
+          background: C.accent,
           border: 'none',
-          borderRadius: 12,
-          padding: '15px 36px',
+          borderRadius: 8,
+          padding: '15px 32px',
           color: '#fff',
           fontSize: 16,
-          fontWeight: 700,
+          fontWeight: 600,
           cursor: submitting ? 'not-allowed' : 'pointer',
           opacity: submitting ? 0.65 : 1,
           display: 'inline-flex',
           alignItems: 'center',
           gap: 10,
+          fontFamily: SANS,
           letterSpacing: '-0.01em',
-          boxShadow: submitting ? 'none' : '0 4px 20px rgba(249,115,22,0.3)',
+          boxShadow: submitting ? 'none' : '0 4px 16px rgba(217,96,59,0.3)',
+          transition: 'background 0.15s ease',
         }}
+        onMouseEnter={(e) => { if (!submitting) e.currentTarget.style.background = C.accentHover }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
       >
         {submitting ? (
           'Submitting…'
@@ -1114,8 +1303,8 @@ function SraSlide({ stepLabel, firmName, submitting, error, onConfirm }: SraSlid
           <>
             Yes, confirm &amp; apply
             <svg
-              width="17"
-              height="17"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -1132,23 +1321,23 @@ function SraSlide({ stepLabel, firmName, submitting, error, onConfirm }: SraSlid
   )
 }
 
-function SuccessSlide() {
+function SuccessSlide({ name }: { name: string }) {
   return (
     <div style={{ textAlign: 'center' }}>
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.15, type: 'spring', stiffness: 220, damping: 18 }}
+        transition={{ delay: 0.1, type: 'spring', stiffness: 240, damping: 18 }}
         style={{
           width: 80,
           height: 80,
           borderRadius: '50%',
-          background: 'rgba(34,197,94,0.12)',
-          border: '2px solid rgba(34,197,94,0.35)',
+          background: '#F0FDF4',
+          border: '2px solid #86EFAC',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          margin: '0 auto 32px',
+          margin: '0 auto 28px',
         }}
       >
         <svg
@@ -1156,7 +1345,7 @@ function SuccessSlide() {
           height="34"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#22c55e"
+          stroke="#16a34a"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -1164,29 +1353,51 @@ function SuccessSlide() {
           <polyline points="20 6 9 17 4 12" />
         </svg>
       </motion.div>
+
       <h1
         style={{
-          color: '#fff',
-          fontSize: 'clamp(26px, 4.5vw, 44px)',
-          fontWeight: 800,
-          letterSpacing: '-0.03em',
-          margin: '0 0 16px',
+          color: C.navy,
+          fontSize: 'clamp(26px, 4.5vw, 42px)',
+          fontWeight: 700,
+          letterSpacing: '-0.025em',
+          margin: '0 0 14px',
+          fontFamily: SERIF,
         }}
       >
-        Application received
+        {name ? `Thanks, ${name.split(' ')[0]}!` : 'Application received'}
       </h1>
       <p
         style={{
-          color: 'rgba(255,255,255,0.5)',
-          fontSize: 18,
-          lineHeight: 1.6,
-          maxWidth: 400,
-          margin: '0 auto',
+          color: C.muted,
+          fontSize: 17,
+          lineHeight: 1.65,
+          maxWidth: 420,
+          margin: '0 auto 32px',
+          fontFamily: SANS,
         }}
       >
         We&apos;ll review your application and be in touch within 2 business days.
         Welcome to SettlementCheck.
       </p>
+      <a
+        href="/"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
+          background: C.navy,
+          color: '#fff',
+          borderRadius: 8,
+          padding: '12px 24px',
+          fontSize: 14,
+          fontWeight: 600,
+          textDecoration: 'none',
+          fontFamily: SANS,
+          letterSpacing: '-0.01em',
+        }}
+      >
+        Back to home
+      </a>
     </div>
   )
 }
