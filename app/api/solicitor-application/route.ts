@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
     }
 
     // Build insert payload — only include optional fields when present
-    // to avoid schema cache errors if the column does not yet exist in Supabase
     const insertPayload: Record<string, unknown> = {
       firm_name,
       contact_name,
@@ -22,7 +21,15 @@ export async function POST(req: NextRequest) {
     }
     if (coverage) insertPayload.coverage = coverage
 
-    const { error: insertError } = await supabase.from('solicitor_applications').insert(insertPayload)
+    let { error: insertError } = await supabase.from('solicitor_applications').insert(insertPayload)
+
+    // Fallback: If Supabase complains about the schema cache (e.g. coverage column not added yet),
+    // retry the insert without the problematic optional column.
+    if (insertError && insertError.message.includes('schema cache') && insertPayload.coverage) {
+      delete insertPayload.coverage
+      const retry = await supabase.from('solicitor_applications').insert(insertPayload)
+      insertError = retry.error
+    }
 
     if (insertError) {
       console.error('Application insert error:', JSON.stringify(insertError))
