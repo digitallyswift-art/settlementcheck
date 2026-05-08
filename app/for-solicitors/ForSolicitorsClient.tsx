@@ -699,7 +699,7 @@ interface TextInputSlideProps {
   onChange: (v: string) => void
   onNext: () => void
   error?: string
-  inputRef: React.RefObject<HTMLInputElement>
+  inputRef: React.RefObject<HTMLInputElement | null>
   loading?: boolean
 }
 
