@@ -15,6 +15,7 @@ export default function ForSolicitorsClient() {
     e.preventDefault()
     setLoading(true)
     try {
+      // TODO: Replace YOUR_FORMSPREE_ID with the real Formspree form ID before going live
       await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -86,7 +87,7 @@ export default function ForSolicitorsClient() {
                     </svg>
                   ),
                   title: 'No minimum spend',
-                  body: 'Pay per lead or choose a monthly subscription. No lock-in, no hidden fees. Start and stop when you like.',
+                  body: 'Pay £60 per qualified introduction. Founding panel rate — no subscription, no lock-in, no hidden fees. You only pay when we deliver.',
                 },
               ].map((card) => (
                 <div key={card.title} className="bg-card rounded-2xl border border-rule p-8">
