@@ -10,29 +10,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Build insert payload — only include optional fields when present
     const insertPayload: Record<string, unknown> = {
       firm_name,
       contact_name,
       email,
       phone: phone || null,
-      sra_confirmed: Boolean(sra_confirmed),
+      sra_regulated: Boolean(sra_confirmed),
       status: 'pending',
     }
-    if (coverage) insertPayload.coverage = coverage
+    if (coverage) insertPayload.geographic_coverage = coverage
 
-    let { error: insertError } = await supabase.from('solicitor_applications').insert(insertPayload)
-
-    // Fallback: If Supabase complains about the schema cache (e.g. coverage column not added yet),
-    // retry the insert without the problematic optional column.
-    if (insertError && insertError.message.includes('schema cache') && insertPayload.coverage) {
-      delete insertPayload.coverage
-      const retry = await supabase.from('solicitor_applications').insert(insertPayload)
-      insertError = retry.error
-    }
+    const { error: insertError } = await supabase.from('solicitor_applications').insert(insertPayload)
 
     if (insertError) {
-      console.error('Application insert error:', JSON.stringify(insertError), 'code:', insertError.code, 'details:', insertError.details, 'hint:', insertError.hint)
+      console.error('Application insert error:', JSON.stringify(insertError))
       return NextResponse.json(
         { error: 'Failed to save application', detail: insertError.message },
         { status: 500 }
