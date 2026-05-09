@@ -482,12 +482,17 @@ export default function ForSolicitorsClient() {
           sra_confirmed: true,
         }),
       })
-      if (!res.ok) throw new Error()
+      if (!res.ok) {
+        let detail = ''
+        try { const d = await res.json(); detail = d.detail || d.error || '' } catch {}
+        throw new Error(detail)
+      }
       trackEvent('solicitor_application_submitted', { firm: form.firmName })
       advance()
-    } catch {
+    } catch (err: unknown) {
+      const detail = err instanceof Error && err.message ? ` (${err.message})` : ''
       setFieldError(
-        'Something went wrong. Please try again or email us at hello@settlementcheck.co.uk'
+        `Something went wrong${detail}. Please try again or email us at hello@settlementcheck.co.uk`
       )
     } finally {
       setSubmitting(false)

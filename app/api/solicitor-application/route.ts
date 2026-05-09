@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (insertError) {
-      console.error('Application insert error:', JSON.stringify(insertError))
+      console.error('Application insert error:', JSON.stringify(insertError), 'code:', insertError.code, 'details:', insertError.details, 'hint:', insertError.hint)
       return NextResponse.json(
         { error: 'Failed to save application', detail: insertError.message },
         { status: 500 }
