@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
           <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0 0 16px; letter-spacing: -0.02em;">Application received</h1>
           <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">Hi ${contact_name},</p>
           <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">Thanks for applying to join the SettlementCheck solicitor panel. We have received your application for <strong>${firm_name}</strong> and will review it within 2 business days.</p>
-          <p style="color: #6b7280; font-size: 14px; line-height: 1.6; margin: 0;">Questions? Reply to this email.</p>
+          <p style="color: #6b7280; font-size: 14px; line-height: 1.6; margin: 0;">Questions? Email us at <a href="mailto:hello@settlementcheck.co.uk" style="color: #D9603B;">hello@settlementcheck.co.uk</a></p>
         </div>
       `,
       })
