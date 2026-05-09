@@ -89,8 +89,8 @@ export async function POST(req: NextRequest) {
         `,
           replyTo: email,
         })
-        .then(({ error }) => {
-          if (error) console.error('Notification email error:', JSON.stringify(error))
+        .then((res: any) => {
+          if (res?.error) console.error('Notification email error:', JSON.stringify(res.error))
         })
         .catch((e: unknown) => console.error('Notification email threw:', e))
     }
@@ -113,8 +113,8 @@ export async function POST(req: NextRequest) {
         </div>
       `,
       })
-      .then(({ error }) => {
-        if (error) console.error('Confirmation email error:', JSON.stringify(error))
+      .then((res: any) => {
+        if (res?.error) console.error('Confirmation email error:', JSON.stringify(res.error))
       })
       .catch((e: unknown) => console.error('Confirmation email threw:', e))
 
