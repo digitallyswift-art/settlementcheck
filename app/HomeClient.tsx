@@ -11,36 +11,36 @@ import FaqAccordion from '@/components/FaqAccordion'
 const STATS = [
   { n: '£0',      l: 'No cost to you' },
   { n: '£751',    l: 'Weekly pay cap 2025/26' },
-  { n: '10 days', l: 'Acas consideration window' },
+  { n: '10 days', l: 'Typical signing window' },
   { n: '£30k',    l: 'Tax-free under ITEPA 2003' },
 ]
 
 const STEPS = [
   {
     n: '01',
-    t: 'Check your offer',
-    d: 'Enter six details and get an instant estimate of whether your offer is fair, below, or above the typical UK range. Based on statutory rates.',
+    t: 'Know your position before you respond',
+    d: 'Enter your salary, length of service, and the offer on the table. You will get an instant read on whether it sits below the typical range, within range, or above it. That is the information you need before you reply to anything.',
   },
   {
     n: '02',
-    t: 'Match with a solicitor',
-    d: 'Solicitor matching is launching shortly. When live, we will introduce you to a vetted SRA-regulated employment specialist who handles settlement agreements regularly.',
+    t: 'Match with a solicitor who negotiates',
+    d: 'A solicitor who handles settlement agreements regularly knows what employers will move on and by how much. Matching launches shortly. Add your details and we will notify you the moment it goes live.',
   },
   {
     n: '03',
-    t: 'Get honest advice',
-    d: 'Your employer is required to cover your legal fees, typically £350 to £750. Your solicitor\'s job is to advise you honestly, not to push you to sign.',
+    t: 'Get advice and recover what you are owed',
+    d: 'Your employer covers the cost of your legal advice. A solicitor reviews your offer, tells you what is negotiable, and handles the conversation with your employer\'s legal team. You do not pay.',
   },
 ]
 
 const TRUST = [
   {
     t: 'Genuinely independent',
-    d: 'Every other settlement calculator online was built by a law firm that wants your case. Ours was not. We have no firm to push you towards. The result you get is honest.',
+    d: 'Every other settlement calculator online was built by a firm that wants your case. This one was not. There is no firm behind this result. What you see is what the numbers say.',
   },
   {
     t: 'Your employer pays',
-    d: 'Under UK practice, employers contribute £350 to £750 toward your independent legal advice on a settlement.',
+    d: 'Under UK practice, your employer pays £350 to £750 toward the cost of independent legal advice on a settlement. In most cases, that covers the full fee.',
   },
   {
     t: 'Built on UK statute',
@@ -60,12 +60,15 @@ function Check() {
   )
 }
 
+export interface StatutoryRow { label: string; y2425: string; y2526: string }
+
 export interface HomeProps {
   title?: React.ReactNode;
   lead?: React.ReactNode;
+  statutoryRows?: StatutoryRow[];
 }
 
-export default function HomeClient({ title, lead }: HomeProps = {}) {
+export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProps = {}) {
   const router = useRouter()
 
   function handleCalculate(payload: CalcPayload) {
@@ -97,21 +100,26 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
                 <div className="flex">
                   <span className="inline-flex items-center gap-2 border border-rule-strong rounded-full px-4 py-1.5 text-[12px] font-medium text-ink bg-white/40">
                     <span className="w-1.5 h-1.5 rounded-full bg-coral" />
-                    Independent · Not owned by a law firm · Free to use
+                    Independent · Not a law firm · Free to use
                   </span>
                 </div>
+
+                {/* SEO keyword eyebrow — carries primary keyword as visible text, H1 carries the USP */}
+                <p className="sc-eyebrow" style={{ letterSpacing: '0.10em' }}>
+                  Settlement Agreement Calculator UK
+                </p>
 
                 <h1 className="sc-h1">
                   {title || (
                     <>
-                      Is your settlement<br />
-                      offer <em style={{ fontStyle: 'italic', color: '#D9603B' }}>fair</em>?
+                      Your opening offer<br />
+                      is almost always <em style={{ fontStyle: 'italic', color: '#D9603B' }}>negotiable.</em>
                     </>
                   )}
                 </h1>
 
                 <p className="sc-lead">
-                  {lead || "Most settlement calculators online are built by law firms trying to capture your case. Ours is not. Get an honest estimate of where your offer stands, grounded in UK statute and current 2025/26 rates. Solicitor matching launches shortly."}
+                  {lead || "Most employees sign the first number they receive without questioning it. That number is rarely the final one. Enter your details and get an instant, independent estimate of where your offer stands."}
                 </p>
 
                 {/* Inline Stats */}
@@ -129,7 +137,7 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
                 </div>
 
                 <p className="sc-body">
-                  Most settlement agreements have a 10-day response window. Use the calculator to understand where your offer stands right away.
+                  You typically have 10 days to respond. Use that time to know your position before you reply.
                 </p>
               </div>
 
@@ -199,7 +207,7 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
             <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.05fr]">
               <div className="flex flex-col gap-3.5">
                 <span className="sc-eyebrow">Why SettlementCheck</span>
-                <h2 className="sc-section-h2">An introduction service built for the employee, not the employer.</h2>
+                <h2 className="sc-section-h2">Built for the employee. Not the employer.</h2>
                 <p className="sc-lead">
                   Most settlement calculators online are built by law firms trying to capture your case. Ours is independent. Solicitors on our panel pay a small introduction fee per qualified lead. We have no single firm to push you towards, and we curate the panel for quality, not volume.
                 </p>
@@ -241,45 +249,44 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
         </section>
 
         {/* ── STATUTORY RATES TABLE ─────────────────────────────── */}
-        <section className="py-section bg-paper-2 border-y border-rule">
-          <div className="sc-container">
-            <div className="flex flex-col gap-3.5 max-w-[640px] mb-10">
-              <span className="sc-eyebrow">Statutory rates</span>
-              <h2 className="sc-section-h2">UK settlement figures: 2024/25 vs 2025/26</h2>
-              <p className="sc-lead">Updated every April. The calculator always uses the current rates.</p>
-            </div>
-            <div className="overflow-x-auto -mx-4 px-4">
-              <table className="w-full border-collapse text-sm" style={{ minWidth: 420 }}>
-                <thead>
-                  <tr className="border-b border-rule">
-                    <th className="text-left py-3 pr-6 font-medium text-ink" style={{ fontSize: 13 }}>Figure</th>
-                    <th className="text-right py-3 px-4 font-medium text-muted" style={{ fontSize: 13 }}>2024/25</th>
-                    <th className="text-right py-3 pl-4 font-medium text-ink" style={{ fontSize: 13 }}>2025/26</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { label: 'Weekly pay cap (England, Scotland, Wales)', y2425: '£643',     y2526: '£751'    },
-                    { label: 'Weekly pay cap (Northern Ireland)',          y2425: '£669',     y2526: '£783'    },
-                    { label: 'Maximum statutory redundancy pay',           y2425: '£19,290',  y2526: '£22,530' },
-                    { label: 'Tax-free termination payment limit',         y2425: '£30,000',  y2526: '£30,000' },
-                    { label: 'Maximum qualifying service years',           y2425: '20 years', y2526: '20 years'},
-                    { label: 'Maximum statutory notice period',            y2425: '12 weeks', y2526: '12 weeks'},
-                  ].map((row, i) => (
-                    <tr key={i} className="border-b border-rule last:border-0">
-                      <td className="py-3 pr-6 text-ink" style={{ fontSize: 14 }}>{row.label}</td>
-                      <td className="py-3 px-4 text-right text-muted tabular-nums" style={{ fontSize: 14 }}>{row.y2425}</td>
-                      <td className="py-3 pl-4 text-right font-medium text-ink tabular-nums" style={{ fontSize: 14 }}>{row.y2526}</td>
+        {statutoryRows.length > 0 && (
+          <section className="py-section bg-paper-2 border-y border-rule">
+            <div className="sc-container">
+              <div className="flex flex-col gap-3.5 max-w-[640px] mb-10">
+                <span className="sc-eyebrow">Statutory rates</span>
+                <h2 className="sc-section-h2">UK redundancy pay cap: 2024/25 vs 2025/26</h2>
+                <p className="sc-lead">Updated every April. The calculator always uses the current rates.</p>
+              </div>
+              <div className="overflow-x-auto -mx-4 px-4">
+                <table className="w-full border-collapse text-sm" style={{ minWidth: 420 }}>
+                  <caption className="sr-only">UK statutory redundancy and settlement figures compared across 2024/25 and 2025/26 tax years</caption>
+                  <thead>
+                    <tr className="border-b border-rule">
+                      <th className="text-left py-3 pr-6 font-medium text-ink" style={{ fontSize: 13 }}>Figure</th>
+                      <th className="text-right py-3 px-4 font-medium text-muted" style={{ fontSize: 13 }}>2024/25</th>
+                      <th className="text-right py-3 pl-4 font-medium text-ink" style={{ fontSize: 13 }}>2025/26</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {statutoryRows.map((row, i) => (
+                      <tr key={i} className="border-b border-rule last:border-0">
+                        <td className="py-3 pr-6 text-ink" style={{ fontSize: 14 }}>{row.label}</td>
+                        <td className="py-3 px-4 text-right text-muted tabular-nums" style={{ fontSize: 14 }}>{row.y2425}</td>
+                        <td className="py-3 pl-4 text-right font-medium text-ink tabular-nums" style={{ fontSize: 14 }}>{row.y2526}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="sc-body mt-5" style={{ fontSize: 13 }}>
+                Sources: ERA 1996 s.227 (GB cap), ERO(NI) 1996 (NI cap), ITEPA 2003 s.403 (£30,000 threshold). Figures effective 6 April 2025.
+              </p>
+              <p className="sc-body mt-1" style={{ fontSize: 12, color: '#8A93A3' }}>
+                Figures reflect the Employment Rights (Increase of Limits) Order 2025, in force from 6 April 2025. Last reviewed: May 2026.
+              </p>
             </div>
-            <p className="sc-body mt-5" style={{ fontSize: 13 }}>
-              Sources: ERA 1996 s.227 (GB cap), ERO(NI) 1996 (NI cap), ITEPA 2003 s.403 (£30,000 threshold). Figures effective 6 April 2025.
-            </p>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* ── CTA BANNER ────────────────────────────────────────── */}
         <section
@@ -296,9 +303,9 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
           <div className="sc-container relative">
             <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:gap-10">
               <div>
-                <h2 className="sc-section-h2 text-white" style={{ maxWidth: '18ch' }}>Not sure if your offer is fair?</h2>
+                <h2 className="sc-section-h2 text-white" style={{ maxWidth: '20ch' }}>Most opening offers have room to move.</h2>
                 <p className="sc-lead mt-3" style={{ color: 'rgba(247,244,238,0.78)', maxWidth: '46ch' }}>
-                  Our calculator is not run by a law firm. Get an honest estimate of where your offer stands today. Solicitor matching launches shortly.
+                  Get your free estimate in under two minutes and find out where yours stands.
                 </p>
               </div>
               <Link href="/#calculator" className="btn-accent whitespace-nowrap self-start md:self-auto">
