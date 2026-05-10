@@ -2,14 +2,14 @@ import type { Metadata } from 'next'
 import HomeClient from './HomeClient'
 
 export const metadata: Metadata = {
-  title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
-  description: 'Free settlement calculator. Is your offer fair? Uses 2026 rates (£751 cap). Redundancy, PILON, tax breakdown. No email. Instant result.',
+  title: 'Employment Settlement Calculator UK | SettlementCheck',
+  description: 'Free employment settlement agreement calculator. Is your offer fair? Net pay after tax: PILON and £30k exemption applied correctly. No email. Employer pays fees.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/',
   },
   openGraph: {
-    title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
-    description: 'Most opening offers have room to move. Get your free estimate in under two minutes and find out where yours stands.',
+    title: 'Employment Settlement Calculator UK | SettlementCheck',
+    description: 'Most opening offers have room to move. Net pay after tax calculated instantly — PILON taxed separately from the £30,000 exemption. No email required.',
     url: 'https://settlementcheck.co.uk/',
     type: 'website',
     locale: 'en_GB',
@@ -35,12 +35,12 @@ const webSiteSchema = {
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'Settlement Agreement Calculator',
+  name: 'Employment Settlement Agreement Calculator',
   url: 'https://settlementcheck.co.uk/',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
-  description: 'Free UK settlement agreement calculator. No email required. Instant result in 60 seconds. Based on 2025/26 statutory rates.',
+  description: 'Free UK employment settlement agreement calculator. Shows estimated net take-home pay after tax: PILON taxed separately from the £30,000 exemption under ITEPA 2003. No email required. Based on April 2025 statutory rates.',
 }
 
 // FAQ schema aligned exactly to FaqAccordion DEFAULT_FAQS (7 questions)
@@ -62,6 +62,14 @@ const faqSchema = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured solicitor. You cannot waive your rights without it.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much tax will I pay on my settlement agreement?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'It depends on which part of your payment is being taxed. Statutory redundancy pay and other termination payments up to £30,000 are tax-free under ITEPA 2003 s.403. Payment in lieu of notice (PILON) is always fully taxable as earnings under s.402D, regardless of what it is called in your agreement. The calculator separates these two elements and shows your estimated net take-home figure after tax.',
       },
     },
     {

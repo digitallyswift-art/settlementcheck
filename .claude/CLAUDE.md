@@ -50,8 +50,13 @@ git add <files> && git commit -m "..." && git push origin main
 - `.claude/skills/stack-and-architecture/SKILL.md` — tech stack, file structure, Tailwind tokens, patterns
 - `.claude/skills/calculator-and-data/SKILL.md` — statutory rates, verdict logic, Supabase schema, OTP flow
 - `.claude/skills/pages-and-components/SKILL.md` — component map, CRO rules, lead form states
+- `.claude/skills/seo-architect.md` — SEO methodology, audit steps, keyword tiers, meta formulas, E-E-A-T rules
 
 ## Agents — invoke by name
 
 - `conversion-copywriter` — any user-facing copy, CTAs, error states, FAQ, email templates
-- `seo-architect` — metadata, canonical URLs, structured data, OG tags, keyword targeting
+- `seo-architect` — SEO audits, metadata, canonical URLs, structured data, OG tags, content gaps, keyword targeting
+  - Agent file: `.claude/agents/seo-architect-agent.md`
+  - Skill file: `.claude/skills/seo-architect.md` (read first, always)
+  - Read both files before any SEO, content, or meta tag task
+  - Trigger commands: `audit [page]`, `quick audit [page]`, `meta [page]`, `gaps`, `snippet [query]`, `schema [page type]`, `statutory check [text]`, `content [topic]`, `full site audit`

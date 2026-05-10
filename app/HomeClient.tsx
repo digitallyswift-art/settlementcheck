@@ -12,7 +12,7 @@ const STATS = [
   { n: '£0',      l: 'No cost to you' },
   { n: '£751',    l: 'Weekly pay cap 2025/26' },
   { n: '10 days', l: 'Typical signing window' },
-  { n: '£30k',    l: 'Tax-free under ITEPA 2003' },
+  { n: 'Net pay', l: 'PILON and £30k exemption split' },
 ]
 
 const STEPS = [
@@ -106,7 +106,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
 
                 {/* SEO keyword eyebrow — carries primary keyword as visible text, H1 carries the USP */}
                 <p className="sc-eyebrow" style={{ letterSpacing: '0.10em' }}>
-                  Settlement Agreement Calculator UK
+                  Employment Settlement Agreement Calculator UK
                 </p>
 
                 <h1 className="sc-h1">
@@ -119,7 +119,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                 </h1>
 
                 <p className="sc-lead">
-                  {lead || "Most employees sign the first number they receive without questioning it. That number is rarely the final one. Enter your details and get an instant, independent estimate of where your offer stands."}
+                  {lead || "Most employees sign the first number they receive without questioning it. That number is rarely the final one. Enter your salary, length of service, and your offer to see your estimated net take-home after tax, with PILON and the £30,000 exemption calculated separately."}
                 </p>
 
                 {/* Inline Stats */}
@@ -197,6 +197,33 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   <p className="sc-body mt-3">{s.d}</p>
                 </article>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── TAX EXPLANATION ───────────────────────────────────── */}
+        <section className="py-section bg-paper-2 border-y border-rule">
+          <div className="sc-container">
+            <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.2fr]">
+              <div className="flex flex-col gap-3.5">
+                <span className="sc-eyebrow">Tax calculation</span>
+                <h2 className="sc-section-h2">How much tax will you pay on your employment settlement?</h2>
+                <p className="sc-lead">Your settlement is made up of different payments. They are not all taxed the same way.</p>
+              </div>
+              <div className="flex flex-col gap-6">
+                <div className="bg-card border border-rule rounded-lg p-6">
+                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">PILON is always taxable</div>
+                  <p className="sc-body">Payment in lieu of notice is treated as earnings under ITEPA 2003 s.402D. It is subject to income tax and National Insurance at your normal rate, regardless of what your agreement calls it.</p>
+                </div>
+                <div className="bg-card border border-rule rounded-lg p-6">
+                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">Up to £30,000 is tax-free</div>
+                  <p className="sc-body">Statutory redundancy pay and other termination payments up to £30,000 are exempt from income tax under ITEPA 2003 s.403. The portion above £30,000 is taxable at your marginal rate.</p>
+                </div>
+                <div className="bg-card border border-rule rounded-lg p-6">
+                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">The calculator separates both</div>
+                  <p className="sc-body">Most calculators show a gross figure. This one calculates PILON and redundancy pay separately, applies the correct tax treatment to each, and shows your estimated net take-home figure.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

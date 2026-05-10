@@ -17,6 +17,10 @@ const DEFAULT_FAQS: FaqItem[] = [
     a: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured solicitor. You cannot waive your rights without it.',
   },
   {
+    q: 'How much tax will I pay on my settlement agreement?',
+    a: 'It depends on which part of your payment is being taxed. Statutory redundancy pay and other termination payments up to £30,000 are tax-free under ITEPA 2003 s.403. Payment in lieu of notice (PILON) is always fully taxable as earnings under s.402D, regardless of what it is called in your agreement. The calculator separates these two elements and shows your estimated net take-home figure after tax.',
+  },
+  {
     q: 'How accurate is the calculator?',
     a: "The calculator gives a general estimate based on UK statutory rates and typical UK settlement market data. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
   },
