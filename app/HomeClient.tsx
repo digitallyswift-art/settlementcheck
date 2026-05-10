@@ -155,7 +155,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
               {STATS.map((s, i) => (
                 <div
                   key={i}
-                  className={`flex flex-col pl-6 py-4 md:py-2 border-rule ${
+                  className={`flex flex-col px-5 py-4 md:py-2 border-rule ${
                     i % 2 !== 0 ? 'border-l' : ''
                   } md:border-l-0 ${i > 0 ? 'md:border-l' : ''}`}
                 >
@@ -284,7 +284,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                 <h2 className="sc-section-h2">UK redundancy pay cap: 2024/25 vs 2025/26</h2>
                 <p className="sc-lead">Updated every April. The calculator always uses the current rates.</p>
               </div>
-              <div className="overflow-x-auto -mx-4 px-4">
+              <div className="overflow-x-auto">
                 <table className="w-full border-collapse text-sm" style={{ minWidth: 420 }}>
                   <caption className="sr-only">UK statutory redundancy and settlement figures compared across 2024/25 and 2025/26 tax years</caption>
                   <thead>
@@ -317,7 +317,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
 
         {/* ── CTA BANNER ────────────────────────────────────────── */}
         <section
-          className="relative overflow-hidden py-16 px-5 md:py-[88px] md:px-8"
+          className="relative overflow-hidden py-16 md:py-[88px]"
           style={{ background: '#0B1F3A' }}
         >
           <div
