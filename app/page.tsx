@@ -51,7 +51,7 @@ const faqSchema = {
       name: 'How much is the tax-free allowance on a settlement agreement?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Under ITEPA 2003 section 403, genuine termination payments — including statutory redundancy pay and basic awards — benefit from a £30,000 tax-free threshold. Payment in lieu of notice (PILON) is always fully taxable under section 402D regardless of how it is structured.',
+        text: 'Under ITEPA 2003 section 403, genuine termination payments (including statutory redundancy pay and basic awards) benefit from a £30,000 tax-free threshold. Payment in lieu of notice (PILON) is always fully taxable under section 402D regardless of how it is structured.',
       },
     },
     {

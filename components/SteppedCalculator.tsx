@@ -248,7 +248,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
       if (!isNaN(o) && !isNaN(s) && s > 0 && o > 0) {
         const monthly = s / 12
         if (Math.abs(o - monthly) / monthly < 0.05) {
-          setOfferWarning('Just to confirm — is this the total settlement figure, not a monthly amount?')
+          setOfferWarning('Just to confirm: is this the total settlement figure, not a monthly amount?')
         }
       }
       goToStep(5)
@@ -605,7 +605,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
           {step === 3 && (
             <div>
               <p style={helperSt}>
-                Count from your contract start date. Only complete years count toward statutory redundancy pay — but months affect other parts of your calculation.
+                Count from your contract start date. Only complete years count toward statutory redundancy pay, but months affect other parts of your calculation.
               </p>
               <h2 style={qSt}>How long have you worked there?</h2>
               <div style={{ display: 'flex', gap: 12 }}>
@@ -659,7 +659,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
           {step === 4 && (
             <div>
               <p style={helperSt}>
-                Enter the total figure as presented. If no offer has been made yet, enter 0 — we will show you what to expect.
+                Enter the total figure as presented. If no offer has been made yet, enter 0 and we will show you what to expect.
               </p>
               <h2 style={qSt}>What has your employer offered?</h2>
               <div className="step-input-wrap">
@@ -722,7 +722,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
                 {([
                   { value: 'redundancy_individual', label: 'Redundancy' },
-                  { value: 'redundancy_collective', label: 'Redundancy — part of a larger group (20 or more people)' },
+                  { value: 'redundancy_collective', label: 'Redundancy: part of a larger group (20 or more people)' },
                   { value: 'performance', label: 'Performance or disciplinary process' },
                   { value: 'constructive', label: 'Constructive dismissal' },
                   { value: 'mutual', label: 'Mutual agreement' },
