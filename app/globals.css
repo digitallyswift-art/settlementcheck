@@ -293,6 +293,52 @@
   .font-460 { font-weight: 460; }
 }
 
+/* ── Global spinner suppression (ERA spec: all number inputs) ────── */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
+
+/* ── Stepped calculator animations ──────────────────────────────── */
+@keyframes sc-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 50%, 90% { transform: translateX(-6px); }
+  30%, 70% { transform: translateX(6px); }
+}
+.sc-shake { animation: sc-shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+
+@keyframes sc-loading-bar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes sc-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Step input wrap — focus-within highlight */
+.step-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1.5px solid #D8D2C6;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.step-input-wrap:focus-within {
+  border-color: #0B1F3A;
+  box-shadow: 0 0 0 3px rgba(11,31,58,0.08);
+}
+
+/* Loading progress bar — 200px mobile, 280px desktop */
+@media (min-width: 640px) {
+  .sc-progress-wrap { width: 280px !important; }
+}
+
 /* ── Calculator component styles ─────────────────────────────────── */
 .calc-grid {
   display: grid;

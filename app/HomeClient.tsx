@@ -4,13 +4,13 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import Calculator, { CalcPayload } from '@/components/Calculator'
+import SteppedCalculator, { CalcPayload } from '@/components/SteppedCalculator'
 import FaqAccordion from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
   { n: '£0',      l: 'No cost to you' },
-  { n: '£719',    l: 'Weekly pay cap 2025/26' },
+  { n: '£751',    l: 'Weekly pay cap 2025/26' },
   { n: '10 days', l: 'Acas consideration window' },
   { n: '£30k',    l: 'Tax-free under ITEPA 2003' },
 ]
@@ -134,7 +134,7 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
               </div>
 
               <div>
-                <Calculator onCalculate={handleCalculate} />
+                <SteppedCalculator onCalculate={handleCalculate} />
               </div>
             </div>
           </div>
@@ -237,6 +237,47 @@ export default function HomeClient({ title, lead }: HomeProps = {}) {
               </div>
               <FaqAccordion />
             </div>
+          </div>
+        </section>
+
+        {/* ── STATUTORY RATES TABLE ─────────────────────────────── */}
+        <section className="py-section bg-paper-2 border-y border-rule">
+          <div className="sc-container">
+            <div className="flex flex-col gap-3.5 max-w-[640px] mb-10">
+              <span className="sc-eyebrow">Statutory rates</span>
+              <h2 className="sc-section-h2">UK settlement figures: 2024/25 vs 2025/26</h2>
+              <p className="sc-lead">Updated every April. The calculator always uses the current rates.</p>
+            </div>
+            <div className="overflow-x-auto -mx-4 px-4">
+              <table className="w-full border-collapse text-sm" style={{ minWidth: 420 }}>
+                <thead>
+                  <tr className="border-b border-rule">
+                    <th className="text-left py-3 pr-6 font-medium text-ink" style={{ fontSize: 13 }}>Figure</th>
+                    <th className="text-right py-3 px-4 font-medium text-muted" style={{ fontSize: 13 }}>2024/25</th>
+                    <th className="text-right py-3 pl-4 font-medium text-ink" style={{ fontSize: 13 }}>2025/26</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { label: 'Weekly pay cap (England, Scotland, Wales)', y2425: '£643',     y2526: '£751'    },
+                    { label: 'Weekly pay cap (Northern Ireland)',          y2425: '£669',     y2526: '£783'    },
+                    { label: 'Maximum statutory redundancy pay',           y2425: '£19,290',  y2526: '£22,530' },
+                    { label: 'Tax-free termination payment limit',         y2425: '£30,000',  y2526: '£30,000' },
+                    { label: 'Maximum qualifying service years',           y2425: '20 years', y2526: '20 years'},
+                    { label: 'Maximum statutory notice period',            y2425: '12 weeks', y2526: '12 weeks'},
+                  ].map((row, i) => (
+                    <tr key={i} className="border-b border-rule last:border-0">
+                      <td className="py-3 pr-6 text-ink" style={{ fontSize: 14 }}>{row.label}</td>
+                      <td className="py-3 px-4 text-right text-muted tabular-nums" style={{ fontSize: 14 }}>{row.y2425}</td>
+                      <td className="py-3 pl-4 text-right font-medium text-ink tabular-nums" style={{ fontSize: 14 }}>{row.y2526}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="sc-body mt-5" style={{ fontSize: 13 }}>
+              Sources: ERA 1996 s.227 (GB cap), ERO(NI) 1996 (NI cap), ITEPA 2003 s.403 (£30,000 threshold). Figures effective 6 April 2025.
+            </p>
           </div>
         </section>
 
