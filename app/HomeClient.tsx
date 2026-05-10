@@ -95,7 +95,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
         >
           <div className="sc-container relative">
             <div className="hero-grid grid gap-10 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
-              <div className="flex flex-col gap-6 md:gap-7">
+              <div className="flex flex-col gap-6 md:gap-7 min-w-0">
                 {/* Hero Pill */}
                 <div className="flex">
                   <span className="inline-flex items-center gap-2 border border-rule-strong rounded-full px-4 py-1.5 text-[12px] font-medium text-ink bg-white/40">

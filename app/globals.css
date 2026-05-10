@@ -13,6 +13,7 @@
 
   body {
     margin: 0;
+    overflow-x: hidden;
     background-color: #F7F4EE;
     color: #0B1F3A;
     font-family: var(--font-sans), Inter, -apple-system, 'Helvetica Neue', Arial, sans-serif;
