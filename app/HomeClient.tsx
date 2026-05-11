@@ -118,27 +118,59 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   )}
                 </h1>
 
-                <p className="sc-lead">
-                  {lead || "Most employees sign the first number they receive without questioning it. That number is rarely the final one. Enter your salary, length of service, and your offer to see your estimated net take-home after tax, with PILON and the £30,000 exemption calculated separately."}
-                </p>
-
-                {/* Inline Stats */}
-                <div className="flex items-center gap-3 pt-2 text-[12px] text-muted whitespace-nowrap">
-                  <div className="flex items-center gap-1.5">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
-                    </svg>
-                    <span>UK statutory rates 2025/26</span>
-                  </div>
-                  <span className="text-rule-strong">|</span>
-                  <span><strong className="text-ink">£30k</strong> tax-free</span>
-                  <span className="text-rule-strong">|</span>
-                  <span>Employer <strong className="text-ink">pays fees</strong></span>
-                </div>
-
-                <p className="sc-body">
-                  You typically have 10 days to respond. Use that time to know your position before you reply.
-                </p>
+                {lead ? (
+                  <p className="sc-lead">{lead}</p>
+                ) : (
+                  <ul className="flex flex-col gap-3.5 pt-1">
+                    {[
+                      {
+                        icon: (
+                          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <rect x="2" y="5" width="20" height="14" rx="2"/>
+                            <path d="M2 10h20"/>
+                            <circle cx="12" cy="15" r="1.5" fill="currentColor" stroke="none"/>
+                          </svg>
+                        ),
+                        label: 'Your actual take-home figure',
+                        detail: 'See net pay after tax, PILON, and the £30k exemption split.',
+                      },
+                      {
+                        icon: (
+                          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <line x1="18" y1="20" x2="18" y2="10"/>
+                            <line x1="12" y1="20" x2="12" y2="4"/>
+                            <line x1="6" y1="20" x2="6" y2="14"/>
+                            <path d="M3 20h18"/>
+                          </svg>
+                        ),
+                        label: 'Is your offer in range',
+                        detail: 'Compare your settlement against UK statutory rates for 2025/26.',
+                      },
+                      {
+                        icon: (
+                          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M12 5v14M5 12l7-7 7 7"/>
+                          </svg>
+                        ),
+                        label: 'First offers are negotiable',
+                        detail: 'Most employees don\'t realise their offer can be improved.',
+                      },
+                    ].map(({ icon, label, detail }, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span
+                          className="mt-0.5 flex-shrink-0 flex items-center justify-center rounded-lg text-coral"
+                          style={{ background: 'rgba(217,96,59,0.09)', width: 34, height: 34 }}
+                        >
+                          {icon}
+                        </span>
+                        <span className="flex flex-col gap-0.5 pt-0.5">
+                          <span className="text-[13.5px] font-semibold text-ink leading-snug tracking-[-0.01em]">{label}</span>
+                          <span className="text-[13px] text-muted leading-snug">{detail}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
               <div>
