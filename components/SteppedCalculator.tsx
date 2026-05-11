@@ -1,7 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
-import Link from 'next/link'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { getVerdict, VerdictResult } from '@/lib/calculations'
 
@@ -23,9 +22,6 @@ interface Props {
   onCalculate: (payload: CalcPayload) => void
 }
 
-export interface SteppedCalculatorHandle {
-  start: () => void
-}
 
 // Notice option → contractual notice weeks (ERA 1996 s.86)
 const NOTICE_WEEKS: Record<string, number> = {
@@ -45,7 +41,7 @@ const REASON_MAP: Record<string, string> = {
 // ERA 1996 s.227 (GB) / ERO(NI) 1996 — April 2025 rates
 const WEEKLY_CAP = { GB: 751, NI: 783 }
 
-type Phase = 'entry' | 'steps' | 'loading'
+type Phase = 'steps' | 'loading'
 type LoadState = 1 | 2 | 3
 
 /* ── Sub-components ─────────────────────────────────────────────── */
@@ -86,9 +82,9 @@ function Tick() {
 
 /* ── Main Component ─────────────────────────────────────────────── */
 
-const SteppedCalculator = forwardRef<SteppedCalculatorHandle, Props>(function SteppedCalculator({ onCalculate }, ref) {
+export default function SteppedCalculator({ onCalculate }: Props) {
   const router = useRouter()
-  const [phase, setPhase] = useState<Phase>('entry')
+  const [phase, setPhase] = useState<Phase>('steps')
   const [step, setStep] = useState(1)
   const [stepVisible, setStepVisible] = useState(true)
   const [shake, setShake] = useState(false)
@@ -114,12 +110,6 @@ const SteppedCalculator = forwardRef<SteppedCalculatorHandle, Props>(function St
   const pendingPayload = useRef<CalcPayload | null>(null)
   const onCalculateRef = useRef(onCalculate)
   useEffect(() => { onCalculateRef.current = onCalculate }, [onCalculate])
-
-  useImperativeHandle(ref, () => ({
-    start() {
-      setPhase('steps')
-    },
-  }))
 
   // Jurisdiction — best-effort default to GB (~96% of users)
   const jurisdiction: 'GB' | 'NI' = 'GB'
@@ -402,62 +392,6 @@ const SteppedCalculator = forwardRef<SteppedCalculatorHandle, Props>(function St
   const progressPct = (step / 7) * 100
   const yearsDisplay = parseInt(yearsNum || '0', 10)
   const offerNum = parseFloat(offer) || 0
-
-  /* ── ENTRY PHASE ─────────────────────────────────────────────── */
-
-  if (phase === 'entry') {
-    return (
-      <div style={{
-        borderRadius: 20,
-        border: '1px solid rgba(11,31,58,0.10)',
-        overflow: 'hidden',
-        boxShadow: '0 24px 60px -12px rgba(11,31,58,0.22), 0 8px 24px -6px rgba(11,31,58,0.10)',
-        background: 'linear-gradient(170deg, #F5F1E9 0%, #EDE8DF 30%, #E8E2D8 60%, #F0EDE6 100%)',
-        padding: '36px 36px 32px',
-      }}>
-        <span style={{ display: 'block', fontSize: 11, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8A93A3', marginBottom: 20 }}>
-          Free calculator
-        </span>
-
-        <p style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 420, lineHeight: 1.3, color: '#0B1F3A', margin: '0 0 8px', letterSpacing: '-0.012em' }}>
-          Most people do not know if their offer is fair.{' '}
-          <em style={{ fontStyle: 'italic', color: '#D9603B' }}>This tells you.</em>
-        </p>
-
-        <p style={{ fontSize: 15, color: '#5B6577', margin: '0 0 24px', lineHeight: 1.55 }}>
-          Seven questions. Sixty seconds. No email required.
-        </p>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
-          {['Private and secure', 'Built on UK statute', 'No email needed to see your result'].map(label => (
-            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(217,96,59,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <Tick />
-              </div>
-              <span style={{ fontSize: 14, color: '#4A5568' }}>{label}</span>
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={() => setPhase('steps')}
-          style={{
-            width: '100%', background: '#D9603B', border: 'none', color: '#fff',
-            fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 16,
-            letterSpacing: '-0.005em', padding: '15px 24px', borderRadius: 10,
-            cursor: 'pointer', marginBottom: 14,
-          }}
-        >
-          Check my offer →
-        </button>
-
-        <p style={{ fontSize: 12, color: '#9AA3AE', textAlign: 'center', margin: 0, lineHeight: 1.55 }}>
-          No data is sold. No solicitor will call unless you ask.
-        </p>
-      </div>
-    )
-  }
-
 
   /* ── LOADING PHASE ───────────────────────────────────────────── */
 
@@ -869,6 +803,4 @@ const SteppedCalculator = forwardRef<SteppedCalculatorHandle, Props>(function St
 
     </div>
   )
-})
-
-export default SteppedCalculator
+}

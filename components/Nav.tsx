@@ -47,7 +47,7 @@ export default function Nav() {
           <Link href="/for-solicitors" className="text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1">
             For solicitors
           </Link>
-          <Link href="/#calculator" className="btn-accent text-[14px] px-5 py-2.5">
+          <Link href="/calculator" className="btn-accent text-[14px] px-5 py-2.5">
             Check my offer →
           </Link>
         </div>
@@ -83,7 +83,7 @@ export default function Nav() {
             </Link>
           ))}
           <Link
-            href="/#calculator"
+            href="/calculator"
             className="btn-accent text-center mt-1"
             onClick={() => setOpen(false)}
           >

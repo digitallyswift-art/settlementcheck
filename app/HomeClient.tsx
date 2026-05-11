@@ -1,11 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import SteppedCalculator, { CalcPayload, SteppedCalculatorHandle } from '@/components/SteppedCalculator'
 import FaqAccordion from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
@@ -70,28 +67,6 @@ export interface HomeProps {
 }
 
 export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProps = {}) {
-  const router = useRouter()
-  const calcRef = useRef<SteppedCalculatorHandle>(null)
-
-  function startCalc() {
-    calcRef.current?.start()
-    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
-  function handleCalculate(payload: CalcPayload) {
-    const p = new URLSearchParams({
-      salary:             payload.inputs.salary,
-      yearsNum:           payload.inputs.yearsNum,
-      monthsNum:          payload.inputs.monthsNum,
-      age:                payload.inputs.age,
-      offer:              payload.inputs.offer,
-      reason:             payload.inputs.reason,
-      discrimination:     payload.inputs.discrimination,
-      contractualNotice:  payload.inputs.contractualNotice,
-    })
-    router.push(`/results?${p.toString()}`)
-  }
-
   return (
     <>
       <Nav />
@@ -182,7 +157,49 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
               </div>
 
               <div>
-                <SteppedCalculator ref={calcRef} onCalculate={handleCalculate} />
+                <div style={{
+                  borderRadius: 20,
+                  border: '1px solid rgba(11,31,58,0.10)',
+                  overflow: 'hidden',
+                  boxShadow: '0 24px 60px -12px rgba(11,31,58,0.22), 0 8px 24px -6px rgba(11,31,58,0.10)',
+                  background: 'linear-gradient(170deg, #F5F1E9 0%, #EDE8DF 30%, #E8E2D8 60%, #F0EDE6 100%)',
+                  padding: '36px 36px 32px',
+                }}>
+                  <span style={{ display: 'block', fontSize: 11, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8A93A3', marginBottom: 20 }}>
+                    Free calculator
+                  </span>
+                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 420, lineHeight: 1.3, color: '#0B1F3A', margin: '0 0 8px', letterSpacing: '-0.012em' }}>
+                    Most people do not know if their offer is fair.{' '}
+                    <em style={{ fontStyle: 'italic', color: '#D9603B' }}>This tells you.</em>
+                  </p>
+                  <p style={{ fontSize: 15, color: '#5B6577', margin: '0 0 24px', lineHeight: 1.55 }}>
+                    Seven questions. Sixty seconds. No email required.
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
+                    {['Private and secure', 'Built on UK statute', 'No email needed to see your result'].map(label => (
+                      <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(217,96,59,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <Check />
+                        </div>
+                        <span style={{ fontSize: 14, color: '#4A5568' }}>{label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Link
+                    href="/calculator"
+                    style={{
+                      display: 'block', width: '100%', background: '#D9603B', textDecoration: 'none', color: '#fff',
+                      fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 16,
+                      letterSpacing: '-0.005em', padding: '15px 24px', borderRadius: 10,
+                      cursor: 'pointer', marginBottom: 14, textAlign: 'center', boxSizing: 'border-box',
+                    }}
+                  >
+                    Check my offer →
+                  </Link>
+                  <p style={{ fontSize: 12, color: '#9AA3AE', textAlign: 'center', margin: 0, lineHeight: 1.55 }}>
+                    No data is sold. No solicitor will call unless you ask.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -239,7 +256,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
               ))}
             </div>
             <div className="mt-10 flex justify-center">
-              <button onClick={startCalc} className="btn-accent">Check my offer →</button>
+              <Link href="/calculator" className="btn-accent">Check my offer →</Link>
             </div>
           </div>
         </section>
@@ -271,7 +288,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">The calculator separates both</div>
                   <p className="sc-body">Most calculators show a gross figure. This one calculates PILON and redundancy pay separately, applies the correct tax treatment to each, and shows your estimated net take-home figure.</p>
                 </div>
-                <button onClick={startCalc} className="btn-accent self-start">See my net take-home →</button>
+                <Link href="/calculator" className="btn-accent self-start">See my net take-home →</Link>
               </div>
             </div>
           </div>
@@ -306,7 +323,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   </div>
                 ))}
                 <div className="pt-7">
-                  <button onClick={startCalc} className="btn-accent self-start">Check my offer, it&apos;s free →</button>
+                  <Link href="/calculator" className="btn-accent self-start">Check my offer, it&apos;s free →</Link>
                 </div>
               </div>
             </div>
@@ -387,9 +404,9 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   Get your free estimate in under two minutes and find out where yours stands.
                 </p>
               </div>
-              <button onClick={startCalc} className="btn-accent whitespace-nowrap self-start md:self-auto">
+              <Link href="/calculator" className="btn-accent whitespace-nowrap self-start md:self-auto">
                 Check my offer now →
-              </button>
+              </Link>
             </div>
           </div>
         </section>
