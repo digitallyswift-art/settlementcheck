@@ -252,10 +252,10 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                 <span className="sc-eyebrow">Tax calculation</span>
                 <h2 className="sc-section-h2">How much tax will you pay on your employment settlement?</h2>
                 <p className="sc-lead">Most employees sign the first number they receive without questioning it. That number is rarely the final one.</p>
-                <p className="sc-body">Enter your salary, length of service, and your offer to see your estimated net take-home after tax — with PILON and the £30,000 exemption calculated separately.</p>
+                <p className="sc-body">Enter your salary, length of service, and your offer to see your estimated net take-home after tax. PILON and the £30,000 exemption are calculated separately.</p>
                 <div className="border-l-2 border-coral pl-4 mt-1">
                   <p className="text-[13px] font-semibold text-ink mb-0.5">What is PILON?</p>
-                  <p className="sc-body" style={{ fontSize: 13 }}>PILON stands for <em>Payment in Lieu of Notice</em> — it is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
+                  <p className="sc-body" style={{ fontSize: 13 }}>PILON stands for <em>Payment in Lieu of Notice</em>. It is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
                 </div>
               </div>
               <div className="flex flex-col gap-6">
@@ -306,7 +306,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   </div>
                 ))}
                 <div className="pt-7">
-                  <button onClick={startCalc} className="btn-accent self-start">Check my offer — it&apos;s free →</button>
+                  <button onClick={startCalc} className="btn-accent self-start">Check my offer, it&apos;s free →</button>
                 </div>
               </div>
             </div>
