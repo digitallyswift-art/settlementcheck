@@ -814,7 +814,7 @@ function ResultsContent() {
           {!valid && (
             <div className="bg-amber-tint border border-[#E0CB94] rounded-lg p-6 mb-6">
               <p className="text-amber font-medium">Missing details. Please go back and complete the calculator.</p>
-              <Link href="/" className="mt-3 inline-block text-[14px] text-ink underline underline-offset-4">Return to calculator</Link>
+              <Link href="/calculator" className="mt-3 inline-block text-[14px] text-ink underline underline-offset-4">Return to calculator</Link>
             </div>
           )}
 

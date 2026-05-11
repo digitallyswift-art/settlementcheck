@@ -165,7 +165,7 @@ export default function HowItWorks() {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="sc-section-h2 text-white mb-3">Ready to check your offer?</h2>
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.8)' }}>Free, confidential, and takes 60 seconds.</p>
-            <Link href="/#calculator" className="btn-accent">
+            <Link href="/calculator" className="btn-accent">
               Check my offer now →
             </Link>
           </div>

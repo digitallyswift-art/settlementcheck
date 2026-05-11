@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
             <p style="font-size:13px;color:#5B6577;line-height:1.6;margin:0;">Your employer is legally required to contribute to the cost of your independent legal advice on any settlement agreement. A solicitor review is free to you and takes 24 to 48 hours. You are under no obligation after the first call.</p>
           </div>
 
-          <a href="https://settlementcheck.co.uk/#calculator"
+          <a href="https://settlementcheck.co.uk/calculator"
              style="display:inline-block;background:#D9603B;color:#fff;font-size:15px;font-weight:600;padding:13px 24px;border-radius:6px;text-decoration:none;letter-spacing:-0.01em;">
             Get matched with a solicitor
           </a>

@@ -189,7 +189,7 @@ export default function EmployerRecommendedSolicitor() {
               <p className="text-white/70 text-sm leading-relaxed mb-6">
                 Free calculator. Vetted solicitor matched within 24 hours. Your employer pays the fees.
               </p>
-              <Link href="/" className="btn-accent">
+              <Link href="/calculator" className="btn-accent">
                 Check my offer →
               </Link>
             </div>
