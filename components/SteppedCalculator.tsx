@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
 import { getVerdict, VerdictResult } from '@/lib/calculations'
 
 export interface CalcPayload {
@@ -19,6 +19,10 @@ export interface CalcPayload {
 
 interface Props {
   onCalculate: (payload: CalcPayload) => void
+}
+
+export interface SteppedCalculatorHandle {
+  start: () => void
 }
 
 // Notice option → contractual notice weeks (ERA 1996 s.86)
@@ -76,7 +80,7 @@ function Tick() {
 
 /* ── Main Component ─────────────────────────────────────────────── */
 
-export default function SteppedCalculator({ onCalculate }: Props) {
+const SteppedCalculator = forwardRef<SteppedCalculatorHandle, Props>(function SteppedCalculator({ onCalculate }, ref) {
   const [phase, setPhase] = useState<Phase>('entry')
   const [step, setStep] = useState(1)
   const [stepVisible, setStepVisible] = useState(true)
@@ -103,6 +107,12 @@ export default function SteppedCalculator({ onCalculate }: Props) {
   const pendingPayload = useRef<CalcPayload | null>(null)
   const onCalculateRef = useRef(onCalculate)
   useEffect(() => { onCalculateRef.current = onCalculate }, [onCalculate])
+
+  useImperativeHandle(ref, () => ({
+    start() {
+      setPhase('steps')
+    },
+  }))
 
   // Jurisdiction — best-effort default to GB (~96% of users)
   const jurisdiction: 'GB' | 'NI' = 'GB'
@@ -440,6 +450,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
       </div>
     )
   }
+
 
   /* ── LOADING PHASE ───────────────────────────────────────────── */
 
@@ -840,4 +851,6 @@ export default function SteppedCalculator({ onCalculate }: Props) {
 
     </div>
   )
-}
+})
+
+export default SteppedCalculator

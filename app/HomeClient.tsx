@@ -1,10 +1,11 @@
 'use client'
 
+import { useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import SteppedCalculator, { CalcPayload } from '@/components/SteppedCalculator'
+import SteppedCalculator, { CalcPayload, SteppedCalculatorHandle } from '@/components/SteppedCalculator'
 import FaqAccordion from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
@@ -70,6 +71,12 @@ export interface HomeProps {
 
 export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProps = {}) {
   const router = useRouter()
+  const calcRef = useRef<SteppedCalculatorHandle>(null)
+
+  function startCalc() {
+    calcRef.current?.start()
+    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   function handleCalculate(payload: CalcPayload) {
     const p = new URLSearchParams({
@@ -175,7 +182,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
               </div>
 
               <div>
-                <SteppedCalculator onCalculate={handleCalculate} />
+                <SteppedCalculator ref={calcRef} onCalculate={handleCalculate} />
               </div>
             </div>
           </div>
@@ -232,7 +239,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
               ))}
             </div>
             <div className="mt-10 flex justify-center">
-              <Link href="/#calculator" className="btn-accent">Check my offer →</Link>
+              <button onClick={startCalc} className="btn-accent">Check my offer →</button>
             </div>
           </div>
         </section>
@@ -264,7 +271,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">The calculator separates both</div>
                   <p className="sc-body">Most calculators show a gross figure. This one calculates PILON and redundancy pay separately, applies the correct tax treatment to each, and shows your estimated net take-home figure.</p>
                 </div>
-                <Link href="/#calculator" className="btn-accent self-start">See my net take-home →</Link>
+                <button onClick={startCalc} className="btn-accent self-start">See my net take-home →</button>
               </div>
             </div>
           </div>
@@ -299,7 +306,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   </div>
                 ))}
                 <div className="pt-7">
-                  <Link href="/#calculator" className="btn-accent self-start">Check my offer — it&apos;s free →</Link>
+                  <button onClick={startCalc} className="btn-accent self-start">Check my offer — it&apos;s free →</button>
                 </div>
               </div>
             </div>
@@ -380,9 +387,9 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   Get your free estimate in under two minutes and find out where yours stands.
                 </p>
               </div>
-              <Link href="/#calculator" className="btn-accent whitespace-nowrap self-start md:self-auto">
+              <button onClick={startCalc} className="btn-accent whitespace-nowrap self-start md:self-auto">
                 Check my offer now →
-              </Link>
+              </button>
             </div>
           </div>
         </section>
