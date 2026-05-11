@@ -67,12 +67,13 @@ export default function Nav() {
             </Link>
 
             {guidesOpen && (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3" style={{ width: 320 }}>
               <div
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-card border border-rule rounded-xl shadow-lg overflow-hidden"
-                style={{ width: 320, boxShadow: '0 12px 40px -8px rgba(11,31,58,0.18)' }}
+                className="bg-card border border-rule rounded-xl overflow-hidden"
+                style={{ boxShadow: '0 12px 40px -8px rgba(11,31,58,0.18)' }}
               >
                 {/* Arrow */}
-                <div className="absolute -top-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
+                <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
 
                 <div className="p-2">
                   {GUIDES_LINKS.map((g) => (
@@ -98,6 +99,7 @@ export default function Nav() {
                     </Link>
                   </div>
                 </div>
+              </div>
               </div>
             )}
           </div>
