@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { getVerdict, VerdictResult } from '@/lib/calculations'
 
 export interface CalcPayload {
@@ -49,9 +50,13 @@ type LoadState = 1 | 2 | 3
 
 /* ── Sub-components ─────────────────────────────────────────────── */
 
-function LogoMark() {
+function LogoMark({ onClick }: { onClick?: () => void }) {
   return (
-    <Link href="/" aria-label="SettlementCheck home" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+    <button
+      onClick={onClick}
+      aria-label="Go to SettlementCheck home"
+      style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+    >
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
         <rect x="1" y="1" width="20" height="20" rx="4" stroke="#D9603B" strokeWidth="1.5" />
         <path d="M6 11.5L9.5 15L16 7.5" stroke="#D9603B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -59,7 +64,7 @@ function LogoMark() {
       <span style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 420, letterSpacing: '-0.01em', lineHeight: 1 }}>
         <span style={{ color: '#D9603B' }}>Settlement</span><span style={{ color: '#0B1F3A' }}>Check</span>
       </span>
-    </Link>
+    </button>
   )
 }
 
@@ -82,6 +87,7 @@ function Tick() {
 /* ── Main Component ─────────────────────────────────────────────── */
 
 const SteppedCalculator = forwardRef<SteppedCalculatorHandle, Props>(function SteppedCalculator({ onCalculate }, ref) {
+  const router = useRouter()
   const [phase, setPhase] = useState<Phase>('entry')
   const [step, setStep] = useState(1)
   const [stepVisible, setStepVisible] = useState(true)
@@ -480,7 +486,7 @@ const SteppedCalculator = forwardRef<SteppedCalculatorHandle, Props>(function St
         aria-label="Calculating your settlement results"
       >
         {/* Static logo mark — no animation */}
-        <LogoMark />
+        <LogoMark onClick={() => router.push('/')} />
 
         {/* Cycling text — React key causes remount → sc-fade-in animation fires on each change */}
         <p
@@ -534,9 +540,20 @@ const SteppedCalculator = forwardRef<SteppedCalculatorHandle, Props>(function St
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 50, background: '#F7F4EE', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
-      {/* Header: logo (static, top left) + progress indicator (top right) */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '20px 24px', flexShrink: 0 }}>
-        <LogoMark />
+      {/* Header: logo (links home) + exit link + progress indicator */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+          <LogoMark onClick={() => router.push('/')} />
+          <button
+            onClick={() => router.push('/')}
+            style={{ display: 'flex', alignItems: 'center', gap: 5, background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 13, color: '#8A93A3', fontFamily: 'var(--font-sans)', letterSpacing: '-0.005em' }}
+          >
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M10 13L5 8L10 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Exit
+          </button>
+        </div>
         <div style={{ textAlign: 'right', flexShrink: 0 }}>
           <div style={{ fontSize: 12, fontWeight: 500, color: '#5B6577', letterSpacing: '-0.005em', marginBottom: 6 }}>
             Question {step} of 7
