@@ -90,6 +90,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
       <Nav />
       <main>
         <section
+          id="calculator"
           className="relative overflow-hidden py-14 md:py-[72px]"
           style={{ background: '#F7F4EE' }}
         >
@@ -230,6 +231,9 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                 </article>
               ))}
             </div>
+            <div className="mt-10 flex justify-center">
+              <Link href="/#calculator" className="btn-accent">Check my offer →</Link>
+            </div>
           </div>
         </section>
 
@@ -260,6 +264,7 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                   <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">The calculator separates both</div>
                   <p className="sc-body">Most calculators show a gross figure. This one calculates PILON and redundancy pay separately, applies the correct tax treatment to each, and shows your estimated net take-home figure.</p>
                 </div>
+                <Link href="/#calculator" className="btn-accent self-start">See my net take-home →</Link>
               </div>
             </div>
           </div>
@@ -293,6 +298,9 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                     </div>
                   </div>
                 ))}
+                <div className="pt-7">
+                  <Link href="/#calculator" className="btn-accent self-start">Check my offer — it&apos;s free →</Link>
+                </div>
               </div>
             </div>
           </div>
