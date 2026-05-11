@@ -237,10 +237,15 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
         <section className="py-section bg-paper-2 border-y border-rule">
           <div className="sc-container">
             <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.2fr]">
-              <div className="flex flex-col gap-3.5">
+              <div className="flex flex-col gap-5">
                 <span className="sc-eyebrow">Tax calculation</span>
                 <h2 className="sc-section-h2">How much tax will you pay on your employment settlement?</h2>
-                <p className="sc-lead">Your settlement is made up of different payments. They are not all taxed the same way.</p>
+                <p className="sc-lead">Most employees sign the first number they receive without questioning it. That number is rarely the final one.</p>
+                <p className="sc-body">Enter your salary, length of service, and your offer to see your estimated net take-home after tax — with PILON and the £30,000 exemption calculated separately.</p>
+                <div className="border-l-2 border-coral pl-4 mt-1">
+                  <p className="text-[13px] font-semibold text-ink mb-0.5">What is PILON?</p>
+                  <p className="sc-body" style={{ fontSize: 13 }}>PILON stands for <em>Payment in Lieu of Notice</em> — it is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
+                </div>
               </div>
               <div className="flex flex-col gap-6">
                 <div className="bg-card border border-rule rounded-lg p-6">
