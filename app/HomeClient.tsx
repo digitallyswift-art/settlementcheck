@@ -112,8 +112,8 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                 <h1 className="sc-h1">
                   {title || (
                     <>
-                      Your opening offer<br />
-                      is almost always <em style={{ fontStyle: 'italic', color: '#D9603B' }}>negotiable.</em>
+                      Your opening offer is<br />
+                      almost always <em style={{ fontStyle: 'italic', color: '#D9603B' }}>negotiable.</em>
                     </>
                   )}
                 </h1>
@@ -164,8 +164,8 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
                           {icon}
                         </span>
                         <span className="flex flex-col gap-0.5 pt-0.5">
-                          <span className="text-[13.5px] font-semibold text-ink leading-snug tracking-[-0.01em]">{label}</span>
-                          <span className="text-[13px] text-muted leading-snug">{detail}</span>
+                          <span className="sc-body font-semibold text-ink leading-snug tracking-[-0.01em]">{label}</span>
+                          <span className="sc-body leading-snug">{detail}</span>
                         </span>
                       </li>
                     ))}
