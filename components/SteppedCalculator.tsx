@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
+import Link from 'next/link'
 import { getVerdict, VerdictResult } from '@/lib/calculations'
 
 export interface CalcPayload {
@@ -50,15 +51,15 @@ type LoadState = 1 | 2 | 3
 
 function LogoMark() {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-        <rect width="26" height="26" rx="7" fill="#D9603B" />
-        <path d="M7 13.5L11 17.5L19 8.5" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    <Link href="/" aria-label="SettlementCheck home" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="20" height="20" rx="4" stroke="#D9603B" strokeWidth="1.5" />
+        <path d="M6 11.5L9.5 15L16 7.5" stroke="#D9603B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <span style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 600, color: '#0B1F3A', letterSpacing: '-0.01em' }}>
-        SettlementCheck
+      <span style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 420, letterSpacing: '-0.01em', lineHeight: 1 }}>
+        <span style={{ color: '#D9603B' }}>Settlement</span><span style={{ color: '#0B1F3A' }}>Check</span>
       </span>
-    </div>
+    </Link>
   )
 }
 
