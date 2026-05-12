@@ -499,7 +499,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
       </div>
 
       {/* Scrollable step content */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '16px 24px 160px', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '16px 24px 220px', display: 'flex', justifyContent: 'center' }}>
         <div style={{ width: '100%', maxWidth: 480, opacity: stepVisible ? 1 : 0, transition: 'opacity 150ms ease' }}>
 
           {/* ── STEP 1: Annual salary ── */}
@@ -754,8 +754,9 @@ export default function SteppedCalculator({ onCalculate }: Props) {
           bottom: 0,
           left: 0,
           right: 0,
-          padding: '16px 24px 32px',
-          background: 'linear-gradient(to top, #F7F4EE 75%, rgba(247,244,238,0))',
+          padding: '16px 24px env(safe-area-inset-bottom, 32px)',
+          paddingBottom: 'max(32px, env(safe-area-inset-bottom, 32px))',
+          background: 'linear-gradient(to top, #F7F4EE 80%, rgba(247,244,238,0))',
           zIndex: 10,
           transition: 'transform 150ms ease',
         }}
