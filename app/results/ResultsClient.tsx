@@ -1,11 +1,10 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import React, { Suspense, useState, useRef } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import EmployeeLeadTypeform from '@/components/EmployeeLeadTypeform'
 import { getVerdict, formatCurrency, VerdictResult, WEEKLY_CAP_GB, WEEKLY_CAP_NI } from '@/lib/calculations'
 
 /* ── Shared tiny components ─────────────────────────────────────── */
@@ -588,10 +587,106 @@ function InputsSummaryPanel({
   )
 }
 
+/* ── Get Matched CTA — verdict-aware, high-converting ───────────── */
+
+function GetMatchedCTA({
+  verdict, offer, salary, totalMonths, prefillEmail, onGetMatched,
+}: {
+  verdict: string; offer: number; salary: number; totalMonths: number
+  prefillEmail: string; onGetMatched: () => void
+}) {
+  const urgencyMap: Record<string, { badge: string; badgeColor: string; badgeBg: string; badgeBorder: string; heading: string; body: string; cta: string }> = {
+    BELOW_MINIMUM: {
+      badge: 'Your offer may be unlawful',
+      badgeColor: '#A8341F', badgeBg: '#FBF0EE', badgeBorder: '#D9A99E',
+      heading: 'Before you respond to your employer — speak to a solicitor.',
+      body: 'Your offer appears to fall below the legal minimum. You do not need to accept it, and you do not need to decide alone. A specialist employment solicitor will review your full agreement, negotiate on your behalf, and recover what you are owed — at no cost to you.',
+      cta: 'Get my free specialist match',
+    },
+    BELOW_TYPICAL: {
+      badge: 'Room to negotiate',
+      badgeColor: '#B5802A', badgeBg: '#FEFBF0', badgeBorder: '#E0CB94',
+      heading: 'Most people in your position leave money behind.',
+      body: 'Your offer covers the legal minimum, but sits below what similar cases typically settle at. A specialist solicitor can review the full agreement — not just the number — and negotiate a better outcome. The advice is free. Your employer pays.',
+      cta: 'Get my free specialist match',
+    },
+    WITHIN_RANGE: {
+      badge: 'Your offer looks fair — but check the terms',
+      badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
+      heading: 'A strong number is only part of the agreement.',
+      body: 'Your offer appears within the typical range. But settlement agreements include terms beyond the financial figure — reference wording, confidentiality obligations, and claims you are waiving. A solicitor will review the complete agreement at no cost to you.',
+      cta: 'Get my free specialist review',
+    },
+    ABOVE_TYPICAL: {
+      badge: 'Your offer looks strong',
+      badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
+      heading: 'Still worth having a solicitor check every term.',
+      body: 'Your offer appears above the typical range. A solicitor will confirm whether the full agreement is watertight — reference wording, non-disparagement clauses, restrictive covenants — before you sign anything. The review is free. Your employer is required to fund it.',
+      cta: 'Get my free specialist review',
+    },
+  }
+
+  const c = urgencyMap[verdict] ?? urgencyMap['BELOW_TYPICAL']
+
+  return (
+    <div className="bg-card border border-rule rounded-lg overflow-hidden">
+      {/* Verdict-matched badge bar */}
+      <div style={{ padding: '16px 24px 0', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', gap: 6,
+          padding: '5px 12px', borderRadius: 999,
+          fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
+          background: c.badgeBg, color: c.badgeColor, border: `1px solid ${c.badgeBorder}`,
+        }}>
+          {c.badge}
+        </span>
+      </div>
+
+      <div className="p-6 md:p-8">
+        {/* Heading + body */}
+        <h2 className="sc-h2 mb-3">{c.heading}</h2>
+        <p className="sc-body text-muted mb-6 max-w-[58ch]">{c.body}</p>
+
+        {/* Trust row */}
+        <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8">
+          {[
+            'Free — your employer pays the legal fee',
+            'SRA-regulated solicitor only',
+            'No obligation after the first call',
+          ].map(t => (
+            <span key={t} className="flex items-center gap-2 text-[13px] text-muted">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              {t}
+            </span>
+          ))}
+        </div>
+
+        {/* Primary CTA */}
+        <button
+          onClick={onGetMatched}
+          className="btn-accent text-[16px] font-semibold px-7 py-4 w-full sm:w-auto"
+          style={{ borderRadius: 10, boxShadow: '0 4px 20px rgba(217,96,59,0.28)', letterSpacing: '-0.01em' }}
+        >
+          {c.cta} →
+        </button>
+
+        {/* Micro-copy */}
+        <p className="text-[12px] text-muted mt-4 leading-[1.6] max-w-[44ch]">
+          Takes 2 minutes. Your details go to one matched solicitor only.
+          {prefillEmail ? ' Your email is pre-filled.' : ''}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 /* ── Main results content ───────────────────────────────────────── */
 
 function ResultsContent() {
   const searchParams = useSearchParams()
+  const router = useRouter()
 
   const [inputs, setInputs] = useState<EditableInputs>({
     salary:            searchParams.get('salary')            ?? '0',
@@ -702,22 +797,24 @@ function ResultsContent() {
                 params={saveParams}
               />
 
-              {/* 9. Lead capture — typeform */}
-              <div className="bg-card border border-rule rounded-lg p-6 md:p-8">
-                <div className="mb-6 pb-6 border-b border-rule">
-                  <p className="text-[11px] font-semibold uppercase tracking-widest text-muted mb-1">Step 2 of 2</p>
-                  <h2 className="sc-h2 mb-1">Get your free specialist match</h2>
-                  <p className="sc-body text-muted max-w-[52ch]">Your employer is legally required to fund your independent legal advice on a settlement agreement.</p>
-                </div>
-                <EmployeeLeadTypeform
-                  verdict={result.verdict}
-                  offer={offer}
-                  salary={salary}
-                  totalMonths={totalMonths}
-                  prefillEmail={prefillEmail}
-                  emailVerified={!!prefillEmail}
-                />
-              </div>
+              {/* 9. Lead capture CTA → /get-matched */}
+              <GetMatchedCTA
+                verdict={result.verdict}
+                offer={offer}
+                salary={salary}
+                totalMonths={totalMonths}
+                prefillEmail={prefillEmail}
+                onGetMatched={() => {
+                  const p = new URLSearchParams({
+                    verdict: result.verdict,
+                    offer:   String(offer),
+                    salary:  String(salary),
+                    months:  String(totalMonths),
+                  })
+                  if (prefillEmail) { p.set('email', prefillEmail); p.set('ev', '1') }
+                  router.push(`/get-matched?${p.toString()}`)
+                }}
+              />
 
               {/* 10. Non-converter fallback */}
               <NonConverterFallback onScrollToSave={scrollToSave} />
