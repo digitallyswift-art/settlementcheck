@@ -704,9 +704,11 @@ function ResultsContent() {
 
               {/* 9. Lead capture — typeform */}
               <div className="bg-card border border-rule rounded-lg p-6 md:p-8">
-                <p className="sc-body mb-6 max-w-[56ch]">
-                  Your employer is legally required to contribute to the cost of your independent legal advice on any settlement agreement. We match you to a specialist solicitor — not a general practice firm. You should expect contact within 24 hours.
-                </p>
+                <div className="mb-6 pb-6 border-b border-rule">
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-muted mb-1">Step 2 of 2</p>
+                  <h2 className="sc-h2 mb-1">Get your free specialist match</h2>
+                  <p className="sc-body text-muted max-w-[52ch]">Your employer is legally required to fund your independent legal advice on a settlement agreement.</p>
+                </div>
                 <EmployeeLeadTypeform
                   verdict={result.verdict}
                   offer={offer}
