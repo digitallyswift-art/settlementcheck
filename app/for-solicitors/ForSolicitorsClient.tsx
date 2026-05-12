@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import PostcodeInput from '@/components/PostcodeInput'
+import { PostcodeLookup } from '@/lib/postcodes'
 
 // ── Brand tokens (matches settlementcheck.co.uk) ─────────────────────────────
 const C = {
@@ -62,21 +64,28 @@ type SlideId =
   | 'email'
   | 'otp'
   | 'phone'
-  | 'coverage'
+  | 'officePostcode'
+  | 'coverageRadius'
   | 'sra'
   | 'success'
 
 interface FormData {
-  firmName: string
-  contactName: string
-  email: string
-  phone: string
-  coverage: string
+  firmName:             string
+  contactName:          string
+  email:                string
+  phone:                string
+  office_postcode:      string
+  office_lat:           number | null
+  office_lng:           number | null
+  office_region:        string
+  coverage_radius_miles: number | null
 }
+
+type StringFields = { [K in keyof FormData]: FormData[K] extends string ? K : never }[keyof FormData]
 
 interface SlideConfig {
   id: SlideId
-  inputField?: keyof FormData
+  inputField?: StringFields
   question?: string
   hint?: string
   placeholder?: string
@@ -121,19 +130,13 @@ const SLIDES: SlideConfig[] = [
     optional: true,
     stepNumber: 5,
   },
-  {
-    id: 'coverage',
-    inputField: 'coverage',
-    question: 'Which areas do you cover?',
-    placeholder: 'London, South East',
-    hint: 'e.g. London, South East, Manchester',
-    stepNumber: 6,
-  },
-  { id: 'sra', stepNumber: 7 },
+  { id: 'officePostcode', stepNumber: 6 },
+  { id: 'coverageRadius', stepNumber: 7 },
+  { id: 'sra', stepNumber: 8 },
   { id: 'success' },
 ]
 
-const TOTAL_STEPS = 7
+const TOTAL_STEPS = 8
 
 // ── Slide animation ───────────────────────────────────────────────────────────
 const slideVariants = {
@@ -275,12 +278,17 @@ export default function ForSolicitorsClient() {
   const [slideIndex, setSlideIndex] = useState(0)
   const [dir, setDir] = useState(1)
   const [form, setForm] = useState<FormData>({
-    firmName: '',
-    contactName: '',
-    email: '',
-    phone: '',
-    coverage: '',
+    firmName:              '',
+    contactName:           '',
+    email:                 '',
+    phone:                 '',
+    office_postcode:       '',
+    office_lat:            null,
+    office_lng:            null,
+    office_region:         '',
+    coverage_radius_miles: null,
   })
+  const [officePostcodeValid, setOfficePostcodeValid] = useState(false)
   const [fieldError, setFieldError] = useState('')
   const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', ''])
   const [otpError, setOtpError] = useState('')
@@ -460,8 +468,11 @@ export default function ForSolicitorsClient() {
       if (ok) advance()
     } else if (id === 'phone') {
       advance()
-    } else if (id === 'coverage') {
-      if (!form.coverage.trim()) { setFieldError('Please enter your geographic coverage'); return }
+    } else if (id === 'officePostcode') {
+      if (!officePostcodeValid || !form.office_postcode.trim()) {
+        setFieldError('Please enter a valid UK postcode to continue')
+        return
+      }
       advance()
     }
   }, [currentSlide.id, form, advance, sendOtp])
@@ -474,12 +485,16 @@ export default function ForSolicitorsClient() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firm_name: form.firmName,
-          contact_name: form.contactName,
-          email: form.email,
-          phone: form.phone || null,
-          coverage: form.coverage,
-          sra_confirmed: true,
+          firm_name:             form.firmName,
+          contact_name:          form.contactName,
+          email:                 form.email,
+          phone:                 form.phone || null,
+          office_postcode:       form.office_postcode,
+          office_lat:            form.office_lat,
+          office_lng:            form.office_lng,
+          office_region:         form.office_region,
+          coverage_radius_miles: form.coverage_radius_miles,
+          sra_confirmed:         true,
         }),
       })
       if (!res.ok) {
@@ -508,7 +523,7 @@ export default function ForSolicitorsClient() {
     (e: React.KeyboardEvent) => {
       if (
         e.key === 'Enter' &&
-        !['otp', 'sra', 'welcome', 'success'].includes(currentSlide.id)
+        !['otp', 'sra', 'welcome', 'success', 'officePostcode', 'coverageRadius'].includes(currentSlide.id)
       ) {
         e.preventDefault()
         handleNext()
@@ -683,6 +698,159 @@ export default function ForSolicitorsClient() {
                   otpRefs={otpRefs}
                 />
               )}
+              {currentSlide.id === 'officePostcode' && (
+                <div>
+                  <h2
+                    style={{
+                      color: C.navy,
+                      fontSize: 'clamp(24px, 4vw, 38px)',
+                      fontWeight: 700,
+                      letterSpacing: '-0.025em',
+                      lineHeight: 1.2,
+                      margin: '0 0 8px',
+                      fontFamily: SERIF,
+                    }}
+                  >
+                    What is your office postcode?
+                  </h2>
+                  <p
+                    style={{
+                      color: C.muted,
+                      fontSize: 15,
+                      margin: '0 0 28px',
+                      lineHeight: 1.5,
+                      fontFamily: SANS,
+                    }}
+                  >
+                    We use this to match you with employees in your area. Must be a real UK postcode.
+                  </p>
+                  <PostcodeInput
+                    value={form.office_postcode}
+                    onChange={v => {
+                      setFieldError('')
+                      setOfficePostcodeValid(false)
+                      setForm(f => ({ ...f, office_postcode: v, office_lat: null, office_lng: null, office_region: '' }))
+                    }}
+                    onValidated={(lookup: PostcodeLookup | null) => {
+                      if (lookup) {
+                        setForm(f => ({
+                          ...f,
+                          office_postcode: lookup.postcode,
+                          office_lat:      lookup.latitude,
+                          office_lng:      lookup.longitude,
+                          office_region:   lookup.admin_district,
+                        }))
+                        setOfficePostcodeValid(true)
+                      } else {
+                        setOfficePostcodeValid(false)
+                      }
+                      setFieldError('')
+                    }}
+                    inputRef={inputRef}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') { e.preventDefault(); handleNext() }
+                    }}
+                  />
+                  {fieldError && (
+                    <p style={{ color: C.error, fontSize: 13, margin: '4px 0 0', fontFamily: SANS }}>{fieldError}</p>
+                  )}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 20 }}>
+                    <button
+                      onClick={handleNext}
+                      disabled={!officePostcodeValid}
+                      style={{
+                        background: C.accent,
+                        border: 'none',
+                        borderRadius: 8,
+                        padding: '12px 26px',
+                        color: '#fff',
+                        fontSize: 15,
+                        fontWeight: 600,
+                        cursor: officePostcodeValid ? 'pointer' : 'not-allowed',
+                        opacity: officePostcodeValid ? 1 : 0.45,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        fontFamily: SANS,
+                        boxShadow: officePostcodeValid ? '0 2px 8px rgba(217,96,59,0.25)' : 'none',
+                      }}
+                      onMouseEnter={e => { if (officePostcodeValid) e.currentTarget.style.background = C.accentHover }}
+                      onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
+                    >
+                      OK
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </button>
+                    <span style={{ color: C.borderStrong, fontSize: 12, fontFamily: SANS }}>
+                      press{' '}
+                      <kbd style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 4, padding: '2px 6px', fontFamily: SANS, fontSize: 11, color: C.muted }}>
+                        Enter
+                      </kbd>
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {currentSlide.id === 'coverageRadius' && (
+                <div>
+                  <h2
+                    style={{
+                      color: C.navy,
+                      fontSize: 'clamp(24px, 4vw, 38px)',
+                      fontWeight: 700,
+                      letterSpacing: '-0.025em',
+                      lineHeight: 1.2,
+                      margin: '0 0 8px',
+                      fontFamily: SERIF,
+                    }}
+                  >
+                    How far do you cover?
+                  </h2>
+                  <p style={{ color: C.muted, fontSize: 15, margin: '0 0 28px', lineHeight: 1.5, fontFamily: SANS }}>
+                    From your office at {form.office_postcode}. You will only receive leads within this range.
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {([
+                      { label: 'Within 25 miles',  value: 25   as number | null },
+                      { label: 'Within 50 miles',  value: 50   as number | null },
+                      { label: 'Within 100 miles', value: 100  as number | null },
+                      { label: 'National (England & Wales)', value: null as number | null },
+                      { label: 'UK-wide',          value: null as number | null },
+                    ]).map(opt => {
+                      const selected = form.coverage_radius_miles === opt.value && opt.value !== null
+                      return (
+                        <button
+                          key={opt.label}
+                          type="button"
+                          onClick={() => {
+                            setForm(f => ({ ...f, coverage_radius_miles: opt.value }))
+                            setTimeout(() => advance(), 300)
+                          }}
+                          style={{
+                            width: '100%',
+                            minHeight: 52,
+                            padding: '14px 20px',
+                            textAlign: 'left',
+                            border: `1.5px solid ${selected ? C.navy : C.border}`,
+                            borderRadius: 10,
+                            fontSize: 16,
+                            fontFamily: SANS,
+                            fontWeight: selected ? 600 : 400,
+                            cursor: 'pointer',
+                            background: selected ? C.navy : C.white,
+                            color: selected ? '#fff' : C.navy,
+                            transition: 'background 120ms ease, color 120ms ease, border-color 120ms ease',
+                          }}
+                        >
+                          {opt.label}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
               {currentSlide.id === 'sra' && (
                 <SraSlide
                   firmName={form.firmName}

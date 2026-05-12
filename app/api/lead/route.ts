@@ -14,6 +14,10 @@ export async function POST(req: NextRequest) {
       salary,
       months_service,
       consent,
+      postcode,
+      postcode_region,
+      postcode_lat,
+      postcode_lng,
     } = await req.json()
 
     // ── Validation ──────────────────────────────────────────────────────────
@@ -35,16 +39,20 @@ export async function POST(req: NextRequest) {
 
     // ── Insert into Supabase ────────────────────────────────────────────────
     const { error: insertError } = await supabase.from('leads').insert({
-      first_name:     first_name.trim(),
-      email:          email.trim().toLowerCase(),
-      phone:          phone.trim(),
-      contact_time:   safeContactTime,
-      verdict:        verdict ?? 'unknown',
-      offer_amount:   offer_amount ?? null,
-      salary:         salary ?? null,
-      months_service: months_service ?? null,
-      consent:        true,
-      status:         'new',
+      first_name:      first_name.trim(),
+      email:           email.trim().toLowerCase(),
+      phone:           phone.trim(),
+      contact_time:    safeContactTime,
+      verdict:         verdict ?? 'unknown',
+      offer_amount:    offer_amount ?? null,
+      salary:          salary ?? null,
+      months_service:  months_service ?? null,
+      consent:         true,
+      status:          'new',
+      postcode:        postcode ?? null,
+      postcode_region: postcode_region ?? null,
+      postcode_lat:    postcode_lat ?? null,
+      postcode_lng:    postcode_lng ?? null,
     })
 
     if (insertError) {
@@ -91,6 +99,10 @@ export async function POST(req: NextRequest) {
                 <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Phone</td>
                 <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;"><a href="tel:${phone.trim()}" style="color: #d9603b;">${phone.trim()}</a></td>
               </tr>
+              ${postcode ? `<tr>
+                <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Postcode</td>
+                <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;">${postcode}${postcode_region ? ` (${postcode_region})` : ''}</td>
+              </tr>` : ''}
               <tr>
                 <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Preferred contact</td>
                 <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;">${safeContactTime}</td>

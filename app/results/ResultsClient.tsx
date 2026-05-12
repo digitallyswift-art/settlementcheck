@@ -5,6 +5,7 @@ import React, { Suspense, useState, useRef } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import EmployeeLeadTypeform from '@/components/EmployeeLeadTypeform'
 import { getVerdict, formatCurrency, VerdictResult, WEEKLY_CAP_GB, WEEKLY_CAP_NI } from '@/lib/calculations'
 
 /* ── Shared tiny components ─────────────────────────────────────── */
@@ -410,176 +411,6 @@ function SaveCard({ resultRef, result, offer, onEmailCapture, params }: {
   )
 }
 
-/* ── Lead form / Step 2 (Section 7) ────────────────────────────── */
-
-function LeadForm({ verdict, offer, salary, totalMonths, prefillEmail }: {
-  verdict: string; offer: number; salary: number; totalMonths: number; prefillEmail: string
-}) {
-  const [form, setForm] = useState({ first_name: '', email: prefillEmail, phone: '', contact_time: 'Morning', consent: false })
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
-
-  const update = (k: string, v: string | boolean) => {
-    setForm(f => ({ ...f, [k]: v }))
-    if (errors[k]) setErrors(e => ({ ...e, [k]: '' }))
-  }
-
-  const submit = async (ev: React.FormEvent) => {
-    ev.preventDefault()
-    const e: Record<string, string> = {}
-    if (!form.first_name.trim()) e.first_name = 'Required'
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Enter a valid email'
-    if (!form.phone || form.phone.length < 7) e.phone = 'Enter a phone number'
-    if (!form.consent) e.consent = 'Required'
-    setErrors(e)
-    if (Object.keys(e).length) return
-    setStatus('submitting')
-    try {
-      const res = await fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ first_name: form.first_name, email: form.email, phone: form.phone, contact_time: form.contact_time, verdict, offer_amount: offer, salary, months_service: totalMonths, consent: form.consent }),
-      })
-      if (!res.ok) throw new Error()
-      setStatus('success')
-    } catch {
-      setErrors({ form: 'Something went wrong. Please try again.' })
-      setStatus('idle')
-    }
-  }
-
-  if (status === 'success') {
-    return (
-      <div className="bg-sage-tint border border-[#BCD0BF] rounded-lg p-7 flex flex-col items-center text-center gap-4">
-        <div className="w-12 h-12 rounded-full flex items-center justify-center text-white" style={{ background: '#4F7060' }}>
-          <CheckIcon size={20} />
-        </div>
-        <h3 className="sc-h3">Matched. A solicitor will call within 24 hours.</h3>
-        <p className="sc-body max-w-[48ch]">
-          On <strong className="text-ink">{form.phone}</strong>, {form.contact_time.toLowerCase()} preferred. The advice is free. Your employer covers the cost.
-        </p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="bg-card border border-rule rounded-lg p-6 md:p-7 flex flex-col gap-5">
-      <div>
-        <span className="sc-eyebrow">Step 2 of 2</span>
-        <h3 className="sc-h3 mt-1.5">Now you know where your offer stands.</h3>
-        <p className="sc-body mt-1 font-medium text-ink">The next step costs you nothing.</p>
-        <p className="sc-body mt-2 max-w-[56ch]">
-          Your employer is legally required to contribute to the cost of your independent legal advice on any settlement agreement.
-        </p>
-        <p className="sc-body mt-2 max-w-[56ch]">
-          We match you to a solicitor who handles settlement agreements exclusively, not a general practice firm taking employment cases alongside conveyancing and wills. You should expect contact within 24 hours.
-        </p>
-        <p className="sc-body mt-2 max-w-[56ch]">
-          They will tell you whether your offer is moveable, handle any negotiation on your behalf, and review every term in the agreement, not just the financial figure.
-        </p>
-        <p className="sc-body mt-2"><strong className="text-ink">You are under no obligation after the first call.</strong></p>
-      </div>
-
-      <form onSubmit={submit} noValidate className="flex flex-col gap-4">
-        <div className="grid grid-cols-2 gap-4 max-[520px]:grid-cols-1">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-medium text-ink">First name</label>
-            <div className="input-wrap">
-              <input type="text" className="flex-1 border-0 bg-transparent outline-none py-3 px-3.5 text-[15px] text-ink placeholder-muted-2" placeholder="Alex" value={form.first_name} onChange={e => update('first_name', e.target.value)} />
-            </div>
-            {errors.first_name && <span className="text-[12px] text-crimson">{errors.first_name}</span>}
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-medium text-ink">Email</label>
-            <div className="input-wrap">
-              <input type="email" className="flex-1 border-0 bg-transparent outline-none py-3 px-3.5 text-[15px] text-ink placeholder-muted-2" placeholder="alex@example.com" value={form.email} onChange={e => update('email', e.target.value)} />
-            </div>
-            {errors.email && <span className="text-[12px] text-crimson">{errors.email}</span>}
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-medium text-ink">Phone</label>
-            <div className="input-wrap">
-              <input type="tel" className="flex-1 border-0 bg-transparent outline-none py-3 px-3.5 text-[15px] text-ink placeholder-muted-2" placeholder="07…" value={form.phone} onChange={e => update('phone', e.target.value)} />
-            </div>
-            {errors.phone && <span className="text-[12px] text-crimson">{errors.phone}</span>}
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[13px] font-medium text-ink">Preferred contact time</label>
-            <div className="pill-radio" role="radiogroup">
-              {(['Morning', 'Afternoon', 'Evening'] as const).map(t => (
-                <button key={t} type="button" className="pill-radio-btn" aria-pressed={form.contact_time === t} onClick={() => update('contact_time', t)}>{t}</button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <label className="grid gap-3 cursor-pointer items-start" style={{ gridTemplateColumns: '18px 1fr' }}>
-          <input type="checkbox" className="mt-0.5 w-4 h-4 accent-ink" checked={form.consent} onChange={e => update('consent', e.target.checked)} />
-          <span className="text-[13px] text-muted leading-[1.55]">
-            I consent to SettlementCheck sharing my details with one matched SRA-regulated solicitor so they may contact me about my settlement.
-          </span>
-        </label>
-        {errors.consent && <span className="text-[12px] text-crimson -mt-2">{errors.consent}</span>}
-        {errors.form && <span className="text-[13px] text-crimson">{errors.form}</span>}
-
-        <button type="submit" disabled={status === 'submitting'} className="btn-accent w-full py-4 text-[16px] disabled:opacity-60">
-          {status === 'submitting' ? 'Submitting…' : 'Get my free specialist match'}
-        </button>
-
-        {/* Trust signals below the CTA */}
-        <div className="flex flex-col gap-2 pt-1">
-          {[
-            'Your employer covers the fee, not you',
-            'Your details go to one matched solicitor only',
-            'No obligation after the first call',
-          ].map(s => (
-            <div key={s} className="flex items-center gap-2 text-[13px] text-muted">
-              <div className="w-4 h-4 rounded-full flex items-center justify-center text-white flex-shrink-0" style={{ background: '#4F7060' }}>
-                <CheckIcon size={9} />
-              </div>
-              {s}
-            </div>
-          ))}
-        </div>
-      </form>
-
-      {/* FAQ / Objection handler */}
-      <div className="pt-4 border-t border-rule flex flex-col gap-3">
-        <h4 className="sc-h3" style={{ fontSize: 18 }}>Questions people ask before they fill this in</h4>
-        {[
-          {
-            q: 'Is this genuinely free for me?',
-            a: 'Yes. Employment law requires your employer to contribute to the cost of your independent legal advice when you are presented with a settlement agreement. In practice, you pay nothing for the initial review. The solicitor\'s fee comes from your employer. That is a legal requirement, not a commercial arrangement.',
-          },
-          {
-            q: 'Will I be contacted by multiple firms?',
-            a: 'No. Your details are shared with one matched solicitor only. You will not be added to any marketing list or called by anyone else.',
-          },
-          {
-            q: 'What if I have already signed?',
-            a: 'In most cases a signed agreement is binding. If you signed recently under pressure, without fully understanding the terms, or without independent legal advice, speak to a solicitor before assuming nothing can change.',
-          },
-          {
-            q: 'I am not sure I have a strong position. Should I still proceed?',
-            a: 'Yes. Not being sure is the most common starting point. A solicitor will tell you in the first call whether there is anything worth pursuing. That assessment costs you nothing and commits you to nothing.',
-          },
-          {
-            q: 'What if my situation does not fit the calculator?',
-            a: 'The calculator gives a statutory and typical benchmark. It cannot capture every variable: seniority, contractual benefits, the specific reason for your departure. That is exactly what the solicitor review is for.',
-          },
-        ].map(({ q, a }) => (
-          <details key={q} className="faq-item group">
-            <summary className="flex justify-between items-center py-3.5 cursor-pointer list-none gap-4 text-[15px] font-medium text-ink">
-              {q}
-              <span className="faq-icon flex-shrink-0">+</span>
-            </summary>
-            <p className="sc-body pb-4 pr-4 leading-[1.65]">{a}</p>
-          </details>
-        ))}
-      </div>
-    </div>
-  )
-}
 
 /* ── Non-converter fallback (Section 8) ─────────────────────────── */
 
@@ -871,8 +702,20 @@ function ResultsContent() {
                 params={saveParams}
               />
 
-              {/* 9. Lead capture */}
-              <LeadForm verdict={result.verdict} offer={offer} salary={salary} totalMonths={totalMonths} prefillEmail={prefillEmail} />
+              {/* 9. Lead capture — typeform */}
+              <div className="bg-card border border-rule rounded-lg p-6 md:p-8">
+                <p className="sc-body mb-6 max-w-[56ch]">
+                  Your employer is legally required to contribute to the cost of your independent legal advice on any settlement agreement. We match you to a specialist solicitor — not a general practice firm. You should expect contact within 24 hours.
+                </p>
+                <EmployeeLeadTypeform
+                  verdict={result.verdict}
+                  offer={offer}
+                  salary={salary}
+                  totalMonths={totalMonths}
+                  prefillEmail={prefillEmail}
+                  emailVerified={!!prefillEmail}
+                />
+              </div>
 
               {/* 10. Non-converter fallback */}
               <NonConverterFallback onScrollToSave={scrollToSave} />

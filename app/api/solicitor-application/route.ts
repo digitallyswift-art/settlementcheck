@@ -4,7 +4,18 @@ import { resend } from '@/lib/resend'
 
 export async function POST(req: NextRequest) {
   try {
-    const { firm_name, contact_name, email, phone, coverage, sra_confirmed } = await req.json()
+    const {
+      firm_name,
+      contact_name,
+      email,
+      phone,
+      office_postcode,
+      office_lat,
+      office_lng,
+      office_region,
+      coverage_radius_miles,
+      sra_confirmed,
+    } = await req.json()
 
     if (!firm_name || !contact_name || !email || !sra_confirmed) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -14,11 +25,15 @@ export async function POST(req: NextRequest) {
       firm_name,
       contact_name,
       email,
-      phone: phone || null,
-      sra_regulated: Boolean(sra_confirmed),
-      status: 'pending',
+      phone:                 phone || null,
+      office_postcode:       office_postcode || null,
+      office_lat:            office_lat ?? null,
+      office_lng:            office_lng ?? null,
+      office_region:         office_region || null,
+      coverage_radius_miles: coverage_radius_miles ?? null,
+      sra_regulated:         Boolean(sra_confirmed),
+      status:                'pending',
     }
-    if (coverage) insertPayload.geographic_coverage = coverage
 
     const { error: insertError } = await supabase.from('solicitor_applications').insert(insertPayload)
 
@@ -64,10 +79,17 @@ export async function POST(req: NextRequest) {
                 <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Phone</td>
                 <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;">${phone}</td>
               </tr>` : ''}
-              ${coverage ? `<tr>
-                <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Coverage</td>
-                <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;">${coverage}</td>
+              ${office_postcode ? `<tr>
+                <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Office postcode</td>
+                <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;">${office_postcode}${office_region ? ` — ${office_region}` : ''}</td>
               </tr>` : ''}
+              ${coverage_radius_miles != null ? `<tr>
+                <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Coverage radius</td>
+                <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;">${coverage_radius_miles} miles</td>
+              </tr>` : `<tr>
+                <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Coverage radius</td>
+                <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;">National</td>
+              </tr>`}
               <tr>
                 <td style="padding: 10px 0; color: #6b7280;">SRA confirmed</td>
                 <td style="padding: 10px 0; color: #16a34a; font-weight: 600;">${sra_confirmed ? '&#10003; Yes' : '&#10007; No'}</td>
