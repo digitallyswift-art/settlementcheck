@@ -6,7 +6,7 @@ import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
   title: 'How to Negotiate a Settlement Agreement | The Complete UK Guide',
-  description: 'Understand the facts of settlement agreement negotiation in the UK. Learn about Without Prejudice rules, leverage, and the step-by-step process.',
+  description: 'Understand the facts of settlement agreement negotiation in the UK. Learn about Without Prejudice rules, assessing your position, and the step-by-step process.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement',
   },
@@ -178,14 +178,14 @@ export default function HowToNegotiateGuide() {
 
             {/* Section 3 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">3. Assessing Leverage</h2>
+              <h2 className="guide-h2 text-[24px]">3. Assessing Your Position</h2>
               <p className="guide-body">
-                Leverage dictates the potential value of a settlement. Strong leverage exists when the employer faces significant financial or reputational risk if the employee refuses to sign. Weak leverage exists when the employer has a watertight, legally sound case for dismissal.
+                The strength of your position dictates the potential value of a settlement. A strong position exists when the employer faces significant financial or reputational risk if the employee refuses to sign. A weak position exists when the employer has a watertight, legally sound case for dismissal.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <div>
-                  <h3 className="font-serif text-[18px] text-ink mb-3 border-b border-rule pb-2">High Leverage</h3>
+                  <h3 className="font-serif text-[18px] text-ink mb-3 border-b border-rule pb-2">Strong Position</h3>
                   <ul className="space-y-2">
                     <li className="text-[14px] text-muted flex items-start gap-2">
                       <span className="text-coral mt-1">•</span> Strong evidence of discrimination.
@@ -199,7 +199,7 @@ export default function HowToNegotiateGuide() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-serif text-[18px] text-ink mb-3 border-b border-rule pb-2">Low Leverage</h3>
+                  <h3 className="font-serif text-[18px] text-ink mb-3 border-b border-rule pb-2">Weak Position</h3>
                   <ul className="space-y-2">
                     <li className="text-[14px] text-muted flex items-start gap-2">
                       <span className="text-coral mt-1">•</span> A genuine redundancy with full consultation completed.
@@ -347,7 +347,7 @@ export default function HowToNegotiateGuide() {
 
             {/* Disclaimer */}
             <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed">
-              SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement process and does not constitute legal counsel.
+              SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement process and does not constitute legal advice.
             </p>
 
           </div>
