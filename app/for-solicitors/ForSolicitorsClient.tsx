@@ -1141,7 +1141,7 @@ function TextInputSlide({
           onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
         >
           {loading ? (
-            'Sending…'
+            'Sending'
           ) : showSkip ? (
             'Skip'
           ) : (
@@ -1300,7 +1300,7 @@ function OtpSlide({
           boxShadow: verifying || !filled ? 'none' : '0 2px 8px rgba(217,96,59,0.25)',
         }}
       >
-        {verifying ? 'Verifying…' : 'Verify email'}
+        {verifying ? 'Verifying' : 'Verify email'}
       </button>
 
       <div style={{ color: C.muted, fontSize: 13, fontFamily: SANS }}>
@@ -1464,7 +1464,7 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
         onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
       >
         {submitting ? (
-          'Submitting…'
+          'Submitting'
         ) : (
           <>
             Yes, confirm &amp; apply

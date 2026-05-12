@@ -162,7 +162,7 @@ function OkBtn({
         onMouseEnter={e => { if (!inactive) e.currentTarget.style.background = C.accentHover }}
         onMouseLeave={e => { e.currentTarget.style.background = inactive ? C.borderStrong : C.accent }}
       >
-        {loading ? 'Sending…' : (
+        {loading ? 'Sending' : (
           <>
             {label}
             {label === 'OK' && (
@@ -586,7 +586,7 @@ export default function GetMatchedClient() {
                         letterSpacing: '-0.01em',
                       }}
                     >
-                      {otpVerifying ? 'Verifying…' : 'Verify code'}
+                      {otpVerifying ? 'Verifying' : 'Verify code'}
                     </button>
                   </div>
                   <p style={{ color: C.muted, fontSize: 13, fontFamily: SANS, marginTop: 20 }}>
@@ -643,7 +643,7 @@ export default function GetMatchedClient() {
               {currentSlide === 'phone' && (
                 <div>
                   <Q>Best number to reach you?</Q>
-                  <Hint>A solicitor — not an automated system — will call you directly.</Hint>
+                  <Hint>A solicitor, not an automated system, will call you directly.</Hint>
                   <LineInput
                     inputRef={inputRef} value={form.phone} type="tel"
                     placeholder="07700 900 000" autoComplete="tel"
@@ -698,7 +698,7 @@ export default function GetMatchedClient() {
                 <div>
                   <Q>Almost done.</Q>
                   <p style={{ color: C.muted, fontSize: 16, margin: '8px 0 24px', lineHeight: 1.6, fontFamily: SANS }}>
-                    We&apos;ll share these details with one matched SRA-regulated solicitor — no one else.
+                    We will share these details with one matched SRA-regulated solicitor. No one else.
                   </p>
 
                   {/* Summary card */}
@@ -742,7 +742,7 @@ export default function GetMatchedClient() {
                     onMouseEnter={e => { if (!submitting) e.currentTarget.style.background = C.accentHover }}
                     onMouseLeave={e => { e.currentTarget.style.background = submitting ? C.borderStrong : C.accent }}
                   >
-                    {submitting ? 'Submitting…' : 'Confirm — get my free specialist match'}
+                    {submitting ? 'Submitting' : 'Confirm and get my free specialist match'}
                   </button>
 
                   <p style={{ fontFamily: SANS, fontSize: 13, color: C.muted, margin: '16px 0 0', lineHeight: 1.65 }}>
@@ -792,7 +792,7 @@ export default function GetMatchedClient() {
                       gap: 10, marginBottom: 32,
                     }}>
                       {[
-                        'SRA-regulated solicitor — not a general practice firm',
+                        'SRA-regulated solicitor, not a general practice firm',
                         'Your details were shared with one solicitor only',
                         'No obligation after the first call',
                       ].map(text => (

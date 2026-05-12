@@ -587,6 +587,87 @@ function InputsSummaryPanel({
   )
 }
 
+/* ── Pre-CTA trust USPs + FAQ to address objections ────────────── */
+
+const LEAD_FAQS = [
+  {
+    q: 'Is this genuinely free for me?',
+    a: 'Yes. UK law requires your employer to pay for your independent legal advice on any settlement agreement. The solicitor\'s fee is covered by your employer, not you. You will not be asked for payment at any point.',
+  },
+  {
+    q: 'Will I be contacted by multiple firms?',
+    a: 'No. Your details go to one matched solicitor only. We do not share your information with multiple firms or add you to any marketing list.',
+  },
+  {
+    q: 'What if I have already signed?',
+    a: 'In most cases a solicitor can still review the agreement, particularly if it was signed under pressure or without adequate time to consider the terms. It is worth getting advice even at this stage.',
+  },
+  {
+    q: 'I am not sure I have a strong position. Should I still proceed?',
+    a: 'Yes. You do not need certainty to get advice. A solicitor will tell you where you stand, what the agreement means, and whether the terms are reasonable. That clarity costs you nothing.',
+  },
+  {
+    q: 'What if my situation does not fit the calculator?',
+    a: 'The calculator covers the most common scenarios. A solicitor can assess your full situation, including anything the calculator cannot account for, such as discrimination, whistleblowing, or complex bonus structures.',
+  },
+]
+
+function LeadFAQ() {
+  const [open, setOpen] = useState<number | null>(null)
+  return (
+    <div className="bg-card border border-rule rounded-lg overflow-hidden">
+      <div className="p-6 md:p-8 pb-4">
+        {/* USP row */}
+        <div className="flex flex-col gap-3 mb-6">
+          {[
+            'Your employer covers the fee, not you',
+            'Your details go to one matched solicitor only',
+            'No obligation after the first call',
+          ].map(t => (
+            <div key={t} className="flex items-center gap-3">
+              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#2D5A3D] flex items-center justify-center">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span className="text-[14px] text-ink leading-snug">{t}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="border-t border-rule pt-6">
+          <h3 className="sc-h3 mb-5">Questions people ask before they fill this in</h3>
+          <div className="flex flex-col">
+            {LEAD_FAQS.map((item, i) => (
+              <div key={i} className="border-t border-rule first:border-t-0">
+                <button
+                  onClick={() => setOpen(open === i ? null : i)}
+                  className="w-full flex items-center justify-between py-4 text-left gap-4"
+                  aria-expanded={open === i}
+                >
+                  <span className="sc-body font-medium text-ink">{item.q}</span>
+                  <span
+                    className="flex-shrink-0 w-7 h-7 rounded-full border border-rule flex items-center justify-center transition-transform duration-200"
+                    style={{ transform: open === i ? 'rotate(45deg)' : 'none' }}
+                    aria-hidden="true"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5B6577" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                  </span>
+                </button>
+                {open === i && (
+                  <p className="sc-body text-muted pb-5 max-w-[60ch]">{item.a}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ── Get Matched CTA — verdict-aware, high-converting ───────────── */
 
 function GetMatchedCTA({
@@ -599,29 +680,29 @@ function GetMatchedCTA({
     BELOW_MINIMUM: {
       badge: 'Your offer may be unlawful',
       badgeColor: '#A8341F', badgeBg: '#FBF0EE', badgeBorder: '#D9A99E',
-      heading: 'Before you respond to your employer — speak to a solicitor.',
-      body: 'Your offer appears to fall below the legal minimum. You do not need to accept it, and you do not need to decide alone. A specialist employment solicitor will review your full agreement, negotiate on your behalf, and recover what you are owed — at no cost to you.',
+      heading: 'Before you respond to your employer, speak to a solicitor.',
+      body: 'Your offer appears to fall below the legal minimum. You do not need to accept it, and you do not need to decide alone. A specialist employment solicitor will review your full agreement, negotiate on your behalf, and recover what you are owed at no cost to you.',
       cta: 'Get my free specialist match',
     },
     BELOW_TYPICAL: {
       badge: 'Room to negotiate',
       badgeColor: '#B5802A', badgeBg: '#FEFBF0', badgeBorder: '#E0CB94',
       heading: 'Most people in your position leave money behind.',
-      body: 'Your offer covers the legal minimum, but sits below what similar cases typically settle at. A specialist solicitor can review the full agreement — not just the number — and negotiate a better outcome. The advice is free. Your employer pays.',
+      body: 'Your offer covers the legal minimum, but sits below what similar cases typically settle at. A specialist solicitor can review the full agreement (not just the number) and negotiate a better outcome. The advice is free. Your employer pays.',
       cta: 'Get my free specialist match',
     },
     WITHIN_RANGE: {
-      badge: 'Your offer looks fair — but check the terms',
+      badge: 'Your offer looks fair, but check the terms',
       badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
       heading: 'A strong number is only part of the agreement.',
-      body: 'Your offer appears within the typical range. But settlement agreements include terms beyond the financial figure — reference wording, confidentiality obligations, and claims you are waiving. A solicitor will review the complete agreement at no cost to you.',
+      body: 'Your offer appears within the typical range. But settlement agreements include terms beyond the financial figure: reference wording, confidentiality obligations, and claims you are waiving. A solicitor will review the complete agreement at no cost to you.',
       cta: 'Get my free specialist review',
     },
     ABOVE_TYPICAL: {
       badge: 'Your offer looks strong',
       badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
       heading: 'Still worth having a solicitor check every term.',
-      body: 'Your offer appears above the typical range. A solicitor will confirm whether the full agreement is watertight — reference wording, non-disparagement clauses, restrictive covenants — before you sign anything. The review is free. Your employer is required to fund it.',
+      body: 'Your offer appears above the typical range. A solicitor will confirm whether the full agreement is watertight: reference wording, non-disparagement clauses, restrictive covenants. The review is free. Your employer is required to fund it.',
       cta: 'Get my free specialist review',
     },
   }
@@ -650,7 +731,7 @@ function GetMatchedCTA({
         {/* Trust row */}
         <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8">
           {[
-            'Free — your employer pays the legal fee',
+            'Free. Your employer pays the legal fee.',
             'SRA-regulated solicitor only',
             'No obligation after the first call',
           ].map(t => (
@@ -816,7 +897,10 @@ function ResultsContent() {
                 }}
               />
 
-              {/* 10. Non-converter fallback */}
+              {/* 10. USPs + FAQ — objection handling before non-converter fallback */}
+              <LeadFAQ />
+
+              {/* 11. Non-converter fallback */}
               <NonConverterFallback onScrollToSave={scrollToSave} />
 
               <p className="text-[12px] text-muted-2 leading-[1.6] text-center px-4">
