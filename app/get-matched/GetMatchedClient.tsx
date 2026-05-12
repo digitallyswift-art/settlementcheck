@@ -27,7 +27,6 @@ type SlideId = 'firstName' | 'email' | 'otp' | 'postcode' | 'phone' | 'contactTi
 // Full slide order when email not pre-verified, prefilled when it is
 const SLIDES_FULL:    SlideId[] = ['firstName', 'email', 'otp', 'postcode', 'phone', 'contactTime', 'consent', 'success']
 const SLIDES_PREFILL: SlideId[] = ['firstName', 'postcode', 'phone', 'contactTime', 'consent', 'success']
-const TOTAL_STEPS = 7 // excludes success
 
 interface FormData {
   firstName:       string
@@ -218,14 +217,16 @@ export default function GetMatchedClient() {
   const [resendCooldown, setResendCooldown] = useState(0)
   const [submitting, setSubmitting]       = useState(false)
 
-  const inputRef    = useRef<HTMLInputElement>(null)
-  const otpRefs     = useRef<(HTMLInputElement | null)[]>([null,null,null,null,null,null])
-  const postcodeRef = useRef<HTMLInputElement>(null)
+  const inputRef      = useRef<HTMLInputElement>(null)
+  const otpRefs       = useRef<(HTMLInputElement | null)[]>([null,null,null,null,null,null])
+  const postcodeRef   = useRef<HTMLInputElement>(null)
+  const advancingRef  = useRef(false) // guard against double-advance from Enter key + onEnter
 
   const currentSlide = slides[slideIndex]
+  const totalSteps   = slides.length - 1 // excludes success
   const isSuccess    = currentSlide === 'success'
-  const stepNum      = isSuccess ? TOTAL_STEPS : slideIndex + 1
-  const progressPct  = isSuccess ? 100 : Math.round((slideIndex / (slides.length - 1)) * 100)
+  const stepNum      = isSuccess ? totalSteps : slideIndex + 1
+  const progressPct  = isSuccess ? 100 : Math.round((slideIndex / totalSteps) * 100)
   const showBack     = slideIndex > 0 && !isSuccess
   const showProgress = !isSuccess
 
@@ -265,6 +266,8 @@ export default function GetMatchedClient() {
   const advance = useCallback(() => {
     setDir(1); setFieldError('')
     setSlideIndex(i => i + 1)
+    // Reset guard after animation completes
+    setTimeout(() => { advancingRef.current = false }, 400)
   }, [])
 
   const goBack = useCallback(() => {
@@ -350,26 +353,31 @@ export default function GetMatchedClient() {
 
   // ── Per-slide advance ─────────────────────────────────────────────────────────
   const handleNext = useCallback(async () => {
+    if (advancingRef.current) return
+    advancingRef.current = true
     setFieldError('')
     if (currentSlide === 'firstName') {
-      if (!form.firstName.trim()) { setFieldError('Please enter your first name'); return }
+      if (!form.firstName.trim()) { advancingRef.current = false; setFieldError('Please enter your first name'); return }
       advance()
     } else if (currentSlide === 'email') {
       if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-        setFieldError('Please enter a valid email address'); return
+        advancingRef.current = false; setFieldError('Please enter a valid email address'); return
       }
       const ok = await sendOtp(form.email)
       if (ok) advance()
+      else advancingRef.current = false
     } else if (currentSlide === 'postcode') {
       if (!postcodeValid || !form.postcode.trim()) {
-        setFieldError('Please enter a valid UK postcode to continue'); return
+        advancingRef.current = false; setFieldError('Please enter a valid UK postcode to continue'); return
       }
       advance()
     } else if (currentSlide === 'phone') {
       if (!form.phone || form.phone.trim().length < 7) {
-        setFieldError('Please enter your phone number'); return
+        advancingRef.current = false; setFieldError('Please enter your phone number'); return
       }
       advance()
+    } else {
+      advancingRef.current = false
     }
   }, [currentSlide, form, postcodeValid, advance, sendOtp])
 
@@ -407,16 +415,9 @@ export default function GetMatchedClient() {
     }
   }, [form, verdict, offerAmount, salaryAmount, totalMonths, advance])
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !['otp','contactTime','consent','success'].includes(currentSlide)) {
-      e.preventDefault(); handleNext()
-    }
-  }, [currentSlide, handleNext])
-
   // ── Render ────────────────────────────────────────────────────────────────────
   return (
     <div
-      onKeyDown={handleKeyDown}
       style={{
         background: C.bg, minHeight: '100vh',
         fontFamily: SANS, WebkitFontSmoothing: 'antialiased',
@@ -478,7 +479,7 @@ export default function GetMatchedClient() {
           <div style={{ maxWidth: 560, margin: '0 auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
               <span style={{ fontFamily: SANS, fontSize: 12, fontWeight: 500, color: C.muted }}>
-                Step {stepNum} of {TOTAL_STEPS}
+                Step {stepNum} of {totalSteps}
               </span>
               <span style={{ fontFamily: SANS, fontSize: 12, color: C.muted }}>{progressPct}%</span>
             </div>
