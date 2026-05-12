@@ -25,7 +25,7 @@ interface Props {
 
 // Notice option → contractual notice weeks (ERA 1996 s.86)
 const NOTICE_WEEKS: Record<string, number> = {
-  statutory: 0, '4w': 4, '6w': 6, '8w': 8, '3m': 13, '6m': 26, '12m': 52, unsure: 0,
+  statutory: 0, '1m_or_less': 4, '2_3m': 10, '4_6m': 20, '6plus': 39, unsure: 0,
 }
 
 // Step 6 reason → calculation engine reason type
@@ -653,21 +653,19 @@ export default function SteppedCalculator({ onCalculate }: Props) {
 
           {/* ── STEP 5: Notice period (tappable list — NO keyboard) ── */}
           {step === 5 && (
-            <div style={{ paddingBottom: 120 }}>
+            <div>
               <p style={helperSt}>
                 Check your written contract, not what your manager said. The written term governs what you are owed.
               </p>
               <h2 style={qSt}>What does your contract say about your notice period?</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
                 {([
-                  { value: 'statutory', label: 'Statutory only (1 week per year, max 12)' },
-                  { value: '4w', label: '4 weeks' },
-                  { value: '6w', label: '6 weeks' },
-                  { value: '8w', label: '8 weeks' },
-                  { value: '3m', label: '3 months' },
-                  { value: '6m', label: '6 months' },
-                  { value: '12m', label: '12 months' },
-                  { value: 'unsure', label: 'I am not sure' },
+                  { value: 'statutory', label: 'Statutory only (1 week per year of service, max 12)' },
+                  { value: '1m_or_less', label: '1 month or less' },
+                  { value: '2_3m',      label: '2 to 3 months' },
+                  { value: '4_6m',      label: '4 to 6 months' },
+                  { value: '6plus',     label: 'More than 6 months' },
+                  { value: 'unsure',    label: 'I am not sure' },
                 ] as const).map(opt => (
                   <button key={opt.value} type="button" onClick={() => handleNoticeSelect(opt.value)} style={optionSt(noticeOption === opt.value)}>
                     {opt.label}
