@@ -149,125 +149,22 @@ const slideTrans = {
   ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
 }
 
-// ── Progress bar ──────────────────────────────────────────────────────────────
+// ── Progress bar (thin, matches employee /get-matched form) ───────────────────
 function ProgressBar({ pct, stepNumber }: { pct: number; stepNumber?: number }) {
-  const label =
-    pct === 0
-      ? "Let's get started"
-      : pct === 100
-      ? 'Application complete'
-      : `${pct}% complete`
-
   return (
-    <div style={{ padding: '20px 24px 20px', maxWidth: 640, margin: '0 auto' }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 10,
-        }}
-      >
-        {stepNumber ? (
-          <span
-            style={{
-              fontFamily: SANS,
-              color: C.muted,
-              fontSize: 12,
-              fontWeight: 600,
-              letterSpacing: '0.07em',
-              textTransform: 'uppercase',
-            }}
-          >
-            Step {stepNumber} of {TOTAL_STEPS}
-          </span>
-        ) : (
-          <span />
-        )}
-        <motion.span
-          key={pct}
-          initial={{ y: -6, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-          style={{
-            fontFamily: SANS,
-            color: C.accent,
-            fontSize: 15,
-            fontWeight: 700,
-            letterSpacing: '-0.01em',
-          }}
-        >
-          {label}
-        </motion.span>
+    <div style={{ padding: '14px 24px', maxWidth: 560, margin: '0 auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
+        <span style={{ fontFamily: SANS, fontSize: 12, fontWeight: 500, color: C.muted }}>
+          {stepNumber ? `Step ${stepNumber} of ${TOTAL_STEPS}` : ''}
+        </span>
+        <span style={{ fontFamily: SANS, fontSize: 12, color: C.muted }}>{pct}%</span>
       </div>
-      {/* Track */}
-      <div
-        style={{
-          height: 18,
-          background: C.border,
-          borderRadius: 999,
-          overflow: 'visible',
-          position: 'relative',
-          boxShadow: 'inset 0 2px 4px rgba(11,31,58,0.08)',
-        }}
-      >
-        {/* Fill */}
+      <div style={{ height: 3, background: C.border, borderRadius: 999, overflow: 'hidden' }}>
         <motion.div
-          animate={{ width: `${Math.max(pct, 0)}%` }}
-          transition={{ type: 'spring', stiffness: 90, damping: 18 }}
-          style={{
-            height: '100%',
-            background: `linear-gradient(90deg, ${C.accentHover} 0%, ${C.accent} 55%, #E8784A 100%)`,
-            borderRadius: 999,
-            position: 'relative',
-            minWidth: pct > 3 ? 18 : 0,
-            overflow: 'visible',
-          }}
-        >
-          {/* Pulsing leading dot */}
-          {pct > 0 && pct < 100 && (
-            <motion.div
-              animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-              style={{
-                position: 'absolute',
-                right: -5,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: 14,
-                height: 14,
-                borderRadius: '50%',
-                background: '#fff',
-                boxShadow: `0 0 0 3px ${C.accent}, 0 0 12px rgba(217,96,59,0.6)`,
-                zIndex: 2,
-              }}
-            />
-          )}
-        </motion.div>
-        {/* Shimmer overlay */}
-        {pct > 0 && pct < 100 && (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              borderRadius: 999,
-              overflow: 'hidden',
-              pointerEvents: 'none',
-            }}
-          >
-            <motion.div
-              animate={{ x: ['-100%', '200%'] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'linear', repeatDelay: 1 }}
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background:
-                  'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%)',
-                width: '40%',
-              }}
-            />
-          </div>
-        )}
+          animate={{ width: `${pct}%` }}
+          transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+          style={{ height: '100%', background: C.accent, borderRadius: 999 }}
+        />
       </div>
     </div>
   )
@@ -297,8 +194,9 @@ export default function ForSolicitorsClient() {
   const [resendCooldown, setResendCooldown] = useState(0)
   const [submitting, setSubmitting] = useState(false)
 
-  const inputRef = useRef<HTMLInputElement>(null)
-  const otpRefs = useRef<(HTMLInputElement | null)[]>([null, null, null, null, null, null])
+  const inputRef      = useRef<HTMLInputElement>(null)
+  const otpRefs       = useRef<(HTMLInputElement | null)[]>([null, null, null, null, null, null])
+  const advancingRef  = useRef(false)
 
   const currentSlide = SLIDES[slideIndex]
   // Divide by TOTAL_STEPS + 1 so step 7 reaches ~88%, not 100%.
@@ -342,6 +240,7 @@ export default function ForSolicitorsClient() {
     setDir(1)
     setFieldError('')
     setSlideIndex((i) => i + 1)
+    setTimeout(() => { advancingRef.current = false }, 400)
   }, [])
 
   const goBack = useCallback(() => {
@@ -452,30 +351,35 @@ export default function ForSolicitorsClient() {
 
   // ── Per-slide next ─────────────────────────────────────────────────────────
   const handleNext = useCallback(async () => {
+    if (advancingRef.current) return
+    advancingRef.current = true
     setFieldError('')
     const id = currentSlide.id
     if (id === 'firmName') {
-      if (!form.firmName.trim()) { setFieldError('Please enter your firm name'); return }
+      if (!form.firmName.trim()) { advancingRef.current = false; setFieldError('Please enter your firm name'); return }
       advance()
     } else if (id === 'contactName') {
-      if (!form.contactName.trim()) { setFieldError('Please enter your name'); return }
+      if (!form.contactName.trim()) { advancingRef.current = false; setFieldError('Please enter your name'); return }
       advance()
     } else if (id === 'email') {
       if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-        setFieldError('Please enter a valid email address'); return
+        advancingRef.current = false; setFieldError('Please enter a valid email address'); return
       }
       const ok = await sendOtp(form.email)
       if (ok) advance()
+      else advancingRef.current = false
     } else if (id === 'phone') {
       advance()
     } else if (id === 'officePostcode') {
       if (!officePostcodeValid || !form.office_postcode.trim()) {
-        setFieldError('Please enter a valid UK postcode to continue')
+        advancingRef.current = false; setFieldError('Please enter a valid UK postcode to continue')
         return
       }
       advance()
+    } else {
+      advancingRef.current = false
     }
-  }, [currentSlide.id, form, advance, sendOtp])
+  }, [currentSlide.id, form, advance, sendOtp, officePostcodeValid])
 
   const submitApplication = useCallback(async () => {
     setSubmitting(true)
@@ -552,8 +456,8 @@ export default function ForSolicitorsClient() {
           top: 0,
           left: 0,
           right: 0,
-          height: 68,
-          background: 'rgba(247,244,238,0.88)',
+          height: 64,
+          background: 'rgba(247,244,238,0.92)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
           borderBottom: `1px solid ${C.border}`,
@@ -630,7 +534,7 @@ export default function ForSolicitorsClient() {
         <div
           style={{
             position: 'fixed',
-            top: 68,
+            top: 64,
             left: 0,
             right: 0,
             background: C.white,
@@ -649,10 +553,10 @@ export default function ForSolicitorsClient() {
           alignItems: 'center',
           justifyContent: 'center',
           minHeight: '100vh',
-          padding: showProgress ? '188px 24px 60px' : '96px 24px 60px',
+          padding: showProgress ? '178px 24px 60px' : '100px 24px 60px',
         }}
       >
-        <div style={{ width: '100%', maxWidth: 600, position: 'relative' }}>
+        <div style={{ width: '100%', maxWidth: 560, position: 'relative' }}>
           <AnimatePresence mode="wait" custom={dir}>
             <motion.div
               key={currentSlide.id}
@@ -703,7 +607,7 @@ export default function ForSolicitorsClient() {
                   <h2
                     style={{
                       color: C.navy,
-                      fontSize: 'clamp(24px, 4vw, 38px)',
+                      fontSize: 'clamp(26px, 5vw, 40px)',
                       fontWeight: 700,
                       letterSpacing: '-0.025em',
                       lineHeight: 1.2,
@@ -762,7 +666,7 @@ export default function ForSolicitorsClient() {
                         background: C.accent,
                         border: 'none',
                         borderRadius: 8,
-                        padding: '12px 26px',
+                        padding: '13px 28px',
                         color: '#fff',
                         fontSize: 15,
                         fontWeight: 600,
@@ -797,7 +701,7 @@ export default function ForSolicitorsClient() {
                   <h2
                     style={{
                       color: C.navy,
-                      fontSize: 'clamp(24px, 4vw, 38px)',
+                      fontSize: 'clamp(26px, 5vw, 40px)',
                       fontWeight: 700,
                       letterSpacing: '-0.025em',
                       lineHeight: 1.2,
@@ -1135,7 +1039,7 @@ function TextInputSlide({
       <h2
         style={{
           color: C.navy,
-          fontSize: 'clamp(24px, 4vw, 38px)',
+          fontSize: 'clamp(26px, 5vw, 40px)',
           fontWeight: 700,
           letterSpacing: '-0.025em',
           lineHeight: 1.2,
@@ -1219,7 +1123,7 @@ function TextInputSlide({
             background: C.accent,
             border: 'none',
             borderRadius: 8,
-            padding: '12px 26px',
+            padding: '13px 28px',
             color: '#fff',
             fontSize: 15,
             fontWeight: 600,
@@ -1315,7 +1219,7 @@ function OtpSlide({
       <h2
         style={{
           color: C.navy,
-          fontSize: 'clamp(24px, 4vw, 38px)',
+          fontSize: 'clamp(26px, 5vw, 40px)',
           fontWeight: 700,
           letterSpacing: '-0.025em',
           lineHeight: 1.2,
@@ -1455,7 +1359,7 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
       <h2
         style={{
           color: C.navy,
-          fontSize: 'clamp(24px, 4vw, 38px)',
+          fontSize: 'clamp(26px, 5vw, 40px)',
           fontWeight: 700,
           letterSpacing: '-0.025em',
           lineHeight: 1.2,
