@@ -617,25 +617,7 @@ function LeadFAQ() {
   return (
     <div className="bg-card border border-rule rounded-lg overflow-hidden">
       <div className="p-6 md:p-8 pb-4">
-        {/* USP row */}
-        <div className="flex flex-col gap-3 mb-6">
-          {[
-            'Your employer covers the fee, not you',
-            'Your details go to one matched solicitor only',
-            'No obligation after the first call',
-          ].map(t => (
-            <div key={t} className="flex items-center gap-3">
-              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#2D5A3D] flex items-center justify-center">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              </span>
-              <span className="text-[14px] text-ink leading-snug">{t}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="border-t border-rule pt-6">
+        <div>
           <h3 className="sc-h3 mb-5">Questions people ask before they fill this in</h3>
           <div className="flex flex-col">
             {LEAD_FAQS.map((item, i) => (
@@ -701,7 +683,7 @@ function GetMatchedCTA({
     ABOVE_TYPICAL: {
       badge: 'Your offer looks strong',
       badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
-      heading: 'Still worth having a solicitor check every term.',
+      heading: 'Still worth having a solicitor review the full agreement.',
       body: 'Your offer appears above the typical range. A solicitor will confirm whether the full agreement is watertight: reference wording, non-disparagement clauses, restrictive covenants. The review is free. Your employer is required to fund it.',
       cta: 'Get my free specialist review',
     },
@@ -728,19 +710,21 @@ function GetMatchedCTA({
         <h2 className="sc-h2 mb-3">{c.heading}</h2>
         <p className="sc-body text-muted mb-6 max-w-[58ch]">{c.body}</p>
 
-        {/* Trust row */}
-        <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8">
+        {/* Trust USPs */}
+        <div className="flex flex-col gap-3 mb-8">
           {[
             'Free. Your employer pays the legal fee.',
-            'SRA-regulated solicitor only',
+            'Your details go to one matched solicitor only',
             'No obligation after the first call',
           ].map(t => (
-            <span key={t} className="flex items-center gap-2 text-[13px] text-muted">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              {t}
-            </span>
+            <div key={t} className="flex items-center gap-3">
+              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#2D5A3D] flex items-center justify-center">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span className="text-[14px] text-ink leading-snug">{t}</span>
+            </div>
           ))}
         </div>
 
