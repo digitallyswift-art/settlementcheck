@@ -260,8 +260,10 @@ export default function SteppedCalculator({ onCalculate }: Props) {
       }
       goToStep(5)
     } else if (step === 5) {
+      if (!noticeOption) { triggerShake(); return }
       goToStep(6)
     } else if (step === 6) {
+      if (!reason) { triggerShake(); return }
       goToStep(7)
     } else if (step === 7) {
       startLoading()
@@ -658,7 +660,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
                 Check your written contract, not what your manager said. The written term governs what you are owed.
               </p>
               <h2 style={qSt}>What does your contract say about your notice period?</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
+              <div className={shake && !noticeOption ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
                 {([
                   { value: 'statutory', label: 'Statutory only (1 week per year of service, max 12)' },
                   { value: '1m_or_less', label: '1 month or less' },
@@ -680,7 +682,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
             <div style={{ paddingBottom: 120 }}>
               <p style={helperSt}>This affects which entitlements apply to your situation.</p>
               <h2 style={qSt}>Why is your employment ending?</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
+              <div className={shake && !reason ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
                 {([
                   { value: 'redundancy_individual', label: 'Redundancy' },
                   { value: 'redundancy_collective', label: 'Redundancy: part of a larger group (20 or more people)' },
