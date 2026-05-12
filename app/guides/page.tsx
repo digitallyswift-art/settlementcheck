@@ -33,6 +33,13 @@ const GUIDES = [
     description: 'No. You are entitled to choose your own solicitor. Here is what the law says, why it matters, and how to find someone whose interests are aligned with yours.',
     readTime: '5 min read',
   },
+  {
+    href: '/guides/pressured-to-sign',
+    eyebrow: 'Employee Rights',
+    title: 'My employer is pressuring me to sign quickly. What are my rights?',
+    description: 'The ACAS 10-day rule, identifying "improper behaviour" under Section 111A, and what to do if you are threatened with dismissal for not signing.',
+    readTime: '6 min read',
+  },
 ]
 
 export default function GuidesPage() {
