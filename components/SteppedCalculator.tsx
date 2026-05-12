@@ -499,7 +499,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
       </div>
 
       {/* Scrollable step content */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '16px 24px 220px', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '16px 24px 260px', display: 'flex', justifyContent: 'center' }}>
         <div style={{ width: '100%', maxWidth: 480, opacity: stepVisible ? 1 : 0, transition: 'opacity 150ms ease' }}>
 
           {/* ── STEP 1: Annual salary ── */}
@@ -653,7 +653,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
 
           {/* ── STEP 5: Notice period (tappable list — NO keyboard) ── */}
           {step === 5 && (
-            <div>
+            <div style={{ paddingBottom: 120 }}>
               <p style={helperSt}>
                 Check your written contract, not what your manager said. The written term governs what you are owed.
               </p>
@@ -679,7 +679,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
 
           {/* ── STEP 6: Reason for leaving (tappable list — NO keyboard) ── */}
           {step === 6 && (
-            <div>
+            <div style={{ paddingBottom: 120 }}>
               <p style={helperSt}>This affects which entitlements apply to your situation.</p>
               <h2 style={qSt}>Why is your employment ending?</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
@@ -756,7 +756,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
           right: 0,
           padding: '16px 24px env(safe-area-inset-bottom, 32px)',
           paddingBottom: 'max(32px, env(safe-area-inset-bottom, 32px))',
-          background: 'linear-gradient(to top, #F7F4EE 80%, rgba(247,244,238,0))',
+          background: 'linear-gradient(to top, #F7F4EE 85%, rgba(247,244,238,0))',
           zIndex: 10,
           transition: 'transform 150ms ease',
         }}
