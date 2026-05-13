@@ -8,7 +8,7 @@ import FaqAccordion from '@/components/FaqAccordion'
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
   { n: '£0',      l: 'No cost to you' },
-  { n: '£751',    l: 'Weekly pay cap 2025/26' },
+  { n: '£751',    l: 'Weekly pay cap 2026/27' },
   { n: '10 days', l: 'Typical signing window' },
   { n: 'Net pay', l: 'PILON and £30k exemption split' },
 ]
@@ -129,7 +129,7 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
                           </svg>
                         ),
                         label: 'Is your offer in range',
-                        detail: 'Compare your settlement against UK statutory rates for 2025/26.',
+                        detail: 'Compare your settlement against UK statutory rates for 2026/27.',
                       },
                       {
                         icon: (
@@ -352,17 +352,17 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
             <div className="sc-container">
               <div className="flex flex-col gap-3.5 max-w-[640px] mb-10">
                 <span className="sc-eyebrow">Statutory rates</span>
-                <h2 className="sc-section-h2">UK redundancy pay cap: 2024/25 vs 2025/26</h2>
+                <h2 className="sc-section-h2">UK redundancy pay cap: 2025/26 vs 2026/27</h2>
                 <p className="sc-lead">Updated every April. The calculator always uses the current rates.</p>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse text-sm" style={{ minWidth: 420 }}>
-                  <caption className="sr-only">UK statutory redundancy and settlement figures compared across 2024/25 and 2025/26 tax years</caption>
+                  <caption className="sr-only">UK statutory redundancy and settlement figures compared across 2025/26 and 2026/27 tax years</caption>
                   <thead>
                     <tr className="border-b border-rule">
                       <th className="text-left py-3 pr-6 font-medium text-ink" style={{ fontSize: 13 }}>Figure</th>
-                      <th className="text-right py-3 px-4 font-medium text-muted" style={{ fontSize: 13 }}>2024/25</th>
-                      <th className="text-right py-3 pl-4 font-medium text-ink" style={{ fontSize: 13 }}>2025/26</th>
+                      <th className="text-right py-3 px-4 font-medium text-muted" style={{ fontSize: 13 }}>2025/26</th>
+                      <th className="text-right py-3 pl-4 font-medium text-ink" style={{ fontSize: 13 }}>2026/27</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -377,10 +377,10 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
                 </table>
               </div>
               <p className="sc-body mt-5" style={{ fontSize: 13 }}>
-                Sources: ERA 1996 s.227 (GB cap), ERO(NI) 1996 (NI cap), ITEPA 2003 s.403 (£30,000 threshold). Figures effective 6 April 2025.
+                Sources: ERA 1996 s.227 (GB cap), ERO(NI) 1996 (NI cap), ITEPA 2003 s.403 (£30,000 threshold). Figures effective 6 April 2026.
               </p>
               <p className="sc-body mt-1" style={{ fontSize: 12, color: '#8A93A3' }}>
-                Figures reflect the Employment Rights (Increase of Limits) Order 2025, in force from 6 April 2025. Last reviewed: May 2026.
+                Figures reflect the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310) and Employment Rights (Increase of Limits) Order (Northern Ireland) 2026 (SR 2026/57), in force from 6 April 2026. Last reviewed: May 2026.
               </p>
             </div>
           </section>

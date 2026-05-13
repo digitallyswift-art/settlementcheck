@@ -40,7 +40,7 @@ const webAppSchema = {
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
-  description: 'Free UK employment settlement agreement calculator. Shows estimated net take-home pay after tax: PILON taxed separately from the £30,000 exemption under ITEPA 2003. No email required. Based on April 2025 statutory rates.',
+  description: 'Free UK employment settlement agreement calculator. Shows estimated net take-home pay after tax: PILON taxed separately from the £30,000 exemption under ITEPA 2003. No email required. Based on April 2026 statutory rates.',
 }
 
 // FAQ schema aligned exactly to FaqAccordion DEFAULT_FAQS (7 questions)
@@ -116,10 +116,11 @@ const faqSchema = {
 }
 
 // Static statutory rates table data — passed as prop so table renders server-side (not in client bundle)
+// NOTE: legacy keys y2425 / y2526 now hold previous-year (2025/26) and current-year (2026/27) figures.
 const STATUTORY_ROWS = [
-  { label: 'Weekly pay cap (England, Scotland, Wales)', y2425: '£643',     y2526: '£751'     },
-  { label: 'Weekly pay cap (Northern Ireland)',          y2425: '£669',     y2526: '£783'     },
-  { label: 'Maximum statutory redundancy pay',           y2425: '£19,290',  y2526: '£22,530'  },
+  { label: 'Weekly pay cap (England, Scotland, Wales)', y2425: '£719',     y2526: '£751'     },
+  { label: 'Weekly pay cap (Northern Ireland)',          y2425: '£749',     y2526: '£783'     },
+  { label: 'Maximum statutory redundancy pay (GB)',      y2425: '£21,570',  y2526: '£22,530'  },
   { label: 'Tax-free termination payment limit',         y2425: '£30,000',  y2526: '£30,000'  },
   { label: 'Maximum qualifying service years',           y2425: '20 years', y2526: '20 years' },
   { label: 'Maximum statutory notice period',            y2425: '12 weeks', y2526: '12 weeks' },

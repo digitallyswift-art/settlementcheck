@@ -70,7 +70,7 @@ export default function Image() {
               letterSpacing: '-0.01em',
             }}
           >
-            Compensatory cap £118,223 · Basic award · Free, no email
+            Compensatory cap £123,543 · Basic award · Free, no email
           </div>
         </div>
 

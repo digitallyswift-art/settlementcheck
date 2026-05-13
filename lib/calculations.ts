@@ -30,10 +30,14 @@ export interface VerdictResult {
   jurisdiction: 'GB' | 'NI';
 }
 
-// ERA 1996 s.227 — weekly pay cap, England/Scotland/Wales. Updated 6 April 2025.
+// ERA 1996 s.227 — weekly pay cap, England/Scotland/Wales.
+// Updated 6 April 2026 by the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310).
+// Previous figure: £719 (in force 6 April 2025 to 5 April 2026).
 export const WEEKLY_CAP_GB = 751;
 
-// ERO(NI) 1996 — weekly pay cap, Northern Ireland. Updated 6 April 2025.
+// ERO(NI) 1996 — weekly pay cap, Northern Ireland.
+// Updated 6 April 2026 by the Employment Rights (Increase of Limits) Order (Northern Ireland) 2026 (SR 2026/57).
+// Previous figure: £749 (in force 6 April 2025 to 5 April 2026).
 export const WEEKLY_CAP_NI = 783;
 
 // ERA 1996 s.162 — maximum qualifying service years for SRP

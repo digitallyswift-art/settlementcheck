@@ -80,20 +80,30 @@ SEO must make this moat visible to search engines and to
 the AI Overview / SGE extraction layer.
 
 ### Statutory Accuracy Baseline
-All content must reflect these verified figures (April 2025):
+All content must reflect these verified figures (April 2026 — current):
 ```
-Weekly pay cap (GB):    £751   // ERA 1996 s.227
-Weekly pay cap (NI):    £783   // ERO(NI) 1996
-Max redundancy weeks:   20     // ERA 1996 s.162
-Tax-free threshold:     £30,000 // ITEPA 2003 s.403
-Protective award max:   90 days // TULRCA 1992 s.189
-Unfair dismissal cap:   £118,223 // ERA 1996 s.124
+Weekly pay cap (GB):    £751      // ERA 1996 s.227 (SI 2026/310)
+Weekly pay cap (NI):    £783      // ERO(NI) 1996 (SR 2026/57)
+Max redundancy weeks:   20        // ERA 1996 s.162
+Tax-free threshold:     £30,000   // ITEPA 2003 s.403
+Protective award max:   90 days   // TULRCA 1992 s.189
+Unfair dismissal cap:   £123,543  // ERA 1996 s.124 (SI 2026/310)
+Max SRP / basic award:  £22,530   // 20 × 1.5 × £751
+```
+
+Previous-year figures (April 2025, retained for comparison tables only):
+```
+Weekly pay cap (GB):    £719
+Weekly pay cap (NI):    £749
+Unfair dismissal cap:   £118,223
 ```
 
 Flag any content referencing outdated figures as
 **CRITICAL — TRUST FAILURE** in audit output.
 Flag any reference to "Employment Rights Act 2025" as
-**CRITICAL — STATUTE ERROR**. This act does not exist.
+**CRITICAL — STATUTE ERROR**. This act does not exist in
+commenced form (the Bill became an Act but most provisions
+commence in stages from 2026 onward).
 
 ---
 
@@ -107,7 +117,7 @@ Check before anything else. Accuracy errors destroy E-E-A-T
 faster than any technical issue.
 
 Scan for:
-- Outdated weekly pay caps (pre-April 2025 figures)
+- Outdated weekly pay caps (pre-April 2026 figures, except where explicitly labelled as historical "last year" data for comparison tables)
 - Any reference to "Employment Rights Act 2025"
 - Protective award stated as 180 days (current max is 90)
 - PILON described as tax-free (it is fully taxable)
@@ -541,7 +551,7 @@ without requiring the reader to continue reading.
 
 Example for the calculator page:
 ```
-From April 2025, the UK redundancy weekly pay cap is £751
+From April 2026, the UK redundancy weekly pay cap is £751
 in England, Scotland and Wales (£783 in Northern Ireland).
 Statutory redundancy pay is calculated by age, service length,
 and weekly pay, capped at 20 qualifying years. The first
@@ -636,7 +646,7 @@ must carry a source citation. Format:
 ```
 Inline: "The weekly pay cap is £751 ¹"
 Footnote: "¹ ERA 1996 s.227, as amended by the Employment
-Rights (Increase of Limits) Order 2025."
+Rights (Increase of Limits) Order 2026 (SI 2026/310)."
 Link: legislation.gov.uk canonical URL
 ```
 
@@ -650,7 +660,7 @@ Every page that references a statutory figure must display:
 
 ```
 "Figures on this page reflect the Employment Rights (Increase
-of Limits) Order 2025, in force from 6 April 2025.
+of Limits) Order 2026 (SI 2026/310), in force from 6 April 2026.
 Last reviewed: [Month Year]."
 ```
 
@@ -787,7 +797,7 @@ run these checks. Binary. No partial credit.
 
 ```
 [ ] Statutory accuracy scan completed first
-[ ] All cited figures match April 2025 verified baseline
+[ ] All cited figures match April 2026 verified baseline
 [ ] "Employment Rights Act 2025" appears in no recommendation
 [ ] All meta descriptions are 157 characters or fewer
 [ ] All recommended title tags are 60 characters or fewer
@@ -807,6 +817,5 @@ run these checks. Binary. No partial credit.
 
 *SEO Architect Skill — SettlementCheck*
 *Version 1.0 | May 2026*
-*All statutory figures verified as of April 2025*
-*Next review: When Employment Rights Bill 2024-25*
-*commencement orders are published*
+*All statutory figures verified as of April 2026 (SI 2026/310 / SR 2026/57)*
+*Next review: April 2027 or when new commencement orders are published*

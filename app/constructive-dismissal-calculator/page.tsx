@@ -6,14 +6,14 @@ import type { StatutoryRow } from '../HomeClient'
 export const metadata: Metadata = {
   title: 'Constructive Dismissal Calculator 2026 | Check Your Claim | SettlementCheck',
   description:
-    'Forced to resign? Estimate your constructive dismissal settlement using 2026 UK rates. Compensatory cap £118,223. Free, no email. Independent, not a law firm.',
+    'Forced to resign? Estimate your constructive dismissal settlement using 2026 UK rates. Compensatory cap £123,543. Free, no email. Independent, not a law firm.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/constructive-dismissal-calculator/',
   },
   openGraph: {
     title: 'Constructive Dismissal Calculator 2026 | Check Your Claim | SettlementCheck',
     description:
-      'Forced to resign? Estimate your constructive dismissal settlement using 2026 UK rates. Compensatory cap £118,223. Free, no email. Independent, not a law firm.',
+      'Forced to resign? Estimate your constructive dismissal settlement using 2026 UK rates. Compensatory cap £123,543. Free, no email. Independent, not a law firm.',
     url: 'https://settlementcheck.co.uk/constructive-dismissal-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
 }
 
 const STATUTORY_ROWS: StatutoryRow[] = [
-  { label: 'Weekly pay cap (GB) — basic award', y2425: '£643', y2526: '£751' },
-  { label: 'Maximum basic award (GB)', y2425: '£19,290', y2526: '£22,530' },
-  { label: 'Compensatory award cap', y2425: '£115,115', y2526: '£118,223' },
+  { label: 'Weekly pay cap (GB) — basic award', y2425: '£719', y2526: '£751' },
+  { label: 'Maximum basic award (GB)', y2425: '£21,570', y2526: '£22,530' },
+  { label: 'Compensatory award cap (GB)', y2425: '£118,223', y2526: '£123,543' },
   { label: 'Tax-free threshold (termination payments)', y2425: '£30,000', y2526: '£30,000' },
   { label: 'Qualifying service for constructive dismissal', y2425: '2 years', y2526: '2 years' },
 ]
@@ -43,7 +43,7 @@ const FAQ_SCHEMA_ITEMS = [
   {
     question: 'How much can I claim for constructive dismissal in 2026?',
     answer:
-      'A constructive dismissal claim is treated as unfair dismissal and carries the same award structure. The basic award uses the £751 weekly pay cap (from April 2025) over up to 20 qualifying years. The compensatory award is capped at £118,223 or 52 weeks\' gross pay, whichever is lower — ERA 1996 s.124.',
+      'A constructive dismissal claim is treated as unfair dismissal and carries the same award structure. The basic award uses the £751 weekly pay cap (from April 2026) over up to 20 qualifying years. The compensatory award is capped at £123,543 or 52 weeks\' gross pay, whichever is lower, under ERA 1996 s.124.',
   },
   {
     question: 'Do I need to resign immediately to claim constructive dismissal?',
@@ -68,7 +68,7 @@ const HOWTOCALCULATE_STEPS = [
   'Verify you have at least two years of continuous employment — ERA 1996 s.94.',
   'Calculate the basic award using capped weekly pay (£751), years of service (up to 20), and age multiplier.',
   'Estimate the compensatory award: loss of earnings, loss of benefits, and future loss.',
-  'Apply the compensatory cap: the lower of £118,223 or 52 weeks\' gross pay — ERA 1996 s.124.',
+  'Apply the compensatory cap: the lower of £123,543 or 52 weeks\' gross pay — ERA 1996 s.124.',
   'Consider an ACAS uplift of up to 25% if your employer failed to follow the ACAS Code.',
   'Apply the £30,000 tax-free threshold to eligible termination payments under ITEPA 2003 s.403.',
 ]
@@ -91,7 +91,7 @@ const JSON_LD = {
       '@type': 'HowTo',
       name: 'How to assess a constructive dismissal claim in 2026',
       description:
-        'Step-by-step guide to evaluating a UK constructive dismissal claim and estimating settlement value using April 2025 statutory rates.',
+        'Step-by-step guide to evaluating a UK constructive dismissal claim and estimating settlement value using April 2026 statutory rates.',
       step: HOWTOCALCULATE_STEPS.map((text, i) => ({
         '@type': 'HowToStep',
         position: i + 1,
@@ -129,7 +129,7 @@ export default function ConstructiveDismissalCalculatorPage() {
             settlement
           </>
         }
-        lead="Constructive dismissal occurs when your employer's conduct forces you to resign — a fundamental breach of contract under ERA 1996 s.95(1)(c). If you have at least two years of service, you can bring a claim. From April 2025, the compensatory award cap is £118,223. The first £30,000 of a settlement is tax-free. Do not resign before taking advice — enter your details to see what your claim may be worth."
+        lead="Constructive dismissal occurs when your employer's conduct forces you to resign, a fundamental breach of contract under ERA 1996 s.95(1)(c). If you have at least two years of service, you can bring a claim. From April 2026, the compensatory award cap is £123,543. The first £30,000 of a settlement is tax-free. Do not resign before taking advice. Enter your details to see what your claim may be worth."
         statutoryRows={STATUTORY_ROWS}
         pageLinks={[
           {

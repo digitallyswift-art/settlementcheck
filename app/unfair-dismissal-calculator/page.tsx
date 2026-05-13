@@ -6,14 +6,14 @@ import type { StatutoryRow } from '../HomeClient'
 export const metadata: Metadata = {
   title: 'Unfair Dismissal Calculator 2026 | Check Your Claim | SettlementCheck',
   description:
-    'Estimate your unfair dismissal basic award using 2026 UK rates. Compensatory cap £118,223. See statutory minimum and typical settlement range in 60 seconds. Free, no email.',
+    'Estimate your unfair dismissal basic award using 2026 UK rates. Compensatory cap £123,543. See statutory minimum and typical settlement range in 60 seconds. Free, no email.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/unfair-dismissal-calculator/',
   },
   openGraph: {
     title: 'Unfair Dismissal Calculator 2026 | Check Your Claim | SettlementCheck',
     description:
-      'Estimate your unfair dismissal basic award using 2026 UK rates. Compensatory cap £118,223. See statutory minimum and typical settlement range in 60 seconds. Free, no email.',
+      'Estimate your unfair dismissal basic award using 2026 UK rates. Compensatory cap £123,543. See statutory minimum and typical settlement range in 60 seconds. Free, no email.',
     url: 'https://settlementcheck.co.uk/unfair-dismissal-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -22,14 +22,14 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Unfair Dismissal Calculator 2026 | Check Your Claim | SettlementCheck',
     description:
-      'Estimate your unfair dismissal basic award using 2026 rates. Compensatory cap £118,223. Free, no email.',
+      'Estimate your unfair dismissal basic award using 2026 rates. Compensatory cap £123,543. Free, no email.',
   },
 }
 
 const STATUTORY_ROWS: StatutoryRow[] = [
-  { label: 'Weekly pay cap (GB) — basic award', y2425: '£643', y2526: '£751' },
-  { label: 'Maximum basic award (GB)', y2425: '£19,290', y2526: '£22,530' },
-  { label: 'Compensatory award cap', y2425: '£115,115', y2526: '£118,223' },
+  { label: 'Weekly pay cap (GB), basic award', y2425: '£719', y2526: '£751' },
+  { label: 'Maximum basic award (GB)', y2425: '£21,570', y2526: '£22,530' },
+  { label: 'Compensatory award cap (GB)', y2425: '£118,223', y2526: '£123,543' },
   { label: 'Tax-free threshold (termination payments)', y2425: '£30,000', y2526: '£30,000' },
   { label: 'Qualifying service for unfair dismissal', y2425: '2 years', y2526: '2 years' },
 ]
@@ -38,7 +38,7 @@ const FAQ_SCHEMA_ITEMS = [
   {
     question: 'What is the unfair dismissal compensatory award cap in 2026?',
     answer:
-      'From 6 April 2025, the unfair dismissal compensatory award cap is £118,223 or 52 weeks\' gross pay, whichever is lower — ERA 1996 s.124 as amended. The basic award uses the same weekly pay cap as statutory redundancy pay: £751 in Great Britain.',
+      'From 6 April 2026, the unfair dismissal compensatory award cap is £123,543 or 52 weeks\' gross pay, whichever is lower, under ERA 1996 s.124 as amended by the Employment Rights (Increase of Limits) Order 2026. The basic award uses the same weekly pay cap as statutory redundancy pay: £751 in Great Britain.',
   },
   {
     question: 'How long do I need to work to claim unfair dismissal?',
@@ -48,7 +48,7 @@ const FAQ_SCHEMA_ITEMS = [
   {
     question: 'What is the basic award for unfair dismissal?',
     answer:
-      'The basic award is calculated in the same way as statutory redundancy pay: capped weekly pay (£751) multiplied by years of service and an age multiplier (0.5 under 22, 1.0 aged 22–40, 1.5 aged 41 and over), up to 20 qualifying years. The maximum basic award is £22,530 from April 2025.',
+      'The basic award is calculated in the same way as statutory redundancy pay: capped weekly pay (£751) multiplied by years of service and an age multiplier (0.5 under 22, 1.0 aged 22–40, 1.5 aged 41 and over), up to 20 qualifying years. The maximum basic award is £22,530 from April 2026.',
   },
   {
     question: 'Is an unfair dismissal settlement taxable?',
@@ -66,7 +66,7 @@ const HOWTOCALCULATE_STEPS = [
   'Confirm you have at least two years of continuous employment — ERA 1996 s.94.',
   'Calculate the basic award: use capped weekly pay (£751), your years of service (up to 20), and your age multiplier.',
   'Assess the compensatory award: estimated loss of earnings, benefits, and future loss.',
-  'Apply the compensatory cap: the lower of £118,223 or 52 weeks\' gross pay — ERA 1996 s.124.',
+  'Apply the compensatory cap: the lower of £123,543 or 52 weeks\' gross pay, under ERA 1996 s.124.',
   'Consider any Polkey reduction if your employer follows some fair procedure.',
   'Factor in any ACAS uplift (up to 25%) if your employer failed to follow the ACAS Code of Practice.',
   'Add PILON if applicable — this is fully taxable as earnings.',
@@ -91,7 +91,7 @@ const JSON_LD = {
       '@type': 'HowTo',
       name: 'How to calculate an unfair dismissal award in 2026',
       description:
-        'Step-by-step guide to estimating a UK unfair dismissal basic and compensatory award using April 2025 statutory rates.',
+        'Step-by-step guide to estimating a UK unfair dismissal basic and compensatory award using April 2026 statutory rates.',
       step: HOWTOCALCULATE_STEPS.map((text, i) => ({
         '@type': 'HowToStep',
         position: i + 1,
@@ -128,7 +128,7 @@ export default function UnfairDismissalCalculatorPage() {
             <em style={{ fontStyle: 'italic', color: '#D9603B' }}>unfair dismissal</em> settlement
           </>
         }
-        lead="If you have been dismissed and have at least two years of continuous employment, you may have an unfair dismissal claim under ERA 1996 s.94. From April 2025, the compensatory award cap is £118,223 (or 52 weeks' pay, whichever is lower). The first £30,000 of any settlement is tax-free. Enter your details to see your basic award and whether your offer is in the typical range."
+        lead="If you have been dismissed and have at least two years of continuous employment, you may have an unfair dismissal claim under ERA 1996 s.94. From April 2026, the compensatory award cap is £123,543 (or 52 weeks' pay, whichever is lower). The first £30,000 of any settlement is tax-free. Enter your details to see your basic award and whether your offer is in the typical range."
         statutoryRows={STATUTORY_ROWS}
         pageLinks={[
           {

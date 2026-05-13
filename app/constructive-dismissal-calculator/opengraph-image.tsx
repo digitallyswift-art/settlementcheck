@@ -70,7 +70,7 @@ export default function Image() {
               letterSpacing: '-0.01em',
             }}
           >
-            Forced to resign? Compensatory cap £118,223 · Free, no email
+            Forced to resign? Compensatory cap £123,543 · Free, no email
           </div>
         </div>
 

@@ -27,19 +27,19 @@ export const metadata: Metadata = {
 }
 
 const STATUTORY_ROWS: StatutoryRow[] = [
-  { label: 'Weekly pay cap (GB)', y2425: '£643', y2526: '£751' },
-  { label: 'Weekly pay cap (Northern Ireland)', y2425: '£669', y2526: '£783' },
+  { label: 'Weekly pay cap (GB)', y2425: '£719', y2526: '£751' },
+  { label: 'Weekly pay cap (Northern Ireland)', y2425: '£749', y2526: '£783' },
   { label: 'Maximum qualifying weeks', y2425: '20', y2526: '20' },
-  { label: 'Maximum statutory redundancy pay (GB)', y2425: '£19,290', y2526: '£22,530' },
+  { label: 'Maximum statutory redundancy pay (GB)', y2425: '£21,570', y2526: '£22,530' },
   { label: 'Tax-free threshold (termination payments)', y2425: '£30,000', y2526: '£30,000' },
-  { label: 'Unfair dismissal compensatory cap', y2425: '£115,115', y2526: '£118,223' },
+  { label: 'Unfair dismissal compensatory cap (GB)', y2425: '£118,223', y2526: '£123,543' },
 ]
 
 const FAQ_SCHEMA_ITEMS = [
   {
     question: 'What is the redundancy pay cap in 2026?',
     answer:
-      'From 6 April 2025, the weekly pay cap for statutory redundancy pay is £751 in England, Scotland and Wales, and £783 in Northern Ireland, under the Employment Rights (Increase of Limits) Order 2025. The maximum statutory redundancy payment is £22,530.',
+      'From 6 April 2026, the weekly pay cap for statutory redundancy pay is £751 in England, Scotland and Wales, and £783 in Northern Ireland, under the Employment Rights (Increase of Limits) Order 2026. The maximum statutory redundancy payment is £22,530.',
   },
   {
     question: 'How is statutory redundancy pay calculated?',
@@ -92,7 +92,7 @@ const JSON_LD = {
       '@type': 'HowTo',
       name: 'How to calculate redundancy pay in 2026',
       description:
-        'Step-by-step calculation of UK statutory redundancy pay using April 2025 rates (£751 weekly cap in Great Britain).',
+        'Step-by-step calculation of UK statutory redundancy pay using April 2026 rates (£751 weekly cap in Great Britain).',
       step: HOWTOCALCULATE_STEPS.map((text, i) => ({
         '@type': 'HowToStep',
         position: i + 1,
@@ -129,7 +129,7 @@ export default function RedundancyCalculatorPage() {
             <em style={{ fontStyle: 'italic', color: '#D9603B' }}>redundancy</em> settlement
           </>
         }
-        lead="From 6 April 2025, the UK weekly pay cap for statutory redundancy is £751 in Great Britain and £783 in Northern Ireland (ERA 1996 s.227). Your redundancy pay is calculated by age, length of service, and capped weekly pay across up to 20 qualifying years. The first £30,000 of your termination payment is tax-free — but PILON is always taxable. Enter your details to see whether your offer meets the legal minimum."
+        lead="From 6 April 2026, the UK weekly pay cap for statutory redundancy is £751 in Great Britain and £783 in Northern Ireland (ERA 1996 s.227, updated by SI 2026/310). Your redundancy pay is calculated by age, length of service, and capped weekly pay across up to 20 qualifying years. The first £30,000 of your termination payment is tax-free, and PILON is always taxable. Enter your details to see whether your offer meets the legal minimum."
         statutoryRows={STATUTORY_ROWS}
         pageLinks={[
           {
