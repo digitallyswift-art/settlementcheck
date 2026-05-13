@@ -41,10 +41,11 @@ export default function Footer() {
             <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Guides</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
-                { href: '/how-it-works', label: 'How it works' },
-                { href: '/how-it-works#faq', label: 'FAQs' },
+                { href: '/guides', label: 'All guides' },
                 { href: '/guides/how-to-negotiate-a-settlement-agreement', label: 'How to negotiate a settlement' },
-                { href: '/guides/employer-recommended-solicitor', label: 'Do I have to use my employer\'s solicitor?' },
+                { href: '/guides/employer-recommended-solicitor', label: "Do I have to use my employer's solicitor?" },
+                { href: '/guides/pressured-to-sign', label: 'Pressured to sign quickly?' },
+                { href: '/how-it-works', label: 'How it works' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>

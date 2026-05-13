@@ -59,14 +59,16 @@ function Check() {
 }
 
 export interface StatutoryRow { label: string; y2425: string; y2526: string }
+export interface PageLink { href: string; label: string }
 
 export interface HomeProps {
   title?: React.ReactNode;
   lead?: React.ReactNode;
   statutoryRows?: StatutoryRow[];
+  pageLinks?: PageLink[];
 }
 
-export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProps = {}) {
+export default function HomeClient({ title, lead, statutoryRows = [], pageLinks = [] }: HomeProps = {}) {
   return (
     <>
       <Nav />
@@ -380,6 +382,27 @@ export default function HomeClient({ title, lead, statutoryRows = [] }: HomeProp
               <p className="sc-body mt-1" style={{ fontSize: 12, color: '#8A93A3' }}>
                 Figures reflect the Employment Rights (Increase of Limits) Order 2025, in force from 6 April 2025. Last reviewed: May 2026.
               </p>
+            </div>
+          </section>
+        )}
+
+        {/* ── RELATED GUIDES (per-page contextual internal links) ── */}
+        {pageLinks.length > 0 && (
+          <section className="py-10 bg-paper border-y border-rule">
+            <div className="sc-container">
+              <span className="sc-eyebrow mb-4 block">Related guides</span>
+              <ul className="flex flex-wrap gap-3">
+                {pageLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="inline-flex items-center gap-2 border border-rule rounded-full px-5 py-2.5 text-[14px] font-medium text-ink bg-card hover:border-coral hover:text-coral transition-colors duration-[160ms] no-underline"
+                    >
+                      {link.label} →
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
         )}
