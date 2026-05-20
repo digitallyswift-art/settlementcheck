@@ -23,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/guides/how-to-negotiate-a-settlement-agreement/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/employer-recommended-solicitor/`,          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/pressured-to-sign/`,                       lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/what-happens-if-you-do-not-sign/`,         lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
 
     // Tier 5 — Supplier-facing
     { url: `${base}/for-solicitors/`,                                 lastModified: now, changeFrequency: 'monthly', priority: 0.6 },

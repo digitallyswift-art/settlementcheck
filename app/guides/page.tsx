@@ -40,6 +40,13 @@ const GUIDES = [
     description: 'The ACAS 10-day rule, identifying "improper behaviour" under Section 111A, and what to do if you are threatened with dismissal for not signing.',
     readTime: '6 min read',
   },
+  {
+    href: '/guides/what-happens-if-you-do-not-sign',
+    eyebrow: 'Employee Rights',
+    title: 'What happens if you do not sign a settlement agreement?',
+    description: 'Your options if you reject the offer, including alternative processes (redundancy or PIPs), tribunal risks, and negotiating a counter-proposal.',
+    readTime: '6 min read',
+  },
 ]
 
 export default function GuidesPage() {
@@ -88,15 +95,7 @@ export default function GuidesPage() {
                 </Link>
               ))}
 
-              {/* Placeholder card — signals more content is coming (good for SEO crawl signals) */}
-              <div className="bg-paper-2 border border-rule border-dashed rounded-xl p-7 flex flex-col gap-3 opacity-60">
-                <span className="sc-eyebrow">Coming soon</span>
-                <p className="font-serif text-ink font-[420] leading-snug tracking-[-0.012em]"
-                  style={{ fontSize: 'clamp(18px, 2vw, 21px)' }}>
-                  What happens if you do not sign a settlement agreement?
-                </p>
-                <p className="sc-body">Your options if you reject the offer, including tribunal claims, negotiation, and the risks on both sides.</p>
-              </div>
+
             </div>
           </div>
         </section>
