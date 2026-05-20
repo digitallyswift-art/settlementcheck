@@ -20,6 +20,41 @@ export const metadata: Metadata = {
 
 const GUIDES = [
   {
+    href: '/guides/what-is-a-fair-settlement-agreement',
+    eyebrow: 'Settlement Agreements',
+    title: 'What Is a Fair Settlement Agreement?',
+    description: 'A fair offer goes beyond the statutory minimum. Understand the multiplier ranges, what strengthens your position, and the red flags that signal an employer is offering too little.',
+    readTime: '9 min read',
+  },
+  {
+    href: '/guides/is-my-settlement-offer-fair',
+    eyebrow: 'Settlement Agreements',
+    title: 'Is My Settlement Offer Fair?',
+    description: 'Compare your offer against statutory minimums and typical UK ranges. Five red flags that signal an offer is too low, and what to do about it.',
+    readTime: '7 min read',
+  },
+  {
+    href: '/guides/redundancy-pay-cap-2026',
+    eyebrow: 'Redundancy',
+    title: 'Redundancy Pay Cap 2026',
+    description: 'The weekly pay cap is £751 from April 2026. Learn how it affects your calculation, see worked examples, and check if your employer is paying you correctly.',
+    readTime: '7 min read',
+  },
+  {
+    href: '/guides/settlement-agreement-acas-calculations',
+    eyebrow: 'Calculations',
+    title: 'ACAS-Based Settlement Calculations',
+    description: 'How the statutory framework works: the £751 weekly pay cap, the three-tier redundancy formula, PILON tax rules, and the £30,000 tax-free limit.',
+    readTime: '6 min read',
+  },
+  {
+    href: '/guides/fair-work-agency',
+    eyebrow: 'UK Employment Law',
+    title: 'What Is the Fair Work Agency?',
+    description: 'The Fair Work Agency is a new UK enforcement body established by the Employment Rights Act 2025. Not yet operational. Learn what it will do and whether it affects your settlement.',
+    readTime: '5 min read',
+  },
+  {
     href: '/guides/how-to-negotiate-a-settlement-agreement',
     eyebrow: 'Negotiation',
     title: 'How to Negotiate a Settlement Agreement',
