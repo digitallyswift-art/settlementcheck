@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import FaqAccordion from '@/components/FaqAccordion'
+import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
@@ -60,15 +60,37 @@ function Check() {
 
 export interface StatutoryRow { label: string; y2425: string; y2526: string }
 export interface PageLink { href: string; label: string }
+export interface StepItem { n: string; t: string; d: string }
 
 export interface HomeProps {
   title?: React.ReactNode;
   lead?: React.ReactNode;
+  leadBullets?: { label: string; detail: string }[];
   statutoryRows?: StatutoryRow[];
   pageLinks?: PageLink[];
+  faqItems?: FaqItem[];
+  steps?: StepItem[];
+  ctaLabel?: string;
+  ctaHref?: string;
+  howItWorksTitle?: string;
+  howItWorksLead?: string;
+  taxSectionTitle?: string;
 }
 
-export default function HomeClient({ title, lead, statutoryRows = [], pageLinks = [] }: HomeProps = {}) {
+export default function HomeClient({
+  title,
+  lead,
+  leadBullets,
+  statutoryRows = [],
+  pageLinks = [],
+  faqItems,
+  steps,
+  ctaLabel = 'Check my offer →',
+  ctaHref = '/calculator',
+  howItWorksTitle = 'Three steps. Sixty seconds. Zero cost.',
+  howItWorksLead = 'From a quick check to a vetted solicitor on the phone. No cost to you.',
+  taxSectionTitle = 'How much tax will you pay on your employment settlement?',
+}: HomeProps = {}) {
   return (
     <>
       <Nav />
@@ -105,6 +127,20 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
 
                 {lead ? (
                   <p className="sc-lead">{lead}</p>
+                ) : leadBullets ? (
+                  <ul className="flex flex-col gap-3 pt-1">
+                    {leadBullets.map(({ label, detail }, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span
+                          className="mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-coral"
+                        />
+                        <span className="flex flex-col gap-0.5">
+                          <span className="sc-body font-semibold text-ink leading-snug tracking-[-0.01em]">{label}</span>
+                          <span className="sc-body leading-snug">{detail}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                 ) : (
                   <ul className="flex flex-col gap-3.5 pt-1">
                     {[
@@ -188,7 +224,7 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
                     ))}
                   </div>
                   <Link
-                    href="/calculator"
+                    href={ctaHref}
                     style={{
                       display: 'block', width: '100%', background: '#D9603B', textDecoration: 'none', color: '#fff',
                       fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 16,
@@ -196,7 +232,7 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
                       cursor: 'pointer', marginBottom: 14, textAlign: 'center', boxSizing: 'border-box',
                     }}
                   >
-                    Check my offer →
+                    {ctaLabel}
                   </Link>
                   <p style={{ fontSize: 12, color: '#9AA3AE', textAlign: 'center', margin: 0, lineHeight: 1.55 }}>
                     No data is sold. No solicitor will call unless you ask.
@@ -236,12 +272,12 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
           <div className="sc-container">
             <div className="flex flex-col gap-3.5 max-w-[640px]">
               <span className="sc-eyebrow">How it works</span>
-              <h2 className="sc-section-h2">Three steps. Sixty seconds. Zero cost.</h2>
-              <p className="sc-lead">From a quick check to a vetted solicitor on the phone. No cost to you.</p>
+              <h2 className="sc-section-h2">{howItWorksTitle}</h2>
+              <p className="sc-lead">{howItWorksLead}</p>
             </div>
 
             <div className="grid grid-cols-3 gap-6 mt-14 max-[900px]:grid-cols-1">
-              {STEPS.map((s, i) => (
+              {(steps || STEPS).map((s, i) => (
                 <article
                   key={i}
                   className="bg-card border border-rule rounded-lg p-8 hover:border-rule-strong transition-colors duration-[160ms]"
@@ -258,7 +294,7 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
               ))}
             </div>
             <div className="mt-10 flex justify-center">
-              <Link href="/calculator" className="btn-accent">Check my offer →</Link>
+              <Link href={ctaHref} className="btn-accent">{ctaLabel}</Link>
             </div>
           </div>
         </section>
@@ -269,7 +305,7 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
             <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.2fr]">
               <div className="flex flex-col gap-5">
                 <span className="sc-eyebrow">Tax calculation</span>
-                <h2 className="sc-section-h2">How much tax will you pay on your employment settlement?</h2>
+                <h2 className="sc-section-h2">{taxSectionTitle}</h2>
                 <p className="sc-lead">Most employees sign the first number they receive without questioning it. That number is rarely the final one.</p>
                 <p className="sc-body">Enter your salary, length of service, and your offer to see your estimated net take-home after tax. PILON and the £30,000 exemption are calculated separately.</p>
                 <div className="border-l-2 border-coral pl-4 mt-1">
@@ -290,7 +326,7 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
                   <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">The calculator separates both</div>
                   <p className="sc-body">Most calculators show a gross figure. This one calculates PILON and redundancy pay separately, applies the correct tax treatment to each, and shows your estimated net take-home figure.</p>
                 </div>
-                <Link href="/calculator" className="btn-accent self-start">See my net take-home →</Link>
+                <Link href={ctaHref} className="btn-accent self-start">See my net take-home →</Link>
               </div>
             </div>
           </div>
@@ -325,7 +361,7 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
                   </div>
                 ))}
                 <div className="pt-7">
-                  <Link href="/calculator" className="btn-accent self-start">Check my offer, it&apos;s free →</Link>
+                  <Link href={ctaHref} className="btn-accent self-start">{ctaLabel}</Link>
                 </div>
               </div>
             </div>
@@ -341,7 +377,7 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
                 <h2 className="sc-section-h2">What people ask before they start.</h2>
                 <p className="sc-lead">Six things almost every employee wants to know before clicking &ldquo;calculate.&rdquo;</p>
               </div>
-              <FaqAccordion />
+              <FaqAccordion faqs={faqItems} />
             </div>
           </div>
         </section>
@@ -427,8 +463,8 @@ export default function HomeClient({ title, lead, statutoryRows = [], pageLinks 
                   Get your free estimate in under two minutes and find out where yours stands.
                 </p>
               </div>
-              <Link href="/calculator" className="btn-accent whitespace-nowrap self-start md:self-auto">
-                Check my offer now →
+              <Link href={ctaHref} className="btn-accent whitespace-nowrap self-start md:self-auto">
+                {ctaLabel}
               </Link>
             </div>
           </div>
