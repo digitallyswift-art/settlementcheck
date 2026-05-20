@@ -8,7 +8,20 @@ export const metadata: Metadata = {
   title: 'Pressured to Sign a Settlement Agreement? | 10-Day Rule | SettlementCheck',
   description: 'Understand your rights if your employer is pressuring you to sign a settlement agreement. Learn about the ACAS 10-day rule, improper behaviour, and your options.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/pressured-to-sign',
+    canonical: 'https://settlementcheck.co.uk/guides/pressured-to-sign/',
+  },
+  openGraph: {
+    title: 'Pressured to Sign a Settlement Agreement? | 10-Day Rule | SettlementCheck',
+    description: 'Understand your rights if your employer is pressuring you to sign a settlement agreement. Learn about the ACAS 10-day rule, improper behaviour, and your options.',
+    url: 'https://settlementcheck.co.uk/guides/pressured-to-sign/',
+    type: 'website',
+    locale: 'en_GB',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pressured to Sign a Settlement Agreement? | SettlementCheck',
+    description: 'The ACAS 10-day rule, what counts as improper pressure, and your options if your employer is rushing you. Free guide.',
   },
 }
 

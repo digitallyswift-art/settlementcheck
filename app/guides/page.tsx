@@ -7,14 +7,20 @@ export const metadata: Metadata = {
   title: 'Employment Settlement Agreement Guides | SettlementCheck',
   description: 'Plain-English guides on settlement agreements, negotiation, legal advice, and your rights as an employee in the UK.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides',
+    canonical: 'https://settlementcheck.co.uk/guides/',
   },
   openGraph: {
     title: 'Employment Settlement Agreement Guides | SettlementCheck',
     description: 'Plain-English guides on settlement agreements, negotiation, legal advice, and your rights as an employee in the UK.',
-    url: 'https://settlementcheck.co.uk/guides',
+    url: 'https://settlementcheck.co.uk/guides/',
     type: 'website',
     locale: 'en_GB',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Employment Settlement Agreement Guides | SettlementCheck',
+    description: 'Plain-English guides on settlement agreements, negotiation, legal advice, and your rights as an employee in the UK.',
   },
 }
 

@@ -8,7 +8,20 @@ export const metadata: Metadata = {
   title: 'How to Negotiate a Settlement Agreement | The Complete UK Guide',
   description: 'Understand the facts of settlement agreement negotiation in the UK. Learn about Without Prejudice rules, assessing your position, and the step-by-step process.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement',
+    canonical: 'https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement/',
+  },
+  openGraph: {
+    title: 'How to Negotiate a Settlement Agreement | The Complete UK Guide',
+    description: 'Understand the facts of settlement agreement negotiation in the UK. Learn about Without Prejudice rules, assessing your position, and the step-by-step process.',
+    url: 'https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement/',
+    type: 'website',
+    locale: 'en_GB',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'How to Negotiate a Settlement Agreement | SettlementCheck',
+    description: 'Without Prejudice rules, step-by-step negotiation process, and what a fair UK settlement looks like. Free guide.',
   },
 }
 
