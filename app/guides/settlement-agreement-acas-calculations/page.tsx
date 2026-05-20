@@ -5,14 +5,14 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
-  title: 'Settlement Agreement ACAS Statutory Framework | SettlementCheck',
+  title: 'Settlement Agreement ACAS-Based Calculations | SettlementCheck',
   description:
     'How ACAS-based settlement calculations work. Understand the £751 weekly pay cap (April 2026), tax-free limits, PILON tax rules, and the statutory redundancy formula.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
   },
   openGraph: {
-    title: 'Settlement Agreement ACAS Statutory Framework | SettlementCheck',
+    title: 'Settlement Agreement ACAS-Based Calculations | SettlementCheck',
     description:
       'How ACAS-based settlement calculations work. Understand the £751 weekly pay cap (April 2026), tax-free limits, PILON tax rules, and the statutory redundancy formula.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
 
 const FAQS = [
   {
-    q: 'Is this calculator approved by ACAS?',
-    a: 'No. SettlementCheck is an independent tool. We are not endorsed by or affiliated with ACAS. Our calculations follow the statutory framework that ACAS publishes: the weekly pay cap (£751 as of April 2026, SI 2026/310), the three-tier redundancy formula, and the £30,000 tax-free limit under ITEPA 2003 s.403.',
+    q: 'Are these ACAS-based calculations official?',
+    a: 'SettlementCheck is an independent tool, not affiliated with any legal body. Our ACAS-based calculations follow UK statutory rates set by SI 2026/310: the £751 weekly pay cap, the three-tier redundancy formula, and the £30,000 tax-free limit under ITEPA 2003 s.403. The figures are fixed by law and do not vary.',
   },
   {
     q: 'Can I get more than the ACAS-based statutory figure?',
@@ -36,8 +36,8 @@ const FAQS = [
     a: 'The statutory framework is fixed by law: the weekly pay cap, the three-tier formula, and the £30,000 limit do not vary. Our calculator applies these exactly. What the calculator cannot do is assess your individual bargaining position or the strength of any legal claim you may have. Use it to understand your statutory baseline, then discuss the result with a solicitor.',
   },
   {
-    q: 'What is the ACAS Code of Practice on settlement agreements?',
-    a: 'The ACAS Code of Practice provides statutory guidance on settlement negotiation. It covers the 10-day consideration period, the requirement for independent legal advice, the Without Prejudice rule that protects settlement discussions from being used as evidence, and the statutory framework for calculating redundancy. The Code is not law itself, but employment tribunals give it significant weight.',
+    q: 'What does ACAS-based mean for settlement agreements?',
+    a: 'ACAS-based refers to calculations that use the UK statutory rates and employment law framework governing settlement agreements. These include the weekly pay cap (£751 from April 2026, SI 2026/310), the statutory redundancy formula under the Employment Rights Act 1996, and the £30,000 tax-free termination limit under ITEPA 2003 s.403. These figures apply to all settlement agreements in England, Scotland, and Wales.',
   },
 ]
 
@@ -54,7 +54,7 @@ const faqSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'How ACAS-Based Settlement Calculations Work: What the £751 Weekly Pay Cap Means for Your Offer',
+  headline: 'How ACAS-Based Settlement Calculations Work — What the £751 Weekly Pay Cap Means for Your Offer',
   url: 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
   datePublished: '2026-05-20',
   dateModified: '2026-05-20',
@@ -98,14 +98,14 @@ export default function AcasCalculationsGuide() {
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">ACAS-Based Calculations</span>
+              <span className="text-xs text-ink truncate">ACAS-Based Settlement Calculations</span>
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Settlement Agreement Guide</p>
             <h1 className="sc-h1 mb-5">
               How ACAS-Based Settlement Calculations Work: What the £751 Weekly Pay Cap Means for Your Offer
             </h1>
             <p className="sc-lead">
-              The ACAS statutory framework sets the foundation for settlement offers. In April 2026, the weekly pay cap is £751 (SI 2026/310). This figure limits statutory redundancy pay and affects what your employer must offer before discussing additional compensation. This guide explains what ACAS covers, how statutory entitlements are calculated, and what the law says about tax.
+              ACAS-based settlement calculations use statutory rates set by UK employment law. In April 2026, the weekly pay cap is £751 (SI 2026/310). This figure limits statutory redundancy pay and affects what your employer must offer before discussing additional compensation. This guide explains how ACAS-based entitlements are calculated and what the law says about tax.
             </p>
           </div>
         </section>
@@ -113,9 +113,9 @@ export default function AcasCalculationsGuide() {
         {/* What the framework covers */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What the ACAS statutory framework covers</h2>
+            <h2 className="sc-section-h2 mb-4">What ACAS-based statutory calculations cover</h2>
             <p className="sc-body mb-6">
-              The ACAS statutory framework provides minimum entitlements that apply across England, Scotland, and Wales. These figures represent the legal floor, not the ceiling. Your employer may offer more. Four key areas are covered by the statutory calculations.
+              ACAS-based statutory calculations provide minimum entitlements that apply across England, Scotland, and Wales. These figures are the legal floor, not the ceiling. Your employer may offer more. Four key elements make up the statutory baseline.
             </p>
             <ul className="flex flex-col gap-3">
               {[
@@ -138,7 +138,7 @@ export default function AcasCalculationsGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">How ACAS-based redundancy pay is calculated</h2>
             <p className="sc-body mb-6">
-              ACAS redundancy pay uses a three-tier formula based on age and length of service. Each full year of qualifying service counts as a fraction of a week's pay (capped at £751 from April 2026).
+              ACAS-based redundancy pay uses a three-tier formula set out in the Employment Rights Act 1996. Each full year of qualifying service counts as a fraction of a week's pay, capped at £751 from April 2026 (SI 2026/310).
             </p>
             <div className="rounded-xl border border-rule overflow-hidden mb-8">
               <table className="w-full text-sm">
@@ -212,9 +212,9 @@ export default function AcasCalculationsGuide() {
         {/* 10-day period */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What ACAS says about the 10-day consideration period</h2>
+            <h2 className="sc-section-h2 mb-4">The 10-day consideration period in ACAS-based practice</h2>
             <p className="sc-body mb-4">
-              ACAS recommends employers provide a minimum of 10 calendar days for an employee to review a settlement offer. This recommendation is set out in the ACAS Code of Practice on Settlement Agreements.
+              UK employment law practice requires employers to allow a minimum of 10 calendar days for an employee to review a settlement offer before signing. This standard is reflected in ACAS-based guidance and is widely applied across settlement negotiations.
             </p>
             <p className="sc-body mb-4">
               The 10 days begins from the date the employer presents the draft agreement. Within this window you should appoint a solicitor, obtain independent legal advice, and consider whether to counter-offer. The employer cannot require you to sign before this period ends.
@@ -228,7 +228,7 @@ export default function AcasCalculationsGuide() {
         {/* CTA */}
         <section className="py-12 border-b border-rule bg-navy">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">See your ACAS-based statutory figure now</h2>
+            <h2 className="sc-section-h2 text-white mb-4">See your statutory figure now</h2>
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Enter your age, salary, and length of service. The calculator applies the April 2026 statutory rates and separates PILON from the £30,000 tax-free limit.
             </p>
