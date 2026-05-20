@@ -25,11 +25,11 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: 'Is the Fair Work Agency the same as ACAS-based enforcement?',
-    a: 'No. ACAS-based enforcement refers to statutory dispute resolution and employment rights guidance used in settlement negotiations. The Fair Work Agency is a separate law enforcement body that will investigate breaches of statutory minimum rights — minimum wage, holiday pay, statutory sick pay — and can impose penalties on employers. The two serve different functions.',
+    a: 'No. ACAS-based enforcement refers to statutory dispute resolution and employment rights guidance used in settlement negotiations. The Fair Work Agency is a separate law enforcement body that will investigate breaches of statutory minimum rights (minimum wage, holiday pay, statutory sick pay) and can impose penalties on employers. The two serve different functions.',
   },
   {
     q: 'Can the Fair Work Agency help me if my employer underpays my settlement?',
-    a: 'The Fair Work Agency cannot enforce the terms of your settlement agreement directly. However, if your settlement fails to include statutory entitlements owed to you — such as holiday pay or minimum wage arrears — the FWA can investigate the employer for the underlying statutory breach. Disputes purely about settlement terms require legal action or an employment tribunal claim.',
+    a: 'The Fair Work Agency cannot enforce the terms of your settlement agreement directly. However, if your settlement fails to include statutory entitlements owed to you (such as holiday pay or minimum wage arrears), the FWA can investigate the employer for the underlying statutory breach. Disputes purely about settlement terms require legal action or an employment tribunal claim.',
   },
   {
     q: 'What rights will the Fair Work Agency enforce?',
@@ -149,7 +149,7 @@ export default function FairWorkAgencyGuide() {
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-navy text-white">
+                  <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Body</th>
                     <th className="text-left px-4 py-3 font-medium">What it enforced</th>
                     <th className="text-left px-4 py-3 font-medium">Status</th>
@@ -181,7 +181,7 @@ export default function FairWorkAgencyGuide() {
               The Fair Work Agency enforces statutory minimum standards, not settlement agreement terms. Your settlement is a private contract between you and your employer. The FWA cannot intervene in disputes about settlement payment amounts or negotiated terms.
             </p>
             <p className="sc-body mb-4">
-              However, if your settlement includes amounts below statutory minimums — for example, if holiday pay owed is excluded from the settlement — the FWA can take action against your employer for the underlying statutory breach. A settlement agreement cannot remove your statutory rights.
+              However, if your settlement includes amounts below statutory minimums (for example, if holiday pay owed is excluded from the settlement), the FWA can take action against your employer for the underlying statutory breach. A settlement agreement cannot remove your statutory rights.
             </p>
             <p className="sc-body">
               For disputes about whether your settlement offer is fair or whether your employer has met their statutory obligations, an employment solicitor is the right route. The FWA covers enforcement of minimum standards, not assessment of settlement value.
@@ -203,7 +203,7 @@ export default function FairWorkAgencyGuide() {
         </section>
 
         {/* CTA */}
-        <section className="py-12 border-b border-rule bg-navy">
+        <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
             <h2 className="sc-section-h2 text-white mb-4">Not sure what your settlement is worth?</h2>
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
@@ -211,7 +211,7 @@ export default function FairWorkAgencyGuide() {
             </p>
             <Link
               href="/#calculator"
-              className="inline-flex items-center gap-2 bg-coral text-white font-semibold px-7 py-3.5 rounded-full hover:bg-coral/90 transition-colors text-sm"
+              className="btn-accent"
             >
               Calculate my settlement
             </Link>

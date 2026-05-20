@@ -40,7 +40,7 @@ const CONSTRUCTIVE_DISMISSAL_STEPS: StepItem[] = [
   {
     n: '01',
     t: 'Get advice before you resign, not after',
-    d: 'This is the most important step. Once you resign, your options change significantly. A solicitor can assess whether what you are experiencing amounts to a fundamental breach of contract and, in many cases, can open negotiations with your employer while you are still employed — often achieving a better outcome than resigning and claiming.',
+    d: 'This is the most important step. Once you resign, your options change significantly. A solicitor can assess whether what you are experiencing amounts to a fundamental breach of contract and, in many cases, can open negotiations with your employer while you are still employed, often achieving a better outcome than resigning and claiming.',
   },
   {
     n: '02',
@@ -50,14 +50,14 @@ const CONSTRUCTIVE_DISMISSAL_STEPS: StepItem[] = [
   {
     n: '03',
     t: 'Know the net figure before you make any decisions',
-    d: 'The first £30,000 of a constructive dismissal settlement is tax-free. PILON is taxed separately as earnings. The calculator gives you the estimated net take-home figure — because that is the number that actually matters when you are weighing your options.',
+    d: 'The first £30,000 of a constructive dismissal settlement is tax-free. PILON is taxed separately as earnings. The calculator gives you the estimated net take-home figure, because that is the number that actually matters when you are weighing your options.',
   },
 ]
 
 const CONSTRUCTIVE_DISMISSAL_FAQS: FaqItem[] = [
   {
     q: 'My employer is making my life at work unbearable. Do I have a claim?',
-    a: 'Possibly, but the legal test is specific. Constructive dismissal requires a fundamental breach of your employment contract by your employer, and you must resign in direct response to it. Common examples include a unilateral cut to your pay or hours, demotion without your consent, sustained bullying or harassment, or serious damage to the trust and confidence that underpins the employment relationship. The key word is fundamental — not every difficult working situation meets the legal threshold. Getting advice before you resign is the most important step, because a solicitor can assess whether what you are experiencing is likely to qualify.',
+    a: 'Possibly, but the legal test is specific. Constructive dismissal requires a fundamental breach of your employment contract by your employer, and you must resign in direct response to it. Common examples include a unilateral cut to your pay or hours, demotion without your consent, sustained bullying or harassment, or serious damage to the trust and confidence that underpins the employment relationship. The key word is fundamental. Not every difficult working situation meets the legal threshold. Getting advice before you resign is the most important step, because a solicitor can assess whether what you are experiencing is likely to qualify.',
   },
   {
     q: 'Why does it matter so much that I get advice before resigning?',
@@ -65,7 +65,7 @@ const CONSTRUCTIVE_DISMISSAL_FAQS: FaqItem[] = [
   },
   {
     q: 'What does it mean to "affirm" the breach?',
-    a: 'If you continue working for a significant period after the event you say forced your resignation, a tribunal may find that you accepted the breach and carried on under the contract — which would undermine your constructive dismissal claim. There is no fixed time limit and it depends on the circumstances, but it is one reason acting promptly matters. Raising a formal grievance is often an important step to show you have not accepted the situation.',
+    a: 'If you continue working for a significant period after the event you say forced your resignation, a tribunal may find that you accepted the breach and carried on under the contract, which would undermine your constructive dismissal claim. There is no fixed time limit and it depends on the circumstances, but it is one reason acting promptly matters. Raising a formal grievance is often an important step to show you have not accepted the situation.',
   },
   {
     q: 'Do I need two years of service to claim?',
@@ -77,7 +77,7 @@ const CONSTRUCTIVE_DISMISSAL_FAQS: FaqItem[] = [
   },
   {
     q: 'My employer has asked to have a "without prejudice" conversation. What does that mean?',
-    a: 'A without prejudice conversation is one held with a genuine view to settling a dispute. What is said in that meeting generally cannot be used as evidence in tribunal proceedings. Under ERA 1996 s.111A, pre-termination negotiations — including settlement offers made before any formal dispute exists — are also protected from disclosure in ordinary unfair dismissal claims. If your employer has approached you about leaving, that conversation may have legal protection, but it does not stop you from seeking independent advice before responding or agreeing to anything.',
+    a: 'A without prejudice conversation is one held with a genuine view to settling a dispute. What is said in that meeting generally cannot be used as evidence in tribunal proceedings. Under ERA 1996 s.111A, pre-termination negotiations (including settlement offers made before any formal dispute exists) are also protected from disclosure in ordinary unfair dismissal claims. If your employer has approached you about leaving, that conversation may have legal protection, but it does not stop you from seeking independent advice before responding or agreeing to anything.',
   },
   {
     q: 'How is a constructive dismissal settlement taxed?',
@@ -85,7 +85,7 @@ const CONSTRUCTIVE_DISMISSAL_FAQS: FaqItem[] = [
   },
   {
     q: 'Do I need a solicitor to sign a settlement agreement?',
-    a: 'Yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is named in the agreement. Without that, the agreement cannot validly waive your right to bring a claim. Your employer is required to contribute to the legal fees, typically between £350 and £750, which in most cases covers the full cost. The advice is effectively free to you — and it is the only way the agreement is legally valid.',
+    a: 'Yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is named in the agreement. Without that, the agreement cannot validly waive your right to bring a claim. Your employer is required to contribute to the legal fees, typically between £350 and £750, which in most cases covers the full cost. The advice is effectively free to you, and it is the only way the agreement is legally valid.',
   },
 ]
 
@@ -169,7 +169,7 @@ export default function ConstructiveDismissalCalculatorPage() {
           },
           {
             label: 'Know your actual take-home figure',
-            detail: 'The first £30,000 is tax-free. PILON is always taxed as earnings. The calculator shows you the net figure after tax — not just the headline number.',
+            detail: 'The first £30,000 is tax-free. PILON is always taxed as earnings. The calculator shows you the net figure after tax, not just the headline number.',
           },
           {
             label: 'Other claims may apply alongside constructive dismissal',
@@ -181,7 +181,7 @@ export default function ConstructiveDismissalCalculatorPage() {
         ctaLabel="Estimate my constructive dismissal settlement →"
         ctaHref="/calculator"
         howItWorksTitle="Three steps to understand your constructive dismissal position."
-        howItWorksLead="From what you could be owed, to the net figure after tax. Free, no email required. Independent — not a law firm."
+        howItWorksLead="From what you could be owed, to the net figure after tax. Free, no email required. Independent, not a law firm."
         taxSectionTitle="How much tax will you pay on a constructive dismissal settlement?"
         statutoryRows={STATUTORY_ROWS}
         pageLinks={[

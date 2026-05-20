@@ -308,19 +308,19 @@ export default function EmployerRecommendedSolicitor() {
                 <li className="flex items-start gap-3">
                   <span className="mt-[7px] w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
                   <span className="guide-body">
-                    <a href="https://www.sra.org.uk/consumers/register/" target="_blank" rel="noopener noreferrer" className="text-ink underline underline-offset-2 hover:text-coral transition-colors">SRA Solicitor Register</a> — verify any solicitor is currently authorised to practise
+                    <a href="https://www.sra.org.uk/consumers/register/" target="_blank" rel="noopener noreferrer" className="text-ink underline underline-offset-2 hover:text-coral transition-colors">SRA Solicitor Register</a>: verify any solicitor is currently authorised to practise
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-[7px] w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
                   <span className="guide-body">
-                    <a href="https://www.acas.org.uk/settlement-agreements" target="_blank" rel="noopener noreferrer" className="text-ink underline underline-offset-2 hover:text-coral transition-colors">ACAS Guide to Settlement Agreements</a> — official guidance on your rights
+                    <a href="https://www.acas.org.uk/settlement-agreements" target="_blank" rel="noopener noreferrer" className="text-ink underline underline-offset-2 hover:text-coral transition-colors">ACAS Guide to Settlement Agreements</a>: official guidance on your rights
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-[7px] w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
                   <span className="guide-body">
-                    <a href="https://www.citizensadvice.org.uk/work/problems-at-work/settlement-agreements/" target="_blank" rel="noopener noreferrer" className="text-ink underline underline-offset-2 hover:text-coral transition-colors">Citizens Advice: Settlement Agreements</a> — plain-English overview of the process
+                    <a href="https://www.citizensadvice.org.uk/work/problems-at-work/settlement-agreements/" target="_blank" rel="noopener noreferrer" className="text-ink underline underline-offset-2 hover:text-coral transition-colors">Citizens Advice: Settlement Agreements</a>: plain-English overview of the process
                   </span>
                 </li>
               </ul>

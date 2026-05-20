@@ -41,7 +41,7 @@ const REDUNDANCY_STEPS: StepItem[] = [
   {
     n: '01',
     t: 'Find out what you are legally owed',
-    d: 'Statutory redundancy pay is your legal minimum — and many employers pay exactly that and no more. Enter your age, salary, and length of service and the calculator shows your entitlement under the April 2026 rates, so you know the floor before any negotiation starts.',
+    d: 'Statutory redundancy pay is your legal minimum. Many employers pay exactly that and no more. Enter your age, salary, and length of service and the calculator shows your entitlement under the April 2026 rates, so you know the floor before any negotiation starts.',
   },
   {
     n: '02',
@@ -51,14 +51,14 @@ const REDUNDANCY_STEPS: StepItem[] = [
   {
     n: '03',
     t: 'Know what you will actually take home',
-    d: 'Redundancy pay and PILON are taxed differently. Getting this wrong is one of the most common errors in settlement agreements. The calculator separates both and gives you an estimated net figure — the number that actually matters.',
+    d: 'Redundancy pay and PILON are taxed differently. Getting this wrong is one of the most common errors in settlement agreements. The calculator separates both and gives you an estimated net figure: the number that actually matters.',
   },
 ]
 
 const REDUNDANCY_FAQS: FaqItem[] = [
   {
     q: 'My employer says I am being made redundant. What am I actually entitled to?',
-    a: 'If you have at least two years of continuous service, you are entitled to statutory redundancy pay as a legal minimum. The amount is based on your age, weekly pay (capped at £751 from April 2026), and years of service, up to a maximum of 20 qualifying years. On top of that, you are entitled to your full notice period (or payment in lieu), any accrued holiday pay, and any other contractual entitlements. Statutory redundancy pay alone is rarely the whole picture — a solicitor can help you identify everything you are owed before you sign.',
+    a: 'If you have at least two years of continuous service, you are entitled to statutory redundancy pay as a legal minimum. The amount is based on your age, weekly pay (capped at £751 from April 2026), and years of service, up to a maximum of 20 qualifying years. On top of that, you are entitled to your full notice period (or payment in lieu), any accrued holiday pay, and any other contractual entitlements. Statutory redundancy pay alone is rarely the whole picture. A solicitor can help you identify everything you are owed before you sign.',
   },
   {
     q: 'How is statutory redundancy pay calculated?',
@@ -78,7 +78,7 @@ const REDUNDANCY_FAQS: FaqItem[] = [
   },
   {
     q: 'Do I need a solicitor to sign a redundancy settlement agreement?',
-    a: 'Yes, if your employer is asking you to sign a settlement agreement. Under ERA 1996 s.203, a settlement agreement is only legally valid if you have received independent legal advice from a qualified, SRA-regulated solicitor who is named in the agreement. Importantly, your employer is required to contribute to the cost of that advice, typically between £350 and £750, which in most cases covers the full fee. The advice is free to you in practice — there is no reason to sign without it.',
+    a: 'Yes, if your employer is asking you to sign a settlement agreement. Under ERA 1996 s.203, a settlement agreement is only legally valid if you have received independent legal advice from a qualified, SRA-regulated solicitor who is named in the agreement. Importantly, your employer is required to contribute to the cost of that advice, typically between £350 and £750, which in most cases covers the full fee. The advice is free to you in practice. There is no reason to sign without it.',
   },
   {
     q: 'What counts as a week\'s pay for redundancy purposes?',
@@ -169,7 +169,7 @@ export default function RedundancyCalculatorPage() {
           },
           {
             label: 'Understand your actual take-home pay',
-            detail: 'Redundancy pay and PILON are taxed differently. The calculator separates both and shows the net figure after tax — because that is the number that actually matters.',
+            detail: 'Redundancy pay and PILON are taxed differently. The calculator separates both and shows the net figure after tax, because that is the number that actually matters.',
           },
           {
             label: 'Do not sign until you have had independent advice',

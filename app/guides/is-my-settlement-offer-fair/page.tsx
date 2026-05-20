@@ -29,11 +29,11 @@ const FAQS = [
   },
   {
     q: 'Should I accept the first offer?',
-    a: 'No. The first offer is almost always below the employer\'s true maximum. If you have any claim strength at all — age, length of service, or disputed circumstances — counter with a higher figure. The employer expects negotiation. A fair counter is to ask the employer to explain the multiplier they have applied to your statutory entitlement. If they cannot justify it, you have room to push.',
+    a: 'No. The first offer is almost always below the employer\'s true maximum. If you have any claim strength at all (age, length of service, or disputed circumstances), counter with a higher figure. The employer expects negotiation. A fair counter is to ask the employer to explain the multiplier they have applied to your statutory entitlement. If they cannot justify it, you have room to push.',
   },
   {
     q: 'What happens if I reject a settlement offer?',
-    a: 'If you reject a settlement offer, the employer can withdraw it and the negotiation ends. However, you can still pursue a tribunal claim for unfair dismissal, discrimination, or breach of contract. The tribunal route is slower (typically 6 to 9 months), uncertain, and costly in time. A settlement avoids all three — which is why employers prefer a certain, swift, private resolution over tribunal risk. That risk is your leverage.',
+    a: 'If you reject a settlement offer, the employer can withdraw it and the negotiation ends. However, you can still pursue a tribunal claim for unfair dismissal, discrimination, or breach of contract. The tribunal route is slower (typically 6 to 9 months), uncertain, and costly in time. A settlement avoids all three, which is why employers prefer a certain, swift, private resolution over tribunal risk. That risk is your leverage.',
   },
   {
     q: 'How long do I have to decide?',
@@ -119,7 +119,7 @@ export default function IsMyOfferFairGuide() {
             </p>
             <ul className="flex flex-col gap-3">
               {[
-                'Your statutory entitlements — redundancy, notice, and holiday pay — form the baseline any offer must meet.',
+                'Your statutory entitlements (redundancy, notice, and holiday pay) form the baseline any offer must meet.',
                 'The strength of any discrimination, whistleblowing, or wrongful dismissal claim you hold directly increases the multiplier.',
                 'Market comparison: what similar cases in your industry and region typically settle for.',
                 'Your bargaining position: how much the employer fears tribunal proceedings relative to the cost of settling higher.',
@@ -143,7 +143,7 @@ export default function IsMyOfferFairGuide() {
             <div className="rounded-xl border border-rule overflow-hidden mb-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-navy text-white">
+                  <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Fairness level</th>
                     <th className="text-left px-4 py-3 font-medium">What it includes</th>
                     <th className="text-left px-4 py-3 font-medium">Typical multiplier</th>
@@ -151,7 +151,7 @@ export default function IsMyOfferFairGuide() {
                 </thead>
                 <tbody>
                   {[
-                    ['Statutory minimum only', 'Redundancy, notice, holiday — no uplift', '1.0x'],
+                    ['Statutory minimum only', 'Redundancy, notice, holiday. No uplift.', '1.0x'],
                     ['Typical fair range', 'Statutory plus settlement uplift', '1.5x to 4.0x'],
                     ['Strong bargaining position', 'Statutory, uplift, and risk premium for a live claim', '4.0x or higher'],
                   ].map(([level, includes, multiplier], i) => (
@@ -177,7 +177,7 @@ export default function IsMyOfferFairGuide() {
             <ul className="flex flex-col gap-4">
               {[
                 'Your offer matches your statutory entitlement exactly. If the redundancy figure and the settlement figure are the same number, the employer has paid you nothing to settle.',
-                'The offer is less than three months of your salary. For most earners, a fair range starts at 1.5x statutory — which typically equals at least three months of gross pay.',
+                'The offer is less than three months of your salary. For most earners, a fair range starts at 1.5x statutory, which typically equals at least three months of gross pay.',
                 'You were told there is no negotiation room. Employers who say the offer is final are usually testing your response. There is almost always room to move.',
                 'The offer contains no itemised breakdown. A fair offer separates redundancy, notice, holiday, and any uplift so you know exactly what each element is worth.',
                 'You received the offer with a deadline shorter than 10 days. Rushed timelines signal the employer is managing risk. That urgency is leverage for you.',
@@ -211,7 +211,7 @@ export default function IsMyOfferFairGuide() {
                 },
                 {
                   title: 'Your financial position',
-                  body: 'If you have another job lined up or financial runway, you have stronger leverage. If you need the payment quickly, the employer may sense it. Your walk-away point — the minimum you will accept — shapes every counter-offer you make.',
+                  body: 'If you have another job lined up or financial runway, you have stronger leverage. If you need the payment quickly, the employer may sense it. Your walk-away point (the minimum you will accept) shapes every counter-offer you make.',
                 },
               ].map(({ title, body }) => (
                 <div key={title} className="flex gap-4">
@@ -227,7 +227,7 @@ export default function IsMyOfferFairGuide() {
         </section>
 
         {/* CTA */}
-        <section className="py-12 border-b border-rule bg-navy">
+        <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
             <h2 className="sc-section-h2 text-white mb-4">Compare your offer against the statutory baseline</h2>
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
@@ -235,7 +235,7 @@ export default function IsMyOfferFairGuide() {
             </p>
             <Link
               href="/#calculator"
-              className="inline-flex items-center gap-2 bg-coral text-white font-semibold px-7 py-3.5 rounded-full hover:bg-coral/90 transition-colors text-sm"
+              className="btn-accent"
             >
               Check my offer now
             </Link>

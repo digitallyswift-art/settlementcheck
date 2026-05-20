@@ -45,7 +45,7 @@ const UNFAIR_DISMISSAL_STEPS: StepItem[] = [
   {
     n: '02',
     t: 'See whether your settlement offer reflects your claim',
-    d: 'The compensatory award can cover lost earnings, lost benefits, future job loss, and pension. The cap is £123,543 or 52 weeks\' gross pay, whichever is lower. The calculator shows where the offer you have received sits against that range — so you can see whether it is reasonable before you decide anything.',
+    d: 'The compensatory award can cover lost earnings, lost benefits, future job loss, and pension. The cap is £123,543 or 52 weeks\' gross pay, whichever is lower. The calculator shows where the offer you have received sits against that range, so you can see whether it is reasonable before you decide anything.',
   },
   {
     n: '03',

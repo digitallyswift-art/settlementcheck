@@ -54,7 +54,7 @@ const faqSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'How ACAS-Based Settlement Calculations Work — What the £751 Weekly Pay Cap Means for Your Offer',
+  headline: 'How ACAS-Based Settlement Calculations Work: What the £751 Weekly Pay Cap Means for Your Offer',
   url: 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
   datePublished: '2026-05-20',
   dateModified: '2026-05-20',
@@ -143,7 +143,7 @@ export default function AcasCalculationsGuide() {
             <div className="rounded-xl border border-rule overflow-hidden mb-8">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-navy text-white">
+                  <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Age at redundancy</th>
                     <th className="text-left px-4 py-3 font-medium">Weeks per year of service</th>
                   </tr>
@@ -226,7 +226,7 @@ export default function AcasCalculationsGuide() {
         </section>
 
         {/* CTA */}
-        <section className="py-12 border-b border-rule bg-navy">
+        <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
             <h2 className="sc-section-h2 text-white mb-4">See your statutory figure now</h2>
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
@@ -234,7 +234,7 @@ export default function AcasCalculationsGuide() {
             </p>
             <Link
               href="/#calculator"
-              className="inline-flex items-center gap-2 bg-coral text-white font-semibold px-7 py-3.5 rounded-full hover:bg-coral/90 transition-colors text-sm"
+              className="btn-accent"
             >
               Calculate my entitlement
             </Link>

@@ -118,7 +118,7 @@ export default function RedundancyPayCapGuide() {
               <ul className="flex flex-col gap-3">
                 {[
                   'The weekly pay cap is £751 (Great Britain) and £783 (Northern Ireland) from 6 April 2026.',
-                  'The maximum statutory redundancy pay is £22,530 — reached only at 20 years service with the highest age multiplier.',
+                  'The maximum statutory redundancy pay is £22,530, reached only at 20 years service with the highest age multiplier.',
                   'The cap limits the statutory formula only. It does not cap what your employer can offer in a settlement agreement.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
@@ -136,7 +136,7 @@ export default function RedundancyPayCapGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">What the redundancy pay cap is and why it exists</h2>
             <p className="sc-body mb-4">
-              The redundancy pay cap is a statutory maximum. It limits the weekly pay figure used in the redundancy calculation, regardless of what you actually earn. If you earn £1,200 per week, the formula uses £751. If you earn £500 per week, the formula uses £500 — the cap only bites when your pay exceeds it.
+              The redundancy pay cap is a statutory maximum. It limits the weekly pay figure used in the redundancy calculation, regardless of what you actually earn. If you earn £1,200 per week, the formula uses £751. If you earn £500 per week, the formula uses £500. The cap only bites when your pay exceeds it.
             </p>
             <p className="sc-body mb-4">
               The cap applies in England, Scotland, and Wales. Northern Ireland has its own separate cap, currently £783 per week (SR 2026/57). The figures are set by the Employment Rights Act 1996 s.227 and change every April by government order (Statutory Instrument). The 2026 cap is set by SI 2026/310, which came into force on 6 April 2026.
@@ -165,7 +165,7 @@ export default function RedundancyPayCapGuide() {
                   { n: 3, text: 'Multiply by your complete years of qualifying service, up to a maximum of 20 years (ERA 1996 s.162).' },
                 ].map(({ n, text }) => (
                   <li key={n} className="flex items-start gap-4">
-                    <span className="w-6 h-6 rounded-full bg-navy text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
+                    <span className="w-6 h-6 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                     <span className="sc-body text-sm">{text}</span>
                   </li>
                 ))}
@@ -207,7 +207,7 @@ export default function RedundancyPayCapGuide() {
                 },
               ].map(({ title, rows, note }) => (
                 <div key={title} className="rounded-xl border border-rule overflow-hidden">
-                  <div className="bg-navy px-4 py-3">
+                  <div className="bg-ink px-4 py-3">
                     <p className="text-white text-sm font-medium">{title}</p>
                   </div>
                   <div className="divide-y divide-rule">
@@ -237,7 +237,7 @@ export default function RedundancyPayCapGuide() {
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-navy text-white">
+                  <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Effective date</th>
                     <th className="text-left px-4 py-3 font-medium">Weekly cap</th>
                     <th className="text-left px-4 py-3 font-medium">Maximum redundancy</th>
@@ -283,7 +283,7 @@ export default function RedundancyPayCapGuide() {
                 { label: 'Benefits in kind', included: false, detail: 'Company car, private health insurance, gym membership, and other non-cash benefits are excluded.' },
               ].map(({ label, included, detail }) => (
                 <div key={label} className="flex items-start gap-4 rounded-xl border border-rule p-4">
-                  <div className={`text-xs font-semibold px-2 py-1 rounded flex-shrink-0 mt-0.5 ${included ? 'bg-navy text-white' : 'bg-paper text-muted'}`}>
+                  <div className={`text-xs font-semibold px-2 py-1 rounded flex-shrink-0 mt-0.5 ${included ? 'bg-ink text-white' : 'bg-paper text-muted'}`}>
                     {included ? 'Included' : 'Excluded'}
                   </div>
                   <div>
@@ -333,7 +333,7 @@ export default function RedundancyPayCapGuide() {
                 { n: 4, title: 'Bring a tribunal claim if they refuse', body: 'If the employer does not respond or refuses, you can bring a claim in the Employment Tribunal for unlawful deduction of wages. The time limit is 3 months from the date of underpayment. A tribunal can award the unpaid amount plus interest.' },
               ].map(({ n, title, body }) => (
                 <li key={n} className="flex gap-4">
-                  <span className="w-7 h-7 rounded-full bg-navy text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
+                  <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
                     <p className="text-sm font-semibold text-ink mb-1">{title}</p>
                     <p className="sc-body text-sm">{body}</p>
@@ -361,16 +361,13 @@ export default function RedundancyPayCapGuide() {
         </section>
 
         {/* CTA */}
-        <section className="py-12 border-b border-rule bg-navy">
+        <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
             <h2 className="sc-section-h2 text-white mb-4">Calculate your redundancy entitlement now</h2>
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Enter your age, salary, and years of service. The calculator applies the April 2026 statutory rates and shows your capped statutory figure instantly.
             </p>
-            <Link
-              href="/redundancy-calculator"
-              className="inline-flex items-center gap-2 bg-coral text-white font-semibold px-7 py-3.5 rounded-full hover:bg-coral/90 transition-colors text-sm"
-            >
+            <Link href="/redundancy-calculator" className="btn-accent">
               Calculate my redundancy pay
             </Link>
           </div>

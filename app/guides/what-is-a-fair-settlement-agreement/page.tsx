@@ -33,7 +33,7 @@ const FAQS = [
   },
   {
     q: 'Can I negotiate after I have already been made redundant?',
-    a: 'Yes. Redundancy is the starting point for negotiation, not the end. Once you have been made redundant, your statutory entitlement is fixed — but the employer may still offer a settlement agreement to avoid any claims arising from the process. If there were procedural flaws (inadequate consultation, no proper selection process, no warning) or if there are other claim elements, you have leverage. Counter with a specific figure and a brief explanation. Employers expect negotiation.',
+    a: 'Yes. Redundancy is the starting point for negotiation, not the end. Once you have been made redundant, your statutory entitlement is fixed, but the employer may still offer a settlement agreement to avoid any claims arising from the process. If there were procedural flaws (inadequate consultation, no proper selection process, no warning) or if there are other claim elements, you have leverage. Counter with a specific figure and a brief explanation. Employers expect negotiation.',
   },
   {
     q: 'What happens to my tribunal claim if I sign?',
@@ -195,7 +195,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             <div className="rounded-xl border border-rule overflow-hidden mb-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-navy text-white">
+                  <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Multiplier</th>
                     <th className="text-left px-4 py-3 font-medium">What it means</th>
                     <th className="text-left px-4 py-3 font-medium">For Sarah (£10,455 floor)</th>
@@ -286,7 +286,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                 },
               ].map(({ n, title, body }) => (
                 <li key={n} className="flex gap-4">
-                  <span className="w-7 h-7 rounded-full bg-navy text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
+                  <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
                     <p className="text-sm font-semibold text-ink mb-1">{title}</p>
                     <p className="sc-body text-sm">{body}</p>
@@ -307,7 +307,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             <div className="rounded-xl border border-rule overflow-hidden mb-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-navy text-white">
+                  <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Payment type</th>
                     <th className="text-left px-4 py-3 font-medium">Tax treatment</th>
                     <th className="text-left px-4 py-3 font-medium">Statutory source</th>
@@ -386,7 +386,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                 },
               ].map(({ n, title, body }) => (
                 <li key={n} className="flex gap-4">
-                  <span className="w-7 h-7 rounded-full bg-navy text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
+                  <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
                     <p className="text-sm font-semibold text-ink mb-1">{title}</p>
                     <p className="sc-body text-sm">{body}</p>
@@ -398,7 +398,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
         </section>
 
         {/* CTA */}
-        <section className="py-12 border-b border-rule bg-navy">
+        <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
             <h2 className="sc-section-h2 text-white mb-4">See what your offer should be worth</h2>
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
@@ -406,7 +406,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             </p>
             <Link
               href="/#calculator"
-              className="inline-flex items-center gap-2 bg-coral text-white font-semibold px-7 py-3.5 rounded-full hover:bg-coral/90 transition-colors text-sm"
+              className="btn-accent"
             >
               Check my offer now
             </Link>
