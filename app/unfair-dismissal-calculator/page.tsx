@@ -39,53 +39,53 @@ const STATUTORY_ROWS: StatutoryRow[] = [
 const UNFAIR_DISMISSAL_STEPS: StepItem[] = [
   {
     n: '01',
-    t: 'Check your basic award entitlement',
-    d: 'Enter your age, salary, and length of service. The calculator applies the April 2026 weekly pay cap of £751 and the correct age multiplier to show your basic award under ERA 1996 ss.162-163.',
+    t: 'Understand what the law says you could be owed',
+    d: 'An unfair dismissal award has two parts: a basic award calculated from your age, pay, and service, and a compensatory award for your actual financial loss. Enter your details and the calculator shows both, based on April 2026 statutory rates.',
   },
   {
     n: '02',
-    t: 'Understand your compensatory award potential',
-    d: 'The compensatory award covers your actual financial loss: lost earnings, lost benefits, and future loss of employment. The cap is £123,543 or 52 weeks\' gross pay, whichever is lower (ERA 1996 s.124). The calculator shows where your offer sits against that range.',
+    t: 'See whether your settlement offer reflects your claim',
+    d: 'The compensatory award can cover lost earnings, lost benefits, future job loss, and pension. The cap is £123,543 or 52 weeks\' gross pay, whichever is lower. The calculator shows where the offer you have received sits against that range — so you can see whether it is reasonable before you decide anything.',
   },
   {
     n: '03',
-    t: 'Know your net take-home before you sign',
-    d: 'The first £30,000 of an unfair dismissal settlement is tax-free. PILON is taxed separately as earnings. The calculator separates both and gives you an estimated net figure, so you know exactly what you will receive.',
+    t: 'Know the net figure before you commit',
+    d: 'The first £30,000 of an unfair dismissal settlement is tax-free. PILON is taxed separately as earnings. Getting the tax treatment wrong is one of the most common drafting errors in settlement agreements. The calculator separates both so you know what you will actually receive.',
   },
 ]
 
 const UNFAIR_DISMISSAL_FAQS: FaqItem[] = [
   {
-    q: 'Do I qualify to bring an unfair dismissal claim?',
-    a: 'You need at least two years of continuous employment with your employer to bring an ordinary unfair dismissal claim under ERA 1996 s.94. However, some dismissals are automatically unfair and carry no qualifying period. These include dismissals connected to whistleblowing (a protected disclosure under ERA 1996 s.103A), pregnancy or maternity leave, trade union membership or activity, and asserting a statutory right. If any of these apply to you, the two-year rule does not bar your claim.',
+    q: 'I\'ve been dismissed. How do I know if it was unfair?',
+    a: 'Dismissal is potentially unfair when your employer either had no valid reason, or had a reason but handled the process badly. A fair dismissal requires a potentially fair reason (such as conduct, capability, or redundancy) and a fair procedure. If you were not given a proper warning, not given a chance to respond, or feel the decision was made before any investigation took place, those are all things a solicitor will want to look at. You need two years of continuous service for an ordinary unfair dismissal claim, but some reasons for dismissal are automatically unfair with no qualifying period at all.',
   },
   {
-    q: 'What is the unfair dismissal compensatory award cap in 2026?',
-    a: 'From 6 April 2026, the compensatory award cap is £123,543 or 52 weeks\' gross pay, whichever is lower, under ERA 1996 s.124 as updated by SI 2026/310. The basic award is calculated the same way as statutory redundancy pay and uses a weekly pay cap of £751, giving a maximum basic award of £22,530.',
+    q: 'What if I have less than two years of service?',
+    a: 'The two-year qualifying period does not apply to every type of claim. If your dismissal was connected to whistleblowing (a protected disclosure under ERA 1996 s.103A), pregnancy or maternity leave, trade union membership or activity, or asserting a statutory right, those are automatically unfair regardless of how long you have worked there. If any of these might apply to your situation, it is worth getting advice before assuming you have no claim.',
   },
   {
-    q: 'What is the basic award and how is it calculated?',
-    a: 'The basic award is calculated using the same formula as statutory redundancy pay: your capped weekly pay (£751 from April 2026), your complete years of continuous service (up to 20), and an age multiplier. The multipliers are 0.5 weeks per year under age 22, 1 week per year aged 22 to 40, and 1.5 weeks per year aged 41 and over. ERA 1996 ss.162-163.',
+    q: 'How much could an unfair dismissal claim be worth?',
+    a: 'An unfair dismissal award has two parts. The basic award is calculated on your age, weekly pay (capped at £751 from April 2026), and years of service, up to a maximum of £22,530. The compensatory award reflects your actual financial loss: immediate lost earnings, future job loss, lost benefits, and pension. From April 2026, the compensatory cap is £123,543 or 52 weeks\' gross pay, whichever is lower. The total award can also be increased by up to 25% if your employer failed to follow a fair disciplinary process.',
   },
   {
-    q: 'What does the compensatory award cover?',
-    a: 'The compensatory award is intended to reflect your actual financial loss from being dismissed. A tribunal (or the parties settling) will consider: immediate loss of earnings from the dismissal date to the settlement or hearing, future loss of earnings if you have not yet found comparable employment, loss of statutory rights (a small conventional figure), and loss of pension contributions. If you contributed to your own dismissal in some way, a tribunal may apply a percentage reduction (called a Polkey reduction). If your employer failed to follow the ACAS Code of Practice on disciplinary procedures, a tribunal can increase the award by up to 25%.',
+    q: 'What does the compensatory award actually cover?',
+    a: 'A tribunal, or the parties when settling, will look at your financial loss from the date of dismissal. That includes immediate lost earnings up to settlement or hearing, future earnings if you have not yet found a comparable job, loss of pension contributions, and a small conventional sum for loss of statutory rights. If you contributed to the dismissal in any way, the award may be reduced. If your employer failed to follow the ACAS Code of Practice on disciplinary procedures, the award can be increased.',
   },
   {
-    q: 'Is an unfair dismissal settlement payment taxable?',
-    a: 'The first £30,000 of a termination payment, including the basic award and compensatory element, is tax-free under ITEPA 2003 s.403. Amounts above £30,000 are taxable at your marginal rate. Payment in lieu of notice (PILON) is always taxed as earnings under ITEPA 2003 s.402D, regardless of what your settlement agreement calls it.',
+    q: 'What is the difference between settling and going to tribunal?',
+    a: 'A settlement is certain, private, and faster. A tribunal claim can take many months and the outcome is never guaranteed. Your employer may argue that the dismissal was procedurally fair, that you contributed to it, or seek a Polkey reduction for factors that reduce the award. That is not a reason to accept a low offer, but it is a reason to get proper advice on what the claim is realistically worth before deciding. Most cases settle before a hearing, often during ACAS early conciliation.',
   },
   {
-    q: 'Should I settle or go to an Employment Tribunal?',
-    a: 'Tribunal claims carry real uncertainty. Your employer may argue procedural fairness, contributory conduct, or a Polkey reduction, all of which can reduce the award significantly. Before filing a claim, ACAS early conciliation is a mandatory first step, and most cases settle during or shortly after that process. Settlement is faster, certain, and confidential. A solicitor reviewing your specific situation can tell you whether the offer on the table reflects the merits of your case or whether there is room to negotiate.',
+    q: 'Is my settlement payment taxable?',
+    a: 'The first £30,000 of a termination payment, including the basic award and compensatory element, is tax-free under ITEPA 2003 s.403. Amounts above £30,000 are taxable at your marginal rate. Payment in lieu of notice (PILON) is always taxed as earnings under ITEPA 2003 s.402D, regardless of what your settlement agreement calls it. How the payment is allocated in the agreement affects what you take home, which is one reason the drafting matters.',
   },
   {
-    q: 'Do I need a solicitor to accept an unfair dismissal settlement?',
-    a: 'If your employer is asking you to sign a settlement agreement to resolve an unfair dismissal claim, yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is identified in the agreement. Your employer is required to contribute to your legal fees, typically £350 to £750, which in most cases covers the full cost.',
+    q: 'Do I need a solicitor to sign a settlement agreement?',
+    a: 'Yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is identified in the agreement. Your employer is required to contribute to that cost, typically between £350 and £750, which in most cases covers the full fee. The settlement agreement cannot validly waive your employment claims without that advice being in place.',
   },
   {
-    q: 'What is ACAS early conciliation and is it mandatory?',
-    a: 'ACAS early conciliation is a free, confidential dispute resolution service. Before you can submit a claim to an Employment Tribunal, you must notify ACAS and give them the opportunity to conciliate. This is a legal requirement under ERA 1996 s.18A. The process typically takes up to six weeks. If conciliation does not resolve the dispute, ACAS issues a certificate that allows you to proceed to tribunal. Many cases settle during this window without the need for a formal hearing.',
+    q: 'What is ACAS early conciliation?',
+    a: 'Before you can bring a claim to an Employment Tribunal, you must first notify ACAS and allow them the opportunity to help resolve the dispute. This is a legal requirement under ERA 1996 s.18A and is known as early conciliation. The process is free and confidential, usually takes up to six weeks, and many cases settle during this window. If it does not resolve the matter, ACAS issues a certificate that allows you to proceed to tribunal.',
   },
 ]
 
@@ -159,28 +159,28 @@ export default function UnfairDismissalCalculatorPage() {
         }
         leadBullets={[
           {
-            label: 'Find out if you have a qualifying claim',
-            detail: 'Two years of continuous employment is the usual threshold. Whistleblowing, pregnancy, and trade union dismissals carry no qualifying period.',
+            label: 'Understand what you may be owed',
+            detail: 'An unfair dismissal award has two parts: a basic award based on your age, pay, and service, and a compensatory award for your actual financial loss. The calculator shows both.',
           },
           {
-            label: 'See your basic award and compensatory award range',
-            detail: 'The basic award uses the £751 weekly cap and age multipliers. The compensatory cap is £123,543 or 52 weeks\' pay, whichever is lower (ERA 1996 s.124).',
+            label: 'See if the offer on the table is reasonable',
+            detail: 'The compensatory cap from April 2026 is £123,543 or 52 weeks\' gross pay. The calculator shows where any offer you have received sits against that range.',
           },
           {
-            label: 'Understand your net take-home figure',
-            detail: 'The first £30,000 is tax-free. PILON is taxed separately. The calculator shows what you will actually receive after tax.',
+            label: 'Know your actual take-home figure',
+            detail: 'The first £30,000 is tax-free. PILON is always taxed as earnings. The calculator separates both so you know what you will receive, not just what the headline figure says.',
           },
           {
-            label: 'Know before you sign anything',
-            detail: 'A settlement agreement waives your right to bring a tribunal claim. Independent legal advice is a legal requirement and your employer must cover the fee.',
+            label: 'A settlement agreement needs independent legal advice',
+            detail: 'It is a legal requirement, and your employer must cover the cost. Signing without advice means the agreement may not even be valid.',
           },
         ]}
         steps={UNFAIR_DISMISSAL_STEPS}
         faqItems={UNFAIR_DISMISSAL_FAQS}
         ctaLabel="Estimate my unfair dismissal award →"
         ctaHref="/calculator"
-        howItWorksTitle="Three steps. Understand your unfair dismissal position."
-        howItWorksLead="From basic award to compensatory range to net take-home. Free, no email required."
+        howItWorksTitle="Three steps to understand your unfair dismissal position."
+        howItWorksLead="From what the law says you could be owed, to the net figure after tax. Free, no email required."
         taxSectionTitle="How much tax will you pay on an unfair dismissal settlement?"
         statutoryRows={STATUTORY_ROWS}
         pageLinks={[

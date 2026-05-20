@@ -40,53 +40,53 @@ const STATUTORY_ROWS: StatutoryRow[] = [
 const REDUNDANCY_STEPS: StepItem[] = [
   {
     n: '01',
-    t: 'Know your statutory minimum',
-    d: 'Enter your age, salary, and length of service. The calculator applies the April 2026 weekly pay cap of £751 and the correct age multiplier to show your legal minimum entitlement under ERA 1996 ss.162-163.',
+    t: 'Find out what you are legally owed',
+    d: 'Statutory redundancy pay is your legal minimum — and many employers pay exactly that and no more. Enter your age, salary, and length of service and the calculator shows your entitlement under the April 2026 rates, so you know the floor before any negotiation starts.',
   },
   {
     n: '02',
-    t: 'See how your offer compares',
-    d: 'Many employers offer enhanced redundancy pay above the statutory floor. The calculator shows whether the total offer you have received sits below, within, or above the typical range for your circumstances.',
+    t: 'See whether your offer is fair or just the minimum',
+    d: 'There is often a gap between what an employer first offers and what a reasonable settlement looks like. If you are also signing away the right to bring tribunal claims, the total package should reflect that. The calculator shows where your offer sits.',
   },
   {
     n: '03',
-    t: 'Understand your take-home figure',
-    d: 'Statutory redundancy pay is tax-free up to £30,000. If your package includes PILON, that is taxed separately as earnings. The calculator separates both and shows your estimated net figure.',
+    t: 'Know what you will actually take home',
+    d: 'Redundancy pay and PILON are taxed differently. Getting this wrong is one of the most common errors in settlement agreements. The calculator separates both and gives you an estimated net figure — the number that actually matters.',
   },
 ]
 
 const REDUNDANCY_FAQS: FaqItem[] = [
   {
-    q: 'What is the redundancy pay cap in 2026?',
-    a: 'From 6 April 2026, the weekly pay cap for statutory redundancy is £751 in England, Scotland and Wales, set by SI 2026/310 under ERA 1996 s.227. The cap in Northern Ireland is £783. The maximum statutory redundancy payment in Great Britain is £22,530 (20 years x 1.5 x £751).',
+    q: 'My employer says I am being made redundant. What am I actually entitled to?',
+    a: 'If you have at least two years of continuous service, you are entitled to statutory redundancy pay as a legal minimum. The amount is based on your age, weekly pay (capped at £751 from April 2026), and years of service, up to a maximum of 20 qualifying years. On top of that, you are entitled to your full notice period (or payment in lieu), any accrued holiday pay, and any other contractual entitlements. Statutory redundancy pay alone is rarely the whole picture — a solicitor can help you identify everything you are owed before you sign.',
   },
   {
     q: 'How is statutory redundancy pay calculated?',
-    a: 'Your statutory redundancy pay is based on three things: your weekly pay (capped at £751), your years of continuous service (up to 20 qualifying years), and your age. The multipliers are: 0.5 weeks for each year of service under age 22, 1 week per year aged 22 to 40, and 1.5 weeks per year aged 41 and over. ERA 1996 ss.162-163.',
+    a: 'The calculation uses three factors: your weekly pay (capped at £751 in Great Britain from April 2026), your complete years of continuous service (up to 20), and your age at the time of redundancy. The multiplier is 0.5 weeks per year for service under age 22, 1 week per year aged 22 to 40, and 1.5 weeks per year aged 41 and over. ERA 1996 ss.162-163. The calculator above applies these rates automatically.',
   },
   {
-    q: 'Is statutory redundancy pay taxable?',
-    a: 'Statutory redundancy pay is tax-free up to £30,000 under ITEPA 2003 s.403. If your total termination payment exceeds £30,000, the excess is taxable at your marginal rate. Payment in lieu of notice (PILON) is always taxed as normal earnings under ITEPA 2003 s.402D, regardless of what it is called in your agreement.',
+    q: 'Something feels off about my redundancy. Could it actually be unfair dismissal?',
+    a: 'This is one of the most important questions to ask before you sign anything. Redundancy is a potentially fair reason for dismissal, but the process your employer follows must be fair too. If the selection process was not transparent, if you were not properly consulted, if the role is being advertised again shortly after, or if you suspect the real reason for your selection was something personal, a solicitor will look at whether a tribunal claim for unfair dismissal is available alongside your redundancy pay. Getting advice at this stage costs nothing and could make a significant difference to what you walk away with.',
   },
   {
-    q: 'Can I get more than the statutory minimum?',
-    a: 'Yes. Statutory redundancy pay is the legal floor, not the ceiling. Many employers offer enhanced redundancy pay, and where you are also signing a settlement agreement, the total package will typically include additional compensation for waiving tribunal claims. If your redundancy was connected to discrimination, a protected disclosure, or a pregnancy, your potential claim value is substantially higher and you should take independent legal advice before signing anything.',
+    q: 'Can I negotiate a higher redundancy payment?',
+    a: 'Statutory redundancy pay is the legal floor, not the final word. Many employers offer enhanced pay, and where you are signing a settlement agreement that includes waiving the right to bring tribunal claims, the total package should reflect that. If there are circumstances around your redundancy that give rise to other claims, that can affect the value of a negotiated settlement. A solicitor can advise you on whether the offer is reasonable before you commit to anything.',
+  },
+  {
+    q: 'Is redundancy pay taxable?',
+    a: 'Statutory redundancy pay is tax-free up to £30,000 under ITEPA 2003 s.403. If your total termination payment exceeds £30,000, the excess is taxable at your marginal rate. Payment in lieu of notice (PILON) is always taxed as earnings under ITEPA 2003 s.402D, regardless of what it is called in your agreement. This distinction matters when you are working out what you will actually receive, and it is one reason the way a settlement agreement is drafted can affect your net position.',
   },
   {
     q: 'Do I need a solicitor to sign a redundancy settlement agreement?',
-    a: 'If your employer is asking you to sign a settlement agreement as part of your redundancy, then yes. Under ERA 1996 s.203, a settlement agreement is only legally valid if you have received independent legal advice from a qualified, SRA-regulated solicitor. Your employer is required to contribute to that cost, typically £350 to £750.',
+    a: 'Yes, if your employer is asking you to sign a settlement agreement. Under ERA 1996 s.203, a settlement agreement is only legally valid if you have received independent legal advice from a qualified, SRA-regulated solicitor who is named in the agreement. Importantly, your employer is required to contribute to the cost of that advice, typically between £350 and £750, which in most cases covers the full fee. The advice is free to you in practice — there is no reason to sign without it.',
   },
   {
     q: 'What counts as a week\'s pay for redundancy purposes?',
-    a: 'A week\'s pay is your gross contractual pay for a normal working week under ERA 1996 ss.221-224. For employees with fixed hours and salary, this is simply your weekly rate. If your hours or pay vary, a 12-week average is used. Overtime that is guaranteed in your contract counts. Discretionary bonuses, pension contributions, and benefits in kind are excluded.',
+    a: 'A week\'s pay is your gross contractual pay for a normal working week under ERA 1996 ss.221-224. For salaried employees with fixed hours, that is your weekly rate. If your hours or pay vary, a 12-week average is used. Contractually guaranteed overtime counts. Discretionary bonuses, pension contributions, and benefits in kind do not.',
   },
   {
-    q: 'What happens if my employer has applied the wrong weekly cap?',
-    a: 'If your employer calculated your statutory redundancy pay using a figure below £751 (for example, using the 2025 cap of £719) and your redundancy date falls on or after 6 April 2026, they have underpaid you. You can raise this in writing citing ERA 1996 s.227 and SI 2026/310. If unresolved, you can bring an Employment Tribunal claim within three months of the payment date.',
-  },
-  {
-    q: 'Is my information shared with anyone?',
-    a: 'No. Your calculator inputs are used only to generate your estimate. They are not stored or shared with solicitors, employers, or third parties. If you choose to be matched with a solicitor when that service launches, you will opt in at that point.',
+    q: 'What if my employer has used the wrong weekly pay cap?',
+    a: 'If your redundancy date falls on or after 6 April 2026 and your employer has calculated your statutory pay using the old 2025 cap of £719 rather than the current £751, they have underpaid you. You can raise this in writing. If it is not resolved, an Employment Tribunal claim is available, but it must be brought within three months of the date payment was due. A solicitor can help you draft the letter or advise on next steps.',
   },
 ]
 
@@ -160,28 +160,28 @@ export default function RedundancyCalculatorPage() {
         }
         leadBullets={[
           {
-            label: 'Your statutory minimum in 60 seconds',
-            detail: 'Based on your age, salary, and length of service at April 2026 rates (£751 weekly cap, ERA 1996 s.227).',
+            label: 'Find out what you are legally owed',
+            detail: 'Statutory redundancy pay is the minimum your employer must pay. Based on your age, salary, and length of service at April 2026 rates, the calculator shows your entitlement before any negotiation starts.',
           },
           {
-            label: 'See if your offer is enhanced or just statutory',
-            detail: 'Many employers offer more than the legal minimum. Find out where your package sits.',
+            label: 'Check whether your offer is fair',
+            detail: 'Many employers offer exactly the statutory minimum and no more. If you are also signing away the right to bring a tribunal claim, the total package should reflect that.',
           },
           {
-            label: 'Net take-home after tax',
-            detail: 'PILON is taxed separately from redundancy pay. The calculator splits both and shows what you will actually receive.',
+            label: 'Understand your actual take-home pay',
+            detail: 'Redundancy pay and PILON are taxed differently. The calculator separates both and shows the net figure after tax — because that is the number that actually matters.',
           },
           {
-            label: 'Know before you sign',
-            detail: 'If your employer is asking you to sign a settlement agreement, independent legal advice is legally required and your employer must cover the fee.',
+            label: 'Do not sign until you have had independent advice',
+            detail: 'A settlement agreement is legally binding and waives your right to claim. Your employer is required to pay for your legal advice. There is no good reason to sign without it.',
           },
         ]}
         steps={REDUNDANCY_STEPS}
         faqItems={REDUNDANCY_FAQS}
         ctaLabel="Calculate my redundancy pay →"
         ctaHref="/calculator"
-        howItWorksTitle="Three steps. See your redundancy entitlement now."
-        howItWorksLead="From your statutory minimum to a net take-home figure. Free, no email required."
+        howItWorksTitle="Three steps to understand your redundancy position."
+        howItWorksLead="From your statutory minimum to what you will actually take home. Free, no email required."
         taxSectionTitle="How much tax will you pay on your redundancy package?"
         statutoryRows={STATUTORY_ROWS}
         pageLinks={[

@@ -39,53 +39,53 @@ const STATUTORY_ROWS: StatutoryRow[] = [
 const CONSTRUCTIVE_DISMISSAL_STEPS: StepItem[] = [
   {
     n: '01',
-    t: 'Understand whether you have a claim',
-    d: 'Constructive dismissal requires a fundamental breach of contract by your employer and a resignation in direct response to it. The calculator cannot assess the strength of your breach, but a solicitor can. You should get that advice before you resign, not after.',
+    t: 'Get advice before you resign, not after',
+    d: 'This is the most important step. Once you resign, your options change significantly. A solicitor can assess whether what you are experiencing amounts to a fundamental breach of contract and, in many cases, can open negotiations with your employer while you are still employed — often achieving a better outcome than resigning and claiming.',
   },
   {
     n: '02',
-    t: 'See your basic and compensatory award range',
-    d: 'Enter your age, salary, and length of service. The calculator shows your basic award (using the £751 weekly cap and age multipliers) and where your total package sits against the compensatory cap of £123,543 or 52 weeks\' pay, whichever is lower.',
+    t: 'See what a constructive dismissal settlement could look like',
+    d: 'A constructive dismissal claim is valued the same way as unfair dismissal. Enter your age, salary, and length of service and the calculator shows your basic award and where your total package could sit against the compensatory cap of £123,543 or 52 weeks\' pay, whichever is lower.',
   },
   {
     n: '03',
-    t: 'Know your net figure before you negotiate',
-    d: 'The first £30,000 of a constructive dismissal settlement is tax-free. PILON is taxed separately as earnings. The calculator gives you an estimated net take-home figure, which is the number that actually matters when you are deciding whether to accept an offer.',
+    t: 'Know the net figure before you make any decisions',
+    d: 'The first £30,000 of a constructive dismissal settlement is tax-free. PILON is taxed separately as earnings. The calculator gives you the estimated net take-home figure — because that is the number that actually matters when you are weighing your options.',
   },
 ]
 
 const CONSTRUCTIVE_DISMISSAL_FAQS: FaqItem[] = [
   {
-    q: 'What is constructive dismissal?',
-    a: 'Constructive dismissal occurs when your employer\'s conduct is so serious that you are left with no reasonable alternative but to resign. Under ERA 1996 s.95(1)(c), you must show a fundamental breach of your employment contract and that you resigned in direct response to it, without delay that could be taken as accepting the breach. Common examples include: a significant and unilateral cut to your pay or hours, demotion or removal of responsibilities without consent, sustained bullying or harassment, and a breakdown in the trust and confidence that underpins every employment relationship.',
+    q: 'My employer is making my life at work unbearable. Do I have a claim?',
+    a: 'Possibly, but the legal test is specific. Constructive dismissal requires a fundamental breach of your employment contract by your employer, and you must resign in direct response to it. Common examples include a unilateral cut to your pay or hours, demotion without your consent, sustained bullying or harassment, or serious damage to the trust and confidence that underpins the employment relationship. The key word is fundamental — not every difficult working situation meets the legal threshold. Getting advice before you resign is the most important step, because a solicitor can assess whether what you are experiencing is likely to qualify.',
   },
   {
-    q: 'Do I need two years of service to claim constructive dismissal?',
-    a: 'For a standard constructive dismissal claim under ERA 1996 s.95(1)(c), yes. You need at least two years of continuous employment. However, if the conduct that forced you to resign was connected to a protected characteristic (such as your sex, race, disability, or age), a protected disclosure (whistleblowing under ERA 1996 s.103A), pregnancy or maternity leave, or trade union membership, you may have additional claims that carry no qualifying period. In those cases, your potential award can be significantly higher.',
+    q: 'Why does it matter so much that I get advice before resigning?',
+    a: 'Because your position is strongest while you are still employed. Before you resign, a solicitor can assess whether the breach is serious enough to support a claim, advise you on how to document what is happening, and in many cases open without prejudice discussions with your employer. That can result in a negotiated settlement where you leave on agreed terms with a financial package, without the risk and delay of a tribunal claim. If you resign first, without that preparation, you have fewer options and less leverage.',
   },
   {
-    q: 'How much can I claim for constructive dismissal in 2026?',
-    a: 'A constructive dismissal claim is treated as unfair dismissal and uses the same award structure. The basic award is calculated using the £751 weekly pay cap (from April 2026), up to 20 qualifying years of service, and an age multiplier (0.5 under 22, 1.0 aged 22-40, 1.5 aged 41 and over). The compensatory award covers your actual financial loss and is capped at £123,543 or 52 weeks\' gross pay, whichever is lower, under ERA 1996 s.124. If your employer failed to follow the ACAS Code of Practice on disciplinary and grievance procedures, a tribunal can increase the award by up to 25%.',
+    q: 'What does it mean to "affirm" the breach?',
+    a: 'If you continue working for a significant period after the event you say forced your resignation, a tribunal may find that you accepted the breach and carried on under the contract — which would undermine your constructive dismissal claim. There is no fixed time limit and it depends on the circumstances, but it is one reason acting promptly matters. Raising a formal grievance is often an important step to show you have not accepted the situation.',
   },
   {
-    q: 'Should I resign before getting legal advice?',
-    a: 'No. This is the most important practical point about constructive dismissal: once you resign, your options narrow considerably. Before you resign, a solicitor can assess whether the breach is truly fundamental, advise on timing, and often open without prejudice negotiations with your employer. This can result in a negotiated settlement agreement that lets you leave on agreed terms with a financial package, without the uncertainty of a tribunal claim. If you resign first without advice, you still have a potential claim, but you lose the leverage that comes from still being employed.',
+    q: 'Do I need two years of service to claim?',
+    a: 'For a standard constructive dismissal claim under ERA 1996 s.95(1)(c), you need at least two years of continuous employment. However, if the conduct that forced you to resign was connected to a protected characteristic (such as your sex, race, disability, or age), a protected disclosure, pregnancy or maternity leave, or trade union membership, you may have additional claims that carry no qualifying period and can be worth significantly more. A solicitor will look at all potential heads of claim, not just the constructive dismissal route.',
   },
   {
-    q: 'What does "affirming the contract" mean and why does it matter?',
-    a: 'Affirmation means that by continuing to work after a fundamental breach, you are treated as having accepted the breach and carried on under the contract. If you continue working for a significant period after the event that you say forced your resignation, a tribunal may find that you affirmed the contract and therefore cannot bring a constructive dismissal claim. There is no fixed period and it depends on the facts, but acting promptly and raising a grievance can help preserve your position.',
+    q: 'How much is a constructive dismissal settlement worth?',
+    a: 'A constructive dismissal claim is valued on the same basis as unfair dismissal. The basic award is calculated using your age, weekly pay (capped at £751 from April 2026), and years of service. The compensatory award covers your actual financial loss and is capped at £123,543 or 52 weeks\' gross pay, whichever is lower, under ERA 1996 s.124. If your employer failed to follow a fair grievance or disciplinary process, a tribunal can increase the award by up to 25%.',
   },
   {
-    q: 'Is a constructive dismissal settlement payment taxable?',
-    a: 'The first £30,000 of a termination payment, including the basic award and compensatory element of a constructive dismissal settlement, is tax-free under ITEPA 2003 s.403. Amounts above £30,000 are taxable at your marginal rate. Payment in lieu of notice (PILON) is always taxed as earnings under ITEPA 2003 s.402D, regardless of what your agreement calls it. Your solicitor should ensure the settlement agreement correctly allocates each element of your payment.',
+    q: 'My employer has asked to have a "without prejudice" conversation. What does that mean?',
+    a: 'A without prejudice conversation is one held with a genuine view to settling a dispute. What is said in that meeting generally cannot be used as evidence in tribunal proceedings. Under ERA 1996 s.111A, pre-termination negotiations — including settlement offers made before any formal dispute exists — are also protected from disclosure in ordinary unfair dismissal claims. If your employer has approached you about leaving, that conversation may have legal protection, but it does not stop you from seeking independent advice before responding or agreeing to anything.',
   },
   {
-    q: 'Do I need a solicitor to sign a constructive dismissal settlement agreement?',
-    a: 'Yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is named in the agreement. You cannot validly waive your right to bring a constructive dismissal or unfair dismissal claim without that advice. Your employer is required to contribute to your legal fees, typically £350 to £750, which in most cases covers the full cost.',
+    q: 'How is a constructive dismissal settlement taxed?',
+    a: 'The first £30,000 of a termination payment, including the basic award and compensatory element, is tax-free under ITEPA 2003 s.403. Amounts above £30,000 are taxable at your marginal rate. Payment in lieu of notice (PILON) is always taxed as earnings under ITEPA 2003 s.402D, regardless of what the agreement calls it. How the settlement is structured and allocated in the agreement affects your net take-home, which is one reason having a solicitor review and draft the document matters.',
   },
   {
-    q: 'What is a without prejudice conversation and does it affect my claim?',
-    a: 'A without prejudice conversation is a discussion held with a genuine view to settling an existing or anticipated dispute. Anything said in a genuine without prejudice discussion cannot ordinarily be used as evidence in tribunal proceedings. Under ERA 1996 s.111A, pre-termination negotiations are also inadmissible in ordinary unfair dismissal cases, provided there has been no "improper behaviour." This covers situations where an employer makes a settlement offer even before any dispute has arisen. If your employer has approached you to discuss leaving, that conversation likely has some form of legal protection, but it does not prevent you from seeking legal advice or negotiating.',
+    q: 'Do I need a solicitor to sign a settlement agreement?',
+    a: 'Yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is named in the agreement. Without that, the agreement cannot validly waive your right to bring a claim. Your employer is required to contribute to the legal fees, typically between £350 and £750, which in most cases covers the full cost. The advice is effectively free to you — and it is the only way the agreement is legally valid.',
   },
 ]
 
@@ -160,28 +160,28 @@ export default function ConstructiveDismissalCalculatorPage() {
         }
         leadBullets={[
           {
-            label: 'Do not resign before you read this',
-            detail: 'Once you resign, your options narrow. A solicitor can often negotiate a settlement while you are still employed, giving you far more leverage.',
+            label: 'Get advice before you resign',
+            detail: 'Your position is strongest while you are still employed. A solicitor can assess your situation and often negotiate a settlement without you needing to resign at all.',
           },
           {
-            label: 'See your basic and compensatory award range',
-            detail: 'The basic award uses the £751 weekly cap and age multipliers. The compensatory cap is £123,543 or 52 weeks\' pay, whichever is lower (ERA 1996 s.124).',
+            label: 'Understand what a settlement could look like',
+            detail: 'A constructive dismissal claim is valued the same as unfair dismissal. The calculator shows your basic award, compensatory range, and where any offer sits against the April 2026 caps.',
           },
           {
-            label: 'Understand your net take-home figure',
-            detail: 'The first £30,000 is tax-free. PILON is taxed separately. The calculator shows what you will actually receive after tax.',
+            label: 'Know your actual take-home figure',
+            detail: 'The first £30,000 is tax-free. PILON is always taxed as earnings. The calculator shows you the net figure after tax — not just the headline number.',
           },
           {
-            label: 'Know the strength of your position',
-            detail: 'Constructive dismissal requires a fundamental breach of contract. If discrimination or whistleblowing is involved, your potential claim is significantly higher with no qualifying period.',
+            label: 'Other claims may apply alongside constructive dismissal',
+            detail: 'If the conduct involved discrimination or whistleblowing, there may be additional claims with no qualifying period and a higher potential value. A solicitor will look at all of them.',
           },
         ]}
         steps={CONSTRUCTIVE_DISMISSAL_STEPS}
         faqItems={CONSTRUCTIVE_DISMISSAL_FAQS}
         ctaLabel="Estimate my constructive dismissal settlement →"
         ctaHref="/calculator"
-        howItWorksTitle="Three steps. Understand your constructive dismissal position."
-        howItWorksLead="From award range to net take-home. Free, no email required. No law firm behind this result."
+        howItWorksTitle="Three steps to understand your constructive dismissal position."
+        howItWorksLead="From what you could be owed, to the net figure after tax. Free, no email required. Independent — not a law firm."
         taxSectionTitle="How much tax will you pay on a constructive dismissal settlement?"
         statutoryRows={STATUTORY_ROWS}
         pageLinks={[
