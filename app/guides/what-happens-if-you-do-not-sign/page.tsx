@@ -262,7 +262,7 @@ export default function RejectSettlementAgreementGuide() {
                   ⁴ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/94" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.94</a> establishes the right of an employee not to be unfairly dismissed.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ⁵ <a href="https://www.acas.org.uk/code-of-practice-on-disciplinary-and-grievance-procedures" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">ACAS Code of Practice on Disciplinary and Grievance Procedures</a> provides the statutory standard for fair workplace procedures.
+                  ⁵ <a href="https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">ACAS Code of Practice on Disciplinary and Grievance Procedures</a> provides the statutory standard for fair workplace procedures.
                 </li>
                 <li className="text-[13px] text-muted-2">
                   ⁶ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/124" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.124</a>, as amended by the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310), caps the compensatory award for unfair dismissal at £123,543.
@@ -274,7 +274,7 @@ export default function RejectSettlementAgreementGuide() {
                   ⁸ <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/403" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Income Tax (Earnings and Pensions) Act 2003 (ITEPA 2003), s.403</a> exempts the first £30,000 of a termination payment from income tax.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ⁹ <a href="https://www.acas.org.uk/code-of-practice-on-settlement-agreements" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">ACAS Code of Practice on Settlement Agreements</a> recommends a minimum of 10 calendar days for employees to consider an offer.
+                  ⁹ <a href="https://www.acas.org.uk/acas-code-of-practice-on-settlement-agreements" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">ACAS Code of Practice on Settlement Agreements</a> recommends a minimum of 10 calendar days for employees to consider an offer.
                 </li>
                 <li className="text-[13px] text-muted-2">
                   ¹⁰ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/86" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.86</a> establishes the statutory minimum notice periods based on length of service.
