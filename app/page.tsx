@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import HomeClient from './HomeClient'
 
 export const metadata: Metadata = {
-  title: 'Employment Settlement Calculator UK | SettlementCheck',
-  description: 'Free employment settlement agreement calculator. Is your offer fair? Net pay after tax: PILON and £30k exemption applied correctly. No email. Employer pays fees.',
+  title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck',
+  description: 'Free settlement agreement calculator — 2026 rates (£751/week cap). See if your offer is fair, get your net take-home after tax. No email. Instant verdict.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/',
   },
   openGraph: {
-    title: 'Employment Settlement Calculator UK | SettlementCheck',
+    title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck',
     description: 'Most opening offers have room to move. Net pay after tax calculated instantly — PILON taxed separately from the £30,000 exemption. No email required.',
     url: 'https://settlementcheck.co.uk/',
     type: 'website',
