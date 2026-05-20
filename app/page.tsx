@@ -134,7 +134,10 @@ export default function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <HomeClient statutoryRows={STATUTORY_ROWS} />
+      <HomeClient
+        statutoryRows={STATUTORY_ROWS}
+        lead="Most employees don't question their first settlement agreement offer. The April 2026 statutory cap is £751 per week, but your actual take-home depends on how PILON is taxed separately from the £30,000 exemption. Use this calculator to see your real net figure in 60 seconds."
+      />
     </>
   )
 }
