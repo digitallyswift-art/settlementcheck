@@ -50,7 +50,7 @@ const UNFAIR_DISMISSAL_STEPS: StepItem[] = [
   {
     n: '03',
     t: 'Know your net take-home before you sign',
-    d: 'The first £30,000 of an unfair dismissal settlement is tax-free. PILON is taxed separately as earnings. The calculator separates both and gives you an estimated net figure — so you know what you will actually receive.',
+    d: 'The first £30,000 of an unfair dismissal settlement is tax-free. PILON is taxed separately as earnings. The calculator separates both and gives you an estimated net figure, so you know exactly what you will receive.',
   },
 ]
 
@@ -61,7 +61,7 @@ const UNFAIR_DISMISSAL_FAQS: FaqItem[] = [
   },
   {
     q: 'What is the unfair dismissal compensatory award cap in 2026?',
-    a: 'From 6 April 2026, the compensatory award cap is £123,543 or 52 weeks\' gross pay, whichever is lower, under ERA 1996 s.124 as updated by SI 2026/310. The basic award — calculated the same way as statutory redundancy pay — uses a weekly pay cap of £751, giving a maximum basic award of £22,530.',
+    a: 'From 6 April 2026, the compensatory award cap is £123,543 or 52 weeks\' gross pay, whichever is lower, under ERA 1996 s.124 as updated by SI 2026/310. The basic award is calculated the same way as statutory redundancy pay and uses a weekly pay cap of £751, giving a maximum basic award of £22,530.',
   },
   {
     q: 'What is the basic award and how is it calculated?',
@@ -73,32 +73,32 @@ const UNFAIR_DISMISSAL_FAQS: FaqItem[] = [
   },
   {
     q: 'Is an unfair dismissal settlement payment taxable?',
-    a: 'The first £30,000 of a termination payment — including the basic award and compensatory element — is tax-free under ITEPA 2003 s.403. Amounts above £30,000 are taxable at your marginal rate. Payment in lieu of notice (PILON) is always taxed as earnings under ITEPA 2003 s.402D, regardless of what your settlement agreement calls it.',
+    a: 'The first £30,000 of a termination payment, including the basic award and compensatory element, is tax-free under ITEPA 2003 s.403. Amounts above £30,000 are taxable at your marginal rate. Payment in lieu of notice (PILON) is always taxed as earnings under ITEPA 2003 s.402D, regardless of what your settlement agreement calls it.',
   },
   {
     q: 'Should I settle or go to an Employment Tribunal?',
-    a: 'Tribunal claims carry real uncertainty — your employer may argue procedural fairness, contributory conduct, or a Polkey reduction, all of which can reduce the award significantly. Before filing a claim, ACAS early conciliation is a mandatory first step, and most cases settle during or shortly after that process. Settlement is faster, certain, and confidential. A solicitor reviewing your specific situation can tell you whether the offer on the table reflects the merits of your case or whether there is room to negotiate.',
+    a: 'Tribunal claims carry real uncertainty. Your employer may argue procedural fairness, contributory conduct, or a Polkey reduction, all of which can reduce the award significantly. Before filing a claim, ACAS early conciliation is a mandatory first step, and most cases settle during or shortly after that process. Settlement is faster, certain, and confidential. A solicitor reviewing your specific situation can tell you whether the offer on the table reflects the merits of your case or whether there is room to negotiate.',
   },
   {
     q: 'Do I need a solicitor to accept an unfair dismissal settlement?',
-    a: 'If your employer is asking you to sign a settlement agreement to resolve an unfair dismissal claim, yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is identified in the agreement. Your employer is required to contribute to your legal fees — typically £350 to £750 — which in most cases covers the full cost.',
+    a: 'If your employer is asking you to sign a settlement agreement to resolve an unfair dismissal claim, yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is identified in the agreement. Your employer is required to contribute to your legal fees, typically £350 to £750, which in most cases covers the full cost.',
   },
   {
     q: 'What is ACAS early conciliation and is it mandatory?',
-    a: 'ACAS early conciliation is a free, confidential dispute resolution service. Before you can submit a claim to an Employment Tribunal, you must notify ACAS and give them the opportunity to conciliate — this is a legal requirement under ERA 1996 s.18A. The process typically takes up to six weeks. If conciliation does not resolve the dispute, ACAS issues a certificate that allows you to proceed to tribunal. Many cases settle during this window without the need for a formal hearing.',
+    a: 'ACAS early conciliation is a free, confidential dispute resolution service. Before you can submit a claim to an Employment Tribunal, you must notify ACAS and give them the opportunity to conciliate. This is a legal requirement under ERA 1996 s.18A. The process typically takes up to six weeks. If conciliation does not resolve the dispute, ACAS issues a certificate that allows you to proceed to tribunal. Many cases settle during this window without the need for a formal hearing.',
   },
 ]
 
 const FAQ_SCHEMA_ITEMS = UNFAIR_DISMISSAL_FAQS.map(({ q, a }) => ({ question: q, answer: a }))
 
 const HOWTOCALCULATE_STEPS = [
-  'Confirm you have at least two years of continuous employment, or identify whether an automatically unfair reason applies — ERA 1996 s.94.',
-  'Calculate the basic award: capped weekly pay (£751), years of service (up to 20), and your age multiplier (0.5/1.0/1.5) — ERA 1996 ss.162-163.',
+  'Confirm you have at least two years of continuous employment, or identify whether an automatically unfair reason applies. ERA 1996 s.94.',
+  'Calculate the basic award: capped weekly pay (£751), years of service (up to 20), and your age multiplier (0.5/1.0/1.5). ERA 1996 ss.162-163.',
   'Assess the compensatory award: immediate loss of earnings, future loss, lost benefits, and loss of pension.',
-  'Apply the compensatory cap: the lower of £123,543 or 52 weeks\' gross pay — ERA 1996 s.124.',
+  'Apply the compensatory cap: the lower of £123,543 or 52 weeks\' gross pay. ERA 1996 s.124.',
   'Consider any Polkey reduction if your employer followed some (but not full) fair procedure.',
   'Consider an ACAS uplift of up to 25% if your employer failed to follow the ACAS Code of Practice on disciplinary and grievance procedures.',
-  'Add PILON if included — always taxed as earnings under ITEPA 2003 s.402D.',
+  'Add PILON if included. PILON is always taxed as earnings under ITEPA 2003 s.402D.',
   'Apply the £30,000 tax-free threshold to the non-PILON termination elements under ITEPA 2003 s.403.',
 ]
 
@@ -160,7 +160,7 @@ export default function UnfairDismissalCalculatorPage() {
         leadBullets={[
           {
             label: 'Find out if you have a qualifying claim',
-            detail: 'Two years of continuous employment is the usual threshold — but whistleblowing, pregnancy, and trade union dismissals carry no qualifying period.',
+            detail: 'Two years of continuous employment is the usual threshold. Whistleblowing, pregnancy, and trade union dismissals carry no qualifying period.',
           },
           {
             label: 'See your basic award and compensatory award range',
@@ -172,7 +172,7 @@ export default function UnfairDismissalCalculatorPage() {
           },
           {
             label: 'Know before you sign anything',
-            detail: 'A settlement agreement waives your right to bring a tribunal claim. Independent legal advice is a legal requirement — and your employer must cover the fee.',
+            detail: 'A settlement agreement waives your right to bring a tribunal claim. Independent legal advice is a legal requirement and your employer must cover the fee.',
           },
         ]}
         steps={UNFAIR_DISMISSAL_STEPS}

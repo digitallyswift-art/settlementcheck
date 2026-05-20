@@ -94,9 +94,9 @@ const FAQ_SCHEMA_ITEMS = REDUNDANCY_FAQS.map(({ q, a }) => ({ question: q, answe
 
 const HOWTOCALCULATE_STEPS = [
   'Find your gross weekly pay: divide your annual salary by 52.',
-  'Apply the weekly cap: £751 in Great Britain (£783 in Northern Ireland) — ERA 1996 s.227, SI 2026/310.',
+  'Apply the weekly cap: £751 in Great Britain (£783 in Northern Ireland). ERA 1996 s.227, SI 2026/310.',
   'Count your complete years of continuous service, up to a maximum of 20 qualifying years.',
-  'Apply the age multiplier for each year: 0.5 for years under age 22, 1.0 for years aged 22-40, 1.5 for years aged 41 and over — ERA 1996 ss.162-163.',
+  'Apply the age multiplier for each year: 0.5 for years under age 22, 1.0 for years aged 22-40, 1.5 for years aged 41 and over. ERA 1996 ss.162-163.',
   'Multiply the capped weekly pay by the multiplier for each year of service and total all years.',
   'Check whether a PILON (Payment in Lieu of Notice) is included. PILON is always taxed as earnings under ITEPA 2003 s.402D.',
   'Apply the £30,000 tax-free threshold to the non-PILON redundancy element under ITEPA 2003 s.403.',
