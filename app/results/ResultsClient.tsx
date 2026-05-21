@@ -478,13 +478,16 @@ function CaseBriefSection({
   const ventoVal = getVentoValue(selectedVentoBand)
   const basicOrRedundancy = result.redundancy || result.basicAward
   const potentialTribunalValue = basicOrRedundancy + result.pilon + ventoVal
+  const caseId = `SC-${Math.abs(parseFloat(inputs.salary) - parseInt(inputs.age) * (parseFloat(inputs.yearsNum) * 12 + parseFloat(inputs.monthsNum))).toString(16).toUpperCase()}`
 
   return (
     <div className="bg-white border border-[#E2DCCE] rounded-xl overflow-hidden shadow-sm" id="printable-case-brief-wrapper">
+      
+      {/* Screen Header Toggle (Click to collapse on screen, hidden in print) */}
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full p-5 text-left flex justify-between items-center bg-[#F7F4EE] border-b border-[#E2DCCE] focus:outline-none cursor-pointer"
+        className="w-full p-5 text-left flex justify-between items-center bg-[#F7F4EE] border-b border-[#E2DCCE] focus:outline-none cursor-pointer no-print"
       >
         <div>
           <span className="text-[#8A93A3] text-[10px] font-bold uppercase tracking-wider block mb-1">
@@ -502,19 +505,39 @@ function CaseBriefSection({
 
       {/* Case Brief Body */}
       <div
-        className={`transition-all duration-300 ${open ? 'max-h-[1500px] opacity-100 p-5' : 'max-h-0 opacity-0 overflow-hidden'}`}
+        className={`transition-all duration-300 ${open ? 'max-h-[3000px] opacity-100 p-5' : 'max-h-0 opacity-0 overflow-hidden print:p-0 print:overflow-visible'}`}
         id="printable-case-brief"
       >
-        <div className="flex flex-col gap-5">
+        {/* ==================== PAGE 1 ==================== */}
+        <div className="flex flex-col gap-5 print-page-1">
+          {/* Print-Only Brand Header */}
+          <div className="hidden print:flex items-center justify-between border-b-2 border-[#0B1F3A] pb-4 mb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-[#D9603B]" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 22 22" fill="none" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                  <rect x="1" y="1" width="20" height="20" rx="4" stroke="#D9603B" strokeWidth="1.5" fill="none"/>
+                  <path d="M6 11.5L9.5 15L16 7.5" stroke="#D9603B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+              <span className="font-serif text-[22px] font-bold tracking-[-0.01em]">
+                <span style={{ color: '#D9603B' }}>Settlement</span><span style={{ color: '#0B1F3A' }}>Check</span>
+              </span>
+            </div>
+            <div className="text-right">
+              <span className="text-[10px] text-[#8A93A3] font-bold uppercase tracking-wider block">CASE ASSESSMENT BRIEF</span>
+              <span className="text-[11px] text-[#0B1F3A] font-bold">Case ID: {caseId}</span>
+            </div>
+          </div>
+
           <div className="pb-3 border-b border-[#E2DCCE]">
-            <h4 className="text-[15px] font-bold text-[#0B1F3A] mb-1">Client Profile & Claims Analysis</h4>
+            <h4 className="text-[16px] font-bold text-[#0B1F3A] mb-1 print:text-[18px]">Client Profile & Claims Analysis</h4>
             <p className="text-[13px] text-[#5B6577] leading-relaxed m-0">
-              This summary compiles client details, statutory entitlements, and potential claims value. It is structured to help legal counsel assess the settlement viability within minutes of intake.
+              This intake assessment report compiles client parameters, statutory entitlements, and potential claims value. It is structured to assist legal counsel during intake review to assess settlement viability and evaluate negotiation leverage.
             </p>
           </div>
 
           {/* Grid of details */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[13px] text-[#5B6577] border-b border-[#E2DCCE] pb-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[13px] text-[#5B6577] border-b border-[#E2DCCE] pb-3 print:grid-cols-4">
             <div>
               <span className="block text-[10px] text-[#8A93A3] font-bold uppercase">Basic Salary</span>
               <strong className="text-[#0B1F3A]">{formatCurrency(parseFloat(inputs.salary))} / yr</strong>
@@ -533,7 +556,7 @@ function CaseBriefSection({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-b border-[#E2DCCE] pb-3 text-[13px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-b border-[#E2DCCE] pb-3 text-[13px] print:grid-cols-2">
             <div>
               <span className="block text-[10px] text-[#8A93A3] font-bold uppercase">Dismissal Context</span>
               <strong className="text-[#0B1F3A]">{formatReason(inputs.reason)}</strong>
@@ -600,9 +623,69 @@ function CaseBriefSection({
             </div>
           </div>
 
-          <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg text-[12px] text-[#5B6577] leading-relaxed m-0">
-            <span className="font-bold text-[#0B1F3A] block mb-1">Disclosures for Legal Counsel:</span>
-            Notice Pay (PILON) has been treated as fully taxable under <strong>s.402D ITEPA 2003</strong>. Ex-gratia payments exceeding £30,000 are subject to marginal rate income tax under <strong>s.403 ITEPA 2003</strong>.
+          {/* Verdict Overview */}
+          <div className="p-4 bg-[#F2F7F3] border border-[#BCD0BF] rounded-lg text-[12px] text-[#5B6577] leading-relaxed">
+            <span className="font-bold text-[#0B1F3A] block mb-1">Assessment Verdict:</span>
+            {result.verdict === 'BELOW_MINIMUM' ? (
+              <p className="m-0 text-[#A8341F]"><strong>Critical Warning:</strong> The current settlement offer is below the calculated statutory minimum floor. An exit package cannot legally waive statutory redundancy rights for an amount less than s.162 of the Employment Rights Act 1996. The employer should be notified immediately of this discrepancy.</p>
+            ) : result.verdict === 'BELOW_TYPICAL' ? (
+              <p className="m-0">The current offer meets the statutory floor but sits below the typical negotiated settlement range for this profile. Standard benchmarks indicate that active negotiation supported by legal counsel can yield a significant uplift.</p>
+            ) : (
+              <p className="m-0">The current offer is financially strong and aligns with or exceeds the typical range for this service profile. Emphasis should be shifted to non-financial covenants (reference wording, confidentiality, tax indemnity clauses) to ensure a clean exit.</p>
+            )}
+          </div>
+        </div>
+
+        {/* ==================== PAGE 2 ==================== */}
+        <div className="page-break flex flex-col gap-5 mt-8 pt-8 border-t border-[#E2DCCE] print:border-0 print:mt-0 print:pt-0 print-page-2">
+          
+          {/* Print-Only Brand Header for Page 2 */}
+          <div className="hidden print:flex items-center justify-between border-b border-[#E2DCCE] pb-3 mb-4">
+            <div className="flex items-center gap-1.5">
+              <span className="text-[#D9603B]">✔</span>
+              <span className="font-serif text-[15px] font-bold text-[#0B1F3A]">SettlementCheck Intake Brief</span>
+            </div>
+            <div className="text-right">
+              <span className="text-[11px] text-[#5B6577]">Case ID: {caseId} • Page 2 of 2</span>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-[16px] font-bold text-[#0B1F3A] mb-1 print:text-[18px]">Tactical Negotiation Notes & Tax Guidance</h4>
+            <p className="text-[13px] text-[#5B6577] leading-relaxed m-0">
+              Key considerations for reviewing counsel regarding tax restructuring, discrimination multipliers, and compliance rules:
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3.5 text-[12px] text-[#5B6577] leading-relaxed">
+            <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg">
+              <span className="font-bold text-[#0B1F3A] block mb-1">Notice Pay (PILON) & Ex-Gratia Tax Allocation</span>
+              Under <strong>s.402D ITEPA 2003</strong>, all payments in lieu of notice (PILON) must be taxed as general earnings under the Post-Employment Notice Pay (PENP) formula. However, genuine ex-gratia redundancy severance qualifies for the first £30,000 tax-free exemption under <strong>s.403 ITEPA 2003</strong>. Any ex-gratia amount exceeding £30,000 is subject to the employee&apos;s marginal income tax rate.
+            </div>
+
+            <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg">
+              <span className="font-bold text-[#0B1F3A] block mb-1">Pension Sacrifice Opportunities</span>
+              If the ex-gratia severance payment exceeds £30,000, the employee can request the employer to pay the excess taxable portion directly into a registered pension scheme as an employer contribution. If completed before the settlement agreement is signed, this restructuring avoids income tax and National Insurance contributions under <strong>s.408 ITEPA 2003</strong>.
+            </div>
+
+            {inputs.discrimination === 'yes' && (
+              <div className="p-3.5 bg-[#FBF0EE] border border-[#D9A99E] rounded-lg text-[#A8341F]">
+                <span className="font-bold block mb-1">Equality Act 2010 & Vento Injury to Feelings Guidelines</span>
+                This case involves discrimination elements. Injury to feelings damages are calculated separately from financial loss under the Vento bands, which are uncapped by the statutory unfair dismissal limits. In negotiations, these damages must be allocated carefully. Under HMRC rules, genuine compensation for injury to feelings related to pre-termination discrimination may be paid tax-free under s.403, whereas compensation for discrimination leading to termination is taxed.
+              </div>
+            )}
+
+            {result.collectiveRedundancy && (
+              <div className="p-3.5 bg-[#FEFBF0] border border-[#E0CB94] rounded-lg text-[#B5802A]">
+                <span className="font-bold block mb-1">TULRCA 1992 s.188 Collective Consultation Obligations</span>
+                Because 20 or more employees are affected, a statutory collective consultation obligation exists. Failure to consult gives rise to a protective award claim under <strong>s.189 TULRCA 1992</strong> of up to 90 days&apos; gross pay. This is a separate tribunal action and is not waived by standard redundancy parameters unless explicitly compromised in the agreement.
+              </div>
+            )}
+
+            <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg">
+              <span className="font-bold text-[#0B1F3A] block mb-1">Strict Platform Disclaimer & Compliance Warning</span>
+              <strong>IMPORTANT NOTICE:</strong> This brief is generated dynamically for intake assessment and informational purposes only. SettlementCheck (operated by SettlementCheck Ltd) is an intake support platform, not a legal advisory body, SRA-regulated law firm, or barrister chambers. This report does not constitute formal legal advice, nor does it create a solicitor-client relationship. Under <strong>s.203(3) of the Employment Rights Act 1996</strong>, a settlement agreement is only legally binding if the employee receives independent advice from a qualified adviser (such as a certified solicitor). The recipient of this report must consult a matched solicitor to verify all figures, check contract clauses, and execute the final agreement.
+            </div>
           </div>
         </div>
       </div>
@@ -788,11 +871,11 @@ function SaveCard({ resultRef, result, offer, onEmailCapture, params }: {
         <p className="sc-body mt-1.5 text-[14px] text-[#5B6577]">Your figures are based on the details you entered today. Save a copy now so you have something to refer back to, share with a partner, or bring to your first solicitor call.</p>
       </div>
 
-      <div className="flex gap-3 flex-col sm:flex-row">
+      <div className="flex flex-col gap-2.5">
         <button
           type="button"
           onClick={() => window.print()}
-          className="btn-ghost text-[14px] px-4 py-2.5 cursor-pointer"
+          className="btn-ghost text-[14px] w-full px-4 py-2.5 cursor-pointer"
         >
           Download PDF brief
         </button>
@@ -802,7 +885,7 @@ function SaveCard({ resultRef, result, offer, onEmailCapture, params }: {
             type="button"
             data-email-trigger
             onClick={() => setEmailOpen(true)}
-            className="btn-accent text-[14px] px-4 py-2.5 cursor-pointer"
+            className="btn-accent text-[14px] w-full px-4 py-2.5 cursor-pointer"
           >
             Email me my results
           </button>
@@ -832,7 +915,7 @@ function SaveCard({ resultRef, result, offer, onEmailCapture, params }: {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="btn-accent text-[14px] self-start px-4 py-2.5 disabled:opacity-60 cursor-pointer"
+            className="btn-accent text-[14px] w-full px-4 py-2.5 disabled:opacity-60 cursor-pointer"
           >
             {status === 'sending' ? 'Sending...' : 'Send my results'}
           </button>
@@ -1223,19 +1306,41 @@ function ResultsContent() {
       {/* Inject print-only and layout styling */}
       <style dangerouslySetInnerHTML={{ __html: `
         @media print {
+          @page {
+            size: A4 portrait;
+            margin: 15mm 15mm 15mm 15mm;
+          }
           body {
             background-color: #ffffff !important;
-            color: #000000 !important;
+            color: #0B1F3A !important;
+            font-family: var(--font-sans), Inter, sans-serif !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
-          nav, footer, button, select, textarea, .sc-container > *:not(#printable-case-brief-wrapper), .no-print {
+          nav, footer, .no-print {
             display: none !important;
+          }
+          main {
+            padding: 0 !important;
+            margin: 0 !important;
+            background: none !important;
+            min-height: auto !important;
+          }
+          .sc-container {
+            padding: 0 !important;
+            margin: 0 !important;
+            max-width: 100% !important;
+            width: 100% !important;
+          }
+          /* Ensure layout containers do not use grid/flex layout when printing */
+          .grid, .flex-col, .lg\:col-span-2 {
+            display: block !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
           }
           #printable-case-brief-wrapper {
             display: block !important;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100% !important;
             border: none !important;
             box-shadow: none !important;
             padding: 0 !important;
@@ -1246,7 +1351,40 @@ function ResultsContent() {
             display: block !important;
             opacity: 1 !important;
             max-height: none !important;
-            padding: 10px !important;
+            overflow: visible !important;
+            height: auto !important;
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+          .page-break {
+            page-break-before: always !important;
+            break-before: page !important;
+            margin-top: 0 !important;
+            padding-top: 15mm !important;
+          }
+          /* Ensure text colors print correctly */
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          /* Force standard table formatting */
+          table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            margin-top: 5px !important;
+            margin-bottom: 5px !important;
+          }
+          th, td {
+            border: 1px solid #E2DCCE !important;
+            padding: 6px 10px !important;
+            font-size: 11px !important;
+          }
+          /* Ensure text reads well */
+          .text-coral, span[style*="color: rgb(217, 96, 59)"] {
+            color: #D9603B !important;
+          }
+          .text-ink {
+            color: #0B1F3A !important;
           }
         }
       `}} />
