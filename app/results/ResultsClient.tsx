@@ -56,6 +56,23 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
 }) {
   const completedYears = yearsNum
 
+  if (offer === 0) {
+    const minEntitlement = result.minimum
+    return (
+      <div className="rounded-lg p-6 md:p-8 bg-[#F2F5F8] border border-[#C8D3DF]">
+        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4 bg-white text-[#0B1F3A] border border-[#C8D3DF]">
+          Negotiation Baseline
+        </span>
+        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Understand your position before you negotiate.</h2>
+        <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
+          <p>Under UK law, you have a statutory minimum floor of <strong className="text-ink">{formatCurrency(minEntitlement)}</strong> (including statutory redundancy and notice pay) based on your {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, age {age}, and salary.</p>
+          <p>In practice, negotiated settlements typically range from <strong className="text-ink">{formatCurrency(result.typicalLow)}</strong> to {result.typicalHighUncapped ? <strong className="text-ink">a figure depending on circumstances</strong> : <strong className="text-ink">{formatCurrency(result.typicalHigh)}</strong>}.</p>
+          <p>Use the simulator below to explore how structured settlement packages can be optimized for tax efficiency, especially if you negotiate a higher package.</p>
+        </div>
+      </div>
+    )
+  }
+
   if (result.verdict === 'BELOW_MINIMUM') {
     const srp = result.redundancy || result.basicAward
     return (
@@ -154,6 +171,8 @@ function FinancialSplitChart({
   taxableTermination,
   estimatedTax,
   netTakeHome,
+  isSimulated = false,
+  pensionSacrifice = 0,
 }: {
   offer: number;
   pilon: number;
@@ -161,20 +180,33 @@ function FinancialSplitChart({
   taxableTermination: number;
   estimatedTax: number;
   netTakeHome: number;
+  isSimulated?: boolean;
+  pensionSacrifice?: number;
 }) {
+  const adjustedTaxableTermination = Math.max(0, taxableTermination - pensionSacrifice)
   const total = Math.max(offer, pilon + taxFreeAmount + taxableTermination) || 1;
   const pilonPct = Math.min(100, Math.max(0, (pilon / total) * 100));
   const taxFreePct = Math.min(100, Math.max(0, (taxFreeAmount / total) * 100));
-  const taxableTermPct = Math.min(100, Math.max(0, (taxableTermination / total) * 100));
+  const taxableTermPct = Math.min(100, Math.max(0, (adjustedTaxableTermination / total) * 100));
+  const pensionPct = Math.min(100, Math.max(0, (pensionSacrifice / total) * 100));
 
   return (
     <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 shadow-sm flex flex-col gap-4">
       <div className="flex justify-between items-center">
         <h4 className="text-[13px] font-bold tracking-wider text-[#5B6577] uppercase m-0">Visual Settlement Split</h4>
         <span className="text-[12px] bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A] font-semibold px-2.5 py-1 rounded-full">
-          Gross: {formatCurrency(offer)}
+          {isSimulated ? 'Simulated Gross' : 'Gross'}: {formatCurrency(offer)}
         </span>
       </div>
+
+      {isSimulated && (
+        <div className="p-3.5 bg-[#FEFBF0] border border-[#E0CB94] rounded-lg text-[13px] text-[#B5802A] leading-relaxed flex gap-2">
+          <span className="text-[16px] flex-shrink-0">💡</span>
+          <div>
+            <strong>Simulation Mode:</strong> Showing typical midpoint settlement package ({formatCurrency(offer)}) for negotiation planning.
+          </div>
+        </div>
+      )}
 
       {/* Visual Stacked Bar */}
       <div className="flex w-full h-8 rounded-lg overflow-hidden bg-[#F7F4EE] border border-[#E2DCCE]">
@@ -191,9 +223,18 @@ function FinancialSplitChart({
           <div
             style={{ width: `${taxableTermPct}%` }}
             className="bg-[#E0CB94] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-[#0B1F3A] font-bold"
-            title={`Taxable Severance: ${formatCurrency(taxableTermination)}`}
+            title={`Taxable Severance: ${formatCurrency(adjustedTaxableTermination)}`}
           >
             {taxableTermPct > 12 && 'Taxable'}
+          </div>
+        )}
+        {pensionPct > 0 && (
+          <div
+            style={{ width: `${pensionPct}%` }}
+            className="bg-[#4F7060] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-white font-bold"
+            title={`To Pension: ${formatCurrency(pensionSacrifice)}`}
+          >
+            {pensionPct > 12 && 'To Pension'}
           </div>
         )}
         {pilonPct > 0 && (
@@ -208,7 +249,7 @@ function FinancialSplitChart({
       </div>
 
       {/* Labels Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-1">
         <div className="flex items-center gap-2">
           <span className="w-3.5 h-3.5 rounded bg-[#BCD0BF] block border border-[#A4BCA7]"></span>
           <div className="text-[13px] leading-tight">
@@ -220,9 +261,18 @@ function FinancialSplitChart({
           <span className="w-3.5 h-3.5 rounded bg-[#E0CB94] block border border-[#CBB37E]"></span>
           <div className="text-[13px] leading-tight">
             <span className="text-[#8A93A3] block text-[10px] uppercase font-bold tracking-wider">Taxable Ex-Gratia</span>
-            <span className="font-semibold text-[#0B1F3A]">{formatCurrency(taxableTermination)}</span>
+            <span className="font-semibold text-[#0B1F3A]">{formatCurrency(adjustedTaxableTermination)}</span>
           </div>
         </div>
+        {pensionSacrifice > 0 && (
+          <div className="flex items-center gap-2">
+            <span className="w-3.5 h-3.5 rounded bg-[#4F7060] block border border-[#3E584B]"></span>
+            <div className="text-[13px] leading-tight">
+              <span className="text-[#8A93A3] block text-[10px] uppercase font-bold tracking-wider">To Pension (Tax-Free)</span>
+              <span className="font-semibold text-[#0B1F3A]">{formatCurrency(pensionSacrifice)}</span>
+            </div>
+          </div>
+        )}
         <div className="flex items-center gap-2">
           <span className="w-3.5 h-3.5 rounded bg-[#D9A99E] block border border-[#C59286]"></span>
           <div className="text-[13px] leading-tight">
@@ -252,30 +302,70 @@ function FinancialSplitChart({
 function PensionSacrificeWidget({
   taxableTermination,
   salary,
+  sacrificeVal,
+  setSacrificeVal,
+  isSimulated = false,
+  simulatedOffer = 0,
 }: {
   taxableTermination: number;
   salary: number;
+  sacrificeVal: number;
+  setSacrificeVal: (val: number) => void;
+  isSimulated?: boolean;
+  simulatedOffer?: number;
 }) {
-  const [sacrificeVal, setSacrificeVal] = useState(0)
+  const isDemoMode = taxableTermination <= 0 && salary >= 100000
+  const [demoSacrificeVal, setDemoSacrificeVal] = useState(10000)
+  const demoTaxableTermination = 20000
 
-  if (taxableTermination <= 0) return null
+  const limitToUse = isDemoMode ? demoTaxableTermination : taxableTermination
+  const valToUse = isDemoMode ? demoSacrificeVal : sacrificeVal
+  const setValToUse = isDemoMode ? setDemoSacrificeVal : setSacrificeVal
 
-  const res = calcPensionSacrifice(taxableTermination, sacrificeVal, salary)
+  const res = calcPensionSacrifice(limitToUse, valToUse, salary)
   const isTrapRange = salary >= 100000 && salary <= 125140
+
+  if (!isDemoMode && taxableTermination <= 0) return null
 
   return (
     <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 shadow-sm flex flex-col gap-4">
       <div>
         <span className="inline-block bg-[#F2F7F3] text-[#4F7060] text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full mb-1">
-          Tax Restructuring Optimizer
+          {isDemoMode ? 'Negotiation Opportunity' : 'Tax Restructuring Optimizer'}
         </span>
         <h3 className="sc-h3 mt-1 text-[#0B1F3A]">Pension Sacrifice Simulator</h3>
         <p className="sc-body mt-1.5 text-[13px] text-[#5B6577] leading-relaxed">
-          UK law allows termination payments up to £30,000 tax-free. Payments above £30,000 are subject to income tax. By sacrifing a portion of your taxable settlement directly into your pension as an employer contribution, you avoid income tax entirely on that portion.
+          {isDemoMode ? (
+            <>
+              Your current offer details do not include a taxable severance payment above the £30,000 threshold. However, as a high earner, if you negotiate a higher package (e.g. £50,000 ex-gratia), you can structure the portion above £30,000 directly into your pension as an employer contribution to save up to 60% in tax.
+            </>
+          ) : (
+            <>
+              UK law allows termination payments up to £30,000 tax-free. Payments above £30,000 are subject to income tax. By sacrificing a portion of your taxable settlement directly into your pension as an employer contribution, you avoid income tax entirely on that portion.
+            </>
+          )}
         </p>
       </div>
 
-      {isTrapRange && (
+      {isDemoMode && (
+        <div className="p-3.5 bg-[#F2F7F3] border border-[#BCD0BF] rounded-lg text-[13px] text-[#4F7060] leading-relaxed flex gap-2">
+          <span className="text-[16px] flex-shrink-0">💡</span>
+          <div>
+            <strong>Interactive Demo:</strong> Showing a simulated £50,000 settlement package (with £20,000 taxable severance). Adjust the slider below to see how pension sacrifice saves tax for an income of {formatCurrency(salary)}.
+          </div>
+        </div>
+      )}
+
+      {!isDemoMode && isSimulated && (
+        <div className="p-3 bg-[#FEFBF0] border border-[#E0CB94] rounded-lg text-[13px] text-[#B5802A] leading-relaxed flex gap-2">
+          <span className="text-[16px] flex-shrink-0">💡</span>
+          <div>
+            <strong>Simulation Mode:</strong> Based on the typical midpoint settlement package of {formatCurrency(simulatedOffer)}.
+          </div>
+        </div>
+      )}
+
+      {isTrapRange && !isDemoMode && (
         <div className="p-3.5 bg-[#FEFBF0] border border-[#E0CB94] rounded-lg text-[13px] text-[#B5802A] leading-relaxed flex gap-2">
           <span className="text-[16px] flex-shrink-0">⚠️</span>
           <div>
@@ -288,20 +378,23 @@ function PensionSacrificeWidget({
       <div className="flex flex-col gap-2 pt-1">
         <div className="flex justify-between text-[14px] font-semibold text-[#0B1F3A]">
           <span>Sacrifice Amount:</span>
-          <span className="text-[16px] text-[#D9603B] font-bold">{formatCurrency(sacrificeVal)}</span>
+          <span className="text-[16px] text-[#D9603B] font-bold">{formatCurrency(valToUse)}</span>
         </div>
         <input
           type="range"
           min="0"
-          max={taxableTermination}
+          max={limitToUse}
           step="100"
-          value={sacrificeVal}
-          onChange={(e) => setSacrificeVal(Number(e.target.value))}
-          className="w-full h-1.5 bg-[#E2DCCE] rounded-lg appearance-none cursor-pointer accent-[#D9603B]"
+          value={valToUse}
+          onChange={(e) => setValToUse(Number(e.target.value))}
+          className="sc-slider w-full cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #D9603B 0%, #D9603B ${(valToUse / (limitToUse || 1)) * 100}%, #E2DCCE ${(valToUse / (limitToUse || 1)) * 100}%, #E2DCCE 100%)`
+          }}
         />
         <div className="flex justify-between text-[11px] text-[#8A93A3] font-semibold">
           <span>£0 (Take Cash)</span>
-          <span>Max: {formatCurrency(taxableTermination)}</span>
+          <span>Max: {formatCurrency(limitToUse)}</span>
         </div>
       </div>
 
@@ -763,15 +856,21 @@ function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offe
               value={result.typicalHighUncapped ? 'Potentially uncapped' : formatCurrency(result.typicalHigh)}
               dimmed
             />
-            <Row label="Your offer" value={formatCurrency(offer)} highlight />
-            {dividerRow}
-            <Row
-              label={`Estimated tax on settlement`}
-              value={`−${formatCurrency(result.estimatedTax)}`}
-              taxTag={<span style={{ fontSize: 12, color: '#8A93A3' }}>At {taxRatePct}% rate</span>}
-              isNegative
-            />
-            <Row label={<strong>Estimated net take-home</strong>} value={<strong>{formatCurrency(netDisplay)}</strong>} highlight />
+            {offer > 0 ? (
+              <>
+                <Row label="Your offer" value={formatCurrency(offer)} highlight />
+                {dividerRow}
+                <Row
+                  label={`Estimated tax on settlement`}
+                  value={`−${formatCurrency(result.estimatedTax)}`}
+                  taxTag={<span style={{ fontSize: 12, color: '#8A93A3' }}>At {taxRatePct}% rate</span>}
+                  isNegative
+                />
+                <Row label={<strong>Estimated net take-home</strong>} value={<strong>{formatCurrency(netDisplay)}</strong>} highlight />
+              </>
+            ) : (
+              <Row label="Your offer" value={<span className="text-[#8A93A3] italic">No offer yet</span>} highlight />
+            )}
           </tbody>
         </table>
       </div>
@@ -1270,6 +1369,9 @@ function ResultsContent() {
   // Selected Vento Band for interactive discrimination modeling
   const [selectedVentoBand, setSelectedVentoBand] = useState<'lower' | 'middle' | 'upper' | 'exceptional' | null>(null)
 
+  // Interactive Pension Sacrifice hoisted state
+  const [sacrificeVal, setSacrificeVal] = useState(0)
+
   const salary            = parseFloat(inputs.salary)
   const yearsNum          = parseFloat(inputs.yearsNum)
   const monthsNum         = parseFloat(inputs.monthsNum)
@@ -1288,6 +1390,37 @@ function ResultsContent() {
   const valid = salary > 0 && age > 0 && offer >= 0 && reason !== ''
   const result: VerdictResult | null = valid
     ? getVerdict(salary, totalMonths, age, offer, reason, discrimination, contractualNotice, jurisdiction)
+    : null
+
+  // ── Pre-offer Simulation / Low Offer Opportunity Mode ─────────────────
+  const hasOffer = offer > 0
+  const typicalMidpoint = result
+    ? (result.typicalHighUncapped
+        ? Math.round(result.typicalLow * 1.5)
+        : Math.round((result.typicalLow + result.typicalHigh) / 2))
+    : 0
+
+  // If they have no offer, we simulate the midpoint.
+  // If they have an offer but no taxable termination, AND they are a high earner (£100k+),
+  // we simulate a typical midpoint offer so they can see the pension widget opportunity.
+  const isOpportunityMode = !!(hasOffer && result && result.taxableTermination <= 0 && salary >= 100000 && typicalMidpoint > offer)
+  const displayOffer = (hasOffer && !isOpportunityMode) ? offer : typicalMidpoint
+
+  const displayResult = valid
+    ? ((hasOffer && !isOpportunityMode)
+        ? result
+        : getVerdict(salary, totalMonths, age, displayOffer, reason, discrimination, contractualNotice, jurisdiction))
+    : null
+
+  const isSimulated = !hasOffer || isOpportunityMode
+
+  // Calculate maximum sacrifice possible based on the display/simulated taxable termination
+  const maxSacrifice = (displayResult && displayResult.taxableTermination > 0) ? displayResult.taxableTermination : 0
+  const adjustedSacrificeVal = Math.min(sacrificeVal, maxSacrifice)
+
+  // Hoisted pension sacrifice calculations
+  const pensionRes = (displayResult && maxSacrifice > 0)
+    ? calcPensionSacrifice(maxSacrifice, adjustedSacrificeVal, salary)
     : null
 
   const saveParams = {
@@ -1309,6 +1442,10 @@ function ResultsContent() {
           @page {
             size: A4 portrait;
             margin: 15mm 15mm 15mm 15mm;
+          }
+          html, body, main, .sc-container, #__next, #react-root {
+            height: auto !important;
+            overflow: visible !important;
           }
           body {
             background-color: #ffffff !important;
@@ -1457,21 +1594,27 @@ function ResultsContent() {
                 {/* Visual Chart - Dynamic stacked bar */}
                 <div className="no-print">
                   <FinancialSplitChart
-                    offer={offer}
-                    pilon={result.pilon}
-                    taxFreeAmount={result.taxFreeAmount}
-                    taxableTermination={result.taxableTermination}
-                    estimatedTax={result.estimatedTax}
-                    netTakeHome={result.estimatedNet}
+                    offer={isSimulated ? displayOffer : offer}
+                    pilon={displayResult?.pilon ?? 0}
+                    taxFreeAmount={displayResult?.taxFreeAmount ?? 0}
+                    taxableTermination={displayResult?.taxableTermination ?? 0}
+                    estimatedTax={(displayResult?.estimatedTax ?? 0) - (pensionRes?.taxSaved ?? 0)}
+                    netTakeHome={(displayResult?.estimatedNet ?? 0) - adjustedSacrificeVal + (pensionRes?.taxSaved ?? 0)}
+                    isSimulated={isSimulated}
+                    pensionSacrifice={adjustedSacrificeVal}
                   />
                 </div>
 
                 {/* Interactive Pension Sacrifice Slider */}
-                {result.taxableTermination > 0 && (
+                {(maxSacrifice > 0 || salary >= 100000) && (
                   <div className="no-print">
                     <PensionSacrificeWidget
-                      taxableTermination={result.taxableTermination}
+                      taxableTermination={maxSacrifice}
                       salary={salary}
+                      sacrificeVal={adjustedSacrificeVal}
+                      setSacrificeVal={setSacrificeVal}
+                      isSimulated={isSimulated}
+                      simulatedOffer={isSimulated ? displayOffer : 0}
                     />
                   </div>
                 )}
