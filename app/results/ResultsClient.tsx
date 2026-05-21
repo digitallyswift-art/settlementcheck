@@ -776,7 +776,7 @@ function ResultsContent() {
 
   const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>('GB')
   const [showJurisdictionToggle, setShowJurisdictionToggle] = useState(false)
-  const [prefillEmail, setPrefillEmail] = useState('')
+  const [prefillEmail, setPrefillEmail] = useState(searchParams.get('email') ?? '')
   const saveCardRef = useRef<HTMLDivElement>(null)
 
   const valid = salary > 0 && age > 0 && offer >= 0 && reason !== ''

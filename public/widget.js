@@ -856,7 +856,7 @@
       }
 
       // Redirect the parent window
-      window.top.location.href = `${origin}/results?${queryParams.toString()}`;
+      window.top.location.href = `${origin}/results/?${queryParams.toString()}`;
     }
 
     async submitLead() {

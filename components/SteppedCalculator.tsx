@@ -224,11 +224,9 @@ export default function SteppedCalculator({ onCalculate }: Props) {
       const o = parseFloat(offer)
       return (!offer || isNaN(o) || o === 0) ? 'No offer made yet' : 'That is what they have offered'
     }
-    if (step === 5) return noticeOption === 'unsure' ? 'I am not sure' : 'That is my notice period'
+    if (step === 5) return 'That is my notice period'
     if (step === 6) return 'That is my situation'
-    // Step 7
-    if (discrimination === 'not_sure') return 'I am not sure'
-    if (discrimination === 'yes') return 'Yes, this may apply'
+    if (step === 7) return 'Review calculations'
     return 'That is my situation'
   }
 
@@ -266,6 +264,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
       if (!reason) { triggerShake(); return }
       goToStep(7)
     } else if (step === 7) {
+      if (!discrimination) { triggerShake(); return }
       startLoading()
     }
   }
@@ -724,7 +723,7 @@ export default function SteppedCalculator({ onCalculate }: Props) {
               </p>
               <h2 style={qSt}>Was discrimination involved?</h2>
               {/* 56px minimum tap targets — higher than standard 48px due to consequence of mis-tap */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
+              <div className={shake && !discrimination ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
                 {([
                   { value: 'no', label: 'No' },
                   { value: 'not_sure', label: 'Not sure' },
