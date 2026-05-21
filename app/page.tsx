@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
 import HomeClient from './HomeClient'
+import { getGeneralStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
-  title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck',
-  description: 'Free settlement agreement calculator — 2026 rates (£751/week cap). See if your offer is fair, get your net take-home after tax. No email. Instant verdict.',
+  title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck (Employment)',
+  description: 'Free settlement agreement calculator — 2026 rates (£751/week cap). See if your offer is fair, get your net take-home after tax. (Not an immigration or visa status service).',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/',
   },
   openGraph: {
-    title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck',
-    description: 'Most opening offers have room to move. Net pay after tax calculated instantly — PILON taxed separately from the £30,000 exemption. No email required.',
+    title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck (Employment)',
+    description: 'Most opening offers have room to move. Net pay after tax calculated instantly — PILON taxed separately from the £30,000 exemption. No email required. (Not an immigration or visa status service).',
     url: 'https://settlementcheck.co.uk/',
     type: 'website',
     locale: 'en_GB',
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'SettlementCheck',
+  name: 'SettlementCheck (Employment)',
   url: 'https://settlementcheck.co.uk',
   description: 'Independent UK settlement agreement calculator and solicitor introduction service. Not owned by a law firm.',
 }
@@ -28,7 +29,7 @@ const orgSchema = {
 const webSiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'SettlementCheck',
+  name: 'SettlementCheck (Employment)',
   url: 'https://settlementcheck.co.uk',
 }
 
@@ -37,10 +38,14 @@ const webAppSchema = {
   '@type': 'WebApplication',
   name: 'Employment Settlement Agreement Calculator',
   url: 'https://settlementcheck.co.uk/',
-  applicationCategory: 'FinanceApplication',
+  applicationCategory: 'BusinessFinancialApplication',
   operatingSystem: 'Web',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
   description: 'Free UK employment settlement agreement calculator. Shows estimated net take-home pay after tax: PILON taxed separately from the £30,000 exemption under ITEPA 2003. No email required. Based on April 2026 statutory rates.',
+  about: {
+    '@type': 'Thing',
+    name: 'Employment Law'
+  }
 }
 
 // FAQ schema aligned exactly to FaqAccordion DEFAULT_FAQS (7 questions)
@@ -115,19 +120,8 @@ const faqSchema = {
   ],
 }
 
-// Static statutory rates table data — passed as prop so table renders server-side (not in client bundle)
-// NOTE: legacy keys y2425 / y2526 now hold previous-year (2025/26) and current-year (2026/27) figures.
-const STATUTORY_ROWS = [
-  { label: 'Weekly pay cap (England, Scotland, Wales)', y2425: '£719',     y2526: '£751'     },
-  { label: 'Weekly pay cap (Northern Ireland)',          y2425: '£749',     y2526: '£783'     },
-  { label: 'Maximum statutory redundancy pay (GB)',      y2425: '£21,570',  y2526: '£22,530'  },
-  { label: 'Tax-free termination payment limit',         y2425: '£30,000',  y2526: '£30,000'  },
-  { label: 'Maximum qualifying service years',           y2425: '20 years', y2526: '20 years' },
-  { label: 'Maximum statutory notice period',            y2425: '12 weeks', y2526: '12 weeks' },
-]
-
-
 export default function HomePage() {
+  const statutoryRows = getGeneralStatutoryRows()
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
@@ -135,7 +129,7 @@ export default function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <HomeClient
-        statutoryRows={STATUTORY_ROWS}
+        statutoryRows={statutoryRows}
         lead="Most employees don't question their first settlement agreement offer. The April 2026 statutory cap is £751 per week, but your actual take-home depends on how PILON is taxed separately from the £30,000 exemption. Use this calculator to see your real net figure in 60 seconds."
       />
     </>

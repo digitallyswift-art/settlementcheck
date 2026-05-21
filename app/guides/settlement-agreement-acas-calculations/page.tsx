@@ -196,7 +196,7 @@ export default function AcasCalculationsGuide() {
             <ul className="flex flex-col gap-3">
               {[
                 'Statutory redundancy pay: typically tax-free within the £30,000 limit.',
-                'Holiday pay: typically tax-free within the £30,000 limit.',
+                'Holiday pay: always taxed as earnings (standard employment income).',
                 'PILON (notice period paid but not worked): always taxed as earnings, separate from the £30,000 limit.',
                 'Ex-gratia compensation: tax-free up to the £30,000 combined limit.',
               ].map((item) => (

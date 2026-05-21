@@ -3,18 +3,19 @@ import Script from 'next/script'
 import HomeClient from '../HomeClient'
 import type { StatutoryRow, StepItem } from '../HomeClient'
 import type { FaqItem } from '@/components/FaqAccordion'
+import { getRedundancyStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
-  title: 'Redundancy Pay Calculator 2026 | Statutory & Enhanced Pay | SettlementCheck',
+  title: 'Redundancy Pay Calculator 2026 | Statutory & Enhanced Pay | SettlementCheck (Employment)',
   description:
-    'Calculate your statutory redundancy pay using April 2026 rates. Weekly cap £751 (GB), age multipliers, PILON tax treatment, and £30,000 tax-free limit explained. Free, no email.',
+    'Calculate your statutory redundancy pay using April 2026 rates. Weekly cap £751 (GB), age multipliers, PILON tax treatment, and £30,000 tax-free limit explained. Free, no email. (Not an immigration or visa status service).',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/redundancy-calculator/',
   },
   openGraph: {
-    title: 'Redundancy Pay Calculator 2026 | Statutory & Enhanced Pay | SettlementCheck',
+    title: 'Redundancy Pay Calculator 2026 | Statutory & Enhanced Pay | SettlementCheck (Employment)',
     description:
-      'Calculate your statutory redundancy pay using April 2026 rates. Weekly cap £751 (GB), age multipliers, PILON tax treatment, and £30,000 tax-free limit explained. Free, no email.',
+      'Calculate your statutory redundancy pay using April 2026 rates. Weekly cap £751 (GB), age multipliers, PILON tax treatment, and £30,000 tax-free limit explained. Free, no email. (Not an immigration or visa status service).',
     url: 'https://settlementcheck.co.uk/redundancy-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -22,20 +23,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Redundancy Pay Calculator 2026 | SettlementCheck',
+    title: 'Redundancy Pay Calculator 2026 | SettlementCheck (Employment)',
     description:
-      'Statutory redundancy pay using 2026 UK rates. Weekly cap £751. Free, no email required.',
+      'Statutory redundancy pay using 2026 UK rates. Weekly cap £751. Free, no email required. (Not an immigration or visa status service).',
   },
 }
-
-const STATUTORY_ROWS: StatutoryRow[] = [
-  { label: 'Weekly pay cap (Great Britain)', y2425: '£719', y2526: '£751' },
-  { label: 'Weekly pay cap (Northern Ireland)', y2425: '£749', y2526: '£783' },
-  { label: 'Maximum qualifying years', y2425: '20', y2526: '20' },
-  { label: 'Maximum statutory redundancy pay (GB)', y2425: '£21,570', y2526: '£22,530' },
-  { label: 'Tax-free threshold (termination payments)', y2425: '£30,000', y2526: '£30,000' },
-  { label: 'Unfair dismissal compensatory cap (GB)', y2425: '£118,223', y2526: '£123,543' },
-]
 
 const REDUNDANCY_STEPS: StepItem[] = [
   {
@@ -144,6 +136,7 @@ const JSON_LD = {
 }
 
 export default function RedundancyCalculatorPage() {
+  const statutoryRows = getRedundancyStatutoryRows()
   return (
     <>
       <Script
@@ -183,7 +176,7 @@ export default function RedundancyCalculatorPage() {
         howItWorksTitle="Three steps to understand your redundancy position."
         howItWorksLead="From your statutory minimum to what you will actually take home. Free, no email required."
         taxSectionTitle="How much tax will you pay on your redundancy package?"
-        statutoryRows={STATUTORY_ROWS}
+        statutoryRows={statutoryRows}
         pageLinks={[
           {
             href: '/guides/redundancy-pay-cap-2026',

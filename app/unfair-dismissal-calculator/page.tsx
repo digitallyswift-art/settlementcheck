@@ -3,18 +3,19 @@ import Script from 'next/script'
 import HomeClient from '../HomeClient'
 import type { StatutoryRow, StepItem } from '../HomeClient'
 import type { FaqItem } from '@/components/FaqAccordion'
+import { getUnfairDismissalStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
-  title: 'Unfair Dismissal Calculator 2026 | Basic & Compensatory Award | SettlementCheck',
+  title: 'Unfair Dismissal Calculator 2026 | Basic & Compensatory Award | SettlementCheck (Employment)',
   description:
-    'Estimate your unfair dismissal basic and compensatory award using April 2026 UK rates. Compensatory cap £123,543. See whether your settlement offer is fair in 60 seconds. Free, no email.',
+    'Estimate your unfair dismissal basic and compensatory award using April 2026 UK rates. Compensatory cap £123,543. See whether your settlement offer is fair in 60 seconds. Free, no email. (Not an immigration or visa status service).',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/unfair-dismissal-calculator/',
   },
   openGraph: {
-    title: 'Unfair Dismissal Calculator 2026 | Basic & Compensatory Award | SettlementCheck',
+    title: 'Unfair Dismissal Calculator 2026 | Basic & Compensatory Award | SettlementCheck (Employment)',
     description:
-      'Estimate your unfair dismissal basic and compensatory award using April 2026 UK rates. Compensatory cap £123,543. Free, no email.',
+      'Estimate your unfair dismissal basic and compensatory award using April 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
     url: 'https://settlementcheck.co.uk/unfair-dismissal-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -22,19 +23,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Unfair Dismissal Calculator 2026 | SettlementCheck',
+    title: 'Unfair Dismissal Calculator 2026 | SettlementCheck (Employment)',
     description:
-      'Basic and compensatory award estimate using 2026 UK rates. Compensatory cap £123,543. Free, no email.',
+      'Basic and compensatory award estimate using 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
   },
 }
-
-const STATUTORY_ROWS: StatutoryRow[] = [
-  { label: 'Weekly pay cap (GB), basic award', y2425: '£719', y2526: '£751' },
-  { label: 'Maximum basic award (GB)', y2425: '£21,570', y2526: '£22,530' },
-  { label: 'Compensatory award cap (GB)', y2425: '£118,223', y2526: '£123,543' },
-  { label: 'Tax-free threshold (termination payments)', y2425: '£30,000', y2526: '£30,000' },
-  { label: 'Qualifying service for unfair dismissal', y2425: '2 years', y2526: '2 years' },
-]
 
 const UNFAIR_DISMISSAL_STEPS: StepItem[] = [
   {
@@ -143,6 +136,7 @@ const JSON_LD = {
 }
 
 export default function UnfairDismissalCalculatorPage() {
+  const statutoryRows = getUnfairDismissalStatutoryRows()
   return (
     <>
       <Script
@@ -182,7 +176,7 @@ export default function UnfairDismissalCalculatorPage() {
         howItWorksTitle="Three steps to understand your unfair dismissal position."
         howItWorksLead="From what the law says you could be owed, to the net figure after tax. Free, no email required."
         taxSectionTitle="How much tax will you pay on an unfair dismissal settlement?"
-        statutoryRows={STATUTORY_ROWS}
+        statutoryRows={statutoryRows}
         pageLinks={[
           {
             href: '/guides/what-is-a-fair-settlement-agreement',

@@ -30,24 +30,23 @@ export interface VerdictResult {
   jurisdiction: 'GB' | 'NI';
 }
 
+import { STATUTORY_RATES, getRatesForDate } from './statutory-rates';
+
 // ERA 1996 s.227 — weekly pay cap, England/Scotland/Wales.
-// Updated 6 April 2026 by the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310).
-// Previous figure: £719 (in force 6 April 2025 to 5 April 2026).
-export const WEEKLY_CAP_GB = 751;
+export const WEEKLY_CAP_GB = STATUTORY_RATES.weeklyCapGB;
 
 // ERO(NI) 1996 — weekly pay cap, Northern Ireland.
-// Updated 6 April 2026 by the Employment Rights (Increase of Limits) Order (Northern Ireland) 2026 (SR 2026/57).
-// Previous figure: £749 (in force 6 April 2025 to 5 April 2026).
-export const WEEKLY_CAP_NI = 783;
+export const WEEKLY_CAP_NI = STATUTORY_RATES.weeklyCapNI;
 
 // ERA 1996 s.162 — maximum qualifying service years for SRP
-const MAX_SERVICE_YEARS = 20;
+const MAX_SERVICE_YEARS = STATUTORY_RATES.maxServiceYears;
 
 // ITEPA 2003 s.403 — tax-free threshold for genuine termination payments
-const TAX_FREE_FLOOR = 30_000;
+const TAX_FREE_FLOOR = STATUTORY_RATES.taxFreeLimit;
 
 // ERA 1996 s.227 — backward-compat alias used by internal helpers
 const WEEKLY_PAY_CAP = WEEKLY_CAP_GB;
+
 
 /* ── Helper functions ──────────────────────────────────────────── */
 
@@ -104,11 +103,13 @@ export function calcNotice(
 }
 
 // ITEPA 2003 — derive marginal income tax rate from gross annual salary.
+// Accounts for the UK Personal Allowance tapering (the 60% tax trap between £100,000 and £125,140).
 // Uses England/Wales/NI bands as baseline (Scottish bands differ — flagged in UI).
 function getTaxRate(grossAnnual: number): number {
   if (grossAnnual <= 50_270) return 0.20;  // basic rate
-  if (grossAnnual <= 125_140) return 0.40; // higher rate
-  return 0.45;                              // additional rate
+  if (grossAnnual <= 100_000) return 0.40; // higher rate (before personal allowance tapering)
+  if (grossAnnual <= 125_140) return 0.60; // 60% tax trap (tapering of personal allowance by £1 for every £2 earned)
+  return 0.45;                              // additional rate (personal allowance is already £0)
 }
 
 /* ── Main calculation function ─────────────────────────────────── */

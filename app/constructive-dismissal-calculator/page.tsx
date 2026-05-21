@@ -3,18 +3,19 @@ import Script from 'next/script'
 import HomeClient from '../HomeClient'
 import type { StatutoryRow, StepItem } from '../HomeClient'
 import type { FaqItem } from '@/components/FaqAccordion'
+import { getConstructiveDismissalStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
-  title: 'Constructive Dismissal Calculator 2026 | Forced to Resign? | SettlementCheck',
+  title: 'Constructive Dismissal Calculator 2026 | Forced to Resign? | SettlementCheck (Employment)',
   description:
-    'Forced to resign by your employer\'s conduct? Estimate your constructive dismissal settlement using April 2026 UK rates. Compensatory cap £123,543. Free, no email. Independent, not a law firm.',
+    'Forced to resign by your employer\'s conduct? Estimate your constructive dismissal settlement using April 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/constructive-dismissal-calculator/',
   },
   openGraph: {
-    title: 'Constructive Dismissal Calculator 2026 | Forced to Resign? | SettlementCheck',
+    title: 'Constructive Dismissal Calculator 2026 | Forced to Resign? | SettlementCheck (Employment)',
     description:
-      'Forced to resign by your employer\'s conduct? Estimate your constructive dismissal settlement using April 2026 UK rates. Compensatory cap £123,543. Free, no email.',
+      'Forced to resign by your employer\'s conduct? Estimate your constructive dismissal settlement using April 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
     url: 'https://settlementcheck.co.uk/constructive-dismissal-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -22,19 +23,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Constructive Dismissal Calculator 2026 | SettlementCheck',
+    title: 'Constructive Dismissal Calculator 2026 | SettlementCheck (Employment)',
     description:
-      'Forced to resign? Estimate your constructive dismissal settlement using 2026 UK rates. Free, no email.',
+      'Forced to resign? Estimate your constructive dismissal settlement using 2026 UK rates. Free, no email. (Not an immigration or visa status service).',
   },
 }
-
-const STATUTORY_ROWS: StatutoryRow[] = [
-  { label: 'Weekly pay cap (GB), basic award', y2425: '£719', y2526: '£751' },
-  { label: 'Maximum basic award (GB)', y2425: '£21,570', y2526: '£22,530' },
-  { label: 'Compensatory award cap (GB)', y2425: '£118,223', y2526: '£123,543' },
-  { label: 'Tax-free threshold (termination payments)', y2425: '£30,000', y2526: '£30,000' },
-  { label: 'Qualifying service for constructive dismissal', y2425: '2 years', y2526: '2 years' },
-]
 
 const CONSTRUCTIVE_DISMISSAL_STEPS: StepItem[] = [
   {
@@ -143,6 +136,7 @@ const JSON_LD = {
 }
 
 export default function ConstructiveDismissalCalculatorPage() {
+  const statutoryRows = getConstructiveDismissalStatutoryRows()
   return (
     <>
       <Script
@@ -183,7 +177,7 @@ export default function ConstructiveDismissalCalculatorPage() {
         howItWorksTitle="Three steps to understand your constructive dismissal position."
         howItWorksLead="From what you could be owed, to the net figure after tax. Free, no email required. Independent, not a law firm."
         taxSectionTitle="How much tax will you pay on a constructive dismissal settlement?"
-        statutoryRows={STATUTORY_ROWS}
+        statutoryRows={statutoryRows}
         pageLinks={[
           {
             href: '/guides/what-is-a-fair-settlement-agreement',
