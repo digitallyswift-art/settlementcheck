@@ -61,14 +61,55 @@ must serve that goal.
 - **Revenue model:** Lead referral to employment solicitors
 - **Tech stack:** Next.js, Vercel, Supabase
 
-### Competitive Landscape
-SettlementCheck competes against:
-1. Large law firm calculator pages (Citizens Advice, employment
-   solicitor firms) — high domain authority, low content quality,
-   zero emotional intelligence in copy
-2. Generic comparison sites — broad but shallow, no statutory
-   accuracy
-3. Gov.uk pages — authoritative but passive, no verdict output
+### Named Competitors — Organic Rankings
+
+These sites currently occupy page 1–2 for SettlementCheck's
+primary money terms. Every audit and content recommendation
+must answer: "Does this beat these specific competitors?"
+
+**Tier 1 — Direct calculator competitors (beat first):**
+
+| Competitor | URL | Key weakness to exploit |
+|---|---|---|
+| Monaco Solicitors | monacosolicitors.co.uk | Lead-gen calculator, no verdict output, copy hedged for solicitor liability |
+| Redmans Solicitors | redmans.co.uk/employment-law-solicitors/settlement-agreement-calculator/ | Tool exists but no named verdict, no PILON/SRP tax split |
+| KLG Law | klglaw.co.uk/how-to-calculate-your-settlement-agreement/ | Two separate pages diluting authority; copy warns "calculator can't assess fairness" — i.e. they refuse to do the one thing users want |
+| Winston Solicitors | winstonsolicitors.co.uk/calculators/employment/settlement-agreement-calculator | Good DA, generic output — no net take-home, no named verdict |
+| settlementagreementcalculator.co.uk | (exact-match domain) | Exact-match domain gives ranking advantage; calculator is basic, no verdict, no tax breakdown, no emotional register |
+| settlementagreement.co.uk | (near-exact-match domain) | Same weakness — domain authority from exact match, not from tool quality |
+| Tribunal Claim Solicitors | tribunalclaimsolicitors.co.uk | Tax calculator only — doesn't assess fairness, only tax liability |
+
+**Tier 2 — Authority content competitors (beat on content):**
+
+| Competitor | URL | Key weakness to exploit |
+|---|---|---|
+| Citizens Advice | citizensadvice.org.uk | Near-gov DA, but purely passive guidance — no calculator, buries figures, written for legal liability not the user |
+| ACAS | acas.org.uk | High authority on "settlement agreement calculator acas" query (16 GSC impressions) — but ACAS has no calculator at all |
+| ukcalculator.com | ukcalculator.com/settlement-agreement-tax-calculator.html | Tax calc only, no fairness verdict, thin content |
+
+**Paid advertisers (bidding on these terms — signals high commercial intent):**
+
+- Premier Legal Solicitors (premier-legal.co.uk)
+- Tribunal Claim Solicitors (tribunalclaimsolicitors.co.uk)
+- KLG Law (klglaw.co.uk — running both organic and paid)
+- Redmans Solicitors (redmans.co.uk — running both)
+- settlementagreements.co.uk (distinct from settlementagreement.co.uk)
+- GAPHR (gaphr.co.uk — HR-side calculator, employer-facing)
+
+These paid players confirm the terms are commercially valuable.
+SettlementCheck does not need to buy clicks — it needs to take
+their organic positions by having a demonstrably better tool
+and demonstrably more accurate, user-first copy.
+
+**The universal competitor weakness:**
+Every competitor calculator either:
+(a) refuses to give a verdict ("only a guide, speak to a solicitor"), or
+(b) gives a tax calculation but not a fairness verdict, or
+(c) has a verdict but buries it after a lead capture gate.
+
+SettlementCheck's verdict is immediate, named, and shown before
+any contact request. This is the moat. Every SEO recommendation
+must make this moat more visible to search engines.
 
 **The moat:** SettlementCheck is the only tool that produces
 a named verdict ("your offer is below the legal minimum"),
@@ -78,6 +119,51 @@ emotional state rather than for legal liability avoidance.
 
 SEO must make this moat visible to search engines and to
 the AI Overview / SGE extraction layer.
+
+### GSC Baseline — May 2026
+
+Current search performance (data period: 3 May – 18 May 2026):
+
+```
+Total clicks:      2   (both on homepage)
+Total impressions: ~320 across 2 weeks
+Average position:  65–79 across all money terms
+CTR:               ~0% on all primary keywords
+```
+
+**Primary keyword positions (all zero clicks):**
+
+| Query | Impressions | Position |
+|---|---|---|
+| employment settlement agreement calculator uk | 47 | 65.98 |
+| settlement agreement calculator uk | 45 | 63.89 |
+| compromise agreement calculator | 45 | 74.73 |
+| settlement agreement calculator | 37 | 78.49 |
+| settlement calculator | 27 | 68.89 |
+| settlement calculator uk | 22 | 67.14 |
+| settlement agreement calculator acas | 16 | 78.81 |
+| settlement offer calculator free | 1 | **9.0** ← nearest to page 1 |
+
+**CRITICAL TECHNICAL ISSUE — CANONICAL BLEED:**
+Three URL variants are being indexed simultaneously:
+- `https://settlementcheck.co.uk/` — 150 impressions, 2 clicks
+- `http://settlementcheck.co.uk/` — 107 impressions, 0 clicks
+- `https://www.settlementcheck.co.uk/` — 64 impressions, 0 clicks
+
+This splits domain authority three ways. The http:// variant
+should not exist in GSC at all — it means the HTTP→HTTPS redirect
+is not working consistently, OR Google has crawled both.
+The www vs non-www split means the canonical tag is not being
+respected as the preferred domain.
+
+**Fix canonical bleed before any other SEO work.**
+This single issue is suppressing all rankings by fragmenting
+the authority that should be concentrated on one URL.
+
+**`settlement offer calculator free` at position 9 is the
+quick win.** One page-1 ranking is achievable immediately if
+the canonical issue is resolved and the homepage title/meta
+are optimised for this specific query.
 
 ### Statutory Accuracy Baseline
 All content must reflect these verified figures (April 2026 — current):

@@ -20,10 +20,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Tier 4 — Guides (hub + spokes)
     { url: `${base}/guides/`,                                         lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/constructive-dismissal-settlement-agreements/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/nhs-settlement-agreements/`,               lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/settlement-agreement-vs-tribunal-claim/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/average-settlement-agreement-payout-uk/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/how-to-negotiate-a-settlement-agreement/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/employer-recommended-solicitor/`,          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/pressured-to-sign/`,                       lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/what-happens-if-you-do-not-sign/`,         lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/tax-free-settlement-30000/`,               lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/redundancy-pay-cap-2026/`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/pilon-tax-treatment-2026/`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/settlement-agreement-acas-calculations/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/fair-work-agency/`,                        lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/is-my-settlement-offer-fair/`,             lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/what-is-a-fair-settlement-agreement/`,     lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/protective-award/`,                        lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
 
     // Tier 5 — Supplier-facing
     { url: `${base}/for-solicitors/`,                                 lastModified: now, changeFrequency: 'monthly', priority: 0.6 },

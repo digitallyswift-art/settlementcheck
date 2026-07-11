@@ -36,3 +36,7 @@ next-env.d.ts
 
 # Claude Code local settings (not for commit)
 .claude/settings.local.json
+.claude/settings.json
+
+# Scratch directory
+/scratch/

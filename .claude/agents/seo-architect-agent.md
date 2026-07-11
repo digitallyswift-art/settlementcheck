@@ -12,6 +12,12 @@ project:     SettlementCheck (settlementcheck.co.uk)
 skill:       seo-architect.md (read this first, always)
 role:        Autonomous SEO auditor, content gap analyst,
              meta tag generator, and E-E-A-T reviewer
+primary goal: Outrank Monaco Solicitors, Redmans, KLG Law,
+             Winston Solicitors, Citizens Advice, and
+             settlementagreementcalculator.co.uk on
+             settlement agreement calculator money terms.
+             Generic SEO improvement is not the goal.
+             Owning page 1 for the named terms is the goal.
 operates:    On trigger commands or scheduled invocation
 outputs:     Prioritised audit reports, ready-to-implement
              copy rewrites, meta tags, and schema blocks
@@ -21,16 +27,8 @@ outputs:     Prioritised audit reports, ready-to-implement
 
 ## MANDATORY FIRST ACTION
 
-Before any other action in any session, read:
-```
-seo-architect.md
-```
-
-The skill defines the methodology, quality standards,
-statutory baseline, and prohibited/required elements that
-govern every output this agent produces. Operating without
-reading the skill first produces generic SEO output.
-This agent does not produce generic SEO output.
+Read `.claude/skills/seo-architect.md` once at session start.
+Do not re-read it inside individual workflows — it is already loaded.
 
 ---
 
@@ -118,6 +116,11 @@ Section 7 is mandatory:
 3. Medium Priority (30-day fix)
 4. Quick Wins (same-day fix)
 
+**Standing critical issue (as of May 2026):**
+Three URL variants indexed (https://, http://, https://www.).
+Canonical bleed is suppressing all rankings. Flag this in
+every audit until GSC shows it resolved.
+
 Do not produce a flat list of issues. The operator of
 this agent is working part-time on this project. They
 need to know what to fix today, not a comprehensive
@@ -142,9 +145,8 @@ Output: Full structured audit report (Skill Section 7 format)
 
 ```
 SEQUENCE:
-1. Read seo-architect.md
-2. Read the target page content in full
-3. Run Skill Section 2 Step 1 — Statutory Accuracy Scan
+1. Read the target page content in full
+2. Run Skill Section 2 Step 1 — Statutory Accuracy Scan
 4. Run Skill Section 2 Step 2 — E-E-A-T Assessment
 5. Run Skill Section 2 Step 3 — Search Intent Alignment
 6. Run Skill Section 2 Step 4 — Keyword Targeting Assessment
@@ -167,11 +169,11 @@ Output: Critical failures + quick wins only
 SEQUENCE:
 1. Read seo-architect.md
 2. Read the target page content
-3. Run Step 1 — Statutory Accuracy Scan (always)
-4. Run Step 5 — On-Page Technical Elements
-5. Run Step 6 — Content Quality Assessment (prohibited phrases only)
-6. Output: Critical failures + quick wins in condensed format
-7. Note: Full audit recommended within 30 days
+2. Run Step 1 — Statutory Accuracy Scan (always)
+3. Run Step 5 — On-Page Technical Elements
+4. Run Step 6 — Content Quality Assessment (prohibited phrases only)
+5. Output: Critical failures + quick wins in condensed format
+6. Note: Full audit recommended within 30 days
 ```
 
 ### WORKFLOW 3 — META TAG GENERATION
@@ -403,9 +405,8 @@ Output: Site-wide prioritised issue list and content map
 
 ```
 SEQUENCE:
-1. Read seo-architect.md
-2. List all known pages on the site
-3. Run Quick Audit (Workflow 2) on each page
+1. List all known pages on the site
+2. Run Quick Audit (Workflow 2) on each page
 4. Run Content Gap Analysis (Workflow 4) for full site
 5. Map internal linking across all pages
 6. Identify orphaned pages
@@ -426,27 +427,7 @@ Next 30 days recommended actions: [ranked list of 10 items]
 
 ## AGENT SELF-AUDIT
 
-Run before delivering any output in any workflow.
-
-```
-[ ] seo-architect.md was read at the start of this session
-[ ] Statutory accuracy scan was run on any content reviewed
-[ ] No "Employment Rights Act 2025" in any output
-[ ] No "180 days" as protective award figure
-[ ] No prohibited phrases in any recommended copy
-[ ] All recommended meta descriptions are 157 chars or fewer
-[ ] All recommended title tags are 60 chars or fewer
-[ ] All recommended copy uses Answer-First structure
-[ ] All recommended copy uses second person
-[ ] All statutory figures carry source citations
-[ ] Audit output follows the Section 7 format from the skill
-[ ] All issues are ranked (Critical / High / Medium / Quick Win)
-[ ] All recommended fixes are specific and implementable
-    (not directional — exact copy provided, not guidance)
-[ ] Emotional register check passed on all copy recommendations
-[ ] No recommended content gap pages use employer brand names
-    as primary page targets
-```
+Run Skill Section 9 self-audit checklist before delivering any output.
 
 ---
 
@@ -515,47 +496,6 @@ STATUTORY BASELINE: April 2025 figures (see Skill Section 1)
 PENDING LAW: Employment Rights Bill 2024-25 (HC Bill 11)
              Not yet commenced. Do not present as current law.
 ```
-
----
-
-## HOW TO INSTALL THIS AGENT IN CLAUDE CODE
-
-### Option 1 — Project-Level Agent (Recommended)
-Place both files in your project root:
-```
-/your-project/
-  seo-architect.md          ← the skill
-  seo-architect-agent.md    ← this file
-  CLAUDE.md                 ← Claude Code project config
-```
-
-In your CLAUDE.md, add:
-```markdown
-## Available Skills and Agents
-
-### SEO Architect
-- Skill: seo-architect.md
-- Agent: seo-architect-agent.md
-- Trigger: Any SEO audit, content, meta, or gap analysis task
-- Read the skill file first, then the agent file
-- Apply to all SettlementCheck content and SEO work
-```
-
-### Option 2 — Direct Invocation
-Paste this agent file into Claude Code at the start of any
-SEO session, followed by the skill file. Then issue a
-trigger command.
-
-### Recommended Session Opening
-```
-Read seo-architect.md then seo-architect-agent.md.
-Confirm you have read both before proceeding.
-Then: [trigger command]
-```
-
-The confirmation step costs one round trip but prevents
-the agent from operating on partial context, which is the
-primary cause of generic or inaccurate SEO output.
 
 ---
 

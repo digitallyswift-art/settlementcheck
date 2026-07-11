@@ -180,6 +180,10 @@ export default function ConstructiveDismissalCalculatorPage() {
         statutoryRows={statutoryRows}
         pageLinks={[
           {
+            href: '/guides/constructive-dismissal-settlement-agreements',
+            label: 'Constructive dismissal settlement agreements guide',
+          },
+          {
             href: '/guides/what-is-a-fair-settlement-agreement',
             label: 'What is a fair settlement agreement?',
           },

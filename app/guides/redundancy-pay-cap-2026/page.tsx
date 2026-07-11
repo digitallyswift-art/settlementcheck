@@ -20,6 +20,12 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Redundancy Pay Cap 2026: £751 Weekly Limit Explained | SettlementCheck',
+    description:
+      'The redundancy pay cap in 2026 is £751 per week in Great Britain (SI 2026/310). See how it affects your calculation, worked examples, and what to do if your employer gets it wrong.',
+  },
 }
 
 const FAQS = [
@@ -56,12 +62,26 @@ const articleSchema = {
   '@type': 'Article',
   headline: 'Redundancy Pay Cap 2026: How the £751 Weekly Limit Affects Your Statutory Entitlement',
   url: 'https://settlementcheck.co.uk/guides/redundancy-pay-cap-2026/',
+  image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-05-21',
   dateModified: '2026-05-21',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'SettlementCheck',
     url: 'https://settlementcheck.co.uk',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://settlementcheck.co.uk/logo.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/redundancy-pay-cap-2026/',
   },
 }
 
@@ -105,7 +125,7 @@ export default function RedundancyPayCapGuide() {
               The redundancy weekly pay cap is £751 in 2026. Here is exactly how it limits your statutory entitlement and what to do if your employer gets it wrong.
             </h1>
             <p className="sc-lead">
-              From 6 April 2026, statutory redundancy pay is calculated using a maximum weekly pay figure of £751 in Great Britain (SI 2026/310, ERA 1996 s.227). If your actual salary is higher, the formula uses £751 regardless. This guide explains how that cap works, shows worked examples with the numbers, and tells you how to check whether your employer has applied it correctly.
+              From 6 April 2026, statutory redundancy pay is calculated using a maximum weekly pay figure of £751 in Great Britain <sup>1</sup> (as set by SI 2026/310 <sup>1</sup> and ERA 1996 s.227 <sup>1</sup>). If your actual salary is higher, the formula uses £751 regardless. This guide explains how that cap works, shows worked examples with the numbers, and tells you how to check whether your employer has applied it correctly.
             </p>
           </div>
         </section>
@@ -116,16 +136,24 @@ export default function RedundancyPayCapGuide() {
             <div className="rounded-xl border border-rule bg-white p-5">
               <p className="text-sm font-semibold text-ink mb-3">Key facts for 2026</p>
               <ul className="flex flex-col gap-3">
-                {[
-                  'The weekly pay cap is £751 (Great Britain) and £783 (Northern Ireland) from 6 April 2026.',
-                  'The maximum statutory redundancy pay is £22,530, reached only at 20 years service with the highest age multiplier.',
-                  'The cap limits the statutory formula only. It does not cap what your employer can offer in a settlement agreement.',
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <CheckIcon />
-                    <span className="sc-body text-sm">{item}</span>
-                  </li>
-                ))}
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <span className="sc-body text-sm">
+                    The weekly pay cap is £751 (Great Britain) <sup>1</sup> and £783 (Northern Ireland) <sup>2</sup> from 6 April 2026.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <span className="sc-body text-sm">
+                    The maximum statutory redundancy pay is £22,530 <sup>3</sup>, reached only at 20 years service with the highest age multiplier.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <span className="sc-body text-sm">
+                    The cap limits the statutory formula only. It does not cap what your employer can offer in a settlement agreement.
+                  </span>
+                </li>
               </ul>
             </div>
           </div>
@@ -139,7 +167,7 @@ export default function RedundancyPayCapGuide() {
               The redundancy pay cap is a statutory maximum. It limits the weekly pay figure used in the redundancy calculation, regardless of what you actually earn. If you earn £1,200 per week, the formula uses £751. If you earn £500 per week, the formula uses £500. The cap only bites when your pay exceeds it.
             </p>
             <p className="sc-body mb-4">
-              The cap applies in England, Scotland, and Wales. Northern Ireland has its own separate cap, currently £783 per week (SR 2026/57). The figures are set by the Employment Rights Act 1996 s.227 and change every April by government order (Statutory Instrument). The 2026 cap is set by SI 2026/310, which came into force on 6 April 2026.
+              The cap applies in England, Scotland, and Wales. Northern Ireland has its own separate cap, currently £783 per week <sup>2</sup>. The figures are set by the Employment Rights Act 1996 s.227 <sup>1</sup> and change every April by government order (Statutory Instrument). The 2026 cap is set by SI 2026/310 <sup>1</sup>, which came into force on 6 April 2026.
             </p>
             <p className="sc-body">
               The cap increases annually, typically in April, in line with average earnings growth. The 2026 increase of 4.4% (from £719 to £751) reflects wage growth since April 2025. Future changes are usually published in late March for the April implementation date.
@@ -159,16 +187,18 @@ export default function RedundancyPayCapGuide() {
             <div className="rounded-xl border border-rule bg-paper p-5 mb-8">
               <p className="text-sm font-semibold text-ink mb-4">The statutory redundancy formula</p>
               <ol className="flex flex-col gap-4">
-                {[
-                  { n: 1, text: 'Establish your weekly pay (annual salary divided by 52), capped at £751 from 6 April 2026.' },
-                  { n: 2, text: 'Apply the age multiplier: 0.5 weeks per year (under 22), 1 week per year (22 to 40), 1.5 weeks per year (41 and over).' },
-                  { n: 3, text: 'Multiply by your complete years of qualifying service, up to a maximum of 20 years (ERA 1996 s.162).' },
-                ].map(({ n, text }) => (
-                  <li key={n} className="flex items-start gap-4">
-                    <span className="w-6 h-6 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
-                    <span className="sc-body text-sm">{text}</span>
-                  </li>
-                ))}
+                <li className="flex items-start gap-4">
+                  <span className="w-6 h-6 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                  <span className="sc-body text-sm">Establish your weekly pay (annual salary divided by 52), capped at £751 from 6 April 2026 <sup>1</sup>.</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="w-6 h-6 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                  <span className="sc-body text-sm">Apply the age multiplier: 0.5 weeks per year (under 22), 1 week per year (22 to 40), 1.5 weeks per year (41 and over).</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span className="w-6 h-6 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                  <span className="sc-body text-sm">Multiply by your complete years of qualifying service, up to a maximum of 20 years <sup>3</sup>.</span>
+                </li>
               </ol>
             </div>
 
@@ -274,24 +304,60 @@ export default function RedundancyPayCapGuide() {
               The cap limits the weekly pay figure, but what is included in "weekly pay" is frequently misunderstood. Employers sometimes get this wrong.
             </p>
             <div className="flex flex-col gap-4">
-              {[
-                { label: 'Gross weekly pay', included: true, detail: 'Take your annual salary and divide by 52. Use gross pay before tax and National Insurance, not take-home.' },
-                { label: 'Guaranteed overtime', included: true, detail: 'Include overtime only if it is contractually guaranteed. Voluntary or occasional overtime is excluded.' },
-                { label: 'Contractual bonuses and commission', included: true, detail: 'Include if the bonus or commission is contractual and regular. A discretionary annual bonus is excluded; a guaranteed quarterly commission is included.' },
-                { label: 'Variable hours', included: true, detail: 'If your pay or hours fluctuate, use the average weekly pay over the 12 weeks before redundancy (ERA 1996 ss.221-224).' },
-                { label: 'Employer pension contributions', included: false, detail: 'What your employer pays into your pension does not count. Only salary is used.' },
-                { label: 'Benefits in kind', included: false, detail: 'Company car, private health insurance, gym membership, and other non-cash benefits are excluded.' },
-              ].map(({ label, included, detail }) => (
-                <div key={label} className="flex items-start gap-4 rounded-xl border border-rule p-4">
-                  <div className={`text-xs font-semibold px-2 py-1 rounded flex-shrink-0 mt-0.5 ${included ? 'bg-ink text-white' : 'bg-paper text-muted'}`}>
-                    {included ? 'Included' : 'Excluded'}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-ink mb-0.5">{label}</p>
-                    <p className="sc-body text-sm text-muted">{detail}</p>
-                  </div>
+              <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
+                <div className="text-xs font-semibold px-2 py-1 rounded flex-shrink-0 mt-0.5 bg-ink text-white">
+                  Included
                 </div>
-              ))}
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-0.5">Gross weekly pay</p>
+                  <p className="sc-body text-sm text-muted">Take your annual salary and divide by 52. Use gross pay before tax and National Insurance, not take-home.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
+                <div className="text-xs font-semibold px-2 py-1 rounded flex-shrink-0 mt-0.5 bg-ink text-white">
+                  Included
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-0.5">Guaranteed overtime</p>
+                  <p className="sc-body text-sm text-muted">Include overtime only if it is contractually guaranteed. Voluntary or occasional overtime is excluded.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
+                <div className="text-xs font-semibold px-2 py-1 rounded flex-shrink-0 mt-0.5 bg-ink text-white">
+                  Included
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-0.5">Contractual bonuses and commission</p>
+                  <p className="sc-body text-sm text-muted">Include if the bonus or commission is contractual and regular. A discretionary annual bonus is excluded; a guaranteed quarterly commission is included.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
+                <div className="text-xs font-semibold px-2 py-1 rounded flex-shrink-0 mt-0.5 bg-ink text-white">
+                  Included
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-0.5">Variable hours</p>
+                  <p className="sc-body text-sm text-muted">If your pay or hours fluctuate, use the average weekly pay over the 12 weeks before redundancy <sup>5</sup>.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
+                <div className="text-xs font-semibold px-2 py-1 rounded flex-shrink-0 mt-0.5 bg-paper text-muted">
+                  Excluded
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-0.5">Employer pension contributions</p>
+                  <p className="sc-body text-sm text-muted">What your employer pays into your pension does not count. Only salary is used.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
+                <div className="text-xs font-semibold px-2 py-1 rounded flex-shrink-0 mt-0.5 bg-paper text-muted">
+                  Excluded
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-0.5">Benefits in kind</p>
+                  <p className="sc-body text-sm text-muted">Company car, private health insurance, gym membership, and other non-cash benefits are excluded.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -304,10 +370,10 @@ export default function RedundancyPayCapGuide() {
               The weekly pay cap applies only to the statutory redundancy formula. It does not limit what your employer can offer in a settlement agreement, and it does not affect notice pay or holiday pay.
             </p>
             <p className="sc-body mb-4">
-              A settlement agreement typically has three financial components: statutory redundancy pay (capped by the formula), notice pay or PILON (always taxed as earnings under ITEPA 2003 s.402D), and accrued holiday pay. These are separate. The cap touches only the first.
+              A settlement agreement typically has three financial components: statutory redundancy pay (capped by the formula), notice pay or PILON (always taxed as earnings under Section 402D of the Income Tax (Earnings and Pensions) Act 2003 <sup>6</sup>), and accrued holiday pay. These are separate. The cap touches only the first.
             </p>
             <p className="sc-body mb-4">
-              Your employer may also offer an ex-gratia payment on top of the statutory entitlement to secure a settlement. If your statutory figure is £8,000, the employer might offer £14,000 total. The cap does not prevent this. Any ex-gratia amount combined with statutory redundancy is tax-free up to £30,000 under ITEPA 2003 s.403 (PILON excluded).
+              Your employer may also offer an ex-gratia payment on top of the statutory entitlement to secure a settlement. If your statutory figure is £8,000, the employer might offer £14,000 total. The cap does not prevent this. Any ex-gratia amount combined with statutory redundancy is tax-free up to £30,000 under Section 403 of the Income Tax (Earnings and Pensions) Act 2003 <sup>4</sup> (PILON excluded).
             </p>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
@@ -326,20 +392,34 @@ export default function RedundancyPayCapGuide() {
               Errors happen. Common mistakes include miscounting years of service, misapplying the age multiplier, or using net pay instead of gross pay. Here is what to do.
             </p>
             <ol className="flex flex-col gap-6">
-              {[
-                { n: 1, title: 'Calculate your correct figure', body: 'Apply the formula: (weekly pay capped at £751) x (age multiplier) x (years of service, max 20). Use your gross pay. Write it down.' },
-                { n: 2, title: 'Check your payslip', body: 'Verify the redundancy payment shown on your final payslip against your calculation. If the number is lower, proceed.' },
-                { n: 3, title: 'Raise it formally in writing', body: 'Email your employer\'s HR or payroll team with your calculation, the correct figure, and a citation to ERA 1996 s.227. Request correction within 7 days.' },
-                { n: 4, title: 'Bring a tribunal claim if they refuse', body: 'If the employer does not respond or refuses, you can bring a claim in the Employment Tribunal for unlawful deduction of wages. The time limit is 3 months from the date of underpayment. A tribunal can award the unpaid amount plus interest.' },
-              ].map(({ n, title, body }) => (
-                <li key={n} className="flex gap-4">
-                  <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
-                  <div>
-                    <p className="text-sm font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
-                  </div>
-                </li>
-              ))}
+              <li className="flex gap-4">
+                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Calculate your correct figure</p>
+                  <p className="sc-body text-sm">Apply the formula: (weekly pay capped at £751) x (age multiplier) x (years of service, max 20). Use your gross pay. Write it down.</p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Check your payslip</p>
+                  <p className="sc-body text-sm">Verify the redundancy payment shown on your final payslip against your calculation. If the number is lower, proceed.</p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Raise it formally in writing</p>
+                  <p className="sc-body text-sm">Email your employer's HR or payroll team with your calculation, the correct figure, and a citation to Section 227 of the Employment Rights Act 1996 <sup>1</sup>. Request correction within 7 days.</p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Bring a tribunal claim if they refuse</p>
+                  <p className="sc-body text-sm">If the employer does not respond or refuses, you can bring a claim in the Employment Tribunal for unlawful deduction of wages. The time limit is 3 months from the date of underpayment. A tribunal can award the unpaid amount plus interest.</p>
+                </div>
+              </li>
             </ol>
           </div>
         </section>
@@ -378,6 +458,45 @@ export default function RedundancyPayCapGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+          </div>
+        </section>
+
+        {/* References */}
+        <section className="py-12 bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">References and Legislation</h3>
+            <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/227" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 227 (as amended by SI 2026/310)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/nisr/2026/57/contents/made" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  The Employment Rights (Increase of Limits) Order (Northern Ireland) 2026 (SR 2026/57)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/162" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 162
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/403" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Income Tax (Earnings and Pensions) Act 2003, Section 403
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/221" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Sections 221-224 (Calculation of a week's pay)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/402D" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Income Tax (Earnings and Pensions) Act 2003, Section 402D
+                </a>
+              </li>
+            </ol>
           </div>
         </section>
       </main>
