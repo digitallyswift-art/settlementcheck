@@ -5,26 +5,27 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
-  title: 'Redundancy Pay Cap 2026: £751 Weekly Limit Explained | SettlementCheck',
+  metadataBase: new URL('https://settlementcheck.co.uk'),
+  title: 'Redundancy Pay Cap 2026 | £751 Weekly Limit | SettlementCheck',
   description:
-    'The redundancy pay cap in 2026 is £751 per week in Great Britain (SI 2026/310). See how it affects your calculation, worked examples, and what to do if your employer gets it wrong.',
+    'Check the UK redundancy pay cap for 2026 (£751/week limit). Find calculations, worked examples, and what to do if your employer got it wrong. No email.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/redundancy-pay-cap-2026/',
+    canonical: '/guides/redundancy-pay-cap-2026/',
   },
   openGraph: {
-    title: 'Redundancy Pay Cap 2026: £751 Weekly Limit Explained | SettlementCheck',
+    title: 'Redundancy Pay Cap 2026 | £751 Weekly Limit | SettlementCheck',
     description:
-      'The redundancy pay cap in 2026 is £751 per week in Great Britain (SI 2026/310). See how it affects your calculation, worked examples, and what to do if your employer gets it wrong.',
-    url: 'https://settlementcheck.co.uk/guides/redundancy-pay-cap-2026/',
+      'Check the UK redundancy pay cap for 2026 (£751/week limit). Find calculations, worked examples, and what to do if your employer got it wrong. No email.',
+    url: '/guides/redundancy-pay-cap-2026/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Redundancy Pay Cap 2026: £751 Weekly Limit Explained | SettlementCheck',
+    title: 'Redundancy Pay Cap 2026 | £751 Weekly Limit | SettlementCheck',
     description:
-      'The redundancy pay cap in 2026 is £751 per week in Great Britain (SI 2026/310). See how it affects your calculation, worked examples, and what to do if your employer gets it wrong.',
+      'Check the UK redundancy pay cap for 2026 (£751/week limit). Find calculations, worked examples, and what to do if your employer got it wrong. No email.',
   },
 }
 
@@ -124,8 +125,15 @@ export default function RedundancyPayCapGuide() {
             <h1 className="sc-h1 mb-5">
               The redundancy weekly pay cap is £751 in 2026. Here is exactly how it limits your statutory entitlement and what to do if your employer gets it wrong.
             </h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
+              <span>Written by SettlementCheck Editorial Team</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Last reviewed: July 2026</span>
+            </div>
             <p className="sc-lead">
-              From 6 April 2026, statutory redundancy pay is calculated using a maximum weekly pay figure of £751 in Great Britain <sup>1</sup> (as set by SI 2026/310 <sup>1</sup> and ERA 1996 s.227 <sup>1</sup>). If your actual salary is higher, the formula uses £751 regardless. This guide explains how that cap works, shows worked examples with the numbers, and tells you how to check whether your employer has applied it correctly.
+              From 6 April 2026, statutory redundancy pay is calculated using a maximum weekly pay figure of £751 in Great Britain <sup>1</sup> (as set by SI 2026/310 <sup>1</sup> and ERA 1996 s.227 <sup>1</sup>). If you earn more than this, your entitlement is capped. Here is how the cap works, worked examples, and what to do if your employer gets it wrong.
             </p>
           </div>
         </section>
@@ -162,12 +170,15 @@ export default function RedundancyPayCapGuide() {
         {/* What the cap is */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What the redundancy pay cap is and why it exists</h2>
+            <h2 className="sc-section-h2 mb-4">What is the redundancy pay cap for 2026?</h2>
+            <div className="sc-body mb-6 bg-paper p-5 rounded-xl border border-rule">
+              From 6 April 2026, the statutory redundancy weekly pay cap is <strong>£751</strong> in Great Britain (England, Scotland, and Wales) and <strong>£783</strong> in Northern Ireland. This cap limits the weekly pay figure used to calculate your statutory redundancy entitlement under Section 227 of the Employment Rights Act 1996 <sup>1</sup>.
+            </div>
             <p className="sc-body mb-4">
               The redundancy pay cap is a statutory maximum. It limits the weekly pay figure used in the redundancy calculation, regardless of what you actually earn. If you earn £1,200 per week, the formula uses £751. If you earn £500 per week, the formula uses £500. The cap only bites when your pay exceeds it.
             </p>
             <p className="sc-body mb-4">
-              The cap applies in England, Scotland, and Wales. Northern Ireland has its own separate cap, currently £783 per week <sup>2</sup>. The figures are set by the Employment Rights Act 1996 s.227 <sup>1</sup> and change every April by government order (Statutory Instrument). The 2026 cap is set by SI 2026/310 <sup>1</sup>, which came into force on 6 April 2026.
+              The figures change every April by government order (Statutory Instrument). The 2026 cap in Great Britain is set by SI 2026/310 <sup>1</sup>, which came into force on 6 April 2026, while Northern Ireland's separate limit is set by SR 2026/57 <sup>2</sup>.
             </p>
             <p className="sc-body">
               The cap increases annually, typically in April, in line with average earnings growth. The 2026 increase of 4.4% (from £719 to £751) reflects wage growth since April 2025. Future changes are usually published in late March for the April implementation date.
@@ -370,10 +381,10 @@ export default function RedundancyPayCapGuide() {
               The weekly pay cap applies only to the statutory redundancy formula. It does not limit what your employer can offer in a settlement agreement, and it does not affect notice pay or holiday pay.
             </p>
             <p className="sc-body mb-4">
-              A settlement agreement typically has three financial components: statutory redundancy pay (capped by the formula), notice pay or PILON (always taxed as earnings under Section 402D of the Income Tax (Earnings and Pensions) Act 2003 <sup>6</sup>), and accrued holiday pay. These are separate. The cap touches only the first.
+              A settlement agreement typically has three financial components: statutory redundancy pay (capped by the formula), notice pay or <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON</Link> (Payment in Lieu of Notice, which is always fully taxable as earnings under Section 402D of ITEPA 2003 <sup>6</sup>), and accrued holiday pay. These are separate. The cap touches only the first.
             </p>
             <p className="sc-body mb-4">
-              Your employer may also offer an ex-gratia payment on top of the statutory entitlement to secure a settlement. If your statutory figure is £8,000, the employer might offer £14,000 total. The cap does not prevent this. Any ex-gratia amount combined with statutory redundancy is tax-free up to £30,000 under Section 403 of the Income Tax (Earnings and Pensions) Act 2003 <sup>4</sup> (PILON excluded).
+              Your employer may also offer an ex-gratia payment on top of the statutory entitlement to secure a settlement. If your statutory figure is £8,000, the employer might offer £14,000 total. The cap does not prevent this. Any redundancy or ex-gratia payment is <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">tax-free up to £30,000</Link> under Section 403 of ITEPA 2003 <sup>4</sup> (notice pay is excluded).
             </p>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
@@ -417,7 +428,7 @@ export default function RedundancyPayCapGuide() {
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
                 <div>
                   <p className="text-sm font-semibold text-ink mb-1">Bring a tribunal claim if they refuse</p>
-                  <p className="sc-body text-sm">If the employer does not respond or refuses, you can bring a claim in the Employment Tribunal for unlawful deduction of wages. The time limit is 3 months from the date of underpayment. A tribunal can award the unpaid amount plus interest.</p>
+                  <p className="sc-body text-sm">If the employer does not respond or refuses, you can bring a claim in the <Link href="/guides/settlement-agreement-vs-tribunal-claim/" className="underline hover:text-ink">Employment Tribunal</Link> for unlawful deduction of wages. The time limit is 3 months from the date of underpayment. A tribunal can award the unpaid amount plus interest.</p>
                 </div>
               </li>
             </ol>
