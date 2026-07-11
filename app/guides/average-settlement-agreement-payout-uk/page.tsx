@@ -5,17 +5,18 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Average Settlement Agreement Payout UK 2026 | SettlementCheck',
   description:
-    'What is the average settlement agreement payout in the UK? Learn about typical ranges, redundancy pay caps, notice pay rules, and how to value your offer in 2026.',
+    'Free UK settlement agreement payout guide. Typical ranges (£5,000-£25,000) and 2026 redundancy pay caps (£751/wk). No email. See if your offer is fair.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/',
+    canonical: '/guides/average-settlement-agreement-payout-uk/',
   },
   openGraph: {
     title: 'Average Settlement Agreement Payout UK 2026 | SettlementCheck',
     description:
-      'What is the average settlement agreement payout in the UK? Learn about typical ranges, redundancy pay caps, notice pay rules, and how to value your offer in 2026.',
-    url: 'https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/',
+      'Free UK settlement agreement payout guide. Typical ranges (£5,000-£25,000) and 2026 redundancy pay caps (£751/wk). No email. See if your offer is fair.',
+    url: '/guides/average-settlement-agreement-payout-uk/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Average Settlement Agreement Payout UK 2026 | SettlementCheck',
     description:
-      'What is the average settlement agreement payout in the UK? Learn about typical ranges, redundancy pay caps, notice pay rules, and how to value your offer in 2026.',
+      'Free UK settlement agreement payout guide. Typical ranges (£5,000-£25,000) and 2026 redundancy pay caps (£751/wk). No email. See if your offer is fair.',
   },
 }
 
@@ -62,12 +63,26 @@ const articleSchema = {
   '@type': 'Article',
   headline: 'Average Settlement Agreement Payout UK 2026: What is a Normal Offer?',
   url: 'https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/',
+  image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-05-26',
-  dateModified: '2026-05-26',
+  dateModified: '2026-07-11',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'SettlementCheck',
     url: 'https://settlementcheck.co.uk',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://settlementcheck.co.uk/logo.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/',
   },
 }
 
@@ -108,17 +123,18 @@ export default function AveragePayoutGuide() {
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Settlement Agreements</p>
             <h1 className="sc-h1 mb-5">
-              Average Settlement Agreement Payouts UK 2026: What is a Normal Offer?
+              The average settlement agreement payout in the UK is £5,000 to £25,000. Here is how to check if your offer is fair in 2026.
             </h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
+              <span>Written by SettlementCheck Editorial Team</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Last reviewed: July 2026</span>
+            </div>
             <p className="sc-lead">
               In 2026, the average UK settlement agreement payout typically falls between £5,000 and £25,000. Under UK employment regulations, your statutory redundancy pay is calculated against a weekly pay cap of £751 in Great Britain <sup>1</sup> (£783 in Northern Ireland <sup>2</sup>). Most fair settlement offers represent 1.5x to 4x of your statutory minimum entitlement. If your employer offers only the statutory minimum, they are paying nothing extra to buy out your right to make a tribunal claim.
             </p>
-            <div className="mt-6 rounded-xl border border-rule bg-white p-4 flex gap-3">
-              <InfoIcon />
-              <p className="text-sm text-ink font-medium">
-                Figures on this page reflect the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310) <sup>1</sup>, in force from 6 April 2026. Last reviewed: May 2026.
-              </p>
-            </div>
           </div>
         </section>
 
@@ -148,10 +164,11 @@ export default function AveragePayoutGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Typical Settlement Payouts by Scenario</h2>
             <p className="sc-body mb-6">
-              Settlement payouts depend heavily on the reason for your departure and the strength of any potential legal claims. The table below outlines typical ranges observed in 2026.
+              Settlement payouts depend heavily on the reason for your departure and the strength of any potential legal claims. For unfair dismissal scenarios, the legal maximum compensation is capped at £123,543 <sup>5</sup> or one year&apos;s gross salary. The table below outlines typical ranges observed in 2026.
             </p>
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
+                <caption className="sr-only">Average settlement agreement payouts by scenario UK 2026</caption>
                 <thead>
                   <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Departure Scenario</th>
@@ -200,19 +217,19 @@ export default function AveragePayoutGuide() {
               <div className="border-l-2 border-coral pl-4 py-1">
                 <strong className="text-ink block text-[16px]">1. Ex-Gratia Payment (Tax-Free Uplift)</strong>
                 <span className="text-muted text-[15px]">
-                  This is the core negotiating component. It is a discretionary payment from your employer to compensate for the loss of your job. Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003, the first £30,000 of redundancy or ex-gratia compensation is paid tax-free <sup>3</sup>.
+                  This is the core negotiating component. It is a discretionary payment from your employer to compensate for the loss of your job. Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003, the first £30,000 of redundancy or ex-gratia compensation is <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">paid tax-free up to £30,000</Link> <sup>3</sup>.
                 </span>
               </div>
               <div className="border-l-2 border-coral pl-4 py-1">
                 <strong className="text-ink block text-[16px]">2. Pay in Lieu of Notice (PILON)</strong>
                 <span className="text-muted text-[15px]">
-                  Notice pay is subject to tax. Whether you work your notice period or receive it as a lump sum, it remains fully taxable as earnings under Section 402D of the Income Tax (Earnings and Pensions) Act 2003 <sup>4</sup>.
+                  Notice pay is subject to tax. Whether you work your notice period or receive it as a lump sum, it remains fully taxable as earnings under Section 402D of the Income Tax (Earnings and Pensions) Act 2003 <sup>4</sup> (see our <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax guide</Link>).
                 </span>
               </div>
               <div className="border-l-2 border-coral pl-4 py-1">
                 <strong className="text-ink block text-[16px]">3. Statutory Redundancy Pay</strong>
                 <span className="text-muted text-[15px]">
-                  If your role is redundant, you are entitled to statutory redundancy pay. The formula applies 0.5 weeks of pay per year under age 22, 1 week per year aged 22 to 40, and 1.5 weeks per year aged 41 and over, capped at 20 years. The weekly pay is capped at £751 in Great Britain <sup>1</sup> (£783 in Northern Ireland <sup>2</sup>), making the maximum statutory redundancy award £22,530.
+                  If your role is redundant, you are entitled to statutory redundancy pay under Section 119 of the Employment Rights Act 1996 <sup>7</sup>. The formula applies 0.5 weeks of pay per year under age 22, 1 week per year aged 22 to 40, and 1.5 weeks per year aged 41 and over, capped at 20 years. The weekly pay is capped at <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">£751 in Great Britain</Link> <sup>1</sup> (£783 in Northern Ireland <sup>2</sup>), making the maximum statutory redundancy award £22,530.
                 </span>
               </div>
               <div className="border-l-2 border-coral pl-4 py-1">
@@ -329,6 +346,14 @@ export default function AveragePayoutGuide() {
                 </a>
               </li>
             </ol>
+          </div>
+        </section>
+        {/* Disclaimer */}
+        <section className="py-6 border-b border-rule bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <p className="sc-body text-xs text-muted leading-relaxed">
+              Disclaimer: SettlementCheck is an independent introduction service and calculator, not a law firm. The information on this page is for general guidance only and does not constitute formal legal or tax advice. Confirm your specific offer using our free calculator.
+            </p>
           </div>
         </section>
       </main>

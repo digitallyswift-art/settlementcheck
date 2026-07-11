@@ -5,17 +5,18 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Protective Award Redundancy Claims 2026 | SettlementCheck',
   description:
     'A protective award is tribunal compensation of up to 90 days\' gross pay for collective redundancy consultation failures. Learn how to claim in 2026.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/protective-award/',
+    canonical: '/guides/protective-award/',
   },
   openGraph: {
     title: 'Protective Award Redundancy Claims 2026 | SettlementCheck',
     description:
       'A protective award is tribunal compensation of up to 90 days\' gross pay for collective redundancy consultation failures. Learn how to claim in 2026.',
-    url: 'https://settlementcheck.co.uk/guides/protective-award/',
+    url: '/guides/protective-award/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -60,14 +61,28 @@ const faqSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'What Is a Protective Award and How Do You Claim It in 2026?',
+  headline: 'Protective Award Redundancy Claims in 2026: Up to 90 Days\' Pay for Failure to Consult',
   url: 'https://settlementcheck.co.uk/guides/protective-award/',
+  image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-05-23',
-  dateModified: '2026-05-23',
+  dateModified: '2026-07-11',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'SettlementCheck',
     url: 'https://settlementcheck.co.uk',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://settlementcheck.co.uk/logo.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/protective-award/',
   },
 }
 
@@ -118,17 +133,18 @@ export default function ProtectiveAwardGuide() {
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Redundancy Rights</p>
             <h1 className="sc-h1 mb-5">
-              What Is a Protective Award and How Do You Claim It in 2026?
+              Protective Award Redundancy Claims in 2026: Up to 90 Days&apos; Pay for Failure to Consult
             </h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
+              <span>Written by SettlementCheck Editorial Team</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Last reviewed: July 2026</span>
+            </div>
             <p className="sc-lead">
               A protective award is tribunal compensation of up to 90 days&apos; gross pay for collective redundancy consultation failures. Under Section 189 of the Trade Union and Labour Relations (Consolidation) Act 1992 <sup>1</sup>, you can claim this if your employer fails to consult you before making 20 or more redundancies. This guide explains how the award is calculated and how you can claim.
             </p>
-            <div className="mt-6 rounded-xl border border-rule bg-white p-4 flex gap-3">
-              <InfoIcon />
-              <p className="text-sm text-ink font-medium">
-                Figures on this page reflect the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310) <sup>2</sup>, in force from 6 April 2026. Last reviewed: May 2026.
-              </p>
-            </div>
           </div>
         </section>
 
@@ -157,8 +173,11 @@ export default function ProtectiveAwardGuide() {
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">What Is a Protective Award?</h2>
+            <div className="sc-body mb-6 bg-paper p-5 rounded-xl border border-rule font-medium">
+              A protective award is compensation of up to 90 days&apos; actual gross pay ordered by an Employment Tribunal when an employer fails to consult collectively before making 20 or more employees redundant. It is claimed under Section 189 of the Trade Union and Labour Relations (Consolidation) Act 1992 <sup>1</sup> and is separate from statutory redundancy pay.
+            </div>
             <p className="sc-body mb-4">
-              When an employer plans to make 20 or more employees redundant at one location within a 90-day period, they have a statutory duty to consult collectively. Under Section 188 of the Trade Union and Labour Relations (Consolidation) Act 1992 <sup>3</sup>, they must consult with recognized trade unions or elected employee representatives.
+              When your employer proposes 20 or more redundancies at one establishment within a 90-day period, they have a statutory duty to consult collectively. Under Section 188 of the Act <sup>3</sup>, they must consult with recognized trade unions or elected employee representatives.
             </p>
             <p className="sc-body mb-4">
               This collective consultation must start at least 30 days before the first dismissal (if proposing 20 to 99 redundancies) or 45 days (if proposing 100 or more redundancies).
@@ -195,7 +214,7 @@ export default function ProtectiveAwardGuide() {
                     [
                       'Insolvent (Bust)',
                       'Paid by the Insolvency Service. Subject to statutory limits.',
-                      'Capped at a maximum of 8 weeks of pay <sup>4</sup> at £751 per week in GB <sup>2</sup> (£783 in NI <sup>5</sup>).',
+                      'Capped at a maximum of 8 weeks of pay <sup>4</sup> at <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">£751 per week</Link> in GB <sup>2</sup> (£783 in NI <sup>5</sup>).',
                     ],
                   ].map(([status, rule, limit], i) => (
                     <tr key={status} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
@@ -255,7 +274,7 @@ export default function ProtectiveAwardGuide() {
                     'Your gross weekly pay is £1,000. Your employer goes bust and enters administration, failing to consult.',
                     'The tribunal awards a 90-day protective award. You must claim this from the Insolvency Service.',
                     'The Insolvency Service caps the payment at a maximum of 8 weeks of pay.',
-                    'The calculation uses the statutory weekly cap of £751 (Great Britain rate).',
+                    'The calculation uses the statutory weekly cap of <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">£751</Link> (Great Britain rate).',
                     'You receive a payment of £6,008 (8 weeks × £751) from the Insolvency Service. The remaining balance of the award can be registered as an unsecured debt, though recovery is rare.',
                   ],
                 },
@@ -302,7 +321,7 @@ export default function ProtectiveAwardGuide() {
                 {
                   n: 4,
                   title: 'Submit your Employment Tribunal claim (ET1)',
-                  body: 'If conciliation does not resolve the issue, you must submit a claim form (ET1) to the employment tribunal within the statutory time limit.',
+                  body: 'If conciliation does not resolve the issue, you must submit a claim form (ET1) to the <Link href="/guides/settlement-agreement-vs-tribunal-claim/" className="underline hover:text-ink">employment tribunal</Link> within the statutory time limit.',
                 },
                 {
                   n: 5,
@@ -338,7 +357,7 @@ export default function ProtectiveAwardGuide() {
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
               <p className="sc-body text-sm">
-                If you have been offered a redundancy package, you can <Link href="/calculator" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> using our free tool to find out where you stand.
+                If you have been offered a redundancy package, you can <Link href="/redundancy-calculator" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> using our free tool to find out where you stand.
               </p>
             </div>
           </div>
@@ -351,7 +370,7 @@ export default function ProtectiveAwardGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Calculate your statutory baseline under 2026 rates. Free, instant results, and no email required.
             </p>
-            <Link href="/calculator" className="btn-accent">
+            <Link href="/redundancy-calculator" className="btn-accent">
               Check my offer
             </Link>
           </div>
@@ -403,6 +422,10 @@ export default function ProtectiveAwardGuide() {
             </ol>
           </div>
         </section>
+        {/* Disclaimer */}
+        <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+          Disclaimer: SettlementCheck is an independent introduction service and calculator, not a law firm. The information on this page is for general guidance only and does not constitute formal legal counsel. Confirm your specific offer using our free calculator.
+        </p>
       </main>
       <Footer />
     </>

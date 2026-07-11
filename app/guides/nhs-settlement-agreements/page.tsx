@@ -5,22 +5,23 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
-  title: 'NHS Settlement Agreements 2026 | Special Severance Rules | SettlementCheck',
+  metadataBase: new URL('https://settlementcheck.co.uk'),
+  title: 'NHS Settlement Agreements 2026 | Rules | SettlementCheck',
   description: 'NHS settlement agreements and Special Severance Payments in 2026. How HM Treasury approvals work, the £100,000 threshold, and your whistleblowing rights.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/nhs-settlement-agreements/',
+    canonical: '/guides/nhs-settlement-agreements/',
   },
   openGraph: {
-    title: 'NHS Settlement Agreements 2026 | Special Severance Rules | SettlementCheck',
+    title: 'NHS Settlement Agreements 2026 | Rules | SettlementCheck',
     description: 'NHS settlement agreements and Special Severance Payments in 2026. How HM Treasury approvals work, the £100,000 threshold, and your whistleblowing rights.',
-    url: 'https://settlementcheck.co.uk/guides/nhs-settlement-agreements/',
+    url: '/guides/nhs-settlement-agreements/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NHS Settlement Agreements 2026 | Special Severance Rules | SettlementCheck',
+    title: 'NHS Settlement Agreements 2026 | Rules | SettlementCheck',
     description: 'NHS settlement agreements and Special Severance Payments in 2026. How HM Treasury approvals work, the £100,000 threshold, and your whistleblowing rights.',
   },
 }
@@ -58,6 +59,34 @@ const faqSchema = {
   })),
 }
 
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'NHS Settlement Agreements: Special Severance Payments',
+  url: 'https://settlementcheck.co.uk/guides/nhs-settlement-agreements/',
+  image: ['https://settlementcheck.co.uk/og-image.png'],
+  datePublished: '2026-07-11',
+  dateModified: '2026-07-11',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://settlementcheck.co.uk/logo.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/nhs-settlement-agreements/',
+  },
+}
+
 function CheckIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-coral flex-shrink-0 mt-0.5">
@@ -93,6 +122,10 @@ export default function NhsSettlementAgreements() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <Nav />
       <main>
         {/* Hero */}
@@ -108,8 +141,15 @@ export default function NhsSettlementAgreements() {
             <h1 className="sc-h1 mb-6">
               NHS Settlement Agreements: Special Severance Payments
             </h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
+              <span>Written by SettlementCheck Editorial Team</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Guidance active for 2026</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Last reviewed: July 2026</span>
+            </div>
             <p className="sc-lead">
-              If you work for the NHS and have been offered a settlement agreement, your exit package is subject to strict public sector rules. Understanding these regulations is essential to ensure your agreement is approved without delay.
+              In 2026, NHS settlement agreements containing Special Severance Payments <sup>1</sup>—amounts exceeding statutory or contractual entitlements—must be approved by HM Treasury. Exit packages of £100,000 or more, or for staff earning over £150,000, require Ministerial approval <sup>2</sup>. Under Section 43J of the Employment Rights Act 1996 <sup>3</sup>, these agreements cannot restrict your right to whistleblow or raise patient safety concerns.
             </p>
           </div>
         </section>
@@ -143,33 +183,33 @@ export default function NhsSettlementAgreements() {
 
             {/* Section 1 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">1. What is a Special Severance Payment?</h2>
+              <h2 className="guide-h2 text-[24px]">What is a Special Severance Payment?</h2>
+              <div className="sc-body mb-6 bg-paper p-5 rounded-xl border border-rule">
+                A <strong>Special Severance Payment (SSP)</strong> is any payment made to a departing public sector employee that exceeds their statutory or contractual entitlements <sup>1</sup>. In the NHS, this includes ex-gratia sums, discretionary notice pay, and voluntary exits, all of which require HM Treasury approval.
+              </div>
               <p className="guide-body">
-                A settlement agreement often includes a financial sum to compensate you for the termination of your employment. In the public sector, any payment exceeding your contractual or statutory entitlement is a Special Severance Payment.
-              </p>
-              <p className="guide-body">
-                These payments are scrutinised because they involve public funds. Common examples include ex-gratia payments and compensation in lieu of notice where no contractual clause exists. They also include voluntary exit payments that exceed standard guidelines.
+                These payments are scrutinised because they involve public funds. Common examples include ex-gratia payments and compensation in lieu of notice (often referred to as <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON</Link>, which is taxable under Section 402D of ITEPA 2003) where no contractual clause exists. They also include voluntary exit payments that exceed standard guidelines.
               </p>
 
               <div className="bg-[#FFF8F6] border border-coral/20 rounded-lg p-5 mt-2 flex items-start gap-3">
                 <InfoIcon />
                 <p className="text-[14px] text-ink leading-relaxed">
-                  <strong>What is excluded:</strong> Statutory redundancy pay and contractual redundancy pay are not Special Severance Payments. Payments ordered by an employment tribunal are also excluded. They do not require the same Treasury approval.
+                  <strong>What is excluded:</strong> <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">Statutory redundancy pay</Link> and contractual redundancy pay are not Special Severance Payments. Payments ordered by an employment tribunal are also excluded. They do not require the same Treasury approval.
                 </p>
               </div>
             </div>
 
             {/* Section 2 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">2. Why NHS settlement agreements require approval</h2>
+              <h2 className="guide-h2 text-[24px]">Why NHS settlement agreements require approval</h2>
               <p className="guide-body">
                 NHS organisations operate under strict financial controls. Other public bodies can approve minor severance payments. NHS employers do not have this flexibility.
               </p>
               <p className="guide-body">
-                Every Special Severance Payment proposed by an NHS trust or foundation trust must be submitted for external approval. The business case must be reviewed by the Department of Health and Social Care and NHS England. It is then sent to HM Treasury for final sign-off.
+                Every Special Severance Payment proposed by an NHS trust or foundation trust must be submitted for external approval. The business case must be reviewed by the Department of Health and Social Care and NHS England. It is then sent to HM Treasury for final sign-off <sup>2</sup>.
               </p>
               <p className="guide-body">
-                Because of this multi-stage review, NHS settlement agreements can take several weeks or even months to finalise. Your employer must demonstrate that the payment represents value for money. They must also show they explored other options to resolve the dispute.
+                Because of this multi-stage review, NHS settlement agreements can take several weeks or even months to finalise. Your employer must demonstrate that the payment represents value for money. They must also show they explored other options to resolve the dispute before offering a settlement.
               </p>
             </div>
 
@@ -191,57 +231,69 @@ export default function NhsSettlementAgreements() {
 
             {/* Section 4 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">3. Confidentiality and whistleblowing rights</h2>
+              <h2 className="guide-h2 text-[24px]">Confidentiality and whistleblowing rights in NHS exits</h2>
               <p className="guide-body">
                 It is common for NHS settlement agreements to contain confidentiality clauses. These are sometimes called non-disclosure or compromise clauses. They usually prevent you from discussing the terms of the agreement or the circumstances of your departure.
               </p>
               <p className="guide-body">
-                However, the law protects your right to speak out on certain matters. Your agreement cannot prevent you from making a protected disclosure, which is the legal term for whistleblowing. You retain the right to report patient safety issues, criminal activity, or breaches of legal obligations.
+                However, the law protects your right to speak out on certain matters. Your agreement cannot prevent you from making a protected disclosure, which is the legal term for whistleblowing. You retain the right to report patient safety issues, criminal activity, or breaches of legal obligations under Section 43J of the Employment Rights Act 1996 <sup>3</sup>.
               </p>
 
               <div className="bg-[#FFF8F6] border border-coral/20 rounded-lg p-5 flex items-start gap-3">
                 <AlertIcon />
                 <p className="text-[14px] text-ink leading-relaxed">
-                  <strong>Silencing is unlawful:</strong> Any clause in a settlement agreement that attempts to stop you from whistleblowing is legally void. NHS employers are instructed that confidentiality clauses must never silence staff who raise safety concerns.
+                  <strong>Silencing is unlawful:</strong> Any clause in a settlement agreement that attempts to stop you from whistleblowing is legally void <sup>3</sup>. NHS employers are instructed that confidentiality clauses must never silence staff who raise safety concerns.
                 </p>
               </div>
             </div>
 
             {/* Section 5 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">4. Legal fees and choosing your own solicitor</h2>
+              <h2 className="guide-h2 text-[24px]">Legal fees and choosing your own solicitor</h2>
               <p className="guide-body">
-                To make a settlement agreement legally binding, you must receive independent legal advice. The solicitor advising you must confirm their advice in writing.
+                To make a settlement agreement legally binding, you must receive independent legal advice <sup>4</sup>. The solicitor advising you must confirm their advice in writing.
               </p>
               <p className="guide-body">
                 Your NHS employer will normally make a financial contribution toward your legal fees. The standard contribution is between £350 and £750. In most straightforward cases, this contribution covers the full cost of the legal review.
               </p>
               <p className="guide-body">
-                You have the right to choose your own independent solicitor. Your employer may suggest a firm, but you are not required to use them. Choosing a specialist employment solicitor ensures your interests are fully protected.
+                You have the right to choose your own independent solicitor. Your employer may suggest a firm, but you are not required to use them. Choosing a specialist employment solicitor ensures your interests are fully protected. You can read more about how this works in our guide to <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-ink">employer-recommended solicitors</Link>.
               </p>
             </div>
 
             {/* Section 6 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">5. How to proceed if offered an NHS settlement</h2>
+              <h2 className="guide-h2 text-[24px]">How to proceed if offered an NHS settlement</h2>
               <p className="guide-body">
                 If you receive a draft settlement agreement from an NHS employer, do not sign it immediately. Take the following steps to protect your position:
               </p>
 
-              <div className="space-y-4 mt-2">
-                <div className="border-l-2 border-coral pl-4 py-1">
-                  <strong className="text-ink block text-[16px]">Ask your employer to explain the figures</strong>
-                  <span className="text-muted text-[15px]">Find out if they have submitted the case for Treasury approval. Clarify when the Treasury case was submitted and how long the approval is expected to take.</span>
-                </div>
-                <div className="border-l-2 border-coral pl-4 py-1">
-                  <strong className="text-ink block text-[16px]">Review your employment contract</strong>
-                  <span className="text-muted text-[15px]">Check your notice period and redundancy terms to ensure the offer meets your contractual entitlements.</span>
-                </div>
-                <div className="border-l-2 border-coral pl-4 py-1">
-                  <strong className="text-ink block text-[16px]">Instruct an independent solicitor</strong>
-                  <span className="text-muted text-[15px]">Find a solicitor who specialises in NHS employment contracts and public sector exits. They will ensure your interests are fully represented.</span>
-                </div>
-              </div>
+              <ol className="list-decimal pl-5 space-y-4 mt-4">
+                <li className="pl-1">
+                  <strong className="text-ink text-[16px] block mb-0.5">Verify the figures</strong>
+                  <span className="text-muted text-[15px] block leading-relaxed">
+                    Check if the offer meets your contract and statutory redundancy entitlements using our <Link href="/redundancy-calculator" className="underline hover:text-ink">redundancy calculator</Link>.
+                  </span>
+                </li>
+                <li className="pl-1">
+                  <strong className="text-ink text-[16px] block mb-0.5">Ask about Treasury approval</strong>
+                  <span className="text-muted text-[15px] block leading-relaxed">
+                    Confirm whether your employer has submitted the exit case for HM Treasury approval and clarify the expected timeline.
+                  </span>
+                </li>
+                <li className="pl-1">
+                  <strong className="text-ink text-[16px] block mb-0.5">Instruct an independent solicitor</strong>
+                  <span className="text-muted text-[15px] block leading-relaxed">
+                    Choose a solicitor specialising in public sector exits to ensure your interests are represented.
+                  </span>
+                </li>
+                <li className="pl-1">
+                  <strong className="text-ink text-[16px] block mb-0.5">Do not sign prematurely</strong>
+                  <span className="text-muted text-[15px] block leading-relaxed">
+                    Wait for final HM Treasury approval before executing the agreement to prevent delays or invalidation.
+                  </span>
+                </li>
+              </ol>
             </div>
 
             {/* CTA */}
@@ -252,7 +304,7 @@ export default function NhsSettlementAgreements() {
               <p className="text-white/70 text-sm leading-relaxed mb-6">
                 Free calculator. Vetted solicitor matched within 24 hours. Your employer pays the fees.
               </p>
-              <Link href="/calculator" className="btn-accent">
+              <Link href="/redundancy-calculator" className="btn-accent">
                 Check my offer →
               </Link>
             </div>
@@ -264,6 +316,33 @@ export default function NhsSettlementAgreements() {
                 <FaqAccordion faqs={FAQS} />
               </div>
             </div>
+
+            {/* References */}
+            <section className="border-t border-rule pt-6 bg-paper px-5 py-4 rounded-xl mt-8">
+              <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">References and Legislation</h3>
+              <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
+                <li>
+                  <a href="https://www.gov.uk/government/publications/public-sector-exit-payments-guidance" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                    HM Treasury: Guidance on Public Sector Exit Payments (including Special Severance Payments)
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.gov.uk/government/publications/managing-public-money" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                    HM Treasury: Managing Public Money, Annex 4.13 (Special Payments)
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/43J" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                    Employment Rights Act 1996, Section 43J (Protected disclosures)
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/203" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                    Employment Rights Act 1996, Section 203 (Restrictions on contracting out)
+                  </a>
+                </li>
+              </ol>
+            </section>
 
             {/* Disclaimer */}
             <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed">

@@ -5,20 +5,27 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
-  title: 'Tax on Settlement Agreements: The £30,000 Exemption Rule Explained',
+  metadataBase: new URL('https://settlementcheck.co.uk'),
+  title: 'Tax-Free Settlement 2026 | £30k Rule | SettlementCheck',
   description:
-    'The first £30,000 of a settlement agreement is tax-free under ITEPA 2003 s.403. Learn which payments qualify, how the excess is taxed, and what to check in 2026.',
+    'Free UK settlement agreement tax guide. First £30,000 is tax-free. Learn which payments qualify, how the excess is taxed, and check your offer. No email.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/tax-free-settlement-30000/',
+    canonical: '/guides/tax-free-settlement-30000/',
   },
   openGraph: {
-    title: 'Tax on Settlement Agreements: The £30,000 Exemption Rule Explained',
+    title: 'Tax-Free Settlement 2026 | £30k Rule | SettlementCheck',
     description:
-      'The first £30,000 of a settlement agreement is tax-free under ITEPA 2003 s.403. Learn which payments qualify, how the excess is taxed, and what to check in 2026.',
-    url: 'https://settlementcheck.co.uk/guides/tax-free-settlement-30000/',
+      'Free UK settlement agreement tax guide. First £30,000 is tax-free. Learn which payments qualify, how the excess is taxed, and check your offer. No email.',
+    url: '/guides/tax-free-settlement-30000/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tax-Free Settlement 2026 | £30k Rule | SettlementCheck',
+    description:
+      'Free UK settlement agreement tax guide. First £30,000 is tax-free. Learn which payments qualify, how the excess is taxed, and check your offer. No email.',
   },
 }
 
@@ -54,14 +61,28 @@ const faqSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Tax on Settlement Agreements: The £30,000 Exemption Rule Explained',
+  headline: 'The first £30,000 of your settlement agreement is tax-free in 2026',
   url: 'https://settlementcheck.co.uk/guides/tax-free-settlement-30000/',
+  image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-05-24',
-  dateModified: '2026-05-24',
+  dateModified: '2026-07-11',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'SettlementCheck',
     url: 'https://settlementcheck.co.uk',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://settlementcheck.co.uk/logo.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/tax-free-settlement-30000/',
   },
 }
 
@@ -104,6 +125,13 @@ export default function TaxFreeSettlementGuide() {
             <h1 className="sc-h1 mb-5">
               The first £30,000 of your settlement agreement is tax-free in 2026. Here is how the exemption works and what is taxable.
             </h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
+              <span>Written by SettlementCheck Editorial Team</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Last reviewed: July 2026</span>
+            </div>
             <p className="sc-lead">
               From 6 April 2026, the first £30,000 of a settlement agreement is tax-free in the UK. This rule comes from Section 403 of the Income Tax (Earnings and Pensions) Act 2003 ¹. The exemption applies to statutory redundancy pay, ex-gratia compensation, and occupational redundancy. Notice pay, holiday pay, and salary are fully taxable. Use this guide to see how the limit applies to your offer.
             </p>
@@ -157,17 +185,30 @@ export default function TaxFreeSettlementGuide() {
             <div className="rounded-xl border border-rule bg-paper p-5 mb-8">
               <p className="text-sm font-semibold text-ink mb-4">Qualifying tax-free payments</p>
               <ul className="flex flex-col gap-3">
-                {[
-                  'Statutory redundancy pay (which is capped at £22,530 in Great Britain ²).',
-                  'Ex-gratia payments, which are discretionary payments to compensate for losing your job.',
-                  'Damages for unfair dismissal or breach of contract.',
-                  'Injury to feelings payments, provided the discrimination occurred before your termination ³.',
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <CheckIcon />
-                    <span className="sc-body text-sm">{item}</span>
-                  </li>
-                ))}
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <span className="sc-body text-sm">
+                    Statutory redundancy pay (capped at £22,530 in Great Britain ², see our <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">2026 cap guide</Link>).
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <span className="sc-body text-sm">
+                    Ex-gratia payments, which are discretionary payments to compensate for losing your job.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <span className="sc-body text-sm">
+                    Damages for <Link href="/unfair-dismissal-calculator" className="underline hover:text-ink">unfair dismissal</Link> or breach of contract.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <span className="sc-body text-sm">
+                    Injury to feelings payments, provided the discrimination occurred before your termination ³.
+                  </span>
+                </li>
               </ul>
             </div>
             <p className="sc-body mb-4">
@@ -185,6 +226,7 @@ export default function TaxFreeSettlementGuide() {
             </p>
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
+                <caption className="sr-only">Tax Treatment of Settlement Agreement Components 2026</caption>
                 <thead>
                   <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Component</th>
@@ -196,7 +238,7 @@ export default function TaxFreeSettlementGuide() {
                 <tbody>
                   {[
                     [
-                      'Statutory Redundancy',
+                      <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">Statutory Redundancy</Link>,
                       'Tax-free up to £30,000',
                       'No employee NICs. Employer Class 1A on excess over £30,000.',
                       'ITEPA 2003 s.403 ¹',
@@ -208,7 +250,7 @@ export default function TaxFreeSettlementGuide() {
                       'ITEPA 2003 s.403 ¹',
                     ],
                     [
-                      'PILON (Notice Pay)',
+                      <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON (Notice Pay)</Link>,
                       'Fully taxable as earnings',
                       'Fully taxable for both employee and employer.',
                       'ITEPA 2003 s.402D ⁴',
@@ -238,7 +280,7 @@ export default function TaxFreeSettlementGuide() {
                       'ITEPA 2003 s.406 ⁶',
                     ],
                   ].map(([component, tax, ni, basis], i) => (
-                    <tr key={component} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
+                    <tr key={i} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
                       <td className="px-4 py-3 text-ink font-medium">{component}</td>
                       <td className="px-4 py-3 text-ink">{tax}</td>
                       <td className="px-4 py-3 text-ink">{ni}</td>
@@ -277,7 +319,7 @@ export default function TaxFreeSettlementGuide() {
                     'You receive a statutory redundancy payment of £12,000 and an ex-gratia payment of £25,000. The total is £37,000.',
                     'The first £30,000 is paid tax-free. The remaining £7,000 is subject to income tax.',
                     'Your employer deducts income tax from the £7,000 excess. You pay no employee National Insurance on the £37,000.',
-                    'Your employer must pay Class 1A National Insurance on the £7,000 excess ³.',
+                    'Your employer must pay Class 1A National Insurance on the £7,000 excess.',
                   ],
                 },
                 {
@@ -381,7 +423,7 @@ export default function TaxFreeSettlementGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Verify your statutory redundancy entitlement and calculate how much of your settlement is tax-free.
             </p>
-            <Link href="/calculator" className="btn-accent">
+            <Link href="/redundancy-calculator" className="btn-accent">
               Check my offer
             </Link>
           </div>
@@ -431,6 +473,14 @@ export default function TaxFreeSettlementGuide() {
                 </a>
               </li>
             </ol>
+          </div>
+        </section>
+        {/* Disclaimer */}
+        <section className="py-6 border-b border-rule bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <p className="sc-body text-xs text-muted leading-relaxed">
+              Disclaimer: Tax calculations on this page are statutory estimates based on 2026/27 HMRC rates. They do not constitute formal legal or tax advice. Confirm your specific offer using our free calculator.
+            </p>
           </div>
         </section>
       </main>

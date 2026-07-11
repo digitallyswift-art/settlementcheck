@@ -5,20 +5,27 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
-  title: 'Constructive Dismissal Settlement Agreements UK (2026 Rules)',
+  metadataBase: new URL('https://settlementcheck.co.uk'),
+  title: 'Constructive Dismissal Settlements 2026 | SettlementCheck',
   description:
-    'Learn about constructive dismissal settlement agreements in the UK. Understand 2026 statutory rates, the £30,000 tax-free rule, and how to assess your offer.',
+    'Free UK constructive dismissal settlement guide. Check 2026 compensation caps (weekly cap £751, max £123,543). No email. Instant fair offer evaluation.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/constructive-dismissal-settlement-agreements/',
+    canonical: '/guides/constructive-dismissal-settlement-agreements/',
   },
   openGraph: {
-    title: 'Constructive Dismissal Settlement Agreements UK (2026 Rules)',
+    title: 'Constructive Dismissal Settlements 2026 | SettlementCheck',
     description:
-      'Learn about constructive dismissal settlement agreements in the UK. Understand 2026 statutory rates, the £30,000 tax-free rule, and how to assess your offer.',
-    url: 'https://settlementcheck.co.uk/guides/constructive-dismissal-settlement-agreements/',
+      'Free UK constructive dismissal settlement guide. Check 2026 compensation caps (weekly cap £751, max £123,543). No email. Instant fair offer evaluation.',
+    url: '/guides/constructive-dismissal-settlement-agreements/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Constructive Dismissal Settlements 2026 | SettlementCheck',
+    description:
+      'Free UK constructive dismissal settlement guide. Check 2026 compensation caps (weekly cap £751, max £123,543). No email. Instant fair offer evaluation.',
   },
 }
 
@@ -56,12 +63,26 @@ const articleSchema = {
   '@type': 'Article',
   headline: 'Constructive Dismissal Settlement Agreements UK (2026 Rules)',
   url: 'https://settlementcheck.co.uk/guides/constructive-dismissal-settlement-agreements/',
+  image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-06-25',
-  dateModified: '2026-06-25',
+  dateModified: '2026-07-11',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'SettlementCheck',
     url: 'https://settlementcheck.co.uk',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://settlementcheck.co.uk/logo.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/constructive-dismissal-settlement-agreements/',
   },
 }
 
@@ -104,8 +125,15 @@ export default function ConstructiveDismissalGuide() {
             <h1 className="sc-h1 mb-5">
               Constructive Dismissal Settlement Agreements in the UK: Rules and Compensation Limits for 2026
             </h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
+              <span>Written by SettlementCheck Editorial Team</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Last reviewed: July 2026</span>
+            </div>
             <p className="sc-lead">
-              If you resign because of your employer's conduct, you may have a constructive dismissal case. Rather than going through a public employment tribunal, many employees resolve these disputes through a settlement agreement. This guide explains how constructive dismissal settlement agreements work in the UK. It covers the legal requirements, the 2026 statutory compensation caps, and how the tax rules apply to your payment.
+              If you resign because of your employer's conduct, you may have a constructive dismissal case. Rather than going through a private employment tribunal, many employees resolve these disputes through a settlement agreement. This guide explains how constructive dismissal settlement agreements work in the UK. It covers the legal requirements, the 2026 statutory compensation caps, and how the tax rules apply to your payment.
             </p>
           </div>
         </section>
@@ -136,8 +164,8 @@ export default function ConstructiveDismissalGuide() {
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">What is constructive dismissal?</h2>
-            <p className="sc-body mb-4">
-              Constructive dismissal occurs when you resign because your employer has breached a fundamental term of your employment contract. This breach must be serious.
+            <p className="sc-body mb-6 bg-paper p-5 rounded-xl border border-rule">
+              Constructive dismissal occurs when you resign from your job because your employer has committed a fundamental breach of your employment contract. To claim constructive dismissal, the employer&apos;s conduct must be serious enough to force you to leave, and you must resign promptly without accepting or waiving the breach.
             </p>
             <p className="sc-body mb-6">
               Common examples of a fundamental breach include:
@@ -168,7 +196,7 @@ export default function ConstructiveDismissalGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">The two-year qualifying service rule</h2>
             <p className="sc-body mb-4">
-              To raise a constructive dismissal case or negotiate a settlement, you must meet the service requirement. Under Section 108(1) of the Employment Rights Act 1996, you need two years of continuous service.
+              To raise a constructive dismissal case or negotiate a settlement, you must meet the service requirement. Under Section 108(1) of the Employment Rights Act 1996, you need two years of continuous service <sup>1</sup>.
             </p>
             <p className="sc-body mb-4">
               If you have under two years of service, you generally cannot negotiate a settlement.
@@ -209,7 +237,7 @@ export default function ConstructiveDismissalGuide() {
             </p>
             <h3 className="text-sm font-semibold text-ink mt-6 mb-3">The Basic Award</h3>
             <p className="sc-body mb-4">
-              The basic award is a statutory calculation based on your age, length of service, and weekly pay. For calculations after 6 April 2026, the statutory weekly pay cap is £751 (SI 2026/310).
+              The basic award is a statutory calculation based on your age, length of service, and weekly pay. For calculations after 6 April 2026, the statutory weekly pay cap is £751 (SI 2026/310) <sup>2</sup>.
             </p>
             <p className="sc-body mb-4">
               The basic award calculation is:
@@ -220,14 +248,14 @@ export default function ConstructiveDismissalGuide() {
               <li>0.5 weeks of pay for each year of service completed under the age of 21.</li>
             </ul>
             <p className="sc-body mb-6">
-              The maximum service counted is 20 years. This means the maximum basic award in 2026 is £22,530.
+              The maximum service counted is 20 years. This means the maximum basic award in 2026 is £22,530 <sup>2</sup>.
             </p>
             <h3 className="text-sm font-semibold text-ink mt-6 mb-3">The Compensatory Award</h3>
             <p className="sc-body mb-4">
               The compensatory award is designed to cover your actual financial losses, such as lost salary and pension contributions.
             </p>
             <p className="sc-body mb-6">
-              Under Section 124 of the Employment Rights Act 1996 and SI 2026/310, the compensatory award is capped at the lower of:
+              Under Section 124 of the Employment Rights Act 1996 and SI 2026/310, the compensatory award is capped at the lower of <sup>2</sup>:
             </p>
             <ul className="list-disc pl-5 sc-body mb-6 space-y-1">
               <li>£123,543.</li>
@@ -239,6 +267,7 @@ export default function ConstructiveDismissalGuide() {
 
             <div className="rounded-xl border border-rule overflow-hidden mt-8">
               <table className="w-full text-sm">
+                <caption className="sr-only">Constructive dismissal compensation limits and statutory awards for 2026/27, sourced from the Employment Rights Act 1996 and SI 2026/310.</caption>
                 <thead>
                   <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Award Type</th>
@@ -274,17 +303,17 @@ export default function ConstructiveDismissalGuide() {
             </p>
             <h3 className="text-sm font-semibold text-ink mt-6 mb-3">The £30,000 Tax-Free Exemption</h3>
             <p className="sc-body mb-4">
-              Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003, the first £30,000 is tax-free. This exemption applies to genuine compensation for the loss of your employment, such as ex-gratia payments.
+              Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003, the first £30,000 is tax-free <sup>3</sup>. This exemption applies to genuine compensation for the loss of your employment, such as ex-gratia payments.
             </p>
             <p className="sc-body mb-4">
-              If your compensation is under £30,000, you will pay no income tax on it. If it is over £30,000, you pay income tax only on the amount that exceeds the threshold. You pay no employee National Insurance contributions on this compensation, even if it is over £30,000.
+              If your compensation is under £30,000, you will pay no income tax on it. If it is over £30,000, you pay income tax only on the amount that exceeds the threshold. You pay no employee National Insurance contributions on this compensation, even if it is over £30,000. You can read more in our guide to <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">tax-free settlements</Link>.
             </p>
             <h3 className="text-sm font-semibold text-ink mt-6 mb-3">Pay in Lieu of Notice (PILON)</h3>
             <p className="sc-body mb-4">
-              Pay in lieu of notice is fully taxable. Under Section 402D of the Income Tax (Earnings and Pensions) Act 2003, notice pay is treated as earnings.
+              Pay in lieu of notice is fully taxable <sup>4</sup>. Under Section 402D of the Income Tax (Earnings and Pensions) Act 2003, notice pay is treated as earnings.
             </p>
             <p className="sc-body mb-4">
-              Your employer must deduct income tax and National Insurance contributions from your notice pay. This is true even if the total settlement is under £30,000.
+              Your employer must deduct income tax and National Insurance contributions from your notice pay. This is true even if the total settlement is under £30,000. You can read more about this in our <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax guide</Link>.
             </p>
             <h3 className="text-sm font-semibold text-ink mt-6 mb-3">Legal Fees Contribution</h3>
             <p className="sc-body mb-4">
@@ -343,7 +372,7 @@ export default function ConstructiveDismissalGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Receiving independent legal advice</h2>
             <p className="sc-body mb-4">
-              You must receive independent legal advice to make a settlement agreement legally binding. This is a statutory requirement under Section 203 of the Employment Rights Act 1996.
+              You must receive independent legal advice to make a settlement agreement legally binding. This is a statutory requirement under Section 203 of the Employment Rights Act 1996 <sup>5</sup>. Before signing, you should check our advice on how to <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">negotiate a settlement agreement</Link>.
             </p>
             <p className="sc-body mb-4">
               The advice must come from a qualified solicitor or a certified adviser. They must be independent of your employer. They explain the terms of the agreement and their effect on your ability to bring future tribunal cases.
@@ -417,6 +446,10 @@ export default function ConstructiveDismissalGuide() {
             </ol>
           </div>
         </section>
+        {/* Disclaimer */}
+        <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+          Disclaimer: SettlementCheck is an independent introduction service and calculator, not a law firm. The information on this page is for general guidance only and does not constitute formal legal counsel. Confirm your specific offer using our free calculator.
+        </p>
       </main>
       <Footer />
     </>

@@ -5,26 +5,27 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
-  title: 'Settlement Agreement vs Employment Tribunal UK 2026',
+  metadataBase: new URL('https://settlementcheck.co.uk'),
+  title: 'Settlement Agreement vs Tribunal 2026 | SettlementCheck',
   description:
-    'Compare a UK settlement agreement vs an employment tribunal claim. Learn about compensation caps, timelines, costs, and key success factors for 2026.',
+    'Compare a UK settlement agreement vs employment tribunal in 2026 (£123,543 cap). Learn about costs, timelines, and payouts. Free check, no email.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-vs-tribunal-claim/',
+    canonical: '/guides/settlement-agreement-vs-tribunal-claim/',
   },
   openGraph: {
-    title: 'Settlement Agreement vs Employment Tribunal UK 2026',
+    title: 'Settlement Agreement vs Tribunal 2026 | SettlementCheck',
     description:
-      'Compare a UK settlement agreement vs an employment tribunal claim. Learn about compensation caps, timelines, costs, and key success factors for 2026.',
-    url: 'https://settlementcheck.co.uk/guides/settlement-agreement-vs-tribunal-claim/',
+      'Compare a UK settlement agreement vs employment tribunal in 2026 (£123,543 cap). Learn about costs, timelines, and payouts. Free check, no email.',
+    url: '/guides/settlement-agreement-vs-tribunal-claim/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Settlement Agreement vs Employment Tribunal UK 2026',
+    title: 'Settlement Agreement vs Tribunal 2026 | SettlementCheck',
     description:
-      'Compare a UK settlement agreement vs an employment tribunal claim. Learn about compensation caps, timelines, costs, and key success factors for 2026.',
+      'Compare a UK settlement agreement vs employment tribunal in 2026 (£123,543 cap). Learn about costs, timelines, and payouts. Free check, no email.',
   },
 }
 
@@ -62,12 +63,26 @@ const articleSchema = {
   '@type': 'Article',
   headline: 'Settlement Agreement vs Employment Tribunal UK 2026: Cost, Time, and Success Rates compared',
   url: 'https://settlementcheck.co.uk/guides/settlement-agreement-vs-tribunal-claim/',
+  image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-05-25',
-  dateModified: '2026-05-25',
+  dateModified: '2026-07-11',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'SettlementCheck',
     url: 'https://settlementcheck.co.uk',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://settlementcheck.co.uk/logo.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/settlement-agreement-vs-tribunal-claim/',
   },
 }
 
@@ -120,15 +135,16 @@ export default function SettlementAgreementVsTribunalGuide() {
             <h1 className="sc-h1 mb-5">
               Settlement Agreement vs Employment Tribunal UK 2026: Cost, Time, and Success Rates compared
             </h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
+              <span>Written by SettlementCheck Editorial Team</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Last reviewed: July 2026</span>
+            </div>
             <p className="sc-lead">
               Under UK employment regulations, a settlement agreement is a private contract that resolves a dispute, whereas an employment tribunal is a public court. In 2026, the statutory cap on unfair dismissal compensatory awards is £123,543, or one year of your gross pay, whichever is lower <sup>1</sup>. The weekly pay cap for calculating statutory redundancy and basic awards is £751 in Great Britain <sup>2</sup> (£783 in Northern Ireland <sup>3</sup>). Rejecting a settlement offer to sue your employer carries risk. Most successful tribunal claims result in awards below these caps, and hearings typically take 12 to 18 months.
             </p>
-            <div className="mt-6 rounded-xl border border-rule bg-white p-4 flex gap-3">
-              <InfoIcon />
-              <p className="text-sm text-ink font-medium">
-                Figures on this page reflect the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310) <sup>1, 2</sup>, in force from 6 April 2026. Last reviewed: May 2026.
-              </p>
-            </div>
           </div>
         </section>
 
@@ -163,6 +179,7 @@ export default function SettlementAgreementVsTribunalGuide() {
             </p>
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
+                <caption className="sr-only">Settlement agreement vs employment tribunal UK 2026 comparison table</caption>
                 <thead>
                   <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Feature</th>
@@ -203,7 +220,7 @@ export default function SettlementAgreementVsTribunalGuide() {
                       'No, dependent on winning the case and employer solvency',
                     ],
                   ].map(([feature, settlement, tribunal], i) => (
-                    <tr key={feature} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
+                    <tr key={i} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
                       <td className="px-4 py-3 text-ink font-medium">{feature}</td>
                       <td className="px-4 py-3 text-ink" dangerouslySetInnerHTML={{ __html: settlement }} />
                       <td className="px-4 py-3 text-ink" dangerouslySetInnerHTML={{ __html: tribunal }} />
@@ -229,7 +246,7 @@ export default function SettlementAgreementVsTribunalGuide() {
               <div className="border-l-2 border-coral pl-4 py-1">
                 <strong className="text-ink block text-[16px]">The Basic Award</strong>
                 <span className="text-muted text-[15px]">
-                  This is calculated using the same statutory formula as redundancy pay. It is based on your age, complete years of service (up to 20 years), and gross weekly salary. The gross weekly salary is capped at £751 in Great Britain <sup>2</sup> (£783 in Northern Ireland <sup>3</sup>). The maximum basic award you can receive is £22,530 <sup>4</sup> (£23,490 in Northern Ireland <sup>5</sup>).
+                  This is calculated using the same statutory formula as <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">statutory redundancy pay</Link>. It is based on your age, complete years of service (up to 20 years), and gross weekly salary. The gross weekly salary is capped at £751 in Great Britain <sup>2</sup> (£783 in Northern Ireland <sup>3</sup>). The maximum basic award you can receive is £22,530 <sup>4</sup> (£23,490 in Northern Ireland <sup>5</sup>).
                 </span>
               </div>
               <div className="border-l-2 border-coral pl-4 py-1">
@@ -248,7 +265,7 @@ export default function SettlementAgreementVsTribunalGuide() {
         {/* Legal Costs and Fees */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4"> Hired Solicitors: Who Pays the Legal Fees?</h2>
+            <h2 className="sc-section-h2 mb-4">Hired Solicitors: Who Pays the Legal Fees?</h2>
             <p className="sc-body mb-4">
               In a settlement agreement, the arrangement is straightforward. Your employer covers the fees for your solicitor to advise you on the terms. This contribution typically ranges from £350 to £750, and the employer pays your solicitor directly.
             </p>
@@ -274,7 +291,7 @@ export default function SettlementAgreementVsTribunalGuide() {
             <div className="rounded-xl border border-rule bg-[#FFF8F6] p-5 flex gap-3">
               <AlertIcon />
               <div className="sc-body text-sm text-ink leading-relaxed">
-                <strong>Statutory limit checklist:</strong> Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003, the first £30,000 of redundancy or ex-gratia compensation is paid tax-free <sup>6</sup>. This applies to both settlement agreements and tribunal awards. However, notice pay remains fully taxable as earnings under Section 402D of the same Act <sup>7</sup>.
+                <strong>Statutory limit checklist:</strong> Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003, the first £30,000 of redundancy or ex-gratia compensation is <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">paid tax-free up to £30,000</Link> <sup>6</sup>. This applies to both settlement agreements and tribunal awards. However, notice pay or PILON remains fully taxable as earnings under Section 402D of the same Act <sup>7</sup> (see our <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax guide</Link>).
               </div>
             </div>
           </div>
@@ -390,6 +407,9 @@ export default function SettlementAgreementVsTribunalGuide() {
                 </a>
               </li>
             </ol>
+            <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
+              <strong>Disclaimer:</strong> SettlementCheck is an independent calculator and guide, not a law firm. The information on this page is for educational purposes only and does not constitute legal advice. While we make every effort to ensure our calculations reflect current statutory limits (such as SI 2026/310), employment disputes are complex. You should consult a qualified solicitor before signing a settlement agreement or initiating tribunal proceedings.
+            </div>
           </div>
         </section>
       </main>

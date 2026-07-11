@@ -5,20 +5,27 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
-  title: 'PILON Tax Treatment UK 2026: Is Notice Pay Tax Free?',
+  metadataBase: new URL('https://settlementcheck.co.uk'),
+  title: 'PILON Tax 2026 | Is Notice Pay Tax Free? | SettlementCheck',
   description:
-    'Pay in Lieu of Notice (PILON) is always fully taxable as earnings under ITEPA 2003 s.402D. It does not qualify for the £30,000 tax-free exemption in 2026.',
+    'Understand PILON tax treatment for 2026. All notice pay is taxable (no £30k exemption). Use our free tool to check your take-home pay. No email.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/pilon-tax-treatment-2026/',
+    canonical: '/guides/pilon-tax-treatment-2026/',
   },
   openGraph: {
-    title: 'PILON Tax Treatment UK 2026: Is Notice Pay Tax Free?',
+    title: 'PILON Tax 2026 | Is Notice Pay Tax Free? | SettlementCheck',
     description:
-      'Pay in Lieu of Notice (PILON) is always fully taxable as earnings under ITEPA 2003 s.402D. It does not qualify for the £30,000 tax-free exemption in 2026.',
-    url: 'https://settlementcheck.co.uk/guides/pilon-tax-treatment-2026/',
+      'Understand PILON tax treatment for 2026. All notice pay is taxable (no £30k exemption). Use our free tool to check your take-home pay. No email.',
+    url: '/guides/pilon-tax-treatment-2026/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PILON Tax 2026 | Is Notice Pay Tax Free? | SettlementCheck',
+    description:
+      'Understand PILON tax treatment for 2026. All notice pay is taxable (no £30k exemption). Use our free tool to check your take-home pay. No email.',
   },
 }
 
@@ -54,14 +61,28 @@ const faqSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'PILON Tax Treatment UK 2026: Is Notice Pay Tax Free?',
+  headline: 'PILON Tax Treatment UK 2026: Pay in Lieu of Notice is Fully Taxable',
   url: 'https://settlementcheck.co.uk/guides/pilon-tax-treatment-2026/',
+  image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-05-23',
-  dateModified: '2026-05-23',
+  dateModified: '2026-07-11',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'SettlementCheck',
     url: 'https://settlementcheck.co.uk',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://settlementcheck.co.uk/logo.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/pilon-tax-treatment-2026/',
   },
 }
 
@@ -102,8 +123,15 @@ export default function PilonTaxTreatmentGuide() {
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Tax Guide</p>
             <h1 className="sc-h1 mb-5">
-              PILON Tax Treatment UK 2026: Is Pay in Lieu of Notice Tax Free?
+              PILON Tax Treatment UK 2026: Pay in Lieu of Notice is Fully Taxable
             </h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
+              <span>Written by SettlementCheck Editorial Team</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
+              <span>Last reviewed: July 2026</span>
+            </div>
             <p className="sc-lead">
               No, Pay in Lieu of Notice (PILON) is not tax-free. Under Section 402D of the Income Tax (Earnings and Pensions) Act 2003 <sup>1</sup>, all notice pay is fully taxable. It does not qualify for the £30,000 tax-free threshold <sup>2</sup>. This rule continues under the April 2026 statutory update <sup>3</sup>. Your employer must deduct tax and National Insurance from your PILON.
             </p>
@@ -134,7 +162,10 @@ export default function PilonTaxTreatmentGuide() {
         {/* How PILON is taxed */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">How PILON is Taxed: The Basics</h2>
+            <h2 className="sc-section-h2 mb-4">Is PILON taxable?</h2>
+            <div className="sc-body mb-6 bg-paper p-5 rounded-xl border border-rule font-medium">
+              Yes, Pay in Lieu of Notice (PILON) is fully taxable in the UK. Under Section 402D of the Income Tax (Earnings and Pensions) Act 2003, all notice pay is treated as general earnings. You must pay income tax and National Insurance on the entire notice payment, and it cannot be paid tax-free.
+            </div>
             <p className="sc-body mb-4">
               Your notice period is the time between being told your job will end and your final day. Sometimes, your employer does not want you to work this period. They can choose to pay you instead. This payment is called Pay in Lieu of Notice, or PILON.
             </p>
@@ -159,7 +190,7 @@ export default function PilonTaxTreatmentGuide() {
             </p>
             <ul className="list-disc pl-5 mb-6 flex flex-col gap-2">
               <li className="sc-body text-sm">
-                Statutory redundancy pay, which is capped at £22,530 in Great Britain <sup>4</sup>.
+                Statutory redundancy pay, which is capped at £22,530 in Great Britain <sup>4</sup> (see our <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">Redundancy Pay Cap Guide</Link>).
               </li>
               <li className="sc-body text-sm">
                 Ex-gratia payments, which are discretionary compensation payments.
@@ -180,6 +211,7 @@ export default function PilonTaxTreatmentGuide() {
             </p>
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
+                <caption className="sr-only">Tax Treatment of Settlement Agreement Components 2026</caption>
                 <thead>
                   <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Component</th>
@@ -195,14 +227,14 @@ export default function PilonTaxTreatmentGuide() {
                       'Taxed as general earnings under Section 402D <sup>1</sup>',
                     ],
                     [
-                      'Statutory Redundancy',
+                      <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">Statutory Redundancy</Link>,
                       'Tax-free up to £30,000 <sup>2</sup>',
                       'Capped at £22,530 in GB <sup>4, 6</sup> and £23,490 in NI <sup>5</sup>',
                     ],
                     [
                       'Ex-Gratia Payment',
                       'Tax-free up to £30,000 <sup>2</sup>',
-                      'Subject to the combined £30,000 limit <sup>2</sup>',
+                      'Subject to the combined £30,000 limit <sup>2</sup> (see <a href="/guides/tax-free-settlement-30000/" class="underline hover:text-ink">Tax-Free Limit Guide</a>)',
                     ],
                     [
                       'Holiday Pay',
@@ -212,7 +244,7 @@ export default function PilonTaxTreatmentGuide() {
                     [
                       'Protective Award',
                       'Tax-free up to £30,000 <sup>2</sup>',
-                      'Compensation capped at 90 days <sup>7</sup>',
+                      'Compensation capped at 90 days <sup>7</sup> (see <a href="/guides/protective-award/" class="underline hover:text-ink">Protective Award Guide</a>)',
                     ],
                     [
                       'Unfair Dismissal Basic Award',
@@ -225,7 +257,7 @@ export default function PilonTaxTreatmentGuide() {
                       'Capped at £123,543 in GB <sup>6</sup> (SI 2026/310 <sup>3</sup>)',
                     ],
                   ].map(([component, treatment, limit], i) => (
-                    <tr key={component} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
+                    <tr key={i} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
                       <td className="px-4 py-3 text-ink font-medium">{component}</td>
                       <td className="px-4 py-3 text-ink">{treatment}</td>
                       <td className="px-4 py-3 text-ink" dangerouslySetInnerHTML={{ __html: limit }} />
@@ -309,7 +341,7 @@ export default function PilonTaxTreatmentGuide() {
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
               <p className="sc-body text-sm">
-                You can <Link href="/calculator" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> to find out where you stand.
+                You can <Link href="/redundancy-calculator" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> to find out where you stand.
               </p>
             </div>
           </div>
@@ -362,6 +394,9 @@ export default function PilonTaxTreatmentGuide() {
                 </li>
               ))}
             </ol>
+            <p className="text-xs text-muted mt-6 italic">
+              Disclaimer: The information on this page is for general guidance only and does not constitute formal legal or tax advice. Legal and tax rules can vary depending on your contract and individual circumstances.
+            </p>
             <p className="sc-body mt-6">
               Remember, your employer covers the fees for your solicitor.
             </p>
@@ -375,7 +410,7 @@ export default function PilonTaxTreatmentGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Enter your details to calculate your statutory baseline and verify how your notice pay is taxed.
             </p>
-            <Link href="/calculator" className="btn-accent">
+            <Link href="/redundancy-calculator" className="btn-accent">
               Check my offer
             </Link>
           </div>
