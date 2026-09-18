@@ -78,6 +78,7 @@ export default function Footer() {
                 { href: '/privacy/', label: 'Privacy policy' },
                 { href: '/terms/', label: 'Terms of use' },
                 { href: '/disclaimer/', label: 'Disclaimer' },
+                { href: '/sitemap/', label: 'HTML Sitemap' },
                 { href: '/sitemap.xml', label: 'XML Sitemap' },
               ].map(l => (
                 <li key={l.href}>
