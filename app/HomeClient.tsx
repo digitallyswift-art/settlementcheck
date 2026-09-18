@@ -86,7 +86,7 @@ export default function HomeClient({
   faqItems,
   steps,
   ctaLabel = 'Check my offer →',
-  ctaHref = '/calculator',
+  ctaHref = '/calculator/',
   howItWorksTitle = 'Three steps. Sixty seconds. Zero cost.',
   howItWorksLead = 'From a quick check to a vetted solicitor on the phone. No cost to you.',
   taxSectionTitle = 'How much tax will you pay on your employment settlement?',

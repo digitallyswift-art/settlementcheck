@@ -3,15 +3,16 @@ import HomeClient from './HomeClient'
 import { getGeneralStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck (Employment)',
   description: 'Free settlement agreement calculator — 2026 rates (£751/week cap). See if your offer is fair, get your net take-home after tax. (Not an immigration or visa status service).',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/',
+    canonical: '/',
   },
   openGraph: {
     title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck (Employment)',
     description: 'Most opening offers have room to move. Net pay after tax calculated instantly — PILON taxed separately from the £30,000 exemption. No email required. (Not an immigration or visa status service).',
-    url: 'https://settlementcheck.co.uk/',
+    url: '/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

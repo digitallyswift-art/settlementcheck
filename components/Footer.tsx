@@ -24,10 +24,10 @@ export default function Footer() {
             <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Calculators</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
-                { href: '/calculator', label: 'Settlement Agreement Calculator' },
-                { href: '/redundancy-calculator', label: 'Redundancy Calculator' },
-                { href: '/unfair-dismissal-calculator', label: 'Unfair Dismissal Calculator' },
-                { href: '/constructive-dismissal-calculator', label: 'Constructive Dismissal Calculator' },
+                { href: '/calculator/', label: 'Settlement Agreement Calculator' },
+                { href: '/redundancy-calculator/', label: 'Redundancy Calculator' },
+                { href: '/unfair-dismissal-calculator/', label: 'Unfair Dismissal Calculator' },
+                { href: '/constructive-dismissal-calculator/', label: 'Constructive Dismissal Calculator' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>
@@ -41,11 +41,11 @@ export default function Footer() {
             <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Guides</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
-                { href: '/guides', label: 'All guides' },
-                { href: '/guides/how-to-negotiate-a-settlement-agreement', label: 'How to negotiate a settlement' },
-                { href: '/guides/employer-recommended-solicitor', label: "Do I have to use my employer's solicitor?" },
-                { href: '/guides/pressured-to-sign', label: 'Pressured to sign quickly?' },
-                { href: '/how-it-works', label: 'How it works' },
+                { href: '/guides/', label: 'All guides' },
+                { href: '/guides/how-to-negotiate-a-settlement-agreement/', label: 'How to negotiate a settlement' },
+                { href: '/guides/employer-recommended-solicitor/', label: "Do I have to use my employer's solicitor?" },
+                { href: '/guides/pressured-to-sign/', label: 'Pressured to sign quickly?' },
+                { href: '/how-it-works/', label: 'How it works' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>
@@ -59,9 +59,9 @@ export default function Footer() {
             <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">For solicitors</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
-                { href: '/for-solicitors', label: 'Join our panel' },
-                { href: '/for-solicitors#how-it-works', label: 'How it works for firms' },
-                { href: '/for-solicitors#contact', label: 'Contact us' },
+                { href: '/for-solicitors/', label: 'Join our panel' },
+                { href: '/for-solicitors/#how-it-works', label: 'How it works for firms' },
+                { href: '/for-solicitors/#contact', label: 'Contact us' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>
@@ -75,9 +75,10 @@ export default function Footer() {
             <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Legal</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
-                { href: '/privacy', label: 'Privacy policy' },
-                { href: '/terms', label: 'Terms of use' },
-                { href: '/disclaimer', label: 'Disclaimer' },
+                { href: '/privacy/', label: 'Privacy policy' },
+                { href: '/terms/', label: 'Terms of use' },
+                { href: '/disclaimer/', label: 'Disclaimer' },
+                { href: '/sitemap.xml', label: 'XML Sitemap' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>

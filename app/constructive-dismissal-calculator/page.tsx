@@ -6,17 +6,18 @@ import type { FaqItem } from '@/components/FaqAccordion'
 import { getConstructiveDismissalStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Constructive Dismissal Calculator 2026 | Forced to Resign? | SettlementCheck (Employment)',
   description:
     'Forced to resign by your employer\'s conduct? Estimate your constructive dismissal settlement using April 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/constructive-dismissal-calculator/',
+    canonical: '/constructive-dismissal-calculator/',
   },
   openGraph: {
     title: 'Constructive Dismissal Calculator 2026 | Forced to Resign? | SettlementCheck (Employment)',
     description:
       'Forced to resign by your employer\'s conduct? Estimate your constructive dismissal settlement using April 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
-    url: 'https://settlementcheck.co.uk/constructive-dismissal-calculator/',
+    url: '/constructive-dismissal-calculator/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

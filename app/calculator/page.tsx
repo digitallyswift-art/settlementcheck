@@ -1,24 +1,30 @@
-'use client'
+import type { Metadata } from 'next'
+import CalculatorClient from './CalculatorClient'
 
-import { useRouter } from 'next/navigation'
-import SteppedCalculator, { CalcPayload } from '@/components/SteppedCalculator'
+export const metadata: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
+  title: 'Free Settlement Agreement Calculator UK 2026 | SettlementCheck',
+  description:
+    'Calculate your employment settlement agreement entitlement in 60 seconds. Instant calculation based on April 2026 UK statutory rates. Free, no email required.',
+  alternates: {
+    canonical: '/calculator/',
+  },
+  openGraph: {
+    title: 'Free Settlement Agreement Calculator UK 2026 | SettlementCheck',
+    description:
+      'Calculate your employment settlement agreement entitlement in 60 seconds. Instant calculation based on April 2026 UK statutory rates. Free, no email required.',
+    url: '/calculator/',
+    type: 'website',
+    locale: 'en_GB',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Settlement Agreement Calculator UK 2026 | SettlementCheck',
+    description:
+      'Calculate your employment settlement agreement entitlement in 60 seconds. Free, no email required.',
+  },
+}
 
 export default function CalculatorPage() {
-  const router = useRouter()
-
-  function handleCalculate(payload: CalcPayload) {
-    const p = new URLSearchParams({
-      salary:            payload.inputs.salary,
-      yearsNum:          payload.inputs.yearsNum,
-      monthsNum:         payload.inputs.monthsNum,
-      age:               payload.inputs.age,
-      offer:             payload.inputs.offer,
-      reason:            payload.inputs.reason,
-      discrimination:    payload.inputs.discrimination,
-      contractualNotice: payload.inputs.contractualNotice,
-    })
-    router.push(`/results?${p.toString()}`)
-  }
-
-  return <SteppedCalculator onCalculate={handleCalculate} />
+  return <CalculatorClient />
 }

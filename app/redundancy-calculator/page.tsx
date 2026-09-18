@@ -6,17 +6,18 @@ import type { FaqItem } from '@/components/FaqAccordion'
 import { getRedundancyStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Redundancy Pay Calculator 2026 | Statutory & Enhanced Pay | SettlementCheck (Employment)',
   description:
     'Calculate your statutory redundancy pay using April 2026 rates. Weekly cap £751 (GB), age multipliers, PILON tax treatment, and £30,000 tax-free limit explained. Free, no email. (Not an immigration or visa status service).',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/redundancy-calculator/',
+    canonical: '/redundancy-calculator/',
   },
   openGraph: {
     title: 'Redundancy Pay Calculator 2026 | Statutory & Enhanced Pay | SettlementCheck (Employment)',
     description:
       'Calculate your statutory redundancy pay using April 2026 rates. Weekly cap £751 (GB), age multipliers, PILON tax treatment, and £30,000 tax-free limit explained. Free, no email. (Not an immigration or visa status service).',
-    url: 'https://settlementcheck.co.uk/redundancy-calculator/',
+    url: '/redundancy-calculator/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

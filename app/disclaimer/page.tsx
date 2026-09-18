@@ -3,10 +3,11 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Calculator Disclaimer | SettlementCheck',
   description: 'The SettlementCheck calculator provides estimates only and does not constitute legal advice. You must obtain independent legal advice before signing a settlement agreement.',
-  alternates: { canonical: 'https://settlementcheck.co.uk/disclaimer/' },
-  robots: { index: true, follow: false },
+  alternates: { canonical: '/disclaimer/' },
+  robots: { index: true, follow: true },
 }
 
 export default function Disclaimer() {
