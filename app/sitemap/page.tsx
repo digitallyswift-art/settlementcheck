@@ -91,6 +91,16 @@ const sitemapData: SitemapCategory[] = [
         description: 'Browse all in-depth employment law and settlement agreement articles.',
       },
       {
+        title: 'Settlement Agreement on Sick Leave: UK Rights & Pay',
+        href: '/guides/settlement-agreement-sick-leave/',
+        description: 'Statutory pay rights, full notice pay rules, disability protections, and tax relief when off sick.',
+      },
+      {
+        title: 'Settlement Agreement Instead of a PIP UK',
+        href: '/guides/settlement-agreement-instead-of-pip/',
+        description: 'Options when offered a settlement agreement instead of a Performance Improvement Plan.',
+      },
+      {
         title: 'Discrimination Settlement Agreements & Vento Bands',
         href: '/guides/discrimination-settlement-agreements/',
         description: 'Uncapped compensation under the Equality Act 2010, 2026 Vento bands, and tax exemption rules.',

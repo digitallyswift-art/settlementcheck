@@ -6,7 +6,7 @@ Word count: ~2,500 words
 
 # Settlement Agreement on Sick Leave: UK Employee Rights and Pay (2026 Guide)
 
-Under UK employment law, your employer can legally offer you a settlement agreement while you are on sick leave. You are under no obligation to accept the offer or leave your job. In 2026, a fair settlement should include full normal pay for your notice period under Sections 87 to 91 of the Employment Rights Act 1996. This applies even if you currently receive Statutory Sick Pay or nil pay. Genuine termination compensation is tax-free up to £30,000 under Section 403 of ITEPA 2003. Your employer covers the cost of your independent legal advice.
+Under UK employment law, your employer can legally offer you a settlement agreement while you are on sick leave. You are under no obligation to accept the offer or leave your job. In 2026, a fair settlement should include full normal pay for your notice period under Sections 87 to 91 of the Employment Rights Act 1996. This applies even if you currently receive Statutory Sick Pay or nil pay. Genuine termination compensation is tax-free up to £30,000 under Section 403 of ITEPA 2003. Your employer covers the cost of your independent legal advice. You can check what your exit package should look like using our [free settlement calculator](/calculator/).
 
 If you are currently signed off work with stress, depression, anxiety, physical injury, or a long-term medical condition, receiving an unexpected settlement proposal can feel unsettling.
 
@@ -49,9 +49,9 @@ During a capability procedure, your employer must:
 - Investigate and trial reasonable adjustments, such as phased returns or amended duties.
 - Explore suitable alternative employment within the organisation before considering dismissal.
 
-If an employer rushes this process, they face significant employment tribunal risks. Ordinary unfair dismissal compensatory awards are capped at £123,543 or 52 weeks of gross pay under SI 2026/310.
+If an employer rushes this process, they face significant employment tribunal risks. Ordinary unfair dismissal compensatory awards are capped at £123,543 or 52 weeks of gross pay under SI 2026/310. You can explore how tribunals assess these claims in our guide to [unfair dismissal settlement agreements](/guides/unfair-dismissal-settlement-agreements/) or estimate potential awards with the [unfair dismissal calculator](/unfair-dismissal-calculator/).
 
-Disability discrimination claims are completely uncapped under Section 124 of the Equality Act 2010. By offering a settlement agreement, your employer seeks to avoid procedural delays, legal uncertainty, and tribunal risk.
+Disability discrimination claims are completely uncapped under Section 124 of the Equality Act 2010. By offering a settlement agreement, your employer seeks to avoid procedural delays, legal uncertainty, and tribunal risk. You can compare both pathways in our detailed comparison of [settlement agreements versus employment tribunal claims](/guides/settlement-agreement-vs-tribunal-claim/).
 
 ---
 
@@ -83,7 +83,7 @@ You have two years of service (two weeks statutory notice). Your contract requir
 
 Section 87(4) excludes you from statutory full pay. Notice follows your contract, but your solicitor will negotiate full pay in the settlement agreement.
 
-If your employer calculates your Pay in Lieu of Notice (PILON) using SSP or nil pay, point out Sections 87 and 88 of the Employment Rights Act 1996. Your independent solicitor will ensure your notice pay reflects your true legal entitlement.
+If your employer calculates your Pay in Lieu of Notice (PILON) using SSP or nil pay, point out Sections 87 and 88 of the Employment Rights Act 1996. Your independent solicitor will ensure your notice pay reflects your true legal entitlement. Read our guide to [PILON tax treatment in 2026](/guides/pilon-tax-treatment-2026/) to understand how notice pay is taxed.
 
 ---
 
@@ -123,7 +123,7 @@ Tribunals also award compensation for injury to feelings based on the Ninth Adde
 - **Upper Band (£37,700 to £62,900):** Extended campaigns of harassment or severe psychiatric harm.
 - **Exceptional Cases (exceeding £62,900):** Rare cases causing lifelong loss of career or catastrophic psychiatric injury.
 
-This potential uncapped exposure provides strong justification for an enhanced financial settlement.
+This potential uncapped exposure provides strong justification for an enhanced financial settlement. Read our comprehensive guide on [discrimination settlement agreements](/guides/discrimination-settlement-agreements/) for further detail.
 
 ---
 
@@ -149,7 +149,7 @@ Examples of improper behaviour during sick leave include:
 - Threatening to stop your sick pay or fire you immediately if you decline the offer.
 - Contacting you repeatedly despite medical notes stating you are unfit for work-related contact.
 
-If your employer acts improperly, their confidentiality disappears. An employment tribunal can review the full discussion.
+If your employer acts improperly or pressures you to accept without adequate time, their confidentiality disappears. You can learn more in our guides to [employer pressure and the ACAS 10-day rule](/guides/pressured-to-sign/) and [protected conversations and without prejudice rules](/guides/protected-conversations-without-prejudice/).
 
 ---
 
@@ -184,6 +184,12 @@ Compare the two primary routes an employer can take when an employee is on prolo
 | **Stress level** | Immediate closure, focus on health recovery | Prolonged meetings, warnings, and uncertainty |
 | **Tribunal claims** | All legal claims waived upon signing | You can lodge tribunal claims within 3 months less 1 day |
 
+### Unsure whether to accept or decline?
+
+Declining a settlement offer does not mean immediate termination. Your employer must continue your contractual sick pay and follow a fair capability investigation.
+
+Explore your strategic choices in our guides on [what happens if you do not sign a settlement agreement](/guides/what-happens-if-you-do-not-sign/) and [how to tell if your settlement offer is fair](/guides/is-my-settlement-offer-fair/).
+
 ---
 
 ## Tax treatment of sick leave settlement payments
@@ -214,7 +220,7 @@ All outstanding holiday pay and sick pay arrears must be paid in full upon depar
 
 ### 4. Pre-termination injury to feelings (completely tax-free)
 
-If your settlement includes compensation for pre-termination disability discrimination, that portion is 100% tax-free under Section 406 of ITEPA 2003, outside the £30,000 limit.
+If your settlement includes compensation for pre-termination disability discrimination, that portion is 100% tax-free under Section 406 of ITEPA 2003, outside the £30,000 limit. Learn more in our complete guide to the [£30,000 settlement tax exemption](/guides/tax-free-settlement-30000/) and read our benchmark analysis of [average UK settlement agreement payouts](/guides/average-settlement-agreement-payout-uk/).
 
 ---
 
@@ -226,8 +232,8 @@ Follow this step-by-step process to protect your rights, verify your pay, and ac
 2. **Confirm your sick pay and accrued holiday:** Check your payslips. Calculate your outstanding statutory holiday balance and any unpaid sick pay owed to your termination date.
 3. **Check your statutory notice rights under the one-week rule:** Review your continuous service and contract length. Determine whether Sections 87 to 91 of the Employment Rights Act 1996 entitle you to full normal pay for your notice period.
 4. **Assess whether your condition qualifies as a disability:** Review whether your condition meets the Section 6 Equality Act 2010 definition. A potential disability discrimination claim gives you substantial negotiating strength.
-5. **Appoint an independent employment solicitor:** Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is mandatory. Your employer covers the legal fees, paying your solicitor directly.
-6. **Negotiate enhanced compensation and an agreed reference:** Your solicitor will negotiate improved ex-gratia compensation, full notice pay, an agreed reference, and appropriate non-derogatory clauses.
+5. **Appoint an independent employment solicitor:** Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is mandatory. Your employer covers the legal fees, paying your solicitor directly. Remember that you [do not have to use your employer's recommended solicitor](/guides/employer-recommended-solicitor/). You can [get matched with a specialist employment solicitor](/get-matched/) through our panel.
+6. **Negotiate enhanced compensation and an agreed reference:** Your solicitor will negotiate improved ex-gratia compensation, full notice pay, an agreed reference, and appropriate non-derogatory clauses. Follow our proven strategies in [how to negotiate a settlement agreement](/guides/how-to-negotiate-a-settlement-agreement/).
 7. **Sign only when satisfied and medically ready:** Take the necessary time to review the final document. Sign only once your solicitor confirms that all tax terms and payment dates are fully protected.
 
 ---

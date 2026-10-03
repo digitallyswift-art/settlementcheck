@@ -148,7 +148,7 @@ export default function SettlementAgreementSickLeaveGuide() {
               <span>Last reviewed: October 2026</span>
             </div>
             <p className="sc-lead">
-              Under UK employment law, your employer can legally offer you a settlement agreement while you are on sick leave. You are under no obligation to accept the offer or leave your job. In 2026, a fair settlement should include full normal pay for your notice period under Sections 87 to 91 of the Employment Rights Act 1996. This applies even if you currently receive Statutory Sick Pay or nil pay. Genuine termination compensation is tax-free up to £30,000 under Section 403 of ITEPA 2003. Your employer covers the cost of your independent legal advice.
+              Under UK employment law, your employer can legally offer you a settlement agreement while you are on sick leave. You are under no obligation to accept the offer or leave your job. In 2026, a fair settlement should include full normal pay for your notice period under Sections 87 to 91 of the Employment Rights Act 1996. This applies even if you currently receive Statutory Sick Pay or nil pay. Genuine termination compensation is tax-free up to £30,000 under Section 403 of ITEPA 2003. Your employer covers the cost of your independent legal advice. You can check what your exit package should look like using our <Link href="/calculator/" className="underline hover:text-ink">free settlement calculator</Link>.
             </p>
           </div>
         </section>
@@ -224,10 +224,10 @@ export default function SettlementAgreementSickLeaveGuide() {
             </div>
 
             <p className="sc-body mb-4">
-              If an employer rushes this process, they face significant employment tribunal risks. Ordinary unfair dismissal compensatory awards are capped at £123,543 or 52 weeks of gross pay under SI 2026/310 <sup>2</sup>.
+              If an employer rushes this process, they face significant employment tribunal risks. Ordinary unfair dismissal compensatory awards are capped at £123,543 or 52 weeks of gross pay under SI 2026/310 <sup>2</sup>. You can explore how tribunals assess these claims in our guide to <Link href="/guides/unfair-dismissal-settlement-agreements/" className="underline hover:text-ink">unfair dismissal settlement agreements</Link> or estimate potential awards with the <Link href="/unfair-dismissal-calculator/" className="underline hover:text-ink">unfair dismissal calculator</Link>.
             </p>
             <p className="sc-body">
-              Disability discrimination claims are completely uncapped under Section 124 of the Equality Act 2010 <sup>3</sup>. By offering a settlement agreement, your employer seeks to avoid procedural delays, legal uncertainty, and tribunal risk.
+              Disability discrimination claims are completely uncapped under Section 124 of the Equality Act 2010 <sup>3</sup>. By offering a settlement agreement, your employer seeks to avoid procedural delays, legal uncertainty, and tribunal risk. You can compare both pathways in our detailed comparison of <Link href="/guides/settlement-agreement-vs-tribunal-claim/" className="underline hover:text-ink">settlement agreements versus employment tribunal claims</Link>.
             </p>
           </div>
         </section>
@@ -286,7 +286,7 @@ export default function SettlementAgreementSickLeaveGuide() {
             <div className="rounded-xl border border-rule bg-white p-5 flex gap-3">
               <InfoIcon />
               <p className="sc-body text-sm">
-                If your employer calculates your Pay in Lieu of Notice (PILON) using SSP or nil pay, point out Sections 87 and 88 of the Employment Rights Act 1996. Your independent solicitor will ensure your notice pay reflects your true legal entitlement.
+                If your employer calculates your Pay in Lieu of Notice (PILON) using SSP or nil pay, point out Sections 87 and 88 of the Employment Rights Act 1996. Your independent solicitor will ensure your notice pay reflects your true legal entitlement. Read our guide to <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax treatment in 2026</Link> to understand how notice pay is taxed.
               </p>
             </div>
           </div>
@@ -391,7 +391,7 @@ export default function SettlementAgreementSickLeaveGuide() {
               ))}
             </ul>
             <p className="sc-body">
-              If your employer acts improperly, their confidentiality disappears. You can learn more in our guide to <Link href="/guides/protected-conversations-without-prejudice/" className="underline hover:text-ink">protected conversations and without prejudice rules</Link>.
+              If your employer acts improperly or pressures you to accept without adequate time, their confidentiality disappears. You can learn more in our guides to <Link href="/guides/pressured-to-sign/" className="underline hover:text-ink">employer pressure and the ACAS 10-day rule</Link> and <Link href="/guides/protected-conversations-without-prejudice/" className="underline hover:text-ink">protected conversations and without prejudice rules</Link>.
             </p>
           </div>
         </section>
@@ -471,6 +471,16 @@ export default function SettlementAgreementSickLeaveGuide() {
                 </tbody>
               </table>
             </div>
+
+            <div className="rounded-xl border border-rule bg-white p-5 mt-6">
+              <h3 className="text-base font-semibold text-ink mb-2">Unsure whether to accept or decline?</h3>
+              <p className="sc-body text-sm mb-3">
+                Declining a settlement offer does not mean immediate termination. Your employer must continue your contractual sick pay and follow a fair capability investigation.
+              </p>
+              <p className="sc-body text-sm">
+                Explore your strategic choices in our guides on <Link href="/guides/what-happens-if-you-do-not-sign/" className="underline hover:text-ink">what happens if you do not sign a settlement agreement</Link> and <Link href="/guides/is-my-settlement-offer-fair/" className="underline hover:text-ink">how to tell if your settlement offer is fair</Link>.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -525,7 +535,7 @@ export default function SettlementAgreementSickLeaveGuide() {
             <div className="rounded-xl border border-rule bg-white p-5 flex gap-3">
               <InfoIcon />
               <p className="sc-body text-sm">
-                If your settlement includes compensation for pre-termination disability discrimination, that portion is 100% tax-free under Section 406 of ITEPA 2003, outside the £30,000 limit. Read our complete guide to the <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">£30,000 settlement tax exemption</Link>.
+                If your settlement includes compensation for pre-termination disability discrimination, that portion is 100% tax-free under Section 406 of ITEPA 2003, outside the £30,000 limit. Learn more in our complete guide to the <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">£30,000 settlement tax exemption</Link> and read our benchmark analysis of <Link href="/guides/average-settlement-agreement-payout-uk/" className="underline hover:text-ink">average UK settlement agreement payouts</Link>.
               </p>
             </div>
           </div>
@@ -564,12 +574,20 @@ export default function SettlementAgreementSickLeaveGuide() {
                 {
                   step: '5',
                   title: 'Appoint an independent employment solicitor',
-                  desc: 'Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is mandatory. Your employer covers the legal fees, paying your solicitor directly.',
+                  desc: (
+                    <>
+                      Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is mandatory. Your employer covers the legal fees, paying your solicitor directly. Remember that you <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-ink">do not have to use your employer's recommended solicitor</Link>. You can <Link href="/get-matched/" className="underline hover:text-ink">get matched with a specialist employment solicitor</Link> through our panel.
+                    </>
+                  ),
                 },
                 {
                   step: '6',
                   title: 'Negotiate enhanced compensation and an agreed reference',
-                  desc: 'Your solicitor will negotiate improved ex-gratia compensation, full notice pay, an agreed reference, and appropriate non-derogatory clauses.',
+                  desc: (
+                    <>
+                      Your solicitor will negotiate improved ex-gratia compensation, full notice pay, an agreed reference, and appropriate non-derogatory clauses. Follow our proven strategies in <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">how to negotiate a settlement agreement</Link>.
+                    </>
+                  ),
                 },
                 {
                   step: '7',
@@ -582,7 +600,7 @@ export default function SettlementAgreementSickLeaveGuide() {
                     {step}
                   </span>
                   <h3 className="text-base font-semibold text-ink mb-1">{title}</h3>
-                  <p className="sc-body text-sm">{desc}</p>
+                  <div className="sc-body text-sm">{desc}</div>
                 </li>
               ))}
             </ol>
@@ -684,9 +702,21 @@ export default function SettlementAgreementSickLeaveGuide() {
                   tag: 'Employee Rights',
                 },
                 {
-                  href: '/guides/pilon-tax-treatment-2026/',
-                  title: 'PILON Tax Treatment UK 2026',
-                  description: 'How Pay in Lieu of Notice is taxed under ITEPA 2003 Section 402D.',
+                  href: '/guides/what-happens-if-you-do-not-sign/',
+                  title: 'What Happens If You Do Not Sign?',
+                  description: 'Evaluate your options if you decline an offer, including capability procedure rights.',
+                  tag: 'Strategy',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'Proven negotiation strategies, counter-offer tactics, and non-financial clauses.',
+                  tag: 'Negotiation',
+                },
+                {
+                  href: '/guides/tax-free-settlement-30000/',
+                  title: 'Tax on Settlement Agreements: £30,000 Rule',
+                  description: 'How the £30,000 exemption works under ITEPA Section 403 and what qualifies as tax-free.',
                   tag: 'Tax Rules',
                 },
               ]}

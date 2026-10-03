@@ -378,7 +378,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
               Under Section 111A(4), the confidentiality shield does not apply to claims under the Equality Act 2010 or whistleblowing claims.
             </p>
             <p className="sc-body mb-6">
-              If an employer uses a settlement meeting to make discriminatory comments, or if the conversation itself forms part of an act of discrimination, you can disclose everything said in that meeting before an employment tribunal.
+              If an employer uses a settlement meeting to make discriminatory comments, or if the conversation itself forms part of an act of discrimination, you can disclose everything said in that meeting before an employment tribunal. If your situation involves long-term sickness absence or health capability issues, see our dedicated guide to <Link href="/guides/settlement-agreement-sick-leave/" className="underline hover:text-ink">settlement agreements on sick leave</Link>.
             </p>
 
             <h3 className="text-sm font-semibold text-ink mt-6 mb-2">2. Without Prejudice Rules and Unambiguous Impropriety</h3>

@@ -26,6 +26,13 @@ export const metadata: Metadata = {
 
 const GUIDES = [
   {
+    href: '/guides/settlement-agreement-instead-of-pip/',
+    eyebrow: 'Capability & PIPs',
+    title: 'Settlement Agreement Instead of a PIP UK',
+    description: 'Offered a settlement agreement instead of a Performance Improvement Plan? Check 2026 statutory rates, tax rules, and practical negotiation scripts.',
+    readTime: '8 min read',
+  },
+  {
     href: '/guides/settlement-agreement-sick-leave/',
     eyebrow: 'Sick Leave & Health',
     title: 'Settlement Agreement on Sick Leave: UK Rights & Pay',

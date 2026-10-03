@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Tier 4: Guides (hub + spokes)
     { url: `${base}/guides/`,                                         lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-sick-leave/`,          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/settlement-agreement-instead-of-pip/`,     lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/unfair-dismissal-settlement-agreements/`,   lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/discrimination-settlement-agreements/`,    lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/constructive-dismissal-settlement-agreements/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },

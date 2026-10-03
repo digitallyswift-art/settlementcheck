@@ -179,6 +179,15 @@ export default function PressuredToSignGuide() {
                     If they want to dismiss you for performance but haven't followed a formal Performance Improvement Plan (PIP), a rushed settlement covers up their failure to follow a fair procedure.
                   </p>
                 </div>
+                <div className="border border-rule rounded-lg p-5 md:col-span-2">
+                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Bypassing Sickness Absence Protocols</h3>
+                  <p className="text-[14px] text-muted leading-relaxed">
+                    If you are off work sick, a fair capability dismissal requires months of medical evidence, consultations, and exploring reasonable adjustments. Employers often apply pressure to avoid these duties. Read our guide on{' '}
+                    <Link href="/guides/settlement-agreement-sick-leave/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      settlement agreements on sick leave
+                    </Link>.
+                  </p>
+                </div>
               </div>
             </div>
 
