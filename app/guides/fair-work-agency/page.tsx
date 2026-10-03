@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   title: 'What Is the Fair Work Agency? UK Employment Guide 2026',
@@ -94,7 +95,7 @@ export default function FairWorkAgencyGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>
@@ -184,7 +185,14 @@ export default function FairWorkAgencyGuide() {
               However, if your settlement includes amounts below statutory minimums (for example, if holiday pay owed is excluded from the settlement), the FWA can take action against your employer for the underlying statutory breach. A settlement agreement cannot remove your statutory rights.
             </p>
             <p className="sc-body">
-              For disputes about whether your settlement offer is fair or whether your employer has met their statutory obligations, an employment solicitor is the right route. The FWA covers enforcement of minimum standards, not assessment of settlement value.
+              For disputes about whether your offer meets standard benchmarks, see our guide on{' '}
+              <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
+                what makes a settlement agreement fair
+              </Link>{' '}
+              or check how your baseline is calculated under{' '}
+              <Link href="/guides/settlement-agreement-acas-calculations/" className="text-coral underline underline-offset-2 hover:text-ink">
+                ACAS-based settlement calculations
+              </Link>.
             </p>
           </div>
         </section>
@@ -197,7 +205,11 @@ export default function FairWorkAgencyGuide() {
               The Employment Rights Act 2025 received Royal Assent but no commencement order for the Fair Work Agency has been issued as of May 2026. The Government must issue a separate commencement order setting the launch date. Until that order is published, the FWA has no operational powers.
             </p>
             <p className="sc-body">
-              Announcements about the FWA launch date are expected as 2026 progresses. Check the UK Government website or legislation.gov.uk for updates. Do not rely on FWA enforcement until operations formally begin.
+              Announcements about the FWA launch date are expected as 2026 progresses. If you are currently negotiating an exit or facing dismissal, you should read our guide on{' '}
+              <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
+                how to negotiate a settlement agreement
+              </Link>{' '}
+              rather than waiting for regulatory agency changes.
             </p>
           </div>
         </section>
@@ -210,7 +222,7 @@ export default function FairWorkAgencyGuide() {
               The free calculator applies April 2026 statutory rates and shows your estimated net take-home in under two minutes.
             </p>
             <Link
-              href="/#calculator"
+              href="/calculator/"
               className="btn-accent"
             >
               Calculate my settlement
@@ -223,6 +235,69 @@ export default function FairWorkAgencyGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+
+            {/* Related Articles Component */}
+            <RelatedArticles
+              title="Related Guides & Calculators"
+              items={[
+                {
+                  href: '/guides/settlement-agreement-acas-calculations/',
+                  title: 'ACAS-Based Settlement Calculations',
+                  description: 'Learn how statutory redundancy formulas, the £751 weekly cap, and notice pay interact.',
+                  tag: 'Calculations',
+                },
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Understand multiplier ranges, statutory baselines, and warning signs of a low offer.',
+                  tag: 'Settlement Guides',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'Leverage, Without Prejudice rules, and practical steps to submit a counter-offer.',
+                  tag: 'Negotiation',
+                },
+                {
+                  href: '/redundancy-calculator/',
+                  title: 'Redundancy Pay Calculator',
+                  description: 'Free tool applying 2026/2027 statutory weekly caps and age multipliers.',
+                  tag: 'Calculator',
+                },
+              ]}
+            />
+          </div>
+        </section>
+
+        {/* References */}
+        <section className="py-12 bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Statutory Framework & Government Sources</h3>
+            <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
+              <li>
+                <a href="https://bills.parliament.uk/bills/3737" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  UK Parliament: Employment Rights Bill (Establishing the Fair Work Agency & enforcement powers)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.gov.uk/government/organisations/department-for-business-and-trade" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Department for Business and Trade (DBT) – Labour Market Enforcement Directives
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/contents" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996 (Primary UK workplace rights framework)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.acas.org.uk/code-of-practice-settlement-agreements" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Acas Code of Practice on Settlement Agreements
+                </a>
+              </li>
+            </ol>
+            <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
+              <strong>Disclaimer:</strong> SettlementCheck is an independent information service and calculation tool. We are not affiliated with the UK Government or any public enforcement agency. This guide provides factual analysis on labor market enforcement reforms and does not constitute formal legal counsel.
+            </div>
           </div>
         </section>
       </main>

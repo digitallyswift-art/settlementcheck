@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   title: 'Do I Have to Use the Solicitor My Employer Recommends? | SettlementCheck',
@@ -99,7 +100,7 @@ export default function EmployerRecommendedSolicitor() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-rule-strong text-xs">/</span>
@@ -270,7 +271,12 @@ export default function EmployerRecommendedSolicitor() {
                   <div className="w-8 h-8 rounded-full bg-paper-2 border border-rule flex items-center justify-center font-sans text-[13px] font-semibold text-ink flex-shrink-0">D</div>
                   <div>
                     <strong className="text-ink block text-[15px] mb-1">You want to know if the offer could be higher</strong>
-                    <span className="text-muted text-[14px] leading-relaxed">An independent solicitor will give you an honest assessment of whether negotiation is realistic in your situation, and what a reasonable counter-offer might look like.</span>
+                    <span className="text-muted text-[14px] leading-relaxed">
+                      An independent solicitor will give you an honest assessment of whether negotiation is realistic in your situation, what a reasonable counter-offer might look like, and{' '}
+                      <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
+                        what a genuinely fair settlement looks like
+                      </Link>.
+                    </span>
                   </div>
                 </div>
               </div>
@@ -280,7 +286,10 @@ export default function EmployerRecommendedSolicitor() {
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">6. What to say to your employer</h2>
               <p className="guide-body">
-                You do not need to explain or justify your choice of solicitor. A brief, factual response is all that is needed.
+                You do not need to explain or justify your choice of solicitor. A brief, factual response is all that is needed. Learn more in our full guide on{' '}
+                <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
+                  how to negotiate a settlement agreement
+                </Link>.
               </p>
 
               <div className="bg-paper-2 border border-rule rounded-xl p-6">
@@ -293,7 +302,10 @@ export default function EmployerRecommendedSolicitor() {
               <div className="bg-[#FFF8F6] border border-coral/20 rounded-lg p-5 flex items-start gap-3">
                 <AlertIcon />
                 <p className="text-[14px] text-ink leading-relaxed">
-                  <strong>If your employer objects or applies pressure</strong> to use their recommended solicitor, make a note of it. An independent solicitor can advise on whether that constitutes undue pressure and whether it affects your position.
+                  <strong>If your employer objects or applies pressure</strong> to use their recommended solicitor, make a note of it. An independent solicitor can advise on whether that constitutes undue pressure under Section 111A. Read our guide on{' '}
+                  <Link href="/guides/pressured-to-sign/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                    your rights when pressured to sign quickly
+                  </Link>.
                 </p>
               </div>
             </div>
@@ -347,7 +359,7 @@ export default function EmployerRecommendedSolicitor() {
               <p className="text-white/70 text-sm leading-relaxed mb-6">
                 Free calculator. Vetted solicitor matched within 24 hours. Your employer pays the fees.
               </p>
-              <Link href="/calculator" className="btn-accent">
+              <Link href="/calculator/" className="btn-accent">
                 Check my offer →
               </Link>
             </div>
@@ -360,11 +372,68 @@ export default function EmployerRecommendedSolicitor() {
               </div>
             </div>
 
-            {/* Disclaimer */}
-            <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed">
-              SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement process and does not constitute legal counsel.
-            </p>
+            {/* Related Articles Component */}
+            <RelatedArticles
+              title="Related Guides & Resources"
+              items={[
+                {
+                  href: '/guides/pressured-to-sign/',
+                  title: 'Pressured to Sign Quickly? Your Rights',
+                  description: 'Understand the ACAS 10-day rule and how to handle artificial employer deadlines.',
+                  tag: 'Employee Rights',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'A complete step-by-step walkthrough of negotiating terms, counter-offers, and legal fees.',
+                  tag: 'Negotiation',
+                },
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Learn the typical multipliers and how to spot when an offer is unreasonably low.',
+                  tag: 'Valuation',
+                },
+                {
+                  href: '/for-solicitors/',
+                  title: 'For Employment Solicitors',
+                  description: 'Are you an SRA-regulated employment solicitor? Learn how our independent panel works.',
+                  tag: 'Panel',
+                },
+              ]}
+            />
+          </div>
+        </section>
 
+        {/* References */}
+        <section className="py-12 bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Regulatory Rules & Statutory References</h3>
+            <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/203" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 203(3) (Mandatory independent legal advice requirement)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.sra.org.uk/solicitors/standards-regulations/code-conduct-solicitors/" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Solicitors Regulation Authority (SRA) Code of Conduct for Solicitors (Rules on conflicts of interest & independence)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.acas.org.uk/settlement-agreements" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Acas Guidance on Settlement Agreements and Legal Costs
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/111A" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 111A (Pre-termination negotiations & improper behaviour)
+                </a>
+              </li>
+            </ol>
+            <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
+              <strong>Disclaimer:</strong> SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the choice of legal representative and does not constitute legal counsel.
+            </div>
           </div>
         </section>
       </main>

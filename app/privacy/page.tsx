@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Privacy Policy | SettlementCheck',
   description: 'How SettlementCheck collects, uses, and protects your personal data in accordance with UK GDPR.',
   alternates: { canonical: 'https://settlementcheck.co.uk/privacy/' },
-  robots: { index: true, follow: false },
+  robots: { index: true, follow: true },
 }
 
 export default function Privacy() {

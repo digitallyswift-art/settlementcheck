@@ -5,12 +5,12 @@ import { useState } from 'react'
 
 const GUIDES_LINKS = [
   {
-    href: '/guides/how-to-negotiate-a-settlement-agreement',
+    href: '/guides/how-to-negotiate-a-settlement-agreement/',
     label: 'How to Negotiate a Settlement Agreement',
     sub: 'Leverage, counter-offers, and the full process',
   },
   {
-    href: '/guides/employer-recommended-solicitor',
+    href: '/guides/employer-recommended-solicitor/',
     label: 'Do You Have to Use Your Employer\'s Solicitor?',
     sub: 'Your right to choose independent legal advice',
   },
@@ -54,7 +54,7 @@ export default function Nav() {
             onMouseLeave={() => setGuidesOpen(false)}
           >
             <Link
-              href="/guides"
+              href="/guides/"
               className="flex items-center gap-1 text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]"
             >
               Guides
@@ -91,7 +91,7 @@ export default function Nav() {
                   ))}
                   <div className="border-t border-rule mt-1 pt-1">
                     <Link
-                      href="/guides"
+                      href="/guides/"
                       className="flex items-center gap-1 px-4 py-2.5 text-[13px] text-coral font-medium hover:underline underline-offset-2"
                       onClick={() => setGuidesOpen(false)}
                     >
@@ -165,7 +165,7 @@ export default function Nav() {
                   </Link>
                 ))}
                 <Link
-                  href="/guides"
+                  href="/guides/"
                   className="text-[13px] text-coral font-medium py-2"
                   onClick={() => { setMobileOpen(false); setMobileGuidesOpen(false) }}
                 >

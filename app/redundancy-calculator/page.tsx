@@ -100,6 +100,37 @@ const JSON_LD = {
   '@context': 'https://schema.org',
   '@graph': [
     {
+      '@type': ['WebApplication', 'SoftwareApplication'],
+      name: 'UK Statutory Redundancy Pay Calculator 2026',
+      url: 'https://settlementcheck.co.uk/redundancy-calculator/',
+      applicationCategory: ['BusinessApplication', 'FinanceApplication'],
+      operatingSystem: 'All modern web browsers',
+      browserRequirements: 'Requires JavaScript. Requires HTML5.',
+      softwareVersion: '2026.1 (SI 2026/310)',
+      isAccessibleForFree: true,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+      },
+      description:
+        'Free UK statutory redundancy pay calculator. Calculates exact redundancy entitlement under April 2026 statutory rates (£751 weekly cap, age-band multipliers, 20-year service limit) and estimates net take-home pay.',
+      featureList: [
+        'Automatic application of age multipliers (0.5x under 22, 1.0x 22 to 40, 1.5x 41 and over)',
+        'April 2026 statutory weekly pay cap (£751 in Great Britain, £783 in Northern Ireland)',
+        'Maximum statutory redundancy calculation up to £22,530',
+        'Net take-home estimation splitting taxable PILON from the £30,000 exemption',
+        'Instant result with zero email requirement',
+      ],
+      screenshot: 'https://settlementcheck.co.uk/og-image.png',
+      creator: {
+        '@type': 'Organization',
+        name: 'SettlementCheck',
+        url: 'https://settlementcheck.co.uk',
+      },
+    },
+    {
       '@type': 'FAQPage',
       mainEntity: FAQ_SCHEMA_ITEMS.map((item) => ({
         '@type': 'Question',
@@ -173,27 +204,39 @@ export default function RedundancyCalculatorPage() {
         steps={REDUNDANCY_STEPS}
         faqItems={REDUNDANCY_FAQS}
         ctaLabel="Calculate my redundancy pay →"
-        ctaHref="/calculator"
+        ctaHref="/calculator/"
         howItWorksTitle="Three steps to understand your redundancy position."
         howItWorksLead="From your statutory minimum to what you will actually take home. Free, no email required."
         taxSectionTitle="How much tax will you pay on your redundancy package?"
         statutoryRows={statutoryRows}
         pageLinks={[
           {
-            href: '/guides/redundancy-pay-cap-2026',
-            label: 'Redundancy pay cap 2026 explained',
+            href: '/calculator/',
+            label: 'Settlement Agreement Calculator',
           },
           {
-            href: '/guides/what-is-a-fair-settlement-agreement',
-            label: 'What is a fair settlement agreement?',
+            href: '/unfair-dismissal-calculator/',
+            label: 'Unfair Dismissal Calculator',
           },
           {
-            href: '/guides/how-to-negotiate-a-settlement-agreement',
-            label: 'How to negotiate your settlement',
+            href: '/constructive-dismissal-calculator/',
+            label: 'Constructive Dismissal Calculator',
           },
           {
-            href: '/unfair-dismissal-calculator',
-            label: 'Unfair dismissal calculator',
+            href: '/guides/redundancy-pay-cap-2026/',
+            label: 'Redundancy Pay Cap 2026 Explained',
+          },
+          {
+            href: '/guides/settlement-agreement-acas-calculations/',
+            label: 'ACAS-Based Calculations Guide',
+          },
+          {
+            href: '/guides/what-is-a-fair-settlement-agreement/',
+            label: 'What Is a Fair Settlement Agreement?',
+          },
+          {
+            href: '/guides/how-to-negotiate-a-settlement-agreement/',
+            label: 'How to Negotiate Your Settlement',
           },
         ]}
       />

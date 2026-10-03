@@ -100,6 +100,37 @@ const JSON_LD = {
   '@context': 'https://schema.org',
   '@graph': [
     {
+      '@type': ['WebApplication', 'SoftwareApplication'],
+      name: 'UK Constructive Dismissal Settlement Calculator 2026',
+      url: 'https://settlementcheck.co.uk/constructive-dismissal-calculator/',
+      applicationCategory: ['BusinessApplication', 'FinanceApplication'],
+      operatingSystem: 'All modern web browsers',
+      browserRequirements: 'Requires JavaScript. Requires HTML5.',
+      softwareVersion: '2026.1 (SI 2026/310)',
+      isAccessibleForFree: true,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+      },
+      description:
+        'Free UK constructive dismissal settlement calculator. Evaluates resignation claims following employer breach of contract, calculating statutory basic award and compensatory award caps under April 2026 rates.',
+      featureList: [
+        'Assessment of fundamental breach of contract and 2-year service rules',
+        'Basic award calculation using the April 2026 weekly pay cap of £751',
+        'Compensatory award assessment capped at the lower of £123,543 or 52 weeks gross pay',
+        'Net take-home estimation splitting taxable PILON from the £30,000 exemption',
+        'Immediate estimation with no email or personal information required',
+      ],
+      screenshot: 'https://settlementcheck.co.uk/og-image.png',
+      creator: {
+        '@type': 'Organization',
+        name: 'SettlementCheck',
+        url: 'https://settlementcheck.co.uk',
+      },
+    },
+    {
       '@type': 'FAQPage',
       mainEntity: FAQ_SCHEMA_ITEMS.map((item) => ({
         '@type': 'Question',
@@ -174,31 +205,39 @@ export default function ConstructiveDismissalCalculatorPage() {
         steps={CONSTRUCTIVE_DISMISSAL_STEPS}
         faqItems={CONSTRUCTIVE_DISMISSAL_FAQS}
         ctaLabel="Estimate my constructive dismissal settlement →"
-        ctaHref="/calculator"
+        ctaHref="/calculator/"
         howItWorksTitle="Three steps to understand your constructive dismissal position."
         howItWorksLead="From what you could be owed, to the net figure after tax. Free, no email required. Independent, not a law firm."
         taxSectionTitle="How much tax will you pay on a constructive dismissal settlement?"
         statutoryRows={statutoryRows}
         pageLinks={[
           {
-            href: '/guides/constructive-dismissal-settlement-agreements',
-            label: 'Constructive dismissal settlement agreements guide',
+            href: '/calculator/',
+            label: 'Settlement Agreement Calculator',
           },
           {
-            href: '/guides/what-is-a-fair-settlement-agreement',
-            label: 'What is a fair settlement agreement?',
+            href: '/unfair-dismissal-calculator/',
+            label: 'Unfair Dismissal Calculator',
           },
           {
-            href: '/guides/how-to-negotiate-a-settlement-agreement',
-            label: 'How to negotiate your settlement',
+            href: '/redundancy-calculator/',
+            label: 'Redundancy Pay Calculator',
           },
           {
-            href: '/guides/pressured-to-sign',
-            label: 'Being pressured to sign? Know your rights',
+            href: '/guides/constructive-dismissal-settlement-agreements/',
+            label: 'Constructive Dismissal Guide',
           },
           {
-            href: '/unfair-dismissal-calculator',
-            label: 'Unfair dismissal calculator',
+            href: '/guides/what-is-a-fair-settlement-agreement/',
+            label: 'What Is a Fair Settlement Agreement?',
+          },
+          {
+            href: '/guides/how-to-negotiate-a-settlement-agreement/',
+            label: 'How to Negotiate Your Settlement',
+          },
+          {
+            href: '/guides/pressured-to-sign/',
+            label: 'Being Pressured to Sign? Know Your Rights',
           },
         ]}
       />

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   title: 'Is My Settlement Offer Fair? UK Settlement Check Guide 2026',
@@ -94,7 +95,7 @@ export default function IsMyOfferFairGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>
@@ -105,7 +106,7 @@ export default function IsMyOfferFairGuide() {
               Most settlement offers fall between 1.5x and 4x the statutory minimum. Here is how to spot if yours is genuinely fair.
             </h1>
             <p className="sc-lead">
-              When you receive a settlement offer, your employer is paying to end your employment cleanly. The legal floor in 2026 is statutory redundancy and notice pay, calculated against a weekly pay cap of £751 (SI 2026/310). A fair offer goes beyond that floor and reflects the strength of your position. Use the free calculator below to compare your offer against the statutory baseline instantly.
+              When you receive a settlement offer, your employer is paying to end your employment cleanly. The legal floor in 2026 is statutory redundancy and notice pay, calculated against a weekly pay cap of £751 (SI 2026/310). A fair offer goes beyond that floor and reflects the strength of your position. Use the free <Link href="/calculator/" className="text-ink font-semibold underline underline-offset-2 hover:text-coral transition-colors">settlement calculator</Link> below to compare your offer against the statutory baseline instantly.
             </p>
           </div>
         </section>
@@ -115,7 +116,7 @@ export default function IsMyOfferFairGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">What makes a settlement offer fair</h2>
             <p className="sc-body mb-6">
-              A fair settlement reflects three things: what the law guarantees you, what your specific claim is worth, and what you can realistically negotiate. Most people underestimate both the statutory floor and their claim's ceiling. Fairness is measured in pounds, not assurances.
+              A fair settlement reflects three things: what the law guarantees you, what your specific claim is worth, and what you can realistically negotiate. Most people underestimate both the statutory floor and their claim&apos;s ceiling. Fairness is measured in pounds, not assurances. Review our in-depth guides on <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">what is a fair settlement agreement</Link> and <Link href="/guides/settlement-agreement-acas-calculations/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">how Acas calculates settlement guidelines</Link>.
             </p>
             <ul className="flex flex-col gap-3">
               {[
@@ -138,34 +139,35 @@ export default function IsMyOfferFairGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Statutory minimum vs fair offer</h2>
             <p className="sc-body mb-6">
-              The statutory minimum is what you are entitled to by law if you take no action. A fair offer acknowledges the employer's settlement risk and gives you a genuine uplift above that floor.
+              Here is how statutory redundancy entitlement compares to what employees typically negotiate with specialist legal representation:
             </p>
-            <div className="rounded-xl border border-rule overflow-hidden mb-6">
-              <table className="w-full text-sm">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr className="bg-ink text-white">
-                    <th className="text-left px-4 py-3 font-medium">Fairness level</th>
-                    <th className="text-left px-4 py-3 font-medium">What it includes</th>
-                    <th className="text-left px-4 py-3 font-medium">Typical multiplier</th>
+                  <tr className="border-b border-rule text-left">
+                    <th className="py-3 pr-4 font-semibold text-ink">Length of service</th>
+                    <th className="py-3 px-4 font-semibold text-ink">Statutory redundancy</th>
+                    <th className="py-3 pl-4 font-semibold text-ink">Typical fair offer</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-rule">
                   {[
-                    ['Statutory minimum only', 'Redundancy, notice, holiday. No uplift.', '1.0x'],
-                    ['Typical fair range', 'Statutory plus settlement uplift', '1.5x to 4.0x'],
-                    ['Strong bargaining position', 'Statutory, uplift, and risk premium for a live claim', '4.0x or higher'],
-                  ].map(([level, includes, multiplier], i) => (
-                    <tr key={level} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
-                      <td className="px-4 py-3 text-ink font-medium">{level}</td>
-                      <td className="px-4 py-3 text-ink">{includes}</td>
-                      <td className="px-4 py-3 text-ink">{multiplier}</td>
+                    { service: '2 to 4 years', stat: '£2,000 to £4,500', fair: '£4,000 to £9,000' },
+                    { service: '5 to 9 years', stat: '£5,000 to £10,000', fair: '£10,000 to £22,000' },
+                    { service: '10 to 14 years', stat: '£10,000 to £18,000', fair: '£20,000 to £38,000' },
+                    { service: '15+ years', stat: '£15,000 to £22,530*', fair: '£30,000 to £50,000+' },
+                  ].map(({ service, stat, fair }) => (
+                    <tr key={service}>
+                      <td className="py-3 pr-4 font-medium text-ink">{service}</td>
+                      <td className="py-3 px-4 text-muted">{stat}</td>
+                      <td className="py-3 pl-4 font-semibold text-emerald-800">{fair}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <p className="sc-body text-sm text-muted">
-              Example: if your statutory entitlement is £5,000, a 2x offer is £10,000. A credible discrimination or whistleblowing claim can push this to £20,000 or beyond. The compensatory cap for unfair dismissal is the lower of £123,543 or 52 weeks' pay (ERA 1996 s.124).
+            <p className="text-xs text-muted mt-3">
+              *Statutory redundancy capped at £22,530 based on 20 years maximum and £751 weekly pay cap (April 2026). See our full analysis on the <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">2026 redundancy pay cap</Link> and calculate your statutory figure with the <Link href="/redundancy-calculator/" className="underline hover:text-ink font-medium">redundancy calculator</Link>.
             </p>
           </div>
         </section>
@@ -173,18 +175,47 @@ export default function IsMyOfferFairGuide() {
         {/* Red flags */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Red flags that suggest your offer is too low</h2>
+            <h2 className="sc-section-h2 mb-4">Five red flags that mean your offer is too low</h2>
+            <p className="sc-body mb-6">
+              Employers often frame low offers as generous. Watch for these five patterns before you agree to sign:
+            </p>
             <ul className="flex flex-col gap-4">
               {[
-                'Your offer matches your statutory entitlement exactly. If the redundancy figure and the settlement figure are the same number, the employer has paid you nothing to settle.',
-                'The offer is less than three months of your salary. For most earners, a fair range starts at 1.5x statutory, which typically equals at least three months of gross pay.',
-                'You were told there is no negotiation room. Employers who say the offer is final are usually testing your response. There is almost always room to move.',
-                'The offer contains no itemised breakdown. A fair offer separates redundancy, notice, holiday, and any uplift so you know exactly what each element is worth.',
-                'You received the offer with a deadline shorter than 10 days. Rushed timelines signal the employer is managing risk. That urgency is leverage for you.',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
+                {
+                  title: 'The offer is statutory redundancy plus two weeks',
+                  detail: 'If you have any potential claim, the employer is attempting to settle cheaply. Two weeks\' pay above statutory is the bare minimum employers offer when they know an employee might not push back.',
+                },
+                {
+                  title: 'No contribution to legal fees',
+                  detail: 'Standard practice in the UK is for the employer to contribute £500 to £1,500+ VAT towards your independent legal advice. If this is missing or very low, it signals the employer does not understand the standard practice or is trying to minimise cost at your expense.',
+                },
+                {
+                  title: 'Pressure to sign within 48 to 72 hours',
+                  detail: 'Employment law guidance recommends a minimum of 10 days. Rushing an employee to sign is a known tactic to prevent you taking proper legal advice. Learn what to do if you are being pressured to sign.',
+                },
+                {
+                  title: 'Notice pay is not separately accounted for',
+                  detail: 'Your settlement sum should be on top of your statutory or contractual notice pay. If the employer wraps notice into the settlement figure, you are being shortchanged.',
+                },
+                {
+                  title: 'Post-termination restrictions with no consideration',
+                  detail: 'If the agreement asks you to reaffirm restrictive covenants (non-compete, non-solicitation) without paying a separate fee for that restriction, the value is flowing entirely to the employer.',
+                },
+              ].map(({ title, detail }, i) => (
+                <li key={title} className="flex items-start gap-3">
                   <WarningIcon />
-                  <span className="sc-body">{item}</span>
+                  <div>
+                    <p className="font-semibold text-ink mb-1">{title}</p>
+                    <p className="sc-body text-sm">
+                      {detail}
+                      {i === 2 && (
+                        <> See our guide on being <Link href="/guides/pressured-to-sign/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">pressured to sign a settlement agreement</Link>.</>
+                      )}
+                      {i === 1 && (
+                        <> Check our advice regarding <Link href="/guides/employer-recommended-solicitor/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">employer-recommended solicitors and independent legal advice</Link>.</>
+                      )}
+                    </p>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -223,6 +254,11 @@ export default function IsMyOfferFairGuide() {
                 </div>
               ))}
             </div>
+            <div className="mt-8 p-4 bg-paper rounded border border-rule">
+              <p className="sc-body text-sm">
+                Ready to take the next step? Read our step-by-step tutorial on <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-ink font-semibold underline underline-offset-2 hover:text-coral transition-colors">how to negotiate a settlement agreement</Link> or understand <Link href="/guides/what-happens-if-you-do-not-sign/" className="text-ink font-semibold underline underline-offset-2 hover:text-coral transition-colors">what happens if you do not sign</Link>.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -233,12 +269,20 @@ export default function IsMyOfferFairGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               The free calculator applies April 2026 statutory rates and shows you where your offer sits against typical UK settlement ranges.
             </p>
-            <Link
-              href="/#calculator"
-              className="btn-accent"
-            >
-              Check my offer now
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/calculator/"
+                className="btn-accent"
+              >
+                Check my settlement offer
+              </Link>
+              <Link
+                href="/redundancy-calculator/"
+                className="btn-outline text-white border-white/30 hover:bg-white/10"
+              >
+                Redundancy calculator
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -247,6 +291,77 @@ export default function IsMyOfferFairGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+          </div>
+        </section>
+
+        {/* Related Articles Component */}
+        <section className="py-12 bg-white">
+          <div className="max-w-2xl mx-auto px-5">
+            <RelatedArticles
+              items={[
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Understand the formula employers use to value exits and how to tell if you are being shortchanged.',
+                  tag: 'Fairness',
+                },
+                {
+                  href: '/guides/settlement-agreement-acas-calculations/',
+                  title: 'Settlement Agreement Acas Calculations Explained',
+                  description: 'How Acas calculates statutory figures and what employment tribunals award for compensation.',
+                  tag: 'Calculations',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'Proven counter-offer strategies and script templates from senior employment lawyers.',
+                  tag: 'Negotiation',
+                },
+                {
+                  href: '/guides/pressured-to-sign/',
+                  title: 'Pressured to Sign a Settlement Agreement?',
+                  description: 'What to do if your employer gives you an unreasonable deadline or threatens dismissal.',
+                  tag: 'Rights',
+                },
+              ]}
+            />
+          </div>
+        </section>
+
+        {/* References */}
+        <section className="py-12 bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Statutory Authorities & Official References</h3>
+            <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/227" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 227 (Statutory weekly pay cap)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/uksi/2026/310/contents/made" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  The Employment Rights (Increase of Limits) Order 2026 (SI 2026/310)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/162" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 162 (Redundancy formula & calculation mechanics)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/124" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 124 (Limit on compensatory award)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.acas.org.uk/code-of-practice-settlement-agreements" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Acas Code of Practice on Settlement Agreements (Code of Practice 4)
+                </a>
+              </li>
+            </ol>
+            <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
+              <strong>Disclaimer:</strong> SettlementCheck is an independent educational tool and calculation service, not a law firm. The figures generated are estimates based on standard UK statutory formulas and do not constitute formal legal counsel. Always obtain independent advice from an SRA-regulated solicitor before signing.
+            </div>
           </div>
         </section>
       </main>

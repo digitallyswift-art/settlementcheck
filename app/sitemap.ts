@@ -5,21 +5,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
 
   return [
-    // Tier 1 — Conversion pillars
+    // Tier 1: Conversion pillars
     { url: `${base}/`,                                                lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
     { url: `${base}/calculator/`,                                     lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
 
-    // Tier 2 — Programmatic SEO landing pages
+    // Tier 2: Programmatic SEO landing pages
     { url: `${base}/redundancy-calculator/`,                          lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/unfair-dismissal-calculator/`,                    lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/constructive-dismissal-calculator/`,              lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
 
-    // Tier 3 — Funnel + how-it-works
+    // Tier 3: Funnel + how-it-works
     { url: `${base}/how-it-works/`,                                   lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${base}/get-matched/`,                                    lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
 
-    // Tier 4 — Guides (hub + spokes)
+    // Tier 4: Guides (hub + spokes)
     { url: `${base}/guides/`,                                         lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/settlement-agreement-sick-leave/`,          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/unfair-dismissal-settlement-agreements/`,   lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/discrimination-settlement-agreements/`,    lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/constructive-dismissal-settlement-agreements/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/nhs-settlement-agreements/`,               lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-vs-tribunal-claim/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -37,10 +39,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/guides/what-is-a-fair-settlement-agreement/`,     lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/protective-award/`,                        lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
 
-    // Tier 5 — Supplier-facing
+    // Tier 5: Supplier-facing
     { url: `${base}/for-solicitors/`,                                 lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
 
-    // Tier 6 — Legal / footer pages
+    // Tier 6: Legal / footer pages
     { url: `${base}/privacy/`,                                        lastModified: now, changeFrequency: 'yearly',  priority: 0.2 },
     { url: `${base}/terms/`,                                          lastModified: now, changeFrequency: 'yearly',  priority: 0.2 },
     { url: `${base}/disclaimer/`,                                     lastModified: now, changeFrequency: 'yearly',  priority: 0.2 },

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   title: 'Pressured to Sign a Settlement Agreement? | 10-Day Rule | SettlementCheck',
@@ -85,7 +86,7 @@ export default function PressuredToSignGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-rule-strong text-xs">/</span>
@@ -189,7 +190,12 @@ export default function PressuredToSignGuide() {
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">1</div>
                   <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Do not sign anything on the spot</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">A settlement agreement is only legally binding once you have received independent legal advice. Acknowledge receipt of the document, but do not sign it.</p>
+                  <p className="text-[15px] text-muted leading-relaxed">
+                    A settlement agreement is only legally binding once you have received independent legal advice. Acknowledge receipt of the document, but do not sign it. Remember: you have the right to appoint your own solicitor (see{' '}
+                    <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      do you have to use your employer's solicitor?
+                    </Link>).
+                  </p>
                 </div>
                 
                 <div className="relative pl-8">
@@ -201,7 +207,16 @@ export default function PressuredToSignGuide() {
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">3</div>
                   <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Assess the offer value</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">Determine if the offer is fair. Calculate your statutory entitlements, including capped weekly pay (£751 in Great Britain)⁴ and your notice period, to understand your financial baseline.</p>
+                  <p className="text-[15px] text-muted leading-relaxed">
+                    Determine if the offer is fair. Calculate your statutory entitlements using our{' '}
+                    <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                      Settlement Calculator
+                    </Link>{' '}
+                    or verify statutory redundancy caps via our guide on{' '}
+                    <Link href="/guides/settlement-agreement-acas-calculations/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      ACAS-based calculations
+                    </Link>.
+                  </p>
                 </div>
               </div>
             </div>
@@ -214,9 +229,14 @@ export default function PressuredToSignGuide() {
               <p className="text-white/70 text-[15px] leading-relaxed mb-6">
                 Calculate your statutory minimums instantly using 2026/2027 legal rates. No email required.
               </p>
-              <Link href="/redundancy-calculator" className="btn-accent">
-                Check offer ranges →
-              </Link>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link href="/calculator/" className="btn-accent">
+                  Calculate settlement →
+                </Link>
+                <Link href="/redundancy-calculator/" className="btn-secondary">
+                  Redundancy calculator →
+                </Link>
+              </div>
             </div>
 
             {/* FAQ */}
@@ -226,6 +246,37 @@ export default function PressuredToSignGuide() {
                 <FaqAccordion faqs={FAQS} />
               </div>
             </div>
+
+            {/* Related Articles Component */}
+            <RelatedArticles
+              title="Related Guides & Rights"
+              items={[
+                {
+                  href: '/guides/what-happens-if-you-do-not-sign/',
+                  title: 'What Happens If You Do Not Sign?',
+                  description: 'Understand the consequences of rejecting an offer and how formal procedures resume.',
+                  tag: 'Your Options',
+                },
+                {
+                  href: '/guides/employer-recommended-solicitor/',
+                  title: 'Using Your Employer’s Recommended Solicitor',
+                  description: 'Why you should exercise your right to independent legal advice paid by your employer.',
+                  tag: 'Legal Advice',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'Turn a pressured situation into a structured, commercially justified counter-offer.',
+                  tag: 'Negotiation',
+                },
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Spot lowball offers and compare your package against typical UK benchmarks.',
+                  tag: 'Fairness Benchmarks',
+                },
+              ]}
+            />
 
             {/* Footnotes and Citations */}
             <div className="space-y-4 pt-8 border-t border-rule">

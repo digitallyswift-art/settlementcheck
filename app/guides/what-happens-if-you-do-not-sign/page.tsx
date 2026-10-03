@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   title: 'Not Signing a Settlement Agreement | 2026 Rights | SettlementCheck',
@@ -75,7 +76,7 @@ export default function RejectSettlementAgreementGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-rule-strong text-xs">/</span>
@@ -123,7 +124,10 @@ export default function RejectSettlementAgreementGuide() {
                 Negotiations can continue after you reject an initial offer. Many employers expect a counter-offer. You can suggest a higher figure, request a different notice period, or negotiate non-financial terms.
               </p>
               <p className="guide-body">
-                To make a binding agreement, you must receive independent legal advice from a qualified solicitor.¹ Your employer usually pays a contribution to cover this cost.²
+                To make a binding agreement, you must receive independent legal advice from a qualified solicitor.¹ Your employer usually pays a contribution to cover this cost,² and you have the right to choose your own adviser (see our guide on{' '}
+                <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink">
+                  do you have to use your employer's solicitor?
+                </Link>).
               </p>
             </div>
 
@@ -141,7 +145,10 @@ export default function RejectSettlementAgreementGuide() {
               </p>
               <ul className="list-disc pl-5 text-[15px] text-muted leading-relaxed space-y-2">
                 <li>
-                  <strong className="text-ink">Redundancy consultation:</strong> Your employer must follow statutory consultation rules if they are reducing staff numbers.³ If they do not, you can bring a case for unfair dismissal.⁴
+                  <strong className="text-ink">Redundancy consultation:</strong> Your employer must follow statutory consultation rules if they are reducing staff numbers.³ You can calculate your minimum entitlement using our{' '}
+                  <Link href="/redundancy-calculator/" className="text-coral underline underline-offset-2 hover:text-ink">
+                    Redundancy Calculator
+                  </Link>. If they do not follow a fair procedure, you can bring a case for unfair dismissal.⁴
                 </li>
                 <li>
                   <strong className="text-ink">Performance improvement plans:</strong> Your employer sets targets to monitor your work over several weeks or months. Failure to meet these targets can lead to dismissal for capability.
@@ -165,10 +172,13 @@ export default function RejectSettlementAgreementGuide() {
                 If you lose at a tribunal, you receive nothing. If you win, the tribunal awards compensation based on your actual financial loss and statutory caps.
               </p>
               <p className="guide-body">
-                In 2026, the maximum unfair dismissal compensation is £123,543, or one year of gross pay, whichever is lower.⁶ The basic award is calculated using your age and length of service, capped at a maximum of £22,530.⁷
+                In 2026, the maximum unfair dismissal compensation is £123,543, or one year of gross pay, whichever is lower.⁶ You can check your potential awards using our{' '}
+                <Link href="/unfair-dismissal-calculator/" className="text-coral underline underline-offset-2 hover:text-ink">
+                  Unfair Dismissal Calculator
+                </Link>. The basic award is calculated using your age and length of service, capped at a maximum of £22,530.⁷
               </p>
               <p className="guide-body">
-                Contrast these limits with the immediate payment offered in your settlement agreement. Up to £30,000 of a compensation payment can be paid tax-free under UK tax rules.⁸
+                Contrast these limits with the immediate payment offered in your settlement agreement. Up to £30,000 of a compensation payment can be paid tax-free under UK tax rules (ITEPA 2003 s.403).⁸
               </p>
 
               {/* Comparison table */}
@@ -214,7 +224,13 @@ export default function RejectSettlementAgreementGuide() {
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">2</div>
                   <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Calculate your entitlements</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">Use the SettlementCheck calculator to verify your statutory redundancy minimums and notice pay. This establishes your baseline.</p>
+                  <p className="text-[15px] text-muted leading-relaxed">
+                    Use the{' '}
+                    <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                      SettlementCheck calculator
+                    </Link>{' '}
+                    to verify your statutory redundancy minimums and notice pay. This establishes your baseline.
+                  </p>
                 </div>
 
                 <div className="relative pl-8">
@@ -226,13 +242,23 @@ export default function RejectSettlementAgreementGuide() {
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">4</div>
                   <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Submit a counter-proposal</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">Present your response to your employer in writing. Suggest a specific settlement amount, outline non-financial terms, and state your reasons.</p>
+                  <p className="text-[15px] text-muted leading-relaxed">
+                    Present your response to your employer in writing. Suggest a specific settlement amount, outline non-financial terms, and state your reasons. Follow the step-by-step framework in our guide on{' '}
+                    <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      how to negotiate a settlement agreement
+                    </Link>.
+                  </p>
                 </div>
 
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">5</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Instruct a solicitor</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">Engage an SRA-regulated solicitor to review your draft counter-proposal. They will advise on whether your expectations are realistic.</p>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Instruct an independent solicitor</h3>
+                  <p className="text-[15px] text-muted leading-relaxed">
+                    Engage an SRA-regulated solicitor to review your draft counter-proposal. Make sure you select someone aligned with your interests rather than your employer's preference (read{' '}
+                    <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      do you have to use your employer's solicitor?
+                    </Link>).
+                  </p>
                 </div>
               </div>
             </div>
@@ -245,9 +271,14 @@ export default function RejectSettlementAgreementGuide() {
               <p className="text-white/70 text-[15px] leading-relaxed mb-6">
                 Calculate your statutory minimums instantly using 2026/2027 legal rates. No email required.
               </p>
-              <Link href="/redundancy-calculator" className="btn-accent">
-                Check offer ranges →
-              </Link>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link href="/calculator/" className="btn-accent">
+                  Calculate settlement →
+                </Link>
+                <Link href="/redundancy-calculator/" className="btn-secondary">
+                  Redundancy calculator →
+                </Link>
+              </div>
             </div>
 
             {/* FAQ */}
@@ -257,6 +288,37 @@ export default function RejectSettlementAgreementGuide() {
                 <FaqAccordion faqs={FAQS} />
               </div>
             </div>
+
+            {/* Related Articles Component */}
+            <RelatedArticles
+              title="Related Guides & Tools"
+              items={[
+                {
+                  href: '/guides/pressured-to-sign/',
+                  title: 'Pressured to Sign Quickly? Your Rights',
+                  description: 'The ACAS 10-day rule and legal protection against improper employer conduct.',
+                  tag: 'Rights & Rules',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'Step-by-step tactics to raise the opening figure and secure better terms.',
+                  tag: 'Negotiation',
+                },
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Benchmark your offer against statutory minimums and typical market multiples.',
+                  tag: 'Valuation',
+                },
+                {
+                  href: '/unfair-dismissal-calculator/',
+                  title: 'Unfair Dismissal Calculator',
+                  description: 'Calculate your potential basic award and compensatory award under 2026 statutory limits.',
+                  tag: 'Calculator',
+                },
+              ]}
+            />
 
             {/* Footnotes and Citations */}
             <div className="space-y-4 pt-8 border-t border-rule">

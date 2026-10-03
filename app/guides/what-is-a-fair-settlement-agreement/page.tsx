@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   title: 'What Is a Fair Settlement Agreement UK 2026? | SettlementCheck',
@@ -94,7 +95,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>
@@ -363,36 +364,59 @@ export default function WhatIsAFairSettlementAgreementGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">What to do if your offer feels too low</h2>
             <ol className="flex flex-col gap-6">
-              {[
-                {
-                  n: 1,
-                  title: 'Calculate your statutory baseline',
-                  body: 'Use the calculator on this site to confirm your statutory redundancy, notice, and holiday entitlement. This is your floor. Any settlement offer below this figure is unlawful.',
-                },
-                {
-                  n: 2,
-                  title: 'Identify any additional claim elements',
-                  body: 'Ask yourself: was the dismissal process fair? Were there any protected characteristics involved? Did you raise a concern before dismissal? Are there unpaid wages or breached contractual promises? Each "yes" raises your position and supports a higher counter-offer.',
-                },
-                {
-                  n: 3,
-                  title: 'Make a specific, reasoned counter-offer in writing',
-                  body: 'Do not respond emotionally. State your statutory entitlement, explain the multiplier you are applying and why, and give a specific pound figure. For example: "My statutory entitlement is £10,455. Your offer of £11,000 is 1.05x statutory and provides no uplift for the disputed dismissal circumstances. A fair offer is 2.5x statutory: £26,137. I am willing to discuss a figure between £18,000 and £26,137." This approach shows you know your numbers and you are serious.',
-                },
-                {
-                  n: 4,
-                  title: 'Instruct a solicitor before you sign',
-                  body: 'Your solicitor confirms whether the final figure is fair, ensures the agreement protects your interests, and checks that all valid claims are correctly captured. Your employer typically pays their fees as part of the settlement. Do not sign without legal advice regardless of time pressure.',
-                },
-              ].map(({ n, title, body }) => (
-                <li key={n} className="flex gap-4">
-                  <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
-                  <div>
-                    <p className="text-sm font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
-                  </div>
-                </li>
-              ))}
+              <li className="flex gap-4">
+                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Calculate your statutory baseline</p>
+                  <p className="sc-body text-sm">
+                    Use our free{' '}
+                    <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                      Settlement Agreement Calculator
+                    </Link>{' '}
+                    or check statutory caps in our{' '}
+                    <Link href="/redundancy-calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                      Redundancy Calculator
+                    </Link>{' '}
+                    and{' '}
+                    <Link href="/guides/settlement-agreement-acas-calculations/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                      ACAS calculations guide
+                    </Link>. This confirms your legal floor. Any settlement offer below this figure is unlawful.
+                  </p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Identify any additional claim elements</p>
+                  <p className="sc-body text-sm">
+                    Ask yourself: was the dismissal process fair? Were there any protected characteristics involved? Did you raise a concern before dismissal? Are there unpaid wages or breached contractual promises? Each "yes" raises your position and supports a higher counter-offer.
+                  </p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Make a specific, reasoned counter-offer in writing</p>
+                  <p className="sc-body text-sm">
+                    Do not respond emotionally. State your statutory entitlement, explain the multiplier you are applying and why, and give a specific pound figure. Follow our structured guidance on{' '}
+                    <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                      how to negotiate a settlement agreement
+                    </Link>.
+                  </p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                <div>
+                  <p className="text-sm font-semibold text-ink mb-1">Instruct an independent solicitor before you sign</p>
+                  <p className="sc-body text-sm">
+                    Your solicitor confirms whether the final figure is fair, ensures the agreement protects your interests, and checks that all valid claims are correctly captured. Remember you have the right to appoint your own solicitor rather than your employer's choice (read{' '}
+                    <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                      do you have to use your employer's solicitor?
+                    </Link>).
+                  </p>
+                </div>
+              </li>
             </ol>
           </div>
         </section>
@@ -404,12 +428,20 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               The free calculator applies April 2026 statutory rates and shows your statutory floor, estimated net take-home, and a verdict on whether your offer is fair.
             </p>
-            <Link
-              href="/#calculator"
-              className="btn-accent"
-            >
-              Check my offer now
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link
+                href="/calculator/"
+                className="btn-accent"
+              >
+                Check my offer now →
+              </Link>
+              <Link
+                href="/redundancy-calculator/"
+                className="btn-secondary"
+              >
+                Redundancy calculator →
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -418,6 +450,79 @@ export default function WhatIsAFairSettlementAgreementGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+
+            {/* Related Articles Component */}
+            <RelatedArticles
+              title="Related Guides & Calculations"
+              items={[
+                {
+                  href: '/guides/settlement-agreement-acas-calculations/',
+                  title: 'ACAS-Based Settlement Calculations',
+                  description: 'Learn the statutory formulas behind the £751 weekly cap, service tiers, and PILON.',
+                  tag: 'Calculations',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'Step-by-step tactics to propose a higher figure and negotiate better exit terms.',
+                  tag: 'Negotiation',
+                },
+                {
+                  href: '/guides/pressured-to-sign/',
+                  title: 'Pressured to Sign Quickly? Your Rights',
+                  description: 'How to handle short deadlines, employer intimidation, and the ACAS 10-day rule.',
+                  tag: 'Rights',
+                },
+                {
+                  href: '/guides/what-happens-if-you-do-not-sign/',
+                  title: 'What Happens If You Do Not Sign?',
+                  description: 'Risks, tribunal alternatives, and workplace processes if an agreement is rejected.',
+                  tag: 'Your Options',
+                },
+              ]}
+            />
+          </div>
+        </section>
+
+        {/* References */}
+        <section className="py-12 bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Statutory Authorities & Official References</h3>
+            <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/162" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 162 (Statutory redundancy formula & multipliers based on age and service)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/227" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 227 (Statutory maximum weekly pay limit)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/uksi/2026/310/contents/made" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  The Employment Rights (Increase of Limits) Order 2026 (SI 2026/310)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/124" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 124 (Compensatory award statutory cap for unfair dismissal)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/403" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Income Tax (Earnings and Pensions) Act 2003, Section 403 (£30,000 termination payment exemption)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.acas.org.uk/code-of-practice-settlement-agreements" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Acas Code of Practice on Settlement Agreements (Code of Practice 4)
+                </a>
+              </li>
+            </ol>
+            <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
+              <strong>Disclaimer:</strong> SettlementCheck is an independent educational tool and calculation service, not a law firm. The information provided in this guide is for general informational purposes only and does not constitute legal advice. You should obtain advice from a qualified, independent employment solicitor before signing any settlement agreement.
+            </div>
           </div>
         </section>
       </main>

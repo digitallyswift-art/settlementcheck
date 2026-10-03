@@ -15,7 +15,7 @@ const nextConfig = {
       {
         source: '/',
         has: [{ type: 'query', key: 'anchor', value: 'calculator' }],
-        destination: '/calculator',
+        destination: '/calculator/',
         permanent: true,
       },
     ]

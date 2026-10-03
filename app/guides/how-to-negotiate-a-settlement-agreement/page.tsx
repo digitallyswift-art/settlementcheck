@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   title: 'How to Negotiate a Settlement Agreement | The Complete UK Guide',
@@ -89,7 +90,7 @@ export default function HowToNegotiateGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-rule-strong text-xs">/</span>
@@ -184,7 +185,10 @@ export default function HowToNegotiateGuide() {
               <div className="bg-[#FFF8F6] border border-coral/20 rounded-lg p-5 mt-6 flex items-start gap-3">
                 <AlertIcon />
                 <p className="text-[14px] text-ink leading-relaxed">
-                  <strong>Exceptions:</strong> These protections do not cover discriminatory remarks, whistleblowing claims, or cases of "improper behaviour" (such as bullying an employee into signing).
+                  <strong>Exceptions:</strong> These protections do not cover discriminatory remarks, whistleblowing claims, or cases of "improper behaviour" (such as bullying an employee into signing). If your employer is rushing or intimidating you, read our guide on{' '}
+                  <Link href="/guides/pressured-to-sign/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                    your rights when pressured to sign quickly
+                  </Link>.
                 </p>
               </div>
             </div>
@@ -238,7 +242,12 @@ export default function HowToNegotiateGuide() {
               <ul className="space-y-3 bg-paper-2 border border-rule rounded-xl p-6">
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
-                  <span className="text-[15px] text-ink"><strong>Notice Pay:</strong> Payment for the contractual notice period.</span>
+                  <span className="text-[15px] text-ink">
+                    <strong>Notice Pay:</strong> Payment for the contractual notice period. Note that PILON is always taxable as earnings — see our guide on{' '}
+                    <Link href="/guides/pilon-tax-treatment-2026/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      PILON tax treatment
+                    </Link>.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
@@ -246,11 +255,28 @@ export default function HowToNegotiateGuide() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
-                  <span className="text-[15px] text-ink"><strong>Statutory Redundancy / Basic Award:</strong> The legal minimum calculation based on age, length of service, and weekly pay.</span>
+                  <span className="text-[15px] text-ink">
+                    <strong>Statutory Redundancy / Basic Award:</strong> The legal minimum calculation based on age, service, and the £751 weekly pay cap. Check our{' '}
+                    <Link href="/redundancy-calculator/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      Redundancy Calculator
+                    </Link>{' '}
+                    or read our guide on{' '}
+                    <Link href="/guides/settlement-agreement-acas-calculations/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      ACAS-based calculations
+                    </Link>.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
-                  <span className="text-[15px] text-ink"><strong>Ex-gratia Payment:</strong> The additional, discretionary compensation offered to secure the agreement.</span>
+                  <span className="text-[15px] text-ink">
+                    <strong>Ex-gratia Payment:</strong> Discretionary compensation to secure the waiver of claims. Up to £30,000 can be paid tax-free (see the{' '}
+                    <Link href="/guides/tax-free-settlement-30000/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      £30,000 tax exemption rule
+                    </Link>). Learn what a reasonable multiple is in{' '}
+                    <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      What Is a Fair Settlement Agreement?
+                    </Link>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -292,14 +318,24 @@ export default function HowToNegotiateGuide() {
                 
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">2</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Instruct a solicitor</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">The employee provides the draft to an independent solicitor. The solicitor reviews the terms and explains the legal rights being surrendered.</p>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Instruct an independent solicitor</h3>
+                  <p className="text-[15px] text-muted leading-relaxed">
+                    The employee provides the draft to an independent solicitor. Remember: you have the legal right to choose your own adviser (read{' '}
+                    <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      do you have to use your employer's solicitor?
+                    </Link>).
+                  </p>
                 </div>
 
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">3</div>
                   <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Submit a counter-offer</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">If the offer is insufficient, the employee (or their solicitor) submits a factual, commercial counter-offer outlining the financial justification.</p>
+                  <p className="text-[15px] text-muted leading-relaxed">
+                    If the offer is insufficient, submit a factual counter-offer outlining the commercial justification. If your employer resists, understand your alternatives in our guide on{' '}
+                    <Link href="/guides/what-happens-if-you-do-not-sign/" className="text-coral underline underline-offset-2 hover:text-ink">
+                      what happens if you do not sign
+                    </Link>.
+                  </p>
                 </div>
 
                 <div className="relative pl-8">
@@ -345,9 +381,14 @@ export default function HowToNegotiateGuide() {
               <p className="text-white/70 text-[15px] leading-relaxed mb-6">
                 Calculate statutory minimums and view typical UK settlement ranges based on specific circumstances.
               </p>
-              <Link href="/redundancy-calculator" className="btn-accent">
-                Check offer ranges →
-              </Link>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link href="/calculator/" className="btn-accent">
+                  Settlement Calculator →
+                </Link>
+                <Link href="/redundancy-calculator/" className="btn-secondary">
+                  Redundancy Calculator →
+                </Link>
+              </div>
             </div>
 
             {/* FAQ */}
@@ -358,11 +399,73 @@ export default function HowToNegotiateGuide() {
               </div>
             </div>
 
-            {/* Disclaimer */}
-            <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed">
-              SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement process and does not constitute legal advice.
-            </p>
+            {/* Related Articles Component */}
+            <RelatedArticles
+              title="Related Guides & Calculations"
+              items={[
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Benchmark your settlement offer against industry standards and legal minimums.',
+                  tag: 'Valuation',
+                },
+                {
+                  href: '/guides/pressured-to-sign/',
+                  title: 'Pressured to Sign Quickly? Your Rights',
+                  description: 'The ACAS 10-day rule and how to handle employer deadlines and pressure.',
+                  tag: 'Employee Rights',
+                },
+                {
+                  href: '/guides/what-happens-if-you-do-not-sign/',
+                  title: 'What Happens if You Do Not Sign?',
+                  description: 'Your choices and risks if you reject the agreement or fail to reach an accord.',
+                  tag: 'Risks & Alternatives',
+                },
+                {
+                  href: '/guides/employer-recommended-solicitor/',
+                  title: 'Do You Have to Use Their Solicitor?',
+                  description: 'Your right to appoint your own independent legal counsel at their expense.',
+                  tag: 'Legal Advice',
+                },
+              ]}
+            />
+          </div>
+        </section>
 
+        {/* References */}
+        <section className="py-12 bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Statutory Authorities & Official References</h3>
+            <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/111A" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 111A (Confidentiality of pre-termination negotiations)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.acas.org.uk/code-of-practice-settlement-agreements" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Acas Code of Practice on Settlement Agreements (Code of Practice 4)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/203" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 203 (Restrictions on contracting out & independent legal advice requirements)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/uksi/2026/310/contents/made" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  The Employment Rights (Increase of Limits) Order 2026 (SI 2026/310)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/403" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Income Tax (Earnings and Pensions) Act 2003, Section 403 (£30,000 exemption threshold)
+                </a>
+              </li>
+            </ol>
+            <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
+              <strong>Disclaimer:</strong> SettlementCheck is an independent introduction service and informational resource. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement negotiation process and does not constitute legal counsel.
+            </div>
           </div>
         </section>
       </main>

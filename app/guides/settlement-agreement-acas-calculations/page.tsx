@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   title: 'Settlement Agreement ACAS-Based Calculations | SettlementCheck',
@@ -94,7 +95,7 @@ export default function AcasCalculationsGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>
@@ -115,20 +116,42 @@ export default function AcasCalculationsGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">What ACAS-based statutory calculations cover</h2>
             <p className="sc-body mb-6">
-              ACAS-based statutory calculations provide minimum entitlements that apply across England, Scotland, and Wales. These figures are the legal floor, not the ceiling. Your employer may offer more. Four key elements make up the statutory baseline.
+              ACAS-based statutory calculations provide minimum entitlements that apply across England, Scotland, and Wales. These figures are the legal floor, not the ceiling. Your employer may offer more. Learn how to evaluate your total offer in our guide on{' '}
+              <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
+                what is a fair settlement agreement
+              </Link>. Four key elements make up the statutory baseline:
             </p>
             <ul className="flex flex-col gap-3">
-              {[
-                'Statutory redundancy pay is capped at £22,530, calculated using age, length of service, and weekly salary capped at £751 (April 2026, SI 2026/310).',
-                'Notice pay is compensation for the contractual notice period owed but not worked.',
-                'Holiday pay is payment for accrued but untaken annual leave at the point of leaving.',
-                'The £30,000 tax-free limit applies to genuine compensation payments under ITEPA 2003 s.403, excluding PILON.',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <CheckIcon />
-                  <span className="sc-body">{item}</span>
-                </li>
-              ))}
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="sc-body">
+                  Statutory redundancy pay is capped at £22,530, calculated using age, length of service, and weekly salary capped at £751 (April 2026, SI 2026/310). Try our free{' '}
+                  <Link href="/redundancy-calculator/" className="text-coral underline underline-offset-2 hover:text-ink">
+                    Redundancy Calculator
+                  </Link>{' '}
+                  or read about the{' '}
+                  <Link href="/guides/redundancy-pay-cap-2026/" className="text-coral underline underline-offset-2 hover:text-ink">
+                    redundancy pay cap 2026
+                  </Link>.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="sc-body">Notice pay is compensation for the contractual notice period owed but not worked.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="sc-body">Holiday pay is payment for accrued but untaken annual leave at the point of leaving.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="sc-body">
+                  The £30,000 tax-free limit applies to genuine compensation payments under ITEPA 2003 s.403 (read our guide on{' '}
+                  <Link href="/guides/tax-free-settlement-30000/" className="text-coral underline underline-offset-2 hover:text-ink">
+                    tax on settlements: £30k rule
+                  </Link>), excluding PILON.
+                </span>
+              </li>
             </ul>
           </div>
         </section>
@@ -214,13 +237,23 @@ export default function AcasCalculationsGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">The 10-day consideration period in ACAS-based practice</h2>
             <p className="sc-body mb-4">
-              UK employment law practice requires employers to allow a minimum of 10 calendar days for an employee to review a settlement offer before signing. This standard is reflected in ACAS-based guidance and is widely applied across settlement negotiations.
+              UK employment law practice requires employers to allow a minimum of 10 calendar days for an employee to review a settlement offer before signing. This standard is reflected in ACAS-based guidance. If your employer is pressuring you with an urgent 24-hour deadline, read our guide on{' '}
+              <Link href="/guides/pressured-to-sign/" className="text-coral underline underline-offset-2 hover:text-ink">
+                what are your rights when pressured to sign quickly
+              </Link>.
             </p>
             <p className="sc-body mb-4">
-              The 10 days begins from the date the employer presents the draft agreement. Within this window you should appoint a solicitor, obtain independent legal advice, and consider whether to counter-offer. The employer cannot require you to sign before this period ends.
+              The 10 days begins from the date the employer presents the draft agreement. Within this window you should appoint an independent adviser (see{' '}
+              <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink">
+                why you don't have to use your employer's recommended solicitor
+              </Link>
+              ), obtain independent legal advice, and consider whether to submit a counter-offer.
             </p>
             <p className="sc-body">
-              The employer can withdraw the offer at any time. A counter-offer in contract law acts as a rejection of the original offer, meaning the employer could remove the settlement entirely. In practice, most employers reiterate their original figure rather than withdrawing.
+              For practical guidance on formulating a counter-offer, consult our walkthrough on{' '}
+              <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
+                how to negotiate a settlement agreement
+              </Link>.
             </p>
           </div>
         </section>
@@ -232,12 +265,20 @@ export default function AcasCalculationsGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Enter your age, salary, and length of service. The calculator applies the April 2026 statutory rates and separates PILON from the £30,000 tax-free limit.
             </p>
-            <Link
-              href="/#calculator"
-              className="btn-accent"
-            >
-              Calculate my entitlement
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link
+                href="/calculator/"
+                className="btn-accent"
+              >
+                Calculate my entitlement →
+              </Link>
+              <Link
+                href="/redundancy-calculator/"
+                className="btn-secondary"
+              >
+                Redundancy calculator →
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -246,6 +287,79 @@ export default function AcasCalculationsGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+
+            {/* Related Articles Component */}
+            <RelatedArticles
+              title="Related Guides & Tools"
+              items={[
+                {
+                  href: '/redundancy-calculator/',
+                  title: 'Redundancy Pay Calculator',
+                  description: 'Calculate your statutory redundancy using the £751 weekly cap and age tiers.',
+                  tag: 'Calculator',
+                },
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Understand how employers calculate ex-gratia uplifts beyond the ACAS baseline.',
+                  tag: 'Valuation',
+                },
+                {
+                  href: '/guides/tax-free-settlement-30000/',
+                  title: 'Tax on Settlement Agreements: £30,000 Rule',
+                  description: 'Detailed analysis of ITEPA 2003 s.403 exemptions and tax bands.',
+                  tag: 'Tax Rules',
+                },
+                {
+                  href: '/guides/pilon-tax-treatment-2026/',
+                  title: 'PILON Tax Treatment 2026',
+                  description: 'Why Pay in Lieu of Notice is always taxable as earnings under s.402D.',
+                  tag: 'Notice & Tax',
+                },
+              ]}
+            />
+          </div>
+        </section>
+
+        {/* References */}
+        <section className="py-12 bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Statutory Authorities & Official References</h3>
+            <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/162" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 162 (Statutory redundancy payment computation)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/227" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 227 (Statutory weekly pay limit)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/uksi/2026/310/contents/made" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  The Employment Rights (Increase of Limits) Order 2026 (SI 2026/310)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/124" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 124 (Limit of compensatory award)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.acas.org.uk/code-of-practice-settlement-agreements" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Acas Code of Practice on Settlement Agreements (Code of Practice 4)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/403" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Income Tax (Earnings and Pensions) Act 2003, Section 403 (£30,000 threshold)
+                </a>
+              </li>
+            </ol>
+            <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
+              <strong>Disclaimer:</strong> SettlementCheck is an independent educational tool and calculation service, not a law firm. The figures generated are estimates based on standard UK statutory formulas and do not constitute formal legal counsel. Always obtain independent advice from an SRA-regulated solicitor before signing.
+            </div>
           </div>
         </section>
       </main>

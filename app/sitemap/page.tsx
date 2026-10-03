@@ -91,6 +91,11 @@ const sitemapData: SitemapCategory[] = [
         description: 'Browse all in-depth employment law and settlement agreement articles.',
       },
       {
+        title: 'Discrimination Settlement Agreements & Vento Bands',
+        href: '/guides/discrimination-settlement-agreements/',
+        description: 'Uncapped compensation under the Equality Act 2010, 2026 Vento bands, and tax exemption rules.',
+      },
+      {
         title: 'How to Negotiate a Settlement Agreement',
         href: '/guides/how-to-negotiate-a-settlement-agreement/',
         description: 'Strategies for negotiating higher financial payouts and favourable departure terms.',

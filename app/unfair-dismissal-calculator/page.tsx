@@ -99,6 +99,37 @@ const JSON_LD = {
   '@context': 'https://schema.org',
   '@graph': [
     {
+      '@type': ['WebApplication', 'SoftwareApplication'],
+      name: 'UK Unfair Dismissal Compensation Calculator 2026',
+      url: 'https://settlementcheck.co.uk/unfair-dismissal-calculator/',
+      applicationCategory: ['BusinessApplication', 'FinanceApplication'],
+      operatingSystem: 'All modern web browsers',
+      browserRequirements: 'Requires JavaScript. Requires HTML5.',
+      softwareVersion: '2026.1 (SI 2026/310)',
+      isAccessibleForFree: true,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+      },
+      description:
+        'Free UK unfair dismissal compensation calculator. Evaluates basic and compensatory awards under April 2026 statutory rates, applying the £123,543 compensatory cap, Polkey reductions, and the £30,000 tax-free exemption.',
+      featureList: [
+        'Statutory basic award calculation capped at £751 per week (max £22,530)',
+        'Compensatory award assessment capped at £123,543 or 52 weeks gross pay',
+        'Evaluation of Polkey reductions and ACAS Code 1 uplifts up to 25 percent',
+        'Net take-home pay estimate separating PILON from the £30,000 tax-free threshold',
+        'Free tool with instant calculation and no email required',
+      ],
+      screenshot: 'https://settlementcheck.co.uk/og-image.png',
+      creator: {
+        '@type': 'Organization',
+        name: 'SettlementCheck',
+        url: 'https://settlementcheck.co.uk',
+      },
+    },
+    {
       '@type': 'FAQPage',
       mainEntity: FAQ_SCHEMA_ITEMS.map((item) => ({
         '@type': 'Question',
@@ -172,27 +203,43 @@ export default function UnfairDismissalCalculatorPage() {
         steps={UNFAIR_DISMISSAL_STEPS}
         faqItems={UNFAIR_DISMISSAL_FAQS}
         ctaLabel="Estimate my unfair dismissal award →"
-        ctaHref="/calculator"
+        ctaHref="/calculator/"
         howItWorksTitle="Three steps to understand your unfair dismissal position."
         howItWorksLead="From what the law says you could be owed, to the net figure after tax. Free, no email required."
         taxSectionTitle="How much tax will you pay on an unfair dismissal settlement?"
         statutoryRows={statutoryRows}
         pageLinks={[
           {
-            href: '/guides/what-is-a-fair-settlement-agreement',
-            label: 'What is a fair settlement agreement?',
+            href: '/calculator/',
+            label: 'Settlement Agreement Calculator',
           },
           {
-            href: '/guides/how-to-negotiate-a-settlement-agreement',
-            label: 'How to negotiate your settlement',
+            href: '/redundancy-calculator/',
+            label: 'Redundancy Pay Calculator',
           },
           {
-            href: '/guides/pressured-to-sign',
-            label: 'Being pressured to sign? Know your rights',
+            href: '/constructive-dismissal-calculator/',
+            label: 'Constructive Dismissal Calculator',
           },
           {
-            href: '/redundancy-calculator',
-            label: 'Redundancy pay calculator',
+            href: '/guides/unfair-dismissal-settlement-agreements/',
+            label: 'Unfair Dismissal Settlement Guide 2026',
+          },
+          {
+            href: '/guides/what-happens-if-you-do-not-sign/',
+            label: 'What Happens If You Do Not Sign?',
+          },
+          {
+            href: '/guides/what-is-a-fair-settlement-agreement/',
+            label: 'What Is a Fair Settlement Agreement?',
+          },
+          {
+            href: '/guides/how-to-negotiate-a-settlement-agreement/',
+            label: 'How to Negotiate Your Settlement',
+          },
+          {
+            href: '/guides/pressured-to-sign/',
+            label: 'Being Pressured to Sign? Know Your Rights',
           },
         ]}
       />

@@ -26,112 +26,140 @@ export const metadata: Metadata = {
 
 const GUIDES = [
   {
-    href: '/guides/constructive-dismissal-settlement-agreements',
+    href: '/guides/settlement-agreement-sick-leave/',
+    eyebrow: 'Sick Leave & Health',
+    title: 'Settlement Agreement on Sick Leave: UK Rights & Pay',
+    description: 'Off work sick and offered a settlement agreement? Learn your 2026 rights, statutory notice pay rules, disability protections, and tax limits.',
+    readTime: '8 min read',
+  },
+  {
+    href: '/guides/protected-conversations-without-prejudice/',
+    eyebrow: 'Section 111A ERA 1996',
+    title: 'Protected Conversations & Without Prejudice UK',
+    description: 'Understand the difference between Section 111A and Without Prejudice. Learn your rights, improper behaviour rules, and the ACAS 10-day consideration period.',
+    readTime: '7 min read',
+  },
+  {
+    href: '/guides/discrimination-settlement-agreements/',
+    eyebrow: 'Equality Act 2010',
+    title: 'Discrimination Settlement Agreements UK 2026',
+    description: 'Learn how discrimination settlements work under the Equality Act 2010. Understand uncapped compensation, the 2026 Vento bands, and tax-free rules.',
+    readTime: '8 min read',
+  },
+  {
+    href: '/guides/unfair-dismissal-settlement-agreements/',
+    eyebrow: 'Employment Law',
+    title: 'Unfair Dismissal Settlement Agreements UK 2026',
+    description: 'Learn how unfair dismissal settlements work in the UK. Understand 2026 compensation caps, Polkey rules, tax-free limits, and negotiation steps.',
+    readTime: '8 min read',
+  },
+  {
+    href: '/guides/constructive-dismissal-settlement-agreements/',
     eyebrow: 'Employment Law',
     title: 'Constructive Dismissal Settlement Agreements UK 2026',
     description: 'Learn how constructive dismissal settlement agreements work in the UK. Understand statutory limits, the £30,000 tax-free rule, and how to value your offer.',
     readTime: '7 min read',
   },
   {
-    href: '/guides/nhs-settlement-agreements',
+    href: '/guides/nhs-settlement-agreements/',
     eyebrow: 'NHS & Public Sector',
     title: 'NHS Settlement Agreements: Special Severance Payments',
     description: 'NHS settlement agreements and Special Severance Payments in 2026. Learn how HM Treasury approvals work, the £100,000 threshold, and your whistleblowing rights.',
     readTime: '6 min read',
   },
   {
-    href: '/guides/settlement-agreement-vs-tribunal-claim',
+    href: '/guides/settlement-agreement-vs-tribunal-claim/',
     eyebrow: 'Legal advice',
     title: 'Settlement Agreement vs Employment Tribunal UK 2026',
     description: 'Compare a private settlement agreement vs a public employment tribunal claim. Learn about compensation caps, timelines, upfront costs, and stress factors.',
     readTime: '7 min read',
   },
   {
-    href: '/guides/average-settlement-agreement-payout-uk',
+    href: '/guides/average-settlement-agreement-payout-uk/',
     eyebrow: 'Settlement Agreements',
     title: 'Average Settlement Agreement Payouts UK 2026',
     description: 'What is a normal UK settlement agreement payout? Learn about typical ranges, redundancy pay caps, notice pay rules, and how to value your offer.',
     readTime: '7 min read',
   },
   {
-    href: '/guides/what-is-a-fair-settlement-agreement',
+    href: '/guides/what-is-a-fair-settlement-agreement/',
     eyebrow: 'Settlement Agreements',
     title: 'What Is a Fair Settlement Agreement?',
     description: 'A fair offer goes beyond the statutory minimum. Understand the multiplier ranges, what strengthens your position, and the red flags that signal an employer is offering too little.',
     readTime: '9 min read',
   },
   {
-    href: '/guides/is-my-settlement-offer-fair',
+    href: '/guides/is-my-settlement-offer-fair/',
     eyebrow: 'Settlement Agreements',
     title: 'Is My Settlement Offer Fair?',
     description: 'Compare your offer against statutory minimums and typical UK ranges. Five red flags that signal an offer is too low, and what to do about it.',
     readTime: '7 min read',
   },
   {
-    href: '/guides/redundancy-pay-cap-2026',
+    href: '/guides/redundancy-pay-cap-2026/',
     eyebrow: 'Redundancy',
     title: 'Redundancy Pay Cap 2026',
     description: 'The weekly pay cap is £751 from April 2026. Learn how it affects your calculation, see worked examples, and check if your employer is paying you correctly.',
     readTime: '7 min read',
   },
   {
-    href: '/guides/pilon-tax-treatment-2026',
+    href: '/guides/pilon-tax-treatment-2026/',
     eyebrow: 'Tax',
     title: 'PILON Tax Treatment UK 2026',
     description: 'Is Pay in Lieu of Notice tax-free? Learn how PILON is taxed under ITEPA 2003 Section 402D and how to check your settlement.',
     readTime: '6 min read',
   },
   {
-    href: '/guides/tax-free-settlement-30000',
+    href: '/guides/tax-free-settlement-30000/',
     eyebrow: 'Tax',
     title: 'Tax on Settlement Agreements: The £30,000 Rule',
     description: 'Is your settlement agreement tax-free? Learn how the £30,000 exemption limit works under ITEPA 2003 s.403, what qualifies, and how the rest is taxed.',
     readTime: '7 min read',
   },
   {
-    href: '/guides/settlement-agreement-acas-calculations',
+    href: '/guides/settlement-agreement-acas-calculations/',
     eyebrow: 'Calculations',
     title: 'ACAS-Based Settlement Calculations',
     description: 'How the statutory framework works: the £751 weekly pay cap, the three-tier redundancy formula, PILON tax rules, and the £30,000 tax-free limit.',
     readTime: '6 min read',
   },
   {
-    href: '/guides/fair-work-agency',
+    href: '/guides/fair-work-agency/',
     eyebrow: 'UK Employment Law',
     title: 'What Is the Fair Work Agency?',
     description: 'The Fair Work Agency is a new UK enforcement body established by the Employment Rights Act 2025. Not yet operational. Learn what it will do and whether it affects your settlement.',
     readTime: '5 min read',
   },
   {
-    href: '/guides/how-to-negotiate-a-settlement-agreement',
+    href: '/guides/how-to-negotiate-a-settlement-agreement/',
     eyebrow: 'Negotiation',
     title: 'How to Negotiate a Settlement Agreement',
     description: 'Without Prejudice rules, what leverage you have, counter-offer tactics, and the step-by-step process from first offer to signed agreement.',
     readTime: '8 min read',
   },
   {
-    href: '/guides/employer-recommended-solicitor',
+    href: '/guides/employer-recommended-solicitor/',
     eyebrow: 'Legal advice',
     title: 'Do You Have to Use the Solicitor Your Employer Recommends?',
     description: 'No. You are entitled to choose your own solicitor. Here is what the law says, why it matters, and how to find someone whose interests are aligned with yours.',
     readTime: '5 min read',
   },
   {
-    href: '/guides/pressured-to-sign',
+    href: '/guides/pressured-to-sign/',
     eyebrow: 'Employee Rights',
     title: 'My employer is pressuring me to sign quickly. What are my rights?',
     description: 'The ACAS 10-day rule, identifying "improper behaviour" under Section 111A, and what to do if you are threatened with dismissal for not signing.',
     readTime: '6 min read',
   },
   {
-    href: '/guides/what-happens-if-you-do-not-sign',
+    href: '/guides/what-happens-if-you-do-not-sign/',
     eyebrow: 'Employee Rights',
     title: 'What happens if you do not sign a settlement agreement?',
     description: 'Your options if you reject the offer, including alternative processes (redundancy or PIPs), tribunal risks, and negotiating a counter-proposal.',
     readTime: '6 min read',
   },
   {
-    href: '/guides/protective-award',
+    href: '/guides/protective-award/',
     eyebrow: 'Redundancy',
     title: 'What Is a Protective Award?',
     description: 'Tribunal compensation of up to 90 days\' gross pay for collective consultation failures. Learn how the calculation works and how to claim in 2026.',
@@ -190,6 +218,59 @@ export default function GuidesPage() {
           </div>
         </section>
 
+        {/* ── CALCULATORS CALLOUT ────────────────────────────── */}
+        <section className="py-12 bg-paper-2 border-y border-rule">
+          <div className="sc-container">
+            <div className="max-w-[700px] mb-8">
+              <span className="sc-eyebrow">Calculators</span>
+              <h2 className="sc-section-h2 mt-2">Free UK Settlement & Redundancy Calculators</h2>
+              <p className="sc-lead mt-3">
+                Calculate your statutory rights, notice pay, and tax-free allowances under 2026 UK employment law limits.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                {
+                  href: '/calculator/',
+                  title: 'Settlement Calculator',
+                  desc: 'Estimate your overall settlement package and net take-home pay.',
+                },
+                {
+                  href: '/redundancy-calculator/',
+                  title: 'Redundancy Calculator',
+                  desc: 'Calculate statutory redundancy using the £751/wk statutory cap.',
+                },
+                {
+                  href: '/unfair-dismissal-calculator/',
+                  title: 'Unfair Dismissal Calculator',
+                  desc: 'Estimate basic and compensatory awards up to the £123,543 cap.',
+                },
+                {
+                  href: '/constructive-dismissal-calculator/',
+                  title: 'Constructive Dismissal',
+                  desc: 'Assess your compensation position if forced to resign.',
+                },
+              ].map((calc) => (
+                <Link
+                  key={calc.href}
+                  href={calc.href}
+                  className="bg-card border border-rule rounded-xl p-5 flex flex-col justify-between hover:border-coral hover:shadow-sm transition-all duration-[160ms] group no-underline"
+                >
+                  <div>
+                    <h3 className="font-serif text-[17px] font-[460] text-ink group-hover:text-coral transition-colors mb-1.5">
+                      {calc.title}
+                    </h3>
+                    <p className="text-[13px] text-muted leading-relaxed">{calc.desc}</p>
+                  </div>
+                  <span className="text-[13px] font-medium text-coral mt-4 inline-flex items-center gap-1 group-hover:underline">
+                    Use calculator →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── CTA BANNER ───────────────────────────────────────── */}
         <section
           className="relative overflow-hidden py-16 md:py-[88px]"
@@ -210,7 +291,7 @@ export default function GuidesPage() {
                   Free estimate in under two minutes. Your employer covers the legal fees.
                 </p>
               </div>
-              <Link href="/calculator" className="btn-accent whitespace-nowrap self-start md:self-auto">
+              <Link href="/calculator/" className="btn-accent whitespace-nowrap self-start md:self-auto">
                 Check my offer →
               </Link>
             </div>

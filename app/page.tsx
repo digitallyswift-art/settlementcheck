@@ -24,7 +24,21 @@ const orgSchema = {
   '@type': 'Organization',
   name: 'SettlementCheck (Employment)',
   url: 'https://settlementcheck.co.uk',
+  logo: 'https://settlementcheck.co.uk/og-image.png',
   description: 'Independent UK settlement agreement calculator and solicitor introduction service. Not owned by a law firm.',
+  areaServed: {
+    '@type': 'AdministrativeArea',
+    name: 'United Kingdom',
+  },
+  knowsAbout: [
+    'UK Employment Law',
+    'Settlement Agreements',
+    'Redundancy Pay',
+    'Unfair Dismissal',
+    'Constructive Dismissal',
+    'Employment Rights Act 1996',
+    'ITEPA 2003 Section 403',
+  ],
 }
 
 const webSiteSchema = {
@@ -36,17 +50,40 @@ const webSiteSchema = {
 
 const webAppSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
+  '@type': ['WebApplication', 'SoftwareApplication'],
   name: 'Employment Settlement Agreement Calculator',
   url: 'https://settlementcheck.co.uk/',
-  applicationCategory: 'BusinessFinancialApplication',
-  operatingSystem: 'Web',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
-  description: 'Free UK employment settlement agreement calculator. Shows estimated net take-home pay after tax: PILON taxed separately from the £30,000 exemption under ITEPA 2003. No email required. Based on April 2026 statutory rates.',
-  about: {
-    '@type': 'Thing',
-    name: 'Employment Law'
-  }
+  applicationCategory: ['BusinessApplication', 'FinanceApplication'],
+  operatingSystem: 'All modern web browsers',
+  browserRequirements: 'Requires JavaScript. Requires HTML5.',
+  softwareVersion: '2026.1 (SI 2026/310)',
+  isAccessibleForFree: true,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'GBP',
+    availability: 'https://schema.org/InStock',
+  },
+  description: 'Free UK employment settlement agreement calculator. Calculates estimated net take-home pay after tax, splitting PILON from the £30,000 exemption under ITEPA 2003. No email required. Based on April 2026 statutory rates (£751 weekly cap).',
+  featureList: [
+    'Instant settlement agreement fairness verdict using April 2026 statutory rates',
+    'Calculation of statutory redundancy and basic awards capped at £751 per week',
+    'Automatic separation of taxable PILON and tax-free termination payments up to £30,000',
+    'Unfair dismissal and constructive dismissal compensatory award estimates',
+    'Free independent solicitor matching with employer fee contributions',
+  ],
+  screenshot: 'https://settlementcheck.co.uk/og-image.png',
+  creator: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
+  about: [
+    { '@type': 'Thing', name: 'Employment Law' },
+    { '@type': 'Thing', name: 'Settlement Agreements' },
+    { '@type': 'Thing', name: 'Redundancy Pay' },
+    { '@type': 'Thing', name: 'Unfair Dismissal' },
+  ],
 }
 
 // FAQ schema aligned exactly to FaqAccordion DEFAULT_FAQS (7 questions)
@@ -132,6 +169,17 @@ export default function HomePage() {
       <HomeClient
         statutoryRows={statutoryRows}
         lead="Most employees don't question their first settlement agreement offer. The April 2026 statutory cap is £751 per week, but your actual take-home depends on how PILON is taxed separately from the £30,000 exemption. Use this calculator to see your real net figure in 60 seconds."
+        pageLinks={[
+          { href: '/calculator/', label: 'Settlement Agreement Calculator' },
+          { href: '/redundancy-calculator/', label: 'Redundancy Pay Calculator' },
+          { href: '/unfair-dismissal-calculator/', label: 'Unfair Dismissal Calculator' },
+          { href: '/constructive-dismissal-calculator/', label: 'Constructive Dismissal Calculator' },
+          { href: '/guides/what-is-a-fair-settlement-agreement/', label: 'What Is a Fair Settlement Agreement?' },
+          { href: '/guides/how-to-negotiate-a-settlement-agreement/', label: 'How to Negotiate a Settlement Agreement' },
+          { href: '/guides/settlement-agreement-acas-calculations/', label: 'ACAS-Based Settlement Calculations' },
+          { href: '/guides/employer-recommended-solicitor/', label: 'Using Employer Recommended Solicitor' },
+          { href: '/guides/pressured-to-sign/', label: 'Pressured to Sign Quickly Rights' },
+        ]}
       />
     </>
   )
