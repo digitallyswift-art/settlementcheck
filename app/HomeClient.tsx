@@ -21,8 +21,8 @@ const STEPS = [
   },
   {
     n: '02',
-    t: 'Match with a solicitor who negotiates',
-    d: 'A solicitor who handles settlement agreements regularly knows what employers will move on and by how much. Matching launches shortly. Add your details and we will notify you the moment it goes live.',
+    t: 'Match with an independent solicitor',
+    d: 'Your employer covers the legal advice fee under s.203(3) of the Employment Rights Act 1996. We connect you with an SRA-regulated specialist to review your terms and negotiate an uplift.',
   },
   {
     n: '03',
@@ -67,8 +67,8 @@ const TRUST: { t: string; d: React.ReactNode }[] = [
     ),
   },
   {
-    t: 'Solicitor matching launching soon',
-    d: 'We are building a panel of vetted SRA-regulated employment specialists. The matching service launches shortly. The calculator is free to use today.',
+    t: 'SRA-regulated solicitor panel',
+    d: 'We connect you with vetted employment law solicitors authorised and regulated by the Solicitors Regulation Authority. Your independent review is paid for by your employer, with zero cost to you.',
   },
 ]
 

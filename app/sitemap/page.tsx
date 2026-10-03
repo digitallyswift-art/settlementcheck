@@ -53,6 +53,12 @@ const sitemapData: SitemapCategory[] = [
         href: '/constructive-dismissal-calculator/',
         description: 'Assess claim strength and potential payout where employer breach forced your resignation.',
       },
+      {
+        title: 'Settlement Agreement Tax Calculator',
+        href: '/settlement-agreement-tax-calculator/',
+        description: 'Calculate tax-free vs taxable breakdown, £30,000 exemption under ITEPA 2003 s.403, and employer legal fee contributions.',
+        badge: 'New',
+      },
     ],
   },
   {

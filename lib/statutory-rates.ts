@@ -99,3 +99,14 @@ export function getRedundancyStatutoryRows(): StatutoryRow[] {
     { label: 'Unfair dismissal compensatory cap (GB)', y2425: `£${STATUTORY_RATES_2025_26.compensatoryAwardLimitGB.toLocaleString('en-GB')}`, y2526: `£${STATUTORY_RATES_2026_27.compensatoryAwardLimitGB.toLocaleString('en-GB')}` },
   ];
 }
+
+export function getTaxStatutoryRows(): StatutoryRow[] {
+  return [
+    { label: 'Statutory tax-free termination threshold (s.403 ITEPA)', y2425: '£30,000', y2526: '£30,000' },
+    { label: 'Notice pay (PILON) tax status', y2425: '100% Taxable (as earnings)', y2526: '100% Taxable (as earnings)' },
+    { label: 'Employer NIC on termination payments over £30k', y2425: '13.8% (Class 1A)', y2526: '13.8% (Class 1A)' },
+    { label: 'Employee NIC on termination payments over £30k', y2425: '0% (Exempt)', y2526: '0% (Exempt)' },
+    { label: 'Statutory weekly pay cap (GB)', y2425: `£${STATUTORY_RATES_2025_26.weeklyCapGB}`, y2526: `£${STATUTORY_RATES_2026_27.weeklyCapGB}` },
+    { label: 'Pension sacrifice availability on excess termination', y2425: 'Permitted', y2526: 'Permitted' },
+  ];
+}

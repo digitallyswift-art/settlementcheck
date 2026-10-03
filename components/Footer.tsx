@@ -28,6 +28,7 @@ export default function Footer() {
                 { href: '/redundancy-calculator/', label: 'Redundancy Calculator' },
                 { href: '/unfair-dismissal-calculator/', label: 'Unfair Dismissal Calculator' },
                 { href: '/constructive-dismissal-calculator/', label: 'Constructive Dismissal Calculator' },
+                { href: '/settlement-agreement-tax-calculator/', label: 'Settlement Tax Calculator' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>

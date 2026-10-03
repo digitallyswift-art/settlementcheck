@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/redundancy-calculator/`,                          lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/unfair-dismissal-calculator/`,                    lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/constructive-dismissal-calculator/`,              lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/settlement-agreement-tax-calculator/`,            lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
 
     // Tier 3: Funnel + how-it-works
     { url: `${base}/how-it-works/`,                                   lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
