@@ -117,6 +117,22 @@ const faqSchema = {
     },
     {
       '@type': 'Question',
+      name: 'How much should a typical UK settlement agreement payout be?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "A typical UK settlement payout covers your full notice pay (PILON), accrued untaken holiday, statutory redundancy if applicable (up to the £751 weekly cap), plus an ex-gratia compensation payment usually between 1 to 3 months' gross salary. The first £30,000 of compensation is tax-free.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does GOV.UK or ACAS offer an official settlement calculator?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'No. Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. The government only provides a basic statutory redundancy calculator. SettlementCheck is an independent tool that calculates your full estimated package, including non-statutory compensation, notice pay, and tax exemptions under ITEPA 2003.',
+      },
+    },
+    {
+      '@type': 'Question',
       name: 'How accurate is the calculator?',
       acceptedAnswer: {
         '@type': 'Answer',

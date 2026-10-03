@@ -40,6 +40,10 @@ const FAQS = [
     q: 'What does ACAS-based mean for settlement agreements?',
     a: 'ACAS-based refers to calculations that use the UK statutory rates and employment law framework governing settlement agreements. These include the weekly pay cap (£751 from April 2026, SI 2026/310), the statutory redundancy formula under the Employment Rights Act 1996, and the £30,000 tax-free termination limit under ITEPA 2003 s.403. These figures apply to all settlement agreements in England, Scotland, and Wales.',
   },
+  {
+    q: 'Does ACAS offer an official settlement agreement calculator?',
+    a: 'No. ACAS does not provide an online settlement agreement calculator. ACAS provides free early conciliation and statutory guidance, but does not calculate settlement payouts. SettlementCheck uses the ACAS and Employment Rights Act statutory formula alongside market data to calculate your complete settlement estimate.',
+  },
 ]
 
 const faqSchema = {

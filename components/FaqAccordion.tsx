@@ -21,6 +21,14 @@ const DEFAULT_FAQS: FaqItem[] = [
     a: 'It depends on which part of your payment is being taxed. Statutory redundancy pay and other termination payments up to £30,000 are tax-free under ITEPA 2003 s.403. Payment in lieu of notice (PILON) is always fully taxable as earnings under s.402D, regardless of what it is called in your agreement. The calculator separates these two elements and shows your estimated net take-home figure after tax.',
   },
   {
+    q: 'How much should a typical UK settlement agreement payout be?',
+    a: "A typical UK settlement payout covers your full notice pay (PILON), accrued untaken holiday, statutory redundancy if applicable (up to the £751 weekly cap), plus an ex-gratia compensation payment usually between 1 to 3 months' gross salary. The first £30,000 of compensation is tax-free.",
+  },
+  {
+    q: 'Does GOV.UK or ACAS offer an official settlement calculator?',
+    a: 'No. Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. The government only provides a basic statutory redundancy calculator. SettlementCheck is an independent tool that calculates your full estimated package, including non-statutory compensation, notice pay, and tax exemptions under ITEPA 2003.',
+  },
+  {
     q: 'How accurate is the calculator?',
     a: "The calculator gives a general estimate based on UK statutory rates and typical UK settlement market data. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
   },
