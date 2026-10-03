@@ -6,26 +6,27 @@ import type { FaqItem } from '@/components/FaqAccordion'
 import { getUnfairDismissalStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
-  title: 'Unfair Dismissal Calculator 2026 | Basic & Compensatory Award | SettlementCheck (Employment)',
+  metadataBase: new URL('https://settlementcheck.co.uk'),
+  title: 'Unfair Dismissal Calculator UK 2026 | SettlementCheck',
   description:
-    'Estimate your unfair dismissal basic and compensatory award using April 2026 UK rates. Compensatory cap £123,543. See whether your settlement offer is fair in 60 seconds. Free, no email. (Not an immigration or visa status service).',
+    'Estimate your unfair dismissal basic and compensatory award using April 2026 statutory rates (£123,543 cap). Check where your offer stands in 60 seconds.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/unfair-dismissal-calculator/',
+    canonical: '/unfair-dismissal-calculator/',
   },
   openGraph: {
-    title: 'Unfair Dismissal Calculator 2026 | Basic & Compensatory Award | SettlementCheck (Employment)',
+    title: 'Unfair Dismissal Calculator UK 2026 | SettlementCheck',
     description:
-      'Estimate your unfair dismissal basic and compensatory award using April 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
-    url: 'https://settlementcheck.co.uk/unfair-dismissal-calculator/',
+      'Estimate your unfair dismissal basic and compensatory award using April 2026 statutory rates (£123,543 cap). Check where your offer stands in 60 seconds.',
+    url: '/unfair-dismissal-calculator/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Unfair Dismissal Calculator 2026 | SettlementCheck (Employment)',
+    title: 'Unfair Dismissal Calculator UK 2026 | SettlementCheck',
     description:
-      'Basic and compensatory award estimate using 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
+      'Estimate your unfair dismissal award using April 2026 UK rates (£123,543 cap). Free check, no email required.',
   },
 }
 
@@ -128,6 +129,38 @@ const JSON_LD = {
         name: 'SettlementCheck',
         url: 'https://settlementcheck.co.uk',
       },
+      reviewedBy: {
+        '@type': 'Organization',
+        name: 'SettlementCheck Legal Research Desk',
+        url: 'https://settlementcheck.co.uk/how-it-works/',
+      },
+      isBasedOn: [
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 119',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/119',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 123',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/123',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 124',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/124',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'The Employment Rights (Increase of Limits) Order 2026',
+          url: 'https://www.legislation.gov.uk/uksi/2026/index',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Income Tax (Earnings and Pensions) Act 2003, Section 403',
+          url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/403',
+        },
+      ],
     },
     {
       '@type': 'FAQPage',
@@ -170,8 +203,7 @@ export default function UnfairDismissalCalculatorPage() {
   const statutoryRows = getUnfairDismissalStatutoryRows()
   return (
     <>
-      <Script
-        id="unfair-dismissal-calculator-schema"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />

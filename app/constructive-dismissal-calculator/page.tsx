@@ -7,16 +7,16 @@ import { getConstructiveDismissalStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Constructive Dismissal Calculator 2026 | Forced to Resign? | SettlementCheck (Employment)',
+  title: 'Constructive Dismissal Calculator UK 2026 | SettlementCheck',
   description:
-    'Forced to resign by your employer\'s conduct? Estimate your constructive dismissal settlement using April 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
+    'Forced to resign by your employer? Estimate your constructive dismissal settlement using April 2026 statutory rates (£123,543 cap). Free check, no email.',
   alternates: {
     canonical: '/constructive-dismissal-calculator/',
   },
   openGraph: {
-    title: 'Constructive Dismissal Calculator 2026 | Forced to Resign? | SettlementCheck (Employment)',
+    title: 'Constructive Dismissal Calculator UK 2026 | SettlementCheck',
     description:
-      'Forced to resign by your employer\'s conduct? Estimate your constructive dismissal settlement using April 2026 UK rates. Compensatory cap £123,543. Free, no email. (Not an immigration or visa status service).',
+      'Forced to resign by your employer? Estimate your constructive dismissal settlement using April 2026 statutory rates (£123,543 cap). Free check, no email.',
     url: '/constructive-dismissal-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Constructive Dismissal Calculator 2026 | SettlementCheck (Employment)',
+    title: 'Constructive Dismissal Calculator UK 2026 | SettlementCheck',
     description:
-      'Forced to resign? Estimate your constructive dismissal settlement using 2026 UK rates. Free, no email. (Not an immigration or visa status service).',
+      'Forced to resign? Calculate your constructive dismissal settlement under April 2026 UK rates (£123,543 cap). Free instant tool.',
   },
 }
 
@@ -129,6 +129,43 @@ const JSON_LD = {
         name: 'SettlementCheck',
         url: 'https://settlementcheck.co.uk',
       },
+      reviewedBy: {
+        '@type': 'Organization',
+        name: 'SettlementCheck Legal Research Desk',
+        url: 'https://settlementcheck.co.uk/how-it-works/',
+      },
+      isBasedOn: [
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 95(1)(c)',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/95',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 119',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/119',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 123',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/123',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 124',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/124',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'The Employment Rights (Increase of Limits) Order 2026',
+          url: 'https://www.legislation.gov.uk/uksi/2026/index',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Income Tax (Earnings and Pensions) Act 2003, Section 403',
+          url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/403',
+        },
+      ],
     },
     {
       '@type': 'FAQPage',
@@ -171,8 +208,7 @@ export default function ConstructiveDismissalCalculatorPage() {
   const statutoryRows = getConstructiveDismissalStatutoryRows()
   return (
     <>
-      <Script
-        id="constructive-dismissal-calculator-schema"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />

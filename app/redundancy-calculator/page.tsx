@@ -7,16 +7,16 @@ import { getRedundancyStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Redundancy Pay Calculator 2026 | Statutory & Enhanced Pay | SettlementCheck (Employment)',
+  title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
   description:
-    'Calculate your statutory redundancy pay using April 2026 rates. Weekly cap £751 (GB), age multipliers, PILON tax treatment, and £30,000 tax-free limit explained. Free, no email. (Not an immigration or visa status service).',
+    'Calculate your statutory redundancy pay under April 2026 UK rates (£751 weekly cap). See your true net figure after tax. Free check, no email required.',
   alternates: {
     canonical: '/redundancy-calculator/',
   },
   openGraph: {
-    title: 'Redundancy Pay Calculator 2026 | Statutory & Enhanced Pay | SettlementCheck (Employment)',
+    title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your statutory redundancy pay using April 2026 rates. Weekly cap £751 (GB), age multipliers, PILON tax treatment, and £30,000 tax-free limit explained. Free, no email. (Not an immigration or visa status service).',
+      'Calculate your statutory redundancy pay under April 2026 UK rates (£751 weekly cap). See your true net figure after tax. Free check, no email required.',
     url: '/redundancy-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Redundancy Pay Calculator 2026 | SettlementCheck (Employment)',
+    title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
     description:
-      'Statutory redundancy pay using 2026 UK rates. Weekly cap £751. Free, no email required. (Not an immigration or visa status service).',
+      'Calculate your statutory redundancy entitlement under April 2026 rates (£751 cap). Free instant calculator, no email required.',
   },
 }
 
@@ -129,6 +129,33 @@ const JSON_LD = {
         name: 'SettlementCheck',
         url: 'https://settlementcheck.co.uk',
       },
+      reviewedBy: {
+        '@type': 'Organization',
+        name: 'SettlementCheck Legal Research Desk',
+        url: 'https://settlementcheck.co.uk/how-it-works/',
+      },
+      isBasedOn: [
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 162',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/162',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 227',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/227',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'The Employment Rights (Increase of Limits) Order 2026',
+          url: 'https://www.legislation.gov.uk/uksi/2026/index',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Income Tax (Earnings and Pensions) Act 2003, Section 403',
+          url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/403',
+        },
+      ],
     },
     {
       '@type': 'FAQPage',
@@ -171,8 +198,7 @@ export default function RedundancyCalculatorPage() {
   const statutoryRows = getRedundancyStatutoryRows()
   return (
     <>
-      <Script
-        id="redundancy-calculator-schema"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />

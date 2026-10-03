@@ -59,6 +59,33 @@ const JSON_LD = {
         name: 'SettlementCheck',
         url: 'https://settlementcheck.co.uk',
       },
+      reviewedBy: {
+        '@type': 'Organization',
+        name: 'SettlementCheck Legal Research Desk',
+        url: 'https://settlementcheck.co.uk/how-it-works/',
+      },
+      isBasedOn: [
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 203',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/203',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Employment Rights Act 1996, Section 162',
+          url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/162',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Income Tax (Earnings and Pensions) Act 2003, Section 403',
+          url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/403',
+        },
+        {
+          '@type': 'Legislation',
+          name: 'Income Tax (Earnings and Pensions) Act 2003, Section 402D',
+          url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/402D',
+        },
+      ],
     },
     {
       '@type': 'BreadcrumbList',
@@ -78,8 +105,7 @@ const JSON_LD = {
 export default function CalculatorPage() {
   return (
     <>
-      <Script
-        id="calculator-schema"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />

@@ -4,14 +4,16 @@ import { getGeneralStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck (Employment)',
-  description: 'Free settlement agreement calculator — 2026 rates (£751/week cap). See if your offer is fair, get your net take-home after tax. (Not an immigration or visa status service).',
+  title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
+  description:
+    'Calculate if your settlement agreement offer is fair in 60 seconds. Based on April 2026 UK statutory rates. Free calculator with zero email required.',
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck (Employment)',
-    description: 'Most opening offers have room to move. Net pay after tax calculated instantly — PILON taxed separately from the £30,000 exemption. No email required. (Not an immigration or visa status service).',
+    title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
+    description:
+      'Calculate if your settlement offer is fair in 60 seconds. See your statutory floor and true take-home pay after tax under April 2026 UK rates. Free, no email.',
     url: '/',
     type: 'website',
     locale: 'en_GB',
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'SettlementCheck (Employment)',
+  name: 'SettlementCheck',
   url: 'https://settlementcheck.co.uk',
   logo: 'https://settlementcheck.co.uk/og-image.png',
   description: 'Independent UK settlement agreement calculator and solicitor introduction service. Not owned by a law firm.',
@@ -44,7 +46,7 @@ const orgSchema = {
 const webSiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'SettlementCheck (Employment)',
+  name: 'SettlementCheck',
   url: 'https://settlementcheck.co.uk',
 }
 
@@ -83,6 +85,23 @@ const webAppSchema = {
     { '@type': 'Thing', name: 'Settlement Agreements' },
     { '@type': 'Thing', name: 'Redundancy Pay' },
     { '@type': 'Thing', name: 'Unfair Dismissal' },
+  ],
+  isBasedOn: [
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 203',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/203',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 162',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/162',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Income Tax (Earnings and Pensions) Act 2003, Section 403',
+      url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/403',
+    },
   ],
 }
 
