@@ -1,0 +1,50 @@
+{
+  "archiveDate": "2026-10-03T20:51:02.632Z",
+  "period": "2026-05-03_to_2026-05-18",
+  "files": [
+    "Chart.csv",
+    "Countries.csv",
+    "Devices.csv",
+    "Filters.csv",
+    "Pages.csv",
+    "Queries.csv",
+    "Search appearance.csv"
+  ],
+  "topQueries": [
+    {
+      "query": "employment settlement agreement calculator uk",
+      "clicks": "0",
+      "impressions": "47",
+      "ctr": "0%",
+      "position": "65.98"
+    },
+    {
+      "query": "settlement agreement calculator uk",
+      "clicks": "0",
+      "impressions": "45",
+      "ctr": "0%",
+      "position": "63.89"
+    },
+    {
+      "query": "compromise agreement calculator",
+      "clicks": "0",
+      "impressions": "45",
+      "ctr": "0%",
+      "position": "74.73"
+    },
+    {
+      "query": "settlement agreement calculator",
+      "clicks": "0",
+      "impressions": "37",
+      "ctr": "0%",
+      "position": "78.49"
+    },
+    {
+      "query": "settlement calculator",
+      "clicks": "0",
+      "impressions": "27",
+      "ctr": "0%",
+      "position": "68.89"
+    }
+  ]
+}

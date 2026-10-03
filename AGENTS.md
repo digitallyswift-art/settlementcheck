@@ -33,6 +33,7 @@ Specialist in technical SEO, programmatic page architecture, search intent, JSON
 - `internal links [page]` — Audits inbound and outbound internal links to ensure maximum PageRank flow and zero orphans.
 - `statutory check [text block]` — Verifies employment law figures (e.g., April 2026 cap of £751/week, £123,543 unfair dismissal compensatory cap, £30,000 tax exemption under ITEPA 2003 s.403).
 - `gaps [category]` — Identifies high-volume search queries and topics missing from the site.
+- `archive gsc` / `analyze gsc` — Automatically archives previous search console data and computes progress vs latest data.
 - `full site audit` — Comprehensive technical audit across all site routes.
 
 ### B. `conversion-copywriter`

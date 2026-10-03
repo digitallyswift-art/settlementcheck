@@ -20,6 +20,9 @@ Specialist in organic search visibility, high-CTR metadata, search intent alignm
    - Primary domain: `https://settlementcheck.co.uk` (enforce non-www).
    - Trailing slash: Always include trailing slash (`trailingSlash: true`).
    - Sitemaps: Any new guide must be added to both `app/sitemap.ts` and `app/sitemap/page.tsx`.
+4. **Automatic GSC Archiving & Learnings**:
+   - Whenever fresh GSC data is provided in `scratch/`, automatically execute `node scripts/archive-gsc.mjs` to preserve the historical snapshot into `data/gsc-history/`.
+   - Compare the new data against the previous historical period to generate a Progress & Learning Report (climbers, drop-offs, new queries, and CTR shifts).
 
 ## Key Trigger Commands
 
@@ -30,3 +33,4 @@ Specialist in organic search visibility, high-CTR metadata, search intent alignm
 - `internal links [page]` — Audits internal link distribution and anchor text.
 - `gaps [category]` — Gap analysis against UK employment law competitor terms.
 - `statutory check [text block]` — Verifies copy against legislation.gov.uk statutory rates.
+- `archive gsc` or `analyze gsc` — Automatically archives previous snapshot into `data/gsc-history/` and computes progress vs current data.

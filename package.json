@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "check:links": "node scripts/check-links.mjs",
-    "seo:check": "node scripts/check-links.mjs"
+    "seo:check": "node scripts/check-links.mjs",
+    "archive:gsc": "node scripts/archive-gsc.mjs"
   },
   "license": "ISC",
   "dependencies": {
