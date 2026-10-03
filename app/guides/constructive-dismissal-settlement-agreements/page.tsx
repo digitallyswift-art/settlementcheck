@@ -115,7 +115,7 @@ export default function ConstructiveDismissalGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>
@@ -399,7 +399,7 @@ export default function ConstructiveDismissalGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Verify your statutory redundancy entitlement and calculate how much of your settlement is tax-free.
             </p>
-            <Link href="/constructive-dismissal-calculator" className="btn-accent">
+            <Link href="/constructive-dismissal-calculator/" className="btn-accent">
               Check my offer now →
             </Link>
           </div>

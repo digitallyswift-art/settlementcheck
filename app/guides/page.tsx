@@ -26,6 +26,13 @@ export const metadata: Metadata = {
 
 const GUIDES = [
   {
+    href: '/guides/compromise-agreement-calculator-uk/',
+    eyebrow: 'Compromise Agreements',
+    title: 'Compromise Agreement UK: What It Is, Calculation & 2026 Rules',
+    description: 'Received a compromise agreement? Calculate your payout under 2026 UK rules. Weekly cap £751, £30,000 tax exemption, and negotiation steps.',
+    readTime: '8 min read',
+  },
+  {
     href: '/guides/settlement-agreement-instead-of-pip/',
     eyebrow: 'Capability & PIPs',
     title: 'Settlement Agreement Instead of a PIP UK',
@@ -174,9 +181,50 @@ const GUIDES = [
   },
 ]
 
+const guidesHubSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'UK Settlement Agreement Guides & Statutory Rights Hub',
+  description: 'Plain-English guides on settlement agreements, negotiation, legal advice, and your rights as an employee in the UK.',
+  url: 'https://settlementcheck.co.uk/guides/',
+  inLanguage: 'en-GB',
+  breadcrumb: {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://settlementcheck.co.uk/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Guides',
+        item: 'https://settlementcheck.co.uk/guides/',
+      },
+    ],
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: GUIDES.length,
+    itemListElement: GUIDES.map((g, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: g.title,
+      url: `https://settlementcheck.co.uk${g.href}`,
+      description: g.description,
+    })),
+  },
+}
+
 export default function GuidesPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(guidesHubSchema) }}
+      />
       <Nav />
       <main>
         {/* ── HERO ─────────────────────────────────────────────── */}

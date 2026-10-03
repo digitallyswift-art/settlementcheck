@@ -16,9 +16,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Tier 3: Funnel + how-it-works
     { url: `${base}/how-it-works/`,                                   lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${base}/get-matched/`,                                    lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
 
     // Tier 4: Guides (hub + spokes)
     { url: `${base}/guides/`,                                         lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/compromise-agreement-calculator-uk/`,      lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/protected-conversations-without-prejudice/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-sick-leave/`,          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-instead-of-pip/`,     lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/unfair-dismissal-settlement-agreements/`,   lastModified: now, changeFrequency: 'monthly', priority: 0.7 },

@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "check:links": "node scripts/check-links.mjs",
+    "seo:check": "node scripts/check-links.mjs"
   },
   "license": "ISC",
   "dependencies": {

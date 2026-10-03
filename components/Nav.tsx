@@ -104,7 +104,7 @@ export default function Nav() {
             )}
           </div>
 
-          <Link href="/how-it-works#about" className="text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]">
+          <Link href="/how-it-works/#about" className="text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]">
             About
           </Link>
         </nav>
@@ -175,7 +175,7 @@ export default function Nav() {
             )}
           </div>
 
-          <Link href="/how-it-works#about" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
+          <Link href="/how-it-works/#about" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
             About
           </Link>
           <Link href="/for-solicitors/" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>

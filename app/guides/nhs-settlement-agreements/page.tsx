@@ -132,7 +132,7 @@ export default function NhsSettlementAgreements() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-rule-strong text-xs">/</span>
@@ -272,7 +272,7 @@ export default function NhsSettlementAgreements() {
                 <li className="pl-1">
                   <strong className="text-ink text-[16px] block mb-0.5">Verify the figures</strong>
                   <span className="text-muted text-[15px] block leading-relaxed">
-                    Check if the offer meets your contract and statutory redundancy entitlements using our <Link href="/redundancy-calculator" className="underline hover:text-ink">redundancy calculator</Link>.
+                    Check if the offer meets your contract and statutory redundancy entitlements using our <Link href="/redundancy-calculator/" className="underline hover:text-ink">redundancy calculator</Link>.
                   </span>
                 </li>
                 <li className="pl-1">
@@ -304,7 +304,7 @@ export default function NhsSettlementAgreements() {
               <p className="text-white/70 text-sm leading-relaxed mb-6">
                 Free calculator. Vetted solicitor matched within 24 hours. Your employer pays the fees.
               </p>
-              <Link href="/redundancy-calculator" className="btn-accent">
+              <Link href="/redundancy-calculator/" className="btn-accent">
                 Check my offer →
               </Link>
             </div>

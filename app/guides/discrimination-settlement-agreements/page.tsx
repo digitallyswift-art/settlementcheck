@@ -123,7 +123,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>

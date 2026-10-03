@@ -91,6 +91,21 @@ const sitemapData: SitemapCategory[] = [
         description: 'Browse all in-depth employment law and settlement agreement articles.',
       },
       {
+        title: 'Compromise Agreement UK: What It Is, Calculation & 2026 Rules',
+        href: '/guides/compromise-agreement-calculator-uk/',
+        description: 'Received a compromise agreement? Calculate your payout under 2026 UK rules, statutory caps, and tax exemptions.',
+      },
+      {
+        title: 'Protected Conversations & Without Prejudice UK',
+        href: '/guides/protected-conversations-without-prejudice/',
+        description: 'Understand the difference between Section 111A and Without Prejudice, improper behaviour rules, and the ACAS 10-day period.',
+      },
+      {
+        title: 'Unfair Dismissal Settlement Agreements UK 2026',
+        href: '/guides/unfair-dismissal-settlement-agreements/',
+        description: 'Learn how unfair dismissal settlements work in the UK, including compensation caps, Polkey rules, and negotiation steps.',
+      },
+      {
         title: 'Settlement Agreement on Sick Leave: UK Rights & Pay',
         href: '/guides/settlement-agreement-sick-leave/',
         description: 'Statutory pay rights, full notice pay rules, disability protections, and tax relief when off sick.',

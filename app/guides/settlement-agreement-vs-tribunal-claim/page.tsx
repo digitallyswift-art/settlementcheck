@@ -125,7 +125,7 @@ export default function SettlementAgreementVsTribunalGuide() {
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
-              <Link href="/guides" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>
@@ -339,7 +339,7 @@ export default function SettlementAgreementVsTribunalGuide() {
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3 mt-8">
               <InfoIcon />
               <p className="sc-body text-sm">
-                You can <Link href="/calculator" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> to find out where you stand.
+                You can <Link href="/calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> to find out where you stand.
               </p>
             </div>
           </div>
@@ -352,7 +352,7 @@ export default function SettlementAgreementVsTribunalGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Enter your details to calculate your statutory baseline and check if your settlement offer is fair.
             </p>
-            <Link href="/calculator" className="btn-accent">
+            <Link href="/calculator/" className="btn-accent">
               Check my offer
             </Link>
           </div>
