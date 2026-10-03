@@ -91,6 +91,11 @@ const sitemapData: SitemapCategory[] = [
         description: 'Browse all in-depth employment law and settlement agreement articles.',
       },
       {
+        title: 'Settlement Agreement: How Much Should You Get? UK 2026 Guide',
+        href: '/guides/settlement-agreement-how-much/',
+        description: 'Find out how much a UK settlement agreement should be, 1 to 3 months benchmarks, statutory redundancy caps, and tax rules.',
+      },
+      {
         title: 'Compromise Agreement UK: What It Is, Calculation & 2026 Rules',
         href: '/guides/compromise-agreement-calculator-uk/',
         description: 'Received a compromise agreement? Calculate your payout under 2026 UK rules, statutory caps, and tax exemptions.',

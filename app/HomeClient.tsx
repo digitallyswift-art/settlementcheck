@@ -31,7 +31,7 @@ const STEPS = [
   },
 ]
 
-const TRUST = [
+const TRUST: { t: string; d: React.ReactNode }[] = [
   {
     t: 'Genuinely independent',
     d: 'Every other settlement calculator online was built by a firm that wants your case. This one was not. There is no firm behind this result. What you see is what the numbers say.',
@@ -42,7 +42,29 @@ const TRUST = [
   },
   {
     t: 'Built on UK statute',
-    d: 'The calculator applies the Employment Rights Act 1996 sections on redundancy, notice, and unfair dismissal awards, plus the £30,000 tax-free rule under ITEPA 2003 section 403.',
+    d: (
+      <>
+        The calculator applies the statutory weekly cap of £751 under{' '}
+        <a
+          href="https://www.legislation.gov.uk/uksi/2026/310/contents/made"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-coral transition-colors"
+        >
+          SI 2026/310
+        </a>
+        , notice pay rules, and the £30,000 tax-free threshold under{' '}
+        <a
+          href="https://www.legislation.gov.uk/ukpga/2003/1/section/403"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-coral transition-colors"
+        >
+          Section 403 of ITEPA 2003
+        </a>
+        .
+      </>
+    ),
   },
   {
     t: 'Solicitor matching launching soon',
@@ -111,16 +133,16 @@ export default function HomeClient({
                   </span>
                 </div>
 
-                {/* SEO keyword eyebrow — carries primary keyword as visible text, H1 carries the USP */}
+                {/* SEO keyword eyebrow — carries primary keyword as visible text, H1 carries the core search intent */}
                 <p className="sc-eyebrow" style={{ letterSpacing: '0.10em' }}>
-                  Employment Settlement Agreement Calculator UK
+                  Independent UK Employment Settlement & Compromise Calculator
                 </p>
 
                 <h1 className="sc-h1">
                   {title || (
                     <>
-                      Your opening offer is<br />
-                      almost always <em style={{ fontStyle: 'italic', color: '#D9603B' }}>negotiable.</em>
+                      How much should your<br />
+                      <em style={{ fontStyle: 'italic', color: '#D9603B' }}>employment settlement</em> be?
                     </>
                   )}
                 </h1>
@@ -375,7 +397,23 @@ export default function HomeClient({
               <div className="flex flex-col gap-3.5">
                 <span className="sc-eyebrow">Common questions</span>
                 <h2 className="sc-section-h2">What people ask before they start.</h2>
-                <p className="sc-lead">Six things almost every employee wants to know before clicking &ldquo;calculate.&rdquo;</p>
+                <p className="sc-lead">What employees want to know before clicking &ldquo;calculate.&rdquo;</p>
+
+                {/* Answer-First Featured Snippet Callout */}
+                <div
+                  itemScope
+                  itemType="https://schema.org/Question"
+                  className="mt-3 p-5 rounded-lg border border-rule bg-card"
+                >
+                  <h3 itemProp="name" className="text-[16px] font-semibold text-ink leading-snug">
+                    How much should an employee settlement agreement be?
+                  </h3>
+                  <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer" className="mt-2.5">
+                    <p itemProp="text" className="sc-body text-[14px] leading-relaxed">
+                      A typical UK settlement agreement pays between one and three months of gross salary, plus notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with the first £30,000 paid tax-free.
+                    </p>
+                  </div>
+                </div>
               </div>
               <FaqAccordion faqs={faqItems} />
             </div>
@@ -413,10 +451,37 @@ export default function HomeClient({
                 </table>
               </div>
               <p className="sc-body mt-5" style={{ fontSize: 13 }}>
-                Sources: ERA 1996 s.227 (GB cap), ERO(NI) 1996 (NI cap), ITEPA 2003 s.403 (£30,000 threshold). Figures effective 6 April 2026.
+                Sources:{' '}
+                <a
+                  href="https://www.legislation.gov.uk/ukpga/1996/18/section/227"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-coral transition-colors"
+                >
+                  ERA 1996 s.227
+                </a>{' '}
+                (GB cap), ERO(NI) 1996 (NI cap),{' '}
+                <a
+                  href="https://www.legislation.gov.uk/ukpga/2003/1/section/403"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-coral transition-colors"
+                >
+                  ITEPA 2003 s.403
+                </a>{' '}
+                (£30,000 threshold). Figures effective 6 April 2026.
               </p>
               <p className="sc-body mt-1" style={{ fontSize: 12, color: '#8A93A3' }}>
-                Figures reflect the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310) and Employment Rights (Increase of Limits) Order (Northern Ireland) 2026 (SR 2026/57), in force from 6 April 2026. Last reviewed: May 2026.
+                Figures reflect the{' '}
+                <a
+                  href="https://www.legislation.gov.uk/uksi/2026/310/contents/made"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-coral transition-colors"
+                >
+                  Employment Rights (Increase of Limits) Order 2026 (SI 2026/310)
+                </a>{' '}
+                and Employment Rights (Increase of Limits) Order (Northern Ireland) 2026 (SR 2026/57), in force from 6 April 2026. Last reviewed: May 2026.
               </p>
             </div>
           </section>

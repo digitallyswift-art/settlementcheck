@@ -117,10 +117,10 @@ const faqSchema = {
     },
     {
       '@type': 'Question',
-      name: 'How much should a typical UK settlement agreement payout be?',
+      name: 'How much should an employee settlement agreement be?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "A typical UK settlement payout covers your full notice pay (PILON), accrued untaken holiday, statutory redundancy if applicable (up to the £751 weekly cap), plus an ex-gratia compensation payment usually between 1 to 3 months' gross salary. The first £30,000 of compensation is tax-free.",
+        text: 'A typical UK settlement agreement pays between one and three months of gross salary, plus notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with the first £30,000 paid tax-free.',
       },
     },
     {
@@ -184,8 +184,9 @@ export default function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <HomeClient
         statutoryRows={statutoryRows}
-        lead="Most employees don't question their first settlement agreement offer. The April 2026 statutory cap is £751 per week, but your actual take-home depends on how PILON is taxed separately from the £30,000 exemption. Use this calculator to see your real net figure in 60 seconds."
+        lead="Check whether your employer's employment settlement offer sits within the typical UK range before you reply. Our independent calculator checks statutory redundancy, notice pay, and tax-free compensation in 60 seconds. Whether your paperwork says employment settlement agreement or compromise agreement, find out where you stand for free."
         pageLinks={[
+          { href: '/guides/settlement-agreement-how-much/', label: 'How Much Should a Settlement Agreement Be?' },
           { href: '/calculator/', label: 'Settlement Agreement Calculator' },
           { href: '/redundancy-calculator/', label: 'Redundancy Pay Calculator' },
           { href: '/unfair-dismissal-calculator/', label: 'Unfair Dismissal Calculator' },
