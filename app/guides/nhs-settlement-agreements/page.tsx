@@ -69,8 +69,13 @@ const articleSchema = {
   dateModified: '2026-07-11',
   author: {
     '@type': 'Organization',
-    name: 'SettlementCheck',
+    name: 'SettlementCheck Editorial Team',
     url: 'https://settlementcheck.co.uk',
+  },
+  reviewedBy: {
+    '@type': 'Organization',
+    name: 'SettlementCheck Legal Research Desk',
+    url: 'https://settlementcheck.co.uk/how-it-works/',
   },
   publisher: {
     '@type': 'Organization',
@@ -85,6 +90,18 @@ const articleSchema = {
     '@type': 'WebPage',
     '@id': 'https://settlementcheck.co.uk/guides/nhs-settlement-agreements/',
   },
+  isBasedOn: [
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 203',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/203',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'National Health Service Act 2006',
+      url: 'https://www.legislation.gov.uk/ukpga/2006/41/contents',
+    },
+  ],
 }
 
 function CheckIcon() {

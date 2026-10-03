@@ -59,11 +59,42 @@ const articleSchema = {
   url: 'https://settlementcheck.co.uk/guides/is-my-settlement-offer-fair/',
   datePublished: '2026-05-20',
   dateModified: '2026-05-20',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck Editorial Team',
+    url: 'https://settlementcheck.co.uk',
+  },
+  reviewedBy: {
+    '@type': 'Organization',
+    name: 'SettlementCheck Legal Research Desk',
+    url: 'https://settlementcheck.co.uk/how-it-works/',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'SettlementCheck',
     url: 'https://settlementcheck.co.uk',
   },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/is-my-settlement-offer-fair/',
+  },
+  isBasedOn: [
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 203',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/203',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 162',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/162',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Income Tax (Earnings and Pensions) Act 2003, Section 403',
+      url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/403',
+    },
+  ],
 }
 
 function CheckIcon() {

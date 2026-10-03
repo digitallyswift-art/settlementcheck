@@ -68,8 +68,13 @@ const articleSchema = {
   dateModified: '2026-07-11',
   author: {
     '@type': 'Organization',
-    name: 'SettlementCheck',
+    name: 'SettlementCheck Editorial Team',
     url: 'https://settlementcheck.co.uk',
+  },
+  reviewedBy: {
+    '@type': 'Organization',
+    name: 'SettlementCheck Legal Research Desk',
+    url: 'https://settlementcheck.co.uk/how-it-works/',
   },
   publisher: {
     '@type': 'Organization',
@@ -84,6 +89,23 @@ const articleSchema = {
     '@type': 'WebPage',
     '@id': 'https://settlementcheck.co.uk/guides/protective-award/',
   },
+  isBasedOn: [
+    {
+      '@type': 'Legislation',
+      name: 'Trade Union and Labour Relations (Consolidation) Act 1992, Section 188',
+      url: 'https://www.legislation.gov.uk/ukpga/1992/52/section/188',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Trade Union and Labour Relations (Consolidation) Act 1992, Section 189',
+      url: 'https://www.legislation.gov.uk/ukpga/1992/52/section/189',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 162',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/162',
+    },
+  ],
 }
 
 function CheckIcon() {

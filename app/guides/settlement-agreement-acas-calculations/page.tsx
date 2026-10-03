@@ -63,11 +63,42 @@ const articleSchema = {
   url: 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
   datePublished: '2026-05-20',
   dateModified: '2026-05-20',
+  author: {
+    '@type': 'Organization',
+    name: 'SettlementCheck Editorial Team',
+    url: 'https://settlementcheck.co.uk',
+  },
+  reviewedBy: {
+    '@type': 'Organization',
+    name: 'SettlementCheck Legal Research Desk',
+    url: 'https://settlementcheck.co.uk/how-it-works/',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'SettlementCheck',
     url: 'https://settlementcheck.co.uk',
   },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
+  },
+  isBasedOn: [
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 227',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/227',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 162',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/162',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Trade Union and Labour Relations (Consolidation) Act 1992, Section 288',
+      url: 'https://www.legislation.gov.uk/ukpga/1992/52/section/288',
+    },
+  ],
 }
 
 function CheckIcon() {

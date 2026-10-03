@@ -68,8 +68,13 @@ const articleSchema = {
   dateModified: '2026-07-11',
   author: {
     '@type': 'Organization',
-    name: 'SettlementCheck',
+    name: 'SettlementCheck Editorial Team',
     url: 'https://settlementcheck.co.uk',
+  },
+  reviewedBy: {
+    '@type': 'Organization',
+    name: 'SettlementCheck Legal Research Desk',
+    url: 'https://settlementcheck.co.uk/how-it-works/',
   },
   publisher: {
     '@type': 'Organization',
@@ -84,6 +89,23 @@ const articleSchema = {
     '@type': 'WebPage',
     '@id': 'https://settlementcheck.co.uk/guides/tax-free-settlement-30000/',
   },
+  isBasedOn: [
+    {
+      '@type': 'Legislation',
+      name: 'Income Tax (Earnings and Pensions) Act 2003, Section 401',
+      url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/401',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Income Tax (Earnings and Pensions) Act 2003, Section 403',
+      url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/403',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Income Tax (Earnings and Pensions) Act 2003, Section 402D',
+      url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/402D',
+    },
+  ],
 }
 
 function CheckIcon() {
