@@ -1,4 +1,4 @@
-# BRAND.md — SettlementCheck Voice and Tone
+# BRAND.md: SettlementCheck Voice and Tone
 
 ## Voice in three words
 Calm. Clear. On your side.
@@ -7,7 +7,7 @@ Calm. Clear. On your side.
 
 ## The reader
 
-An employee who has just received a settlement offer — probably today or this week.
+An employee who has just received a settlement offer, probably today or this week.
 They feel a mix of shock, suspicion, and uncertainty. They do not know if the offer
 is fair. They do not know how to find a solicitor. They assume legal help costs money.
 They are cautious about anything that feels like a sales pitch.
@@ -29,12 +29,15 @@ Do not alarm them. Do not patronise them. Do not oversell.
 
 ---
 
-## Attention Economy & AI-Search Principles
+## Cognitive Load & Attention Principles
 
-- **The 3-Second Hook**: In an AI search environment where zero-click searches dominate, mobile visitors decide within 3 seconds whether to stay. Always place the interactive tool or primary utility above the fold. Never force users to scroll past background copy before they can take action.
-- **Progressive Cognitive Relief**: Stressed employees facing tight deadlines suffer from decision fatigue. Break complex legal calculations into focused, single-concept steps. Each tap should give the user clear feedback and momentum.
-- **Zero-Friction Value Exchange**: Deliver the statutory floor and fairness verdict freely without email capture. Gating basic calculations breaks trust. Reserve contact capture for the high-value step: connecting with an SRA-regulated solicitor.
-- **Immediate Attention Payoff**: Never leave the user with static numbers alone. Immediately answer their unspoken question: "What do I say to my employer now?" Provide practical tools like negotiation email drafts and clear tax breakdowns.
+- **Intent-Matched First Screen**: 
+  - On calculator and tool routes, place the interactive inputs above the fold.
+  - On informational guides, place the Answer-First summary box (40 to 60 words) above the fold, followed immediately by an inline interactive tool.
+- **Zero Gating**: Always display the statutory calculation, tax split, and fairness verdict freely without requiring an email address or telephone number.
+- **Progressive Disclosure**: Deliver the high-level verdict immediately. Provide granular statutory breakdowns and tax mechanics as the user scrolls or interacts.
+- **Active State Persistence**: Never ask a user to re-enter data they have already provided in an earlier tool or widget. Carry parameters forward via URL search params.
+- **Strict Legal Boundary**: Position all tools and copy as objective calculation and commercial estimation. Never provide or imply legal advice. Independent legal advice is reserved for the SRA-regulated solicitor review, paid by the employer under Section 203 of the Employment Rights Act 1996.
 
 ---
 
@@ -48,31 +51,31 @@ Do not alarm them. Do not patronise them. Do not oversell.
 
 ---
 
-## UK language — use these
+## UK language: use these
 
 - solicitor (not lawyer or attorney)
 - redundancy (not layoff or termination)
 - employment tribunal (not labor court)
-- statutory (correct UK legal term — use it)
+- statutory (correct UK legal term: use it)
 - colour, favour, recognise, organise, licence (noun), authorize
-- "find out where you stand" — natural, resonant phrase
-- "what you're entitled to" — appropriate and familiar
+- "find out where you stand" - natural, resonant phrase
+- "what you're entitled to" - appropriate and familiar
 - "get advice" not "obtain legal counsel"
-- "sort this out" — acceptable in CTAs
+- "sort this out" - acceptable in CTAs
 - "your employer" not "the company" or "your organization"
 
 ---
 
 ## Never write
 
-- Em dashes — banned entirely. Use a comma, a full stop, or restructure the sentence
+- Em dashes: banned entirely. Use a comma, a full stop, or restructure the sentence
 - Exclamation marks in body copy. Acceptable sparingly in CTAs only
 - Ellipsis (...) in UI copy. Creates unease and uncertainty
-- "Don't worry" — patronising
-- "We're passionate about" — corporate filler
-- "Reach out" — American phrasing
-- "Going forward" / "touch base" / "leverage" — jargon
-- "Please be advised that" / "It is important to note that" — bureaucratic
+- "Don't worry" - patronising
+- "We're passionate about" - corporate filler
+- "Reach out" - American phrasing
+- "Going forward" / "touch base" / "leverage" - jargon
+- "Please be advised that" / "It is important to note that" - bureaucratic
 - "Low-ball" in user-facing copy (use "below the typical range" instead)
 - "Claim" when referring to what an employee might receive (use "settlement" or "amount")
 - Two-word filler openers: "Basically,", "Essentially,", "Simply put,"
@@ -86,24 +89,17 @@ Do not alarm them. Do not patronise them. Do not oversell.
 
 **Calculator labels:** Minimal. Label only. No explanatory copy inside the form itself.
 
-**Result — below typical range:** Honest without alarmism. "Your offer may be below
-the typical range" not "Your employer is underpaying you." Give them the fact.
-Let the solicitor interpret it.
+**Result (below typical range):** Honest without alarmism. "Your offer may be below the typical range" not "Your employer is underpaying you." Give them the fact. Let the solicitor interpret it.
 
-**Result — within range:** Reassuring but not dismissive. Still recommend advice
-because every case is different.
+**Result (within range):** Reassuring but not dismissive. Still recommend advice because every case is different.
 
-**Result — above typical range:** Positive and brief. Still recommend a solicitor
-confirms the structure before they sign.
+**Result (above typical range):** Positive and brief. Still recommend a solicitor confirms the structure before they sign.
 
-**OTP verification screen:** Functional. Short. One sentence of context.
-No enthusiasm. No filler.
+**OTP verification screen:** Functional. Short. One sentence of context. No enthusiasm. No filler.
 
-**Error states:** Never technical, never blame the user. "We couldn't send that email.
-Please check the address and try again." Full stop.
+**Error states:** Never technical, never blame the user. "We couldn't send that email. Please check the address and try again." Full stop.
 
-**For Solicitors page:** Straightforward B2B. What leads look like. What it costs.
-What the commitment is. No waffle.
+**For Solicitors page:** Straightforward B2B. What leads look like. What it costs. What the commitment is. No waffle.
 
 ---
 

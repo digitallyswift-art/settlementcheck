@@ -19,8 +19,8 @@ Writes user-facing copy for SettlementCheck tailored to an employee who just rec
    - Never write "claim" for settlement payout (use "settlement" or "amount").
    - Clear CTAs: "Calculate my estimate →", "Check my offer now →", "Get my free solicitor match →". Never "Submit" or "Click here".
 
-## Attention Economy Directives
-- **3-Second Hook**: Never delay action behind background narrative. Position interactive tools and clear value propositions immediately above the fold.
+## Cognitive Load & Attention Directives
+- **Intent-Matched Placement**: Place interactive tools above the fold on calculator pages; on guides, place the Answer-First direct answer box above the fold, followed immediately by an inline interactive tool.
 - **Progressive Cognitive Relief**: Keep inputs and questions single-concept. Reduce anxiety by giving immediate feedback at each step.
 - **Zero-Friction Value**: Provide statutory calculations freely without email gates to earn user trust.
-- **Actionable Payoff**: Every verdict must offer a practical next step (e.g. an objective HR response draft and independent solicitor matching).
+- **Actionable Commercial Payoff**: Every verdict must offer a practical next step (such as an objective commercial communication template and independent solicitor matching). Never provide or imply legal advice.
