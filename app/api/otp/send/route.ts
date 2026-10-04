@@ -82,10 +82,17 @@ export async function POST(req: NextRequest) {
           </div>
         `
 
+    const textBody =
+      form_type === 'solicitor'
+        ? `SettlementCheck\n\nYour verification code is: ${code}\n\nUse the code above to verify your email address for your solicitor panel application. This code expires in 10 minutes.\n\nIf you didn't request this, you can ignore this email.`
+        : `SettlementCheck\n\nYour verification code is: ${code}\n\nUse the code above to confirm your email address. This code expires in 10 minutes.\n\nIf you didn't request this, you can ignore this email.`
+
     const { error: emailError } = await resend.emails.send({
-      from: 'SettlementCheck <noreply@settlementcheck.co.uk>',
+      from: 'SettlementCheck <team@settlementcheck.co.uk>',
+      replyTo: 'team@settlementcheck.co.uk',
       to: email,
       subject,
+      text: textBody,
       html: body,
     })
 

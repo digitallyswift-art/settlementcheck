@@ -1,0 +1,97 @@
+[
+  {
+    "id": "CASE-001-REDUNDANCY-STANDARD",
+    "title": "Standard Statutory Redundancy with Notice",
+    "inputs": {
+      "age": 42,
+      "yearsOfService": 6,
+      "grossAnnualSalary": 52000,
+      "employerOffer": 8000,
+      "contractualNoticeMonths": 1,
+      "jurisdiction": "GB"
+    },
+    "expectedInvariants": {
+      "redundancyWeeks": 6,
+      "weeklyCapApplicable": 751,
+      "taxFreeExemptionLimit": 30000,
+      "requiredStatute": "Employment Rights Act 1996 s.162"
+    },
+    "bannedTerms": ["severance", "at-will", "lawyer", "attorney"]
+  },
+  {
+    "id": "CASE-002-SENIOR-OVER-CAP",
+    "title": "Senior Employee Capped at 20 Years Service",
+    "inputs": {
+      "age": 55,
+      "yearsOfService": 24,
+      "grossAnnualSalary": 95000,
+      "employerOffer": 35000,
+      "contractualNoticeMonths": 3,
+      "jurisdiction": "GB"
+    },
+    "expectedInvariants": {
+      "maxServiceYearsApplied": 20,
+      "weeklyCapApplicable": 751,
+      "taxFreeFloor": 30000,
+      "taxablePortionAboveFloor": true,
+      "requiredStatute": "ITEPA 2003 s.403"
+    },
+    "bannedTerms": ["severance", "at-will", "lawyer", "attorney"]
+  },
+  {
+    "id": "CASE-003-PIP-EXIT-OFFER",
+    "title": "Protected Conversation Exit Under Performance Plan",
+    "inputs": {
+      "age": 36,
+      "yearsOfService": 3,
+      "grossAnnualSalary": 60000,
+      "employerOffer": 10000,
+      "contractualNoticeMonths": 1,
+      "jurisdiction": "GB"
+    },
+    "expectedInvariants": {
+      "weeklyCapApplicable": 751,
+      "legalFeeContributionMinimum": 500,
+      "confidentialityUnderSection111A": true,
+      "requiredStatute": "Employment Rights Act 1996 s.111A"
+    },
+    "bannedTerms": ["severance", "at-will", "lawyer", "attorney"]
+  },
+  {
+    "id": "CASE-004-DISCRIMINATION-MATERNITY",
+    "title": "Pregnancy / Maternity Detriment Settlement",
+    "inputs": {
+      "age": 32,
+      "yearsOfService": 4,
+      "grossAnnualSalary": 48000,
+      "employerOffer": 15000,
+      "contractualNoticeMonths": 2,
+      "discrimination": "yes",
+      "jurisdiction": "GB"
+    },
+    "expectedInvariants": {
+      "weeklyCapApplicable": 751,
+      "uncappedCompensationApplies": true,
+      "ventoBandsRelevant": true,
+      "requiredStatute": "Equality Act 2010"
+    },
+    "bannedTerms": ["severance", "at-will", "lawyer", "attorney"]
+  },
+  {
+    "id": "CASE-005-NORTHERN-IRELAND-CAP",
+    "title": "Northern Ireland Jurisdiction Rates Check",
+    "inputs": {
+      "age": 45,
+      "yearsOfService": 5,
+      "grossAnnualSalary": 40000,
+      "employerOffer": 6000,
+      "contractualNoticeMonths": 1,
+      "jurisdiction": "NI"
+    },
+    "expectedInvariants": {
+      "weeklyCapApplicable": 783,
+      "requiredStatute": "ERO (NI) 1996"
+    },
+    "bannedTerms": ["severance", "at-will", "lawyer", "attorney"]
+  }
+]

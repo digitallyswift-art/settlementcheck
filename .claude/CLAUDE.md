@@ -32,6 +32,8 @@
 - Do NOT add more than 5 fields to the lead capture form
 - Do NOT show the lead form before the calculator result (value before commitment)
 - Do NOT use green — brand uses navy `#0B1F3A`, coral `#D9603B`, off-white `#F7F4EE`
+- Do NOT assume exports or function signatures — inspect target files with `view_file` before writing code
+- Do NOT add redirects in next.config.js for uncommitted, local-only, or newly created routes
 
 ---
 

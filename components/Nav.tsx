@@ -29,6 +29,11 @@ const CALCULATOR_LINKS = [
     label: 'Settlement Agreement Tax Calculator',
     sub: 'Work out the £30k exemption, PILON & net pay',
   },
+  {
+    href: '/settlement-agreement-review/',
+    label: 'Employment Settlement Checker',
+    sub: 'Check employment draft clauses, £30k tax & fees',
+  },
 ]
 
 const GUIDES_LINKS = [

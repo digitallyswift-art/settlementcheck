@@ -42,7 +42,7 @@ const FAQS = [
   },
   {
     q: 'Does ACAS offer an official settlement agreement calculator?',
-    a: 'No. ACAS does not provide an online settlement agreement calculator. ACAS provides free early conciliation and statutory guidance, but does not calculate settlement payouts. SettlementCheck uses the ACAS and Employment Rights Act statutory formula alongside market data to calculate your complete settlement estimate.',
+    a: 'No. ACAS does not provide an online settlement agreement calculator. ACAS provides free early conciliation and statutory guidance, but does not calculate settlement payouts. SettlementCheck provides an independent ACAS-based calculator applying the statutory formula from the Employment Rights Act 1996 and ACAS Code of Practice benchmarks alongside market data to calculate your complete settlement estimate.',
   },
 ]
 
@@ -393,7 +393,7 @@ export default function AcasCalculationsGuide() {
               </li>
             </ol>
             <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
-              <strong>Disclaimer:</strong> SettlementCheck is an independent educational tool and calculation service, not a law firm. The figures generated are estimates based on standard UK statutory formulas and do not constitute formal legal counsel. Always obtain independent advice from an SRA-regulated solicitor before signing.
+              <strong>Disclaimer & Legal Notice:</strong> SettlementCheck is an independent platform and is not affiliated with, endorsed by, or operated by ACAS (the Advisory, Conciliation and Arbitration Service). Official ACAS guidance can be accessed directly at acas.org.uk. All figures generated on SettlementCheck are estimates based on UK statutory formulas (Employment Rights Act 1996 and SI 2026/310) and do not constitute formal legal counsel. Always obtain independent legal advice from an SRA-regulated solicitor before signing.
             </div>
           </div>
         </section>

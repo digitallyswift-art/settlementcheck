@@ -15,7 +15,7 @@ export default function Footer() {
               Free settlement agreement advice for UK employees. Your employer pays the legal fees.
             </p>
             <p className="text-[12px] text-white/55 mt-6 max-w-[38ch] leading-[1.6]">
-              SettlementCheck is an introduction service, not a law firm. We are not regulated by the SRA. Solicitors on our panel are independently SRA-regulated.
+              SettlementCheck is an independent introduction and calculation platform, not a law firm, and is not affiliated with ACAS or GOV.UK. We are not regulated by the SRA. Solicitors on our panel are independently SRA-regulated.
             </p>
           </div>
 
@@ -29,6 +29,7 @@ export default function Footer() {
                 { href: '/unfair-dismissal-calculator/', label: 'Unfair Dismissal Calculator' },
                 { href: '/constructive-dismissal-calculator/', label: 'Constructive Dismissal Calculator' },
                 { href: '/settlement-agreement-tax-calculator/', label: 'Settlement Tax Calculator' },
+                { href: '/settlement-agreement-review/', label: 'Employment Settlement Checker' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>

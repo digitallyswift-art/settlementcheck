@@ -65,3 +65,31 @@ Scans all 46+ routes and 530+ internal links to verify:
 - **Brand Colors**: Navy `#0B1F3A`, Coral `#D9603B`, Off-white `#F7F4EE`. Never use green.
 - **UK English**: "Solicitor" (not lawyer/attorney), "Redundancy" (not layoff), "Tribunal" (not court).
 - **Legislation**: Cited to `legislation.gov.uk` (Employment Rights Act 1996, ITEPA 2003).
+
+---
+
+## 4. Zero-Assumption Engineering Protocol (Project Memory)
+
+These rules are strictly binding on all AI pair programming sessions:
+
+1. **Never Assume — Inspect First**:
+   - Before writing or editing consuming code, adapters, or wrapper tools, ALWAYS use `view_file` or `grep_search` to inspect the actual exported functions, types, and parameter signatures in the target files (e.g. `lib/calculations.ts`, `lib/statutory-rates.ts`).
+   - Never guess function names or interfaces from memory.
+
+2. **No Phantom Redirects**:
+   - Never add redirects to `next.config.js` for uncommitted, local-only, or newly created development routes.
+   - Always run `git status` before writing redirects. 301 redirects are reserved solely for previously committed, published, or indexed URLs with live backlinks.
+
+3. **SEO Intent & Emotional Framing Calibration**:
+   - Before creating any route or directory in `app/`, verify the actual search query intent of UK employees.
+   - Reject internal legal/corporate jargon (e.g. "audit") in favor of user-centric, empowering terms (e.g. "review", "check") that match brand identity (*SettlementCheck*).
+
+4. **Deterministic Invariant Quality Gates**:
+   - All statutory calculations must remain pure TypeScript functions; AI agents must invoke them as tools rather than calculating approximations.
+   - Before completing tasks, always run and pass:
+     ```bash
+     npm run test:evals   # 100% statutory and brand guardrail compliance
+     npm run check:links  # 0 broken routes and strict trailing-slash enforcement
+     npx tsc --noEmit     # 0 TypeScript type errors
+     ```
+

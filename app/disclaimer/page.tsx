@@ -32,7 +32,11 @@ export default function Disclaimer() {
           {[
             {
               title: 'What the calculator does',
-              body: 'The SettlementCheck calculator applies the UK statutory redundancy formula (using 2025/26 rates, including a weekly pay cap of £719) and general market data to produce an estimate of the minimum statutory entitlement and typical settlement range for your situation.',
+              body: 'The SettlementCheck calculator applies the UK statutory redundancy formula (using April 2026 rates under SI 2026/310, including the weekly pay cap of £751) and general market data to produce an estimate of the minimum statutory entitlement and typical settlement range for your situation.',
+            },
+            {
+              title: 'Independence from ACAS and Official Bodies',
+              body: 'SettlementCheck is an independent educational and estimation platform. It is not affiliated with, endorsed by, or operated by ACAS (the Advisory, Conciliation and Arbitration Service) or any UK government department. Our tools provide ACAS-based and statutory-aligned calculations derived from public UK legislation (Employment Rights Act 1996 and SI 2026/310). For official ACAS conciliation or arbitration services, visit acas.org.uk directly.',
             },
             {
               title: 'What the calculator does not do',
@@ -44,7 +48,7 @@ export default function Disclaimer() {
             },
             {
               title: 'Statutory rates',
-              body: 'Statutory rates change annually. The calculator uses rates effective from April 2025. If you are reading this after April 2026, rates may have changed. Always confirm current rates with a solicitor.',
+              body: 'Statutory rates change annually. The calculator uses rates effective from April 2026 (SI 2026/310, £751 weekly pay cap and £123,543 unfair dismissal compensatory cap). Always confirm current figures with an SRA-regulated solicitor.',
             },
             {
               title: 'No solicitor-client relationship',

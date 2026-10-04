@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { resend } from '@/lib/resend'
 
@@ -75,10 +75,11 @@ export async function POST(req: NextRequest) {
 
       try {
       await resend.emails.send({
-        from:    'SettlementCheck <noreply@settlementcheck.co.uk>',
+        from:    'SettlementCheck <team@settlementcheck.co.uk>',
         to:      notificationEmail,
         subject: `New lead: ${first_name.trim()} (${verdictLabel[verdict] ?? verdict})`,
         replyTo: email.trim(),
+        text: `New Lead: ${first_name.trim()}\nEmail: ${email.trim()}\nPhone: ${phone.trim()}\nContact time: ${safeContactTime}\nVerdict: ${verdictLabel[verdict] ?? verdict}\nOffer: ${offerFormatted}\nSalary: ${salaryFormatted}\nService: ${serviceYears}${postcode ? `\nPostcode: ${postcode}` : ''}`,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 560px; margin: 0 auto; padding: 40px 24px;">
             <div style="margin-bottom: 24px;">
@@ -137,10 +138,25 @@ export async function POST(req: NextRequest) {
 
     // ── Confirmation to employee - isolated so an email failure never blocks the success response
     try {
+      const employeeText = [
+        `Hi ${first_name.trim()},`,
+        '',
+        'Your details are with us.',
+        `We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (${safeContactTime.toLowerCase()}).`,
+        '',
+        'The advice is free. Your employer is required to cover the legal fees for your independent advice on a settlement agreement.',
+        '',
+        '---',
+        'SettlementCheck • United Kingdom • team@settlementcheck.co.uk',
+        'SettlementCheck is an introduction service, not a law firm. We connect you with SRA-regulated solicitors. We do not provide legal advice.',
+      ].join('\n')
+
       await resend.emails.send({
-        from:    'SettlementCheck <noreply@settlementcheck.co.uk>',
+        from:    'SettlementCheck <team@settlementcheck.co.uk>',
+        replyTo: 'team@settlementcheck.co.uk',
         to:      email.trim(),
         subject: 'We have received your details - SettlementCheck',
+        text:    employeeText,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 40px 24px;">
             <div style="margin-bottom: 32px;">
@@ -152,6 +168,9 @@ export async function POST(req: NextRequest) {
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">The advice is free. Your employer is required to cover the legal fees for your independent advice on a settlement agreement.</p>
             <div style="background: #f9fafb; border-radius: 8px; padding: 16px;">
               <p style="color: #6b7280; font-size: 13px; margin: 0; line-height: 1.6;">SettlementCheck is an introduction service, not a law firm. We connect you with SRA-regulated solicitors. We do not provide legal advice.</p>
+            </div>
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
+              <p style="font-size: 11px; color: #9ca3af; margin: 0;">SettlementCheck &bull; United Kingdom &bull; team@settlementcheck.co.uk</p>
             </div>
           </div>
         `,

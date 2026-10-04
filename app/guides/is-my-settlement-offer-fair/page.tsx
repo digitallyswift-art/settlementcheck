@@ -147,7 +147,7 @@ export default function IsMyOfferFairGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">What makes a settlement offer fair</h2>
             <p className="sc-body mb-6">
-              A fair settlement reflects three things: what the law guarantees you, what your specific claim is worth, and what you can realistically negotiate. Most people underestimate both the statutory floor and their claim&apos;s ceiling. Fairness is measured in pounds, not assurances. Review our in-depth guides on <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">what is a fair settlement agreement</Link> and <Link href="/guides/settlement-agreement-acas-calculations/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">how Acas calculates settlement guidelines</Link>.
+              A fair settlement reflects three things: what the law guarantees you, what your specific claim is worth, and what you can realistically negotiate. Most people underestimate both the statutory floor and their claim&apos;s ceiling. Fairness is measured in pounds, not assurances. Review our in-depth guides on <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">what is a fair settlement agreement</Link> and <Link href="/guides/settlement-agreement-acas-calculations/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">how ACAS-based settlement calculations work</Link>.
             </p>
             <ul className="flex flex-col gap-3">
               {[
@@ -338,8 +338,8 @@ export default function IsMyOfferFairGuide() {
                 },
                 {
                   href: '/guides/settlement-agreement-acas-calculations/',
-                  title: 'Settlement Agreement Acas Calculations Explained',
-                  description: 'How Acas calculates statutory figures and what employment tribunals award for compensation.',
+                  title: 'Settlement Agreement ACAS-Based Calculations Explained',
+                  description: 'How ACAS-based statutory calculations work and what employment tribunals award for compensation.',
                   tag: 'Calculations',
                 },
                 {

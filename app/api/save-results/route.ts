@@ -74,11 +74,42 @@ export async function POST(req: NextRequest) {
     const rangeHigh = typicalHighUncapped ? 'Potentially uncapped' : fmt(typicalHigh)
     const jurisdictionLabel = jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland and Wales'
 
+    const textBody = [
+      'SettlementCheck — Your Settlement Calculation Results',
+      '=====================================================',
+      '',
+      `Verdict: ${vLabel}`,
+      `Jurisdiction: ${jurisdictionLabel} (2025/26 rates)`,
+      '',
+      `Your offer:               ${fmt(offer)}`,
+      `Legal statutory minimum:  ${fmt(minimum)}`,
+      `Typical negotiated range: ${fmt(typicalLow)} to ${rangeHigh}`,
+      `Estimated net take-home:  ${fmt(estimatedNet)}`,
+      '',
+      'What happens next?',
+      'Your employer is legally required to contribute to the cost of your independent legal advice on any settlement agreement. A solicitor review is free to you and takes 24 to 48 hours. You are under no obligation after the first call.',
+      '',
+      'Get matched with an SRA-regulated solicitor:',
+      'https://settlementcheck.co.uk/get-matched/',
+      '',
+      '-----------------------------------------------------',
+      'SettlementCheck • United Kingdom • team@settlementcheck.co.uk',
+      'Estimate based on UK statutory rates (ERA 1996, ITEPA 2003). Not legal advice.',
+      'SettlementCheck is an introduction service, not a law firm. You received this email because you requested your calculation results.',
+    ].join('\n')
+
     await resend.emails.send({
-      from:    'SettlementCheck <noreply@settlementcheck.co.uk>',
+      from:    'SettlementCheck <team@settlementcheck.co.uk>',
+      replyTo: 'team@settlementcheck.co.uk',
       to:      safeEmail,
       subject: 'Your settlement calculation results - SettlementCheck',
+      text:    textBody,
       html: `
+        <!-- Hidden Preheader -->
+        <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+          Your settlement calculation results: ${vLabel}. Estimated net: ${fmt(estimatedNet)}.
+        </div>
+
         <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#fff;">
           <div style="margin-bottom:28px;">
             <span style="font-size:18px;font-weight:700;color:#0B1F3A;letter-spacing:-0.015em;">SettlementCheck</span>
@@ -117,14 +148,17 @@ export async function POST(req: NextRequest) {
             <p style="font-size:13px;color:#5B6577;line-height:1.6;margin:0;">Your employer is legally required to contribute to the cost of your independent legal advice on any settlement agreement. A solicitor review is free to you and takes 24 to 48 hours. You are under no obligation after the first call.</p>
           </div>
 
-          <a href="https://settlementcheck.co.uk/calculator"
+          <a href="https://settlementcheck.co.uk/get-matched/"
              style="display:inline-block;background:#D9603B;color:#fff;font-size:15px;font-weight:600;padding:13px 24px;border-radius:6px;text-decoration:none;letter-spacing:-0.01em;">
             Get matched with a solicitor
           </a>
 
           <div style="margin-top:40px;padding-top:20px;border-top:1px solid #E2DCCE;">
+            <p style="font-size:11px;color:#8A93A3;line-height:1.6;margin:0 0 6px;">
+              SettlementCheck &bull; United Kingdom &bull; <a href="mailto:team@settlementcheck.co.uk" style="color:#8A93A3;">team@settlementcheck.co.uk</a>
+            </p>
             <p style="font-size:11px;color:#8A93A3;line-height:1.6;margin:0;">
-              Estimate based on UK statutory rates (ERA 1996, ITEPA 2003). Not legal advice. SettlementCheck is an introduction service, not a law firm. This email was sent once because you requested it and will not be used for marketing.
+              Estimate based on UK statutory rates (ERA 1996, ITEPA 2003). Not legal advice. SettlementCheck is an introduction service, not a law firm. This email was sent once because you requested your calculation results.
             </p>
           </div>
         </div>

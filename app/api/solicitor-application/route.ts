@@ -53,9 +53,11 @@ export async function POST(req: NextRequest) {
     if (notificationEmail) {
       resend.emails
         .send({
-          from: 'SettlementCheck <noreply@settlementcheck.co.uk>',
+          from: 'SettlementCheck <team@settlementcheck.co.uk>',
           to: notificationEmail,
           subject: `New solicitor application: ${firm_name}`,
+          replyTo: email,
+          text: `New Solicitor Application\n\nFirm: ${firm_name}\nContact: ${contact_name}\nEmail: ${email}\nPhone: ${phone || 'N/A'}\nOffice: ${office_postcode || 'N/A'}${office_region ? ` (${office_region})` : ''}\nRadius: ${coverage_radius_miles != null ? coverage_radius_miles + ' miles' : 'National'}\nSRA Confirmed: ${sra_confirmed ? 'Yes' : 'No'}`,
           html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 560px; margin: 0 auto; padding: 40px 24px;">
             <div style="margin-bottom: 24px;">
@@ -100,7 +102,6 @@ export async function POST(req: NextRequest) {
             </div>
           </div>
         `,
-          replyTo: email,
         })
         .then((res: any) => {
           if (res?.error) console.error('Notification email error:', JSON.stringify(res.error))
@@ -111,9 +112,11 @@ export async function POST(req: NextRequest) {
     // Confirmation to applicant
     resend.emails
       .send({
-        from: 'SettlementCheck <noreply@settlementcheck.co.uk>',
+        from: 'SettlementCheck <team@settlementcheck.co.uk>',
+        replyTo: 'team@settlementcheck.co.uk',
         to: email,
         subject: 'Application received - SettlementCheck',
+        text: `Hi ${contact_name},\n\nThanks for applying to join the SettlementCheck solicitor panel. We have received your application for ${firm_name} and will review it within 2 business days.\n\nQuestions? Email us at hello@settlementcheck.co.uk\n\nSettlementCheck • United Kingdom`,
         html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 40px 24px;">
           <div style="margin-bottom: 32px;">
@@ -123,6 +126,9 @@ export async function POST(req: NextRequest) {
           <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">Hi ${contact_name},</p>
           <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">Thanks for applying to join the SettlementCheck solicitor panel. We have received your application for <strong>${firm_name}</strong> and will review it within 2 business days.</p>
           <p style="color: #6b7280; font-size: 14px; line-height: 1.6; margin: 0;">Questions? Email us at <a href="mailto:hello@settlementcheck.co.uk" style="color: #D9603B;">hello@settlementcheck.co.uk</a></p>
+          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
+            <p style="font-size: 11px; color: #9ca3af; margin: 0;">SettlementCheck &bull; United Kingdom &bull; team@settlementcheck.co.uk</p>
+          </div>
         </div>
       `,
       })

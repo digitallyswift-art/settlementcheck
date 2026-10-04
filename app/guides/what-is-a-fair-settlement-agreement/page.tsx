@@ -434,7 +434,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                     </Link>{' '}
                     and{' '}
                     <Link href="/guides/settlement-agreement-acas-calculations/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
-                      ACAS calculations guide
+                      ACAS-based calculations guide
                     </Link>. This confirms your legal floor. Any settlement offer below this figure is unlawful.
                   </p>
                 </div>

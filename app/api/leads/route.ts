@@ -159,10 +159,11 @@ Consent Verified: Yes`,
 
       try {
         await resend.emails.send({
-          from: 'SettlementCheck <noreply@settlementcheck.co.uk>',
+          from: 'SettlementCheck <team@settlementcheck.co.uk>',
           to: targetEmail,
           subject: `${isB2B ? '[' + partnerFirmName + ' Widget] ' : ''}New Lead: ${first_name.trim()} (${verdictLabel[verdict] ?? verdict})`,
           replyTo: email.trim(),
+          text: `New Settlement Lead (${partnerFirmName})\n\nName: ${first_name.trim()}\nEmail: ${email.trim()}\nPhone: ${phone.trim()}\nVerdict: ${verdictLabel[verdict] ?? verdict}\nOffer: ${offerFormatted}\nSalary: ${salaryFormatted}\nService: ${serviceYears}${source_url ? `\nReferral: ${source_url}` : ''}`,
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 560px; margin: 0 auto; padding: 40px 24px;">
               <div style="margin-bottom: 24px;">
@@ -217,10 +218,26 @@ Consent Verified: Yes`,
 
     // ── Confirmation email to employee ──────────────────────────────────────
     try {
+      const confirmationText = [
+        `Hi ${first_name.trim()},`,
+        '',
+        'Thank you for using the settlement agreement calculator.',
+        `Your inquiry has been sent to the specialist team at ${partnerFirmName}.`,
+        'An employment solicitor will review your figures and contact you directly within 24 hours to discuss your options.',
+        '',
+        'The advice is free. Under UK employment law, your employer is required to contribute towards your legal fees for independent advice on a settlement agreement.',
+        '',
+        '---',
+        'SettlementCheck • United Kingdom • team@settlementcheck.co.uk',
+        'SettlementCheck widget handles routing to SRA-regulated solicitors. We do not provide legal advice directly.',
+      ].join('\n')
+
       await resend.emails.send({
-        from: 'SettlementCheck <noreply@settlementcheck.co.uk>',
+        from: 'SettlementCheck <team@settlementcheck.co.uk>',
+        replyTo: 'team@settlementcheck.co.uk',
         to: email.trim(),
         subject: `Your settlement check request - ${partnerFirmName}`,
+        text: confirmationText,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 40px 24px;">
             <div style="margin-bottom: 32px;">
@@ -233,6 +250,9 @@ Consent Verified: Yes`,
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">The advice is free. Under UK employment law, your employer is required to contribute towards your legal fees for independent advice on a settlement agreement.</p>
             <div style="background: #f9fafb; border-radius: 8px; padding: 16px;">
               <p style="color: #6b7280; font-size: 13px; margin: 0; line-height: 1.6;">SettlementCheck widget handles routing to SRA-regulated solicitors. We do not provide legal advice directly.</p>
+            </div>
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
+              <p style="font-size: 11px; color: #9ca3af; margin: 0;">SettlementCheck &bull; United Kingdom &bull; team@settlementcheck.co.uk</p>
             </div>
           </div>
         `,

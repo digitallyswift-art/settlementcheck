@@ -8,7 +8,8 @@
     "start": "next start",
     "check:links": "node scripts/check-links.mjs",
     "seo:check": "node scripts/check-links.mjs",
-    "archive:gsc": "node scripts/archive-gsc.mjs"
+    "archive:gsc": "node scripts/archive-gsc.mjs",
+    "test:evals": "node scripts/evals/eval-runner.mjs"
   },
   "license": "ISC",
   "dependencies": {

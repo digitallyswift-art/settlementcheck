@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Tier 1: Conversion pillars
     { url: `${base}/`,                                                lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
     { url: `${base}/calculator/`,                                     lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
+    { url: `${base}/settlement-agreement-review/`,                    lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
 
     // Tier 2: Programmatic SEO landing pages
     { url: `${base}/redundancy-calculator/`,                          lastModified: now, changeFrequency: 'monthly', priority: 0.9 },

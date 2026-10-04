@@ -39,6 +39,12 @@ const sitemapData: SitemapCategory[] = [
         badge: 'Popular',
       },
       {
+        title: 'Employment Settlement Agreement Checker',
+        href: '/settlement-agreement-review/',
+        description: 'Instant confidential check verifying draft clauses, tax exemptions (s.403), statutory caps, and counter-offer strategy.',
+        badge: 'Free Tool',
+      },
+      {
         title: 'Redundancy Pay Calculator',
         href: '/redundancy-calculator/',
         description: 'Calculate statutory redundancy pay and enhanced settlement compensation entitlements for 2026.',
@@ -162,7 +168,7 @@ const sitemapData: SitemapCategory[] = [
         description: 'The latest statutory weekly pay caps and statutory maximum entitlements.',
       },
       {
-        title: 'Settlement Agreement ACAS Calculations',
+        title: 'ACAS-Based Settlement Calculations',
         href: '/guides/settlement-agreement-acas-calculations/',
         description: 'Understanding early conciliation benchmarks and ACAS Code of Practice uplift.',
       },
