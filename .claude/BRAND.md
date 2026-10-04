@@ -29,6 +29,15 @@ Do not alarm them. Do not patronise them. Do not oversell.
 
 ---
 
+## Attention Economy & AI-Search Principles
+
+- **The 3-Second Hook**: In an AI search environment where zero-click searches dominate, mobile visitors decide within 3 seconds whether to stay. Always place the interactive tool or primary utility above the fold. Never force users to scroll past background copy before they can take action.
+- **Progressive Cognitive Relief**: Stressed employees facing tight deadlines suffer from decision fatigue. Break complex legal calculations into focused, single-concept steps. Each tap should give the user clear feedback and momentum.
+- **Zero-Friction Value Exchange**: Deliver the statutory floor and fairness verdict freely without email capture. Gating basic calculations breaks trust. Reserve contact capture for the high-value step: connecting with an SRA-regulated solicitor.
+- **Immediate Attention Payoff**: Never leave the user with static numbers alone. Immediately answer their unspoken question: "What do I say to my employer now?" Provide practical tools like negotiation email drafts and clear tax breakdowns.
+
+---
+
 ## Layout and Visual Design for Content
 
 - **Never produce a "wall of text."** 

@@ -18,8 +18,20 @@ export interface CalcPayload {
   result: VerdictResult
 }
 
+export interface InitialCalcValues {
+  salary?: string
+  yearsNum?: string
+  monthsNum?: string
+  age?: string
+  offer?: string
+  reason?: string
+  discrimination?: string
+  contractualNotice?: string
+}
+
 interface Props {
   onCalculate: (payload: CalcPayload) => void
+  initialValues?: InitialCalcValues
 }
 
 
@@ -82,7 +94,7 @@ function Tick() {
 
 /* ── Main Component ─────────────────────────────────────────────── */
 
-export default function SteppedCalculator({ onCalculate }: Props) {
+export default function SteppedCalculator({ onCalculate, initialValues }: Props) {
   const router = useRouter()
   const [phase, setPhase] = useState<Phase>('steps')
   const [step, setStep] = useState(1)
@@ -90,17 +102,35 @@ export default function SteppedCalculator({ onCalculate }: Props) {
   const [shake, setShake] = useState(false)
 
   // Form values
-  const [salary, setSalary] = useState('')
-  const [age, setAge] = useState('')
+  const [salary, setSalary] = useState(initialValues?.salary || '')
+  const [age, setAge] = useState(initialValues?.age || '')
   const [ageError, setAgeError] = useState('')
-  const [yearsNum, setYearsNum] = useState('')
-  const [monthsNum, setMonthsNum] = useState('')
-  const [offer, setOffer] = useState('')
+  const [yearsNum, setYearsNum] = useState(initialValues?.yearsNum || '')
+  const [monthsNum, setMonthsNum] = useState(initialValues?.monthsNum || '')
+  const [offer, setOffer] = useState(initialValues?.offer || '')
   const [offerWarning, setOfferWarning] = useState('')
-  const [noticeOption, setNoticeOption] = useState<string | null>(null)
-  const [reason, setReason] = useState<string | null>(null)
+  const [noticeOption, setNoticeOption] = useState<string | null>(initialValues?.contractualNotice || null)
+  const [reason, setReason] = useState<string | null>(() => {
+    if (!initialValues?.reason) return null
+    if (initialValues.reason === 'redundancy') return 'redundancy_individual'
+    return initialValues.reason
+  })
   const [collectiveVisible, setCollectiveVisible] = useState(false)
-  const [discrimination, setDiscrimination] = useState<string | null>(null)
+  const [discrimination, setDiscrimination] = useState<string | null>(initialValues?.discrimination || null)
+
+  useEffect(() => {
+    if (!initialValues) return
+    if (initialValues.salary && !salary) setSalary(initialValues.salary)
+    if (initialValues.age && !age) setAge(initialValues.age)
+    if (initialValues.yearsNum && !yearsNum) setYearsNum(initialValues.yearsNum)
+    if (initialValues.monthsNum && !monthsNum) setMonthsNum(initialValues.monthsNum)
+    if (initialValues.offer && !offer) setOffer(initialValues.offer)
+    if (initialValues.contractualNotice && !noticeOption) setNoticeOption(initialValues.contractualNotice)
+    if (initialValues.reason && !reason) {
+      setReason(initialValues.reason === 'redundancy' ? 'redundancy_individual' : initialValues.reason)
+    }
+    if (initialValues.discrimination && !discrimination) setDiscrimination(initialValues.discrimination)
+  }, [initialValues])
 
   // Loading animation state
   const [loadState, setLoadState] = useState<LoadState>(1)

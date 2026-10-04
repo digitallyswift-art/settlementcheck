@@ -786,6 +786,197 @@ function CaseBriefSection({
   )
 }
 
+/* ── Negotiation Response Draftsman ─────────────────────────────── */
+
+interface NegotiationDraftsmanProps {
+  result: VerdictResult
+  offer: number
+  salary: number
+  yearsNum: number
+  onGetMatched: () => void
+}
+
+function NegotiationDraftsman({
+  result,
+  offer,
+  salary,
+  yearsNum,
+  onGetMatched,
+}: NegotiationDraftsmanProps) {
+  const [open, setOpen] = useState(true)
+  const [copied, setCopied] = useState(false)
+  const [activeTemplate, setActiveTemplate] = useState<'uplift' | 'fee_only'>('uplift')
+
+  const redundancyAmount = result.redundancy || result.basicAward
+  const pilonAmount = result.pilon
+  const minFloor = redundancyAmount + pilonAmount
+  const targetUplift = result.typicalLow > offer ? result.typicalLow : Math.round(offer * 1.25)
+
+  const upliftSubject = 'Without Prejudice: Settlement Agreement Proposal - Confidential'
+  const upliftBody = `Dear [HR Manager / Line Manager],
+
+Thank you for discussing the proposed settlement agreement with me.
+
+Having reviewed the statutory baseline under the Employment Rights Act 1996, I would like to clarify our position regarding the current package:
+
+1. Statutory Redundancy / Basic Entitlement: Based on my ${yearsNum} complete ${yearsNum === 1 ? 'year' : 'years'} of continuous service, my statutory floor is ${formatCurrency(redundancyAmount)}.
+2. Notice Pay (PILON): Under my contract and Section 86 of the Employment Rights Act 1996, my accrued notice entitlement is ${formatCurrency(pilonAmount)}.
+3. Total Statutory Baseline: Before considering any compensatory termination payment or waiver of potential claims, my statutory minimum entitlement totals ${formatCurrency(minFloor)}.
+
+The current offer presented is ${formatCurrency(offer)}. To reach an amicable and fair resolution that reflects my service and compensates for waiving my employment rights, I would request that the total settlement package is adjusted to ${formatCurrency(targetUplift)}.
+
+Additionally, in line with standard UK practice and Section 203(3) of the Employment Rights Act 1996, please confirm that the company will provide the standard legal fee contribution of £500 plus VAT for my independent solicitor review.
+
+I look forward to your response and concluding this matter constructively.
+
+Kind regards,
+[Your Name]`
+
+  const feeSubject = 'Without Prejudice: Independent Legal Advice Fee Contribution'
+  const feeBody = `Dear [HR Manager / Line Manager],
+
+Thank you for sending through the draft settlement agreement.
+
+Under Section 203(3) of the Employment Rights Act 1996, I am required to receive independent legal advice from an SRA-regulated solicitor before this agreement can become legally binding.
+
+Could you please confirm that the company will provide the standard employer legal fee contribution of £500 plus VAT, paid directly to my appointed solicitor upon completion of the agreement?
+
+Once confirmed, I will instruct my solicitor to proceed with the review immediately.
+
+Kind regards,
+[Your Name]`
+
+  const currentSubject = activeTemplate === 'uplift' ? upliftSubject : feeSubject
+  const currentBody = activeTemplate === 'uplift' ? upliftBody : feeBody
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(`Subject: ${currentSubject}\n\n${currentBody}`)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch {
+      // Fallback
+    }
+  }
+
+  return (
+    <div className="bg-white border border-[#E2DCCE] rounded-xl overflow-hidden shadow-sm" id="negotiation-draftsman">
+      {/* Header Toggle */}
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="w-full p-5 text-left flex justify-between items-center bg-[#F7F4EE] border-b border-[#E2DCCE] focus:outline-none cursor-pointer"
+      >
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="bg-[#D9603B] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+              Practical Next Step
+            </span>
+            <span className="text-[#8A93A3] text-[11px] font-semibold">HR Response Draft</span>
+          </div>
+          <h3 className="sc-h3 text-[#0B1F3A] m-0">What to say to your employer</h3>
+        </div>
+        <span
+          className="text-[#0B1F3A] font-bold text-[18px] transition-transform duration-200"
+          style={{ transform: open ? 'rotate(180deg)' : 'none' }}
+        >
+          ▾
+        </span>
+      </button>
+
+      {open && (
+        <div className="p-5 md:p-6 flex flex-col gap-4">
+          <p className="text-[14px] text-[#5B6577] m-0 leading-relaxed">
+            Replying to an employer requires a calm, objective tone. Use this draft to state your statutory entitlements clearly without escalating tension.
+          </p>
+
+          {/* Template Switcher */}
+          <div className="flex gap-2 p-1 bg-[#F5F1E9] rounded-lg border border-[#E2DCCE] w-fit">
+            <button
+              type="button"
+              onClick={() => setActiveTemplate('uplift')}
+              className={`px-3 py-1.5 rounded-md text-[12px] font-semibold transition-colors cursor-pointer ${
+                activeTemplate === 'uplift'
+                  ? 'bg-[#0B1F3A] text-white'
+                  : 'text-[#5B6577] hover:text-[#0B1F3A]'
+              }`}
+            >
+              Negotiate Uplift
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTemplate('fee_only')}
+              className={`px-3 py-1.5 rounded-md text-[12px] font-semibold transition-colors cursor-pointer ${
+                activeTemplate === 'fee_only'
+                  ? 'bg-[#0B1F3A] text-white'
+                  : 'text-[#5B6577] hover:text-[#0B1F3A]'
+              }`}
+            >
+              Legal Fee Contribution
+            </button>
+          </div>
+
+          {/* Draft Box */}
+          <div className="bg-[#FAF8F5] border border-[#E2DCCE] rounded-lg p-4 font-mono text-[12px] md:text-[13px] text-[#0B1F3A] leading-relaxed relative flex flex-col gap-2">
+            <div className="border-b border-[#E2DCCE] pb-2 text-[12px] text-[#5B6577] font-sans font-medium">
+              <span className="font-bold text-[#0B1F3A]">Subject:</span> {currentSubject}
+            </div>
+            <pre className="font-sans whitespace-pre-wrap m-0 text-[#2B3445] text-[13px] leading-relaxed">
+              {currentBody}
+            </pre>
+          </div>
+
+          {/* Action Row */}
+          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between pt-1">
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="px-4 py-2.5 rounded-lg text-[13px] font-bold transition-all flex items-center justify-center gap-2 cursor-pointer border"
+              style={{
+                background: copied ? '#4F7060' : '#ffffff',
+                borderColor: copied ? '#4F7060' : '#C8D3DF',
+                color: copied ? '#ffffff' : '#0B1F3A',
+              }}
+            >
+              {copied ? (
+                <>
+                  <CheckIcon size={15} />
+                  <span>Copied to clipboard</span>
+                </>
+              ) : (
+                <>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>Copy draft template</span>
+                </>
+              )}
+            </button>
+
+            {/* Solicitor Bridge Button */}
+            <button
+              type="button"
+              onClick={onGetMatched}
+              className="px-4 py-2.5 rounded-lg text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#c25230] transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+            >
+              <span>Have a solicitor negotiate this for you →</span>
+            </button>
+          </div>
+
+          {/* Conversion Reassurance Bridge */}
+          <div className="rounded-lg p-3 bg-[#F2F5F8] border border-[#C8D3DF] text-[12px] text-[#5B6577] flex items-start gap-2.5">
+            <span className="text-[15px] flex-shrink-0 leading-none">🛡</span>
+            <p className="m-0 leading-relaxed">
+              <strong>Your employer covers the legal fee:</strong> Under UK employment convention, employers pay £350 to £750 toward independent legal advice. An SRA-regulated solicitor can handle these negotiations directly with HR so you do not have to.
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 /* ── Breakdown table ────────────────────────────────────────────── */
 
 function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offer: number; salary: number }) {
@@ -1428,6 +1619,18 @@ function ResultsContent() {
     contractualNotice, jurisdiction,
   }
 
+  const handleSolicitorMatch = () => {
+    if (!result) return
+    const p = new URLSearchParams({
+      verdict: result.verdict,
+      offer:   String(offer),
+      salary:  String(salary),
+      months:  String(totalMonths),
+    })
+    if (prefillEmail) { p.set('email', prefillEmail); p.set('ev', '1') }
+    router.push(`/get-matched?${p.toString()}`)
+  }
+
   function scrollToSave() {
     saveCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
     setTimeout(() => saveCardRef.current?.querySelector<HTMLButtonElement>('[data-email-trigger]')?.click(), 400)
@@ -1635,6 +1838,17 @@ function ResultsContent() {
                   <BreakdownTable result={result} offer={offer} salary={salary} />
                 </div>
 
+                {/* Negotiation Response Draftsman (Practical Next Step) */}
+                <div className="no-print">
+                  <NegotiationDraftsman
+                    result={result}
+                    offer={offer}
+                    salary={salary}
+                    yearsNum={Math.floor(yearsNum)}
+                    onGetMatched={handleSolicitorMatch}
+                  />
+                </div>
+
                 {/* Barrister-Ready Case Brief (Intake brief) */}
                 <CaseBriefSection
                   inputs={inputs}
@@ -1667,16 +1881,7 @@ function ResultsContent() {
                   salary={salary}
                   totalMonths={totalMonths}
                   prefillEmail={prefillEmail}
-                  onGetMatched={() => {
-                    const p = new URLSearchParams({
-                      verdict: result.verdict,
-                      offer:   String(offer),
-                      salary:  String(salary),
-                      months:  String(totalMonths),
-                    })
-                    if (prefillEmail) { p.set('email', prefillEmail); p.set('ev', '1') }
-                    router.push(`/get-matched?${p.toString()}`)
-                  }}
+                  onGetMatched={handleSolicitorMatch}
                 />
 
                 {/* Save results panel */}

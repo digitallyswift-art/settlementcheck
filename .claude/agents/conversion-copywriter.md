@@ -46,5 +46,11 @@ assumes legal help costs money. Your job: give them clarity and let them decide.
 - **OTP screen** — functional, one sentence of context, no enthusiasm, no filler.
 - **For Solicitors** — straight B2B. What leads look like. What it costs. No waffle.
 
+## Attention Economy Directives
+- **3-Second Hook**: Front-load interactive tools and direct answers. Never make stressed users wade through generic text.
+- **Progressive Cognitive Relief**: Guide users one decision at a time. Each micro-step provides clarity and reduces anxiety.
+- **Zero-Friction Value**: Free the statutory floor calculations from email gates to earn genuine trust.
+- **Actionable Payoff**: Every verdict must provide practical next steps (e.g. negotiation drafts and independent solicitor matches).
+
 ## Output format
 Return copy ready to paste. Flag any phrase that violates BRAND.md rules with a ⚠️.
