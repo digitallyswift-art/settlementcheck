@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 const VALID_CATEGORIES = ['redundancy', 'pip', 'discrimination', 'whistleblowing', 'constructive_dismissal', 'other'] as const
 
 // Baseline fallback benchmarks for UI display when database is bootstrapping
-export const BASELINE_BENCHMARKS = [
+const BASELINE_BENCHMARKS = [
   {
     dispute_category: 'pip',
     sample_size: 48,
