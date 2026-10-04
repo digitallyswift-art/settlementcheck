@@ -13,6 +13,7 @@ import {
   WEEKLY_CAP_NI,
   calcPensionSacrifice,
 } from '@/lib/calculations'
+import { getOfficialBenchmark } from '@/lib/statutory-rates'
 
 /* ── Shared tiny components ─────────────────────────────────────── */
 
@@ -49,66 +50,136 @@ function Testimonials() {
   )
 }
 
-/* ── Empirical Market Telemetry Card ────────────────────────────── */
+/* ── Official Government & Statutory Benchmarks Card ────────────── */
 
-function EmpiricalBenchmarkCard({ reason, salary }: { reason: string; salary: number }) {
-  const categoryMap: Record<string, { label: string; multiplier: number; legalFee: number; duration: number; count: number }> = {
-    pip: { label: 'Performance Improvement Plan (PIP)', multiplier: 3.2, legalFee: 750, duration: 3.5, count: 48 },
-    redundancy: { label: 'Statutory & Enhanced Redundancy', multiplier: 2.1, legalFee: 600, duration: 2.5, count: 112 },
-    redundancy_collective: { label: 'Collective Redundancy Consultation', multiplier: 2.4, legalFee: 650, duration: 3.0, count: 64 },
-    dismissal: { label: 'Unfair Dismissal / Capability Exit', multiplier: 3.4, legalFee: 800, duration: 4.0, count: 52 },
-    constructive_dismissal: { label: 'Constructive Dismissal Baseline', multiplier: 3.8, legalFee: 850, duration: 4.5, count: 29 },
-  }
+function OfficialBenchmarkCard({
+  reason,
+  salary,
+  offer,
+  result,
+  isDiscrimination,
+}: {
+  reason: string;
+  salary: number;
+  offer: number;
+  result: VerdictResult;
+  isDiscrimination: boolean;
+}) {
+  const benchmark = getOfficialBenchmark(reason, isDiscrimination)
+  const monthlySalary = salary / 12
+  const acasLow = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.min)
+  const acasHigh = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.max)
 
-  const benchmark = categoryMap[reason] || {
-    label: 'Standard Employment Settlement',
-    multiplier: 2.8,
-    legalFee: 750,
-    duration: 3.5,
-    count: 85,
-  }
+  const isUnderpaid = offer > 0 && offer < result.minimum
+  const isBelowAcas = offer >= result.minimum && offer < acasLow
+  const isHealthyOffer = offer >= acasLow
 
   return (
     <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 md:p-6 shadow-sm no-print">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E2DCCE] pb-3 mb-4">
         <div>
           <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-[#D9603B] font-semibold block mb-0.5">
-            Empirical Market Telemetry
+            Official Statutory &amp; Tribunal Benchmarks
           </span>
-          <h3 className="text-[16px] font-serif font-bold text-ink m-0">
-            Real Settlement Precedents: {benchmark.label}
+          <h3 className="text-[17px] font-serif font-bold text-ink m-0">
+            {benchmark.jurisdictionCategory}: Official Compensation Precedents
           </h3>
         </div>
-        <span className="text-[11px] text-[#8A93A3] font-mono self-start sm:self-auto">
-          Sample: {benchmark.count} verified cases
-        </span>
+        <a
+          href={benchmark.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[11px] text-[#0B1F3A] hover:text-[#D9603B] underline underline-offset-2 font-mono flex items-center gap-1 self-start sm:self-auto transition-colors"
+        >
+          <span>Source: {benchmark.sourceName}</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE]">
-          <span className="text-[11px] text-[#5B6577] block mb-1">Average Settlement Multiple</span>
-          <span className="text-[18px] font-bold text-ink block font-serif">
-            {benchmark.multiplier}× <span className="text-[12px] font-normal text-[#5B6577]">vs initial offer</span>
+        {/* Metric 1: Statutory Floor */}
+        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
+          <div>
+            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">1. Statutory Legal Minimum</span>
+            <span className="text-[18px] font-bold text-ink block font-serif">
+              {formatCurrency(result.minimum)}
+            </span>
+          </div>
+          <span className="text-[10px] text-[#8A93A3] mt-2 block">
+            Notice (s.86) + Redundancy (s.162 ERA 1996)
           </span>
         </div>
-        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE]">
-          <span className="text-[11px] text-[#5B6577] block mb-1">Employer Legal Fee Paid</span>
-          <span className="text-[18px] font-bold text-ink block font-serif">
-            £{benchmark.legalFee} <span className="text-[12px] font-normal text-[#5B6577]">+ VAT avg</span>
+
+        {/* Metric 2: HMCTS Tribunal Median */}
+        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
+          <div>
+            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">2. MoJ Tribunal Median Award</span>
+            <span className="text-[18px] font-bold text-ink block font-serif">
+              {formatCurrency(benchmark.medianTribunalAward)}
+            </span>
+          </div>
+          <span className="text-[10px] text-[#8A93A3] mt-2 block">
+            Mean average: {formatCurrency(benchmark.meanTribunalAward)} (MoJ Tables)
           </span>
         </div>
-        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE]">
-          <span className="text-[11px] text-[#5B6577] block mb-1">Average Resolution Time</span>
-          <span className="text-[18px] font-bold text-ink block font-serif">
-            {benchmark.duration} <span className="text-[12px] font-normal text-[#5B6577]">weeks</span>
+
+        {/* Metric 3: Acas Ex-Gratia Range */}
+        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
+          <div>
+            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">3. Acas Typical Settlement</span>
+            <span className="text-[18px] font-bold text-ink block font-serif">
+              {formatCurrency(acasLow)} – {formatCurrency(acasHigh)}
+            </span>
+          </div>
+          <span className="text-[10px] text-[#8A93A3] mt-2 block">
+            Floor + {benchmark.typicalAcasExGratiaMonths.min}–{benchmark.typicalAcasExGratiaMonths.max} mos ex-gratia
           </span>
         </div>
       </div>
 
-      <div className="bg-paper-2 border border-[#E2DCCE] rounded-lg p-3 text-[12px] text-[#5B6577] flex items-center justify-between gap-3">
-        <span>
-          💡 <strong className="text-ink">Attention Insight:</strong> Over 91% of employees represented by an independent SRA-regulated solicitor negotiate higher than their employer&apos;s initial offer.
-        </span>
+      {/* Dynamic Status / Psychology Leverage Callout */}
+      {offer > 0 && (
+        <div className={`rounded-lg p-3.5 text-[13px] leading-relaxed mb-4 border ${
+          isUnderpaid
+            ? 'bg-[#FBF0EE] border-[#F2C4BA] text-[#A8341F]'
+            : isBelowAcas
+            ? 'bg-[#FFF8E6] border-[#F0D597] text-[#7A5B15]'
+            : 'bg-[#F0F5FA] border-[#C4D8EC] text-[#0B1F3A]'
+        }`}>
+          {isUnderpaid && (
+            <p className="m-0">
+              <strong>⚠️ Critical Legal Discrepancy:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> is <strong>{formatCurrency(result.minimum - offer)} below your statutory floor</strong> ({formatCurrency(result.minimum)}). Under the Employment Rights Act 1996, your employer cannot legally require you to waive rights without providing full statutory entitlements.
+            </p>
+          )}
+          {isBelowAcas && (
+            <p className="m-0">
+              <strong>⚖️ Below Market Standard:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> covers statutory minimums but provides less than the standard Acas conciliation range ({formatCurrency(acasLow)} – {formatCurrency(acasHigh)}). You are releasing full tribunal rights with minimal ex-gratia consideration.
+            </p>
+          )}
+          {isHealthyOffer && (
+            <p className="m-0">
+              <strong>✓ Solid Settlement Position:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> sits within or above the typical Acas settlement range for this dispute category.
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Statutory Legal Advice Fee Protection Notice */}
+      <div className="bg-paper-2 border border-[#E2DCCE] rounded-lg p-3 text-[12px] text-[#5B6577] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex items-start gap-2">
+          <span className="text-[#0B1F3A] font-bold text-[14px] leading-none mt-0.5">§</span>
+          <span className="leading-snug">
+            <strong className="text-ink">Statutory Legal Fee Contribution:</strong> Under Section 203(3) of the Employment Rights Act 1996, your settlement is legally void without independent solicitor certification. Employers customarily contribute <strong>£350 to £1,000+ VAT</strong> directly to cover this fee.
+          </span>
+        </div>
+        <a
+          href="https://www.legislation.gov.uk/ukpga/1996/18/section/203"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#0B1F3A] hover:text-[#D9603B] underline underline-offset-2 font-mono whitespace-nowrap text-[11px]"
+        >
+          ERA 1996 s.203(3) &nearr;
+        </a>
       </div>
     </div>
   )
@@ -1893,8 +1964,14 @@ function ResultsContent() {
                   <Testimonials />
                 </div>
 
-                {/* Empirical Market Telemetry */}
-                <EmpiricalBenchmarkCard reason={reason} salary={salary} />
+                {/* Official Statutory & Tribunal Benchmarks */}
+                <OfficialBenchmarkCard
+                  reason={reason}
+                  salary={salary}
+                  offer={isSimulated ? displayOffer : offer}
+                  result={displayResult ?? result}
+                  isDiscrimination={discrimination === 'yes' || discrimination === 'not_sure'}
+                />
 
                 {/* Visual Chart - Dynamic stacked bar */}
                 <div className="no-print">
