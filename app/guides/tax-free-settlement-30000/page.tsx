@@ -160,23 +160,57 @@ export default function TaxFreeSettlementGuide() {
           </div>
         </section>
 
-        {/* Key takeaways callout */}
-        <section className="py-10 border-b border-rule">
+        {/* Statutory Quick Answer Callout (GEO / AI Overview Optimised) */}
+        <section className="py-8 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <div className="rounded-xl border border-rule bg-white p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Key tax rules for settlement agreements</p>
-              <ul className="flex flex-col gap-3">
-                {[
-                  'The £30,000 exemption only applies to genuine compensation for losing your job.',
-                  'You pay no employee National Insurance contributions on any part of your termination payment.',
-                  'Your employer covers your legal fees for this process, which is paid tax-free under HMRC rules.',
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <CheckIcon />
-                    <span className="sc-body text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
+                  Statutory Quick Answer
+                </span>
+                <span className="text-[11px] font-semibold text-muted">
+                  HMRC &amp; ITEPA 2003 Rules
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-ink mb-2">
+                How is a settlement agreement taxed in the UK?
+              </h2>
+              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
+                Under Section 403 of ITEPA 2003, the first £30,000 of compensation for loss of employment is completely free of income tax and employee National Insurance. In contrast, notice pay (PILON) and accrued holiday pay are fully taxable as general earnings under Section 402D. Employer legal fee contributions paid directly to your solicitor are exempt from tax under Section 413A.
+              </p>
+
+              {/* Structured Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Ex-Gratia &amp; Redundancy</span>
+                  <span className="font-bold text-ink text-sm">First £30,000 Tax-Free</span>
+                  <span className="text-muted text-[11px]">Section 403 of ITEPA 2003</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Notice Pay (PILON)</span>
+                  <span className="font-bold text-ink text-sm">Fully Taxable as Earnings</span>
+                  <span className="text-muted text-[11px]">Subject to PENP formula (s.402D)</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employee National Insurance</span>
+                  <span className="font-bold text-ink text-sm">0% NI on Compensation</span>
+                  <span className="text-muted text-[11px]">No employee NI even on sums above £30k</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Fee Contribution</span>
+                  <span className="font-bold text-ink text-sm">100% Tax-Exempt</span>
+                  <span className="text-muted text-[11px]">Paid to your solicitor (s.413A)</span>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span className="text-xs text-muted">
+                  Primary statute: <strong>Income Tax (Earnings and Pensions) Act 2003 s.403</strong>
+                </span>
+                <Link href="/settlement-agreement-tax-calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                  Calculate your take-home cash after tax →
+                </Link>
+              </div>
             </div>
           </div>
         </section>

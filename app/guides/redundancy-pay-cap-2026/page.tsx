@@ -160,31 +160,57 @@ export default function RedundancyPayCapGuide() {
           </div>
         </section>
 
-        {/* Core facts callout */}
-        <section className="py-10 border-b border-rule">
+        {/* Statutory Quick Answer Callout (GEO / AI Overview Optimised) */}
+        <section className="py-8 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <div className="rounded-xl border border-rule bg-white p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Key facts for 2026</p>
-              <ul className="flex flex-col gap-3">
-                <li className="flex items-start gap-3">
-                  <CheckIcon />
-                  <span className="sc-body text-sm">
-                    The weekly pay cap is £751 (Great Britain) <sup>1</sup> and £783 (Northern Ireland) <sup>2</sup> from 6 April 2026.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckIcon />
-                  <span className="sc-body text-sm">
-                    The maximum statutory redundancy pay is £22,530 <sup>3</sup>, reached only at 20 years service with the highest age multiplier.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckIcon />
-                  <span className="sc-body text-sm">
-                    The cap limits the statutory formula only. It does not cap what your employer can offer in a settlement agreement.
-                  </span>
-                </li>
-              </ul>
+            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
+                  Statutory Quick Answer
+                </span>
+                <span className="text-[11px] font-semibold text-muted">
+                  April 2026 Rates (SI 2026/310)
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-ink mb-2">
+                What is the UK statutory redundancy pay cap for 2026?
+              </h2>
+              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
+                From 6 April 2026, the statutory redundancy weekly pay cap is £751 in Great Britain under SI 2026/310 (£783 in Northern Ireland). The maximum statutory redundancy payment is £22,530, based on 20 years of continuous service. Any settlement offer paying less than your statutory redundancy entitlement is unlawful under Section 162 of the Employment Rights Act 1996.
+              </p>
+
+              {/* Structured Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Statutory Weekly Pay Cap</span>
+                  <span className="font-bold text-ink text-sm">£751 (GB) / £783 (NI)</span>
+                  <span className="text-muted text-[11px]">In force from 6 April 2026 (SI 2026/310)</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Maximum Statutory Redundancy</span>
+                  <span className="font-bold text-ink text-sm">£22,530</span>
+                  <span className="text-muted text-[11px]">20 years service x 1.5 weekly cap</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Qualifying Service</span>
+                  <span className="font-bold text-ink text-sm">2 continuous years</span>
+                  <span className="text-muted text-[11px]">Employment Rights Act 1996 s.155</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Tax Status</span>
+                  <span className="font-bold text-ink text-sm">100% Tax-Free</span>
+                  <span className="text-muted text-[11px]">Covered by £30k exemption (ITEPA s.403)</span>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span className="text-xs text-muted">
+                  Primary statute: <strong>Employment Rights Act 1996 s.227 &amp; SI 2026/310</strong>
+                </span>
+                <Link href="/calculator/?reason=redundancy" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                  Calculate your exact capped figure →
+                </Link>
+              </div>
             </div>
           </div>
         </section>

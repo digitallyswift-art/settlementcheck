@@ -118,6 +118,38 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   const [collectiveVisible, setCollectiveVisible] = useState(false)
   const [discrimination, setDiscrimination] = useState<string | null>(initialValues?.discrimination || null)
 
+  // Smart session storage persistence
+  useEffect(() => {
+    try {
+      const saved = typeof window !== 'undefined' ? sessionStorage.getItem('sc_saved_calc') : null
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (!initialValues?.salary && parsed.salary && !salary) setSalary(parsed.salary)
+        if (!initialValues?.age && parsed.age && !age) setAge(parsed.age)
+        if (!initialValues?.yearsNum && parsed.yearsNum && !yearsNum) setYearsNum(parsed.yearsNum)
+        if (!initialValues?.monthsNum && parsed.monthsNum && !monthsNum) setMonthsNum(parsed.monthsNum)
+        if (!initialValues?.offer && parsed.offer && !offer) setOffer(parsed.offer)
+        if (!initialValues?.contractualNotice && parsed.contractualNotice && !noticeOption) setNoticeOption(parsed.contractualNotice)
+        if (!initialValues?.reason && parsed.reason && !reason) setReason(parsed.reason)
+        if (!initialValues?.discrimination && parsed.discrimination && !discrimination) setDiscrimination(parsed.discrimination)
+      }
+    } catch {
+      // Safe fallback for restricted or private browsing
+    }
+  }, [])
+
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('sc_saved_calc', JSON.stringify({
+          salary, age, yearsNum, monthsNum, offer, contractualNotice: noticeOption, reason, discrimination
+        }))
+      }
+    } catch {
+      // Safe fallback
+    }
+  }, [salary, age, yearsNum, monthsNum, offer, noticeOption, reason, discrimination])
+
   useEffect(() => {
     if (!initialValues) return
     if (initialValues.salary && !salary) setSalary(initialValues.salary)

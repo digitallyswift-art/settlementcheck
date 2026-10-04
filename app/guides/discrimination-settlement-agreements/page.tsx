@@ -545,7 +545,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Evaluate your compensation against 2026 statutory caps, calculate your tax-free allowance, and check if your offer is fair.
             </p>
-            <Link href="/calculator/" className="btn-accent">
+            <Link href="/calculator/?discrimination=yes" className="btn-accent">
               Calculate my settlement now &rarr;
             </Link>
           </div>

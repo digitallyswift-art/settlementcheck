@@ -111,6 +111,61 @@ export default function WhatIsAFairSettlementAgreementGuide() {
           </div>
         </section>
 
+        {/* Statutory Quick Answer Callout (GEO / AI Overview Optimised) */}
+        <section className="py-8 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
+                  Statutory Quick Answer
+                </span>
+                <span className="text-[11px] font-semibold text-muted">
+                  April 2026 Fairness Benchmarks
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-ink mb-2">
+                What makes a settlement agreement offer fair in the UK?
+              </h2>
+              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
+                A fair settlement agreement must exceed your statutory baseline. In 2026, your statutory floor consists of statutory redundancy capped at £751 per week under SI 2026/310, contractual notice pay, and accrued holiday. A fair offer adds an ex-gratia compensatory uplift, plus the standard £350 to £750 employer legal fee contribution under Section 203(3) of the Employment Rights Act 1996.
+              </p>
+
+              {/* Structured Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Statutory Floor</span>
+                  <span className="font-bold text-ink text-sm">Redundancy + Notice Pay</span>
+                  <span className="text-muted text-[11px]">Guaranteed by ERA 1996 ss.86 &amp; 162</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Ex-Gratia Uplift</span>
+                  <span className="font-bold text-ink text-sm">1 to 4 Months Salary</span>
+                  <span className="text-muted text-[11px]">Compensates for waiving claims</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Tax-Free Exemption</span>
+                  <span className="font-bold text-ink text-sm">First £30,000 Tax-Free</span>
+                  <span className="text-muted text-[11px]">ITEPA 2003 Section 403</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Fee Contribution</span>
+                  <span className="font-bold text-ink text-sm">£350 to £750</span>
+                  <span className="text-muted text-[11px]">Paid to your independent solicitor (s.203)</span>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span className="text-xs text-muted">
+                  Primary statute: <strong>Employment Rights Act 1996 s.203 &amp; SI 2026/310</strong>
+                </span>
+                <Link href="/calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                  Check if your offer is fair in 60 seconds →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* What a settlement agreement is */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
@@ -122,10 +177,10 @@ export default function WhatIsAFairSettlementAgreementGuide() {
               The agreement is only legally binding if it meets specific conditions set out in ERA 1996 s.203. One of those conditions is that you must receive independent legal advice before signing. This is not a courtesy or a formality. Without it, the agreement is likely unenforceable and you retain your right to bring tribunal claims.
             </p>
             <p className="sc-body mb-4">
-              Your employer typically pays your legal fees. The standard contribution is £250 to £750, though you can negotiate this higher. Your solicitor reviews the agreement, explains what rights you are waiving, advises whether the figure is fair, and can flag unfair terms for negotiation.
+              Your employer typically pays your legal fees. The standard contribution is £350 to £750, though you can negotiate this higher. Your solicitor reviews the agreement, explains what rights you are waiving, advises whether the figure is fair, and can flag unfair terms for negotiation.
             </p>
             <p className="sc-body">
-              The first figure your employer offers is rarely their maximum. It is a starting point. Employers know that tribunal proceedings cost them far more in management time, legal fees, and uncertainty than a modest increase on the initial offer. You have leverage. Use it.
+              The first figure your employer offers is rarely their maximum. It is a starting point. Employers know that tribunal proceedings cost them far more in management time, legal fees, and uncertainty than a modest increase on the initial offer. You have a solid negotiating position.
             </p>
           </div>
         </section>

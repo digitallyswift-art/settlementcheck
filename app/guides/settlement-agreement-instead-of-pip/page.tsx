@@ -399,7 +399,7 @@ export default function PipSettlementGuide() {
                 <p className="font-serif text-[17px] font-[460] text-ink">Check your settlement offer now</p>
                 <p className="text-xs text-muted">Free, confidential estimate in under 2 minutes. No contact info needed.</p>
               </div>
-              <Link href="/calculator/" className="btn-accent text-xs whitespace-nowrap">
+              <Link href="/calculator/?reason=performance" className="btn-accent text-xs whitespace-nowrap">
                 Calculate my estimate →
               </Link>
             </div>
@@ -636,7 +636,7 @@ export default function PipSettlementGuide() {
             <p className="sc-lead text-white/80 max-w-xl mx-auto mb-6 text-sm">
               Use our free calculator to see if your offer meets statutory standards. Your employer covers the cost of independent legal advice.
             </p>
-            <Link href="/calculator/" className="btn-accent text-sm inline-block">
+            <Link href="/calculator/?reason=performance" className="btn-accent text-sm inline-block">
               Calculate my estimate →
             </Link>
           </div>

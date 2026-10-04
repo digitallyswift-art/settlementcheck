@@ -75,7 +75,8 @@ function checkHref(rawHref, file) {
     return;
   }
 
-  const [pathname] = rawHref.split('#');
+  const [urlWithoutHash] = rawHref.split('#');
+  const [pathname] = urlWithoutHash.split('?');
   
   if (pathname && pathname !== '/' && !pathname.includes('.') && !pathname.endsWith('/')) {
     issues.push({

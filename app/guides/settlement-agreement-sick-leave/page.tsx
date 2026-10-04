@@ -663,7 +663,7 @@ export default function SettlementAgreementSickLeaveGuide() {
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
               Evaluate your offer against 2026 statutory caps (£751 weekly cap), calculate your notice pay, and verify your tax-free allowance.
             </p>
-            <Link href="/calculator/" className="btn-accent">
+            <Link href="/calculator/?reason=mutual" className="btn-accent">
               Calculate my settlement now &rarr;
             </Link>
           </div>

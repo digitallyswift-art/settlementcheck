@@ -235,7 +235,7 @@ export default function UnfairDismissalCalculatorPage() {
         steps={UNFAIR_DISMISSAL_STEPS}
         faqItems={UNFAIR_DISMISSAL_FAQS}
         ctaLabel="Estimate my unfair dismissal award →"
-        ctaHref="/calculator/"
+        ctaHref="/calculator/?reason=performance"
         howItWorksTitle="Three steps to understand your unfair dismissal position."
         howItWorksLead="From what the law says you could be owed, to the net figure after tax. Free, no email required."
         taxSectionTitle="How much tax will you pay on an unfair dismissal settlement?"

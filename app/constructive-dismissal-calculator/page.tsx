@@ -241,7 +241,7 @@ export default function ConstructiveDismissalCalculatorPage() {
         steps={CONSTRUCTIVE_DISMISSAL_STEPS}
         faqItems={CONSTRUCTIVE_DISMISSAL_FAQS}
         ctaLabel="Estimate my constructive dismissal settlement →"
-        ctaHref="/calculator/"
+        ctaHref="/calculator/?reason=constructive"
         howItWorksTitle="Three steps to understand your constructive dismissal position."
         howItWorksLead="From what you could be owed, to the net figure after tax. Free, no email required. Independent, not a law firm."
         taxSectionTitle="How much tax will you pay on a constructive dismissal settlement?"

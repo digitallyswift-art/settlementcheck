@@ -230,7 +230,7 @@ export default function RedundancyCalculatorPage() {
         steps={REDUNDANCY_STEPS}
         faqItems={REDUNDANCY_FAQS}
         ctaLabel="Calculate my redundancy pay →"
-        ctaHref="/calculator/"
+        ctaHref="/calculator/?reason=redundancy"
         howItWorksTitle="Three steps to understand your redundancy position."
         howItWorksLead="From your statutory minimum to what you will actually take home. Free, no email required."
         taxSectionTitle="How much tax will you pay on your redundancy package?"

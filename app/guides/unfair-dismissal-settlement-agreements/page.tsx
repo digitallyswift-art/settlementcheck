@@ -469,7 +469,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
               <Link href="/unfair-dismissal-calculator/" className="btn-accent">
                 Unfair Dismissal Calculator →
               </Link>
-              <Link href="/calculator/" className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-rule text-white hover:bg-white/10 transition-colors font-medium text-sm">
+              <Link href="/calculator/?reason=performance" className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-rule text-white hover:bg-white/10 transition-colors font-medium text-sm">
                 Standard Settlement Calculator
               </Link>
             </div>

@@ -165,23 +165,57 @@ export default function AveragePayoutGuide() {
           </div>
         </section>
 
-        {/* Key Takeaways */}
-        <section className="py-10 border-b border-rule">
+        {/* Statutory Quick Answer Callout (GEO / AI Overview Optimised) */}
+        <section className="py-8 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <div className="rounded-xl border border-rule bg-white p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Key payout facts</p>
-              <ul className="flex flex-col gap-3">
-                {[
-                  'Typical settlement amounts range from 1.5x to 4x of your statutory minimum entitlement.',
-                  'Your employer covers your solicitor fees to review and sign the agreement, which keeps it free for you.',
-                  'Under s.403 of ITEPA 2003, the first £30,000 of redundancy or ex-gratia compensation is completely tax-free.',
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <CheckIcon />
-                    <span className="sc-body text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
+                  Statutory Quick Answer
+                </span>
+                <span className="text-[11px] font-semibold text-muted">
+                  April 2026 UK Rates
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-ink mb-2">
+                What is the average settlement agreement payout in the UK?
+              </h2>
+              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
+                In the UK, the average settlement agreement payout ranges between £5,000 and £25,000, typically representing 1.5 to 4 months of gross salary on top of contractual notice pay. Statutory redundancy is capped at £751 per week under SI 2026/310, and genuine severance up to £30,000 is tax-free under Section 403 of ITEPA 2003.
+              </p>
+
+              {/* Structured Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Typical Settlement Range</span>
+                  <span className="font-bold text-ink text-sm">£5,000 to £25,000</span>
+                  <span className="text-muted text-[11px]">1.5x to 4x statutory minimum</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Statutory Weekly Pay Cap</span>
+                  <span className="font-bold text-ink text-sm">£751 (GB) / £783 (NI)</span>
+                  <span className="text-muted text-[11px]">Under SI 2026/310</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Tax-Free Exemption</span>
+                  <span className="font-bold text-ink text-sm">First £30,000 tax-free</span>
+                  <span className="text-muted text-[11px]">ITEPA 2003 Section 403</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Fee Contribution</span>
+                  <span className="font-bold text-ink text-sm">£350 to £750</span>
+                  <span className="text-muted text-[11px]">Covers your solicitor review (ERA 1996 s.203)</span>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span className="text-xs text-muted">
+                  Primary statute: <strong>Employment Rights Act 1996 s.162 &amp; SI 2026/310</strong>
+                </span>
+                <Link href="/calculator/?reason=redundancy" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                  Check your offer against this baseline →
+                </Link>
+              </div>
             </div>
           </div>
         </section>
