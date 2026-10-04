@@ -44,6 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/guides/is-my-settlement-offer-fair/`,             lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/what-is-a-fair-settlement-agreement/`,     lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/protective-award/`,                        lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/employment-tribunal-average-awards-uk/`,  lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
 
     // Tier 5: Supplier-facing
     { url: `${base}/for-solicitors/`,                                 lastModified: now, changeFrequency: 'monthly', priority: 0.6 },

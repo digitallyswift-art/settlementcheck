@@ -213,6 +213,12 @@ const sitemapData: SitemapCategory[] = [
         description: 'How to claim up to 90 days gross pay when 20+ redundancies occur without consultation.',
       },
       {
+        title: 'Average Employment Tribunal Awards UK (MoJ Tables)',
+        href: '/guides/employment-tribunal-average-awards-uk/',
+        description: 'Official Ministry of Justice tribunal compensation tables, £123,543 cap, and settlement comparison.',
+        badge: 'New',
+      },
+      {
         title: 'Fair Work Agency & Workers Rights Overview',
         href: '/guides/fair-work-agency/',
         description: 'New enforcement bodies and statutory employee protections under UK labour law.',

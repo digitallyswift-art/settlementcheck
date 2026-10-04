@@ -1,5 +1,6 @@
 import { callAI } from '../gateway';
 import { evaluateSettlementOfferTool, getStatutoryRatesTool } from '../tools/statutory-tools';
+import { getOfficialBenchmark, OfficialBenchmarkData } from '@/lib/statutory-rates';
 
 export interface ExtractedAgreementTerms {
   exGratiaAmount?: number;
@@ -14,6 +15,8 @@ export interface ExtractedAgreementTerms {
   hasPersonalInjuryWaiver?: boolean;
   hasMutualConfidentiality?: boolean;
   agreedReferenceClause?: boolean;
+  disputeReason?: string;
+  isDiscrimination?: boolean;
 }
 
 export interface StatutoryAuditCheck {
@@ -33,6 +36,7 @@ export interface AuditReport {
     recommendedLegalFeeContribution: number;
     keyClauseAmendments: string[];
   };
+  officialBenchmark?: OfficialBenchmarkData;
   disclaimer: string;
 }
 
@@ -66,7 +70,9 @@ Return a valid JSON object matching:
   "hasWaiverOfAccruedPensions": boolean,
   "hasPersonalInjuryWaiver": boolean,
   "hasMutualConfidentiality": boolean,
-  "agreedReferenceClause": boolean
+  "agreedReferenceClause": boolean,
+  "disputeReason": "redundancy" | "redundancy_collective" | "pip" | "constructive_dismissal" | "discrimination" | "unfair_dismissal",
+  "isDiscrimination": boolean
 }
 `;
 
@@ -88,6 +94,8 @@ Return a valid JSON object matching:
     yearsOfService: parsed.yearsOfService ?? userContext?.yearsOfService,
     age: parsed.age ?? userContext?.age,
     jurisdiction: parsed.jurisdiction || userContext?.jurisdiction || 'GB',
+    disputeReason: parsed.disputeReason || userContext?.disputeReason || 'unfair_dismissal',
+    isDiscrimination: parsed.isDiscrimination ?? userContext?.isDiscrimination ?? false,
   };
 }
 
@@ -273,11 +281,18 @@ export async function auditSettlementAgreement(
     calculationSummary,
   );
 
+  // Step 4: Official Statutory & Ministry of Justice Benchmark Precedents
+  const officialBenchmark = getOfficialBenchmark(
+    extractedTerms.disputeReason || 'unfair_dismissal',
+    Boolean(extractedTerms.isDiscrimination),
+  );
+
   return {
     extractedTerms,
     statutoryChecks,
     tacticalNegotiationPoints,
     recommendedCounterOffer,
+    officialBenchmark,
     disclaimer: 'This audit provides guidance and statutory calculation checks for negotiation preparation. By law (ERA 1996 s.203), you must have your final settlement agreement reviewed and signed off by an independent qualified solicitor or legal adviser before it becomes binding.',
   };
 }

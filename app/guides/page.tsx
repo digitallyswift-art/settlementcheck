@@ -186,7 +186,15 @@ const GUIDES = [
     description: 'Tribunal compensation of up to 90 days\' gross pay for collective consultation failures. Learn how the calculation works and how to claim in 2026.',
     readTime: '6 min read',
   },
+  {
+    href: '/guides/employment-tribunal-average-awards-uk/',
+    eyebrow: 'Tribunal Statistics',
+    title: 'Average Employment Tribunal Awards UK 2026: MoJ Compensation Tables',
+    description: 'Official Ministry of Justice median tribunal awards (£7,564 unfair dismissal), discrimination precedents, £123,543 cap, and settlement comparison.',
+    readTime: '8 min read',
+  },
 ]
+
 
 const guidesHubSchema = {
   '@context': 'https://schema.org',

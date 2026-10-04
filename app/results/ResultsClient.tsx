@@ -14,6 +14,7 @@ import {
   calcPensionSacrifice,
 } from '@/lib/calculations'
 import { getOfficialBenchmark } from '@/lib/statutory-rates'
+import { trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
 
 /* ── Shared tiny components ─────────────────────────────────────── */
 
@@ -89,6 +90,7 @@ function OfficialBenchmarkCard({
           href={benchmark.sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackOutboundCitation(benchmark.sourceUrl, benchmark.sourceName, { component: 'official_benchmark_card' })}
           className="text-[11px] text-[#0B1F3A] hover:text-[#D9603B] underline underline-offset-2 font-mono flex items-center gap-1 self-start sm:self-auto transition-colors"
         >
           <span>Source: {benchmark.sourceName}</span>
@@ -176,6 +178,7 @@ function OfficialBenchmarkCard({
           href="https://www.legislation.gov.uk/ukpga/1996/18/section/203"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackOutboundCitation('https://www.legislation.gov.uk/ukpga/1996/18/section/203', 'ERA 1996 s.203(3)', { component: 'official_benchmark_card' })}
           className="text-[#0B1F3A] hover:text-[#D9603B] underline underline-offset-2 font-mono whitespace-nowrap text-[11px]"
         >
           ERA 1996 s.203(3) &nearr;
@@ -1791,6 +1794,11 @@ function ResultsContent() {
 
   const handleSolicitorMatch = () => {
     if (!result) return
+    trackSolicitorMatchClick('results_primary_cta', {
+      verdict: result.verdict,
+      offer,
+      salary,
+    })
     const p = new URLSearchParams({
       verdict: result.verdict,
       offer:   String(offer),
@@ -1798,7 +1806,7 @@ function ResultsContent() {
       months:  String(totalMonths),
     })
     if (prefillEmail) { p.set('email', prefillEmail); p.set('ev', '1') }
-    router.push(`/get-matched?${p.toString()}`)
+    router.push(`/get-matched/?${p.toString()}`)
   }
 
   function scrollToSave() {

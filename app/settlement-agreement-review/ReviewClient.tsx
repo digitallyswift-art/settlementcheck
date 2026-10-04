@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import type { AuditReport } from '@/lib/ai/agents/settlement-auditor'
+import { getOfficialBenchmark, OfficialBenchmarkData } from '@/lib/statutory-rates'
+import { trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
 
 const SAMPLE_AGREEMENT = `1. The Employment will terminate on 30 April 2026 by mutual agreement.
 2. Subject to the Employee complying with this Agreement, the Employer shall pay an Ex-Gratia termination payment of £38,000.
@@ -11,20 +13,177 @@ const SAMPLE_AGREEMENT = `1. The Employment will terminate on 30 April 2026 by m
 5. The Employee hereby agrees to waive all claims against the Company, including accrued pension entitlements, personal injury claims, and statutory rights under the Employment Rights Act 1996.
 6. The Employee agrees not to make any disparaging statements regarding the Employer.`
 
+function formatGBP(val: number): string {
+  return `£${val.toLocaleString('en-GB')}`
+}
+
+/* ── Benchmark Precedents Card Component for Agreement Review ───── */
+function ReviewBenchmarkCard({
+  benchmark,
+  extractedOffer,
+  salary,
+}: {
+  benchmark: OfficialBenchmarkData
+  extractedOffer?: number
+  salary?: number
+}) {
+  const annualSalary = salary && salary > 0 ? salary : 0
+  const monthlySalary = annualSalary > 0 ? annualSalary / 12 : 0
+  const acasLow = monthlySalary > 0 ? Math.round(monthlySalary * benchmark.typicalAcasExGratiaMonths.min) : 0
+  const acasHigh = monthlySalary > 0 ? Math.round(monthlySalary * benchmark.typicalAcasExGratiaMonths.max) : 0
+
+  const offer = extractedOffer ?? 0
+  const isBelowMedian = offer > 0 && offer < benchmark.medianTribunalAward
+  const isAboveMedian = offer > 0 && offer >= benchmark.medianTribunalAward
+
+  return (
+    <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 sm:p-6 shadow-sm mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E2DCCE] pb-3 mb-4">
+        <div>
+          <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-coral font-semibold block mb-0.5">
+            Official Statutory &amp; Tribunal Benchmarks
+          </span>
+          <h3 className="text-lg font-serif font-bold text-ink m-0">
+            {benchmark.jurisdictionCategory}: Official Compensation Precedents
+          </h3>
+        </div>
+        <a
+          href={benchmark.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() =>
+            trackOutboundCitation(benchmark.sourceUrl, benchmark.sourceName, {
+              component: 'review_client_benchmark_card',
+            })
+          }
+          className="text-xs text-ink hover:text-coral underline underline-offset-2 font-mono flex items-center gap-1 self-start sm:self-auto transition-colors"
+        >
+          <span>Source: {benchmark.sourceName}</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+      </div>
+
+      {/* Benchmark Metrics Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+        {/* Metric 1: MoJ Median Tribunal Award */}
+        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
+          <div>
+            <span className="text-xs text-muted font-medium block mb-1">1. MoJ Tribunal Median Award</span>
+            <span className="text-xl font-bold text-ink font-serif block">
+              {formatGBP(benchmark.medianTribunalAward)}
+            </span>
+          </div>
+          <span className="text-[11px] text-muted-2 mt-2 block font-mono">
+            Mean average: {formatGBP(benchmark.meanTribunalAward)} (MoJ Tables)
+          </span>
+        </div>
+
+        {/* Metric 2: Acas Typical Ex-Gratia Range */}
+        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
+          <div>
+            <span className="text-xs text-muted font-medium block mb-1">2. Acas Typical Ex-Gratia</span>
+            <span className="text-xl font-bold text-ink font-serif block">
+              {monthlySalary > 0
+                ? `${formatGBP(acasLow)} – ${formatGBP(acasHigh)}`
+                : `${benchmark.typicalAcasExGratiaMonths.min}–${benchmark.typicalAcasExGratiaMonths.max} Months' Pay`}
+            </span>
+          </div>
+          <span className="text-[11px] text-muted-2 mt-2 block">
+            {annualSalary > 0
+              ? `Based on ${formatGBP(annualSalary)} salary (${benchmark.typicalAcasExGratiaMonths.min}–${benchmark.typicalAcasExGratiaMonths.max} mos)`
+              : 'Typical conciliated ex-gratia months'}
+          </span>
+        </div>
+
+        {/* Metric 3: Statutory Compensatory Cap */}
+        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
+          <div>
+            <span className="text-xs text-muted font-medium block mb-1">3. Statutory Cap Limit</span>
+            <span className="text-xl font-bold text-ink font-serif block">
+              {benchmark.maximumCompensatoryCap > 0
+                ? formatGBP(benchmark.maximumCompensatoryCap)
+                : 'Uncapped'}
+            </span>
+          </div>
+          <span className="text-[11px] text-muted-2 mt-2 block">
+            {benchmark.maximumCompensatoryCap > 0
+              ? 'ERA 1996 s.124 (April 2026 cap)'
+              : 'Equality Act 2010 s.124 (Uncapped)'}
+          </span>
+        </div>
+      </div>
+
+      {/* Dynamic Comparative Analysis */}
+      {offer > 0 && (
+        <div
+          className={`rounded-lg p-3.5 text-xs sm:text-sm leading-relaxed mb-4 border ${
+            isBelowMedian
+              ? 'bg-[#FEFBF0] border-[#E0CB94] text-[#7A5B15]'
+              : isAboveMedian
+              ? 'bg-[#F0F5FA] border-[#C4D8EC] text-ink'
+              : 'bg-paper border-rule text-ink'
+          }`}
+        >
+          {isBelowMedian && (
+            <p className="m-0">
+              <strong>⚖️ Below Official MoJ Median:</strong> Your employer&apos;s draft ex-gratia offer of{' '}
+              <strong>{formatGBP(offer)}</strong> is{' '}
+              <strong>{formatGBP(benchmark.medianTribunalAward - offer)} below the Ministry of Justice median award</strong>{' '}
+              ({formatGBP(benchmark.medianTribunalAward)}) for this complaint type. This provides strong factual leverage to negotiate an uplift before signing.
+            </p>
+          )}
+          {isAboveMedian && (
+            <p className="m-0">
+              <strong>✓ Above Official MoJ Median:</strong> Your employer&apos;s draft ex-gratia offer of{' '}
+              <strong>{formatGBP(offer)}</strong> exceeds the MoJ median tribunal award ({formatGBP(benchmark.medianTribunalAward)}) for this dispute category. Your primary negotiation leverage should focus on raising employer legal fee contributions to £750–£1,000+ VAT and securing a positive, agreed reference.
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Section 203(3) ERA 1996 Fee Notice */}
+      <div className="bg-paper-2 border border-[#E2DCCE] rounded-lg p-3 text-xs text-muted flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex items-start gap-2">
+          <span className="text-ink font-bold text-sm leading-none mt-0.5">§</span>
+          <span className="leading-snug">
+            <strong className="text-ink">Mandatory Legal Review:</strong> Under Section 203(3) Employment Rights Act 1996, this settlement is legally void without independent solicitor certification. Standard UK employer contribution is <strong>£500 to £1,000+ VAT</strong> paid directly to your solicitor.
+          </span>
+        </div>
+        <a
+          href="https://www.legislation.gov.uk/ukpga/1996/18/section/203"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() =>
+            trackOutboundCitation(
+              'https://www.legislation.gov.uk/ukpga/1996/18/section/203',
+              'ERA 1996 s.203(3)',
+              { component: 'review_client_benchmark_card' }
+            )
+          }
+          className="text-ink hover:text-coral underline underline-offset-2 font-mono whitespace-nowrap text-xs transition-colors"
+        >
+          ERA 1996 s.203(3) &nearr;
+        </a>
+      </div>
+    </div>
+  )
+}
+
 export default function ReviewClient() {
   const [agreementText, setAgreementText] = useState('')
   const [salary, setSalary] = useState('')
   const [yearsOfService, setYearsOfService] = useState('')
   const [age, setAge] = useState('')
+  const [disputeReason, setDisputeReason] = useState('auto')
   const [loading, setLoading] = useState(false)
   const [stepIndex, setStepIndex] = useState(0)
   const [report, setReport] = useState<AuditReport | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   const steps = [
-    'Parsing contractual clauses and compensation breakdown...',
-    'Verifying statutory caps (£751/wk) and tax thresholds (ITEPA 2003 s.403)...',
-    'Synthesizing tactical negotiation points and counter-offer strategy...',
+    'Parsing contractual clauses, financial compensation, and dispute context...',
+    'Verifying statutory caps (£751/wk), £30k tax exemption (ITEPA 2003 s.403), and MoJ tribunal tables...',
+    'Synthesizing tactical negotiation points, counter-offer strategy, and solicitor fee coverage...',
   ]
 
   const handleUseSample = () => {
@@ -32,6 +191,7 @@ export default function ReviewClient() {
     setSalary('65000')
     setYearsOfService('5')
     setAge('43')
+    setDisputeReason('unfair_dismissal')
     setError(null)
   }
 
@@ -61,6 +221,7 @@ export default function ReviewClient() {
             salary: salary ? Number(salary) : undefined,
             yearsOfService: yearsOfService ? Number(yearsOfService) : undefined,
             age: age ? Number(age) : undefined,
+            disputeReason: disputeReason !== 'auto' ? disputeReason : undefined,
           },
         }),
       })
@@ -82,6 +243,17 @@ export default function ReviewClient() {
     }
   }
 
+  // Determine active benchmark data
+  const activeBenchmark: OfficialBenchmarkData =
+    report?.officialBenchmark ||
+    getOfficialBenchmark(
+      report?.extractedTerms.disputeReason || (disputeReason !== 'auto' ? disputeReason : 'unfair_dismissal'),
+      Boolean(report?.extractedTerms.isDiscrimination)
+    )
+
+  const effectiveSalary =
+    report?.extractedTerms.salary || (salary ? Number(salary) : undefined)
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Intro Header */}
@@ -94,7 +266,7 @@ export default function ReviewClient() {
           Check your employment settlement agreement
         </h1>
         <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto">
-          Paste your draft clauses or protected conversation offer. In seconds, see if your employment termination payout meets UK statutory rates, check £30k tax rules, and find out what to ask for.
+          Paste your draft clauses or protected conversation offer. In seconds, see if your employment termination payout meets UK statutory rates, compare against Ministry of Justice tribunal tables, and check £30k tax rules.
         </p>
       </div>
 
@@ -130,9 +302,9 @@ export default function ReviewClient() {
           {/* Optional Context Inputs */}
           <div className="pt-4 border-t border-rule">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-muted mb-3">
-              Optional Context (Enables Statutory Minimum Floor Check)
+              Optional Context (Enables Statutory Minimum Floor &amp; Benchmark Calibration)
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
               <div>
                 <label htmlFor="salary-input" className="block text-xs font-medium text-ink mb-1">
                   Gross Annual Salary (£)
@@ -172,6 +344,24 @@ export default function ReviewClient() {
                   className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
                 />
               </div>
+              <div>
+                <label htmlFor="dispute-reason-select" className="block text-xs font-medium text-ink mb-1">
+                  Dispute Reason
+                </label>
+                <select
+                  id="dispute-reason-select"
+                  value={disputeReason}
+                  onChange={(e) => setDisputeReason(e.target.value)}
+                  className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                >
+                  <option value="auto">Auto-detect from text</option>
+                  <option value="unfair_dismissal">Unfair Dismissal / Capability</option>
+                  <option value="redundancy">Redundancy</option>
+                  <option value="pip">PIP / Performance Plan</option>
+                  <option value="constructive_dismissal">Constructive Dismissal</option>
+                  <option value="discrimination">Discrimination / Detriment</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -184,9 +374,9 @@ export default function ReviewClient() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto px-6 py-3.5 bg-coral hover:bg-coral-ink text-white font-medium rounded-lg text-sm transition-colors shadow-sm disabled:opacity-50"
+            className="w-full sm:w-auto px-6 py-3.5 bg-coral hover:bg-coral-ink text-white font-medium rounded-lg text-sm transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
           >
-            {loading ? 'Checking agreement terms...' : 'Check my agreement now →'}
+            {loading ? 'Auditing agreement terms against UK statutory rates...' : 'Check my agreement now →'}
           </button>
         </form>
 
@@ -221,7 +411,7 @@ export default function ReviewClient() {
                 <span className="text-xs text-muted block mb-1">Ex-Gratia Offer</span>
                 <span className="text-lg font-bold text-ink">
                   {report.extractedTerms.exGratiaAmount !== undefined
-                    ? `£${report.extractedTerms.exGratiaAmount.toLocaleString('en-GB')}`
+                    ? formatGBP(report.extractedTerms.exGratiaAmount)
                     : 'Not Specified'}
                 </span>
               </div>
@@ -229,7 +419,7 @@ export default function ReviewClient() {
                 <span className="text-xs text-muted block mb-1">Notice / PILON</span>
                 <span className="text-lg font-bold text-ink">
                   {report.extractedTerms.noticePayPilon !== undefined
-                    ? `£${report.extractedTerms.noticePayPilon.toLocaleString('en-GB')}`
+                    ? formatGBP(report.extractedTerms.noticePayPilon)
                     : 'Included / Unstated'}
                 </span>
               </div>
@@ -247,9 +437,16 @@ export default function ReviewClient() {
               </div>
             </div>
 
+            {/* Official MoJ & Statutory Benchmark Card */}
+            <ReviewBenchmarkCard
+              benchmark={activeBenchmark}
+              extractedOffer={report.extractedTerms.exGratiaAmount}
+              salary={effectiveSalary}
+            />
+
             {/* Statutory Check Badges */}
             <h3 className="text-sm font-semibold text-ink uppercase tracking-wider mb-3">
-              Statutory Rule & Compliance Checks
+              Statutory Rule &amp; Compliance Checks
             </h3>
             <div className="space-y-3 mb-6">
               {report.statutoryChecks.map((check, idx) => (
@@ -308,7 +505,7 @@ export default function ReviewClient() {
                       Target Settlement Range
                     </span>
                     <span className="text-xl font-bold text-ink font-serif">
-                      £{report.recommendedCounterOffer.suggestedExGratiaLow.toLocaleString('en-GB')} – £{report.recommendedCounterOffer.suggestedExGratiaHigh.toLocaleString('en-GB')}
+                      {formatGBP(report.recommendedCounterOffer.suggestedExGratiaLow)} – {formatGBP(report.recommendedCounterOffer.suggestedExGratiaHigh)}
                     </span>
                   </div>
                   <div>
@@ -324,27 +521,42 @@ export default function ReviewClient() {
             </div>
 
             {/* High-Intent Next Step Box */}
-            <div className="bg-ink text-paper p-6 rounded-xl space-y-4">
-              <div className="space-y-1">
-                <h4 className="text-lg font-serif font-bold text-white">
+            <div className="bg-ink text-paper p-6 sm:p-8 rounded-xl space-y-4">
+              <div className="space-y-2">
+                <span className="text-xs font-mono uppercase tracking-wider text-coral font-semibold block">
+                  Mandatory Legal Step • 100% Employer Funded
+                </span>
+                <h4 className="text-xl sm:text-2xl font-serif font-bold text-white">
                   Have an SRA-Regulated Employment Solicitor Sign Your Agreement
                 </h4>
-                <p className="text-xs sm:text-sm text-paper opacity-90">
-                  By UK law (Employment Rights Act 1996 s.203), your settlement agreement is only valid once signed off by an independent qualified solicitor. Your employer covers these legal fees.
+                <p className="text-xs sm:text-sm text-paper opacity-90 max-w-2xl leading-relaxed">
+                  By UK law (Employment Rights Act 1996 s.203), your settlement agreement is only legally valid once signed off by an independent qualified solicitor. Your employer pays the solicitor fees directly under HMRC rules.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row gap-3 pt-3">
+                <Link
+                  href={`/get-matched/?offer=${report.extractedTerms.exGratiaAmount || 0}&salary=${effectiveSalary || 0}`}
+                  onClick={() =>
+                    trackSolicitorMatchClick('review_client_report_cta', {
+                      offer: report.extractedTerms.exGratiaAmount,
+                      salary: effectiveSalary,
+                    })
+                  }
+                  className="inline-flex justify-center items-center px-6 py-3.5 bg-coral hover:bg-coral-ink text-white font-semibold rounded-lg text-sm transition-colors text-center shadow-md cursor-pointer"
+                >
+                  Get Matched with an SRA Solicitor Now →
+                </Link>
                 <Link
                   href="/calculator/"
-                  className="inline-flex justify-center items-center px-5 py-3 bg-coral hover:bg-coral-ink text-white font-medium rounded-lg text-sm transition-colors text-center"
+                  className="inline-flex justify-center items-center px-5 py-3.5 bg-transparent border border-paper text-white hover:bg-white hover:text-ink font-medium rounded-lg text-sm transition-colors text-center"
                 >
-                  Calculate Employment Settlement Baseline →
+                  Calculate Statutory Entitlement Baseline
                 </Link>
                 <Link
                   href="/how-it-works/"
-                  className="inline-flex justify-center items-center px-5 py-3 bg-transparent border border-paper text-white hover:bg-white hover:text-ink font-medium rounded-lg text-sm transition-colors text-center"
+                  className="inline-flex justify-center items-center px-5 py-3.5 bg-transparent border border-rule text-paper opacity-80 hover:opacity-100 hover:text-white font-medium rounded-lg text-sm transition-colors text-center"
                 >
-                  How Employment Solicitor Matching Works
+                  How Solicitor Matching Works
                 </Link>
               </div>
             </div>
@@ -358,3 +570,4 @@ export default function ReviewClient() {
     </div>
   )
 }
+
