@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import InlineEstimator from '@/components/InlineEstimator'
 
 export const metadata: Metadata = {
   title: 'Employment Settlement Agreement: How Much Should You Get? UK 2026',
@@ -195,6 +196,15 @@ export default function HowMuchGuidePage() {
                 </Link>
               </div>
             </div>
+
+            {/* Interactive Inline Estimator */}
+            <InlineEstimator
+              initialSalary={50000}
+              initialYears={4}
+              reason="redundancy"
+              title="Interactive Settlement Payout Estimator"
+              subtitle="Enter your gross salary and years of service to calculate your statutory baseline and typical negotiated package."
+            />
           </div>
         </section>
 

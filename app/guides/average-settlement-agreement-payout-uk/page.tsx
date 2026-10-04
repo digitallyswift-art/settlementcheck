@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import InlineEstimator from '@/components/InlineEstimator'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -225,8 +226,17 @@ export default function AveragePayoutGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Typical Settlement Payouts by Scenario</h2>
             <p className="sc-body mb-6">
-              Settlement payouts depend heavily on the reason for your departure and the strength of any potential legal claims. For unfair dismissal scenarios, the legal maximum compensation is capped at £123,543 <sup>5</sup> or one year&apos;s gross salary. The table below outlines typical ranges observed in 2026.
+              Settlement payouts depend heavily on the reason for your departure and the strength of any potential legal claims. For unfair dismissal scenarios, the legal maximum compensation is capped at £123,543 <sup>5</sup> or one year&apos;s gross salary. Use the interactive estimator below to calculate your figures, or view the scenario benchmarks.
             </p>
+
+            {/* Interactive Inline Estimator */}
+            <InlineEstimator
+              initialSalary={50000}
+              initialYears={4}
+              reason="redundancy"
+              title="Calculate Your Estimated Payout Range"
+              subtitle="Enter your gross salary and continuous service to see your statutory floor and typical UK negotiated package."
+            />
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
                 <caption className="sr-only">Average settlement agreement payouts by scenario UK 2026</caption>
