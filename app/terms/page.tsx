@@ -21,7 +21,20 @@ export default function Terms() {
           {[
             {
               title: '1. About SettlementCheck',
-              body: 'SettlementCheck.co.uk is an introduction service. We connect individuals who have received a settlement agreement with SRA-regulated employment law solicitors. We are not a law firm and do not provide legal advice or legal services.',
+              body: (
+                <>
+                  SettlementCheck.co.uk is operated by{' '}
+                  <a
+                    href="https://digitallyswift.com"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-coral underline underline-offset-2 hover:opacity-80 transition-opacity"
+                  >
+                    Digitally Swift Ltd
+                  </a>
+                  . We are an introduction service that connects individuals who have received a settlement agreement with SRA-regulated employment law solicitors. We are not a law firm and do not provide legal advice or legal services.
+                </>
+              ),
             },
             {
               title: '2. Use of the calculator',

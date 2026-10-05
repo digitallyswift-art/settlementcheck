@@ -96,7 +96,17 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="flex items-center justify-between gap-4 text-[12px] text-white/55 flex-wrap">
-          <span>© 2026 SettlementCheck.co.uk · Registered in England</span>
+          <span>
+            © 2026 SettlementCheck.co.uk · Operated by{' '}
+            <a
+              href="https://digitallyswift.com"
+              target="_blank"
+              rel="noopener"
+              className="text-white/70 hover:text-white underline underline-offset-2 transition-colors duration-[160ms]"
+            >
+              Digitally Swift
+            </a>
+          </span>
           <span>settlementcheck.co.uk</span>
         </div>
       </div>

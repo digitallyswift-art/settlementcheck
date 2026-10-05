@@ -19,7 +19,16 @@ export default function Privacy() {
           <p className="text-sm text-gray-400 mb-8">Last updated: 1 January 2025</p>
 
           <Section title="1. Who we are">
-            SettlementCheck.co.uk (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is an introduction service that connects individuals with
+            SettlementCheck.co.uk (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is operated by{' '}
+            <a
+              href="https://digitallyswift.com"
+              target="_blank"
+              rel="noopener"
+              className="text-coral underline underline-offset-2 hover:opacity-80 transition-opacity"
+            >
+              Digitally Swift Ltd
+            </a>
+            , an independent UK digital technology company. SettlementCheck is an introduction service that connects individuals with
             SRA-regulated employment law solicitors. We are not a law firm and do not provide legal services.
           </Section>
 

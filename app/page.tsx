@@ -28,6 +28,11 @@ const orgSchema = {
   url: 'https://settlementcheck.co.uk',
   logo: 'https://settlementcheck.co.uk/og-image.png',
   description: 'Independent UK settlement agreement calculator and solicitor introduction service. Not owned by a law firm.',
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'Digitally Swift',
+    url: 'https://digitallyswift.com',
+  },
   areaServed: {
     '@type': 'AdministrativeArea',
     name: 'United Kingdom',
