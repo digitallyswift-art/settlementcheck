@@ -1262,7 +1262,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             Why standard legal marketing wastes your fee earners’ billable hours
           </h2>
           <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.6, margin: 0, fontFamily: SANS }}>
-            Acquiring employment clients through PPC ads or generic lead brokers creates immense non-billable overhead. SettlementCheck solves each bottleneck deterministically.
+            Acquiring employment clients through digital advertising or generic lead brokers creates substantial non-billable overhead. SettlementCheck solves each bottleneck deterministically.
           </p>
         </div>
 
@@ -1276,29 +1276,29 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
           {[
             {
               num: '01',
-              painTitle: 'The Unqualified Tire-Kicker',
-              painText: '40-minute free initial calls with employees who have no settlement offer, under 2 years continuous service, or no budget for private fees.',
+              painTitle: 'Unqualified Initial Enquiries',
+              painText: '30 to 45-minute unbillable calls with callers who do not have an active settlement offer, lack qualifying employment service, or have no funding for private fees.',
               solTitle: 'Pre-Filtered Statutory Floor',
-              solText: 'Every SettlementCheck instruction holds an active settlement offer with tenure and statutory floor verified against the April 2026 cap (£751/week).',
+              solText: 'Every SettlementCheck instruction holds an active settlement offer with continuous service and statutory floor verified under the Employment Rights Act 1996.',
             },
             {
               num: '02',
-              painTitle: 'The 45-Minute Intake Interview',
-              painText: 'Junior solicitors spending billable time extracting basic facts: salary, notice pay, holiday accrued, and pension details from distressed callers.',
+              painTitle: 'The Time-Consuming Intake Interview',
+              painText: 'Fee earners spending valuable billable time extracting baseline figures: gross salary, notice pay, accrued holiday, and statutory redundancy caps.',
               solTitle: 'Full Data Payload on Arrival',
-              solText: 'Your team receives a completed statutory breakdown, separating contractual PILON from tax-exempt compensation before making contact.',
+              solText: 'Your team receives a completed statutory dossier, separating contractual PILON from tax-exempt termination compensation before picking up the phone.',
             },
             {
               num: '03',
-              painTitle: 'The £250/Click Google Ads Burn',
-              painText: 'Bidding £120 to £280+ per click on Google Search for "settlement agreement solicitor", competing against national claims factories.',
-              solTitle: 'Fixed £60 Performance Model',
-              solText: 'Zero ad spend risk. Pay only a transparent £60 introduction fee for genuine, OTP-verified instructions. Average ROI exceeds 10x.',
+              painTitle: 'High Client Acquisition Costs (CAC)',
+              painText: 'Between digital advertising spend, agency retainers, and low conversion rates on cold web traffic, acquiring a signed settlement agreement matter often costs hundreds of pounds in marketing overhead.',
+              solTitle: 'Fixed £60 Introduction Fee',
+              solText: 'No marketing agency retainers, ad budget volatility, or wasted clicks. Pay strictly a flat £60 fee for genuine, OTP-verified instructions.',
             },
             {
               num: '04',
-              painTitle: 'The Shared Broker Race',
-              painText: 'Lead brokers selling the exact same enquiry to 5 local firms at once, forcing your team into an undignified sprint to dial first.',
+              painTitle: 'Shared Lead Brokers & Fast Sprints',
+              painText: 'Lead brokers selling the identical enquiry to multiple local law firms simultaneously, creating an undignified race to contact the client first.',
               solTitle: '100% Territorial Exclusivity',
               solText: 'Strict 1:1 matching. Once an employee in your agreed coverage area requests independent advice, the mandate belongs solely to your firm.',
             },
@@ -1643,7 +1643,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               margin: '8px 0 16px',
             }}
           >
-            The Economics: Why this out-earns pay-per-click
+            The Economics: Predictable margins on every matter
           </h2>
           <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.6, margin: 0, fontFamily: SANS }}>
             Under Section 203 of the Employment Rights Act 1996, the employer pays your legal fee. You pay only a fixed £60 introduction fee per verified instruction.
