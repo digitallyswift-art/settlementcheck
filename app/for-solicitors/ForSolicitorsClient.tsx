@@ -936,12 +936,10 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
 
   const currentDossier = dossiers[activeDossierTab]
 
-  // Economics calculations
+  // Economics calculations (based on standard £500 statutory benchmark employer contribution)
   const introCost = monthlyIntros * 60
-  const avgEmployerFee = monthlyIntros * 650
-  const upliftExtra = Math.round(monthlyIntros * 0.3 * 1200) // 30% take negotiation, £1,200 avg fee
-  const netFirmRevenue = (avgEmployerFee + upliftExtra) - introCost
-  const hoursSaved = Math.round(monthlyIntros * 1.5)
+  const baselineEmployerFee = monthlyIntros * 500
+  const netFirmRevenue = baselineEmployerFee - introCost
 
   return (
     <div style={{ maxWidth: 1160, margin: '0 auto', padding: '40px 24px 100px' }}>
@@ -1703,43 +1701,39 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
               gap: 16,
-              marginBottom: 28,
+              marginBottom: 20,
             }}
           >
-            <div style={{ background: C.bg, padding: '16px 18px', borderRadius: 8, border: `1px solid ${C.border}` }}>
+            <div style={{ background: C.bg, padding: '18px 20px', borderRadius: 8, border: `1px solid ${C.border}` }}>
               <div style={{ fontSize: 11, color: C.muted, textTransform: 'uppercase', fontWeight: 600 }}>Introduction Cost</div>
-              <div style={{ fontSize: 22, fontWeight: 700, color: C.navy, fontFamily: MONO, marginTop: 4 }}>
+              <div style={{ fontSize: 24, fontWeight: 700, color: C.navy, fontFamily: MONO, marginTop: 4 }}>
                 £{introCost.toLocaleString()}
               </div>
-              <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>Fixed £60 per instruction</div>
+              <div style={{ fontSize: 12, color: C.muted, marginTop: 3 }}>Fixed £60 per verified instruction</div>
             </div>
 
-            <div style={{ background: C.bg, padding: '16px 18px', borderRadius: 8, border: `1px solid ${C.border}` }}>
-              <div style={{ fontSize: 11, color: C.muted, textTransform: 'uppercase', fontWeight: 600 }}>Employer Legal Contributions</div>
-              <div style={{ fontSize: 22, fontWeight: 700, color: C.navy, fontFamily: MONO, marginTop: 4 }}>
-                £{avgEmployerFee.toLocaleString()}
+            <div style={{ background: C.bg, padding: '18px 20px', borderRadius: 8, border: `1px solid ${C.border}` }}>
+              <div style={{ fontSize: 11, color: C.muted, textTransform: 'uppercase', fontWeight: 600 }}>Employer Legal Contributions (Baseline)</div>
+              <div style={{ fontSize: 24, fontWeight: 700, color: C.navy, fontFamily: MONO, marginTop: 4 }}>
+                £{baselineEmployerFee.toLocaleString()}
               </div>
-              <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>Avg £650 paid by employers</div>
+              <div style={{ fontSize: 12, color: C.muted, marginTop: 3 }}>Based on £500 standard benchmark contribution</div>
             </div>
 
-            <div style={{ background: C.bg, padding: '16px 18px', borderRadius: 8, border: `1px solid ${C.border}` }}>
-              <div style={{ fontSize: 11, color: C.muted, textTransform: 'uppercase', fontWeight: 600 }}>Negotiation Uplift Upside</div>
-              <div style={{ fontSize: 22, fontWeight: 700, color: C.navy, fontFamily: MONO, marginTop: 4 }}>
-                £{upliftExtra.toLocaleString()}
-              </div>
-              <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>Estimated 30% uplift retention</div>
-            </div>
-
-            <div style={{ background: C.successLight, padding: '16px 18px', borderRadius: 8, border: `1px solid ${C.success}40` }}>
-              <div style={{ fontSize: 11, color: C.success, textTransform: 'uppercase', fontWeight: 700 }}>Net Additional Revenue</div>
+            <div style={{ background: C.successLight, padding: '18px 20px', borderRadius: 8, border: `1px solid ${C.success}40` }}>
+              <div style={{ fontSize: 11, color: C.success, textTransform: 'uppercase', fontWeight: 700 }}>Net Fee Retained (Standard Reviews)</div>
               <div style={{ fontSize: 24, fontWeight: 700, color: C.success, fontFamily: MONO, marginTop: 4 }}>
-                £{netFirmRevenue.toLocaleString()}+
+                £{netFirmRevenue.toLocaleString()}
               </div>
-              <div style={{ fontSize: 11, color: C.success, marginTop: 2 }}>~{hoursSaved} unbillable hours saved</div>
+              <div style={{ fontSize: 12, color: C.success, marginTop: 3 }}>£440 net margin per standard sign-off</div>
             </div>
           </div>
+
+          <p style={{ fontSize: 12, color: C.muted, lineHeight: 1.5, margin: '0 0 28px', textAlign: 'center', fontFamily: SANS }}>
+            * Models a standard Section 203 review and adviser certificate execution at the customary £500 + VAT employer contribution floor. Any fee uplift negotiated with the employer or extended representation agreed with the client represents additional billable income for your firm.
+          </p>
 
           <div style={{ textAlign: 'center' }}>
             <button
@@ -1784,7 +1778,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
                 fontFamily: SANS,
               }}
             >
-              Conversion Protocol
+              Response Protocol
             </span>
             <h2
               style={{
@@ -1796,19 +1790,19 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
                 margin: '8px 0 16px',
               }}
             >
-              The 15-minute contact SLA that closes 60%+ of introductions
+              Prompt response standards that protect client momentum
             </h2>
             <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.6, margin: '0 0 18px', fontFamily: SANS }}>
-              When an employee checks their offer, they are in peak uncertainty. Employers commonly impose tight 7 to 14 day deadlines to sign off Section 203 agreements.
+              When an employee receives a settlement agreement, they often face a strict 7 to 14 day deadline to obtain independent legal advice under Section 203.
             </p>
             <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.6, margin: '0 0 24px', fontFamily: SANS }}>
-              We route leads to one partner firm at a time. In exchange for exclusive territorial allocation, partner firms commit to initiating contact within 15 minutes during standard office hours.
+              We route instructions to one partner firm at a time. Partner firms commit to initiating contact on the same business day (or within 24 hours), ensuring employees receive timely advice while their agreement window is open.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
-                { title: 'Strict 1:1 Routing', desc: 'No shared leads. You are not competing in an undignified sprint against 4 other firms.' },
-                { title: 'Pre-Warmed Clients', desc: 'Clients have already reviewed our guide on employer fee obligations under ERA 1996 s.203.' },
+                { title: 'Strict 1:1 Routing', desc: 'No shared leads. You are not competing against multiple other law firms for the same matter.' },
+                { title: 'Pre-Informed Clients', desc: 'Clients arrive having calculated their statutory entitlement and reviewed standard employer fee contribution practices.' },
                 { title: 'Direct CRM / Webhook Push', desc: 'Introductions delivered instantly via encrypted email or straight into your practice management CRM.' },
               ].map((point) => (
                 <div key={point.title} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
@@ -1831,24 +1825,24 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             }}
           >
             <h3 style={{ fontFamily: SERIF, fontSize: 24, fontWeight: 700, margin: '0 0 14px' }}>
-              Territory Exclusivity Rules
+              Territory Allocation Protocol
             </h3>
             <p style={{ fontSize: 14, color: '#A5B4FC', lineHeight: 1.6, margin: '0 0 24px' }}>
-              To protect conversion rates and avoid panel oversaturation, SettlementCheck maintains strict density caps per postcode district.
+              To ensure partner firms receive healthy matter volume and to prevent panel dilution, SettlementCheck manages regional capacity deliberately.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 28 }}>
               <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 8, padding: '14px 16px' }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Max 2 Partner Firms per Postcode District</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Managed Panel Density per Region</div>
                 <div style={{ fontSize: 12, color: '#CBD5E1', marginTop: 3 }}>
-                  Once allocation in your territory is claimed, subsequent firms are placed on a waitlist.
+                  Partner capacity is calibrated to regional employee instruction volume so each partner firm receives a consistent flow of matters.
                 </div>
               </div>
 
               <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 8, padding: '14px 16px' }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>SRA Regulation Verification</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>SRA Roll Verification</div>
                 <div style={{ fontSize: 12, color: '#CBD5E1', marginTop: 3 }}>
-                  All applicants undergo roll verification against the Solicitors Regulation Authority register.
+                  All applicant firms undergo active status verification against the Solicitors Regulation Authority register.
                 </div>
               </div>
             </div>
@@ -1922,7 +1916,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             },
             {
               q: 'What happens if a contact is unreachable?',
-              a: 'While our OTP verification keeps unreachable contacts below 3%, if a lead has genuinely invalid contact details or does not respond within 48 hours, we credit that introduction back to your account immediately with zero dispute.',
+              a: 'Every employee contact is verified via two-factor OTP (email and phone). If an introduced employee has invalid contact details or does not respond within 48 hours of initial outreach, we credit that introduction back to your account immediately with zero dispute.',
             },
             {
               q: 'Are there monthly subscription fees or long-term commitments?',

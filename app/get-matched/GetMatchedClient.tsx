@@ -746,7 +746,7 @@ export default function GetMatchedClient() {
                   </button>
 
                   <p style={{ fontFamily: SANS, fontSize: 13, color: C.muted, margin: '16px 0 0', lineHeight: 1.65 }}>
-                    Your details go to one SRA-regulated solicitor only. No obligation after the first call. Your employer is legally required to cover your independent legal advice fee.
+                    Your details go to one SRA-regulated solicitor only. No obligation after the first call. Your employer covers your independent legal advice fee under Section 203 of the Employment Rights Act 1996.
                   </p>
                 </div>
               )}
@@ -783,7 +783,7 @@ export default function GetMatchedClient() {
                       during the {form.contactTime.toLowerCase()}.
                     </p>
                     <p style={{ fontFamily: SANS, fontSize: 15, color: C.muted, lineHeight: 1.65, margin: '0 0 32px' }}>
-                      The advice is free. Your employer is legally required to fund your independent legal review of any settlement agreement.
+                      The standard review is free to you. Your employer covers the cost of your independent legal advice under Section 203 of the Employment Rights Act 1996.
                     </p>
 
                     {/* Trust signals */}

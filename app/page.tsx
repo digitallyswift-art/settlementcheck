@@ -115,7 +115,7 @@ const faqSchema = {
       name: 'Does it cost me anything?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'No. Your employer is required by UK law to cover your legal fees for this process, typically £350 to £750. You pay nothing. This means you can choose a specialist who will genuinely advise you, not just whoever is cheapest.',
+        text: 'No. For a settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). To secure this binding waiver, employers cover your legal fees as standard practice, typically contributing £350 to £750 + VAT. You pay nothing for a standard review, and you can choose an independent specialist who genuinely advises you.',
       },
     },
     {

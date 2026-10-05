@@ -8,9 +8,9 @@ const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: [
-    { '@type': 'Question', name: 'Does it cost me anything?', acceptedAnswer: { '@type': 'Answer', text: 'No. Your employer is required by UK law to cover your legal fees for this process, typically £350 to £750. You pay nothing.' } },
+    { '@type': 'Question', name: 'Does it cost me anything?', acceptedAnswer: { '@type': 'Answer', text: 'No. For a settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). To secure this, employers cover your legal fees as standard practice, typically contributing £350 to £750 + VAT. You pay nothing for a standard review.' } },
     { '@type': 'Question', name: 'Do I legally need a solicitor?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured solicitor.' } },
-    { '@type': 'Question', name: 'How quickly will a solicitor contact me?', acceptedAnswer: { '@type': 'Answer', text: 'All panel solicitors commit to responding within 24 hours of an introduction. Most reach out the same business day.' } },
+    { '@type': 'Question', name: 'How quickly will a solicitor contact me?', acceptedAnswer: { '@type': 'Answer', text: 'All panel solicitors commit to responding within 24 hours of an introduction, often the same business day.' } },
     { '@type': 'Question', name: 'What if I want to negotiate a higher amount?', acceptedAnswer: { '@type': 'Answer', text: 'Many employees do successfully negotiate more once a solicitor reviews their circumstances. A specialist will assess whether factors like length of service, discrimination, whistleblowing, or contract breaches justify a higher offer.' } },
     { '@type': 'Question', name: 'Is my information shared?', acceptedAnswer: { '@type': 'Answer', text: 'Only with the small panel of solicitors you choose to be introduced to. Never with employers, recruiters, or third parties.' } },
     { '@type': 'Question', name: 'Why is your calculator independent when others are not?', acceptedAnswer: { '@type': 'Answer', text: 'Most settlement calculators are built by law firms. Our calculator is run by an independent platform with no firm to promote. The estimate you get reflects your actual situation.' } },
@@ -86,9 +86,9 @@ export default function HowItWorks() {
                     </svg>
                   ),
                 body: [
-                  'After seeing your estimate, you can choose to be matched with 2–3 vetted employment law solicitors in your area. Every solicitor on our panel is SRA-regulated with specific experience in settlement agreements.',
+                  'After seeing your estimate, you can choose to be introduced to a vetted, SRA-regulated employment solicitor in your area with specific experience in settlement agreements.',
                   "We share your situation details (offer amount, salary, years of service, and verdict) so solicitors arrive informed. You don't need to explain everything from scratch.",
-                  'We guarantee a response within 24 hours. Most solicitors respond the same day.',
+                  'Panel solicitors commit to responding within 24 hours, often the same business day.',
                 ],
               },
               {
@@ -101,8 +101,8 @@ export default function HowItWorks() {
                     </svg>
                   ),
                 body: [
-                  'Under UK employment law, your employer is legally required to contribute to your legal fees for independent advice on a settlement agreement. The typical employer contribution is £350 to £750.',
-                  'This means you pay nothing. Not for using SettlementCheck, and not for the solicitor\'s advice.',
+                  'For a settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). To secure this binding waiver, employers cover your legal fees as standard UK employment practice, typically contributing £350 to £750 + VAT.',
+                  'This means for a standard agreement review and sign-off, you pay nothing. The solicitor invoices your employer directly.',
                   'The solicitor will review your agreement, advise you on your rights, and (if you choose) help you negotiate a better offer.',
                 ],
               },

@@ -10,7 +10,7 @@ export interface FaqItem {
 const DEFAULT_FAQS: FaqItem[] = [
   {
     q: 'Does it cost me anything?',
-    a: 'No. Your employer is required by UK law to cover your legal fees for this process, typically £350 to £750. You pay nothing. This means you can choose a specialist who will genuinely advise you, not just whoever is cheapest.',
+    a: 'No. For a settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). To secure this binding waiver, employers cover your legal fees as standard practice, typically contributing £350 to £750 + VAT. This means you pay nothing for a standard review, and you can choose an independent specialist who genuinely advises you.',
   },
   {
     q: 'Do I legally need a solicitor?',

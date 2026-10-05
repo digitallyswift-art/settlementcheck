@@ -1632,7 +1632,7 @@ function GetMatchedCTA({
       badge: 'Unlawful offer threshold',
       badgeColor: '#A8341F', badgeBg: '#FBF0EE', badgeBorder: '#D9A99E',
       heading: 'Protect your legal rights immediately.',
-      body: 'Your employer is legally required to cover the costs of your legal consultation. Let a matched SRA-regulated solicitor review your paperwork, negotiate your uplift, and correct this offer for free.',
+      body: 'Your employer pays for your independent legal review under Section 203 of the Employment Rights Act 1996. Let an SRA-regulated solicitor review your agreement terms and advise on securing your full statutory entitlement at no cost to you.',
       cta: 'Match with a specialist solicitor',
     },
     BELOW_TYPICAL: {
@@ -1646,7 +1646,7 @@ function GetMatchedCTA({
       badge: 'Fair offer value',
       badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
       heading: 'Ensure your contract terms are secure.',
-      body: 'While the cash figure aligns with averages, settlement agreements contain strict covenants and legal waivers. Your employer is legally required to pay for independent legal review.',
+      body: 'While the financial figure aligns with standard ranges, settlement agreements contain strict warranties, post-termination restrictions, and legal waivers. Your employer covers the cost of your independent legal review.',
       cta: 'Secure your free legal review',
     },
     ABOVE_TYPICAL: {

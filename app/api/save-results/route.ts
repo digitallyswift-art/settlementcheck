@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
       `Estimated net take-home:  ${fmt(estimatedNet)}`,
       '',
       'What happens next?',
-      'Your employer is legally required to contribute to the cost of your independent legal advice on any settlement agreement. A solicitor review is free to you and takes 24 to 48 hours. You are under no obligation after the first call.',
+      'For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). Your employer covers the cost of this review as standard practice, meaning it is free to you. A solicitor review typically takes 24 to 48 hours, and you are under no obligation after the first call.',
       '',
       'Get matched with an SRA-regulated solicitor:',
       'https://settlementcheck.co.uk/get-matched/',
@@ -145,7 +145,7 @@ export async function POST(req: NextRequest) {
 
           <div style="background:#FBF0EE;border-radius:10px;padding:18px 20px;margin-bottom:28px;">
             <p style="font-size:14px;font-weight:600;color:#0B1F3A;margin:0 0 6px;">What happens next?</p>
-            <p style="font-size:13px;color:#5B6577;line-height:1.6;margin:0;">Your employer is legally required to contribute to the cost of your independent legal advice on any settlement agreement. A solicitor review is free to you and takes 24 to 48 hours. You are under no obligation after the first call.</p>
+            <p style="font-size:13px;color:#5B6577;line-height:1.6;margin:0;">For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). Your employer covers the cost of this review as standard practice, meaning it is free to you. A solicitor review typically takes 24 to 48 hours, and you are under no obligation after the first call.</p>
           </div>
 
           <a href="https://settlementcheck.co.uk/get-matched/"
