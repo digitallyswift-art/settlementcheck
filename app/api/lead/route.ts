@@ -36,11 +36,32 @@ export async function POST(req: NextRequest) {
 
     const validContactTimes = ['Morning', 'Afternoon', 'Evening']
     const safeContactTime = validContactTimes.includes(contact_time) ? contact_time : 'Morning'
+    const normalizedEmail = email.trim().toLowerCase()
+
+    // ── OTP Verification Guard ──────────────────────────────────────────────
+    // Enforce verified OTP prior to inserting lead into database
+    const { data: verifiedOtp, error: otpCheckError } = await supabase
+      .from('otp_codes')
+      .select('id, used')
+      .eq('email', normalizedEmail)
+      .eq('form_type', 'employee')
+      .eq('used', true)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    if (otpCheckError) {
+      console.error('OTP check error:', otpCheckError)
+    }
+
+    if (!verifiedOtp) {
+      return NextResponse.json({ error: 'Email must be verified with OTP before submitting' }, { status: 403 })
+    }
 
     // ── Insert into Supabase ────────────────────────────────────────────────
-    const { error: insertError } = await supabase.from('leads').insert({
+    const insertPayload: any = {
       first_name:      first_name.trim(),
-      email:           email.trim().toLowerCase(),
+      email:           normalizedEmail,
       phone:           phone.trim(),
       contact_time:    safeContactTime,
       verdict:         verdict ?? 'unknown',
@@ -49,11 +70,22 @@ export async function POST(req: NextRequest) {
       months_service:  months_service ?? null,
       consent:         true,
       status:          'new',
+      email_verified:  true,
       postcode:        postcode ?? null,
       postcode_region: postcode_region ?? null,
       postcode_lat:    postcode_lat ?? null,
       postcode_lng:    postcode_lng ?? null,
-    })
+    }
+
+    let { error: insertError } = await supabase.from('leads').insert(insertPayload)
+
+    if (insertError) {
+      // In case email_verified column does not exist in an older schema, retry without it
+      console.warn('Initial lead insert failed, attempting fallback without email_verified column:', insertError)
+      const { email_verified: _, ...fallbackPayload } = insertPayload
+      const fallbackResult = await supabase.from('leads').insert(fallbackPayload)
+      insertError = fallbackResult.error
+    }
 
     if (insertError) {
       console.error('Lead insert error:', insertError)

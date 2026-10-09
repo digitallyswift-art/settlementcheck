@@ -65,6 +65,12 @@ const sitemapData: SitemapCategory[] = [
         description: 'Calculate tax-free vs taxable breakdown, £30,000 exemption under ITEPA 2003 s.403, and employer legal fee contributions.',
         badge: 'New',
       },
+      {
+        title: 'Protective Award Calculator',
+        href: '/protective-award-calculator/',
+        description: 'Calculate your entitlement of up to 90 days gross pay for collective redundancy consultation failure under TULRCA 1992 s.189.',
+        badge: 'New Tool',
+      },
     ],
   },
   {

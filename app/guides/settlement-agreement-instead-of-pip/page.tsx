@@ -7,16 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Settlement Agreement Instead of a PIP UK | 2026 Employee Guide',
+  title: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
   description:
-    'Offered a settlement agreement instead of a PIP? Check 2026 statutory caps (£751/week), tax rules, negotiation scripts, and how to secure a fair exit.',
+    'Offered a settlement agreement instead of a PIP? Check 2026 rates (£751/wk), Section 111A rules, negotiation tactics, and £500+ legal fee coverage. Free guide.',
   alternates: {
     canonical: '/guides/settlement-agreement-instead-of-pip/',
   },
   openGraph: {
-    title: 'Settlement Agreement Instead of a PIP UK | 2026 Employee Guide',
+    title: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
     description:
-      'Offered a settlement agreement instead of a PIP? Check 2026 statutory caps (£751/week), tax rules, negotiation scripts, and how to secure a fair exit.',
+      'Offered a settlement agreement instead of a PIP? Check 2026 rates (£751/wk), Section 111A rules, negotiation tactics, and £500+ legal fee coverage. Free guide.',
     url: '/guides/settlement-agreement-instead-of-pip/',
     type: 'article',
     locale: 'en_GB',
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Settlement Agreement Instead of a PIP UK | 2026 Employee Guide',
+    title: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
     description:
-      'Offered a settlement agreement instead of a PIP? Check 2026 statutory caps (£751/week), tax rules, negotiation scripts, and how to secure a fair exit.',
+      'Offered a settlement agreement instead of a PIP? Check 2026 rates (£751/wk), Section 111A rules, negotiation tactics, and £500+ legal fee coverage. Free guide.',
   },
 }
 
@@ -144,6 +144,66 @@ export default function PipSettlementGuide() {
             <p className="sc-lead">
               Being offered a settlement agreement instead of a Performance Improvement Plan (PIP) is a frequent workplace scenario in the UK. Under the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310), statutory weekly pay is capped at £751 in Great Britain. When your employer proposes an agreed exit rather than a PIP, they want a clean departure without tribunal risk.
             </p>
+          </div>
+        </section>
+
+        {/* Statutory Quick Answer Callout (GEO / AI Overview Optimised) */}
+        <section className="py-8 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
+                  Statutory Quick Answer
+                </span>
+                <span className="text-[11px] font-semibold text-muted">
+                  Section 111A ERA 1996 Rules
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-ink mb-2">
+                Should I accept a settlement agreement instead of a PIP?
+              </h2>
+              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
+                In most cases, negotiating an agreed settlement is better than enduring a PIP. Employers propose exits under Section 111A of the Employment Rights Act 1996. A typical package pays your contractual notice plus two to three months of tax-free salary. Your employer also covers your independent solicitor fees under Section 203.
+              </p>
+
+              {/* Structured Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Typical Exit Package</span>
+                  <span className="font-bold text-ink text-sm">Notice + 2 to 3 Months Pay</span>
+                  <span className="text-muted text-[11px]">Negotiated tax-free ex-gratia sum</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Legal Conversation Status</span>
+                  <span className="font-bold text-ink text-sm">Protected under s.111A</span>
+                  <span className="text-muted text-[11px]">Employment Rights Act 1996</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Consideration Window</span>
+                  <span className="font-bold text-ink text-sm">10 Calendar Days</span>
+                  <span className="text-muted text-[11px]">Minimum time under ACAS Code 4</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Contribution</span>
+                  <span className="font-bold text-ink text-sm">£350 to £750+ VAT</span>
+                  <span className="text-muted text-[11px]">Your employer pays your solicitor fees</span>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span className="text-xs text-muted">
+                  Primary statute: <strong>Employment Rights Act 1996 s.111A &amp; s.203</strong>
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  <Link href="/settlement-agreement-review/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
+                    Check my draft exit terms →
+                  </Link>
+                  <Link href="/calculator/?reason=pip" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                    Calculate my PIP exit baseline →
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 

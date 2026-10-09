@@ -70,6 +70,10 @@ const TRUST: { t: string; d: React.ReactNode }[] = [
     t: 'SRA-regulated solicitor panel',
     d: 'We connect you with vetted employment law solicitors authorised and regulated by the Solicitors Regulation Authority. Your independent review is paid for by your employer, with zero cost to you.',
   },
+  {
+    t: 'Independent alternative to GOV.UK and ACAS',
+    d: 'Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. SettlementCheck is an independent platform that calculates your complete package. It includes ex-gratia compensation and tax exemptions under 2026 statutory rates.',
+  },
 ]
 
 function Check() {

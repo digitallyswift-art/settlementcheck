@@ -171,9 +171,9 @@ export function getVerdict(
 
   // ── Protective award (TULRCA 1992 s.189(4)) ──────────────────
   // Triggered only for collective redundancy (20+ employees).
-  const effectiveWeekly = Math.min(salary / 52, weeklyCapUsed);
+  // 90 calendar days = approx 12.86 weeks of actual weekly remuneration.
   const protectiveAwardMax = isCollectiveRedundancy
-    ? Math.round(effectiveWeekly * 90)
+    ? Math.round((salary / 52) * (90 / 7))
     : 0;
 
   // ── Typical range ─────────────────────────────────────────────
@@ -301,5 +301,85 @@ export function calcPensionSacrifice(
     pensionGrowth,
     cashNetReduction,
     netWealthBenefit,
+  };
+}
+
+/* ── Protective Award Engine (TULRCA 1992 s.189) ─────────────────── */
+
+export interface ProtectiveAwardParams {
+  salary: number; // gross annual salary
+  daysAwarded?: number; // up to 90 days (TULRCA 1992 s.189)
+  employerStatus?: 'solvent' | 'insolvent';
+  jurisdiction?: 'GB' | 'NI';
+  employeesProposed?: number; // 20-99 (30 days consultation) or 100+ (45 days)
+}
+
+export interface ProtectiveAwardResult {
+  daysAwarded: number;
+  weeksAwarded: number;
+  weeklyGrossPay: number;
+  solventAward: number;
+  insolventAward: number;
+  insolventShortfall: number;
+  weeklyCapUsed: number;
+  maxInsolvencyWeeks: number;
+  isCollectiveThresholdMet: boolean;
+  statutoryConsultationPeriod: number; // 30 days (20-99) or 45 days (100+)
+  taxFreeAmount: number;
+  taxableAmount: number;
+  estimatedTax: number;
+  estimatedNet: number;
+}
+
+export function calcProtectiveAward({
+  salary,
+  daysAwarded = 90,
+  employerStatus = 'solvent',
+  jurisdiction = 'GB',
+  employeesProposed = 20,
+}: ProtectiveAwardParams): ProtectiveAwardResult {
+  const cappedDays = Math.min(Math.max(1, daysAwarded), 90);
+  const weeksAwarded = Number((cappedDays / 7).toFixed(2));
+  const weeklyGrossPay = Math.round(salary / 52);
+  const weeklyCapUsed = jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB;
+
+  // Solvent employer: uncapped actual gross pay for days awarded
+  const solventAward = Math.round((salary / 52) * (cappedDays / 7));
+
+  // Insolvent employer: paid by Insolvency Service, capped at 8 weeks and statutory weekly cap
+  const maxInsolvencyWeeks = 8;
+  const insolventWeeksUsed = Math.min(maxInsolvencyWeeks, cappedDays / 7);
+  const insolventWeeklyPay = Math.min(weeklyGrossPay, weeklyCapUsed);
+  const insolventAward = Math.round(insolventWeeklyPay * insolventWeeksUsed);
+  const insolventShortfall = Math.max(0, solventAward - insolventAward);
+
+  const isCollectiveThresholdMet = employeesProposed >= 20;
+  const statutoryConsultationPeriod = employeesProposed >= 100 ? 45 : employeesProposed >= 20 ? 30 : 0;
+
+  // Selected award based on employer status
+  const effectiveGrossAward = employerStatus === 'insolvent' ? insolventAward : solventAward;
+
+  // Tax calculation under ITEPA 2003 s.403 (first £30,000 tax-free)
+  const taxFreeAmount = Math.min(effectiveGrossAward, TAX_FREE_FLOOR);
+  const taxableAmount = Math.max(0, effectiveGrossAward - TAX_FREE_FLOOR);
+  const taxRate = getTaxRate(salary);
+  const estimatedTax = Math.round(taxableAmount * taxRate);
+  const estimatedNet = effectiveGrossAward - estimatedTax;
+
+  return {
+    daysAwarded: cappedDays,
+    weeksAwarded,
+    weeklyGrossPay,
+    solventAward,
+    insolventAward,
+    insolventShortfall,
+    weeklyCapUsed,
+    maxInsolvencyWeeks,
+    isCollectiveThresholdMet,
+    statutoryConsultationPeriod,
+    taxFreeAmount,
+    taxableAmount,
+    estimatedTax,
+    estimatedNet,
   };
 }

@@ -7,16 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 import InlineEstimator from '@/components/InlineEstimator'
 
 export const metadata: Metadata = {
-  title: 'Employment Settlement Agreement: How Much Should You Get? UK 2026',
+  title: 'How Much Settlement Should You Get? 2026 | SettlementCheck',
   description:
-    'Find out how much a UK employment settlement agreement should be in 2026. Typical 1 to 3 months payout ranges, notice pay rules, £751 weekly cap, and tax calculations.',
+    'Find out how much a UK settlement agreement should be in 2026. 1 to 3 months payout ranges, notice pay, £751 weekly cap, and tax rules. Free guide.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-how-much/',
   },
   openGraph: {
-    title: 'Employment Settlement Agreement: How Much Should You Get? UK 2026',
+    title: 'How Much Settlement Should You Get? 2026 | SettlementCheck',
     description:
-      'Find out how much a UK employment settlement agreement should be in 2026. Typical 1 to 3 months payout ranges, notice pay rules, £751 weekly cap, and tax calculations.',
+      'Find out how much a UK settlement agreement should be in 2026. 1 to 3 months payout ranges, notice pay, £751 weekly cap, and tax rules. Free guide.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-how-much/',
     type: 'article',
     locale: 'en_GB',
@@ -186,14 +186,44 @@ export default function HowMuchGuidePage() {
               </h2>
               <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                 <p itemProp="text" className="sc-body text-[16px] leading-relaxed text-ink font-medium">
-                  A typical UK settlement agreement pays between one and three months of gross salary, plus notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with the first £30,000 paid tax-free.
+                  A typical UK settlement pays between one and three months of gross salary. Your package also includes your contractual notice and accrued holiday. Statutory redundancy is capped at £751 per week under SI 2026/310. The first £30,000 of compensation is tax-free under Section 403 of ITEPA 2003.
                 </p>
               </div>
+
+              {/* Attention Economy: Structured Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 pt-4 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Ex-Gratia Benchmark</span>
+                  <span className="font-bold text-ink text-sm">1 to 3 Months' Gross Pay</span>
+                  <span className="text-muted text-[11px]">Negotiated on top of your statutory floor</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Statutory Weekly Cap</span>
+                  <span className="font-bold text-ink text-sm">£751 / week (GB 2026)</span>
+                  <span className="text-muted text-[11px]">ERA 1996 s.227 (SI 2026/310)</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Tax-Free Limit</span>
+                  <span className="font-bold text-ink text-sm">First £30,000 Free of Tax</span>
+                  <span className="text-muted text-[11px]">ITEPA 2003 s.403 (excludes PILON)</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Contribution</span>
+                  <span className="font-bold text-ink text-sm">£350 to £750+ VAT</span>
+                  <span className="text-muted text-[11px]">Your employer pays your solicitor fees</span>
+                </div>
+              </div>
+
               <div className="mt-5 pt-4 border-t border-rule flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-                <span className="text-xs text-muted">Based on April 2026 statutory rates and UK market benchmarks.</span>
-                <Link href="/calculator/" className="btn-accent text-sm py-2 px-4 no-underline">
-                  Calculate my estimate →
-                </Link>
+                <span className="text-xs text-muted">Figures based on April 2026 rates. Zero email required.</span>
+                <div className="flex flex-wrap gap-2">
+                  <Link href="/settlement-agreement-review/" className="inline-flex items-center justify-center text-xs font-semibold px-3 py-2 rounded border border-rule hover:bg-paper text-ink transition-colors">
+                    Check my draft clauses →
+                  </Link>
+                  <Link href="/calculator/" className="btn-accent text-sm py-2 px-4 no-underline">
+                    Calculate my estimate →
+                  </Link>
+                </div>
               </div>
             </div>
 

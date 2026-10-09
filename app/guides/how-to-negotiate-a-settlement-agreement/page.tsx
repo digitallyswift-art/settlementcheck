@@ -6,14 +6,16 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
-  title: 'How to Negotiate a Settlement Agreement | The Complete UK Guide',
-  description: 'Understand the facts of settlement agreement negotiation in the UK. Learn about Without Prejudice rules, assessing your position, and the step-by-step process.',
+  title: 'How to Negotiate a Settlement Agreement 2026 | SettlementCheck',
+  description:
+    'Negotiate a UK settlement agreement using 2026 rates (£751/wk cap). Without Prejudice rules, counter-offers, and £500+ legal fee contributions. Free guide.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement/',
   },
   openGraph: {
-    title: 'How to Negotiate a Settlement Agreement | The Complete UK Guide',
-    description: 'Understand the facts of settlement agreement negotiation in the UK. Learn about Without Prejudice rules, assessing your position, and the step-by-step process.',
+    title: 'How to Negotiate a Settlement Agreement 2026 | SettlementCheck',
+    description:
+      'Negotiate a UK settlement agreement using 2026 rates (£751/wk cap). Without Prejudice rules, counter-offers, and £500+ legal fee contributions. Free guide.',
     url: 'https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement/',
     type: 'website',
     locale: 'en_GB',
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'How to Negotiate a Settlement Agreement | SettlementCheck',
+    title: 'How to Negotiate a Settlement Agreement 2026 | SettlementCheck',
     description: 'Without Prejudice rules, step-by-step negotiation process, and what a fair UK settlement looks like. Free guide.',
   },
 }

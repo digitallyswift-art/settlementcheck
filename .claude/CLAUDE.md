@@ -7,18 +7,20 @@
 
 ---
 
-## Current phase — May 2026
+## Current phase — October 2026
 
 **Done:** 
-- Core structure: Homepage, results page, calculator component, mobile layout.
-- Phase 1 SEO Strategy: Refactored `HomeClient` and created programmatic SEO landing pages (`/redundancy-calculator`, `/unfair-dismissal-calculator`, `/constructive-dismissal-calculator`).
-- Phase 2 SEO Strategy: Initiated Hub & Spoke content model. Created the "How to Negotiate a Settlement Agreement" guide using modern, visually appealing layout components (UI callouts, numbered timelines, no walls of text). 
-- Brand Guidelines updated: Enforced strict visual design rules and highly readable, factual UK-targeted language for all future AI content generation.
-- Component Refactoring: Made `FaqAccordion` dynamic and standard across all guides. Updated Footer and Nav for optimized internal linking.
+- Core structure & programmatic SEO tools: Homepage, Results, Core Calculator, Redundancy, Unfair Dismissal, Constructive Dismissal, Tax Calculator, Agreement Review Tool.
+- Hub & Spoke Content Architecture: 20+ pillar and spoke guides covering statutory redundancy, negotiation, ACAS procedures, and tax rules under April 2026 statutory rates (£751/wk, SI 2026/310).
+- GEO / AI Overviews Defense: Deployed structured Answer-First `Statutory Quick Answer` citation blocks across all core pillar guides adhering to the Attention Economy Framework.
+- Striking Distance Optimization: Calibrated Homepage H1/metas, core calculator metadata, and compromise agreement hub targeting Page 1 Top 3 positions.
+- Protective Award Expansion: Launched `/protective-award-calculator/` with pure 90-day calculation engine under TULRCA 1992 s.189, upgraded `/guides/protective-award/`.
+- Backend Security & Lead Infrastructure: Hardened `/api/lead` with server-side OTP verification against `otp_codes` before database insertion (`email_verified: true`).
+- Performance Tracking: Full historical search log and keyword monitoring tracked in `data/PERFORMANCE_LOG.md`.
+
 **Next:** 
-- Content Expansion: Generate additional core pillar guides using the newly established visual layout and copy rules.
-- Backend Infrastructure: Supabase integration, Resend OTP email verification, lead capture data layer.  
-**Not started:** API routes (`/api/send-otp`, `/api/verify-otp`), Supabase schema, Framer Motion animations.
+- Monitor 14-day velocity and rankings for striking distance keywords and protective award queries.
+- Solicitor panel onboarding and commercial funnel monetization.
 
 ---
 

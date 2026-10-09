@@ -7,16 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Compromise Agreement UK: What It Is, Calculation & 2026 Rules',
+  title: 'Compromise Agreement Calculator UK 2026 | SettlementCheck',
   description:
-    'Received a compromise agreement? Calculate your payout under 2026 UK rules. Weekly cap £751, £30,000 tax-free limit, legal fees paid by employer, and negotiation steps.',
+    'Calculate your compromise agreement payout under 2026 UK statutory rules (£751 cap). Redundancy, PILON, and tax-free breakdown. Free, no email required.',
   alternates: {
     canonical: '/guides/compromise-agreement-calculator-uk/',
   },
   openGraph: {
-    title: 'Compromise Agreement UK: What It Is, Calculation & 2026 Rules',
+    title: 'Compromise Agreement Calculator UK 2026 | SettlementCheck',
     description:
-      'Received a compromise agreement? Calculate your payout under 2026 UK rules. Weekly cap £751, £30,000 tax-free limit, legal fees paid by employer, and negotiation steps.',
+      'Calculate your compromise agreement payout under 2026 UK statutory rules (£751 cap). Redundancy, PILON, and tax-free breakdown. Free, no email required.',
     url: '/guides/compromise-agreement-calculator-uk/',
     type: 'website',
     locale: 'en_GB',
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Compromise Agreement UK: What It Is, Calculation & 2026 Rules',
+    title: 'Compromise Agreement Calculator UK 2026 | SettlementCheck',
     description:
-      'Received a compromise agreement? Calculate your payout under 2026 UK rules. Weekly cap £751, £30,000 tax-free limit, legal fees paid by employer, and negotiation steps.',
+      'Calculate your compromise agreement payout under 2026 UK statutory rules (£751 cap). Redundancy, PILON, and tax-free breakdown. Free, no email required.',
   },
 }
 
@@ -78,7 +78,7 @@ const faqSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Compromise Agreement UK: What It Is, Calculation & 2026 Rules',
+  headline: 'Compromise Agreement Calculator UK: 2026 Rules & Payout Guide',
   url: 'https://settlementcheck.co.uk/guides/compromise-agreement-calculator-uk/',
   image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-10-03',
@@ -163,11 +163,11 @@ export default function CompromiseAgreementCalculatorPage() {
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">Compromise Agreement UK</span>
+              <span className="text-xs text-ink truncate">Compromise Agreement Calculator</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Statutory Agreement Guide</p>
+            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Statutory Agreement Calculator &amp; Guide</p>
             <h1 className="sc-h1 mb-5">
-              Compromise Agreement UK: What It Is, Calculation & 2026 Rules
+              Compromise Agreement Calculator UK: 2026 Rules &amp; Payout Guide
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
               <span>SettlementCheck Legal Analysis</span>
@@ -177,8 +177,68 @@ export default function CompromiseAgreementCalculatorPage() {
               <span>Last reviewed: October 2026</span>
             </div>
             <p className="sc-lead">
-              A compromise agreement is the former legal name for a settlement agreement in the UK. Under Section 23 of the Enterprise and Regulatory Reform Act 2013, the document was officially renamed on 29 July 2013. The underlying legal framework remains identical under Section 203(3) of the Employment Rights Act 1996. It is a binding contract where an employee waives employment tribunal rights in return for a severance settlement.
+              A compromise agreement is the former legal name for a settlement agreement in the UK. Under Section 23 of the Enterprise and Regulatory Reform Act 2013, the document was officially renamed on 29 July 2013. The underlying legal framework remains identical under Section 203(3) of the Employment Rights Act 1996. It is a binding contract where an employee waives employment tribunal rights in return for a compensation payout.
             </p>
+          </div>
+        </section>
+
+        {/* Statutory Quick Answer Callout (GEO / AI Overview Optimised) */}
+        <section className="py-8 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
+                  Statutory Quick Answer
+                </span>
+                <span className="text-[11px] font-semibold text-muted">
+                  ERRA 2013 &amp; ERA 1996 s.203
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-ink mb-2">
+                How is a compromise agreement calculated in 2026?
+              </h2>
+              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
+                A compromise agreement calculation combines statutory redundancy, notice pay, untaken holiday, and an ex-gratia compensation payment. Under Section 403 of ITEPA 2003, the first £30,000 of compensation is tax-free. Your employer also covers your independent solicitor fees under Section 203(3) of the Employment Rights Act 1996.
+              </p>
+
+              {/* Structured Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Statutory Weekly Pay Cap</span>
+                  <span className="font-bold text-ink text-sm">£751 Per Week</span>
+                  <span className="text-muted text-[11px]">SI 2026/310 (Max statutory redundancy £22,530)</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Tax-Free Exemption</span>
+                  <span className="font-bold text-ink text-sm">First £30,000 Tax-Free</span>
+                  <span className="text-muted text-[11px]">Section 403 of ITEPA 2003</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Notice Pay (PILON)</span>
+                  <span className="font-bold text-ink text-sm">Fully Taxable as Earnings</span>
+                  <span className="text-muted text-[11px]">Taxed under Post-Employment Notice rules</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Independent Legal Advice</span>
+                  <span className="font-bold text-ink text-sm">Paid by Your Employer</span>
+                  <span className="text-muted text-[11px]">Typically £350 to £750 + VAT direct contribution</span>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span className="text-xs text-muted">
+                  Primary statute: <strong>Employment Rights Act 1996 s.203(3)</strong>
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  <Link href="/settlement-agreement-review/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
+                    Check draft agreement clauses →
+                  </Link>
+                  <Link href="/calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                    Calculate my compromise payout →
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -228,7 +288,7 @@ export default function CompromiseAgreementCalculatorPage() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">What is a compromise agreement in the UK?</h2>
             <div className="sc-body mb-6 bg-paper p-5 rounded-xl border border-rule">
-              A compromise agreement is a legally binding contract between an employer and an employee that settles workplace disputes and terminates employment. The employee agrees to waive their rights to bring claims before an employment tribunal. In return, the employer provides a severance payment, an agreed reference, and pays for the employee's independent legal advice.
+              A compromise agreement is a legally binding contract between an employer and an employee that settles workplace disputes and terminates employment. The employee agrees to waive their rights to bring claims before an employment tribunal. In return, the employer provides a compensation payment, an agreed reference, and pays for the employee's independent legal advice.
             </div>
             <p className="sc-body mb-4">
               The Enterprise and Regulatory Reform Act 2013 renamed these documents to settlement agreements on 29 July 2013. The change also introduced Section 111A of the Employment Rights Act 1996. This section allows employers and employees to hold confidential pre-termination negotiations before any formal workplace dispute arises.
@@ -380,7 +440,7 @@ export default function CompromiseAgreementCalculatorPage() {
               <div className="p-5 rounded-xl border border-rule bg-white shadow-sm">
                 <h3 className="font-semibold text-ink text-base mb-2">Component 4: Ex-gratia compensation payment</h3>
                 <p className="sc-body text-sm">
-                  This is the discretionary severance amount negotiated on top of statutory minimums. It reflects the value of waiving your employment claims. For ordinary unfair dismissal, the statutory compensatory award cap is £123,543 or 52 weeks of gross salary under SI 2026/310.
+                  This is the discretionary compensation amount negotiated on top of statutory minimums. It reflects the value of waiving your employment claims. For ordinary unfair dismissal, the statutory compensatory award cap is £123,543 or 52 weeks of gross salary under SI 2026/310.
                 </p>
               </div>
             </div>
@@ -396,7 +456,7 @@ export default function CompromiseAgreementCalculatorPage() {
             </p>
             <div className="rounded-xl border border-rule overflow-hidden mb-6 shadow-sm">
               <div className="bg-ink px-4 py-3">
-                <p className="text-white text-sm font-medium">Severance package calculation breakdown</p>
+                <p className="text-white text-sm font-medium">Compromise agreement calculation breakdown</p>
               </div>
               <table className="w-full text-sm">
                 <thead>
@@ -428,12 +488,12 @@ export default function CompromiseAgreementCalculatorPage() {
                   </tr>
                   <tr>
                     <td className="px-4 py-3 font-medium text-ink">Ex-Gratia Compensation</td>
-                    <td className="px-4 py-3 text-muted">Negotiated severance sum</td>
+                    <td className="px-4 py-3 text-muted">Negotiated compensation sum</td>
                     <td className="px-4 py-3 font-semibold text-ink">£15,600.00</td>
                     <td className="px-4 py-3 text-ink">Tax-free (within £30k)</td>
                   </tr>
                   <tr className="bg-paper font-semibold text-ink">
-                    <td className="px-4 py-3">Total Gross Severance</td>
+                    <td className="px-4 py-3">Total Gross Settlement</td>
                     <td className="px-4 py-3 text-muted">Combined agreement sum</td>
                     <td className="px-4 py-3 text-coral font-bold text-base">£41,412.00</td>
                     <td className="px-4 py-3">£24,612 tax-free</td>

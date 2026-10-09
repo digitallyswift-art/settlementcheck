@@ -30,6 +30,7 @@ export default function Footer() {
                 { href: '/constructive-dismissal-calculator/', label: 'Constructive Dismissal Calculator' },
                 { href: '/settlement-agreement-tax-calculator/', label: 'Settlement Tax Calculator' },
                 { href: '/settlement-agreement-review/', label: 'Employment Settlement Checker' },
+                { href: '/protective-award-calculator/', label: 'Protective Award Calculator' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>

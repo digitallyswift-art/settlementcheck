@@ -176,7 +176,7 @@ export default function RedundancyPayCapGuide() {
                 What is the UK statutory redundancy pay cap for 2026?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                From 6 April 2026, the statutory redundancy weekly pay cap is £751 in Great Britain under SI 2026/310 (£783 in Northern Ireland). The maximum statutory redundancy payment is £22,530, based on 20 years of continuous service. Any settlement offer paying less than your statutory redundancy entitlement is unlawful under Section 162 of the Employment Rights Act 1996.
+                From 6 April 2026, the statutory redundancy weekly pay cap is £751 in Great Britain under SI 2026/310 (£783 in Northern Ireland). The maximum statutory payment is £22,530, based on 20 qualifying years. Your statutory entitlement forms your absolute legal floor under Section 162 of the Employment Rights Act 1996.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -207,9 +207,14 @@ export default function RedundancyPayCapGuide() {
                 <span className="text-xs text-muted">
                   Primary statute: <strong>Employment Rights Act 1996 s.227 &amp; SI 2026/310</strong>
                 </span>
-                <Link href="/calculator/?reason=redundancy" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
-                  Calculate your exact capped figure →
-                </Link>
+                <div className="flex flex-wrap gap-2">
+                  <Link href="/settlement-agreement-review/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
+                    Check my draft terms →
+                  </Link>
+                  <Link href="/calculator/?reason=redundancy" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                    Calculate my redundancy floor →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

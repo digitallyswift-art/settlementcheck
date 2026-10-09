@@ -535,7 +535,7 @@ export default function ReviewClient() {
               </div>
               <div className="flex flex-col sm:flex-row gap-3 pt-3">
                 <Link
-                  href={`/get-matched/?offer=${report.extractedTerms.exGratiaAmount || 0}&salary=${effectiveSalary || 0}`}
+                  href={`/get-matched/?offer=${report.extractedTerms.exGratiaAmount || 0}&salary=${effectiveSalary || 0}&verdict=${report.extractedTerms.exGratiaAmount && report.extractedTerms.exGratiaAmount < (report.officialBenchmark?.medianTribunalAward || 0) ? 'BELOW_TYPICAL' : 'WITHIN_RANGE'}&months=${(report.extractedTerms.yearsOfService || 0) * 12}`}
                   onClick={() =>
                     trackSolicitorMatchClick('review_client_report_cta', {
                       offer: report.extractedTerms.exGratiaAmount,

@@ -4,25 +4,25 @@ import CalculatorClient from './CalculatorClient'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Free Settlement Agreement Calculator UK 2026 | SettlementCheck',
+  title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
   description:
-    'Calculate your employment settlement agreement entitlement in 60 seconds. Instant calculation based on April 2026 UK statutory rates. Free, no email required.',
+    'Calculate your UK settlement agreement payout in 60 seconds. Free online calculator applying April 2026 statutory rates (£751 cap). Zero email required.',
   alternates: {
     canonical: '/calculator/',
   },
   openGraph: {
-    title: 'Free Settlement Agreement Calculator UK 2026 | SettlementCheck',
+    title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your employment settlement agreement entitlement in 60 seconds. Instant calculation based on April 2026 UK statutory rates. Free, no email required.',
+      'Calculate your UK settlement agreement payout in 60 seconds. Free online calculator applying April 2026 statutory rates (£751 cap). Zero email required.',
     url: '/calculator/',
     type: 'website',
     locale: 'en_GB',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free Settlement Agreement Calculator UK 2026 | SettlementCheck',
+    title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your employment settlement agreement entitlement in 60 seconds. Free, no email required.',
+      'Calculate your UK settlement agreement payout in 60 seconds. Free online calculator applying April 2026 statutory rates (£751 cap). Zero email required.',
   },
 }
 

@@ -160,6 +160,66 @@ export default function PilonTaxTreatmentGuide() {
           </div>
         </section>
 
+        {/* Statutory Quick Answer Callout (GEO / AI Overview Optimised) */}
+        <section className="py-8 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
+                  Statutory Quick Answer
+                </span>
+                <span className="text-[11px] font-semibold text-muted">
+                  HMRC &amp; ITEPA 2003 Rules
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-ink mb-2">
+                Is PILON taxable in a UK settlement agreement?
+              </h2>
+              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
+                Yes, Pay in Lieu of Notice (PILON) is always fully taxable in the UK. HMRC treats all notice pay as general earnings under Section 402D of ITEPA 2003. You pay income tax and National Insurance on the full amount. Notice pay cannot be included inside the £30,000 tax-free exemption.
+              </p>
+
+              {/* Structured Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Notice Pay Tax Status</span>
+                  <span className="font-bold text-ink text-sm">100% Taxable as Earnings</span>
+                  <span className="text-muted text-[11px]">Subject to Income Tax + National Insurance</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">£30,000 Tax-Free Limit</span>
+                  <span className="font-bold text-ink text-sm">Does Not Apply to PILON</span>
+                  <span className="text-muted text-[11px]">Exemption reserved for ex-gratia &amp; redundancy</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Governing Statute</span>
+                  <span className="font-bold text-ink text-sm">ITEPA 2003 Section 402D</span>
+                  <span className="text-muted text-[11px]">Post-Employment Notice Pay (PENP) rules</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Contribution</span>
+                  <span className="font-bold text-ink text-sm">100% Tax-Exempt</span>
+                  <span className="text-muted text-[11px]">Your employer pays your solicitor fees</span>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span className="text-xs text-muted">
+                  Primary statute: <strong>ITEPA 2003 s.402D &amp; HMRC PENP formula</strong>
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  <Link href="/settlement-agreement-review/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
+                    Check my draft notice clauses →
+                  </Link>
+                  <Link href="/settlement-agreement-tax-calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                    Calculate my net take-home pay →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Key takeaways callout */}
         <section className="py-10 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">

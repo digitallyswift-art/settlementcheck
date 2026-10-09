@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
   description:
-    'Calculate if your settlement agreement offer is fair in 60 seconds. Based on April 2026 UK statutory rates. Free calculator with zero email required.',
+    'Calculate your settlement agreement payout in 60 seconds. Free UK calculator based on April 2026 statutory rates (£751 cap). Check your offer with zero email.',
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate if your settlement offer is fair in 60 seconds. See your statutory floor and true take-home pay after tax under April 2026 UK rates. Free, no email.',
+      'Calculate your settlement agreement payout in 60 seconds. Free UK calculator based on April 2026 statutory rates (£751 cap). Check your offer with zero email.',
     url: '/',
     type: 'website',
     locale: 'en_GB',
@@ -207,8 +207,14 @@ export default function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <HomeClient
+        title={
+          <>
+            Settlement Agreement<br />
+            <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Calculator UK</em> (2026 Rates)
+          </>
+        }
+        lead="Calculate whether your employment settlement offer is fair in 60 seconds. Our free UK calculator checks statutory redundancy, notice pay, and tax-free compensation under April 2026 rates (£751 cap). Whether your paperwork says settlement agreement or compromise agreement, find out where you stand for free."
         statutoryRows={statutoryRows}
-        lead="Check whether your employer's employment settlement offer sits within the typical UK range before you reply. Our independent calculator checks statutory redundancy, notice pay, and tax-free compensation in 60 seconds. Whether your paperwork says employment settlement agreement or compromise agreement, find out where you stand for free."
         pageLinks={[
           { href: '/guides/settlement-agreement-how-much/', label: 'How Much Should a Settlement Agreement Be?' },
           { href: '/calculator/', label: 'Settlement Agreement Calculator' },

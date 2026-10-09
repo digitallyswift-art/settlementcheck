@@ -176,7 +176,7 @@ export default function TaxFreeSettlementGuide() {
                 How is a settlement agreement taxed in the UK?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                Under Section 403 of ITEPA 2003, the first £30,000 of compensation for loss of employment is completely free of income tax and employee National Insurance. In contrast, notice pay (PILON) and accrued holiday pay are fully taxable as general earnings under Section 402D. Employer legal fee contributions paid directly to your solicitor are exempt from tax under Section 413A.
+                Under Section 403 of ITEPA 2003, the first £30,000 of compensation is completely tax-free. You pay no income tax and no employee National Insurance on this portion. However, notice pay (PILON) and holiday pay are taxable as earnings under Section 402D. Your employer&apos;s contribution to your legal fees is also 100% tax-free under Section 413A.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -197,9 +197,9 @@ export default function TaxFreeSettlementGuide() {
                   <span className="text-muted text-[11px]">No employee NI even on sums above £30k</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Fee Contribution</span>
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Contribution</span>
                   <span className="font-bold text-ink text-sm">100% Tax-Exempt</span>
-                  <span className="text-muted text-[11px]">Paid to your solicitor (s.413A)</span>
+                  <span className="text-muted text-[11px]">Your employer pays your solicitor fees</span>
                 </div>
               </div>
 
@@ -207,9 +207,14 @@ export default function TaxFreeSettlementGuide() {
                 <span className="text-xs text-muted">
                   Primary statute: <strong>Income Tax (Earnings and Pensions) Act 2003 s.403</strong>
                 </span>
-                <Link href="/settlement-agreement-tax-calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
-                  Calculate your take-home cash after tax →
-                </Link>
+                <div className="flex flex-wrap gap-2">
+                  <Link href="/settlement-agreement-review/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
+                    Check my draft tax split →
+                  </Link>
+                  <Link href="/settlement-agreement-tax-calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                    Calculate my take-home pay →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

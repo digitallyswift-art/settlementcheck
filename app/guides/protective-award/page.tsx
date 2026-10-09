@@ -3,19 +3,20 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Protective Award Redundancy Claims 2026 | SettlementCheck',
+  title: 'Protective Award Calculator & Rules 2026 | SettlementCheck',
   description:
-    'A protective award is tribunal compensation of up to 90 days\' gross pay for collective redundancy consultation failures. Learn how to claim in 2026.',
+    'Calculate up to 90 days gross pay for collective redundancy consultation failure. Free calculator, solvent vs insolvent rules, and 2026 statutory caps.',
   alternates: {
     canonical: '/guides/protective-award/',
   },
   openGraph: {
-    title: 'Protective Award Redundancy Claims 2026 | SettlementCheck',
+    title: 'Protective Award Calculator & Rules 2026 | SettlementCheck',
     description:
-      'A protective award is tribunal compensation of up to 90 days\' gross pay for collective redundancy consultation failures. Learn how to claim in 2026.',
+      'Calculate up to 90 days gross pay for collective redundancy consultation failure. Free calculator, solvent vs insolvent rules, and 2026 statutory caps.',
     url: '/guides/protective-award/',
     type: 'website',
     locale: 'en_GB',
@@ -23,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Protective Award Redundancy Claims 2026 | SettlementCheck',
+    title: 'Protective Award Calculator & Rules 2026 | SettlementCheck',
     description:
-      'A protective award is tribunal compensation of up to 90 days\' gross pay for collective redundancy consultation failures. Learn how to claim in 2026.',
+      'Calculate up to 90 days gross pay for collective redundancy consultation failure. Free calculator, solvent vs insolvent rules, and 2026 statutory caps.',
   },
 }
 
@@ -61,7 +62,7 @@ const faqSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Protective Award Redundancy Claims in 2026: Up to 90 Days\' Pay for Failure to Consult',
+  headline: 'Protective Award Redundancy Claims: 90 Days Pay Calculator & 2026 Rules',
   url: 'https://settlementcheck.co.uk/guides/protective-award/',
   image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-05-23',
@@ -153,20 +154,80 @@ export default function ProtectiveAwardGuide() {
               <span className="text-muted text-xs">/</span>
               <span className="text-xs text-ink truncate">Protective Award</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Redundancy Rights</p>
+            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Statutory Redundancy Rights &amp; Calculator</p>
             <h1 className="sc-h1 mb-5">
-              Protective Award Redundancy Claims in 2026: Up to 90 Days&apos; Pay for Failure to Consult
+              Protective Award Redundancy Claims: 90 Days Pay Calculator &amp; 2026 Rules
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
+              <span>SettlementCheck Legal Analysis</span>
               <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
+              <span>Statutory baseline: SI 2026/310</span>
               <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Last reviewed: July 2026</span>
+              <span>Last reviewed: October 2026</span>
             </div>
             <p className="sc-lead">
-              A protective award is tribunal compensation of up to 90 days&apos; gross pay for collective redundancy consultation failures. Under Section 189 of the Trade Union and Labour Relations (Consolidation) Act 1992 <sup>1</sup>, you can claim this if your employer fails to consult you before making 20 or more redundancies. This guide explains how the award is calculated and how you can claim.
+              A protective award is tribunal compensation of up to 90 days gross pay for collective redundancy consultation failures. Under Section 189 of the Trade Union and Labour Relations (Consolidation) Act 1992, you can claim this if your employer fails to consult before making 20 or more redundancies. This guide explains how the award is calculated and how you can claim.
             </p>
+          </div>
+        </section>
+
+        {/* Statutory Quick Answer Callout (GEO / AI Overview Optimised) */}
+        <section className="py-8 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
+                  Statutory Quick Answer
+                </span>
+                <span className="text-[11px] font-semibold text-muted">
+                  TULRCA 1992 s.189 &amp; ERA 1996 s.184
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-ink mb-2">
+                What is a protective award and how much can you claim?
+              </h2>
+              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
+                A protective award is compensation of up to 90 days gross pay for failure to consult collectively. If your employer is trading, the award is based on your actual gross earnings with no statutory cap. If your employer is insolvent, payments from the Insolvency Service are capped at 8 weeks of pay (£751 per week in Great Britain). You must start ACAS Early Conciliation within 3 months minus 1 day from your dismissal.
+              </p>
+
+              {/* Structured Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Maximum Tribunal Award</span>
+                  <span className="font-bold text-ink text-sm">Up to 90 Days Pay</span>
+                  <span className="text-muted text-[11px]">TULRCA 1992 s.189 (~12.86 weeks)</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Solvent Employer Cap</span>
+                  <span className="font-bold text-ink text-sm">Uncapped Actual Gross Pay</span>
+                  <span className="text-muted text-[11px]">Liable directly against trading company</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Insolvent Employer Cap</span>
+                  <span className="font-bold text-ink text-sm">Max £6,008 (8 wks @ £751)</span>
+                  <span className="text-muted text-[11px]">Paid by Insolvency Service (GB rate)</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Limitation Period</span>
+                  <span className="font-bold text-ink text-sm">3 Months Less 1 Day</span>
+                  <span className="text-muted text-[11px]">Strict ACAS Early Conciliation deadline</span>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span className="text-xs text-muted">
+                  Primary statute: <strong>TULRCA 1992 Section 189</strong>
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  <Link href="/settlement-agreement-review/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
+                    Check draft agreement clauses →
+                  </Link>
+                  <Link href="/protective-award-calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                    Calculate my protective award →
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -313,6 +374,18 @@ export default function ProtectiveAwardGuide() {
                 </div>
               ))}
             </div>
+
+            <div className="mt-8 p-6 rounded-2xl bg-paper border border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-bold text-ink mb-1">Calculate your specific protective award</p>
+                <p className="sc-body text-xs text-muted">
+                  Input your exact salary to calculate your 90-day entitlement and compare solvent vs insolvent outcomes under 2026 rules.
+                </p>
+              </div>
+              <Link href="/protective-award-calculator/" className="btn-accent flex-shrink-0 text-xs py-2.5 px-4 font-bold">
+                Calculate my award →
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -379,7 +452,7 @@ export default function ProtectiveAwardGuide() {
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
               <p className="sc-body text-sm">
-                If you have been offered a redundancy package, you can <Link href="/redundancy-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> using our free tool to find out where you stand.
+                If you have been offered a redundancy settlement package, you can <Link href="/protective-award-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">calculate your protective award</Link> or <Link href="/calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your settlement offer</Link> using our free tools.
               </p>
             </div>
           </div>
@@ -388,12 +461,12 @@ export default function ProtectiveAwardGuide() {
         {/* CTA Banner */}
         <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">Check if your redundancy settlement is fair</h2>
+            <h2 className="sc-section-h2 text-white mb-4">Calculate your protective award entitlement</h2>
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              Calculate your statutory baseline under 2026 rates. Free, instant results, and no email required.
+              Check your 90-day gross pay entitlement and compare solvent vs insolvent caps under 2026 statutory rates. Free, instant results, zero email required.
             </p>
-            <Link href="/redundancy-calculator/" className="btn-accent">
-              Check my offer
+            <Link href="/protective-award-calculator/" className="btn-accent">
+              Calculate my protective award →
             </Link>
           </div>
         </section>
@@ -444,6 +517,41 @@ export default function ProtectiveAwardGuide() {
             </ol>
           </div>
         </section>
+
+        {/* Related Guides */}
+        <section className="py-12 bg-white">
+          <div className="max-w-2xl mx-auto px-5">
+            <RelatedArticles
+              items={[
+                {
+                  href: '/protective-award-calculator/',
+                  title: 'Protective Award Calculator UK',
+                  description: 'Calculate your entitlement of up to 90 days gross pay under TULRCA 1992 s.189.',
+                  tag: 'Calculator',
+                },
+                {
+                  href: '/guides/redundancy-pay-cap-2026/',
+                  title: 'Redundancy Pay Cap 2026',
+                  description: 'The weekly statutory pay cap is £751 from April 2026. Check your statutory floor.',
+                  tag: 'Redundancy',
+                },
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Assess whether your redundancy settlement offer matches typical UK market ranges.',
+                  tag: 'Settlement',
+                },
+                {
+                  href: '/guides/settlement-agreement-vs-tribunal-claim/',
+                  title: 'Settlement Agreement vs Tribunal Claim',
+                  description: 'Weigh up the pros, cons, costs, and timescales of settling versus taking your employer to tribunal.',
+                  tag: 'Tribunal',
+                },
+              ]}
+            />
+          </div>
+        </section>
+
         {/* Disclaimer */}
         <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
           Disclaimer: SettlementCheck is an independent introduction service and calculator, not a law firm. The information on this page is for general guidance only and does not constitute formal legal counsel. Confirm your specific offer using our free calculator.

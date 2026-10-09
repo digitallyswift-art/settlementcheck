@@ -6,16 +6,16 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
-  title: 'Is My Settlement Offer Fair? UK Settlement Check Guide 2026',
+  title: 'Is My Settlement Offer Fair? 2026 UK Check | SettlementCheck',
   description:
-    'Find out if your settlement offer is fair. Compare your offer against statutory minimums, typical UK ranges, and the red flags that signal an offer is too low.',
+    'Check if your UK settlement offer is fair using 2026 rates (£751/wk cap). Compare against statutory minimums, tribunal medians, and Acas ranges. Free guide.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/is-my-settlement-offer-fair/',
   },
   openGraph: {
-    title: 'Is My Settlement Offer Fair? UK Settlement Check Guide 2026',
+    title: 'Is My Settlement Offer Fair? 2026 UK Check | SettlementCheck',
     description:
-      'Find out if your settlement offer is fair. Compare your offer against statutory minimums, typical UK ranges, and the red flags that signal an offer is too low.',
+      'Check if your UK settlement offer is fair using 2026 rates (£751/wk cap). Compare against statutory minimums, tribunal medians, and Acas ranges. Free guide.',
     url: 'https://settlementcheck.co.uk/guides/is-my-settlement-offer-fair/',
     type: 'website',
     locale: 'en_GB',
