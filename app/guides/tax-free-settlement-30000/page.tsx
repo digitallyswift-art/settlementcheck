@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -495,6 +496,37 @@ export default function TaxFreeSettlementGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+
+            <div className="pt-8">
+              <RelatedArticles
+                items={[
+                  {
+                    href: '/guides/nhs-settlement-agreements/',
+                    title: 'NHS Redundancy & MARS Calculator 2026',
+                    description: 'Learn how Agenda for Change terms and MARS voluntary exit packages are taxed under s.403.',
+                    tag: 'Calculator',
+                  },
+                  {
+                    href: '/guides/redundancy-pay-cap-2026/',
+                    title: 'Redundancy Pay Cap 2026 Explained',
+                    description: 'Understand the statutory weekly pay cap of £751 and how it applies to your statutory floor.',
+                    tag: 'Guide',
+                  },
+                  {
+                    href: '/guides/pilon-tax-treatment-2026/',
+                    title: 'PILON Tax Treatment 2026',
+                    description: 'Notice pay is taxable as earnings under Section 402D. Learn how PILON is separated from redundancy.',
+                    tag: 'Tax Guide',
+                  },
+                  {
+                    href: '/redundancy-calculator/',
+                    title: 'Statutory Redundancy Calculator',
+                    description: 'Calculate your statutory redundancy pay floor under the 2026 weekly cap of £751.',
+                    tag: 'Calculator',
+                  },
+                ]}
+              />
+            </div>
           </div>
         </section>
 

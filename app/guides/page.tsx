@@ -84,8 +84,8 @@ const GUIDES = [
   {
     href: '/guides/nhs-settlement-agreements/',
     eyebrow: 'NHS & Public Sector',
-    title: 'NHS Settlement Agreements: Special Severance Payments',
-    description: 'NHS settlement agreements and Special Severance Payments in 2026. Learn how HM Treasury approvals work, the £100,000 threshold, and your whistleblowing rights.',
+    title: 'NHS Settlement Agreements & MARS Calculator 2026',
+    description: 'Calculate your NHS redundancy and MARS severance payout under Agenda for Change. HM Treasury approval rules, £100k cap, pension rules, and tax-free limits.',
     readTime: '6 min read',
   },
   {

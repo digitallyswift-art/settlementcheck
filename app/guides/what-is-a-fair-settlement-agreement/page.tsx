@@ -534,6 +534,12 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                   description: 'Risks, tribunal alternatives, and workplace processes if an agreement is rejected.',
                   tag: 'Your Options',
                 },
+                {
+                  href: '/guides/nhs-settlement-agreements/',
+                  title: 'NHS Settlement Agreements & MARS Calculator 2026',
+                  description: 'Benchmark your NHS exit package under Agenda for Change terms and Treasury approval rules.',
+                  tag: 'Public Sector',
+                },
               ]}
             />
           </div>

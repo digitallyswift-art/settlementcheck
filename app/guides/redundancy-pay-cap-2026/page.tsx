@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -501,6 +502,16 @@ export default function RedundancyPayCapGuide() {
             <p className="sc-body">
               The cap protects you. Use it as your baseline. Any settlement negotiation starts from the capped statutory figure and works upward based on your bargaining position, length of service, and any additional employment claims you may have.
             </p>
+
+            <div className="mt-6 rounded-xl border border-coral/30 bg-[#FFF8F6] p-5 flex items-start gap-3">
+              <InfoIcon />
+              <div className="text-sm">
+                <p className="font-semibold text-ink mb-1">Are you an NHS or public sector employee?</p>
+                <p className="text-muted leading-relaxed">
+                  Under NHS Agenda for Change Section 16, contractual redundancy pay is calculated on your actual monthly salary (1 month of pay per year of service up to 24 months), bypassing the statutory £751 weekly cap. Check your entitlement using our dedicated <Link href="/guides/nhs-settlement-agreements/" className="underline font-semibold text-coral hover:text-ink">NHS Redundancy &amp; MARS Calculator</Link>.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -522,6 +533,37 @@ export default function RedundancyPayCapGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+
+            <div className="pt-8">
+              <RelatedArticles
+                items={[
+                  {
+                    href: '/guides/nhs-settlement-agreements/',
+                    title: 'NHS Redundancy & MARS Calculator 2026',
+                    description: 'Agenda for Change Section 16 terms pay 1 month per year up to 24 months, uncapped by statutory weekly rates.',
+                    tag: 'Calculator',
+                  },
+                  {
+                    href: '/protective-award-calculator/',
+                    title: 'Protective Award Calculator UK',
+                    description: 'Calculate your entitlement of up to 90 days gross pay under TULRCA 1992 s.189 for consultation failures.',
+                    tag: 'Calculator',
+                  },
+                  {
+                    href: '/guides/tax-free-settlement-30000/',
+                    title: 'The £30,000 Tax-Free Settlement Rule',
+                    description: 'Learn how redundancy pay, PILON, and ex-gratia sums are taxed under ITEPA 2003 s.403.',
+                    tag: 'Tax Guide',
+                  },
+                  {
+                    href: '/guides/what-is-a-fair-settlement-agreement/',
+                    title: 'What Is a Fair Settlement Agreement?',
+                    description: 'Learn how settlement packages are structured and benchmarked across UK sectors.',
+                    tag: 'Guide',
+                  },
+                ]}
+              />
+            </div>
           </div>
         </section>
 

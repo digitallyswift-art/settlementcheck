@@ -383,3 +383,87 @@ export function calcProtectiveAward({
     estimatedNet,
   };
 }
+
+/* ── NHS Agenda for Change & MARS Engine (AfC s.16 / s.17) ────────── */
+
+export interface NhsExitParams {
+  salary: number; // gross annual salary
+  yearsOfService: number; // reckonable NHS continuous service
+  exitType?: 'afc_redundancy' | 'mars' | 'statutory_only';
+  customExGratia?: number; // any additional special severance payment
+}
+
+export interface NhsExitResult {
+  monthlyGrossPay: number;
+  monthsAwarded: number;
+  grossAward: number;
+  statutoryRedundancyEquivalent: number;
+  afcEnhancement: number; // difference between AfC and statutory floor
+  treasuryApprovalRequired: boolean; // true if any ex-gratia or package >= £100k
+  requiresMinisterialApproval: boolean; // true if package >= £100k or salary >= £150k
+  taxFreeAmount: number;
+  taxableAmount: number;
+  estimatedTax: number;
+  estimatedNet: number;
+}
+
+export function calcNhsExit({
+  salary,
+  yearsOfService,
+  exitType = 'afc_redundancy',
+  customExGratia = 0,
+}: NhsExitParams): NhsExitResult {
+  const monthlyGrossPay = Math.round(salary / 12);
+  const years = Math.max(0, Math.floor(yearsOfService));
+
+  let monthsAwarded = 0;
+  let basePayout = 0;
+
+  if (exitType === 'afc_redundancy') {
+    // AfC Section 16: minimum 2 years service, 1 month per year, max 24 months
+    monthsAwarded = years >= 2 ? Math.min(years, 24) : 0;
+    basePayout = Math.round(monthlyGrossPay * monthsAwarded);
+  } else if (exitType === 'mars') {
+    // AfC Section 17 MARS: 1 month per year, typically max 21 months
+    monthsAwarded = years >= 1 ? Math.min(years, 21) : 0;
+    basePayout = Math.round(monthlyGrossPay * monthsAwarded);
+  } else {
+    // Statutory only
+    monthsAwarded = 0;
+    basePayout = 0;
+  }
+
+  // Statutory redundancy benchmark for comparison (assuming mid-age multiplier 1.0)
+  const statYears = Math.min(years, 20);
+  const statutoryRedundancyEquivalent = Math.round(Math.min(salary / 52, WEEKLY_CAP_GB) * statYears);
+
+  const grossAward = basePayout + customExGratia;
+  const afcEnhancement = Math.max(0, grossAward - statutoryRedundancyEquivalent);
+
+  // Treasury thresholds:
+  // Any Special Severance Payment (ex-gratia) requires DHSC & Treasury sign-off.
+  // Exit packages >= £100,000 or salary >= £150,000 require Ministerial approval.
+  const requiresMinisterialApproval = grossAward >= 100000 || salary >= 150000;
+  const treasuryApprovalRequired = requiresMinisterialApproval || customExGratia > 0;
+
+  // Tax treatment under ITEPA 2003 s.403 (first £30,000 tax-free)
+  const taxFreeAmount = Math.min(grossAward, TAX_FREE_FLOOR);
+  const taxableAmount = Math.max(0, grossAward - TAX_FREE_FLOOR);
+  const taxRate = getTaxRate(salary);
+  const estimatedTax = Math.round(taxableAmount * taxRate);
+  const estimatedNet = grossAward - estimatedTax;
+
+  return {
+    monthlyGrossPay,
+    monthsAwarded,
+    grossAward,
+    statutoryRedundancyEquivalent,
+    afcEnhancement,
+    treasuryApprovalRequired,
+    requiresMinisterialApproval,
+    taxFreeAmount,
+    taxableAmount,
+    estimatedTax,
+    estimatedNet,
+  };
+}

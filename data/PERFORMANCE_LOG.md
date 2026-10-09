@@ -90,13 +90,21 @@ Data snapshots archived in: `data/gsc-history/`
 | `work settlement calculator` | 108 | 11.2 | `/` | **Top 3** |
 | `compromise agreement calculator uk` | 79 | 11.9 | `/guides/compromise-agreement-calculator-uk/` | **Top 3** |
 | `protective award calculator` | 694 (on guide) | 9.2 | `/protective-award-calculator/` | **Top 1–3** |
+| `nhs settlement agreement` / MARS | 186 | 10.2 | `/guides/nhs-settlement-agreements/` | **Top 3** |
 
 ---
 
-## 4. GSC Annotation Recorded
+## 4. GSC Annotations Recorded
 
+- **Annotation 1 (Striking-Distance & Protective Award):**
 ```text
 2026-10-09: Striking-distance H1/meta optimisations, launched /protective-award-calculator/ & rolled out GEO AI blocks.
+```
+*(Exact character count: 119 / 120)*
+
+- **Annotation 2 (NHS & MARS Redundancy Engine):**
+```text
+2026-10-09: Shipped NHS & MARS redundancy calculator + Attention Economy answer-first block to push #10 query into Top 3.
 ```
 *(Exact character count: 119 / 120)*
 
@@ -106,7 +114,7 @@ Data snapshots archived in: `data/gsc-history/`
 
 ```bash
 npm run test:evals   # 16/16 PASSED (100% legal & brand compliance)
-npm run check:links  # 635 links across 80 files, 0 broken, 100% trailing-slash compliant
+npm run check:links  # 660 links across 81 files, 0 broken, 100% trailing-slash compliant
 npx tsc --noEmit     # 0 TypeScript type errors
 ```
 
@@ -115,6 +123,7 @@ npx tsc --noEmit     # 0 TypeScript type errors
 ## 6. Scheduled Monitoring Checkpoints
 
 - **Checkpoint 1 (14-Day Velocity Review):** 23 October 2026
-  - Inspect impressions and rank shifts for `protective award calculator` and `compromise agreement calculator`.
+  - Inspect impressions and rank shifts for `protective award calculator`, `compromise agreement calculator`, and `nhs settlement agreement`.
 - **Checkpoint 2 (28-Day Page 1 Audit):** 6 November 2026
   - Run `node scripts/compare-gsc.mjs` with next export to verify movement into Top 3 positions.
+

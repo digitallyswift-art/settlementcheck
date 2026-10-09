@@ -253,6 +253,14 @@ export default function RedundancyCalculatorPage() {
             label: 'Redundancy Pay Cap 2026 Explained',
           },
           {
+            href: '/guides/nhs-settlement-agreements/',
+            label: 'NHS Redundancy & MARS Calculator',
+          },
+          {
+            href: '/protective-award-calculator/',
+            label: 'Protective Award 90-Day Calculator',
+          },
+          {
             href: '/guides/settlement-agreement-acas-calculations/',
             label: 'ACAS-Based Calculations Guide',
           },

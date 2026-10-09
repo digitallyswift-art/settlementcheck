@@ -395,6 +395,12 @@ export default function EmployerRecommendedSolicitor() {
                   tag: 'Valuation',
                 },
                 {
+                  href: '/guides/nhs-settlement-agreements/',
+                  title: 'NHS Settlement Agreements & MARS Calculator 2026',
+                  description: 'Learn why NHS trusts suggest panel solicitors and how independent advice protects whistleblowing and pension rights.',
+                  tag: 'Public Sector',
+                },
+                {
                   href: '/for-solicitors/',
                   title: 'For Employment Solicitors',
                   description: 'Are you an SRA-regulated employment solicitor? Learn how our independent panel works.',
