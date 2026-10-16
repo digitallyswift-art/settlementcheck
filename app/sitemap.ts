@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     // Tier 1: Conversion pillars
     { url: `${base}/`,                                                lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
+    { url: `${base}/calculators/`,                                    lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
     { url: `${base}/calculator/`,                                     lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
     { url: `${base}/settlement-agreement-review/`,                    lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
 

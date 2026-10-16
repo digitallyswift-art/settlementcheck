@@ -190,7 +190,26 @@ function OfficialBenchmarkCard({
 
 /* ── Agreement Review Cross-Sell Card ───────────────────────────── */
 
-function AgreementReviewCrossSellCard() {
+function AgreementReviewCrossSellCard({
+  salary,
+  yearsNum,
+  age,
+  reason,
+}: {
+  salary?: number | string
+  yearsNum?: number | string
+  age?: number | string
+  reason?: string
+}) {
+  const queryParams = new URLSearchParams()
+  if (salary && Number(salary) > 0) queryParams.set('salary', String(salary))
+  if (yearsNum && Number(yearsNum) > 0) queryParams.set('years', String(yearsNum))
+  if (age && Number(age) > 0) queryParams.set('age', String(age))
+  if (reason) queryParams.set('reason', String(reason))
+
+  const queryString = queryParams.toString()
+  const reviewHref = `/settlement-agreement-review/${queryString ? `?${queryString}` : ''}`
+
   return (
     <div className="bg-[#0B1F3A] text-white rounded-xl p-5 md:p-6 shadow-sm flex flex-col gap-3.5 border border-[#1A2F4E] no-print">
       <div className="flex items-center gap-2">
@@ -206,7 +225,7 @@ function AgreementReviewCrossSellCard() {
         If your employer has handed you draft terms, paste them here. We check your £30,000 tax exemption, notice pay, and employer legal fee contributions in seconds.
       </p>
       <Link
-        href="/settlement-agreement-review/"
+        href={reviewHref}
         className="mt-1 inline-flex items-center justify-center px-4 py-3 bg-[#D9603B] hover:bg-[#B14A28] text-white font-semibold rounded-lg text-[13px] transition-colors text-center"
       >
         Check my draft settlement terms →
@@ -2072,7 +2091,12 @@ function ResultsContent() {
                 />
 
                 {/* Agreement Review Cross-Sell Card */}
-                <AgreementReviewCrossSellCard />
+                <AgreementReviewCrossSellCard
+                  salary={inputs.salary}
+                  yearsNum={inputs.yearsNum}
+                  age={inputs.age}
+                  reason={inputs.reason}
+                />
 
                 {/* Save results panel */}
                 <SaveCard

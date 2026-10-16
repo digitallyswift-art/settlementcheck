@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -427,6 +428,13 @@ export default function TaxFreeSettlementGuide() {
             <p className="sc-body">
               Your solicitor will check the tax wording to ensure it is standard. They will make sure you only pay what you legally owe.
             </p>
+
+            <ReviewCallout
+              title="Concerned about your tax indemnity clause?"
+              description="Do not sign a broad tax indemnity without checking the numbers. Paste your agreement draft to verify that ex-gratia payments and PILON are correctly partitioned under ITEPA 2003 s.403."
+              ctaText="Verify your agreement tax wording →"
+              badge="Tax Risk Audit"
+            />
           </div>
         </section>
 

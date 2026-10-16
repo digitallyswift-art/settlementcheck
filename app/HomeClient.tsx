@@ -255,11 +255,22 @@ export default function HomeClient({
                       display: 'block', width: '100%', background: '#D9603B', textDecoration: 'none', color: '#fff',
                       fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 16,
                       letterSpacing: '-0.005em', padding: '15px 24px', borderRadius: 10,
-                      cursor: 'pointer', marginBottom: 14, textAlign: 'center', boxSizing: 'border-box',
+                      cursor: 'pointer', marginBottom: 12, textAlign: 'center', boxSizing: 'border-box',
                     }}
                   >
                     {ctaLabel}
                   </Link>
+
+                  <div className="pt-3 border-t border-[#0B1F3A]/[0.08] mb-3 text-center">
+                    <span className="text-[12px] text-muted block mb-1">Already received a written offer or draft contract?</span>
+                    <Link
+                      href="/settlement-agreement-review/"
+                      className="inline-flex items-center gap-1 text-[13px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
+                    >
+                      Review your draft agreement clauses →
+                    </Link>
+                  </div>
+
                   <p style={{ fontSize: 12, color: '#9AA3AE', textAlign: 'center', margin: 0, lineHeight: 1.55 }}>
                     No data is sold. No solicitor will call unless you ask.
                   </p>
@@ -321,6 +332,85 @@ export default function HomeClient({
             </div>
             <div className="mt-10 flex justify-center">
               <Link href={ctaHref} className="btn-accent">{ctaLabel}</Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── HOLDING A DRAFT AGREEMENT? CLAUSE REVIEW ─────────── */}
+        <section className="py-section bg-card border-b border-rule">
+          <div className="sc-container">
+            <div className="max-w-[720px] mb-12">
+              <span className="sc-eyebrow">Draft contract &amp; clause review</span>
+              <h2 className="sc-section-h2 mt-2">
+                Already received a settlement agreement? Check your clauses before you sign.
+              </h2>
+              <p className="sc-lead mt-3">
+                Most employees sign the first draft handed to them without realizing the employer contribution to legal fees is below market, restrictive covenants are excessive, and the compensation falls short of statutory tribunal baselines.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+              <div className="bg-paper border border-rule rounded-xl p-6 flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
+                    1
+                  </div>
+                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Legal fee contribution check</h3>
+                  <p className="text-[14px] text-muted leading-relaxed">
+                    Under ERA 1996 s.203, you must receive independent legal advice. We check whether your employer is offering the standard £500 to £1,500 + VAT or trying to underfund your solicitor.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">
+                  Statutory requirement: ERA 1996 s.203
+                </div>
+              </div>
+
+              <div className="bg-paper border border-rule rounded-xl p-6 flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
+                    2
+                  </div>
+                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Tax exemption &amp; PILON audit</h3>
+                  <p className="text-[14px] text-muted leading-relaxed">
+                    Verify that your £30,000 tax-free termination exemption under ITEPA 2003 s.403 is correctly applied, and that notice pay is separated to prevent unexpected tax bills from HMRC.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">
+                  Tax code: ITEPA 2003 s.402D / s.403
+                </div>
+              </div>
+
+              <div className="bg-paper border border-rule rounded-xl p-6 flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
+                    3
+                  </div>
+                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Counter-offer leverage points</h3>
+                  <p className="text-[14px] text-muted leading-relaxed">
+                    Compare your package against Ministry of Justice tribunal tables and Acas ex-gratia standards. Get specific amendments to counter non-compete and gagging clauses.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">
+                  Benchmark: MoJ Tribunal Precedents
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-paper-2 border border-rule rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div className="flex flex-col gap-1 text-center sm:text-left">
+                <span className="text-[16px] font-bold text-ink font-serif">
+                  Paste your draft agreement clauses for a free, confidential check
+                </span>
+                <span className="text-[13px] text-muted">
+                  No personal data stored. Takes 60 seconds. Instant benchmark analysis.
+                </span>
+              </div>
+              <Link
+                href="/settlement-agreement-review/"
+                className="btn-accent whitespace-nowrap px-6 py-3 text-[14px]"
+              >
+                Review my draft agreement →
+              </Link>
             </div>
           </div>
         </section>

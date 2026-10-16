@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
   title: 'Not Signing a Settlement Agreement | 2026 Rights | SettlementCheck',
@@ -158,6 +159,13 @@ export default function RejectSettlementAgreementGuide() {
                 </li>
               </ul>
             </div>
+
+            <ReviewCallout
+              title="Weighing up whether to sign your agreement?"
+              description="Before you reject or sign, see how your draft terms compare against official Ministry of Justice tribunal payout tables and statutory compensation caps."
+              ctaText="Check your agreement risk & terms →"
+              badge="Objective Risk Assessment"
+            />
 
             {/* Section 3 */}
             <div className="space-y-4">

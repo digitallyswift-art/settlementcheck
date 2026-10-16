@@ -24,12 +24,13 @@ export default function Footer() {
             <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Calculators</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
+                { href: '/calculators/', label: 'All calculators' },
                 { href: '/calculator/', label: 'Settlement Agreement Calculator' },
                 { href: '/redundancy-calculator/', label: 'Redundancy Calculator' },
                 { href: '/unfair-dismissal-calculator/', label: 'Unfair Dismissal Calculator' },
                 { href: '/constructive-dismissal-calculator/', label: 'Constructive Dismissal Calculator' },
                 { href: '/settlement-agreement-tax-calculator/', label: 'Settlement Tax Calculator' },
-                { href: '/settlement-agreement-review/', label: 'Employment Settlement Checker' },
+                { href: '/settlement-agreement-review/', label: 'Settlement Agreement Review' },
                 { href: '/protective-award-calculator/', label: 'Protective Award Calculator' },
               ].map(l => (
                 <li key={l.href}>

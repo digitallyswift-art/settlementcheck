@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -205,6 +206,13 @@ export default function ProtectedConversationsGuide() {
               </a>
               .
             </p>
+
+            <ReviewCallout
+              title="Handed an offer letter after a protected conversation?"
+              description="Check your severance terms confidentially before responding. Verify your statutory redundancy rights, legal fee contribution, and £30,000 tax-free exemption."
+              ctaText="Check your protected offer terms →"
+              badge="Protected Conversation Checker"
+            />
           </div>
         </section>
 

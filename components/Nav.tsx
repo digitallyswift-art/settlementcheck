@@ -31,8 +31,13 @@ const CALCULATOR_LINKS = [
   },
   {
     href: '/settlement-agreement-review/',
-    label: 'Employment Settlement Checker',
-    sub: 'Check employment draft clauses, £30k tax & fees',
+    label: 'Settlement Agreement Review',
+    sub: 'Check draft contract clauses, £30k tax & legal fees',
+  },
+  {
+    href: '/protective-award-calculator/',
+    label: 'Protective Award Calculator',
+    sub: 'Up to 90 days gross pay for failure to consult',
   },
 ]
 
@@ -94,10 +99,9 @@ export default function Nav() {
             onMouseEnter={() => setCalculatorsOpen(true)}
             onMouseLeave={() => setCalculatorsOpen(false)}
           >
-            <button
-              type="button"
-              className="flex items-center gap-1 text-[14px] text-muted hover:text-ink transition-colors duration-[160ms] bg-transparent border-0 p-0 cursor-pointer"
-              aria-expanded={calculatorsOpen}
+            <Link
+              href="/calculators/"
+              className="flex items-center gap-1 text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]"
             >
               Calculators
               <svg
@@ -106,7 +110,7 @@ export default function Nav() {
               >
                 <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </button>
+            </Link>
 
             {calculatorsOpen && (
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3" style={{ width: 340 }}>
@@ -129,11 +133,28 @@ export default function Nav() {
                         <span className="text-[12px] text-muted leading-snug">{c.sub}</span>
                       </Link>
                     ))}
+                    <div className="border-t border-rule mt-1 pt-1">
+                      <Link
+                        href="/calculators/"
+                        className="flex items-center gap-1 px-4 py-2 text-[13px] text-coral font-medium hover:underline underline-offset-2"
+                        onClick={() => setCalculatorsOpen(false)}
+                      >
+                        View all calculators hub →
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
           </div>
+
+          {/* Settlement Agreement & Contract Review Tool */}
+          <Link
+            href="/settlement-agreement-review/"
+            className="text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]"
+          >
+            Review Agreement
+          </Link>
 
           {/* Guides dropdown */}
           <div
@@ -246,9 +267,27 @@ export default function Nav() {
                     {c.label}
                   </Link>
                 ))}
+                <Link
+                  href="/calculators/"
+                  className="text-[13px] text-coral font-medium py-1.5"
+                  onClick={() => { setMobileOpen(false); setMobileCalculatorsOpen(false) }}
+                >
+                  View all calculators hub →
+                </Link>
               </div>
             )}
           </div>
+
+          <Link
+            href="/settlement-agreement-review/"
+            className="text-[15px] font-medium text-ink py-2 flex items-center justify-between hover:text-coral transition-colors"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>Review Agreement</span>
+            <span className="text-[11px] font-mono uppercase tracking-wider text-coral font-semibold bg-coral/10 px-2 py-0.5 rounded">
+              Contract Checker
+            </span>
+          </Link>
 
           {/* Guides expandable */}
           <div>

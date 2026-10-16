@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import type { AuditReport } from '@/lib/ai/agents/settlement-auditor'
 import { getOfficialBenchmark, OfficialBenchmarkData } from '@/lib/statutory-rates'
@@ -170,6 +171,8 @@ function ReviewBenchmarkCard({
 }
 
 export default function ReviewClient() {
+  const searchParams = useSearchParams()
+
   const [agreementText, setAgreementText] = useState('')
   const [salary, setSalary] = useState('')
   const [yearsOfService, setYearsOfService] = useState('')
@@ -179,6 +182,19 @@ export default function ReviewClient() {
   const [stepIndex, setStepIndex] = useState(0)
   const [report, setReport] = useState<AuditReport | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!searchParams) return
+    const pSalary = searchParams.get('salary')
+    const pYears = searchParams.get('years') || searchParams.get('yearsOfService')
+    const pAge = searchParams.get('age')
+    const pReason = searchParams.get('reason') || searchParams.get('disputeReason')
+
+    if (pSalary) setSalary(pSalary)
+    if (pYears) setYearsOfService(pYears)
+    if (pAge) setAge(pAge)
+    if (pReason) setDisputeReason(pReason)
+  }, [searchParams])
 
   const steps = [
     'Parsing contractual clauses, financial compensation, and dispute context...',

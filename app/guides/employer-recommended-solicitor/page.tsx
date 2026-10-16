@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
   title: 'Do I Have to Use the Solicitor My Employer Recommends? | SettlementCheck',
@@ -152,6 +153,13 @@ export default function EmployerRecommendedSolicitor() {
                 </p>
               </div>
             </div>
+
+            <ReviewCallout
+              title="Want an objective clause check first?"
+              description="Before you speak to any solicitor, run your draft terms through our confidential review tool. Know whether your employer legal fee offer covers realistic costs and if your package is fair."
+              ctaText="Check my legal fee contribution →"
+              badge="Independent Analysis"
+            />
 
             {/* Section 2 — Why employers recommend */}
             <div className="space-y-4">

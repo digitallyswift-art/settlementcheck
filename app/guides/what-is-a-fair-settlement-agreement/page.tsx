@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
   title: 'What Is a Fair Settlement Agreement UK 2026? | SettlementCheck',
@@ -182,6 +183,13 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             <p className="sc-body">
               The first figure your employer offers is rarely their maximum. It is a starting point. Employers know that tribunal proceedings cost them far more in management time, legal fees, and uncertainty than a modest increase on the initial offer. You have a solid negotiating position.
             </p>
+
+            <ReviewCallout
+              title="Already holding a draft agreement?"
+              description="Do not sign until you check your clauses. Paste your terms to check your legal fee contribution, verify £30,000 tax exemption rules, and benchmark your payout against 2026 tribunal awards."
+              ctaText="Check my draft clauses →"
+              badge="Confidential Clause Checker"
+            />
           </div>
         </section>
 

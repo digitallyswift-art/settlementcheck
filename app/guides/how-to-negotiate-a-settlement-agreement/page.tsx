@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
   title: 'How to Negotiate a Settlement Agreement 2026 | SettlementCheck',
@@ -233,6 +234,13 @@ export default function HowToNegotiateGuide() {
                 </div>
               </div>
             </div>
+
+            <ReviewCallout
+              title="Want to know what leverage you have?"
+              description="Paste your draft settlement agreement into our free checker. In 60 seconds, see where your employer has cut corners on legal fees, notice pay, and statutory compensation."
+              ctaText="Audit your agreement clauses →"
+              badge="Tactical Leverage Tool"
+            />
 
             {/* Section 4 */}
             <div className="space-y-4">

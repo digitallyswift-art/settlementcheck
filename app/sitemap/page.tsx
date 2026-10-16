@@ -33,6 +33,12 @@ const sitemapData: SitemapCategory[] = [
     description: 'Free, confidential compensation estimators tailored to UK employment law regulations.',
     items: [
       {
+        title: 'All Calculators Hub',
+        href: '/calculators/',
+        description: 'Complete directory of free UK employment compensation calculators and statutory evaluation tools.',
+        badge: 'Hub',
+      },
+      {
         title: 'Settlement Agreement Calculator',
         href: '/calculator/',
         description: 'Instant estimation of your settlement agreement value based on salary, service length, and statutory formula.',

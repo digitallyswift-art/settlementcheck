@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
   title: 'Pressured to Sign a Settlement Agreement? | 10-Day Rule | SettlementCheck',
@@ -134,6 +135,13 @@ export default function PressuredToSignGuide() {
                 If an employer demands a signature within 24 or 48 hours, they are in breach of these guidelines. While the ACAS code is not legally binding in itself, employment tribunals take it highly into account when assessing whether an employer acted reasonably or applied undue pressure.
               </p>
             </div>
+
+            <ReviewCallout
+              title="Facing a deadline from your employer?"
+              description="Do not panic. You are entitled to at least 10 calendar days under Acas guidelines. Paste your draft clauses into our free tool to check your statutory rights and legal fee funding in 60 seconds."
+              ctaText="Check my draft clauses now →"
+              badge="Urgent Deadline Support"
+            />
 
             {/* Section 2 */}
             <div className="space-y-4">

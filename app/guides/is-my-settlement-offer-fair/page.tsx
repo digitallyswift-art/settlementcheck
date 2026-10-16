@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
   title: 'Is My Settlement Offer Fair? 2026 UK Check | SettlementCheck',
@@ -200,6 +201,13 @@ export default function IsMyOfferFairGuide() {
             <p className="text-xs text-muted mt-3">
               *Statutory redundancy capped at £22,530 based on 20 years maximum and £751 weekly pay cap (April 2026). See our full analysis on the <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">2026 redundancy pay cap</Link> and calculate your statutory figure with the <Link href="/redundancy-calculator/" className="underline hover:text-ink font-medium">redundancy calculator</Link>.
             </p>
+
+            <ReviewCallout
+              title="Want to know if your specific written offer is fair?"
+              description="Do not guess whether your numbers match the table. Paste your draft agreement terms to run an instant statutory audit and tribunal benchmark check."
+              ctaText="Check my offer clauses now →"
+              badge="Instant Offer Audit"
+            />
           </div>
         </section>
 
