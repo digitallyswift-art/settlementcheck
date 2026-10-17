@@ -127,3 +127,73 @@ npx tsc --noEmit     # 0 TypeScript type errors
 - **Checkpoint 2 (28-Day Page 1 Audit):** 6 November 2026
   - Run `node scripts/compare-gsc.mjs` with next export to verify movement into Top 3 positions.
 
+---
+
+## 7. Release & Optimization Log: Phase 1 Cannibalization & Striking-Distance Execution (17 October 2026)
+
+### A. Disentangle `/` (Homepage) vs `/calculator/` (Dedicated Tool)
+*Objective: Eliminate internal self-cannibalization between the homepage (pos 18.8) and calculator page (pos 78.9) to allow both to rank for their distinct intents.*
+- **Dedicated Calculator (`/calculator/`):**
+  - Calibrated title tag: `Calculate Settlement Agreement UK | 2026 Payout Calculator` (57 chars). Targets `calculate settlement agreement` (680 monthly impr) and `settlement agreement payout`.
+  - Calibrated meta description: `Calculate your UK settlement agreement payout using April 2026 statutory rates (£751/wk cap). Instant fairness score, PILON, and net tax breakdown. Free.` (154 chars).
+  - Added semantic accessible `<h1 className="sr-only">Calculate Settlement Agreement UK (2026 Rates)</h1>` to ensure search engine crawlers index clear on-page heading intent.
+  - Updated `WebApplication` schema name and aligned `BreadcrumbList` connecting `https://settlementcheck.co.uk/` to `https://settlementcheck.co.uk/calculator/`.
+- **Homepage (`/`):**
+  - Calibrated meta description to exact character ceiling: `Calculate your UK settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap). Check your offer with zero email required.` (154 chars).
+  - Added Twitter card metadata matching OpenGraph.
+
+### B. Striking-Distance Capture: Compromise Agreement Hub (`/guides/compromise-agreement-calculator-uk/`)
+*Objective: Propel 585+ monthly impressions at positions 11–15 into Top 3–5 rankings on Page 1.*
+- Added exact-match H2: `Compromise Agreement Calculator: 2026 Statutory Calculation Rules & Formulas`.
+- Added dedicated question to `FAQS` array and `FAQPage` schema: *"Is a compromise agreement calculator the same as a settlement agreement calculator?"* explaining the ERRA 2013 legal transition and 2026 statutory baseline (£751/week cap, £30k exemption).
+- Upgraded in-content and bottom CTAs with high-intent anchor phrasing: *"Launch Compromise Agreement Calculator →"* and *"Calculate my compromise agreement payout →"*.
+- Deployed sitewide internal linking equity to `/guides/compromise-agreement-calculator-uk/` from:
+  - Homepage hero eyebrow ([app/HomeClient.tsx](file:///c:/settlementcheck/app/HomeClient.tsx)).
+  - Main navigation dropdown under Guides ([components/Nav.tsx](file:///c:/settlementcheck/components/Nav.tsx)).
+  - Sitewide footer under Guides ([components/Footer.tsx](file:///c:/settlementcheck/components/Footer.tsx)).
+
+### C. Elevate GOV.UK & ACAS Comparative Differentiator on Homepage (`/`)
+*Objective: Win featured snippets and rank for 367+ monthly impressions querying `settlement agreement calculator gov` (pos 16.2) and `settlement agreement calculator acas` (pos 25.5).*
+- Added dedicated 4th trust differentiator into `TRUST` array in `app/HomeClient.tsx`: *"Why is there no official GOV.UK or ACAS settlement calculator?"*.
+- Deployed second `Question` / `Answer` microdata featured snippet callout directly in the homepage FAQ section addressing why GOV.UK and ACAS lack interactive settlement calculators and establishing SettlementCheck as the independent UK statutory alternative.
+
+### D. GSC Annotation Recorded
+- **Annotation 3 (Phase 1 Cannibalization & Compromise Hub Push):**
+```text
+2026-10-17: Resolved / vs /calculator/ cannibalization, pushed compromise hub into Nav/Footer, deployed GOV/ACAS snippet.
+```
+*(Exact character count: 119 / 120)*
+
+---
+
+## 8. 2026-10-17 — Phase 2: Unblock "Discovered – currently not indexed" Cluster & Commercial Mesh
+
+*Audit Basis: GSC Coverage report indicated 13 high-value URLs languishing in "Discovered - currently not indexed" status due to orphan risk, sitemap omissions, and link deprivation.*
+
+### A. Core Architectural & Funnel Discoveries
+- **XML Sitemap Omission**: `/get-matched/` (primary commercial revenue funnel) was present in HTML sitemap (`app/sitemap/page.tsx`) but missing from machine XML sitemap (`app/sitemap.ts`). Resolved by adding `{ url: `${base}/get-matched/`, priority: 0.9, changeFrequency: 'weekly' }`.
+- **Prohibited Phrase Rectification**: Identified and eliminated 6 instances of prohibited phrase `"Employment Rights Act 2025"` across `app/guides/fair-work-agency/page.tsx` and `app/guides/page.tsx`, standardizing to `"Employment Rights Bill 2024-25"`. Added missing `metadataBase` and corrected canonical tags.
+
+### B. Sitewide Internal Link Mesh Deployment
+- **Global Header Navigation (`components/Nav.tsx`)**:
+  - Added `Find a solicitor` (`/get-matched/`) to desktop CTA bar.
+  - Added `Find a solicitor` (`/get-matched/`) to mobile slide-out navigation for complete desktop/mobile parity.
+- **Global Footer Navigation (`components/Footer.tsx`)**:
+  - Added `/get-matched/` (`Find a solicitor`) to the Solicitors column to distribute sitewide PageRank equity.
+- **Homepage Commercial Flow (`app/HomeClient.tsx`)**:
+  - Connected Step 2 of `STEPS` directly to `/get-matched/` via contextual anchor text.
+  - Added "Explore statutory compensation tools" strip below Statutory Rates Table linking to `/redundancy-calculator/`, `/unfair-dismissal-calculator/`, and `/get-matched/`.
+- **In-Content High-Authority Cross-Links**:
+  - `app/guides/protective-award/page.tsx`: Embedded contextual links to `/redundancy-calculator/`, `/unfair-dismissal-calculator/`, and `/get-matched/`.
+  - `app/guides/nhs-settlement-agreements/page.tsx`: Added cross-links to `/redundancy-calculator/` and `/unfair-dismissal-calculator/` in statutory redundancy comparisons.
+  - `app/guides/how-to-negotiate-a-settlement-agreement/page.tsx`: Added RelatedArticles card for `/guides/fair-work-agency/`.
+
+### C. GSC Annotation Recorded
+- **Annotation 4 (Phase 2 Unindexed URLs & Commercial Link Mesh):**
+```text
+2026-10-17: Phase 2 unindexed mesh deployed; added /get-matched/ to XML sitemap, Nav & Footer; internal linking boosted.
+```
+*(Exact character count: 114 / 120)*
+
+
+

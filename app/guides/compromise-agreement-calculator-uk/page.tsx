@@ -32,6 +32,10 @@ export const metadata: Metadata = {
 
 const FAQS = [
   {
+    q: 'Is a compromise agreement calculator the same as a settlement agreement calculator?',
+    a: 'Yes. Because compromise agreements were legally renamed settlement agreements under Section 23 of the Enterprise and Regulatory Reform Act 2013, the statutory calculation formulas are identical. A 2026 compromise agreement calculation combines statutory redundancy pay capped at £751 per week under SI 2026/310, contractual notice pay, accrued untaken holiday pay, and an ex-gratia compensation payment where the first £30,000 is tax-free under Section 403 of ITEPA 2003.',
+  },
+  {
     q: 'What is the difference between a compromise agreement and a settlement agreement?',
     a: 'There is no legal difference today. Under Section 23 of the Enterprise and Regulatory Reform Act 2013, compromise agreements were legally renamed settlement agreements on 29 July 2013. The underlying legal mechanism remains identical under Section 203(3) of the Employment Rights Act 1996.',
   },
@@ -233,8 +237,8 @@ export default function CompromiseAgreementCalculatorPage() {
                   <Link href="/settlement-agreement-review/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
                     Check draft agreement clauses →
                   </Link>
-                  <Link href="/calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
-                    Calculate my compromise payout →
+                  <Link href="/calculator/" className="inline-flex items-center text-xs font-bold px-3 py-1.5 rounded bg-coral text-white hover:bg-coral-ink transition-colors">
+                    Launch Compromise Agreement Calculator →
                   </Link>
                 </div>
               </div>
@@ -403,7 +407,7 @@ export default function CompromiseAgreementCalculatorPage() {
         {/* Calculation Framework */}
         <section className="py-12 border-b border-rule bg-paper">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">How is a compromise agreement calculated?</h2>
+            <h2 className="sc-section-h2 mb-4">Compromise Agreement Calculator: 2026 Statutory Calculation Rules &amp; Formulas</h2>
             <p className="sc-body mb-6">
               A standard settlement payout consists of four separate components. Each component follows different legal formulas and tax rules.
             </p>
@@ -635,7 +639,7 @@ export default function CompromiseAgreementCalculatorPage() {
               Use our free UK settlement calculator to check your statutory entitlement, tax-free allowances, and typical payout range under 2026 rules.
             </p>
             <Link href="/calculator/" className="btn-accent">
-              Calculate my settlement payout →
+              Calculate my compromise agreement payout →
             </Link>
           </div>
         </section>

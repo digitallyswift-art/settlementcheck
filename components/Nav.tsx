@@ -62,6 +62,11 @@ const GUIDES_LINKS = [
     label: 'Protective Award Redundancy Claims',
     sub: 'Up to 90 days gross pay for failure to consult',
   },
+  {
+    href: '/guides/compromise-agreement-calculator-uk/',
+    label: 'Compromise Agreement Calculator',
+    sub: 'Legacy ERRA 2013 rules & statutory formulas',
+  },
 ]
 
 export default function Nav() {
@@ -218,6 +223,9 @@ export default function Nav() {
 
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-3">
+          <Link href="/get-matched/" className="text-[13px] font-medium text-coral hover:text-coral-ink transition-colors duration-[160ms] px-1">
+            Find a solicitor
+          </Link>
           <Link href="/for-solicitors/" className="text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1">
             For solicitors
           </Link>
@@ -328,6 +336,9 @@ export default function Nav() {
 
           <Link href="/how-it-works/" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
             How it works
+          </Link>
+          <Link href="/get-matched/" className="text-[15px] font-medium text-coral py-2" onClick={() => setMobileOpen(false)}>
+            Find a solicitor
           </Link>
           <Link href="/for-solicitors/" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
             For solicitors

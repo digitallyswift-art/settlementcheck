@@ -447,12 +447,12 @@ export default function ProtectiveAwardGuide() {
               Before you sign, you should verify whether the settlement payment accounts for the fact that your employer failed to consult collectively. A fair settlement should compensate you for this failure.
             </p>
             <p className="sc-body mb-6">
-              You can choose your own independent solicitor to review your settlement agreement. Your employer covers the fees for this review, and they pay these fees directly to your solicitor.
+              You can choose your own independent solicitor to review your settlement agreement. Your employer covers the fees for this review, and they pay these fees directly to your solicitor. You can <Link href="/get-matched/" className="text-coral underline hover:text-ink transition-colors font-semibold">get matched with an SRA-regulated solicitor</Link> with zero upfront cost.
             </p>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
               <p className="sc-body text-sm">
-                If you have been offered a redundancy settlement package, you can <Link href="/protective-award-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">calculate your protective award</Link> or <Link href="/calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your settlement offer</Link> using our free tools.
+                If you have been offered a redundancy settlement package, you can <Link href="/protective-award-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">calculate your protective award</Link>, check your entitlements with our <Link href="/redundancy-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">redundancy pay calculator</Link> and <Link href="/unfair-dismissal-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">unfair dismissal calculator</Link>, or <Link href="/calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your complete settlement offer</Link>.
               </p>
             </div>
           </div>

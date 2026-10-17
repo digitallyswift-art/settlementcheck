@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/results/'],
+        disallow: ['/results/', '/portal/', '/dossier/'],
       },
       {
         userAgent: [
@@ -19,7 +19,7 @@ export default function robots(): MetadataRoute.Robots {
           'cohere-ai',
         ],
         allow: '/',
-        disallow: ['/results/'],
+        disallow: ['/results/', '/portal/', '/dossier/'],
       },
     ],
     sitemap: 'https://settlementcheck.co.uk/sitemap.xml',

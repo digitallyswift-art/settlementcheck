@@ -1,0 +1,50 @@
+name: Autonomous SERP Sentinel 24/7 Fleet
+
+on:
+  schedule:
+    # Runs daily at 03:30 UTC (24/7 autonomous scheduled trigger in the cloud)
+    - cron: '30 3 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI if needed
+
+jobs:
+  run-autonomous-sentinel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Execute Autonomous SEO Actuator (4-Agent Loop)
+        env:
+          GSC_CLIENT_EMAIL: ${{ secrets.GSC_CLIENT_EMAIL }}
+          GSC_PRIVATE_KEY: ${{ secrets.GSC_PRIVATE_KEY }}
+          GSC_SITE_URL: ${{ secrets.GSC_SITE_URL || 'sc-domain:settlementcheck.co.uk' }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          npm run sentinel:act
+
+      - name: Commit & Push Persistent Change Log
+        run: |
+          git config --global user.name "SettlementCheck Sentinel Fleet"
+          git config --global user.email "sentinel@settlementcheck.co.uk"
+          git add data/serp-actions/
+          if git diff --staged --quiet; then
+            echo "No change log updates to commit."
+          else
+            git commit -m "chore(sentinel): autonomous SEO 4-agent run digest [skip ci]"
+            git push
+          fi

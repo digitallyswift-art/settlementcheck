@@ -414,6 +414,12 @@ export default function HowToNegotiateGuide() {
               title="Related Guides & Calculations"
               items={[
                 {
+                  href: '/guides/compromise-agreement-calculator-uk/',
+                  title: 'Compromise Agreement Calculator UK',
+                  description: 'Calculate your payout under April 2026 UK statutory rates and £30,000 tax exemptions.',
+                  tag: 'Calculator Guide',
+                },
+                {
                   href: '/guides/what-is-a-fair-settlement-agreement/',
                   title: 'What Is a Fair Settlement Agreement?',
                   description: 'Benchmark your settlement offer against industry standards and legal minimums.',
@@ -436,6 +442,12 @@ export default function HowToNegotiateGuide() {
                   title: 'Do You Have to Use Their Solicitor?',
                   description: 'Your right to appoint your own independent legal counsel at their expense.',
                   tag: 'Legal Advice',
+                },
+                {
+                  href: '/guides/fair-work-agency/',
+                  title: 'Fair Work Agency & Workers Rights',
+                  description: 'New enforcement powers and statutory protections under the Employment Rights Bill.',
+                  tag: 'Statutory Reform',
                 },
               ]}
             />

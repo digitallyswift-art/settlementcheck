@@ -70,6 +70,7 @@ export function calcRedundancy(
   age: number,
   weeklyPayCap: number = WEEKLY_PAY_CAP,
 ): number {
+  if (totalMonths < 24) return 0; // ERA 1996 s.155: statutory redundancy requires 2 complete years continuous service
   const weeklyPay = Math.min(salary / 52, weeklyPayCap);
   const completedYears = Math.min(Math.floor(totalMonths / 12), MAX_SERVICE_YEARS);
   let total = 0;

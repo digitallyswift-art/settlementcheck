@@ -148,7 +148,7 @@ const GUIDES = [
     href: '/guides/fair-work-agency/',
     eyebrow: 'UK Employment Law',
     title: 'What Is the Fair Work Agency?',
-    description: 'The Fair Work Agency is a new UK enforcement body established by the Employment Rights Act 2025. Not yet operational. Learn what it will do and whether it affects your settlement.',
+    description: 'The Fair Work Agency is a new UK enforcement body established by the Employment Rights Bill 2024-25. Not yet operational. Learn what it will do and whether it affects your settlement.',
     readTime: '5 min read',
   },
   {

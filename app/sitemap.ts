@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/protective-award-calculator/`,                    lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
 
     // Tier 3: Funnel + how-it-works
+    { url: `${base}/get-matched/`,                                    lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
     { url: `${base}/how-it-works/`,                                   lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
 
     // Tier 4: Guides (hub + spokes)

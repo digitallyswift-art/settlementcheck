@@ -51,10 +51,19 @@ Automated deterministic link and route integrity verification.
 ```bash
 npm run check:links
 ```
-Scans all 46+ routes and 530+ internal links to verify:
+Scans all 58+ routes and 710+ internal links to verify:
 - Zero 404 or broken internal links.
 - Consistent trailing slashes (`trailingSlash: true` compliance to prevent 308 redirect lag).
 - Inclusion in XML (`/sitemap.xml`) and HTML (`/sitemap/`) sitemaps.
+
+### D. `sentinel-fleet`
+Autonomous background fleet managing SERP intelligence and 15-minute territorial SLA watchdog.
+
+**Terminal Commands:**
+```bash
+npm run sentinel:serp  # Runs SERP Sentinel scan, checks climbers/droppers, AI Overviews, saves snapshot
+npm run watchdog:sla   # Inspects lead locks, triggers failover cascade on expired 15-minute locks
+```
 
 ---
 

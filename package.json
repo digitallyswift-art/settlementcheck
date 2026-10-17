@@ -9,7 +9,11 @@
     "check:links": "node scripts/check-links.mjs",
     "seo:check": "node scripts/check-links.mjs",
     "archive:gsc": "node scripts/archive-gsc.mjs",
-    "test:evals": "node scripts/evals/eval-runner.mjs"
+    "test:evals": "node scripts/evals/eval-runner.mjs",
+    "sentinel:serp": "node scripts/sentinel/serp-sentinel.mjs",
+    "sentinel:act": "node scripts/sentinel/autonomous-actuator.mjs",
+    "watchdog:sla": "node scripts/watchdog/sla-watchdog.mjs",
+    "test:gsc": "node scripts/sentinel/test-gsc-connection.mjs"
   },
   "license": "ISC",
   "dependencies": {

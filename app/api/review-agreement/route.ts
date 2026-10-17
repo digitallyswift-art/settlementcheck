@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auditSettlementAgreement } from '@/lib/ai/agents/settlement-auditor';
+import { AgenticOrchestrator } from '@/lib/agentic-engine';
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,9 +16,28 @@ export async function POST(req: NextRequest) {
 
     const report = await auditSettlementAgreement(agreementText, context);
 
+    // Generate instruction-ready solicitor pre-flight dossier via Agentic Engine
+    let dossier = null;
+    try {
+      dossier = await AgenticOrchestrator.executeCaseDossier({
+        salary: report.extractedTerms.salary ?? context?.salary ?? 45000,
+        yearsOfService: report.extractedTerms.yearsOfService ?? context?.yearsOfService ?? 3,
+        age: report.extractedTerms.age ?? context?.age ?? 38,
+        employerOffer: report.extractedTerms.exGratiaAmount ?? context?.offer ?? 5000,
+        rawAgreementText: agreementText,
+        disputeReason: (report.extractedTerms.disputeReason as any) || 'redundancy',
+        isDiscrimination: report.extractedTerms.isDiscrimination,
+        jurisdiction: report.extractedTerms.jurisdiction,
+        employerOfferedLegalFee: report.extractedTerms.legalFeeContribution,
+      });
+    } catch (dossierErr) {
+      console.warn('Agentic dossier generation non-fatal error:', dossierErr);
+    }
+
     return NextResponse.json({
       success: true,
       report,
+      dossier,
     });
   } catch (error: any) {
     console.error('Settlement agreement review failed:', error);

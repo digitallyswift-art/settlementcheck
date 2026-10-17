@@ -6,17 +6,18 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'What Is the Fair Work Agency? UK Employment Guide 2026',
   description:
-    'The Fair Work Agency is a new UK enforcement body established by the Employment Rights Act 2025. Not yet operational. Learn what it will do and whether it affects your settlement.',
+    'The Fair Work Agency is a new UK enforcement body under the Employment Rights Bill 2024-25. Not yet operational. Learn what it will do and how it impacts settlements.',
   alternates: {
-    canonical: 'https://settlementcheck.co.uk/guides/fair-work-agency/',
+    canonical: '/guides/fair-work-agency/',
   },
   openGraph: {
     title: 'What Is the Fair Work Agency? UK Employment Guide 2026',
     description:
-      'The Fair Work Agency is a new UK enforcement body established by the Employment Rights Act 2025. Not yet operational. Learn what it will do and whether it affects your settlement.',
-    url: 'https://settlementcheck.co.uk/guides/fair-work-agency/',
+      'The Fair Work Agency is a new UK enforcement body under the Employment Rights Bill 2024-25. Not yet operational. Learn what it will do and how it impacts settlements.',
+    url: '/guides/fair-work-agency/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -38,7 +39,7 @@ const FAQS = [
   },
   {
     q: 'Does the Fair Work Agency apply to Scotland and Wales?',
-    a: 'The Fair Work Agency is established as a UK-wide body under the Employment Rights Act 2025. Employment law is partly devolved in Scotland and Wales, so some variation in how FWA powers apply may exist. If you are employed outside England, confirm the position with a solicitor once the FWA has launched.',
+    a: 'The Fair Work Agency is established as a UK-wide body under the Employment Rights Bill 2024-25. Employment law is partly devolved in Scotland and Wales, so some variation in how FWA powers apply may exist. If you are employed outside England, confirm the position with a solicitor once the FWA has launched.',
   },
 ]
 
@@ -106,12 +107,12 @@ export default function FairWorkAgencyGuide() {
               What is the Fair Work Agency and does it affect my settlement agreement?
             </h1>
             <p className="sc-lead">
-              The Fair Work Agency (FWA) is a new UK government body established by the Employment Rights Act 2025 to enforce workers' rights including minimum wage, holiday pay, and statutory sick pay. It is not yet operational as of May 2026. The FWA will consolidate enforcement functions currently held by several separate bodies into a single point of accountability.
+              The Fair Work Agency (FWA) is a planned UK enforcement body established under the Employment Rights Bill 2024-25 to enforce workers' rights including minimum wage, holiday pay, and statutory sick pay. It is not yet operational as of 2026. The FWA will consolidate enforcement functions currently held by several separate bodies into a single point of accountability.
             </p>
             <div className="mt-6 rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
               <p className="text-sm text-ink">
-                The Fair Work Agency has been established in law under the Employment Rights Act 2025 but has not yet commenced operations. No launch date has been confirmed. Do not rely on FWA enforcement until the commencement order is issued.
+                The Fair Work Agency is provided for under the Employment Rights Bill 2024-25 but has not yet commenced operations. No launch date has been confirmed. Do not rely on FWA enforcement until statutory commencement orders are issued.
               </p>
             </div>
           </div>
@@ -202,7 +203,7 @@ export default function FairWorkAgencyGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">When will the Fair Work Agency launch?</h2>
             <p className="sc-body mb-4">
-              The Employment Rights Act 2025 received Royal Assent but no commencement order for the Fair Work Agency has been issued as of May 2026. The Government must issue a separate commencement order setting the launch date. Until that order is published, the FWA has no operational powers.
+              The Employment Rights Bill 2024-25 establishes the agency framework, but no statutory commencement order has been issued as of 2026. The Government must publish an official commencement order before the FWA has operational powers.
             </p>
             <p className="sc-body">
               Announcements about the FWA launch date are expected as 2026 progresses. If you are currently negotiating an exit or facing dismissal, you should read our guide on{' '}

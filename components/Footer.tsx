@@ -47,6 +47,7 @@ export default function Footer() {
               {[
                 { href: '/guides/', label: 'All guides' },
                 { href: '/guides/how-to-negotiate-a-settlement-agreement/', label: 'How to negotiate a settlement' },
+                { href: '/guides/compromise-agreement-calculator-uk/', label: 'Compromise Agreement Calculator' },
                 { href: '/guides/employer-recommended-solicitor/', label: "Do I have to use my employer's solicitor?" },
                 { href: '/guides/pressured-to-sign/', label: 'Pressured to sign quickly?' },
                 { href: '/how-it-works/', label: 'How it works' },
@@ -60,11 +61,13 @@ export default function Footer() {
 
           {/* For solicitors */}
           <div>
-            <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">For solicitors</h4>
+            <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Solicitors</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
+                { href: '/get-matched/', label: 'Find a solicitor' },
                 { href: '/for-solicitors/', label: 'Join our panel' },
                 { href: '/for-solicitors/#how-it-works', label: 'How it works for firms' },
+                { href: '/portal/', label: 'Partner portal' },
                 { href: '/for-solicitors/#contact', label: 'Contact us' },
               ].map(l => (
                 <li key={l.href}>

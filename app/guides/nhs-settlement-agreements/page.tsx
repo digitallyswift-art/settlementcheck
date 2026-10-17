@@ -389,7 +389,7 @@ export default function NhsSettlementAgreements() {
                 </div>
               </div>
               <p className="guide-body">
-                Your accrued pension benefits are protected by statute. A settlement agreement cannot forfeit the pension you have already built up. If you are offered a voluntary exit under MARS, early retirement buyout is generally not automatic unless explicitly negotiated.
+                Your accrued pension benefits are protected by statute. A settlement agreement cannot forfeit the pension you have already built up. If you are offered a voluntary exit under MARS, early retirement buyout is generally not automatic unless explicitly negotiated. You can check your baseline statutory redundancy entitlement using our <Link href="/redundancy-calculator/" className="underline hover:text-ink font-medium">redundancy pay calculator</Link>, or evaluate unfair selection using our <Link href="/unfair-dismissal-calculator/" className="underline hover:text-ink font-medium">unfair dismissal calculator</Link>.
               </p>
             </div>
 

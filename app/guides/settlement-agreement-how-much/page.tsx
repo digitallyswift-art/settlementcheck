@@ -500,6 +500,12 @@ export default function HowMuchGuidePage() {
               title="Related Guides & Tools"
               items={[
                 {
+                  href: '/guides/compromise-agreement-calculator-uk/',
+                  title: 'Compromise Agreement Calculator UK',
+                  description: 'Calculate your statutory redundancy and tax-free payout under April 2026 rates.',
+                  tag: 'Calculator Guide',
+                },
+                {
                   href: '/calculator/',
                   title: 'Settlement Agreement Calculator',
                   description: 'Calculate your estimated settlement payout and tax split in 60 seconds.',

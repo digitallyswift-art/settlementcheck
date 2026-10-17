@@ -1,0 +1,435 @@
+{
+  "runAt": "2026-10-17T10:46:08.489Z",
+  "dataSource": "Local Archive (settlementcheck.co.uk-Performance-on-Search-2026-10-09)",
+  "totalTrackedQueries": 295,
+  "totalImpressions": 9860,
+  "totalClicks": 179,
+  "topMovers": [
+    {
+      "query": "settlement agreement calculator",
+      "prevPos": 78.49,
+      "curPos": 20.7,
+      "change": 57.8,
+      "clicks": 12,
+      "impr": 788,
+      "ctr": 1.52
+    },
+    {
+      "query": "calculate settlement agreement",
+      "prevPos": 61.75,
+      "curPos": 26.14,
+      "change": 35.6,
+      "clicks": 1,
+      "impr": 680,
+      "ctr": 0.15
+    },
+    {
+      "query": "settlement agreement calculator uk",
+      "prevPos": 63.89,
+      "curPos": 16.18,
+      "change": 47.7,
+      "clicks": 15,
+      "impr": 587,
+      "ctr": 2.56
+    },
+    {
+      "query": "compromise agreement calculator",
+      "prevPos": 74.73,
+      "curPos": 15.12,
+      "change": 59.6,
+      "clicks": 0,
+      "impr": 506,
+      "ctr": 0
+    },
+    {
+      "query": "average settlement agreement amount uk",
+      "prevPos": 78,
+      "curPos": 40.1,
+      "change": 37.9,
+      "clicks": 0,
+      "impr": 450,
+      "ctr": 0
+    },
+    {
+      "query": "employment settlement agreement calculator uk",
+      "prevPos": 65.98,
+      "curPos": 13.61,
+      "change": 52.4,
+      "clicks": 0,
+      "impr": 404,
+      "ctr": 0
+    },
+    {
+      "query": "settlement calculator uk",
+      "prevPos": 67.14,
+      "curPos": 24.93,
+      "change": 42.2,
+      "clicks": 1,
+      "impr": 338,
+      "ctr": 0.3
+    },
+    {
+      "query": "settlement agreement how much",
+      "prevPos": 99,
+      "curPos": 34.41,
+      "change": 64.6,
+      "clicks": 0,
+      "impr": 277,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement calculator gov",
+      "prevPos": 99,
+      "curPos": 16.18,
+      "change": 82.8,
+      "clicks": 0,
+      "impr": 213,
+      "ctr": 0
+    },
+    {
+      "query": "settlement calculator",
+      "prevPos": 68.89,
+      "curPos": 61.06,
+      "change": 7.8,
+      "clicks": 0,
+      "impr": 208,
+      "ctr": 0
+    },
+    {
+      "query": "employment settlement agreement calculator",
+      "prevPos": 75.07,
+      "curPos": 13.74,
+      "change": 61.3,
+      "clicks": 1,
+      "impr": 156,
+      "ctr": 0.64
+    },
+    {
+      "query": "settlement agreement tax calculator uk",
+      "prevPos": 78,
+      "curPos": 19.24,
+      "change": 58.8,
+      "clicks": 2,
+      "impr": 148,
+      "ctr": 1.35
+    },
+    {
+      "query": "employment settlement calculator",
+      "prevPos": 99,
+      "curPos": 13.73,
+      "change": 85.3,
+      "clicks": 8,
+      "impr": 141,
+      "ctr": 5.67
+    },
+    {
+      "query": "employee settlement calculator",
+      "prevPos": 69.67,
+      "curPos": 8.27,
+      "change": 61.4,
+      "clicks": 3,
+      "impr": 124,
+      "ctr": 2.42
+    },
+    {
+      "query": "settlement agreement calculator acas",
+      "prevPos": 78.81,
+      "curPos": 33.04,
+      "change": 45.8,
+      "clicks": 0,
+      "impr": 116,
+      "ctr": 0
+    },
+    {
+      "query": "redundancy settlement agreement calculator",
+      "prevPos": 85.6,
+      "curPos": 34.2,
+      "change": 51.4,
+      "clicks": 0,
+      "impr": 110,
+      "ctr": 0
+    },
+    {
+      "query": "work settlement calculator",
+      "prevPos": 72,
+      "curPos": 11.2,
+      "change": 60.8,
+      "clicks": 1,
+      "impr": 108,
+      "ctr": 0.93
+    },
+    {
+      "query": "nhs settlement agreements",
+      "prevPos": 99,
+      "curPos": 45.83,
+      "change": 53.2,
+      "clicks": 0,
+      "impr": 99,
+      "ctr": 0
+    },
+    {
+      "query": "compromise agreement calculator uk",
+      "prevPos": 66.57,
+      "curPos": 11.9,
+      "change": 54.7,
+      "clicks": 0,
+      "impr": 79,
+      "ctr": 0
+    },
+    {
+      "query": "nhs settlement agreement",
+      "prevPos": 99,
+      "curPos": 43.46,
+      "change": 55.5,
+      "clicks": 0,
+      "impr": 78,
+      "ctr": 0
+    },
+    {
+      "query": "settlement calculator employment",
+      "prevPos": 99,
+      "curPos": 8.07,
+      "change": 90.9,
+      "clicks": 8,
+      "impr": 74,
+      "ctr": 10.81
+    },
+    {
+      "query": "settlement agreement amounts",
+      "prevPos": 99,
+      "curPos": 52.78,
+      "change": 46.2,
+      "clicks": 0,
+      "impr": 72,
+      "ctr": 0
+    },
+    {
+      "query": "harassment compensation calculator uk",
+      "prevPos": 99,
+      "curPos": 44.98,
+      "change": 54,
+      "clicks": 0,
+      "impr": 63,
+      "ctr": 0
+    },
+    {
+      "query": "free settlement agreement calculator",
+      "prevPos": 99,
+      "curPos": 5.77,
+      "change": 93.2,
+      "clicks": 7,
+      "impr": 60,
+      "ctr": 11.67
+    },
+    {
+      "query": "salary settlement",
+      "prevPos": 99,
+      "curPos": 18.54,
+      "change": 80.5,
+      "clicks": 0,
+      "impr": 50,
+      "ctr": 0
+    }
+  ],
+  "emergingKeywords": [
+    {
+      "query": "employment settlement calculator",
+      "impr": 141,
+      "pos": 13.73
+    },
+    {
+      "query": "acas settlement agreement calculator",
+      "impr": 38,
+      "pos": 25.45
+    },
+    {
+      "query": "settlement agreement how much",
+      "impr": 277,
+      "pos": 34.41
+    },
+    {
+      "query": "settlement agreement calculator gov",
+      "impr": 213,
+      "pos": 16.18
+    },
+    {
+      "query": "nhs settlement agreements",
+      "impr": 99,
+      "pos": 45.83
+    },
+    {
+      "query": "nhs settlement agreement",
+      "impr": 78,
+      "pos": 43.46
+    },
+    {
+      "query": "settlement agreement amounts",
+      "impr": 72,
+      "pos": 52.78
+    },
+    {
+      "query": "harassment compensation calculator uk",
+      "impr": 63,
+      "pos": 44.98
+    },
+    {
+      "query": "salary settlement",
+      "impr": 50,
+      "pos": 18.54
+    },
+    {
+      "query": "compensation calculator",
+      "impr": 32,
+      "pos": 73.19
+    }
+  ],
+  "aiOverviewCandidates": [
+    {
+      "query": "acas settlement agreement calculator",
+      "curPos": 25.45,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a settlement agreement with employer",
+      "curPos": 88.67,
+      "cited": false
+    },
+    {
+      "query": "how to calculate settlement amount employee",
+      "curPos": 1,
+      "cited": true
+    },
+    {
+      "query": "settlement agreement calculator acas",
+      "curPos": 33.04,
+      "cited": false
+    },
+    {
+      "query": "how to calculate a settlement agreement",
+      "curPos": 28.26,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a settlement agreement",
+      "curPos": 81.58,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate settlement agreement",
+      "curPos": 86.38,
+      "cited": false
+    },
+    {
+      "query": "how to ask for a settlement agreement",
+      "curPos": 83.67,
+      "cited": false
+    },
+    {
+      "query": "what is a reasonable settlement agreement uk",
+      "curPos": 2,
+      "cited": true
+    },
+    {
+      "query": "what is a settlement agreement",
+      "curPos": 3,
+      "cited": true
+    },
+    {
+      "query": "what is a reasonable settlement agreement payout. my location is united",
+      "curPos": 99,
+      "cited": false
+    },
+    {
+      "query": "how to calculate settlement amount",
+      "curPos": 32,
+      "cited": false
+    },
+    {
+      "query": "are they tax free",
+      "curPos": 2,
+      "cited": true
+    },
+    {
+      "query": "what is a reasonable settlement agreement",
+      "curPos": 2,
+      "cited": true
+    },
+    {
+      "query": "how to negotiate a settlement",
+      "curPos": 59,
+      "cited": false
+    }
+  ],
+  "autonomousActions": [
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement agreement calculator uk",
+      "rank": 16.18,
+      "impressions": 587,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "employment settlement calculator",
+      "rank": 13.73,
+      "impressions": 141,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement agreement tax calculator uk",
+      "rank": 19.24,
+      "impressions": 148,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "employment settlement agreement calculator",
+      "rank": 13.74,
+      "impressions": 156,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "work settlement calculator",
+      "rank": 11.2,
+      "impressions": 108,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "compromise agreement calculator",
+      "rank": 15.12,
+      "impressions": 506,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "employment settlement agreement calculator uk",
+      "rank": 13.61,
+      "impressions": 404,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement agreement calculator gov",
+      "rank": 16.18,
+      "impressions": 213,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "compromise agreement calculator uk",
+      "rank": 11.9,
+      "impressions": 79,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "salary settlement",
+      "rank": 18.54,
+      "impressions": 50,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    }
+  ]
+}

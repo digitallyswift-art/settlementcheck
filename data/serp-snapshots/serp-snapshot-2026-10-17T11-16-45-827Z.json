@@ -1,0 +1,372 @@
+{
+  "runAt": "2026-10-17T11:16:45.827Z",
+  "dataSource": "GSC_LIVE_API (Direct Service Account Connection)",
+  "totalTrackedQueries": 333,
+  "totalImpressions": 2542,
+  "totalClicks": 26,
+  "topMovers": [
+    {
+      "query": "settlement agreement calculator",
+      "prevPos": 78.49,
+      "curPos": 30.212290502793294,
+      "change": 48.3,
+      "clicks": 0,
+      "impr": 179,
+      "ctr": 0
+    },
+    {
+      "query": "calculate settlement agreement",
+      "prevPos": 61.75,
+      "curPos": 29.73076923076923,
+      "change": 32,
+      "clicks": 0,
+      "impr": 156,
+      "ctr": 0
+    },
+    {
+      "query": "compromise agreement calculator",
+      "prevPos": 74.73,
+      "curPos": 16.068702290076338,
+      "change": 58.7,
+      "clicks": 0,
+      "impr": 131,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement calculator uk",
+      "prevPos": 63.89,
+      "curPos": 23.221311475409838,
+      "change": 40.7,
+      "clicks": 5,
+      "impr": 122,
+      "ctr": 4.1
+    },
+    {
+      "query": "settlement calculator",
+      "prevPos": 68.89,
+      "curPos": 62.36708860759494,
+      "change": 6.5,
+      "clicks": 0,
+      "impr": 79,
+      "ctr": 0
+    },
+    {
+      "query": "employment settlement agreement calculator uk",
+      "prevPos": 65.98,
+      "curPos": 25.47761194029851,
+      "change": 40.5,
+      "clicks": 0,
+      "impr": 67,
+      "ctr": 0
+    },
+    {
+      "query": "settlement calculator uk",
+      "prevPos": 67.14,
+      "curPos": 47.36507936507937,
+      "change": 19.8,
+      "clicks": 0,
+      "impr": 63,
+      "ctr": 0
+    },
+    {
+      "query": "compensation calculator",
+      "prevPos": 99,
+      "curPos": 70.72222222222223,
+      "change": 28.3,
+      "clicks": 0,
+      "impr": 54,
+      "ctr": 0
+    },
+    {
+      "query": "nhs settlement agreement",
+      "prevPos": 99,
+      "curPos": 51.54,
+      "change": 47.5,
+      "clicks": 0,
+      "impr": 50,
+      "ctr": 0
+    },
+    {
+      "query": "acas settlement agreement calculator",
+      "prevPos": 99,
+      "curPos": 6.020833333333333,
+      "change": 93,
+      "clicks": 4,
+      "impr": 48,
+      "ctr": 8.33
+    },
+    {
+      "query": "settlement agreement calculator gov",
+      "prevPos": 99,
+      "curPos": 15.354166666666666,
+      "change": 83.6,
+      "clicks": 1,
+      "impr": 48,
+      "ctr": 2.08
+    },
+    {
+      "query": "nhs settlement agreements",
+      "prevPos": 99,
+      "curPos": 53.234042553191486,
+      "change": 45.8,
+      "clicks": 0,
+      "impr": 47,
+      "ctr": 0
+    },
+    {
+      "query": "average settlement agreement amount uk",
+      "prevPos": 78,
+      "curPos": 36.54347826086956,
+      "change": 41.5,
+      "clicks": 0,
+      "impr": 46,
+      "ctr": 0
+    },
+    {
+      "query": "employee settlement calculator",
+      "prevPos": 69.67,
+      "curPos": 4.085714285714285,
+      "change": 65.6,
+      "clicks": 0,
+      "impr": 35,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement how much",
+      "prevPos": 99,
+      "curPos": 33.371428571428574,
+      "change": 65.6,
+      "clicks": 0,
+      "impr": 35,
+      "ctr": 0
+    },
+    {
+      "query": "compromise agreement",
+      "prevPos": 99,
+      "curPos": 89.12121212121212,
+      "change": 9.9,
+      "clicks": 0,
+      "impr": 33,
+      "ctr": 0
+    },
+    {
+      "query": "employment settlement agreement calculator",
+      "prevPos": 75.07,
+      "curPos": 25.258064516129032,
+      "change": 49.8,
+      "clicks": 0,
+      "impr": 31,
+      "ctr": 0
+    },
+    {
+      "query": "how to negotiate a settlement agreement",
+      "prevPos": 99,
+      "curPos": 81.54838709677419,
+      "change": 17.5,
+      "clicks": 0,
+      "impr": 31,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement calculator acas",
+      "prevPos": 78.81,
+      "curPos": 20.580645161290324,
+      "change": 58.2,
+      "clicks": 0,
+      "impr": 31,
+      "ctr": 0
+    },
+    {
+      "query": "negotiate settlement agreement",
+      "prevPos": 99,
+      "curPos": 92.3103448275862,
+      "change": 6.7,
+      "clicks": 0,
+      "impr": 29,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement tax calculator uk",
+      "prevPos": 78,
+      "curPos": 28.96551724137931,
+      "change": 49,
+      "clicks": 0,
+      "impr": 29,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement negotiations",
+      "prevPos": 99,
+      "curPos": 87.92857142857143,
+      "change": 11.1,
+      "clicks": 0,
+      "impr": 28,
+      "ctr": 0
+    },
+    {
+      "query": "employment settlement calculator",
+      "prevPos": 99,
+      "curPos": 26.074074074074073,
+      "change": 72.9,
+      "clicks": 2,
+      "impr": 27,
+      "ctr": 7.41
+    },
+    {
+      "query": "work settlement calculator",
+      "prevPos": 72,
+      "curPos": 12.045454545454545,
+      "change": 60,
+      "clicks": 1,
+      "impr": 22,
+      "ctr": 4.55
+    },
+    {
+      "query": "redundancy settlement agreement calculator",
+      "prevPos": 85.6,
+      "curPos": 35.59090909090909,
+      "change": 50,
+      "clicks": 0,
+      "impr": 22,
+      "ctr": 0
+    }
+  ],
+  "emergingKeywords": [
+    {
+      "query": "employment settlement calculator",
+      "impr": 27,
+      "pos": 26.074074074074073
+    },
+    {
+      "query": "settlement agreement calculator gov",
+      "impr": 48,
+      "pos": 15.354166666666666
+    },
+    {
+      "query": "compensation calculator",
+      "impr": 54,
+      "pos": 70.72222222222223
+    },
+    {
+      "query": "compromise agreement",
+      "impr": 33,
+      "pos": 89.12121212121212
+    },
+    {
+      "query": "how to negotiate a settlement agreement",
+      "impr": 31,
+      "pos": 81.54838709677419
+    },
+    {
+      "query": "negotiate settlement agreement",
+      "impr": 29,
+      "pos": 92.3103448275862
+    },
+    {
+      "query": "nhs settlement agreement",
+      "impr": 50,
+      "pos": 51.54
+    },
+    {
+      "query": "nhs settlement agreements",
+      "impr": 47,
+      "pos": 53.234042553191486
+    },
+    {
+      "query": "settlement agreement how much",
+      "impr": 35,
+      "pos": 33.371428571428574
+    },
+    {
+      "query": "settlement agreement negotiations",
+      "impr": 28,
+      "pos": 87.92857142857143
+    }
+  ],
+  "aiOverviewCandidates": [
+    {
+      "query": "acas settlement agreement calculator",
+      "curPos": 6.020833333333333,
+      "cited": true
+    },
+    {
+      "query": "how to negotiate a settlement agreement with employer",
+      "curPos": 86.83333333333333,
+      "cited": false
+    },
+    {
+      "query": "acas redundancy calculator",
+      "curPos": 69.5,
+      "cited": false
+    },
+    {
+      "query": "acas unfair dismissal compensation",
+      "curPos": 94,
+      "cited": false
+    },
+    {
+      "query": "how to ask for a settlement agreement",
+      "curPos": 84.66666666666667,
+      "cited": false
+    },
+    {
+      "query": "how to calculate a settlement agreement",
+      "curPos": 29.6,
+      "cited": false
+    },
+    {
+      "query": "how to calculate redundancy pay",
+      "curPos": 89,
+      "cited": false
+    },
+    {
+      "query": "how to calculate settlement amount employee",
+      "curPos": 1,
+      "cited": true
+    },
+    {
+      "query": "how to negotiate a better settlement agreement",
+      "curPos": 91,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a commercial settlement agreement",
+      "curPos": 85.33333333333333,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a settlement",
+      "curPos": 59,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a settlement agreement",
+      "curPos": 81.54838709677419,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a settlement agreement with an employee",
+      "curPos": 100,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate settlement",
+      "curPos": 75.5,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate settlement agreement",
+      "curPos": 87.38888888888889,
+      "cited": false
+    }
+  ],
+  "autonomousActions": [
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "compromise agreement calculator",
+      "rank": 16.068702290076338,
+      "impressions": 131,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    }
+  ]
+}

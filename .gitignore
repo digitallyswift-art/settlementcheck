@@ -16,6 +16,9 @@
 # misc
 .DS_Store
 *.pem
+*credentials*.json
+*service-account*.json
+gsc-*.json
 
 # debug
 npm-debug.log*

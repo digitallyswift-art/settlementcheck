@@ -4,20 +4,26 @@ import { getGeneralStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
+  title: 'Settlement Agreement Calculator UK (2026) | Free Employee Payout Tool',
   description:
-    'Calculate your settlement agreement payout in 60 seconds. Free UK calculator based on April 2026 statutory rates (£751 cap). Check your offer with zero email.',
+    'Calculate your employee settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Zero email required.',
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'Settlement Agreement Calculator UK 2026 | SettlementCheck',
+    title: 'Settlement Agreement Calculator UK (2026) | Free Employee Payout Tool',
     description:
-      'Calculate your settlement agreement payout in 60 seconds. Free UK calculator based on April 2026 statutory rates (£751 cap). Check your offer with zero email.',
+      'Calculate your employee settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Zero email required.',
     url: '/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Settlement Agreement Calculator UK (2026) | Free Employee Payout Tool',
+    description:
+      'Calculate your employee settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Zero email required.',
   },
 }
 
@@ -216,6 +222,7 @@ export default function HomePage() {
         lead="Calculate whether your employment settlement offer is fair in 60 seconds. Our free UK calculator checks statutory redundancy, notice pay, and tax-free compensation under April 2026 rates (£751 cap). Whether your paperwork says settlement agreement or compromise agreement, find out where you stand for free."
         statutoryRows={statutoryRows}
         pageLinks={[
+          { href: '/guides/compromise-agreement-calculator-uk/', label: 'Compromise Agreement Calculator UK' },
           { href: '/guides/settlement-agreement-how-much/', label: 'How Much Should a Settlement Agreement Be?' },
           { href: '/calculator/', label: 'Settlement Agreement Calculator' },
           { href: '/redundancy-calculator/', label: 'Redundancy Pay Calculator' },

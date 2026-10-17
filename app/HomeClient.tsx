@@ -22,7 +22,15 @@ const STEPS = [
   {
     n: '02',
     t: 'Match with an independent solicitor',
-    d: 'Your employer covers the legal advice fee under s.203(3) of the Employment Rights Act 1996. We connect you with an SRA-regulated specialist to review your terms and negotiate an uplift.',
+    d: (
+      <>
+        Your employer covers the legal advice fee under s.203(3) of the Employment Rights Act 1996.{' '}
+        <Link href="/get-matched/" className="underline hover:text-coral transition-colors font-medium">
+          Get matched with an SRA-regulated specialist
+        </Link>{' '}
+        to review your terms and negotiate an uplift.
+      </>
+    ),
   },
   {
     n: '03',
@@ -35,6 +43,10 @@ const TRUST: { t: string; d: React.ReactNode }[] = [
   {
     t: 'Genuinely independent',
     d: 'Every other settlement calculator online was built by a firm that wants your case. This one was not. There is no firm behind this result. What you see is what the numbers say.',
+  },
+  {
+    t: 'Why is there no official GOV.UK or ACAS settlement calculator?',
+    d: 'GOV.UK only provides a basic statutory redundancy calculator. ACAS facilitates conciliation without estimating individual financial settlements. SettlementCheck fills this gap as the independent UK standard calculator applying official April 2026 statutory rates (£751 weekly cap) and ITEPA 2003 tax rules.',
   },
   {
     t: 'Your employer pays',
@@ -86,7 +98,7 @@ function Check() {
 
 export interface StatutoryRow { label: string; y2425: string; y2526: string }
 export interface PageLink { href: string; label: string }
-export interface StepItem { n: string; t: string; d: string }
+export interface StepItem { n: string; t: string; d: React.ReactNode }
 
 export interface HomeProps {
   title?: React.ReactNode;
@@ -139,7 +151,14 @@ export default function HomeClient({
 
                 {/* SEO keyword eyebrow — carries primary keyword as visible text, H1 carries the core search intent */}
                 <p className="sc-eyebrow" style={{ letterSpacing: '0.10em' }}>
-                  Independent UK Employment Settlement & Compromise Calculator
+                  Independent UK Employment Settlement &amp;{' '}
+                  <Link
+                    href="/guides/compromise-agreement-calculator-uk/"
+                    className="hover:text-coral underline underline-offset-2 transition-colors"
+                    title="Compromise Agreement Calculator UK"
+                  >
+                    Compromise Calculator
+                  </Link>
                 </p>
 
                 <h1 className="sc-h1">
@@ -493,7 +512,7 @@ export default function HomeClient({
                 <h2 className="sc-section-h2">What people ask before they start.</h2>
                 <p className="sc-lead">What employees want to know before clicking &ldquo;calculate.&rdquo;</p>
 
-                {/* Answer-First Featured Snippet Callout */}
+                {/* Answer-First Featured Snippet Callout: Baseline Amount */}
                 <div
                   itemScope
                   itemType="https://schema.org/Question"
@@ -505,6 +524,22 @@ export default function HomeClient({
                   <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer" className="mt-2.5">
                     <p itemProp="text" className="sc-body text-[14px] leading-relaxed">
                       A typical UK settlement agreement pays between one and three months of gross salary, plus notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with the first £30,000 paid tax-free.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Answer-First Featured Snippet Callout: GOV.UK & ACAS Comparison */}
+                <div
+                  itemScope
+                  itemType="https://schema.org/Question"
+                  className="p-5 rounded-lg border border-rule bg-card"
+                >
+                  <h3 itemProp="name" className="text-[16px] font-semibold text-ink leading-snug">
+                    Does GOV.UK or ACAS offer an official settlement agreement calculator?
+                  </h3>
+                  <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer" className="mt-2.5">
+                    <p itemProp="text" className="sc-body text-[14px] leading-relaxed">
+                      No. Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. GOV.UK only calculates statutory redundancy pay (£751 weekly cap), while ACAS provides conciliation without estimating payouts. SettlementCheck provides the independent UK standard calculator combining statutory redundancy, notice pay, and tax exemptions under ITEPA 2003.
                     </p>
                   </div>
                 </div>
@@ -577,6 +612,35 @@ export default function HomeClient({
                 </a>{' '}
                 and Employment Rights (Increase of Limits) Order (Northern Ireland) 2026 (SR 2026/57), in force from 6 April 2026. Last reviewed: May 2026.
               </p>
+
+              {/* Explore statutory tools strip */}
+              <div className="mt-8 pt-6 border-t border-rule flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <span className="text-[13px] font-semibold text-ink uppercase tracking-wider">
+                  Explore statutory compensation tools:
+                </span>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Link
+                    href="/redundancy-calculator/"
+                    className="text-[13px] text-coral hover:underline font-medium"
+                  >
+                    Redundancy Calculator →
+                  </Link>
+                  <span className="text-muted/40 hidden sm:inline">·</span>
+                  <Link
+                    href="/unfair-dismissal-calculator/"
+                    className="text-[13px] text-coral hover:underline font-medium"
+                  >
+                    Unfair Dismissal Calculator →
+                  </Link>
+                  <span className="text-muted/40 hidden sm:inline">·</span>
+                  <Link
+                    href="/get-matched/"
+                    className="text-[13px] text-coral hover:underline font-medium"
+                  >
+                    Find a Solicitor →
+                  </Link>
+                </div>
+              </div>
             </div>
           </section>
         )}

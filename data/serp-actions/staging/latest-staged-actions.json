@@ -1,0 +1,560 @@
+[
+  {
+    "id": "pkg_actuator_1792238658090_1",
+    "query": "settlement agreement calculator uk",
+    "priority": "CRITICAL",
+    "actionType": "INTERNAL_LINK_BOOST",
+    "seoTechnicalBrief": {
+      "query": "settlement agreement calculator uk",
+      "currentMetrics": {
+        "impressions": 587,
+        "clicks": 15,
+        "position": 16.18,
+        "ctr": 2.56
+      },
+      "searchIntent": "TRANSACTIONAL_CALCULATOR",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
+      "characterBudgets": {
+        "titleMin": 50,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "FAQPage",
+        "primarySubject": "settlement agreement calculator uk",
+        "targetFaqQuestion": "How does settlement agreement calculator uk work under UK employment law?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/how-to-negotiate-a-settlement-agreement/"
+        ],
+        "destinationRoute": "/calculator/",
+        "exactAnchorText": "settlement agreement calculator uk"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Settlement Agreement Calculator UK (2026) | SettlementCheck",
+      "calibratedMetaDescription": "Check your settlement agreement calculator uk payout under 2026 UK statutory rates (£751/wk cap). Free check. Your employer covers your legal fee.",
+      "answerFirstFaq": {
+        "question": "How does settlement agreement calculator uk work under UK employment law?",
+        "answer": "Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.",
+        "characterCount": 269
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
+        "targetRoute": "/calculator/",
+        "anchorText": "settlement agreement calculator uk",
+        "surroundingText": "If you have received an offer, you can check where you stand using our [settlement agreement calculator uk](/calculator/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 95,
+      "isLowEffort": false,
+      "burstinessScore": 82,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Staged optimization for settlement agreement calculator uk",
+    "status": "VALIDATED",
+    "timestamp": "2026-10-17T12:04:18.091Z"
+  },
+  {
+    "id": "pkg_actuator_1792238658092_2",
+    "query": "compromise agreement calculator",
+    "priority": "CRITICAL",
+    "actionType": "INTERNAL_LINK_BOOST",
+    "seoTechnicalBrief": {
+      "query": "compromise agreement calculator",
+      "currentMetrics": {
+        "impressions": 506,
+        "clicks": 0,
+        "position": 15.12,
+        "ctr": 0
+      },
+      "searchIntent": "COMPROMISE_AGREEMENT_LEGACY",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/compromise-agreement-calculator-uk/",
+      "characterBudgets": {
+        "titleMin": 50,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "FAQPage",
+        "primarySubject": "compromise agreement calculator",
+        "targetFaqQuestion": "How does compromise agreement calculator work under UK employment law?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/how-to-negotiate-a-settlement-agreement/"
+        ],
+        "destinationRoute": "/guides/compromise-agreement-calculator-uk/",
+        "exactAnchorText": "compromise agreement calculator"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Compromise Agreement Calculator UK (2026) | SettlementCheck",
+      "calibratedMetaDescription": "Check your compromise agreement calculator payout under 2026 UK statutory rates (£751/wk cap). Free check. Your employer covers your legal fee.",
+      "answerFirstFaq": {
+        "question": "How does compromise agreement calculator work under UK employment law?",
+        "answer": "Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.",
+        "characterCount": 269
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
+        "targetRoute": "/guides/compromise-agreement-calculator-uk/",
+        "anchorText": "compromise agreement calculator",
+        "surroundingText": "If you have received an offer, you can check where you stand using our [compromise agreement calculator](/guides/compromise-agreement-calculator-uk/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 95,
+      "isLowEffort": false,
+      "burstinessScore": 82,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Staged optimization for compromise agreement calculator",
+    "status": "VALIDATED",
+    "timestamp": "2026-10-17T12:04:18.092Z"
+  },
+  {
+    "id": "pkg_actuator_1792238658092_3",
+    "query": "employment settlement agreement calculator uk",
+    "priority": "CRITICAL",
+    "actionType": "INTERNAL_LINK_BOOST",
+    "seoTechnicalBrief": {
+      "query": "employment settlement agreement calculator uk",
+      "currentMetrics": {
+        "impressions": 404,
+        "clicks": 0,
+        "position": 13.61,
+        "ctr": 0
+      },
+      "searchIntent": "TRANSACTIONAL_CALCULATOR",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
+      "characterBudgets": {
+        "titleMin": 50,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "FAQPage",
+        "primarySubject": "employment settlement agreement calculator uk",
+        "targetFaqQuestion": "How does employment settlement agreement calculator uk work under UK employment law?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/how-to-negotiate-a-settlement-agreement/"
+        ],
+        "destinationRoute": "/calculator/",
+        "exactAnchorText": "employment settlement agreement calculator uk"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Employment Settlement Agreement Calculator | SettlementCheck",
+      "calibratedMetaDescription": "Check employment settlement agreement calculator uk payout under 2026 UK rates (£751/wk cap). Free check. Your employer covers your legal fee.",
+      "answerFirstFaq": {
+        "question": "How does employment settlement agreement calculator uk work under UK employment law?",
+        "answer": "Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.",
+        "characterCount": 269
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
+        "targetRoute": "/calculator/",
+        "anchorText": "employment settlement agreement calculator uk",
+        "surroundingText": "If you have received an offer, you can check where you stand using our [employment settlement agreement calculator uk](/calculator/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 95,
+      "isLowEffort": false,
+      "burstinessScore": 82,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Staged optimization for employment settlement agreement calculator uk",
+    "status": "VALIDATED",
+    "timestamp": "2026-10-17T12:04:18.092Z"
+  },
+  {
+    "id": "pkg_actuator_1792238658092_4",
+    "query": "settlement agreement calculator gov",
+    "priority": "CRITICAL",
+    "actionType": "INTERNAL_LINK_BOOST",
+    "seoTechnicalBrief": {
+      "query": "settlement agreement calculator gov",
+      "currentMetrics": {
+        "impressions": 213,
+        "clicks": 0,
+        "position": 16.18,
+        "ctr": 0
+      },
+      "searchIntent": "TRANSACTIONAL_CALCULATOR",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
+      "characterBudgets": {
+        "titleMin": 50,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "FAQPage",
+        "primarySubject": "settlement agreement calculator gov",
+        "targetFaqQuestion": "How does settlement agreement calculator gov work under UK employment law?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/how-to-negotiate-a-settlement-agreement/"
+        ],
+        "destinationRoute": "/calculator/",
+        "exactAnchorText": "settlement agreement calculator gov"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Settlement Agreement Calculator Gov 2026 | SettlementCheck",
+      "calibratedMetaDescription": "Check your settlement agreement calculator gov payout under 2026 UK statutory rates (£751/wk cap). Free check. Your employer covers your legal fee.",
+      "answerFirstFaq": {
+        "question": "How does settlement agreement calculator gov work under UK employment law?",
+        "answer": "Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.",
+        "characterCount": 269
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
+        "targetRoute": "/calculator/",
+        "anchorText": "settlement agreement calculator gov",
+        "surroundingText": "If you have received an offer, you can check where you stand using our [settlement agreement calculator gov](/calculator/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 95,
+      "isLowEffort": false,
+      "burstinessScore": 82,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Staged optimization for settlement agreement calculator gov",
+    "status": "VALIDATED",
+    "timestamp": "2026-10-17T12:04:18.092Z"
+  },
+  {
+    "id": "pkg_actuator_1792238658092_5",
+    "query": "employment settlement agreement calculator",
+    "priority": "CRITICAL",
+    "actionType": "INTERNAL_LINK_BOOST",
+    "seoTechnicalBrief": {
+      "query": "employment settlement agreement calculator",
+      "currentMetrics": {
+        "impressions": 156,
+        "clicks": 1,
+        "position": 13.74,
+        "ctr": 0.64
+      },
+      "searchIntent": "TRANSACTIONAL_CALCULATOR",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
+      "characterBudgets": {
+        "titleMin": 50,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "FAQPage",
+        "primarySubject": "employment settlement agreement calculator",
+        "targetFaqQuestion": "How does employment settlement agreement calculator work under UK employment law?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/how-to-negotiate-a-settlement-agreement/"
+        ],
+        "destinationRoute": "/calculator/",
+        "exactAnchorText": "employment settlement agreement calculator"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Employment Settlement Agreement Calculator | SettlementCheck",
+      "calibratedMetaDescription": "Check your employment settlement agreement calculator payout under 2026 UK statutory rates (£751/wk cap). Free check. Your employer covers your legal fee.",
+      "answerFirstFaq": {
+        "question": "How does employment settlement agreement calculator work under UK employment law?",
+        "answer": "Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.",
+        "characterCount": 269
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
+        "targetRoute": "/calculator/",
+        "anchorText": "employment settlement agreement calculator",
+        "surroundingText": "If you have received an offer, you can check where you stand using our [employment settlement agreement calculator](/calculator/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 95,
+      "isLowEffort": false,
+      "burstinessScore": 82,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Staged optimization for employment settlement agreement calculator",
+    "status": "VALIDATED",
+    "timestamp": "2026-10-17T12:04:18.092Z"
+  },
+  {
+    "id": "pkg_actuator_1792238658092_6",
+    "query": "settlement agreement tax calculator uk",
+    "priority": "CRITICAL",
+    "actionType": "INTERNAL_LINK_BOOST",
+    "seoTechnicalBrief": {
+      "query": "settlement agreement tax calculator uk",
+      "currentMetrics": {
+        "impressions": 148,
+        "clicks": 2,
+        "position": 19.24,
+        "ctr": 1.35
+      },
+      "searchIntent": "TAX_STATUTORY_EXEMPTION",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/settlement-agreement-tax-calculator-uk/",
+      "characterBudgets": {
+        "titleMin": 50,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "FAQPage",
+        "primarySubject": "settlement agreement tax calculator uk",
+        "targetFaqQuestion": "How does settlement agreement tax calculator uk work under UK employment law?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/how-to-negotiate-a-settlement-agreement/"
+        ],
+        "destinationRoute": "/guides/settlement-agreement-tax-calculator-uk/",
+        "exactAnchorText": "settlement agreement tax calculator uk"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Settlement Agreement Tax Calculator 2026 | SettlementCheck",
+      "calibratedMetaDescription": "Check your settlement agreement tax calculator uk payout under 2026 UK statutory rates (£751/wk cap). Free check. Your employer covers your legal fee.",
+      "answerFirstFaq": {
+        "question": "How does settlement agreement tax calculator uk work under UK employment law?",
+        "answer": "Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.",
+        "characterCount": 269
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
+        "targetRoute": "/guides/settlement-agreement-tax-calculator-uk/",
+        "anchorText": "settlement agreement tax calculator uk",
+        "surroundingText": "If you have received an offer, you can check where you stand using our [settlement agreement tax calculator uk](/guides/settlement-agreement-tax-calculator-uk/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 95,
+      "isLowEffort": false,
+      "burstinessScore": 82,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Staged optimization for settlement agreement tax calculator uk",
+    "status": "VALIDATED",
+    "timestamp": "2026-10-17T12:04:18.092Z"
+  }
+]
