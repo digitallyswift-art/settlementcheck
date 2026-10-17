@@ -3,10 +3,6 @@
     {
       "path": "/api/cron/serp-sentinel",
       "schedule": "0 3 * * *"
-    },
-    {
-      "path": "/api/cron/sla-watchdog",
-      "schedule": "*/15 * * * *"
     }
   ]
 }
