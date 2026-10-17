@@ -121,9 +121,14 @@ async function runActuator() {
       .slice(0, 6);
 
     const packages = opportunities.map((opp, idx) => {
-      const intent = (opp.query.includes('compromise') ? 'COMPROMISE_AGREEMENT_LEGACY' :
-                     opp.query.includes('tax') ? 'TAX_STATUTORY_EXEMPTION' :
-                     opp.query.includes('calculator') ? 'TRANSACTIONAL_CALCULATOR' : 'GENERAL_SETTLEMENT');
+      const isTax = opp.query.includes('tax') || opp.query.includes('pilon');
+      const isCompromise = opp.query.includes('compromise');
+      const isGov = opp.query.includes('gov') || opp.query.includes('acas');
+
+      const intent = isCompromise ? 'COMPROMISE_AGREEMENT_LEGACY' :
+                     isTax ? 'TAX_STATUTORY_EXEMPTION' :
+                     isGov ? 'GOV_ACAS_BENCHMARK' :
+                     opp.query.includes('calculator') ? 'TRANSACTIONAL_CALCULATOR' : 'GENERAL_SETTLEMENT';
       
       const dest = intent === 'COMPROMISE_AGREEMENT_LEGACY' ? '/guides/compromise-agreement-calculator-uk/' :
                    intent === 'TAX_STATUTORY_EXEMPTION' ? '/guides/settlement-agreement-tax-calculator-uk/' : '/calculator/';
@@ -135,17 +140,34 @@ async function runActuator() {
       if (title.length > 60) title = `${cleanQ} | SettlementCheck`;
       if (title.length > 60) title = `${cleanQ.slice(0, 38)} | SettlementCheck`;
 
-      // Calibrated meta with complete sentences
-      let meta = `Check your ${opp.query.toLowerCase()} payout under 2026 UK statutory rates (£751/wk cap). Free check. Your employer covers your legal fee.`;
-      if (meta.length > 155) {
-        meta = `Check ${opp.query.toLowerCase()} payout under 2026 UK rates (£751/wk cap). Free check. Your employer covers your legal fee.`;
-      }
-      if (meta.length < 140) {
-        meta = `Check your ${opp.query.toLowerCase()} entitlement under 2026 UK statutory rates (£751/wk cap). Free check in 2 mins. Your employer covers your legal fee.`;
+      // Intent-aware calibrated meta with natural British English and complete sentences
+      let meta = '';
+      if (isTax) {
+        meta = 'Calculate tax on your UK settlement agreement. See your £30,000 statutory tax exemption (ITEPA 2003). Free check. Your employer covers your legal fee.';
+      } else if (isCompromise) {
+        meta = 'Calculate your compromise agreement payout under 2026 UK statutory rates (£751/wk cap). Free, confidential check. Your employer covers your legal fee.';
+      } else if (isGov) {
+        meta = 'Calculate your settlement payout against 2026 UK government statutory rates (£751/wk cap). Free check in 2 mins. Your employer covers your legal fee.';
+      } else {
+        meta = 'Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. Your employer covers your legal fee.';
       }
 
-      const faqQ = `How does ${opp.query} work under UK employment law?`;
-      const faqA = `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.`;
+      // Intent-aware Answer-First FAQ
+      let faqQ = '';
+      let faqA = '';
+      if (isTax) {
+        faqQ = 'How is a settlement agreement taxed under UK employment law?';
+        faqA = 'Under Section 403 of ITEPA 2003, genuine compensation payments up to £30,000 are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON) remain subject to normal income tax and National Insurance. Your employer covers the cost of your independent legal review.';
+      } else if (isCompromise) {
+        faqQ = 'What is a compromise agreement under UK employment law?';
+        faqA = 'A compromise agreement (now officially called a settlement agreement) is a legally binding contract waiving employment tribunal claims in return for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, with genuine compensation up to £30,000 being tax-free. Your employer covers your independent solicitor fee.';
+      } else if (isGov) {
+        faqQ = 'Does the UK government offer an official settlement agreement calculator?';
+        faqA = 'The UK government does not provide a settlement agreement calculator, only basic statutory redundancy tools. SettlementCheck calculates your complete payout against official 2026 statutory rates (£751 per week cap under ERA 1996), while genuine compensation up to £30,000 is tax-free. Your employer covers your legal fee.';
+      } else {
+        faqQ = 'How is a settlement agreement payout calculated under UK employment law?';
+        faqA = 'Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.';
+      }
 
       const linkSnippet = `If you have received an offer, you can check where you stand using our [${opp.query}](${dest}). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996.`;
 

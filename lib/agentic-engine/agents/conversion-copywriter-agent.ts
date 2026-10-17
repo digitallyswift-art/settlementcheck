@@ -83,17 +83,48 @@ export class ConversionCopywriterAgent {
   }
 
   /**
-   * Formats a calibrated Meta Description (strictly 140-155 chars) with intact sentences
+   * Formats a calibrated Meta Description (strictly 140-155 chars) with natural English, complete sentences, and correct statutory citations
    */
-  public static craftCalibratedMetaDescription(query: string, statutoryCap: number): string {
-    const cleanQ = query.toLowerCase().trim();
+  public static craftCalibratedMetaDescription(
+    query: string,
+    statutoryCap: number = 751,
+    taxFreeThreshold: number = 30000,
+    intent?: string
+  ): string {
+    const q = query.toLowerCase().trim();
+    const isTax = intent === 'TAX_STATUTORY_EXEMPTION' || /\btax\b/i.test(q) || /\bpilon\b/i.test(q);
+    const isCompromise = intent === 'COMPROMISE_AGREEMENT_LEGACY' || /compromise/i.test(q);
+    const isGov = intent === 'GOV_ACAS_BENCHMARK' || /\bgov\b/i.test(q) || /\bacas\b/i.test(q);
 
-    const candidates = [
-      `Calculate your ${cleanQ} entitlement under April 2026 statutory rates (£${statutoryCap}/wk cap). Free check in 2 mins. Your employer covers your legal fee.`,
-      `Check your ${cleanQ} payout under 2026 UK statutory rates (£${statutoryCap}/wk cap). Free, confidential check. Your employer covers your legal fees.`,
-      `Check your ${cleanQ} payout under 2026 UK rates (£${statutoryCap}/wk cap). Free 2-minute statutory check. Your employer covers your legal fee.`,
-      `Check your ${cleanQ} entitlement under 2026 UK statutory rates (£${statutoryCap}/wk cap). Free check. Your employer covers your legal fee.`,
-    ];
+    let candidates: string[] = [];
+
+    if (isTax) {
+      candidates = [
+        `Calculate tax on your UK settlement agreement. See your £${taxFreeThreshold.toLocaleString('en-GB')} statutory tax exemption (ITEPA 2003). Free check. Your employer covers your legal fee.`,
+        `Calculate how much tax you will pay on your UK settlement agreement. Free 2026 tax calculator (£${taxFreeThreshold.toLocaleString('en-GB')} exemption). Your employer covers your legal fee.`,
+        `Check tax on your UK settlement agreement under 2026 statutory rates (£${taxFreeThreshold.toLocaleString('en-GB')} tax-free exemption). Free check. Your employer covers your legal fee.`,
+        `Calculate tax on your settlement agreement under UK law (£${taxFreeThreshold.toLocaleString('en-GB')} tax-free threshold). Free check. Your employer covers your legal fee.`,
+      ];
+    } else if (isCompromise) {
+      candidates = [
+        `Calculate your compromise agreement payout under 2026 UK statutory rates (£${statutoryCap}/wk cap). Free, confidential check. Your employer covers your legal fee.`,
+        `Check your compromise agreement payout against 2026 UK statutory rates (£${statutoryCap}/wk cap). Free 2-minute check. Your employer covers your legal fee.`,
+        `Calculate your compromise agreement payout under 2026 UK statutory rates (£${statutoryCap}/wk cap). Free check. Your employer covers your legal fee.`,
+      ];
+    } else if (isGov) {
+      candidates = [
+        `Calculate your settlement payout against 2026 UK government statutory rates (£${statutoryCap}/wk cap). Free check in 2 mins. Your employer covers your legal fee.`,
+        `Check your settlement agreement payout against official 2026 UK statutory rates (£${statutoryCap}/wk cap). Free check. Your employer covers your legal fee.`,
+        `Compare your settlement offer to 2026 UK government statutory redundancy rates (£${statutoryCap}/wk cap). Free check. Your employer covers your legal fee.`,
+      ];
+    } else {
+      // General & transactional settlement calculator queries
+      candidates = [
+        `Calculate your UK settlement agreement payout under 2026 statutory rates (£${statutoryCap}/wk cap). Free 2-minute check. Your employer covers your legal fee.`,
+        `Calculate your settlement agreement payout under 2026 UK statutory rates (£${statutoryCap}/wk cap). Free, confidential check. Your employer covers your legal fee.`,
+        `Check your settlement agreement payout against 2026 UK statutory rates (£${statutoryCap}/wk cap). Free online check. Your employer covers your legal fee.`,
+      ];
+    }
 
     for (const cand of candidates) {
       const sanitized = this.sanitizeCopy(cand);
@@ -102,15 +133,52 @@ export class ConversionCopywriterAgent {
       }
     }
 
-    // Precise padding/trimming guaranteeing complete sentence
-    let result = `Check your ${cleanQ} payout under 2026 UK statutory rates (£${statutoryCap}/wk cap). Free check. Your employer covers your legal fees.`;
-    result = this.sanitizeCopy(result);
+    const fallback = isTax
+      ? `Calculate tax on your UK settlement agreement under 2026 statutory rates (£${taxFreeThreshold.toLocaleString('en-GB')} tax-free exemption). Free check. Your employer covers your legal fee.`
+      : `Calculate your UK settlement agreement payout under 2026 statutory rates (£${statutoryCap}/wk cap). Free 2-minute check. Your employer covers your legal fee.`;
 
-    if (result.length > 155) {
-      result = `Check ${cleanQ} payout under 2026 UK statutory rates (£${statutoryCap}/wk cap). Free check. Your employer covers your legal fees.`;
+    return this.sanitizeCopy(fallback);
+  }
+
+  /**
+   * Crafts an Answer-First FAQ question and answer aligned with the query's legal domain
+   */
+  public static craftAnswerFirstFaq(
+    query: string,
+    intent?: string,
+    weeklyCap: number = 751,
+    taxFreeThreshold: number = 30000
+  ): { question: string; answer: string } {
+    const q = query.toLowerCase().trim();
+    const isTax = intent === 'TAX_STATUTORY_EXEMPTION' || /\btax\b/i.test(q) || /\bpilon\b/i.test(q);
+    const isCompromise = intent === 'COMPROMISE_AGREEMENT_LEGACY' || /compromise/i.test(q);
+    const isGov = intent === 'GOV_ACAS_BENCHMARK' || /\bgov\b/i.test(q) || /\bacas\b/i.test(q);
+
+    if (isTax) {
+      return {
+        question: 'How is a settlement agreement taxed under UK employment law?',
+        answer: `Under Section 403 of ITEPA 2003, genuine compensation payments up to £${taxFreeThreshold.toLocaleString('en-GB')} are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON) remain subject to normal income tax and National Insurance. Your employer covers the cost of your independent legal review.`,
+      };
     }
 
-    return result.slice(0, 155);
+    if (isCompromise) {
+      return {
+        question: 'What is a compromise agreement under UK employment law?',
+        answer: `A compromise agreement (now officially called a settlement agreement) is a legally binding contract waiving employment tribunal claims in return for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, with genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} being tax-free. Your employer covers your independent solicitor fee.`,
+      };
+    }
+
+    if (isGov) {
+      return {
+        question: 'Does the UK government offer an official settlement agreement calculator?',
+        answer: `The UK government does not provide a settlement agreement calculator, only basic statutory redundancy tools. SettlementCheck calculates your complete payout against official 2026 statutory rates (£${weeklyCap} per week cap under ERA 1996), while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free. Your employer covers your legal fee.`,
+      };
+    }
+
+    return {
+      question: 'How is a settlement agreement payout calculated under UK employment law?',
+      answer: `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.`,
+    };
   }
 
   /**
@@ -121,14 +189,16 @@ export class ConversionCopywriterAgent {
     const weeklyCap = brief.statutoryInvariants.weeklyCapGB;
     const taxFree = brief.statutoryInvariants.taxFreeThreshold;
     const dest = brief.internalLinkGraph.destinationRoute;
+    const intent = brief.searchIntent;
     const sourceRoute = brief.internalLinkGraph.sourceRoutes[0] || '/guides/how-to-negotiate-a-settlement-agreement/';
 
     // Deterministic baselines
     let title = this.craftCalibratedTitle(q);
-    let metaDesc = this.craftCalibratedMetaDescription(q, weeklyCap);
+    let metaDesc = this.craftCalibratedMetaDescription(q, weeklyCap, taxFree, intent);
 
-    let faqQuestion = brief.schemaSpecification.targetFaqQuestion;
-    let faqAnswer = `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, while genuine compensation up to £${taxFree.toLocaleString('en-GB')} is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.`;
+    const defaultFaq = this.craftAnswerFirstFaq(q, intent, weeklyCap, taxFree);
+    let faqQuestion = defaultFaq.question;
+    let faqAnswer = defaultFaq.answer;
 
     let contextualSnippet = `If you have received an offer, you can check where you stand using our [${q}](${dest}). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996.`;
 
