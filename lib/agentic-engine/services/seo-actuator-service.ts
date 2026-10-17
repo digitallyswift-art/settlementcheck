@@ -35,6 +35,7 @@ export interface AppliedSeoRecord {
 
 export class SeoActuatorService {
   private static readonly APPLIED_DISK_PATH = path.resolve('data/serp-actions/applied-actions.json');
+  private static readonly TMP_APPLIED_PATH = '/tmp/applied-actions.json';
   private static readonly STAGED_DISK_PATH = path.resolve('data/serp-actions/staging/latest-staged-actions.json');
 
   /**
@@ -85,18 +86,21 @@ export class SeoActuatorService {
     }
 
     // 2. Check local disk applied actions
-    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
-      try {
-        const content = fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8');
-        const appliedList: AppliedSeoRecord[] = JSON.parse(content);
-        const match = appliedList.find(
-          a => a.targetCanonicalUrl === fullCanonical || this.normalizePath(a.targetCanonicalUrl.replace('https://settlementcheck.co.uk', '')) === norm
-        );
-        if (match && match.status === 'APPLIED') {
-          return match;
+    const checkPaths = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
+    for (const diskPath of checkPaths) {
+      if (fs.existsSync(diskPath)) {
+        try {
+          const content = fs.readFileSync(diskPath, 'utf-8');
+          const appliedList: AppliedSeoRecord[] = JSON.parse(content);
+          const match = appliedList.find(
+            a => a.targetCanonicalUrl === fullCanonical || this.normalizePath(a.targetCanonicalUrl.replace('https://settlementcheck.co.uk', '')) === norm
+          );
+          if (match && match.status === 'APPLIED') {
+            return match;
+          }
+        } catch {
+          // Ignore read error
         }
-      } catch {
-        // Ignore read error
       }
     }
 
@@ -104,7 +108,7 @@ export class SeoActuatorService {
   }
 
   /**
-   * Reads all current packages across disk and Supabase
+   * Reads all current packages across disk, /tmp, and Supabase
    */
   public static async getAllPackages(): Promise<AppliedSeoRecord[]> {
     const list: AppliedSeoRecord[] = [];
@@ -125,6 +129,12 @@ export class SeoActuatorService {
             list.push({
               id: d.id,
               query: d.query,
+              priority: d.priority || 'CRITICAL',
+              actionType: d.action_type || 'INTERNAL_LINK_BOOST',
+              impressions: d.impressions ?? 0,
+              clicks: d.clicks ?? 0,
+              position: d.position ?? 0,
+              ctr: d.ctr ?? 0,
               targetCanonicalUrl: d.target_canonical_url,
               calibratedTitle: d.calibrated_title,
               calibratedMetaDescription: d.calibrated_meta_description,
@@ -138,17 +148,20 @@ export class SeoActuatorService {
       } catch {}
     }
 
-    // 2. Local disk applied actions
-    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
-      try {
-        const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
-        for (const item of diskApplied) {
-          if (!seenIds.has(item.id)) {
-            seenIds.add(item.id);
-            list.push(item);
+    // 2. Local disk and /tmp applied actions
+    const diskSources = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
+    for (const diskPath of diskSources) {
+      if (fs.existsSync(diskPath)) {
+        try {
+          const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(diskPath, 'utf-8'));
+          for (const item of diskApplied) {
+            if (!seenIds.has(item.id)) {
+              seenIds.add(item.id);
+              list.push(item);
+            }
           }
-        }
-      } catch {}
+        } catch {}
+      }
     }
 
     // 3. Staged actions fallback
@@ -216,19 +229,28 @@ export class SeoActuatorService {
       }
     }
 
-    // 2. Persist to disk
+    // 2. Persist to disk / /tmp safely
     this.saveAppliedToDisk(target);
 
-    // 3. Persist to Supabase if available
+    // 3. Persist to Supabase if available (upsert so it is stored even if read from staging file)
     if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         await supabase
           .from('seo_autonomous_actions')
-          .update({
+          .upsert({
+            id: target.id,
+            query: target.query,
+            target_canonical_url: target.targetCanonicalUrl,
+            calibrated_title: target.calibratedTitle,
+            calibrated_meta_description: target.calibratedMetaDescription,
+            faq_question: target.faqQuestion,
+            faq_answer: target.faqAnswer,
             status: 'APPLIED',
-          })
-          .eq('id', target.id);
-      } catch {}
+            created_at: target.appliedAt || new Date().toISOString(),
+          }, { onConflict: 'id' });
+      } catch (err) {
+        console.error('Supabase upsert failed:', err);
+      }
     }
 
     return {
@@ -252,13 +274,16 @@ export class SeoActuatorService {
     target.status = 'VALIDATED';
     target.appliedAt = undefined;
 
-    // Update disk
-    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
-      try {
-        const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
-        const filtered = diskApplied.filter(p => p.id !== packageId);
-        fs.writeFileSync(this.APPLIED_DISK_PATH, JSON.stringify(filtered, null, 2), 'utf-8');
-      } catch {}
+    // Update disk & /tmp
+    const diskTargets = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
+    for (const dPath of diskTargets) {
+      if (fs.existsSync(dPath)) {
+        try {
+          const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(dPath, 'utf-8'));
+          const filtered = diskApplied.filter(p => p.id !== packageId);
+          fs.writeFileSync(dPath, JSON.stringify(filtered, null, 2), 'utf-8');
+        } catch {}
+      }
     }
 
     // Update Supabase
@@ -295,25 +320,32 @@ export class SeoActuatorService {
   }
 
   /**
-   * Saves applied action records locally
+   * Saves applied action records locally with safe /tmp fallback for serverless
    */
   private static saveAppliedToDisk(record: AppliedSeoRecord) {
-    let appliedList: AppliedSeoRecord[] = [];
-    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+    const tryPaths = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
+    for (const targetPath of tryPaths) {
       try {
-        appliedList = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
-      } catch {}
-    }
+        let appliedList: AppliedSeoRecord[] = [];
+        if (fs.existsSync(targetPath)) {
+          try {
+            appliedList = JSON.parse(fs.readFileSync(targetPath, 'utf-8'));
+          } catch {}
+        }
 
-    const idx = appliedList.findIndex(a => a.id === record.id);
-    if (idx >= 0) {
-      appliedList[idx] = record;
-    } else {
-      appliedList.push(record);
-    }
+        const idx = appliedList.findIndex(a => a.id === record.id);
+        if (idx >= 0) {
+          appliedList[idx] = record;
+        } else {
+          appliedList.push(record);
+        }
 
-    const dir = path.dirname(this.APPLIED_DISK_PATH);
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(this.APPLIED_DISK_PATH, JSON.stringify(appliedList, null, 2), 'utf-8');
+        const dir = path.dirname(targetPath);
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(targetPath, JSON.stringify(appliedList, null, 2), 'utf-8');
+      } catch (err) {
+        // Continue to /tmp if APPLIED_DISK_PATH fails with EROFS in serverless
+      }
+    }
   }
 }
