@@ -64,6 +64,22 @@ const JSON_LD = {
         name: 'SettlementCheck Legal Research Desk',
         url: 'https://settlementcheck.co.uk/how-it-works/',
       },
+      about: [
+        {
+          '@type': 'Thing',
+          name: 'United Kingdom Employment Law',
+          sameAs: 'https://en.wikipedia.org/wiki/United_Kingdom_labour_law',
+        },
+        {
+          '@type': 'Thing',
+          name: 'Settlement Agreement',
+          sameAs: 'https://en.wikipedia.org/wiki/Settlement_agreement',
+        },
+      ],
+      audience: {
+        '@type': 'Audience',
+        audienceType: 'UK Employees',
+      },
       isBasedOn: [
         {
           '@type': 'Legislation',
