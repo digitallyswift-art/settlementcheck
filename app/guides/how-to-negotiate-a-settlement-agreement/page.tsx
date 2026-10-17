@@ -6,7 +6,9 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   title: 'How to Negotiate a Settlement Agreement 2026 | SettlementCheck',
   description:
     'Negotiate a UK settlement agreement using 2026 rates (£751/wk cap). Without Prejudice rules, counter-offers, and £500+ legal fee contributions. Free guide.',
@@ -27,6 +29,10 @@ export const metadata: Metadata = {
     title: 'How to Negotiate a Settlement Agreement 2026 | SettlementCheck',
     description: 'Without Prejudice rules, step-by-step negotiation process, and what a fair UK settlement looks like. Free guide.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/guides/how-to-negotiate-a-settlement-agreement/', STATIC_METADATA)
 }
 
 const FAQS = [

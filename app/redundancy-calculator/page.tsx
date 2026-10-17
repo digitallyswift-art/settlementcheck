@@ -5,7 +5,9 @@ import type { StatutoryRow, StepItem } from '../HomeClient'
 import type { FaqItem } from '@/components/FaqAccordion'
 import { getRedundancyStatutoryRows } from '@/lib/statutory-rates'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
   description:
@@ -28,6 +30,10 @@ export const metadata: Metadata = {
     description:
       'Calculate your statutory redundancy entitlement under April 2026 rates (£751 cap). Free instant calculator, no email required.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/redundancy-calculator/', STATIC_METADATA)
 }
 
 const REDUNDANCY_STEPS: StepItem[] = [

@@ -4,7 +4,9 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import ReviewClient from './ReviewClient'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   title: 'Employment Settlement Agreement Checker | Check Your Offer & Clauses | SettlementCheck',
   description: 'Check your UK employment settlement agreement clauses and offer amount. Instant confidential check of statutory redundancy caps (£751/week), £30,000 tax rules, and employer legal fees.',
   alternates: { canonical: 'https://settlementcheck.co.uk/settlement-agreement-review/' },
@@ -14,6 +16,10 @@ export const metadata: Metadata = {
     url: 'https://settlementcheck.co.uk/settlement-agreement-review/',
     type: 'website',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/settlement-agreement-review/', STATIC_METADATA)
 }
 
 const reviewSchema = {

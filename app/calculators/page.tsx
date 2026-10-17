@@ -6,7 +6,9 @@ import Footer from '@/components/Footer'
 import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 import CalculatorsClient from './CalculatorsClient'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Employment & Settlement Calculators UK | SettlementCheck',
   description:
@@ -31,10 +33,14 @@ export const metadata: Metadata = {
   },
 }
 
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/calculators/', STATIC_METADATA)
+}
+
 const CALCULATORS_FAQS: FaqItem[] = [
   {
     q: 'Which calculator should I start with if I have just been given a settlement offer?',
-    a: 'Start with the flagship Settlement Agreement Calculator (/calculator/). It evaluates your entire package—including statutory redundancy baseline, contractual notice pay, and ex-gratia compensation—giving you an instant fairness score and estimated net take-home figure. If you specifically need to verify contract clauses or check employer legal fee contributions, follow up with the Employment Settlement Checker.',
+    a: 'Start with the flagship Settlement Agreement Calculator (/calculator/). It evaluates your entire package - including statutory redundancy baseline, contractual notice pay, and ex-gratia compensation - giving you an instant fairness score and estimated net take-home figure. If you specifically need to verify contract clauses or check employer legal fee contributions, follow up with the Employment Settlement Checker.',
   },
   {
     q: 'How do I know these calculators are accurate for April 2026?',

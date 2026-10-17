@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import fs from 'fs';
 import path from 'path';
 import { supabase } from '@/lib/supabase';
@@ -82,6 +83,14 @@ export async function POST(req: NextRequest) {
           );
         }
         const result = await SeoActuatorService.applyPackage(packageId, { triggerIndexing: true });
+        if (result.success && result.package?.targetCanonicalUrl) {
+          try {
+            const pathName = SeoActuatorService.normalizePath(
+              result.package.targetCanonicalUrl.replace('https://settlementcheck.co.uk', '')
+            );
+            revalidatePath(pathName);
+          } catch {}
+        }
         return NextResponse.json(result);
       }
 
@@ -93,11 +102,17 @@ export async function POST(req: NextRequest) {
           );
         }
         const result = await SeoActuatorService.rollbackPackage(packageId);
+        try {
+          revalidatePath('/', 'layout');
+        } catch {}
         return NextResponse.json(result);
       }
 
       case 'APPLY_ALL': {
         const result = await SeoActuatorService.applyAllValidated();
+        try {
+          revalidatePath('/', 'layout');
+        } catch {}
         return NextResponse.json(result);
       }
 

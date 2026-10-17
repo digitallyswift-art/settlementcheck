@@ -6,7 +6,9 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Tax-Free Settlement 2026 | £30k Rule | SettlementCheck',
   description:
@@ -29,6 +31,10 @@ export const metadata: Metadata = {
     description:
       'Free UK settlement agreement tax guide. First £30,000 is tax-free. Learn which payments qualify, how the excess is taxed, and check your offer. No email.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/guides/tax-free-settlement-30000/', STATIC_METADATA)
 }
 
 const FAQS = [

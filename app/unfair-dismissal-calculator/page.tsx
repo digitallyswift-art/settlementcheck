@@ -5,7 +5,9 @@ import type { StatutoryRow, StepItem } from '../HomeClient'
 import type { FaqItem } from '@/components/FaqAccordion'
 import { getUnfairDismissalStatutoryRows } from '@/lib/statutory-rates'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Unfair Dismissal Calculator UK 2026 | SettlementCheck',
   description:
@@ -28,6 +30,10 @@ export const metadata: Metadata = {
     description:
       'Estimate your unfair dismissal award using April 2026 UK rates (£123,543 cap). Free check, no email required.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/unfair-dismissal-calculator/', STATIC_METADATA)
 }
 
 const UNFAIR_DISMISSAL_STEPS: StepItem[] = [

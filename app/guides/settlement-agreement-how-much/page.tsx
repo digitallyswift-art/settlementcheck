@@ -6,7 +6,9 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import InlineEstimator from '@/components/InlineEstimator'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   title: 'How Much Settlement Should You Get? 2026 | SettlementCheck',
   description:
     'Find out how much a UK settlement agreement should be in 2026. 1 to 3 months payout ranges, notice pay, £751 weekly cap, and tax rules. Free guide.',
@@ -22,6 +24,10 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/guides/settlement-agreement-how-much/', STATIC_METADATA)
 }
 
 const FAQS = [

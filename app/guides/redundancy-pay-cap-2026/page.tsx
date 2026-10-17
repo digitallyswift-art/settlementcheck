@@ -5,7 +5,9 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Redundancy Pay Cap 2026 | £751 Weekly Limit | SettlementCheck',
   description:
@@ -28,6 +30,10 @@ export const metadata: Metadata = {
     description:
       'Check the UK redundancy pay cap for 2026 (£751/week limit). Find calculations, worked examples, and what to do if your employer got it wrong. No email.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/guides/redundancy-pay-cap-2026/', STATIC_METADATA)
 }
 
 const FAQS = [

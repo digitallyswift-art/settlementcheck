@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import ProtectiveAwardClient from './ProtectiveAwardClient'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Protective Award Calculator UK 2026 | SettlementCheck',
   description:
@@ -24,6 +26,10 @@ export const metadata: Metadata = {
     description:
       'Calculate your protective award under TULRCA 1992 s.189. Up to 90 days gross pay for failure to consult on 20+ redundancies. Free instant UK calculator.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/protective-award-calculator/', STATIC_METADATA)
 }
 
 const FAQS = [
