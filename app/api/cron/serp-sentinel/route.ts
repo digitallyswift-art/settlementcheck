@@ -32,7 +32,9 @@ async function handleSentinel(req: NextRequest) {
 
     if (GoogleSearchConsoleClient.isConfigured()) {
       const gscData = await GoogleSearchConsoleClient.pullLatestSearchData();
-      const digest = await AutonomousSeoActionService.executeActionPipeline(gscData);
+      const digest = await AutonomousSeoActionService.executeActionPipeline(gscData, {
+        sendEmail: true,
+      });
       return NextResponse.json({
         success: true,
         source: 'GSC_LIVE_API',
@@ -47,6 +49,7 @@ async function handleSentinel(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      source: 'LOCAL_FALLBACK_ARCHIVE',
       report,
     });
   } catch (error: any) {

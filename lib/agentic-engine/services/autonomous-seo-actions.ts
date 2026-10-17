@@ -11,6 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import { GscFetchResult, GscQueryRow } from './gsc-client';
 import { resend } from '@/lib/resend';
+import { GoogleIndexingClient } from './google-indexing-client';
 import { SeoWorkflowOrchestrator } from '../orchestrator/seo-workflow-orchestrator';
 import { AutonomousSeoActionPackage } from '../types';
 
@@ -163,7 +164,20 @@ export class AutonomousSeoActionService {
     }
 
     let emailSent = false;
-    const recipient = options?.recipientEmail || process.env.SEO_ALERT_EMAIL || 'support@digitallyswift.com';
+    let recipients: string[] = [
+      'support@digitallyswift.com',
+      'digitallyswift@gmail.com',
+      'yesmarioo@gmail.com',
+    ];
+
+    if (options?.recipientEmail) {
+      recipients = [options.recipientEmail];
+    } else if (process.env.SEO_ALERT_EMAILS) {
+      recipients = process.env.SEO_ALERT_EMAILS.split(',').map(e => e.trim()).filter(Boolean);
+    } else if (process.env.SEO_ALERT_EMAIL) {
+      const envEmails = process.env.SEO_ALERT_EMAIL.split(',').map(e => e.trim()).filter(Boolean);
+      recipients = Array.from(new Set([...recipients, ...envEmails]));
+    }
 
     // 3. Dispatch Executive Email Report via Resend
     if (options?.sendEmail !== false && process.env.RESEND_API_KEY) {
@@ -180,7 +194,7 @@ export class AutonomousSeoActionService {
           .slice(0, 5)
           .map(
             s =>
-              `<li><strong>"${s.query}"</strong>: Pos ${s.position.toFixed(1)} (${s.impressions} impressions) — <em>${s.opportunity}</em></li>`
+              `<li><strong>"${s.query}"</strong>: Pos ${s.position.toFixed(1)} (${s.impressions} impressions) - <em>${s.opportunity}</em></li>`
           )
           .join('');
 
@@ -247,7 +261,7 @@ export class AutonomousSeoActionService {
 
         await resend.emails.send({
           from: 'SettlementCheck Sentinel <notifications@settlementcheck.co.uk>',
-          to: recipient,
+          to: recipients,
           subject: `🛡️ Autonomous SEO Digest: ${totalClicks} Clicks, ${totalImpr.toLocaleString('en-GB')} Impr (${gscData.source})`,
           html,
         });
@@ -255,6 +269,18 @@ export class AutonomousSeoActionService {
         emailSent = true;
       } catch (emailErr) {
         console.warn('Resend email dispatch error:', emailErr);
+      }
+    }
+
+    // 4. Trigger Google Indexing API Re-crawl Pings for target canonical routes
+    if (GoogleIndexingClient.isConfigured() && dualAgentPackages && dualAgentPackages.length > 0) {
+      try {
+        const targetUrls = dualAgentPackages.map(p => p.seoTechnicalBrief.targetCanonicalUrl);
+        GoogleIndexingClient.notifyBatch(targetUrls).catch(err => {
+          console.warn('Background Google Indexing batch notification notice:', err?.message || err);
+        });
+      } catch (indexErr) {
+        console.warn('Google Indexing API notice:', indexErr);
       }
     }
 
