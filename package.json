@@ -12,6 +12,8 @@
     "test:evals": "node scripts/evals/eval-runner.mjs",
     "sentinel:serp": "node scripts/sentinel/serp-sentinel.mjs",
     "sentinel:act": "node scripts/sentinel/autonomous-actuator.mjs",
+    "sentinel:digest": "node scripts/sentinel/autonomous-actuator.mjs --email",
+    "sentinel:email": "node scripts/sentinel/send-digest-email.mjs",
     "watchdog:sla": "node scripts/watchdog/sla-watchdog.mjs",
     "test:gsc": "node scripts/sentinel/test-gsc-connection.mjs"
   },

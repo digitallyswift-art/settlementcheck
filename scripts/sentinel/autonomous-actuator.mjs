@@ -252,6 +252,12 @@ async function runActuator() {
   console.log(`    JSON:     ${path.relative('.', result.stagedJsonPath)}`);
   console.log(`    Markdown: ${path.relative('.', result.stagedMarkdownPath)}`);
   console.log(`================================================================\n`);
+
+  if (process.argv.includes('--email')) {
+    console.log('📬 --email flag detected. Dispatching stakeholder intelligence digest...');
+    const { execSync } = await import('child_process');
+    execSync('node scripts/sentinel/send-digest-email.mjs', { stdio: 'inherit' });
+  }
 }
 
 runActuator().catch(err => {
