@@ -22,7 +22,7 @@ export async function resolveDynamicSeoMetadata(
 
     return {
       ...defaultMetadata,
-      title,
+      title: { absolute: title },
       description,
       openGraph: {
         ...(defaultMetadata.openGraph || {}),
