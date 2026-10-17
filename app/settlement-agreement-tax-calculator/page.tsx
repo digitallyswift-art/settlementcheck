@@ -4,7 +4,9 @@ import type { StepItem } from '../HomeClient'
 import type { FaqItem } from '@/components/FaqAccordion'
 import { getTaxStatutoryRows } from '@/lib/statutory-rates'
 
-export const metadata: Metadata = {
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Settlement Agreement Tax Calculator UK 2026 | SettlementCheck',
   description:
@@ -27,6 +29,10 @@ export const metadata: Metadata = {
     description:
       'Calculate tax on your settlement agreement under 2026 UK rates. Work out your £30k tax-free limit, PILON, and net pay. Free instant calculator.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/settlement-agreement-tax-calculator/', STATIC_METADATA)
 }
 
 const TAX_STEPS: StepItem[] = [

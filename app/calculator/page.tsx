@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import CalculatorClient from './CalculatorClient'
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
-export const metadata: Metadata = {
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Free Employee Settlement Agreement Calculator UK (2026)',
   description:
@@ -24,6 +25,10 @@ export const metadata: Metadata = {
     description:
       'Calculate your employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Free.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/calculator/', STATIC_METADATA)
 }
 
 const JSON_LD = {

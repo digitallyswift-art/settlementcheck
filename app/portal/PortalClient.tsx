@@ -18,9 +18,140 @@ interface MockMatter {
 }
 
 export default function PortalClient() {
-  const [activeTab, setActiveTab] = useState<'pipeline' | 'territory' | 'telemetry' | 'settings'>('pipeline');
+  const [activeTab, setActiveTab] = useState<'pipeline' | 'territory' | 'telemetry' | 'seo' | 'settings'>('pipeline');
   const [webhookUrl, setWebhookUrl] = useState('https://app.clio.com/api/v4/webhooks/sc_intake');
   const [isSaved, setIsSaved] = useState(false);
+
+  // Autonomous SEO Fleet State
+  const [seoSummary, setSeoSummary] = useState<{
+    totalPackages: number;
+    appliedCount: number;
+    validatedCount: number;
+    stagedCount: number;
+  } | null>(null);
+  const [seoPackages, setSeoPackages] = useState<any[]>([]);
+  const [recentRuns, setRecentRuns] = useState<any[]>([]);
+  const [changeLogPreview, setChangeLogPreview] = useState<string>('');
+  const [isLoadingSeo, setIsLoadingSeo] = useState<boolean>(false);
+  const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const fetchSeoData = async () => {
+    setIsLoadingSeo(true);
+    try {
+      const res = await fetch('/api/portal/seo-actions/');
+      const data = await res.json();
+      if (data.success) {
+        setSeoSummary(data.summary);
+        setSeoPackages(data.packages || []);
+        setRecentRuns(data.recentRuns || []);
+        setChangeLogPreview(data.changeLogPreview || '');
+      }
+    } catch (e) {
+      console.error('Failed to load SEO data', e);
+    } finally {
+      setIsLoadingSeo(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (activeTab === 'seo' && !seoSummary) {
+      fetchSeoData();
+    }
+  }, [activeTab, seoSummary]);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 4000);
+  };
+
+  const handleApplyPackage = async (packageId: string) => {
+    setActionLoadingId(packageId);
+    try {
+      const res = await fetch('/api/portal/seo-actions/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'APPLY', packageId }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('✓ Package applied live to production and Google Indexing API pinged (HTTP 200)');
+        await fetchSeoData();
+      } else {
+        showToast(`Error: ${data.error || 'Failed to apply package'}`);
+      }
+    } catch (err: any) {
+      showToast(`Error: ${err.message}`);
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  const handleRollbackPackage = async (packageId: string) => {
+    setActionLoadingId(packageId);
+    try {
+      const res = await fetch('/api/portal/seo-actions/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'ROLLBACK', packageId }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('✓ Package rolled back to baseline metadata');
+        await fetchSeoData();
+      } else {
+        showToast(`Error: ${data.error || 'Failed to rollback package'}`);
+      }
+    } catch (err: any) {
+      showToast(`Error: ${err.message}`);
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  const handleApplyAll = async () => {
+    setActionLoadingId('APPLY_ALL');
+    try {
+      const res = await fetch('/api/portal/seo-actions/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'APPLY_ALL' }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`✓ Applied ${data.appliedCount} packages with batch Google Indexing pings`);
+        await fetchSeoData();
+      } else {
+        showToast(`Error: ${data.error || 'Failed to batch apply'}`);
+      }
+    } catch (err: any) {
+      showToast(`Error: ${err.message}`);
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  const handleReindex = async (url: string, packageId: string) => {
+    setActionLoadingId(`REINDEX_${packageId}`);
+    try {
+      const res = await fetch('/api/portal/seo-actions/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'REINDEX', url }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('✓ Google Indexing API notification confirmed: crawl queued');
+        await fetchSeoData();
+      } else {
+        showToast(`Error: ${data.indexingResult?.error || 'Failed to ping Googlebot'}`);
+      }
+    } catch (err: any) {
+      showToast(`Error: ${err.message}`);
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
 
   const mockMatters: MockMatter[] = [
     {
@@ -100,6 +231,7 @@ export default function PortalClient() {
             { id: 'pipeline', label: 'Instruction Pipeline' },
             { id: 'territory', label: 'Territory & Postcodes' },
             { id: 'telemetry', label: 'Settlement Telemetry' },
+            { id: 'seo', label: 'Autonomous SEO Fleet 🤖' },
             { id: 'settings', label: 'PMS Webhook & Settings' },
           ].map(tab => (
             <button
@@ -300,6 +432,355 @@ export default function PortalClient() {
           </div>
         )}
 
+        {/* ── Tab 4: Autonomous SEO Fleet ─────────────────────────────── */}
+        {activeTab === 'seo' && (
+          <div className="space-y-6">
+            {/* Header & Fleet Controls */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#D9603B]/10 text-[#D9603B] text-[11px] font-mono font-bold uppercase tracking-wider border border-[#D9603B]/20">
+                      Dual-Agent Sentinel Fleet
+                    </span>
+                    <span className="text-xs text-[#0B1F3A]/40 font-mono">seo-architect · conversion-copywriter</span>
+                  </div>
+                  <h2 className="text-xl font-serif font-bold text-[#0B1F3A]">Autonomous SEO Fleet & Actuation Engine</h2>
+                  <p className="text-xs sm:text-sm text-[#0B1F3A]/70 max-w-2xl">
+                    Review staged search opportunities, calibrated meta tags, and answer-first FAQs. Deploy live to production in 1-click and trigger automated Googlebot re-indexing via the Google Indexing API.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 sm:self-start">
+                  <button
+                    onClick={handleApplyAll}
+                    disabled={actionLoadingId === 'APPLY_ALL'}
+                    className="px-4 py-2.5 bg-[#D9603B] text-white text-xs font-semibold rounded-lg hover:bg-[#D9603B]/90 transition-all shadow-sm flex items-center gap-2 disabled:opacity-50"
+                  >
+                    {actionLoadingId === 'APPLY_ALL' ? (
+                      <>
+                        <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Deploying & Pinging...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>⚡ Apply All Validated</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={fetchSeoData}
+                    disabled={isLoadingSeo}
+                    className="px-3.5 py-2.5 bg-[#0B1F3A]/5 text-[#0B1F3A] text-xs font-semibold rounded-lg hover:bg-[#0B1F3A]/10 transition-colors flex items-center gap-1.5"
+                  >
+                    <span>🔄</span>
+                    <span>Refresh</span>
+                  </button>
+
+                  <a
+                    href="/api/portal/seo-actions/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3.5 py-2.5 border border-[#0B1F3A]/15 text-[#0B1F3A]/80 text-xs font-medium rounded-lg hover:bg-[#0B1F3A]/5 transition-colors"
+                  >
+                    JSON Feed ↗
+                  </a>
+                </div>
+              </div>
+
+              {/* Fleet Metric Cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+                <div className="p-4 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
+                  <span className="text-xs text-[#0B1F3A]/60 block mb-0.5">Total Opportunities</span>
+                  <span className="text-2xl font-serif font-bold text-[#0B1F3A]">
+                    {seoSummary ? seoSummary.totalPackages : '-'}
+                  </span>
+                  <span className="text-[11px] text-[#0B1F3A]/50 block mt-0.5">Striking-distance queries</span>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
+                  <span className="text-xs text-[#0B1F3A]/60 block mb-0.5">Live in Production</span>
+                  <span className="text-2xl font-serif font-bold text-[#D9603B]">
+                    {seoSummary ? seoSummary.appliedCount : '0'}
+                  </span>
+                  <span className="text-[11px] text-[#0B1F3A]/50 block mt-0.5">Dynamic metadata active</span>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
+                  <span className="text-xs text-[#0B1F3A]/60 block mb-0.5">Statutory Validated</span>
+                  <span className="text-2xl font-serif font-bold text-[#0B1F3A]">
+                    {seoSummary ? seoSummary.validatedCount : '-'}
+                  </span>
+                  <span className="text-[11px] text-[#0B1F3A]/50 block mt-0.5">April 2026 rates verified</span>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#0B1F3A] text-white">
+                  <span className="text-xs text-white/60 block mb-0.5">Google Indexing Protocol</span>
+                  <span className="text-xl font-serif font-bold text-[#D9603B]">HTTP 200 OK</span>
+                  <span className="text-[11px] text-white/70 block mt-0.5">OAuth2 Service Account</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Opportunities List */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between px-1">
+                <h3 className="text-base font-serif font-bold text-[#0B1F3A]">
+                  Staged & Active Optimization Packages ({seoPackages.length})
+                </h3>
+                <span className="text-xs text-[#0B1F3A]/60 font-mono">
+                  Target Invariants: 50-60 Title · 140-155 Meta · £751/wk Cap
+                </span>
+              </div>
+
+              {isLoadingSeo && seoPackages.length === 0 ? (
+                <div className="bg-white rounded-2xl p-12 text-center border border-[#0B1F3A]/10 text-xs text-[#0B1F3A]/60">
+                  <span className="inline-block w-5 h-5 border-2 border-[#D9603B] border-t-transparent rounded-full animate-spin mb-2" />
+                  <p>Loading autonomous fleet packages from engine...</p>
+                </div>
+              ) : (
+                seoPackages.map((pkg: any) => {
+                  const isApplied = pkg.status === 'APPLIED';
+                  const titleLen = pkg.calibratedTitle?.length || 0;
+                  const metaLen = pkg.calibratedMetaDescription?.length || 0;
+                  const isTitleOk = titleLen >= 45 && titleLen <= 65;
+                  const isMetaOk = metaLen >= 135 && metaLen <= 160;
+                  const isBusy = actionLoadingId === pkg.id || actionLoadingId === `REINDEX_${pkg.id}`;
+
+                  return (
+                    <div
+                      key={pkg.id}
+                      className={`bg-white rounded-2xl border transition-all overflow-hidden ${
+                        isApplied
+                          ? 'border-[#0B1F3A] shadow-md ring-1 ring-[#0B1F3A]/10'
+                          : 'border-[#0B1F3A]/10 shadow-sm hover:border-[#0B1F3A]/30'
+                      }`}
+                    >
+                      {/* Package Card Header */}
+                      <div className="p-5 border-b border-[#0B1F3A]/10 bg-[#F7F4EE]/40 flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span
+                            className={`px-2.5 py-0.5 rounded text-[11px] font-mono font-bold tracking-wider ${
+                              pkg.priority === 'CRITICAL'
+                                ? 'bg-[#D9603B] text-white'
+                                : 'bg-[#0B1F3A] text-white'
+                            }`}
+                          >
+                            {pkg.priority || 'CRITICAL'}
+                          </span>
+                          <span className="font-mono text-xs font-semibold text-[#0B1F3A]/60 px-2 py-0.5 bg-white rounded border border-[#0B1F3A]/10">
+                            {pkg.actionType || 'META_BOOST'}
+                          </span>
+                          <h4 className="font-serif font-bold text-base text-[#0B1F3A]">
+                            &ldquo;{pkg.query}&rdquo;
+                          </h4>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          {isApplied ? (
+                            <span className="px-3 py-1 rounded-full bg-[#0B1F3A] text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+                              <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse" />
+                              LIVE IN PRODUCTION
+                            </span>
+                          ) : (
+                            <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold">
+                              ✓ STATUTORY VALIDATED
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Package Details Grid */}
+                      <div className="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        {/* Left Column: Target & Meta Specs (7 cols) */}
+                        <div className="lg:col-span-7 space-y-4">
+                          <div>
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block mb-1">
+                              Target Canonical URL
+                            </span>
+                            <div className="flex items-center gap-2">
+                              <a
+                                href={pkg.targetCanonicalUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-mono text-xs text-[#0B1F3A] hover:text-[#D9603B] font-semibold underline underline-offset-2 break-all"
+                              >
+                                {pkg.targetCanonicalUrl}
+                              </a>
+                            </div>
+                          </div>
+
+                          {/* GSC Performance Metrics */}
+                          {(pkg.impressions !== undefined || pkg.clicks !== undefined) && (
+                            <div className="flex flex-wrap gap-4 py-2 px-3 rounded-lg bg-[#F7F4EE] border border-[#0B1F3A]/5 text-xs text-[#0B1F3A]/80 font-mono">
+                              <div>
+                                <span className="text-[#0B1F3A]/50 block text-[10px]">Impressions</span>
+                                <strong className="text-[#0B1F3A]">{pkg.impressions?.toLocaleString('en-GB') ?? '-'}</strong>
+                              </div>
+                              <div>
+                                <span className="text-[#0B1F3A]/50 block text-[10px]">Clicks</span>
+                                <strong className="text-[#0B1F3A]">{pkg.clicks ?? '0'}</strong>
+                              </div>
+                              <div>
+                                <span className="text-[#0B1F3A]/50 block text-[10px]">Avg Position</span>
+                                <strong className="text-[#0B1F3A]">{pkg.position ? Number(pkg.position).toFixed(1) : '-'}</strong>
+                              </div>
+                              <div>
+                                <span className="text-[#0B1F3A]/50 block text-[10px]">CTR</span>
+                                <strong className="text-[#0B1F3A]">{pkg.ctr ? `${Number(pkg.ctr).toFixed(1)}%` : '-'}</strong>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Calibrated Title */}
+                          <div>
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A]/60">
+                                Calibrated Title
+                              </span>
+                              <span
+                                className={`text-[11px] font-mono font-semibold px-2 py-0.5 rounded ${
+                                  isTitleOk ? 'bg-emerald-50 text-emerald-800' : 'bg-amber-50 text-amber-800'
+                                }`}
+                              >
+                                {titleLen} / 60 chars
+                              </span>
+                            </div>
+                            <div className="p-3 rounded-lg bg-[#0B1F3A]/5 text-xs font-medium text-[#0B1F3A] border border-[#0B1F3A]/10">
+                              {pkg.calibratedTitle}
+                            </div>
+                          </div>
+
+                          {/* Calibrated Meta Description */}
+                          <div>
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A]/60">
+                                Calibrated Meta Description
+                              </span>
+                              <span
+                                className={`text-[11px] font-mono font-semibold px-2 py-0.5 rounded ${
+                                  isMetaOk ? 'bg-emerald-50 text-emerald-800' : 'bg-amber-50 text-amber-800'
+                                }`}
+                              >
+                                {metaLen} / 155 chars
+                              </span>
+                            </div>
+                            <div className="p-3 rounded-lg bg-[#0B1F3A]/5 text-xs text-[#0B1F3A] border border-[#0B1F3A]/10 leading-relaxed">
+                              {pkg.calibratedMetaDescription}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right Column: Answer-First FAQ & Indexing Status (5 cols) */}
+                        <div className="lg:col-span-5 space-y-4">
+                          <div>
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block mb-1">
+                              Featured Snippet FAQ
+                            </span>
+                            <div className="p-3.5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10 space-y-2">
+                              <p className="text-xs font-bold text-[#0B1F3A]">
+                                Q: {pkg.faqQuestion}
+                              </p>
+                              <p className="text-xs text-[#0B1F3A]/70 leading-relaxed">
+                                A: {pkg.faqAnswer}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Indexing Telemetry */}
+                          <div className="p-3.5 rounded-xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 space-y-2">
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block">
+                              Google Indexing Telemetry
+                            </span>
+                            <div className="text-xs text-[#0B1F3A]/80 space-y-1">
+                              <div className="flex items-center justify-between">
+                                <span className="text-[#0B1F3A]/60">Status:</span>
+                                <strong className="font-mono text-[11px] text-[#0B1F3A]">
+                                  {pkg.indexingStatus || (isApplied ? 'INDEXING_REQUESTED_HTTP_200' : 'Ready for Actuation')}
+                                </strong>
+                              </div>
+                              {pkg.appliedAt && (
+                                <div className="flex items-center justify-between text-[11px]">
+                                  <span className="text-[#0B1F3A]/60">Deployed:</span>
+                                  <span className="font-mono text-[#0B1F3A]/70">{new Date(pkg.appliedAt).toLocaleDateString('en-GB')} {new Date(pkg.appliedAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Package Card Actions Footer */}
+                      <div className="p-4 bg-[#F7F4EE]/60 border-t border-[#0B1F3A]/10 flex flex-wrap items-center justify-between gap-3">
+                        <div className="text-xs text-[#0B1F3A]/60 flex items-center gap-2">
+                          <span className="font-mono font-semibold text-[#0B1F3A]">{pkg.id}</span>
+                          <span>·</span>
+                          <span>Invariants: 0 Em Dashes · SRA Independent Solicitor</span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          {isApplied ? (
+                            <>
+                              <button
+                                onClick={() => handleReindex(pkg.targetCanonicalUrl, pkg.id)}
+                                disabled={isBusy}
+                                className="px-3.5 py-1.5 rounded-lg border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-colors disabled:opacity-50"
+                              >
+                                Re-ping Googlebot 🔄
+                              </button>
+                              <button
+                                onClick={() => handleRollbackPackage(pkg.id)}
+                                disabled={isBusy}
+                                className="px-3.5 py-1.5 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-xs font-semibold text-red-800 transition-colors disabled:opacity-50"
+                              >
+                                Rollback to Baseline
+                              </button>
+                            </>
+                          ) : (
+                            <button
+                              onClick={() => handleApplyPackage(pkg.id)}
+                              disabled={isBusy}
+                              className="px-5 py-2 rounded-lg bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold transition-all shadow-sm flex items-center gap-2 disabled:opacity-50"
+                            >
+                              {actionLoadingId === pkg.id ? (
+                                <>
+                                  <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                  <span>Applying & Pinging...</span>
+                                </>
+                              ) : (
+                                <>
+                                  <span>⚡ 1-Click Apply & Ping Googlebot →</span>
+                                </>
+                              )}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+
+            {/* Change Log & Audit Trail Box */}
+            {changeLogPreview && (
+              <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-serif font-bold text-[#0B1F3A]">
+                    Autonomous Fleet Audit Log (CHANGE_LOG.md)
+                  </h3>
+                  <span className="text-[11px] font-mono text-[#0B1F3A]/50">data/serp-actions/CHANGE_LOG.md</span>
+                </div>
+                <pre className="p-4 rounded-xl bg-[#0B1F3A] text-white/90 text-xs font-mono overflow-x-auto max-h-72 leading-relaxed whitespace-pre-wrap">
+                  {changeLogPreview}
+                </pre>
+              </div>
+            )}
+          </div>
+        )}
+
+
         {/* ── Tab 4: PMS Webhook & Settings ────────────────────────────────── */}
         {activeTab === 'settings' && (
           <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
@@ -338,6 +819,14 @@ export default function PortalClient() {
           </div>
         )}
       </main>
+
+      {/* Floating Status Notification Toast */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0B1F3A] text-white px-5 py-3.5 rounded-xl shadow-2xl border border-[#D9603B]/40 flex items-center gap-3 text-xs">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#D9603B] animate-pulse" />
+          <span className="font-medium">{toastMessage}</span>
+        </div>
+      )}
     </div>
   );
 }

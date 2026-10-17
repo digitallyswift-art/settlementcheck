@@ -131,7 +131,7 @@ async function runActuator() {
                      opp.query.includes('calculator') ? 'TRANSACTIONAL_CALCULATOR' : 'GENERAL_SETTLEMENT';
       
       const dest = intent === 'COMPROMISE_AGREEMENT_LEGACY' ? '/guides/compromise-agreement-calculator-uk/' :
-                   intent === 'TAX_STATUTORY_EXEMPTION' ? '/guides/settlement-agreement-tax-calculator-uk/' : '/calculator/';
+                   intent === 'TAX_STATUTORY_EXEMPTION' ? '/settlement-agreement-tax-calculator/' : '/calculator/';
       
       // Calibrated title without duplicate UK
       const cleanQ = opp.query.replace(/\buk\b/gi, '').trim().split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');

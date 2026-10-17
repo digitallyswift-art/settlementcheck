@@ -69,11 +69,11 @@ export class SeoArchitectAgent {
       case 'TRANSACTIONAL_CALCULATOR':
         return '/calculator/';
       case 'TAX_STATUTORY_EXEMPTION':
-        return '/guides/settlement-agreement-tax-calculator-uk/';
+        return '/settlement-agreement-tax-calculator/';
       case 'GOV_ACAS_BENCHMARK':
         return '/calculator/';
       case 'REDUNDANCY_DISPUTE':
-        return '/guides/settlement-agreement-redundancy-calculator/';
+        return '/redundancy-calculator/';
       case 'SOLICITOR_SELECTION':
         return '/for-solicitors/';
       case 'GENERAL_SETTLEMENT':

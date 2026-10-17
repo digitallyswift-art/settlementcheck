@@ -478,7 +478,7 @@
         "ctr": 1.35
       },
       "searchIntent": "TAX_STATUTORY_EXEMPTION",
-      "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/settlement-agreement-tax-calculator-uk/",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/settlement-agreement-tax-calculator/",
       "characterBudgets": {
         "titleMin": 50,
         "titleMax": 60,
@@ -501,7 +501,7 @@
         "sourceRoutes": [
           "/guides/how-to-negotiate-a-settlement-agreement/"
         ],
-        "destinationRoute": "/guides/settlement-agreement-tax-calculator-uk/",
+        "destinationRoute": "/settlement-agreement-tax-calculator/",
         "exactAnchorText": "settlement agreement tax calculator uk"
       }
     },
@@ -515,9 +515,9 @@
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-        "targetRoute": "/guides/settlement-agreement-tax-calculator-uk/",
+        "targetRoute": "/settlement-agreement-tax-calculator/",
         "anchorText": "settlement agreement tax calculator uk",
-        "surroundingText": "If you have received an offer, you can check where you stand using our [settlement agreement tax calculator uk](/guides/settlement-agreement-tax-calculator-uk/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996."
+        "surroundingText": "If you have received an offer, you can check where you stand using our [settlement agreement tax calculator uk](/settlement-agreement-tax-calculator/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
