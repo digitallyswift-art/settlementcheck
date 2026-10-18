@@ -6,26 +6,26 @@ import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Average Employment Tribunal Awards UK 2026: MoJ Compensation Tables',
+  title: 'Employment Tribunal Average Awards 2026 | SettlementCheck',
   description:
-    'Official MoJ employment tribunal compensation tables 2026. Unfair dismissal (£7,564 median), discrimination, £123,543 statutory cap, and settlement comparison.',
+    'Official MoJ tribunal compensation tables 2026. Unfair dismissal (£7,564 median), discrimination, £123,543 cap, and commercial settlement benchmarks.',
   alternates: {
-    canonical: '/guides/employment-tribunal-average-awards-uk/',
+    canonical: 'https://settlementcheck.co.uk/guides/employment-tribunal-average-awards-uk/',
   },
   openGraph: {
-    title: 'Average Employment Tribunal Awards UK 2026: MoJ Compensation Tables',
+    title: 'Employment Tribunal Average Awards 2026 | SettlementCheck',
     description:
-      'Official MoJ employment tribunal compensation tables 2026. Unfair dismissal (£7,564 median), discrimination, £123,543 statutory cap, and settlement comparison.',
-    url: '/guides/employment-tribunal-average-awards-uk/',
+      'Official MoJ tribunal compensation tables 2026. Unfair dismissal (£7,564 median), discrimination, £123,543 cap, and commercial settlement benchmarks.',
+    url: 'https://settlementcheck.co.uk/guides/employment-tribunal-average-awards-uk/',
     type: 'article',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Average Employment Tribunal Awards UK 2026: MoJ Compensation Tables',
+    title: 'Employment Tribunal Average Awards 2026 | SettlementCheck',
     description:
-      'Official MoJ employment tribunal compensation tables 2026. Unfair dismissal (£7,564 median), discrimination, £123,543 statutory cap, and settlement comparison.',
+      'Official MoJ tribunal compensation tables 2026. Unfair dismissal (£7,564 median), discrimination, £123,543 cap, and commercial settlement benchmarks.',
   },
 }
 

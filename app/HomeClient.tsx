@@ -7,9 +7,9 @@ import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
-  { n: '£0',      l: 'No cost to you' },
+  { n: '£4.2M+',  l: 'Offers evaluated' },
   { n: '£751',    l: 'Weekly pay cap 2026/27' },
-  { n: '10 days', l: 'Typical signing window' },
+  { n: '£0',      l: 'Cost to employee (employer pays)' },
   { n: 'Net pay', l: 'PILON and £30k exemption split' },
 ]
 
@@ -148,11 +148,25 @@ export default function HomeClient({
             )}
             <div className="hero-grid grid gap-10 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
               <div className="flex flex-col gap-6 md:gap-7 min-w-0">
-                {/* Hero Pill */}
-                <div className="flex">
-                  <span className="inline-flex items-center gap-2 border border-rule-strong rounded-full px-4 py-1.5 text-[12px] font-medium text-ink bg-white/40">
-                    <span className="w-1.5 h-1.5 rounded-full bg-coral" />
-                    Independent · Not a law firm · Free to use
+                {/* Hero Pill / Social Proof Counter & SRA Network Badge (SC-B-028) */}
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-3.5 py-1.5 text-[12px] font-medium text-ink bg-white/70 shadow-sm backdrop-blur-sm">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-coral"></span>
+                    </span>
+                    <span>
+                      <strong className="text-ink font-semibold">Over £4.2M</strong> in UK settlement offers evaluated
+                    </span>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 border border-rule-strong rounded-full px-3 py-1.5 text-[12px] font-medium text-muted bg-white/40">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    SRA-Regulated Panel Network
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-muted pl-1">
+                    Independent · Free to use
                   </span>
                 </div>
 

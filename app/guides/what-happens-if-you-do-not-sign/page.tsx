@@ -7,14 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
-  title: 'Not Signing a Settlement Agreement | 2026 Rights | SettlementCheck',
-  description: 'Understand what happens if you reject a settlement agreement in the UK. Learn about alternative workplace procedures, notice pay, and tribunal risks.',
+  title: 'Refusing a Settlement Agreement: Rights | SettlementCheck',
+  description:
+    'Understand what happens if you reject a settlement agreement in the UK. Learn about alternative workplace procedures, notice pay, and tribunal risks.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/what-happens-if-you-do-not-sign/',
   },
   openGraph: {
-    title: 'Not Signing a Settlement Agreement | 2026 Rights | SettlementCheck',
-    description: 'Understand what happens if you reject a settlement agreement in the UK. Learn about alternative workplace procedures, notice pay, and tribunal risks.',
+    title: 'Refusing a Settlement Agreement: Rights | SettlementCheck',
+    description:
+      'Understand what happens if you reject a settlement agreement in the UK. Learn about alternative workplace procedures, notice pay, and tribunal risks.',
     url: 'https://settlementcheck.co.uk/guides/what-happens-if-you-do-not-sign/',
     type: 'website',
     locale: 'en_GB',
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'What Happens if You Do Not Sign a Settlement Agreement? | SettlementCheck',
+    title: 'Refusing a Settlement Agreement: Rights | SettlementCheck',
     description: 'Notice pay rights, tribunal options, and what your employer can and cannot do if you reject their offer. Free guide.',
   },
 }

@@ -6,16 +6,16 @@ import FaqAccordion from '@/components/FaqAccordion'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Discrimination Settlement Agreements UK 2026 | Vento Bands & Tax Rules',
+  title: 'Discrimination Settlement Calculator UK | SettlementCheck',
   description:
-    'UK guide to discrimination settlement agreements in 2026. Learn about uncapped compensation, the Ninth Addendum Vento bands (£1,300 to £62,900+), and tax rules.',
+    'UK discrimination settlement guide 2026. Uncapped compensation, Ninth Addendum Vento bands (£1,300 to £62,900+), injury to feelings, and tax exemptions.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/discrimination-settlement-agreements/',
   },
   openGraph: {
-    title: 'Discrimination Settlement Agreements UK 2026 | Vento Bands & Tax Rules',
+    title: 'Discrimination Settlement Calculator UK | SettlementCheck',
     description:
-      'UK guide to discrimination settlement agreements in 2026. Learn about uncapped compensation, the Ninth Addendum Vento bands (£1,300 to £62,900+), and tax rules.',
+      'UK discrimination settlement guide 2026. Uncapped compensation, Ninth Addendum Vento bands (£1,300 to £62,900+), injury to feelings, and tax exemptions.',
     url: 'https://settlementcheck.co.uk/guides/discrimination-settlement-agreements/',
     type: 'website',
     locale: 'en_GB',
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Discrimination Settlement Agreements UK 2026 | Vento Bands & Tax Rules',
+    title: 'Discrimination Settlement Calculator UK | SettlementCheck',
     description:
-      'UK guide to discrimination settlement agreements in 2026. Learn about uncapped compensation, the Ninth Addendum Vento bands (£1,300 to £62,900+), and tax rules.',
+      'UK discrimination settlement guide 2026. Uncapped compensation, Ninth Addendum Vento bands (£1,300 to £62,900+), injury to feelings, and tax exemptions.',
   },
 }
 

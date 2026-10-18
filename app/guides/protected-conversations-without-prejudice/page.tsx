@@ -8,26 +8,26 @@ import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Protected Conversations & Without Prejudice UK | Section 111A Guide',
+  title: 'Protected Conversations: Section 111A | SettlementCheck',
   description:
-    'UK employee guide to Section 111A protected conversations and Without Prejudice rules. Learn your rights, improper behaviour limits, and 2026 statutory rates.',
+    'Section 111A protected conversations and Without Prejudice guide. Learn improper behaviour rules, negotiation protections, and April 2026 statutory caps.',
   alternates: {
-    canonical: '/guides/protected-conversations-without-prejudice/',
+    canonical: 'https://settlementcheck.co.uk/guides/protected-conversations-without-prejudice/',
   },
   openGraph: {
-    title: 'Protected Conversations & Without Prejudice UK | Section 111A Guide',
+    title: 'Protected Conversations: Section 111A | SettlementCheck',
     description:
-      'UK employee guide to Section 111A protected conversations and Without Prejudice rules. Learn your rights, improper behaviour limits, and 2026 statutory rates.',
-    url: '/guides/protected-conversations-without-prejudice/',
+      'Section 111A protected conversations and Without Prejudice guide. Learn improper behaviour rules, negotiation protections, and April 2026 statutory caps.',
+    url: 'https://settlementcheck.co.uk/guides/protected-conversations-without-prejudice/',
     type: 'article',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Protected Conversations & Without Prejudice UK | Section 111A Guide',
+    title: 'Protected Conversations: Section 111A | SettlementCheck',
     description:
-      'UK employee guide to Section 111A protected conversations and Without Prejudice rules. Learn your rights, improper behaviour limits, and 2026 statutory rates.',
+      'Section 111A protected conversations and Without Prejudice guide. Learn improper behaviour rules, negotiation protections, and April 2026 statutory caps.',
   },
 }
 

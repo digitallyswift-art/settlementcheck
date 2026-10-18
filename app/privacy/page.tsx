@@ -3,8 +3,9 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | SettlementCheck',
-  description: 'How SettlementCheck collects, uses, and protects your personal data in accordance with UK GDPR.',
+  title: 'Privacy Policy & UK GDPR Compliance | SettlementCheck',
+  description:
+    'Learn how SettlementCheck protects your confidential case data and privacy in accordance with UK GDPR and the Data Protection Act 2018. Updated 2026.',
   alternates: { canonical: 'https://settlementcheck.co.uk/privacy/' },
   robots: { index: true, follow: true },
 }

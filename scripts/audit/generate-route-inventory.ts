@@ -176,13 +176,13 @@ function extractPageMetadata(filePath: string, route: string) {
 
   // Title
   let title: string | null = null;
-  const titleMatch = content.match(/title:\s*['"]([^'"]+)['"]/);
-  if (titleMatch) title = titleMatch[1];
+  const titleMatch = content.match(/title:\s*(?:'([^']*)'|"([^"]*)")/);
+  if (titleMatch) title = titleMatch[1] ?? titleMatch[2];
 
   // Description
   let description: string | null = null;
-  const descMatch = content.match(/description:\s*['"]([^'"]+)['"]/);
-  if (descMatch) description = descMatch[1];
+  const descMatch = content.match(/description:\s*(?:'([^']*)'|"([^"]*)")/);
+  if (descMatch) description = (descMatch[1] ?? descMatch[2]).replace(/\s+/g, ' ').trim();
 
   // Canonical
   let canonical: string | null = null;

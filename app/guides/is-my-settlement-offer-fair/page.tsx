@@ -5,6 +5,8 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
+import InlineEstimator from '@/components/InlineEstimator'
+import InteractiveToolHook from '@/components/InteractiveToolHook'
 
 export const metadata: Metadata = {
   title: "Is My Employer's Settlement Offer Fair? | SettlementCheck",
@@ -166,6 +168,32 @@ export default function IsMyOfferFairGuide() {
           </div>
         </section>
 
+        {/* Interactive Tool Hook & Live Calculation Engine (AEO Zero-Click Defense) */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <InteractiveToolHook
+              badge="Interactive Benchmark Tool"
+              title="AI summaries cannot calculate your fair settlement benchmark"
+              description="Generic AI overviews only summarize headline rules. Run our free 2026 calculation engine to benchmark your specific offer against tribunal medians, statutory minimums, and commercial settlement ranges."
+              ctaText="Check my offer now →"
+              ctaHref="/calculator/"
+              statutoryPills={[
+                { label: 'Weekly Cap', value: '£751/week', citation: 'SI 2026/310' },
+                { label: 'Unfair Dismissal Cap', value: '£123,543', citation: 'ERA 1996 s.124' },
+                { label: 'Tax-Free Cap', value: 'First £30,000', citation: 'ITEPA 2003 s.403' },
+              ]}
+            />
+
+            <InlineEstimator
+              title="Settlement Offer Fairness Estimator"
+              subtitle="Compare your offer against the statutory redundancy floor and typical commercial negotiation ranges."
+              initialSalary={52000}
+              initialYears={4}
+              reason="redundancy"
+            />
+          </div>
+        </section>
+
         {/* Comparison table */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
@@ -192,7 +220,7 @@ export default function IsMyOfferFairGuide() {
                     <tr key={service}>
                       <td className="py-3 pr-4 font-medium text-ink">{service}</td>
                       <td className="py-3 px-4 text-muted">{stat}</td>
-                      <td className="py-3 pl-4 font-semibold text-emerald-800">{fair}</td>
+                      <td className="py-3 pl-4 font-semibold text-ink">{fair}</td>
                     </tr>
                   ))}
                 </tbody>

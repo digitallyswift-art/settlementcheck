@@ -7,16 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Unfair Dismissal Settlement Agreements UK 2026',
+  title: 'Unfair Dismissal Settlement Calculator | SettlementCheck',
   description:
-    'Calculate fair unfair dismissal settlements in 2026. Weekly cap £751, max compensatory award £123,543, tax-free limits, Polkey rules, and negotiation steps.',
+    'Calculate fair unfair dismissal settlements in 2026. £751 weekly cap, £123,543 max compensatory award, tax rules, Polkey reductions, and legal steps.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/unfair-dismissal-settlement-agreements/',
   },
   openGraph: {
-    title: 'Unfair Dismissal Settlement Agreements UK 2026',
+    title: 'Unfair Dismissal Settlement Calculator | SettlementCheck',
     description:
-      'Calculate fair unfair dismissal settlements in 2026. Weekly cap £751, max compensatory award £123,543, tax-free limits, Polkey rules, and negotiation steps.',
+      'Calculate fair unfair dismissal settlements in 2026. £751 weekly cap, £123,543 max compensatory award, tax rules, Polkey reductions, and legal steps.',
     url: 'https://settlementcheck.co.uk/guides/unfair-dismissal-settlement-agreements/',
     type: 'website',
     locale: 'en_GB',
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Unfair Dismissal Settlement Agreements UK 2026',
+    title: 'Unfair Dismissal Settlement Calculator | SettlementCheck',
     description:
-      'Calculate fair unfair dismissal settlements in 2026. Weekly cap £751, max compensatory award £123,543, tax-free limits, Polkey rules, and negotiation steps.',
+      'Calculate fair unfair dismissal settlements in 2026. £751 weekly cap, £123,543 max compensatory award, tax rules, Polkey reductions, and legal steps.',
   },
 }
 

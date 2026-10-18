@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/constructive-dismissal-calculator/`,              lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/settlement-agreement-tax-calculator/`,            lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/protective-award-calculator/`,                    lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/pip-settlement-calculator/`,                      lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
 
     // Tier 3: Explainer + how-it-works
     { url: `${base}/how-it-works/`,                                   lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
@@ -48,8 +49,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/guides/protective-award/`,                        lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/employment-tribunal-average-awards-uk/`,  lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
 
-    // Tier 5: Supplier-facing
+    // Tier 5: Supplier & B2B facing
     { url: `${base}/for-solicitors/`,                                 lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${base}/for-employers/`,                                  lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
 
     // Tier 6: Legal / footer pages
     { url: `${base}/privacy/`,                                        lastModified: now, changeFrequency: 'yearly',  priority: 0.2 },

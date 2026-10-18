@@ -9,15 +9,15 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
   description:
-    'Offered a settlement agreement instead of a PIP? Check 2026 rates (£751/wk), Section 111A rules, negotiation tactics, and £500+ legal fee coverage. Free guide.',
+    'Offered a settlement instead of a PIP? Check April 2026 rates (£751/wk), Section 111A protections, negotiation tactics, and £500+ legal fee coverage.',
   alternates: {
-    canonical: '/guides/settlement-agreement-instead-of-pip/',
+    canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-instead-of-pip/',
   },
   openGraph: {
     title: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
     description:
-      'Offered a settlement agreement instead of a PIP? Check 2026 rates (£751/wk), Section 111A rules, negotiation tactics, and £500+ legal fee coverage. Free guide.',
-    url: '/guides/settlement-agreement-instead-of-pip/',
+      'Offered a settlement instead of a PIP? Check April 2026 rates (£751/wk), Section 111A protections, negotiation tactics, and £500+ legal fee coverage.',
+    url: 'https://settlementcheck.co.uk/guides/settlement-agreement-instead-of-pip/',
     type: 'article',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
     description:
-      'Offered a settlement agreement instead of a PIP? Check 2026 rates (£751/wk), Section 111A rules, negotiation tactics, and £500+ legal fee coverage. Free guide.',
+      'Offered a settlement instead of a PIP? Check April 2026 rates (£751/wk), Section 111A protections, negotiation tactics, and £500+ legal fee coverage.',
   },
 }
 
@@ -281,6 +281,27 @@ export default function PipSettlementGuide() {
               </a>{' '}
               allows your employer to avoid these delays. By agreeing a financial exit, your employer eliminates weeks of administrative work. Crucially, a signed agreement waives your right to bring an employment tribunal claim.
             </p>
+
+            {/* Interactive Calculator Hook for PIP exits */}
+            <div className="my-6 p-5 rounded-xl bg-white border border-[#E2DCCE] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-coral font-bold block mb-1">
+                  Dedicated PIP Settlement Engine
+                </span>
+                <strong className="text-base text-ink block mb-1">
+                  Value your Performance Plan exit package
+                </strong>
+                <p className="text-xs text-muted m-0">
+                  Calculate employer process cost savings, statutory notice pay, and tax-free ex-gratia benchmarks.
+                </p>
+              </div>
+              <Link
+                href="/pip-settlement-calculator/"
+                className="px-4 py-2.5 bg-coral hover:bg-coral-ink text-white font-semibold text-xs rounded-lg transition-colors whitespace-nowrap shadow-sm text-center cursor-pointer"
+              >
+                Calculate PIP settlement →
+              </Link>
+            </div>
           </div>
         </section>
 

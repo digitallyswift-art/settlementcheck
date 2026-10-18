@@ -4,18 +4,20 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import InlineEstimator from '@/components/InlineEstimator'
+import InteractiveToolHook from '@/components/InteractiveToolHook'
 
 export const metadata: Metadata = {
-  title: 'Employment ACAS Settlement Calculations | SettlementCheck',
+  title: 'ACAS Settlement Agreement Calculations | SettlementCheck',
   description:
-    'How employment ACAS settlement calculations work. Learn the £751 weekly cap (April 2026), tax-free limits, notice pay rules, and statutory formulas. Free.',
+    'How negotiation benchmarks work. Understand the £751 weekly cap (April 2026), £30k tax exemption, PILON rules, and statutory redundancy baselines.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
   },
   openGraph: {
-    title: 'Employment ACAS Settlement Calculations | SettlementCheck',
+    title: 'ACAS Settlement Agreement Calculations | SettlementCheck',
     description:
-      'How employment ACAS settlement calculations work. Learn the £751 weekly cap (April 2026), tax-free limits, notice pay rules, and statutory formulas. Free.',
+      'How negotiation benchmarks work. Understand the £751 weekly cap (April 2026), £30k tax exemption, PILON rules, and statutory redundancy baselines.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
     type: 'website',
     locale: 'en_GB',
@@ -143,6 +145,32 @@ export default function AcasCalculationsGuide() {
             <p className="sc-lead">
               ACAS-based settlement calculations use statutory rates set by UK employment law. In April 2026, the weekly pay cap is £751 (SI 2026/310). This figure limits statutory redundancy pay and affects what your employer must offer before discussing additional compensation. Use our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link> to check your statutory baseline and tax-free allowances.
             </p>
+          </div>
+        </section>
+
+        {/* Interactive Tool Hook & Live Calculation Engine (AEO Zero-Click Defense) */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <InteractiveToolHook
+              badge="Interactive Calculation Engine"
+              title="AI summaries cannot calculate your ACAS-based statutory entitlement"
+              description="Generic AI summaries only provide statutory caps. To compute your exact age-tier redundancy formula (0.5x, 1.0x, 1.5x) and £30,000 tax exemption, use our verified calculation tool."
+              ctaText="Calculate my estimate →"
+              ctaHref="/calculator/"
+              statutoryPills={[
+                { label: 'Weekly Cap', value: '£751/week', citation: 'SI 2026/310' },
+                { label: 'Tax-Free Cap', value: 'First £30,000', citation: 'ITEPA 2003 s.403' },
+                { label: 'Max Redundancy', value: '£22,530', citation: 'ERA 1996 s.162' },
+              ]}
+            />
+
+            <InlineEstimator
+              title="ACAS-Based Settlement Payout Estimator"
+              subtitle="Calculate your statutory minimum floor and realistic negotiation settlement range under 2026 statutory rates."
+              initialSalary={45000}
+              initialYears={5}
+              reason="redundancy"
+            />
           </div>
         </section>
 

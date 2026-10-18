@@ -5,13 +5,15 @@ import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Employment Settlement Agreement Guides | SettlementCheck',
-  description: 'Plain-English guides on settlement agreements, negotiation, legal advice, and your rights as an employee in the UK.',
+  description:
+    'Expert UK settlement agreement guides on negotiation tactics, tax exemptions, statutory caps, and legal rights. Free advice, your employer covers fees.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/',
   },
   openGraph: {
     title: 'Employment Settlement Agreement Guides | SettlementCheck',
-    description: 'Plain-English guides on settlement agreements, negotiation, legal advice, and your rights as an employee in the UK.',
+    description:
+      'Expert UK settlement agreement guides on negotiation tactics, tax exemptions, statutory caps, and legal rights. Free advice, your employer covers fees.',
     url: 'https://settlementcheck.co.uk/guides/',
     type: 'website',
     locale: 'en_GB',
@@ -20,7 +22,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Employment Settlement Agreement Guides | SettlementCheck',
-    description: 'Plain-English guides on settlement agreements, negotiation, legal advice, and your rights as an employee in the UK.',
+    description:
+      'Expert UK settlement agreement guides on negotiation tactics, tax exemptions, statutory caps, and legal rights. Free advice, your employer covers fees.',
   },
 }
 

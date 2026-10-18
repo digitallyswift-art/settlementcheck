@@ -7,14 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
-  title: 'Do I Have to Use the Solicitor My Employer Recommends? | SettlementCheck',
-  description: 'No. You are entitled to choose your own solicitor for independent legal advice on a settlement agreement. Here is what the law says.',
+  title: 'Can I Choose My Own Settlement Solicitor? | SettlementCheck',
+  description:
+    'You have the legal right to choose your own independent settlement solicitor. Your employer must still pay the legal advice fee. Here is what the law says.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/employer-recommended-solicitor/',
   },
   openGraph: {
-    title: 'Do I Have to Use the Solicitor My Employer Recommends? | SettlementCheck',
-    description: 'No. You are entitled to choose your own solicitor for independent legal advice on a settlement agreement. Here is what the law says.',
+    title: 'Can I Choose My Own Settlement Solicitor? | SettlementCheck',
+    description:
+      'You have the legal right to choose your own independent settlement solicitor. Your employer must still pay the legal advice fee. Here is what the law says.',
     url: 'https://settlementcheck.co.uk/guides/employer-recommended-solicitor/',
     type: 'website',
     locale: 'en_GB',
@@ -22,8 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Do I Have to Use My Employer\'s Solicitor? | SettlementCheck',
-    description: 'You are free to choose your own solicitor. Your employer must still pay the contribution. Free guide.',
+    title: 'Can I Choose My Own Settlement Solicitor? | SettlementCheck',
+    description:
+      'You have the legal right to choose your own independent settlement solicitor. Your employer must still pay the legal advice fee. Free guide.',
   },
 }
 

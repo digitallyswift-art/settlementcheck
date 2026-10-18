@@ -18,12 +18,14 @@ const faqSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'How It Works | Settlement Agreement Advice UK | SettlementCheck',
-  description: 'Three steps: check your offer with our free calculator, get matched with a vetted SRA-regulated employment solicitor within 24 hours, and get honest advice. Your employer pays the fees.',
+  title: 'How SettlementCheck Works: Step-by-Step | SettlementCheck',
+  description:
+    'Check your offer in 60s, get matched with a vetted SRA employment solicitor within 24 hours, and sign with confidence. Your employer covers the fees.',
   alternates: { canonical: 'https://settlementcheck.co.uk/how-it-works/' },
   openGraph: {
-    title: 'How It Works | Settlement Agreement Advice UK',
-    description: 'Free settlement agreement calculator, vetted solicitor match within 24 hours, employer pays the legal fees.',
+    title: 'How SettlementCheck Works: Step-by-Step | SettlementCheck',
+    description:
+      'Check your offer in 60s, get matched with a vetted SRA employment solicitor within 24 hours, and sign with confidence. Your employer covers the fees.',
     url: 'https://settlementcheck.co.uk/how-it-works/',
     type: 'website',
   },

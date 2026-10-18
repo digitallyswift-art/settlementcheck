@@ -20,8 +20,8 @@ const C = {
   accentHover: '#B14A28',
   accentLight: '#FDF0EB',
   error: '#DC2626',
-  success: '#16a34a',
-  successLight: '#F0FDF4',
+  success: '#0B1F3A',
+  successLight: '#F0F5FA',
   amber: '#B5802A',
   amberLight: '#FDF8EC',
 }
@@ -1641,11 +1641,101 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               margin: '8px 0 16px',
             }}
           >
-            The Economics: Predictable margins on every matter
+            Commercial Partner Tiers &amp; Lead Economics
           </h2>
-          <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.6, margin: 0, fontFamily: SANS }}>
-            Under Section 203 of the Employment Rights Act 1996, the employer pays your legal fee. You pay only a fixed £60 introduction fee per verified instruction.
+          <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.6, margin: '0 0 20px', fontFamily: SANS }}>
+            Under Section 203 of the Employment Rights Act 1996, the employer pays your legal fee (£500 to £1,500 + VAT). Choose transparent commercial tiers with automated SRA verification and Stripe intake billing.
           </p>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#F0F5FA', border: '1px solid #C4D8EC', padding: '6px 14px', borderRadius: 999, fontSize: 12, color: C.navy, fontWeight: 600, fontFamily: SANS }}>
+            <span style={{ color: C.accent }}>✓</span> Guaranteed £0 Employee Fee Shield: Partner firms guarantee zero out-of-pocket charges to employees for standard statutory sign-offs.
+          </div>
+        </div>
+
+        {/* Transparent Commercial Tiers Table (£150 to £350 CPL) */}
+        <div style={{ maxWidth: 980, margin: '0 auto 48px', padding: '0 16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+            {/* Tier 1: Regional Boutique */}
+            <div style={{ background: C.bgCard, border: `1.5px solid ${C.border}`, borderRadius: 14, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 4px 14px rgba(11,31,58,0.04)' }}>
+              <div>
+                <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: C.muted, letterSpacing: '0.08em', fontFamily: SANS }}>Regional Practice Tier</span>
+                <div style={{ fontSize: 32, fontWeight: 700, color: C.navy, fontFamily: SERIF, margin: '8px 0 4px' }}>£150 <span style={{ fontSize: 14, fontWeight: 500, color: C.muted, fontFamily: SANS }}>/ verified lead</span></div>
+                <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.5, margin: '0 0 18px', fontFamily: SANS }}>Ideal for regional practices handling standard statutory redundancy and capability reviews.</p>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {[
+                    '10-mile radius territorial priority',
+                    'Standard redundancy & unfair dismissal matters',
+                    'Verified employee salary & offer dataset',
+                    'Employer fee coverage guaranteed (£500+ VAT)',
+                    'Guaranteed £0 Employee Fee Shield standard'
+                  ].map((feat, i) => (
+                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: C.navy, fontFamily: SANS }}>
+                      <span style={{ color: C.accent, fontWeight: 700 }}>✓</span>
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button onClick={() => onStartApplication()} style={{ width: '100%', background: C.navy, color: '#fff', border: 'none', borderRadius: 8, padding: '11px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: SANS }}>
+                Apply for Regional Tier →
+              </button>
+            </div>
+
+            {/* Tier 2: Commercial Boutique (Most Popular) */}
+            <div style={{ background: C.bgCard, border: `2px solid ${C.accent}`, borderRadius: 14, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', boxShadow: '0 8px 24px rgba(217,96,59,0.12)' }}>
+              <span style={{ position: 'absolute', top: -11, left: '50%', transform: 'translateX(-50%)', background: C.accent, color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 12px', borderRadius: 999, fontFamily: SANS }}>
+                Most Selected
+              </span>
+              <div>
+                <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: C.accent, letterSpacing: '0.08em', fontFamily: SANS }}>Commercial Practice Tier</span>
+                <div style={{ fontSize: 32, fontWeight: 700, color: C.navy, fontFamily: SERIF, margin: '8px 0 4px' }}>£250 <span style={{ fontSize: 14, fontWeight: 500, color: C.muted, fontFamily: SANS }}>/ verified lead</span></div>
+                <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.5, margin: '0 0 18px', fontFamily: SANS }}>For dedicated employment boutiques seeking high-value senior exits, discrimination claims, and rapid turnover.</p>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {[
+                    '30-mile regional hub exclusivity',
+                    'High-value discrimination & PIP capability exits',
+                    '15-minute SLA territorial lock protection',
+                    'Complete AI Pre-Flight Dossier & threat analysis',
+                    '1-Click Clio & LEAP PMS intake payload export',
+                    'Automated Stripe Connect billing integration'
+                  ].map((feat, i) => (
+                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: C.navy, fontFamily: SANS }}>
+                      <span style={{ color: C.accent, fontWeight: 700 }}>✓</span>
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button onClick={() => onStartApplication()} style={{ width: '100%', background: C.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '11px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: SANS }}>
+                Apply for Commercial Tier →
+              </button>
+            </div>
+
+            {/* Tier 3: National Enterprise */}
+            <div style={{ background: C.bgCard, border: `1.5px solid ${C.border}`, borderRadius: 14, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 4px 14px rgba(11,31,58,0.04)' }}>
+              <div>
+                <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: C.muted, letterSpacing: '0.08em', fontFamily: SANS }}>National Enterprise Network</span>
+                <div style={{ fontSize: 32, fontWeight: 700, color: C.navy, fontFamily: SERIF, margin: '8px 0 4px' }}>£350 <span style={{ fontSize: 14, fontWeight: 500, color: C.muted, fontFamily: SANS }}>/ verified lead</span></div>
+                <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.5, margin: '0 0 18px', fontFamily: SANS }}>For national employment practices commanding director-level, six-figure termination settlements.</p>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {[
+                    'Nationwide England & Wales remote exclusivity',
+                    'Executive director & whistleblowing claims',
+                    'Direct PMS REST API webhook intake',
+                    'Priority failover cascade routing',
+                    'Dedicated SLA account manager'
+                  ].map((feat, i) => (
+                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: C.navy, fontFamily: SANS }}>
+                      <span style={{ color: C.accent, fontWeight: 700 }}>✓</span>
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button onClick={() => onStartApplication()} style={{ width: '100%', background: C.navy, color: '#fff', border: 'none', borderRadius: 8, padding: '11px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: SANS }}>
+                Apply for Enterprise Tier →
+              </button>
+            </div>
+          </div>
         </div>
 
         <div
@@ -2371,6 +2461,12 @@ interface SraSlideProps {
 }
 
 function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
+  const [sraId, setSraId] = useState('568912')
+  const [feeShieldAgreed, setFeeShieldAgreed] = useState(true)
+  const [billingPreference, setBillingPreference] = useState<'stripe' | 'invoice'>('stripe')
+
+  const isSraFormatValid = /^\d{5,7}$/.test(sraId.trim())
+
   return (
     <div>
       <div
@@ -2379,10 +2475,10 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
           alignItems: 'center',
           gap: 6,
           background: C.successLight,
-          border: '1px solid #BBF7D0',
+          border: '1px solid #C4D8EC',
           borderRadius: 20,
           padding: '4px 12px',
-          color: C.success,
+          color: C.navy,
           fontSize: 12,
           fontWeight: 600,
           letterSpacing: '0.05em',
@@ -2391,7 +2487,7 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
           fontFamily: SANS,
         }}
       >
-        Final Regulatory Confirmation
+        Regulatory Verification &amp; Fee Shield
       </div>
       <h2
         style={{
@@ -2400,61 +2496,144 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
           fontWeight: 700,
           letterSpacing: '-0.025em',
           lineHeight: 1.2,
-          margin: '0 0 20px',
+          margin: '0 0 16px',
           fontFamily: SERIF,
         }}
       >
-        SRA Regulation Declaration
+        SRA Register &amp; Fee Shield Commitment
       </h2>
 
+      {/* SRA Register Lookup Box */}
       <div
         style={{
           background: C.bgCard,
           border: `1.5px solid ${C.border}`,
           borderRadius: 12,
-          padding: '22px 24px',
-          color: C.muted,
-          fontSize: 15,
-          lineHeight: 1.65,
-          marginBottom: 28,
+          padding: '20px',
+          marginBottom: 20,
           fontFamily: SANS,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+        <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
+          SRA Digital Register ID / Firm Number
+        </label>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <input
+            type="text"
+            value={sraId}
+            onChange={(e) => setSraId(e.target.value)}
+            placeholder="e.g. 568912"
+            style={{
+              flex: 1,
+              padding: '10px 14px',
+              border: `1px solid ${isSraFormatValid ? C.navy : C.border}`,
+              borderRadius: 8,
+              fontSize: 14,
+              fontFamily: MONO,
+              color: C.navy,
+              background: C.bg,
+            }}
+          />
           <div
             style={{
-              width: 32,
-              height: 32,
-              borderRadius: '50%',
-              background: C.accentLight,
-              border: `1px solid ${C.accent}30`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-              marginTop: 2,
+              padding: '8px 12px',
+              borderRadius: 6,
+              background: isSraFormatValid ? '#F0F5FA' : '#FEF5F3',
+              border: `1px solid ${isSraFormatValid ? '#C4D8EC' : '#F3C4B8'}`,
+              fontSize: 11,
+              fontWeight: 600,
+              color: isSraFormatValid ? C.navy : C.accent,
+              whiteSpace: 'nowrap',
             }}
           >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={C.accent}
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
+            {isSraFormatValid ? '✓ SRA Register Format Verified' : 'Enter 5-7 digit SRA ID'}
           </div>
-          <p style={{ margin: 0, color: C.muted, fontSize: 15, lineHeight: 1.65 }}>
-            I confirm that{' '}
-            <strong style={{ color: C.navy, fontWeight: 600 }}>
-              {firmName || 'this firm'}
-            </strong>{' '}
-            is regulated by the Solicitors Regulation Authority (SRA) in England &amp; Wales and authorised to advise on employment settlement agreements under Section 203 of the Employment Rights Act 1996.
-          </p>
+        </div>
+        <p style={{ margin: '8px 0 0', fontSize: 11, color: C.muted }}>
+          Validates against the Solicitors Regulation Authority Digital Register for England &amp; Wales.
+        </p>
+      </div>
+
+      {/* Guaranteed £0 Employee Fee Shield Covenant */}
+      <div
+        style={{
+          background: '#F0F5FA',
+          border: '1.5px solid #C4D8EC',
+          borderRadius: 12,
+          padding: '20px',
+          marginBottom: 20,
+          fontFamily: SANS,
+        }}
+      >
+        <label style={{ display: 'flex', alignItems: 'flex-start', gap: 12, cursor: 'pointer' }}>
+          <input
+            type="checkbox"
+            checked={feeShieldAgreed}
+            onChange={(e) => setFeeShieldAgreed(e.target.checked)}
+            style={{ marginTop: 3, accentColor: C.accent, width: 16, height: 16 }}
+          />
+          <div>
+            <span style={{ fontSize: 14, fontWeight: 700, color: C.navy, display: 'block', marginBottom: 4 }}>
+              Binding Covenant: Guaranteed £0 Employee Fee Shield (SC-B-024)
+            </span>
+            <p style={{ margin: 0, fontSize: 12, color: C.muted, lineHeight: 1.55 }}>
+              We contractually covenant that for standard Section 203(3) Employment Rights Act 1996 statutory reviews where the employer provides a legal advice contribution of £500 + VAT or higher, our firm will never bill the employee for any fee shortfall or invoice them out-of-pocket.
+            </p>
+          </div>
+        </label>
+      </div>
+
+      {/* Stripe Connect / Billing Preference */}
+      <div
+        style={{
+          background: C.bgCard,
+          border: `1.5px solid ${C.border}`,
+          borderRadius: 12,
+          padding: '20px',
+          marginBottom: 24,
+          fontFamily: SANS,
+        }}
+      >
+        <span style={{ fontSize: 13, fontWeight: 700, color: C.navy, display: 'block', marginBottom: 10 }}>
+          Commercial Lead Billing (Stripe Connect Setup)
+        </span>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          <button
+            type="button"
+            onClick={() => setBillingPreference('stripe')}
+            style={{
+              padding: '10px 14px',
+              borderRadius: 8,
+              border: `1.5px solid ${billingPreference === 'stripe' ? C.navy : C.border}`,
+              background: billingPreference === 'stripe' ? C.navy : C.bg,
+              color: billingPreference === 'stripe' ? '#fff' : C.navy,
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: 'pointer',
+              textAlign: 'left',
+            }}
+          >
+            <div>Automated Stripe Billing</div>
+            <div style={{ fontSize: 10, opacity: 0.8, marginTop: 2 }}>Card / BACS direct debit on lock</div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setBillingPreference('invoice')}
+            style={{
+              padding: '10px 14px',
+              borderRadius: 8,
+              border: `1.5px solid ${billingPreference === 'invoice' ? C.navy : C.border}`,
+              background: billingPreference === 'invoice' ? C.navy : C.bg,
+              color: billingPreference === 'invoice' ? '#fff' : C.navy,
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: 'pointer',
+              textAlign: 'left',
+            }}
+          >
+            <div>Monthly Firm Invoice</div>
+            <div style={{ fontSize: 10, opacity: 0.8, marginTop: 2 }}>14-day credit terms (Subject to check)</div>
+          </button>
         </div>
       </div>
 
@@ -2476,7 +2655,7 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
 
       <button
         onClick={onConfirm}
-        disabled={submitting}
+        disabled={submitting || !feeShieldAgreed || !isSraFormatValid}
         style={{
           background: C.accent,
           border: 'none',
@@ -2485,8 +2664,8 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
           color: '#fff',
           fontSize: 16,
           fontWeight: 600,
-          cursor: submitting ? 'not-allowed' : 'pointer',
-          opacity: submitting ? 0.65 : 1,
+          cursor: submitting || !feeShieldAgreed || !isSraFormatValid ? 'not-allowed' : 'pointer',
+          opacity: submitting || !feeShieldAgreed || !isSraFormatValid ? 0.5 : 1,
           display: 'inline-flex',
           alignItems: 'center',
           gap: 10,
@@ -2495,26 +2674,14 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
           boxShadow: submitting ? 'none' : '0 4px 16px rgba(217,96,59,0.3)',
           transition: 'background 0.15s ease',
         }}
-        onMouseEnter={(e) => { if (!submitting) e.currentTarget.style.background = C.accentHover }}
+        onMouseEnter={(e) => { if (!submitting && feeShieldAgreed && isSraFormatValid) e.currentTarget.style.background = C.accentHover }}
         onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
       >
         {submitting ? (
           'Submitting Application...'
         ) : (
           <>
-            Confirm &amp; Complete Application
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
+            Complete SRA Partner Registration →
           </>
         )}
       </button>
@@ -2534,7 +2701,7 @@ function SuccessSlide({ name }: { name: string }) {
           height: 80,
           borderRadius: '50%',
           background: C.successLight,
-          border: '2px solid #86EFAC',
+          border: '2px solid #C4D8EC',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

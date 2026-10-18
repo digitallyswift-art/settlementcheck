@@ -5,6 +5,8 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
+import InlineEstimator from '@/components/InlineEstimator'
+import InteractiveToolHook from '@/components/InteractiveToolHook'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -14,13 +16,13 @@ const STATIC_METADATA: Metadata = {
   description:
     'Free UK settlement agreement tax guide. First £30,000 is tax-free. Learn which payments qualify, how the excess is taxed, and check your offer. No email.',
   alternates: {
-    canonical: '/guides/tax-free-settlement-30000/',
+    canonical: 'https://settlementcheck.co.uk/guides/tax-free-settlement-30000/',
   },
   openGraph: {
     title: 'Tax-Free Settlement 2026 | £30k Rule | SettlementCheck',
     description:
       'Free UK settlement agreement tax guide. First £30,000 is tax-free. Learn which payments qualify, how the excess is taxed, and check your offer. No email.',
-    url: '/guides/tax-free-settlement-30000/',
+    url: 'https://settlementcheck.co.uk/guides/tax-free-settlement-30000/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -225,6 +227,32 @@ export default function TaxFreeSettlementGuide() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Interactive Tool Hook & Live Calculation Engine (AEO Zero-Click Defense) */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <InteractiveToolHook
+              badge="Interactive Tax Calculation Engine"
+              title="Static AI Overviews cannot calculate your exact Post-Employment Notice Pay"
+              description="Generic AI summaries only quote the £30,000 headline figure. They cannot compute your individual Post-Employment Notice Pay (PENP s.402D) or progressive tax bands. Calculate your net payout instantly."
+              ctaText="Calculate my tax breakdown →"
+              ctaHref="/settlement-agreement-tax-calculator/"
+              statutoryPills={[
+                { label: 'Ex-Gratia Cap', value: 'First £30,000', citation: 'ITEPA 2003 s.403' },
+                { label: 'Notice Pay (PENP)', value: '100% Taxable', citation: 'ITEPA 2003 s.402D' },
+                { label: 'Employee NI', value: '0% Exemption', citation: 'Social Security Act 1992' },
+              ]}
+            />
+
+            <InlineEstimator
+              title="Settlement Agreement Tax Split Estimator"
+              subtitle="Calculate your tax-free ex-gratia amount, taxable notice pay, and estimated net take-home figure."
+              initialSalary={55000}
+              initialYears={5}
+              reason="redundancy"
+            />
           </div>
         </section>
 

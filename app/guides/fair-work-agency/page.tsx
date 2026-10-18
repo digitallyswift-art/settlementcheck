@@ -7,17 +7,17 @@ import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'What Is the Fair Work Agency? UK Employment Guide 2026',
+  title: 'What Is the Fair Work Agency? Guide | SettlementCheck',
   description:
-    'The Fair Work Agency is a new UK enforcement body under the Employment Rights Bill 2024-25. Not yet operational. Learn what it will do and how it impacts settlements.',
+    'The Fair Work Agency is a new UK enforcement body under the Employment Rights Bill. Learn its remit, enforcement powers, and impact on settlement talks.',
   alternates: {
-    canonical: '/guides/fair-work-agency/',
+    canonical: 'https://settlementcheck.co.uk/guides/fair-work-agency/',
   },
   openGraph: {
-    title: 'What Is the Fair Work Agency? UK Employment Guide 2026',
+    title: 'What Is the Fair Work Agency? Guide | SettlementCheck',
     description:
-      'The Fair Work Agency is a new UK enforcement body under the Employment Rights Bill 2024-25. Not yet operational. Learn what it will do and how it impacts settlements.',
-    url: '/guides/fair-work-agency/',
+      'The Fair Work Agency is a new UK enforcement body under the Employment Rights Bill. Learn its remit, enforcement powers, and impact on settlement talks.',
+    url: 'https://settlementcheck.co.uk/guides/fair-work-agency/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

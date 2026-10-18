@@ -231,6 +231,9 @@ export default function Nav() {
           <Link href="/for-solicitors/" className="text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1">
             For solicitors
           </Link>
+          <Link href="/for-employers/" className="text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1">
+            For employers
+          </Link>
           <Link href="/calculator/" className="btn-accent text-[14px] px-5 py-2.5">
             Check my offer →
           </Link>
@@ -344,6 +347,9 @@ export default function Nav() {
           </Link>
           <Link href="/for-solicitors/" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
             For solicitors
+          </Link>
+          <Link href="/for-employers/" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
+            For employers
           </Link>
           <Link
             href="/calculator/"

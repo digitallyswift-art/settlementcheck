@@ -9,14 +9,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Settlement Agreement on Sick Leave: UK Rights & Pay (2026)',
   description:
-    'Off sick and offered a settlement agreement? Learn your 2026 UK pay rights, full notice pay rules, £30,000 tax relief, and why your employer covers your fees.',
+    'Off sick and offered a settlement? Check 2026 UK statutory pay rights, notice pay rules, £30,000 tax exemptions, and employer legal fee contributions.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-sick-leave/',
   },
   openGraph: {
     title: 'Settlement Agreement on Sick Leave: UK Rights & Pay (2026)',
     description:
-      'Off sick and offered a settlement agreement? Learn your 2026 UK pay rights, full notice pay rules, £30,000 tax relief, and why your employer covers your fees.',
+      'Off sick and offered a settlement? Check 2026 UK statutory pay rights, notice pay rules, £30,000 tax exemptions, and employer legal fee contributions.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-sick-leave/',
     type: 'article',
     locale: 'en_GB',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Settlement Agreement on Sick Leave: UK Rights & Pay (2026)',
     description:
-      'Off sick and offered a settlement agreement? Learn your 2026 UK pay rights, full notice pay rules, £30,000 tax relief, and why your employer covers your fees.',
+      'Off sick and offered a settlement? Check 2026 UK statutory pay rights, notice pay rules, £30,000 tax exemptions, and employer legal fee contributions.',
   },
 }
 

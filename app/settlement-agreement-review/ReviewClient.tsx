@@ -6,6 +6,9 @@ import Link from 'next/link'
 import type { AuditReport } from '@/lib/ai/agents/settlement-auditor'
 import { getOfficialBenchmark, OfficialBenchmarkData } from '@/lib/statutory-rates'
 import { trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
+import { AcasWatchdog } from '@/components/AcasWatchdog'
+import { WithoutPrejudiceClarification } from '@/components/WithoutPrejudiceClarification'
+import { RestrictiveCovenantScanner } from '@/components/RestrictiveCovenantScanner'
 
 const SAMPLE_AGREEMENT = `1. The Employment will terminate on 30 April 2026 by mutual agreement.
 2. Subject to the Employee complying with this Agreement, the Employer shall pay an Ex-Gratia termination payment of £38,000.
@@ -182,6 +185,7 @@ export default function ReviewClient() {
   const [stepIndex, setStepIndex] = useState(0)
   const [report, setReport] = useState<AuditReport | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<'audit' | 'watchdog' | 'clarification' | 'covenants'>('audit')
 
   useEffect(() => {
     if (!searchParams) return
@@ -286,9 +290,79 @@ export default function ReviewClient() {
         </p>
       </div>
 
-      {/* Input Form Box */}
-      <div className="bg-card border border-rule rounded-xl p-6 sm:p-8 shadow-sm mb-8">
-        <form onSubmit={handleReview} className="space-y-6">
+      {/* Interactive Tool Suite Tabs */}
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+        <button
+          type="button"
+          onClick={() => setActiveTab('audit')}
+          className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            activeTab === 'audit'
+              ? 'bg-[#0B1F3A] text-white shadow-sm'
+              : 'bg-white text-[#0B1F3A] border border-[#E2DCCE] hover:border-[#0B1F3A]'
+          }`}
+        >
+          1. Full Agreement Audit
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('watchdog')}
+          className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            activeTab === 'watchdog'
+              ? 'bg-[#0B1F3A] text-white shadow-sm'
+              : 'bg-white text-[#0B1F3A] border border-[#E2DCCE] hover:border-[#0B1F3A]'
+          }`}
+        >
+          2. ACAS 10-Day Watchdog
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('clarification')}
+          className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            activeTab === 'clarification'
+              ? 'bg-[#0B1F3A] text-white shadow-sm'
+              : 'bg-white text-[#0B1F3A] border border-[#E2DCCE] hover:border-[#0B1F3A]'
+          }`}
+        >
+          3. Without Prejudice Clarification Mode
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('covenants')}
+          className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            activeTab === 'covenants'
+              ? 'bg-[#0B1F3A] text-white shadow-sm'
+              : 'bg-white text-[#0B1F3A] border border-[#E2DCCE] hover:border-[#0B1F3A]'
+          }`}
+        >
+          4. Restrictive Covenant Scanner
+        </button>
+      </div>
+
+      {/* Standalone Tool Views */}
+      {activeTab === 'watchdog' && (
+        <div className="mb-8">
+          <AcasWatchdog />
+        </div>
+      )}
+
+      {activeTab === 'clarification' && (
+        <div className="mb-8">
+          <WithoutPrejudiceClarification
+            initialOfferAmount={report?.extractedTerms.exGratiaAmount ? Number(report.extractedTerms.exGratiaAmount) : undefined}
+          />
+        </div>
+      )}
+
+      {activeTab === 'covenants' && (
+        <div className="mb-8">
+          <RestrictiveCovenantScanner initialClauseText={agreementText} />
+        </div>
+      )}
+
+      {/* Input Form Box (Only shown when activeTab === 'audit') */}
+      {activeTab === 'audit' && (
+        <div className="bg-card border border-rule rounded-xl p-6 sm:p-8 shadow-sm mb-8">
+          <form onSubmit={handleReview} className="space-y-6">
           <div>
             <div className="flex justify-between items-center mb-2">
               <label htmlFor="agreement-text" className="block text-sm font-semibold text-ink">
@@ -412,9 +486,10 @@ export default function ReviewClient() {
           </div>
         )}
       </div>
+    )}
 
       {/* Generated Review Report Card */}
-      {report && (
+      {activeTab === 'audit' && report && (
         <div className="space-y-6">
           {/* Executive Overview */}
           <div className="bg-card border border-rule rounded-xl p-6 sm:p-8 shadow-sm">
@@ -534,6 +609,23 @@ export default function ReviewClient() {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Protective Negotiation Tools & Statutory Shields */}
+            <div className="pt-6 border-t border-rule space-y-6">
+              <div className="border-b border-rule pb-2">
+                <span className="text-xs font-mono uppercase tracking-wider text-coral font-semibold block mb-0.5">
+                  Statutory Protection &amp; Negotiation Shield Tools
+                </span>
+                <h3 className="text-lg font-serif font-bold text-ink">
+                  Acas Consideration Watchdog, Clarification Generator &amp; Covenant Scanner
+                </h3>
+              </div>
+              <AcasWatchdog />
+              <WithoutPrejudiceClarification
+                initialOfferAmount={report.extractedTerms.exGratiaAmount ? Number(report.extractedTerms.exGratiaAmount) : undefined}
+              />
+              <RestrictiveCovenantScanner initialClauseText={agreementText} />
             </div>
 
             {/* High-Intent Next Step Box */}

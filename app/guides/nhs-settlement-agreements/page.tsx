@@ -10,15 +10,15 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'NHS Settlement & MARS Calculator 2026 | SettlementCheck',
   description:
-    'Calculate your NHS settlement and MARS redundancy payout under Agenda for Change. HM Treasury approval rules, £100k cap, pension rules, and tax-free limits.',
+    'Calculate NHS settlement and MARS redundancy payouts under Agenda for Change. HM Treasury rules, £100k cap, pension terms, and £30,000 tax exemptions.',
   alternates: {
-    canonical: '/guides/nhs-settlement-agreements/',
+    canonical: 'https://settlementcheck.co.uk/guides/nhs-settlement-agreements/',
   },
   openGraph: {
     title: 'NHS Settlement & MARS Calculator 2026 | SettlementCheck',
     description:
-      'Calculate your NHS settlement and MARS redundancy payout under Agenda for Change. HM Treasury approval rules, £100k cap, pension rules, and tax-free limits.',
-    url: '/guides/nhs-settlement-agreements/',
+      'Calculate NHS settlement and MARS redundancy payouts under Agenda for Change. HM Treasury rules, £100k cap, pension terms, and £30,000 tax exemptions.',
+    url: 'https://settlementcheck.co.uk/guides/nhs-settlement-agreements/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'NHS Settlement & MARS Calculator 2026 | SettlementCheck',
     description:
-      'Calculate your NHS settlement and MARS redundancy payout under Agenda for Change. HM Treasury approval rules, £100k cap, pension rules, and tax-free limits.',
+      'Calculate NHS settlement and MARS redundancy payouts under Agenda for Change. HM Treasury rules, £100k cap, pension terms, and £30,000 tax exemptions.',
   },
 }
 

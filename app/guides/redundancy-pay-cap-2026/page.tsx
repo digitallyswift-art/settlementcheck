@@ -4,29 +4,31 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import InlineEstimator from '@/components/InlineEstimator'
+import InteractiveToolHook from '@/components/InteractiveToolHook'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Redundancy Pay Cap 2026 | £751 Weekly Limit | SettlementCheck',
+  title: 'Redundancy Pay Cap 2026 (£751/wk) | SettlementCheck',
   description:
     'Check the UK redundancy pay cap for 2026 (£751/week limit). Find calculations, worked examples, and what to do if your employer got it wrong. No email.',
   alternates: {
-    canonical: '/guides/redundancy-pay-cap-2026/',
+    canonical: 'https://settlementcheck.co.uk/guides/redundancy-pay-cap-2026/',
   },
   openGraph: {
-    title: 'Redundancy Pay Cap 2026 | £751 Weekly Limit | SettlementCheck',
+    title: 'Redundancy Pay Cap 2026 (£751/wk) | SettlementCheck',
     description:
       'Check the UK redundancy pay cap for 2026 (£751/week limit). Find calculations, worked examples, and what to do if your employer got it wrong. No email.',
-    url: '/guides/redundancy-pay-cap-2026/',
+    url: 'https://settlementcheck.co.uk/guides/redundancy-pay-cap-2026/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Redundancy Pay Cap 2026 | £751 Weekly Limit | SettlementCheck',
+    title: 'Redundancy Pay Cap 2026 (£751/wk) | SettlementCheck',
     description:
       'Check the UK redundancy pay cap for 2026 (£751/week limit). Find calculations, worked examples, and what to do if your employer got it wrong. No email.',
   },
@@ -224,6 +226,32 @@ export default function RedundancyPayCapGuide() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Interactive Tool Hook & Live Calculation Engine (AEO Zero-Click Defense) */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <InteractiveToolHook
+              badge="Interactive Redundancy Engine"
+              title="Static AI Overviews cannot calculate your individual service breakdown"
+              description="Generic AI summaries only quote the £751 weekly cap. To calculate your actual age-weighted entitlement (0.5x, 1.0x, 1.5x) and see your statutory minimum floor, use our live tool."
+              ctaText="Calculate my estimate →"
+              ctaHref="/redundancy-calculator/"
+              statutoryPills={[
+                { label: 'Weekly Cap', value: '£751/week', citation: 'SI 2026/310' },
+                { label: 'Max Redundancy', value: '£22,530', citation: 'ERA 1996 s.162' },
+                { label: 'Max Service', value: '20 Years', citation: 'ERA 1996 s.162(2)' },
+              ]}
+            />
+
+            <InlineEstimator
+              title="Redundancy Statutory Floor Estimator"
+              subtitle="Calculate your exact statutory redundancy entitlement based on your age, service, and salary under April 2026 caps."
+              initialSalary={48000}
+              initialYears={6}
+              reason="redundancy"
+            />
           </div>
         </section>
 

@@ -4,20 +4,22 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import InlineEstimator from '@/components/InlineEstimator'
+import InteractiveToolHook from '@/components/InteractiveToolHook'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Employee Compromise Agreement Calculator UK | SettlementCheck',
+  title: 'Compromise Agreement Calculator UK (2026) | SettlementCheck',
   description:
-    'Calculate your employee compromise agreement payout in 2026 (£751 cap). Redundancy, PILON, and tax-free compensation breakdown. Free instant guide.',
+    'Calculate your compromise agreement payout in 2026 (£751 cap). Statutory redundancy, PILON, and tax-free compensation breakdown. Free instant tool.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/compromise-agreement-calculator-uk/',
   },
   openGraph: {
-    title: 'Employee Compromise Agreement Calculator UK | SettlementCheck',
+    title: 'Compromise Agreement Calculator UK (2026) | SettlementCheck',
     description:
-      'Calculate your employee compromise agreement payout in 2026 (£751 cap). Redundancy, PILON, and tax-free compensation breakdown. Free instant guide.',
+      'Calculate your compromise agreement payout in 2026 (£751 cap). Statutory redundancy, PILON, and tax-free compensation breakdown. Free instant tool.',
     url: 'https://settlementcheck.co.uk/guides/compromise-agreement-calculator-uk/',
     type: 'website',
     locale: 'en_GB',
@@ -27,7 +29,7 @@ const STATIC_METADATA: Metadata = {
     card: 'summary_large_image',
     title: 'Compromise Agreement Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your compromise agreement payout under 2026 UK statutory rules (£751 cap). Redundancy, PILON, and tax-free breakdown. Free, no email required.',
+      'Calculate your compromise agreement payout under 2026 statutory rules (£751 cap). Redundancy, PILON, and tax-free breakdown. Free check.',
   },
 }
 
@@ -248,6 +250,32 @@ export default function CompromiseAgreementCalculatorPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Interactive Tool Hook & Calculation Engine (AEO Zero-Click Defense) */}
+        <section className="py-6 bg-paper border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <InteractiveToolHook
+              badge="Interactive Calculation Engine"
+              title="Static AI Overviews cannot calculate your exact compromise agreement"
+              description="Google AI summaries only show statutory caps (£751/week). To calculate your exact age-weighted redundancy, Post-Employment Notice Pay (PENP), and £30,000 tax exemption, use our live calculation tool."
+              ctaText="Calculate my estimate →"
+              ctaHref="/calculator/"
+              statutoryPills={[
+                { label: 'Weekly Cap', value: '£751/week', citation: 'SI 2026/310' },
+                { label: 'Tax-Free Cap', value: 'First £30,000', citation: 'ITEPA 2003 s.403' },
+                { label: 'Max Redundancy', value: '£22,530', citation: 'ERA 1996 s.162' },
+              ]}
+            />
+
+            <InlineEstimator
+              title="Compromise Agreement Payout Estimator"
+              subtitle="Calculate your statutory minimum floor and realistic negotiation settlement range under 2026 statutory rates."
+              initialSalary={50000}
+              initialYears={4}
+              reason="redundancy"
+            />
           </div>
         </section>
 

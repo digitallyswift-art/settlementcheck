@@ -7,14 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
-  title: 'Pressured to Sign a Settlement Agreement? | 10-Day Rule | SettlementCheck',
-  description: 'Understand your rights if your employer is pressuring you to sign a settlement agreement. Learn about the ACAS 10-day rule, improper behaviour, and your options.',
+  title: 'Pressured to Sign? The 10-Day ACAS Rule | SettlementCheck',
+  description:
+    'Rights when pressured to sign a settlement agreement. ACAS Code 4 minimum 10-day rule, improper behaviour under ERA 1996 s.111A, and fee protection.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/pressured-to-sign/',
   },
   openGraph: {
-    title: 'Pressured to Sign a Settlement Agreement? | 10-Day Rule | SettlementCheck',
-    description: 'Understand your rights if your employer is pressuring you to sign a settlement agreement. Learn about the ACAS 10-day rule, improper behaviour, and your options.',
+    title: 'Pressured to Sign? The 10-Day ACAS Rule | SettlementCheck',
+    description:
+      'Rights when pressured to sign a settlement agreement. ACAS Code 4 minimum 10-day rule, improper behaviour under ERA 1996 s.111A, and fee protection.',
     url: 'https://settlementcheck.co.uk/guides/pressured-to-sign/',
     type: 'website',
     locale: 'en_GB',
@@ -22,8 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pressured to Sign a Settlement Agreement? | SettlementCheck',
-    description: 'The ACAS 10-day rule, what counts as improper pressure, and your options if your employer is rushing you. Free guide.',
+    title: 'Pressured to Sign? The 10-Day ACAS Rule | SettlementCheck',
+    description:
+      'The ACAS 10-day rule, what counts as improper pressure, and your options if your employer is rushing you. Free guide.',
   },
 }
 

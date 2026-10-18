@@ -548,26 +548,127 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
           </div>
         )}
 
-        {/* ── Tab 6: PMS Integration & Export ──────────────────────────────── */}
+        {/* ── Tab 6: PMS Integration & Export (SC-B-027) ──────────────────────── */}
         {activeTab === 'pms' && (
           <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
-            <h3 className="font-serif font-bold text-xl">Practice Management System (PMS) Bi-Directional Sync</h3>
-            <p className="text-xs sm:text-sm text-[#0B1F3A]/70">
-              Zero-data-entry integration schema ready for Clio Grow/Manage, LEAP, and PracticeEvolve intake webhooks.
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#0B1F3A]/10 pb-4">
+              <div>
+                <span className="text-xs font-mono uppercase tracking-wider text-[#D9603B] font-semibold block mb-0.5">
+                  1-Click Practice Management Export (SC-B-027)
+                </span>
+                <h3 className="font-serif font-bold text-xl">
+                  Clio &amp; LEAP Legal Software Intake Integration
+                </h3>
+              </div>
+              <span className="text-xs font-mono bg-[#0B1F3A]/5 text-[#0B1F3A] px-2.5 py-1 rounded">
+                REST / Webhook / CSV
+              </span>
+            </div>
+
+            <p className="text-xs sm:text-sm text-[#0B1F3A]/70 leading-relaxed">
+              Eliminate manual case re-typing. Export verified settlement dossier payloads directly into Clio Grow/Manage, LEAP, or PracticeEvolve to maintain 15-minute SLA intake compliance.
             </p>
 
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-semibold text-[#0B1F3A]/70">clio_matter_intake_payload.json</span>
-                <button
-                  onClick={() => copyToClipboard(JSON.stringify(crmPayload.clioMatterPayload, null, 2), 'pms-tab')}
-                  className="px-3 py-1 text-xs font-semibold bg-[#0B1F3A] text-white rounded hover:bg-[#0B1F3A]/90 transition-colors"
-                >
-                  {copiedKey === 'pms-tab' ? '✓ Copied' : 'Copy JSON Payload'}
-                </button>
-              </div>
+            {/* 1-Click Action Buttons Strip */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Clio 1-Click Download */}
+              <button
+                type="button"
+                onClick={() => {
+                  const blob = new Blob([JSON.stringify(crmPayload.clioMatterPayload, null, 2)], { type: 'application/json' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `clio_matter_${dossierId}.json`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="p-3.5 bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Export Clio Intake (JSON)
+              </button>
 
-              <pre className="p-4 rounded-xl bg-[#0B1F3A] text-[#F7F4EE] text-xs font-mono overflow-x-auto leading-relaxed max-h-96">
+              {/* LEAP CSV 1-Click Download */}
+              <button
+                type="button"
+                onClick={() => {
+                  const headers = [
+                    'Matter ID', 'Lead Source', 'Client Name', 'Client Email', 'Client Phone', 'Client Postcode',
+                    'Tenure Years', 'Age', 'Gross Salary', 'Employer Offer', 'Statutory Minimum Floor',
+                    'Target Settlement', 'Employer Legal Fee Offered', 'Recommended Legal Fee Demand',
+                    'Strategic Verdict', 'SRA s203 Review Required'
+                  ];
+                  const row = [
+                    dossierId,
+                    crmPayload.leadSource,
+                    matterSummary.clientName,
+                    matterSummary.clientContact.email,
+                    matterSummary.clientContact.phone,
+                    matterSummary.clientContact.postcode,
+                    matterSummary.keyFigures.tenureYears,
+                    matterSummary.keyFigures.age,
+                    matterSummary.keyFigures.salary,
+                    matterSummary.keyFigures.employerOffer,
+                    matterSummary.keyFigures.statutoryMinimum,
+                    matterSummary.keyFigures.targetSettlement,
+                    matterSummary.keyFigures.employerLegalFeeOffered,
+                    matterSummary.keyFigures.recommendedLegalFeeDemand,
+                    matterSummary.strategicVerdict,
+                    'YES'
+                  ].map(v => `"${String(v).replace(/"/g, '""')}"`);
+                  const csvContent = `${headers.map(h => `"${h}"`).join(',')}\n${row.join(',')}`;
+                  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `leap_matter_${dossierId}.csv`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="p-3.5 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Export LEAP Intake (CSV)
+              </button>
+
+              {/* Copy Full Webhook Payload */}
+              <button
+                type="button"
+                onClick={() => copyToClipboard(JSON.stringify(crmPayload.clioMatterPayload, null, 2), 'pms-tab')}
+                className="p-3.5 bg-white border border-[#0B1F3A]/20 hover:border-[#0B1F3A] text-[#0B1F3A] rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+              >
+                {copiedKey === 'pms-tab' ? (
+                  <><span>✓</span> Copied JSON Payload</>
+                ) : (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    Copy REST Payload
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Code Preview */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-semibold text-[#0B1F3A]/70">
+                  Clio / LEAP Standard Intake Payload Preview
+                </span>
+                <span className="text-[11px] font-mono text-[#0B1F3A]/50">schema: settlementcheck.co.uk/v1</span>
+              </div>
+              <pre className="p-4 rounded-xl bg-[#0B1F3A] text-[#F7F4EE] text-xs font-mono overflow-x-auto leading-relaxed max-h-80">
                 {JSON.stringify(crmPayload.clioMatterPayload, null, 2)}
               </pre>
             </div>

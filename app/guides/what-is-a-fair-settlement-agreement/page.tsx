@@ -7,16 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
-  title: 'Fair Settlement Agreement From Employer? | SettlementCheck',
+  title: 'What Is a Fair Settlement Agreement? | SettlementCheck',
   description:
-    "Is your employer's settlement agreement fair? Understand the £751 weekly cap, multiplier benchmarks, and red flags for low severance offers. Free check.",
+    "Is your employer's settlement agreement fair? Understand the £751 weekly cap, multiplier benchmarks, and red flags for low settlement offers. Free check.",
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/what-is-a-fair-settlement-agreement/',
   },
   openGraph: {
-    title: 'Fair Settlement Agreement From Employer? | SettlementCheck',
+    title: 'What Is a Fair Settlement Agreement? | SettlementCheck',
     description:
-      "Is your employer's settlement agreement fair? Understand the £751 weekly cap, multiplier benchmarks, and red flags for low severance offers. Free check.",
+      "Is your employer's settlement agreement fair? Understand the £751 weekly cap, multiplier benchmarks, and red flags for low settlement offers. Free check.",
     url: 'https://settlementcheck.co.uk/guides/what-is-a-fair-settlement-agreement/',
     type: 'website',
     locale: 'en_GB',

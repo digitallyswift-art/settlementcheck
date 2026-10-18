@@ -142,6 +142,26 @@ const CALCULATORS: CalculatorCardData[] = [
     guideLabel: 'Read collective consultation guide',
   },
   {
+    id: 'pip-settlement',
+    title: 'PIP Settlement Calculator',
+    href: '/pip-settlement-calculator/',
+    badge: 'Performance & Capability Exit',
+    category: 'dismissal',
+    statutoryBasis: 'ERA 1996 s.111A · Acas Code 1',
+    description:
+      'Value your exit terms if placed on a Performance Improvement Plan or offered a protected conversation. Compare employer process cost avoidance and benchmark ex-gratia compensation.',
+    outputs: [
+      'Employer process cost avoidance estimate',
+      'Contractual notice (PILON) vs ex-gratia allocation',
+      'ERA 1996 s.108 2-year unfair dismissal standing check',
+      'Target settlement range and legal fee contribution target',
+    ],
+    timeToComplete: '45 secs',
+    primaryCta: 'Calculate my estimate →',
+    guideHref: '/guides/settlement-agreement-instead-of-pip/',
+    guideLabel: 'Read PIP settlement guide',
+  },
+  {
     id: 'settlement-review',
     title: 'Settlement Agreement & Contract Review',
     href: '/settlement-agreement-review/',

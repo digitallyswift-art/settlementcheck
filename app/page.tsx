@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Employment Settlement Calculator UK 2026 | SettlementCheck',
   description:
-    'Calculate your UK employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30k tax exemption. Free.',
+    'Calculate your settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and £30,000 tax-free exemption. Instant check.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/',
   },
   openGraph: {
     title: 'Employment Settlement Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your UK employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30k tax exemption. Free.',
+      'Calculate your settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and £30,000 tax-free exemption. Instant check.',
     url: 'https://settlementcheck.co.uk/',
     type: 'website',
     locale: 'en_GB',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Employment Settlement Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your UK employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30k tax exemption. Free.',
+      'Calculate your settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and £30,000 tax-free exemption. Instant check.',
   },
 }
 

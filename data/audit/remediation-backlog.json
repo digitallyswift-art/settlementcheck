@@ -119,7 +119,7 @@
   {
     "id": "SC-B-014",
     "priority": "P1",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "FORUM_DEMAND_MOAT",
     "finding": "SC-E-DEM-003: Employers weaponizing 48-hour or 72-hour artificial ultimatums, violating the ACAS Code of Practice 4 minimum 10-day consideration guideline.",
     "remediation": "Implement ACAS 10-Day Chrono-Watchdog on /settlement-agreement-review/ calculating remaining days and drafting an ACAS Code 4 extension notice.",
@@ -128,7 +128,7 @@
   {
     "id": "SC-B-015",
     "priority": "P1",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "FORUM_DEMAND_MOAT",
     "finding": "SC-E-DEM-002: Employees experiencing paralyzing fear that submitting a counter-proposal will cause the employer to withdraw the offer under the legal rule of Hyde v Wrench [1840].",
     "remediation": "Introduce 'Without Prejudice Clarification Mode' drafting exploratory inquiries that preserve the existing offer while negotiating terms.",
@@ -146,7 +146,7 @@
   {
     "id": "SC-B-017",
     "priority": "P2",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "SEO_AEO_ARCHITECTURE",
     "finding": "SC-E-SEO-009: Google AI Overviews suppress organic click-throughs on definitional queries (e.g. 476 zero-click impressions on 'compromise agreement calculator').",
     "remediation": "Deploy 'Interactive Tool Hooks' in title tags and meta descriptions, and embed comparison markdown tables under H2s to earn AI Overview citation carousel placement.",
@@ -155,7 +155,7 @@
   {
     "id": "SC-B-018",
     "priority": "P2",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "SEO_AEO_ARCHITECTURE",
     "finding": "SC-E-SEO-003 & 004: 16 page titles exceed 60 characters and 20 meta descriptions exceed 155 characters, causing truncation and lower CTR in Google search results.",
     "remediation": "Recalibrate all 16 titles to 50–60 characters and all 20 descriptions to 140–155 characters using Answer-First direct figures and active verbs.",
@@ -200,7 +200,7 @@
   {
     "id": "SC-B-023",
     "priority": "P2",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "CONVERSION_COMMERCIAL",
     "finding": "SC-E-COM-005: Solicitor partner acquisition on /for-solicitors/ is slowed by lack of transparent commercial tiers (£150–£350 CPL) and self-serve SRA firm verification.",
     "remediation": "Build transparent B2B pricing table with automated SRA digital register number lookup and Stripe billing integration.",
@@ -209,7 +209,7 @@
   {
     "id": "SC-B-024",
     "priority": "P2",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "FORUM_DEMAND_MOAT",
     "finding": "SC-E-DEM-005: Fear of solicitor fee shortfall creates friction preventing employees from seeking independent legal advice.",
     "remediation": "Formalize 'Guaranteed £0 Employee Fee Shield' in partner law firm contracts, ensuring standard reviews never bill the employee.",
@@ -218,7 +218,7 @@
   {
     "id": "SC-B-025",
     "priority": "P2",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "FORUM_DEMAND_MOAT",
     "finding": "SC-E-DEM-006: Employers inserting new post-termination restrictive covenants and 12-month non-competes not present in the original employment contract.",
     "remediation": "Build Restrictive Covenant Risk Scanner in /settlement-agreement-review/ auditing restraint of trade under Tillman v Egon Zehnder [2019].",
@@ -227,7 +227,7 @@
   {
     "id": "SC-B-026",
     "priority": "P2",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "FORUM_DEMAND_MOAT",
     "finding": "SC-E-DEM-008: High-velocity queries for PIP exits and NHS settlement agreements (1,442 live impressions) lack tailored intake calculator logic.",
     "remediation": "Launch dedicated programmatic calculators: (1) PIP Exit Valuator and (2) NHS MARS & Agenda for Change Redundancy Engine.",
@@ -236,7 +236,7 @@
   {
     "id": "SC-B-027",
     "priority": "P3",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "CONVERSION_COMMERCIAL",
     "finding": "SC-E-COM-007: Solicitor pre-flight dossier lacks 1-click Practice Management System (PMS) export (Clio / LEAP), requiring law firms to manually re-key intake data.",
     "remediation": "Implement 1-click Clio and LEAP PMS intake payload export (JSON / CSV / REST API) on /dossier/review/[id]/.",
@@ -245,7 +245,7 @@
   {
     "id": "SC-B-028",
     "priority": "P3",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "CONVERSION_COMMERCIAL",
     "finding": "SC-E-COM-008: Homepage hero lacks dynamic social proof counters and verified SRA network badges above the fold, increasing first-time visitor hesitation.",
     "remediation": "Add above-the-fold social proof banner ('Over £4.2M evaluated') and SRA regulatory clarification badges.",
@@ -254,7 +254,7 @@
   {
     "id": "SC-B-029",
     "priority": "P3",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "SECURITY_PRIVACY",
     "finding": "Partner solicitor portal lacks Multi-Factor Authentication (MFA / TOTP), leaving confidential employee case dossiers vulnerable to credential stuffing.",
     "remediation": "Enforce mandatory TOTP authenticator app or email OTP verification on /portal/ login.",
@@ -263,7 +263,7 @@
   {
     "id": "SC-B-030",
     "priority": "P3",
-    "status": "Proposed",
+    "status": "Resolved",
     "category": "ECOSYSTEM_MOAT_FEATURES",
     "finding": "Employers have zero self-serve tools on the platform, forcing them to conduct redundancy math manually or pay £350/hr for routine compromise agreement drafts.",
     "remediation": "Launch B2B 'SettlementCheck for Employers' portal allowing HR directors to bulk-calculate redundancy packages and dispatch S.203-compliant agreements to our solicitor network.",

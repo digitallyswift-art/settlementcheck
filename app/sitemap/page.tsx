@@ -4,13 +4,15 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'HTML Sitemap | SettlementCheck',
-  description: 'Complete directory of UK settlement agreement calculators, legal advice guides, redundancy tools, and resources on SettlementCheck.co.uk.',
+  title: 'Settlement Agreement Site Directory | SettlementCheck',
+  description:
+    'Complete directory of UK settlement agreement calculators, legal advice guides, redundancy tools, and employee resources on SettlementCheck.co.uk.',
   alternates: { canonical: 'https://settlementcheck.co.uk/sitemap/' },
   robots: { index: true, follow: true },
   openGraph: {
-    title: 'HTML Sitemap | SettlementCheck',
-    description: 'Explore all calculators, statutory rights guides, and legal resources on SettlementCheck.',
+    title: 'Settlement Agreement Site Directory | SettlementCheck',
+    description:
+      'Complete directory of UK settlement agreement calculators, legal advice guides, redundancy tools, and employee resources on SettlementCheck.co.uk.',
     url: 'https://settlementcheck.co.uk/sitemap/',
     type: 'website',
   },
@@ -77,6 +79,12 @@ const sitemapData: SitemapCategory[] = [
         description: 'Calculate your entitlement of up to 90 days gross pay for collective redundancy consultation failure under TULRCA 1992 s.189.',
         badge: 'New Tool',
       },
+      {
+        title: 'PIP Settlement Calculator',
+        href: '/pip-settlement-calculator/',
+        description: 'Value fair settlement packages during performance improvement plans based on employer process cost avoidance and s.111A discussions.',
+        badge: 'New Tool',
+      },
     ],
   },
   {
@@ -102,6 +110,12 @@ const sitemapData: SitemapCategory[] = [
         title: 'For Solicitors / Law Firms',
         href: '/for-solicitors/',
         description: 'Join our independent panel of verified UK employment law specialists.',
+      },
+      {
+        title: 'SettlementCheck for Employers',
+        href: '/for-employers/',
+        description: 'B2B collective redundancy budget modeler, s.111A packs, and s.203 solicitor dispatch for HR leaders.',
+        badge: 'B2B Portal',
       },
     ],
   },

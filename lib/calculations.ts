@@ -501,3 +501,94 @@ export function calcNhsExit({
     estimatedNet,
   };
 }
+
+export interface PipExitParams {
+  salary: number;
+  yearsOfService: number;
+  noticeWeeks?: number;
+  pipStage?: 'pre_pip' | 'formal_pip' | 'final_warning';
+  currentOffer?: number;
+}
+
+export interface PipExitResult {
+  monthlyGrossPay: number;
+  weeklyGrossPay: number;
+  contractualNoticePay: number;
+  hasUnfairDismissalRights: boolean;
+  processCostAvoidanceMin: number;
+  processCostAvoidanceMax: number;
+  benchmarkedExGratiaMin: number;
+  benchmarkedExGratiaMax: number;
+  recommendedSettlementTarget: number;
+  taxFreeExGratia: number;
+  taxableNotice: number;
+  estimatedNet: number;
+  legalFeeTarget: number;
+}
+
+export function calcPipExit({
+  salary,
+  yearsOfService,
+  noticeWeeks,
+  pipStage = 'formal_pip',
+  currentOffer = 0,
+}: PipExitParams): PipExitResult {
+  const monthlyGrossPay = Math.round(salary / 12);
+  const weeklyGrossPay = Math.round(salary / 52);
+  const years = Math.max(0, Math.floor(yearsOfService));
+
+  // Statutory notice (ERA 1996 s.86) vs contractual notice
+  const statutoryNoticeWeeks = years < 1 ? 1 : Math.min(years, 12);
+  const effectiveNoticeWeeks = noticeWeeks && noticeWeeks > 0 ? noticeWeeks : statutoryNoticeWeeks;
+  const contractualNoticePay = Math.round(weeklyGrossPay * effectiveNoticeWeeks);
+
+  // Unfair dismissal protection under ERA 1996 s.108 requires 2 complete years
+  const hasUnfairDismissalRights = years >= 2;
+
+  // PIP Process cost avoidance for employer:
+  // Running a 60-90 day PIP involves management time, HR hours, and salary during the procedure.
+  const stageMultiplier = pipStage === 'final_warning' ? 1.0 : pipStage === 'formal_pip' ? 2.0 : 2.5;
+  const processCostAvoidanceMin = Math.round(monthlyGrossPay * (stageMultiplier * 0.75));
+  const processCostAvoidanceMax = Math.round(monthlyGrossPay * (stageMultiplier * 1.25));
+
+  // Commercial ex-gratia benchmark range:
+  // With unfair dismissal rights: 2 to 3.5 months' pay. Without: 1 to 2 months' pay.
+  const exGratiaMonthsMin = hasUnfairDismissalRights ? 2.0 : 1.0;
+  const exGratiaMonthsMax = hasUnfairDismissalRights ? 3.5 : 2.0;
+
+  const benchmarkedExGratiaMin = Math.round(monthlyGrossPay * exGratiaMonthsMin);
+  const benchmarkedExGratiaMax = Math.round(monthlyGrossPay * exGratiaMonthsMax);
+
+  // Recommended settlement package (Notice + Ex-Gratia median)
+  const recommendedSettlementTarget = contractualNoticePay + Math.round((benchmarkedExGratiaMin + benchmarkedExGratiaMax) / 2);
+
+  // Tax treatment: Notice is 100% taxable (ITEPA s.402D), ex-gratia is tax-free up to £30k (s.403)
+  const targetExGratia = Math.max(0, recommendedSettlementTarget - contractualNoticePay);
+  const taxFreeExGratia = Math.min(targetExGratia, TAX_FREE_FLOOR);
+  const taxableExGratia = Math.max(0, targetExGratia - TAX_FREE_FLOOR);
+  const totalTaxable = contractualNoticePay + taxableExGratia;
+
+  const baseTax = calculateTotalIncomeTax(salary);
+  const totalTax = calculateTotalIncomeTax(salary + totalTaxable);
+  const estimatedTax = Math.max(0, Math.round(totalTax - baseTax));
+  const estimatedNet = recommendedSettlementTarget - estimatedTax;
+
+  const legalFeeTarget = hasUnfairDismissalRights ? 750 : 500;
+
+  return {
+    monthlyGrossPay,
+    weeklyGrossPay,
+    contractualNoticePay,
+    hasUnfairDismissalRights,
+    processCostAvoidanceMin,
+    processCostAvoidanceMax,
+    benchmarkedExGratiaMin,
+    benchmarkedExGratiaMax,
+    recommendedSettlementTarget,
+    taxFreeExGratia,
+    taxableNotice: contractualNoticePay,
+    estimatedNet,
+    legalFeeTarget,
+  };
+}
+

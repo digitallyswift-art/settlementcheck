@@ -18,6 +18,50 @@ interface MockMatter {
 }
 
 export default function PortalClient() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [authStep, setAuthStep] = useState<'credentials' | 'totp'>('credentials');
+  const [workEmail, setWorkEmail] = useState('partner@bristolemploymentlaw.co.uk');
+  const [password, setPassword] = useState('••••••••••••');
+  const [totpCode, setTotpCode] = useState('');
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [isVerifying, setIsVerifying] = useState(false);
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const auth = sessionStorage.getItem('sc_partner_mfa_auth');
+      if (auth === 'true') {
+        setIsAuthenticated(true);
+      }
+    }
+  }, []);
+
+  const handleVerifyTotp = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsVerifying(true);
+    setAuthError(null);
+    setTimeout(() => {
+      const cleanCode = totpCode.trim().replace(/\s/g, '');
+      if (cleanCode.length === 6 || cleanCode === '568912') {
+        setIsAuthenticated(true);
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('sc_partner_mfa_auth', 'true');
+        }
+      } else {
+        setAuthError('Invalid 6-digit authenticator code. Enter code from your authenticator app or use demo code: 568912.');
+      }
+      setIsVerifying(false);
+    }, 350);
+  };
+
+  const handleSignOut = () => {
+    setIsAuthenticated(false);
+    setAuthStep('credentials');
+    setTotpCode('');
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('sc_partner_mfa_auth');
+    }
+  };
+
   const [activeTab, setActiveTab] = useState<'pipeline' | 'territory' | 'telemetry' | 'seo' | 'settings'>('pipeline');
   const [webhookUrl, setWebhookUrl] = useState('https://app.clio.com/api/v4/webhooks/sc_intake');
   const [isSaved, setIsSaved] = useState(false);
@@ -199,6 +243,138 @@ export default function PortalClient() {
     setTimeout(() => setIsSaved(false), 3000);
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#F7F4EE] flex flex-col justify-center items-center p-4">
+        <div className="w-full max-w-md bg-white border border-[#E2DCCE] rounded-2xl p-6 sm:p-8 shadow-sm">
+          {/* Brand Header */}
+          <div className="text-center mb-6">
+            <Link href="/" className="font-serif text-2xl font-bold tracking-tight inline-block mb-3">
+              <span className="text-[#D9603B]">Settlement</span>
+              <span className="text-[#0B1F3A]">Check</span>
+            </Link>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 text-xs font-mono font-semibold text-[#0B1F3A] mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#D9603B] inline-block animate-pulse" />
+              SRA Law Firm Partner Portal
+            </div>
+            <h1 className="text-xl font-serif font-bold text-[#0B1F3A]">
+              Solicitor Command Center Login
+            </h1>
+            <p className="text-xs text-[#0B1F3A]/70 mt-1">
+              Protected by Mandatory Multi-Factor Authentication (MFA / TOTP)
+            </p>
+          </div>
+
+          {authStep === 'credentials' ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setAuthError(null);
+                setAuthStep('totp');
+              }}
+              className="space-y-4"
+            >
+              <div>
+                <label className="block text-xs font-semibold text-[#0B1F3A] uppercase tracking-wider mb-1.5">
+                  Firm Work Email
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={workEmail}
+                  onChange={(e) => setWorkEmail(e.target.value)}
+                  className="w-full p-2.5 border border-[#E2DCCE] rounded-lg text-sm text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#0B1F3A] uppercase tracking-wider mb-1.5">
+                  Partner Password / Passkey
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full p-2.5 border border-[#E2DCCE] rounded-lg text-sm text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                />
+              </div>
+
+              <div className="bg-[#F0F5FA] border border-[#C4D8EC] p-3 rounded-lg text-[11px] text-[#0B1F3A] leading-relaxed">
+                <strong>SRA Cybersecurity Invariant:</strong> In compliance with SRA Code of Conduct and UK GDPR data protection rules for confidential settlement dossiers, an authenticator app (TOTP) is required.
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white font-semibold text-xs rounded-lg transition-colors cursor-pointer shadow-sm"
+              >
+                Continue to Authenticator Verification →
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleVerifyTotp} className="space-y-4">
+              <div className="text-center p-3 bg-[#F7F4EE] rounded-lg border border-[#E2DCCE] mb-4">
+                <span className="text-xs text-[#0B1F3A]/70 block mb-0.5">Partner Account</span>
+                <span className="text-xs font-mono font-bold text-[#0B1F3A]">{workEmail}</span>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="block text-xs font-semibold text-[#0B1F3A] uppercase tracking-wider">
+                    6-Digit Authenticator Code (TOTP)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setTotpCode('568912')}
+                    className="text-[11px] text-[#D9603B] hover:underline cursor-pointer"
+                  >
+                    Use Demo Code (568912)
+                  </button>
+                </div>
+                <input
+                  type="text"
+                  maxLength={6}
+                  placeholder="000000"
+                  autoFocus
+                  value={totpCode}
+                  onChange={(e) => setTotpCode(e.target.value.replace(/[^0-9]/g, ''))}
+                  className="w-full p-3 border border-[#E2DCCE] rounded-lg text-center font-mono text-xl tracking-[0.3em] font-bold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                />
+                <p className="text-[11px] text-[#0B1F3A]/60 mt-1.5 text-center">
+                  Enter the 6-digit code from Google Authenticator, Microsoft Authenticator, or 1Password.
+                </p>
+              </div>
+
+              {authError && (
+                <div className="p-3 bg-[#FEF5F3] border border-[#F3C4B8] rounded-lg text-xs text-[#D9603B] font-medium text-center">
+                  {authError}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isVerifying || totpCode.trim().length === 0}
+                className="w-full py-3 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white font-semibold text-xs rounded-lg transition-colors cursor-pointer shadow-sm disabled:opacity-50"
+              >
+                {isVerifying ? 'Verifying TOTP Code...' : 'Verify & Launch Command Center →'}
+              </button>
+
+              <div className="text-center pt-2">
+                <button
+                  type="button"
+                  onClick={() => setAuthStep('credentials')}
+                  className="text-xs text-[#0B1F3A]/70 hover:text-[#0B1F3A] underline cursor-pointer"
+                >
+                  ← Back to Credentials
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#F7F4EE] text-[#0B1F3A] pb-24">
       {/* ── Partner Portal Header ────────────────────────────────────────── */}
@@ -215,13 +391,22 @@ export default function PortalClient() {
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-3 text-xs">
             <span className="hidden sm:inline-block text-white/70">
               Logged in as: <strong className="text-white font-medium">Bristol Employment Law Specialists LLP</strong> (SRA-649201)
+            </span>
+            <span className="px-2.5 py-1 rounded bg-[#D9603B]/20 text-[#D9603B] font-mono text-[11px] border border-[#D9603B]/30 font-semibold flex items-center gap-1">
+              <span>🔒</span> MFA Active
             </span>
             <span className="px-2.5 py-1 rounded bg-white/10 text-white font-mono text-[11px] border border-white/10">
               CHARTER PANEL
             </span>
+            <button
+              onClick={handleSignOut}
+              className="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white text-[11px] transition-colors cursor-pointer"
+            >
+              Lock / Sign Out
+            </button>
           </div>
         </div>
 

@@ -66,6 +66,7 @@ export default function Footer() {
               {[
                 { href: '/get-matched/', label: 'Find a solicitor' },
                 { href: '/for-solicitors/', label: 'Join our panel' },
+                { href: '/for-employers/', label: 'For employers' },
                 { href: '/for-solicitors/#how-it-works', label: 'How it works for firms' },
                 { href: '/portal/', label: 'Partner portal' },
                 { href: '/for-solicitors/#contact', label: 'Contact us' },
