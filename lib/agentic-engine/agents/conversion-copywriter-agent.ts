@@ -1,7 +1,7 @@
 /**
  * Specialist Conversion Copywriter Agent
  * Writes and reviews high-converting, empathetic, brand-compliant copy for SettlementCheck.
- * Strictly adheres to .claude/BRAND.md rules:
+ * Strictly adheres to .agents/rules/brand-standards.md rules:
  * - Tone: Calm, clear, on their side
  * - UK English: "solicitor", "redundancy", "employment tribunal", "settlement"
  * - Key reassurance: "your employer covers the legal fees"
@@ -9,6 +9,7 @@
  */
 
 import { callAI } from '@/lib/ai/gateway';
+import { sanitizeMarketingClaims } from '../guardrails/cap-code-claims-guard';
 import { ConversionCopyPackage, SeoTechnicalBrief } from '../types';
 
 export class ConversionCopywriterAgent {
@@ -32,6 +33,9 @@ export class ConversionCopywriterAgent {
       .replace(/\bseverance\b/gi, 'settlement')
       .replace(/\blayoff\b/gi, 'redundancy')
       .replace(/\blabor court\b/gi, 'employment tribunal');
+
+    // Replace risky unverified marketing claims under CAP Code rules
+    sanitized = sanitizeMarketingClaims(sanitized).sanitizedText;
 
     return sanitized;
   }

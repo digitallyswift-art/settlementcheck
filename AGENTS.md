@@ -12,11 +12,31 @@ In your chat canvas:
   - `@seo-architect` — Invokes the SEO Architect for audits, meta tags, schema, keyword gaps, and internal linking.
   - `@conversion-copywriter` — Invokes the Conversion Copywriter for hero copy, CTAs, FAQs, and brand compliance.
   - `@link-checker` — Invokes the automated route and link verification workflow.
+  - `@stack-and-architecture` — Invokes Next.js App Router standards, Tailwind tokens, and tech stack guidelines.
+  - `@pages-and-components` — Invokes component catalog, CRO rules, and Calculator-to-Results URL contracts.
+  - `@calculator-and-data` — Invokes statutory formulas, Supabase database schemas, and OTP verification flows.
   - Any file or directory (e.g., `@app/sitemap.ts`, `@components/Nav.tsx`).
 - **Trigger Actions with `/`**: Type `/` to run built-in actions:
   - `/plan` — Create a structured step-by-step roadmap before executing large SEO or feature migrations.
   - `/goal` — Run thorough multi-step background optimization and validation tasks.
   - `/grill-me` — Interactive interview to clarify design, copy, or technical decisions before building.
+
+---
+
+## 1.5 Architectural Separation: IDE Customizations vs Application Engine
+
+- **Design-Time IDE Customizations (`.agents/`)**:
+  - Contains Antigravity IDE skills (`.agents/skills/`) and behavioral rules (`.agents/rules/`).
+  - Provides prompt runbooks that assist developers during AI pair programming.
+  - Never compiled into production bundles or executed by Next.js runtime.
+- **Production Runtime Engine (`lib/agentic-engine/`)**:
+  - Live TypeScript application code running in Next.js, APIs, and cron jobs:
+    - **`agents/`**: Cognitive entities calling LLMs via `callAI()` (`SeoArchitectAgent`, `ConversionCopywriterAgent`, `LegalComplianceAuditorAgent`).
+    - **`guardrails/`**: Deterministic regulatory and quality filters (`SraBoundaryGuard`, `CapCodeClaimsGuard`, `AntiAiQualityGuard`).
+    - **`orchestrator/`**: Master multi-agent state machines (`AgenticOrchestrator`, `SeoWorkflowOrchestrator`).
+    - **`workers/`**: Scheduled background executors and worker task definitions (`slaWatchdogWorker`, `triageWorker`, etc.).
+    - **`tools/`**: Pure deterministic calculation and lookup tools (`statutory-tools.ts`, `serp-tools.ts`).
+    - **`services/`**: External API clients and file system persistence (`gsc-client.ts`, `seo-actuator-service.ts`, `google-indexing-client.ts`).
 
 ---
 
@@ -36,11 +56,17 @@ Specialist in technical SEO, programmatic page architecture, search intent, JSON
 - `archive gsc` / `analyze gsc` — Automatically archives previous search console data and computes progress vs latest data.
 - `full site audit` — Comprehensive technical audit across all site routes.
 
+**Autonomous Multi-Agent Worker Fleet:**
+- `seoOpportunityWorker` (`lib/agentic-engine/workers/seo-opportunity-worker.ts`) — Evaluates GSC query signals and creates `SeoTechnicalBrief`.
+- `seoCopyWorker` (`lib/agentic-engine/workers/seo-copy-worker.ts`) — Generates 50-60 character titles, 140-155 character descriptions, and Answer-First FAQ blocks.
+- `legalComplianceWorker` (`lib/agentic-engine/workers/legal-compliance-worker.ts`) — Enforces April 2026 statutory rates, SRA boundary disclaimers, and ASA/CAP Code rules.
+- `seoActuatorWorker` (`lib/agentic-engine/workers/seo-actuator-worker.ts`) — Deploys validated optimizations to production and notifies Google Indexing API.
+
 ### B. `conversion-copywriter`
 Specialist in high-converting, empathetic, legally accurate copy tailored to stressed UK employees.
 
 **Key Commands to prompt the agent with:**
-- `review copy [file]` — Audits copy against `.claude/BRAND.md` rules (no em dashes, active voice, plain UK English, "your employer pays the fees", no banned corporate buzzwords).
+- `review copy [file]` — Audits copy against `.agents/rules/brand-standards.md` rules (no em dashes, active voice, plain UK English, "your employer pays the fees", no banned corporate buzzwords).
 - `rewrite cta [page]` — Generates high-intent CTA copy (e.g., "Check my offer now →", "Calculate my estimate →").
 - `faq [topic]` — Writes concise, answer-first FAQ accordions that qualify for Google Featured Snippets.
 
@@ -101,6 +127,27 @@ Specialist qualitative researcher mining real-world employee anxieties, settleme
 **Key Commands to prompt the agent with:**
 - `mine demand [topic]` — Extracts qualitative user demand evidence and builds structured entries for `forum-demand-matrix.md`.
 
+### J. `stack-and-architecture`
+Specialist in Next.js 14 App Router layout, Tailwind design tokens, typography, component hierarchies, and environment variables.
+
+**Key Commands to prompt the agent with:**
+- `check tokens [file]` — Audits CSS and Tailwind classes for brand token compliance (no arbitrary values).
+- `verify env` — Verifies client vs server environment variable boundaries.
+
+### K. `pages-and-components`
+Specialist in UI component architecture, Calculator-to-Results URL query param contracts, CRO rules, and LeadForm state machines.
+
+**Key Commands to prompt the agent with:**
+- `audit cro [page]` — Checks above-the-fold value delivery, mobile responsiveness, and zero email gating.
+- `verify contract [component]` — Validates search params contracts between Calculator and ResultsClient.
+
+### L. `calculator-and-data`
+Specialist in statutory calculation logic, April 2026 caps, verdict mathematical formulas, Supabase database schemas, and OTP security flow.
+
+**Key Commands to prompt the agent with:**
+- `audit rates` — Checks April 2026 statutory rates and caps across codebase.
+- `verify otp flow` — Audits 3-state OTP pipeline and database mutation security.
+
 ---
 
 ## 3. Brand & Technical Hard Stops
@@ -144,5 +191,11 @@ These rules are strictly binding on all AI pair programming sessions:
    - Ad-hoc, unpadded (`phase-1-`), or non-prefixed filenames are strictly prohibited.
    - Every markdown report's Line 1 H1 must strictly match `# Phase <ID> — <Title> Report`.
    - All references to other audit documents must be valid local file links.
+
+6. **Evidence-Bounded Inter-Agent Protocol (EBIAP) & Zero-Fabrication Contract**:
+   - **No Vanity Metrics**: Agents are strictly prohibited from generating hypothetical, estimated, or fabricated volume metrics (*"Over £XM evaluated"*, *"X,000 UK employees helped"*, *"4.9/5 satisfaction"*) as social proof.
+   - **Default to Statute, Never Fiction**: When conversion psychology requires trust badges or reassurance, agents must **always** draw from verified statutory mechanisms (e.g., April 2026 statutory rates, £0 employee legal fee under Section 203(3) ERA 1996, 10-day ACAS Code 4 period, SRA-regulated panel network) rather than invented marketing metrics.
+   - **The Coder Refusal Gate**: Coder agents must refuse to hardcode static string statistics or vanity counters unless backed by an authenticated SQL query / API endpoint or statutory constant in `lib/statutory-rates.ts`.
+   - **Typed Handoff Schema**: All inter-agent work packages touching claims or copy must declare their `claimClassification` (`STATUTORY_INVARIANT` | `SYSTEM_TELEMETRY` | `REGULATORY_STATUS` | `PURE_UX_NAVIGATION`) and attach verifiable `substantiationProof` validated via `validateAgentHandoff()`.
 
 

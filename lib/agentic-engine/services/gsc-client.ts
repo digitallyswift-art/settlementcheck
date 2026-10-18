@@ -7,6 +7,7 @@
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
+import { SafeFs } from './safe-fs';
 
 export interface GscQueryRow {
   query: string;
@@ -168,13 +169,10 @@ export class GoogleSearchConsoleClient {
           rowLimit: 2500,
         });
 
-        // Automatically archive the pulled API snapshot to disk
+        // Automatically archive the pulled API snapshot to disk or /tmp
         const archiveDir = path.resolve('data/gsc-history/api-snapshots');
-        if (!fs.existsSync(archiveDir)) {
-          fs.mkdirSync(archiveDir, { recursive: true });
-        }
         const snapshotFile = path.join(archiveDir, `gsc-pull-${endDate}.json`);
-        fs.writeFileSync(snapshotFile, JSON.stringify({ pulledAt: new Date().toISOString(), startDate, endDate, rows }, null, 2));
+        SafeFs.writeFileSyncSafe(snapshotFile, JSON.stringify({ pulledAt: new Date().toISOString(), startDate, endDate, rows }, null, 2));
 
         const totalClicks = rows.reduce((acc, r) => acc + r.clicks, 0);
         const totalImpressions = rows.reduce((acc, r) => acc + r.impressions, 0);

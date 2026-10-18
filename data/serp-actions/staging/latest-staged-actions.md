@@ -1,5 +1,5 @@
 # 🛡️ Autonomous SEO Actuator — Staged Review Digest
-**Generated At**: 2026-10-17T12:43:02.573Z
+**Generated At**: 2026-10-18T19:01:35.229Z
 **Compliance**: 100% BRAND.md & April 2026 Statutory Invariants
 
 ### 🎯 "settlement agreement calculator uk" [CRITICAL]
@@ -53,10 +53,10 @@
 
 ---
 ### 🎯 "settlement agreement tax calculator uk" [CRITICAL]
-- Target: [https://settlementcheck.co.uk/guides/settlement-agreement-tax-calculator-uk/](https://settlementcheck.co.uk/guides/settlement-agreement-tax-calculator-uk/)
+- Target: [https://settlementcheck.co.uk/settlement-agreement-tax-calculator/](https://settlementcheck.co.uk/settlement-agreement-tax-calculator/)
 - Title (58 chars): `Settlement Agreement Tax Calculator 2026 | SettlementCheck`
 - Meta (150 chars): `Calculate tax on your UK settlement agreement. See your £30,000 statutory tax exemption (ITEPA 2003). Free check. Your employer covers your legal fee.`
 - FAQ Answer: Under Section 403 of ITEPA 2003, genuine compensation payments up to £30,000 are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON) remain subject to normal income tax and National Insurance. Your employer covers the cost of your independent legal review.
-- Contextual Link: If you have received an offer, you can check where you stand using our [settlement agreement tax calculator uk](/guides/settlement-agreement-tax-calculator-uk/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996.
+- Contextual Link: If you have received an offer, you can check where you stand using our [settlement agreement tax calculator uk](/settlement-agreement-tax-calculator/). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996.
 - Statutory Audit: Passed (ERA 1996 s.162, £751/wk cap, £30k exemption)
 - Anti-AI Score: 95% (Burstiness: 82)

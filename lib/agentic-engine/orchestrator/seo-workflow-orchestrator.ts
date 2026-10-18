@@ -9,11 +9,16 @@ import fs from 'fs';
 import path from 'path';
 import { SeoArchitectAgent, SeoAuditContext } from '../agents/seo-architect-agent';
 import { ConversionCopywriterAgent } from '../agents/conversion-copywriter-agent';
-import { StatutoryAuditorAgent } from '../agents/statutory-auditor-agent';
-import { AntiAiQualityGuard } from '../agents/anti-ai-quality-guard';
+import { LegalComplianceAuditorAgent, StatutoryAuditorAgent } from '../agents/legal-compliance-auditor-agent';
+import { AntiAiQualityGuard } from '../guardrails/anti-ai-quality-guard';
+import { seoOpportunityWorker } from '../workers/seo-opportunity-worker';
+import { seoCopyWorker } from '../workers/seo-copy-worker';
+import { legalComplianceWorker } from '../workers/legal-compliance-worker';
 import { SeoStorageService } from '../services/seo-storage-service';
 import { AutonomousSeoActionPackage, SeoTechnicalBrief, ConversionCopyPackage } from '../types';
 import { GscFetchResult, GscQueryRow } from '../services/gsc-client';
+import { SafeFs } from '../services/safe-fs';
+import { auditClaimsAndSubstantiation } from '../guardrails/cap-code-claims-guard';
 
 export interface SeoOrchestrationResult {
   runId: string;
@@ -117,6 +122,33 @@ export class SeoWorkflowOrchestrator {
       errors.push(`Copy missing required statutory figures (£${expectedCap} or £30,000)`);
     }
 
+    // 6. Hard SERP character budget invariants (SC-E-SEO-003 & 004)
+    const title = pkg.copyPackage.calibratedTitle;
+    if (title.length < 50 || title.length > 60) {
+      errors.push(`Title length (${title.length} chars) violates SERP budget of 50-60 characters: "${title}"`);
+    }
+
+    const meta = pkg.copyPackage.calibratedMetaDescription;
+    if (meta.length < 140 || meta.length > 155) {
+      errors.push(`Meta description length (${meta.length} chars) violates SERP budget of 140-155 characters: "${meta}"`);
+    }
+
+    // 7. ASA / CAP Code claims substantiation invariant (claims-privacy-auditor)
+    const claimsCheck = auditClaimsAndSubstantiation(allText);
+    if (!claimsCheck.isCompliant) {
+      for (const v of claimsCheck.violations) {
+        errors.push(`CAP Code substantiation violation: "${v.phrase}" (${v.riskReason})`);
+      }
+    }
+
+    // 8. Prohibited deflective legal phrases (Rule 4)
+    const lowerAllText = allText.toLowerCase();
+    for (const phrase of LegalComplianceAuditorAgent.PROHIBITED_LEGAL_PHRASES) {
+      if (lowerAllText.includes(phrase)) {
+        errors.push(`Prohibited phrasing detected: "${phrase}"`);
+      }
+    }
+
     return {
       isValid: errors.length === 0,
       errors,
@@ -142,14 +174,14 @@ export class SeoWorkflowOrchestrator {
     for (let i = 0; i < opportunities.length; i++) {
       const opp = opportunities[i];
 
-      // 1. Specialist SEO Architect Agent in the loop
-      const seoBrief: SeoTechnicalBrief = await SeoArchitectAgent.generateTechnicalBrief(opp);
+      // 1. Specialist SEO Opportunity & Architecture Worker in the loop
+      const seoBrief: SeoTechnicalBrief = await seoOpportunityWorker.execute(opp);
 
-      // 2. Specialist Conversion Copywriter Agent in the loop
-      const copyPackage: ConversionCopyPackage = await ConversionCopywriterAgent.generateCopyPackage(seoBrief);
+      // 2. Specialist Conversion Copywriter & AEO Worker in the loop
+      const copyPackage: ConversionCopyPackage = await seoCopyWorker.execute(seoBrief);
 
-      // 3. Specialist Statutory & Legal Auditor Agent in the loop
-      const statutoryAudit = StatutoryAuditorAgent.auditCopy(copyPackage, seoBrief);
+      // 3. Specialist Legal & Compliance Auditor Worker in the loop (AGENTS.md Section 2.E)
+      const statutoryAudit = await legalComplianceWorker.execute({ copy: copyPackage, brief: seoBrief });
 
       // 4. Specialist Anti-AI Quality & E-E-A-T Guard in the loop
       const antiAiQuality = AntiAiQualityGuard.evaluateQuality(copyPackage);
@@ -198,20 +230,15 @@ export class SeoWorkflowOrchestrator {
       packages.push(pkg);
     }
 
-    // Ensure staging directory exists
-    if (!fs.existsSync(this.STAGING_DIR)) {
-      fs.mkdirSync(this.STAGING_DIR, { recursive: true });
-    }
-
     const stagedJsonPath = path.join(this.STAGING_DIR, 'latest-staged-actions.json');
     const stagedMarkdownPath = path.join(this.STAGING_DIR, 'latest-staged-actions.md');
 
-    // Write JSON artifact
-    fs.writeFileSync(stagedJsonPath, JSON.stringify(packages, null, 2), 'utf-8');
+    // Write JSON artifact safely
+    const jsonResult = SafeFs.writeFileSyncSafe(stagedJsonPath, JSON.stringify(packages, null, 2), 'utf-8');
 
-    // Write Human-Reviewable Markdown Digest
+    // Write Human-Reviewable Markdown Digest safely
     const markdownContent = this.formatMarkdownStagingDigest(runId, timestamp, packages, gscData.source);
-    fs.writeFileSync(stagedMarkdownPath, markdownContent, 'utf-8');
+    const mdResult = SafeFs.writeFileSyncSafe(stagedMarkdownPath, markdownContent, 'utf-8');
 
     // Persist to cumulative CHANGE_LOG.md and Supabase
     const metrics = {
@@ -223,7 +250,6 @@ export class SeoWorkflowOrchestrator {
     };
 
     await SeoStorageService.persistRun(runId, gscData.source, metrics, packages, false);
-    fs.writeFileSync(stagedMarkdownPath, markdownContent, 'utf-8');
 
     return {
       runId,

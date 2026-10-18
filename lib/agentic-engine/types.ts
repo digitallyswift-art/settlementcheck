@@ -167,11 +167,11 @@ export interface SolicitorPreFlightDossier {
 
 // ── Agentic Worker Definition ─────────────────────────────────────────────────
 
-export interface AgenticWorker<TInput, TOutput> {
+export interface AgenticWorker<TInput, TOutput, TContext = any> {
   name: string;
   description: string;
   permittedTools: AIToolDefinition[];
-  execute: (input: TInput, context: EmployeeMatterContext) => Promise<TOutput>;
+  execute: (input: TInput, context?: TContext) => Promise<TOutput>;
 }
 
 // ── Phase 3: Autonomous Background Fleet Types ───────────────────────────────
@@ -384,5 +384,36 @@ export interface SeoRunLogRecord {
   email_sent: boolean;
   digest_json: Record<string, any>;
   created_at?: string;
+}
+
+// ── Evidence-Bounded Inter-Agent Protocol (EBIAP) ─────────────────────────────
+
+export type ClaimClassification =
+  | 'STATUTORY_INVARIANT'     // Directly derived from UK statute (ERA 1996, ITEPA 2003)
+  | 'SYSTEM_TELEMETRY'        // Live database query / authenticated telemetry
+  | 'REGULATORY_STATUS'       // Verified SRA register / statutory body status
+  | 'PURE_UX_NAVIGATION';     // Standard UI / navigation without empirical assertions
+
+export interface AgentHandoffContract {
+  taskId: string;
+  sourceAgent: string;
+  targetAgent: string;
+  targetComponent: string;
+  proposedAction: string;
+  proposedCopyOrSpec: string;
+  claimClassification: ClaimClassification;
+  evidentiaryProofRequired: boolean;
+  substantiationProof?: {
+    statuteReference?: string;
+    databaseQuery?: string;
+    regulatoryId?: string;
+    empiricalSourceUrl?: string;
+  };
+}
+
+export interface HandoffValidationResult {
+  isValid: boolean;
+  rejectionReason?: string;
+  interceptedViolations?: string[];
 }
 

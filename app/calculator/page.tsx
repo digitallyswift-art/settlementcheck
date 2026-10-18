@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import CalculatorClient from './CalculatorClient'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+import DynamicFaqJsonLd from '@/components/seo/DynamicFaqJsonLd'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -185,6 +186,7 @@ export default function CalculatorPage() {
           <li><a href="/guides/how-to-negotiate-a-settlement-agreement/">How to Negotiate a Higher Settlement Agreement Payout</a></li>
         </ul>
       </div>
+      <DynamicFaqJsonLd pathname="/calculator/" />
       <CalculatorClient />
     </>
   )

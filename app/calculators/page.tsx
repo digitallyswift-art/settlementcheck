@@ -7,6 +7,7 @@ import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 import CalculatorsClient from './CalculatorsClient'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+import DynamicFaqJsonLd from '@/components/seo/DynamicFaqJsonLd'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -14,13 +15,13 @@ const STATIC_METADATA: Metadata = {
   description:
     'Compare all free UK employment calculators: settlement agreements, statutory redundancy (£751 cap), unfair dismissal, tax, and protective awards.',
   alternates: {
-    canonical: '/calculators/',
+    canonical: 'https://settlementcheck.co.uk/calculators/',
   },
   openGraph: {
     title: 'Employment & Settlement Calculators UK | SettlementCheck',
     description:
       'Compare all free UK employment calculators: settlement agreements, statutory redundancy (£751 cap), unfair dismissal, tax, and protective awards.',
-    url: '/calculators/',
+    url: 'https://settlementcheck.co.uk/calculators/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -181,6 +182,7 @@ export default function CalculatorsHubPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />
+      <DynamicFaqJsonLd pathname="/calculators/" />
 
       <Nav />
 

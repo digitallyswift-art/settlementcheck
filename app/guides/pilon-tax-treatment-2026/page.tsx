@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   description:
     'Understand PILON tax treatment for 2026. All notice pay is taxable (no £30k exemption). Use our free tool to check your take-home pay. No email.',
   alternates: {
-    canonical: '/guides/pilon-tax-treatment-2026/',
+    canonical: 'https://settlementcheck.co.uk/guides/pilon-tax-treatment-2026/',
   },
   openGraph: {
     title: 'PILON Tax 2026 | Is Notice Pay Tax Free? | SettlementCheck',
     description:
       'Understand PILON tax treatment for 2026. All notice pay is taxable (no £30k exemption). Use our free tool to check your take-home pay. No email.',
-    url: '/guides/pilon-tax-treatment-2026/',
+    url: 'https://settlementcheck.co.uk/guides/pilon-tax-treatment-2026/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

@@ -10,10 +10,15 @@ jobs:
   run-autonomous-sentinel:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -45,6 +50,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No change log updates to commit."
           else
-            git commit -m "chore(sentinel): autonomous SEO 4-agent run digest [skip ci]"
-            git push
+            git commit -m "chore(sentinel): autonomous SEO 4-agent run digest"
+            git push origin main
           fi

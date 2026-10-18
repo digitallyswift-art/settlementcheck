@@ -10,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import { supabase } from '@/lib/supabase';
 import { AutonomousSeoActionPackage, SeoAutonomousActionRecord, SeoRunLogRecord } from '../types';
+import { SafeFs } from './safe-fs';
 
 export class SeoStorageService {
   private static readonly CHANGE_LOG_PATH = path.resolve('data/serp-actions/CHANGE_LOG.md');
@@ -143,10 +144,10 @@ ${packageEntries}
 ---
 `;
 
-    if (!fs.existsSync(this.CHANGE_LOG_PATH)) {
-      fs.writeFileSync(this.CHANGE_LOG_PATH, header + entry, 'utf-8');
+    if (!SafeFs.existsSyncSafe(this.CHANGE_LOG_PATH)) {
+      SafeFs.writeFileSyncSafe(this.CHANGE_LOG_PATH, header + entry, 'utf-8');
     } else {
-      fs.appendFileSync(this.CHANGE_LOG_PATH, entry, 'utf-8');
+      SafeFs.appendFileSyncSafe(this.CHANGE_LOG_PATH, entry, 'utf-8');
     }
   }
 }

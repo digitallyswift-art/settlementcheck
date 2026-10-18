@@ -247,8 +247,8 @@
     "priority": "P3",
     "status": "Resolved",
     "category": "CONVERSION_COMMERCIAL",
-    "finding": "SC-E-COM-008: Homepage hero lacks dynamic social proof counters and verified SRA network badges above the fold, increasing first-time visitor hesitation.",
-    "remediation": "Add above-the-fold social proof banner ('Over £4.2M evaluated') and SRA regulatory clarification badges.",
+    "finding": "SC-E-COM-008: Homepage hero lacks verified trust signals; unverified aggregate counters are prohibited under CAP Code Rule 3.7 and must be replaced by verified statutory rates and SRA badges.",
+    "remediation": "Add above-the-fold verified statutory rate badge ('Updated for April 2026 UK statutory rates') and SRA regulatory network badges.",
     "effort": "Low"
   },
   {

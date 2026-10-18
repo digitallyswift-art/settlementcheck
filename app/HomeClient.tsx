@@ -7,7 +7,7 @@ import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
-  { n: '£4.2M+',  l: 'Offers evaluated' },
+  { n: '10 days', l: 'ACAS consideration period' },
   { n: '£751',    l: 'Weekly pay cap 2026/27' },
   { n: '£0',      l: 'Cost to employee (employer pays)' },
   { n: 'Net pay', l: 'PILON and £30k exemption split' },
@@ -148,7 +148,7 @@ export default function HomeClient({
             )}
             <div className="hero-grid grid gap-10 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
               <div className="flex flex-col gap-6 md:gap-7 min-w-0">
-                {/* Hero Pill / Social Proof Counter & SRA Network Badge (SC-B-028) */}
+                {/* Hero Pill / Statutory Rates & SRA Network Badge */}
                 <div className="flex flex-wrap items-center gap-2.5">
                   <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-3.5 py-1.5 text-[12px] font-medium text-ink bg-white/70 shadow-sm backdrop-blur-sm">
                     <span className="relative flex h-2 w-2">
@@ -156,7 +156,7 @@ export default function HomeClient({
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-coral"></span>
                     </span>
                     <span>
-                      <strong className="text-ink font-semibold">Over £4.2M</strong> in UK settlement offers evaluated
+                      Updated for <strong className="text-ink font-semibold">April 2026</strong> UK statutory rates
                     </span>
                   </div>
                   <span className="inline-flex items-center gap-1.5 border border-rule-strong rounded-full px-3 py-1.5 text-[12px] font-medium text-muted bg-white/40">

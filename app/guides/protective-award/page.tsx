@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   description:
     'Calculate up to 90 days gross pay for collective redundancy consultation failure. Free calculator, solvent vs insolvent rules, and 2026 statutory caps.',
   alternates: {
-    canonical: '/guides/protective-award/',
+    canonical: 'https://settlementcheck.co.uk/guides/protective-award/',
   },
   openGraph: {
     title: 'Protective Award Calculator & Rules 2026 | SettlementCheck',
     description:
       'Calculate up to 90 days gross pay for collective redundancy consultation failure. Free calculator, solvent vs insolvent rules, and 2026 statutory caps.',
-    url: '/guides/protective-award/',
+    url: 'https://settlementcheck.co.uk/guides/protective-award/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

@@ -1426,18 +1426,18 @@
   {
     "id": "SC-E-COM-008",
     "sourceLocation": "app/page.tsx (Homepage Hero)",
-    "exactFinding": "Homepage hero section lacks dynamic social proof counters (e.g. 'Over £4.2M in settlement offers evaluated', '4.9/5 satisfaction from 1,200+ UK employees') and verified security seals above the fold.",
-    "evidenceSource": "app/page.tsx; Conversion rate optimization standards for high-stress legal services",
+    "exactFinding": "Homepage hero section originally lacked prominent trust signals; however, unverified aggregate counters (e.g. 'Over £4.2M in settlement offers evaluated') are prohibited under CAP Code Rule 3.7 without documentary proof, requiring factual statutory and regulatory verification instead.",
+    "evidenceSource": "app/page.tsx; CAP Code Rule 3.1 & 3.7; Legal and regulatory trust standards for UK employment law services",
     "sourceDate": "2026-10-18",
     "dateChecked": "2026-10-18",
-    "confidence": "Medium",
+    "confidence": "High",
     "severity": "P3",
     "verificationStatus": "Confirmed",
-    "classification": "Opportunity",
+    "classification": "Compliance Remediation",
     "jurisdiction": "UK-wide",
-    "userImpact": "Stressed employees arriving on the homepage have lower immediate trust and hesitate to begin the stepped calculator.",
-    "recommendedAction": "Add an above-the-fold social proof banner with vetted client feedback and an SRA-regulated solicitor network badge.",
-    "evidenceRequired": "Visual regression check confirming trust badge placement on mobile and desktop."
+    "userImpact": "Stressed employees arriving on the homepage require immediate factual trust signals without being misled by unverified vanity metrics.",
+    "recommendedAction": "Deploy above-the-fold factual statutory rate verification ('Updated for April 2026 UK statutory rates') and an SRA-regulated solicitor network badge, strictly rejecting unsubstantiated aggregate figures.",
+    "evidenceRequired": "Visual regression check confirming verified statutory badges and zero unverified marketing assertions above the fold."
   },
   {
     "id": "SC-E-SEO-009",

@@ -244,8 +244,9 @@ Solicitor intake staff must manually re-type client details, creating operationa
 
 ## 9. Homepage Above-the-Fold Trust Elements (`SC-E-COM-008`)
 
-The homepage (`app/page.tsx`) hero presents a clean, minimalist calculator interface. However, for a user in crisis, the page lacks immediate external validation:
-- **No Aggregate Counter**: Adding *"Over £4.2M in UK settlement offers evaluated"* provides immediate social validation.
+The homepage (`app/page.tsx`) hero presents a clean, minimalist calculator interface. However, for a user in crisis, the page requires immediate statutory reassurance and regulatory backing:
+- **Verified Statutory Rates**: Highlighting *"Updated for April 2026 UK statutory rates"* confirms the engine is calibrated to current legislation (£751/wk cap, £123,543 cap) without asserting unverified aggregate sums.
+- **Strict CAP Code Compliance**: Unsubstantiated vanity metrics (such as aggregate evaluation counters) are strictly prohibited under CAP Code Rule 3.7 without documentary audit trails.
 - **No SRA Regulation Clarification**: Emphasizing that *"All partner solicitors are independently regulated by the Solicitors Regulation Authority (SRA)"* relieves fears of unregulated claims management companies (CMCs).
 - **No Confidentiality Seal**: Highlighting *"100% Confidential · No employer notification · UK GDPR Article 9 Compliant"* encourages immediate calculator engagement.
 
@@ -262,7 +263,7 @@ The homepage (`app/page.tsx`) hero presents a clean, minimalist calculator inter
 | **`SC-E-COM-005`** | **P2** | `/for-solicitors/` | B2B solicitor acquisition slowed by lack of self-serve onboarding and transparent pricing tables. | Legal-tech B2B SaaS benchmarks | Introduce transparent CPL pricing table and automated SRA ID lookup. |
 | **`SC-E-COM-006`** | **P2** | `ResultsClient.tsx` | "Acas Typical Settlement" label damages legal and commercial credibility with partner firms. | ACAS remit; CAP Code Rule 3.1 | Rename to "Typical Negotiation Benchmark" citing MoJ tribunal statistics. |
 | **`SC-E-COM-007`** | **P3** | `/dossier/review/[id]/` | Dossier lacks 1-click PMS export (Clio / LEAP), requiring manual re-keying by law firms. | Legal-tech API standards | Implement JSON / CSV / API export tailored for Clio and LEAP PMS intake. |
-| **`SC-E-COM-008`** | **P3** | `app/page.tsx` (Hero) | Hero section lacks dynamic social proof counters and verified SRA network badges above fold. | High-stress service CRO standards | Add aggregate evaluation counter and SRA regulatory badges to hero. |
+| **`SC-E-COM-008`** | **P3** | `app/page.tsx` (Hero) | Hero section lacks prominent trust signals; unverified aggregate metrics are prohibited under CAP Code 3.7. | CAP Code Rule 3.7; CRO standards | Add verified April 2026 statutory rates badge and SRA regulatory badges to hero. |
 
 ---
 

@@ -182,6 +182,97 @@ for (const cliche of ROBOTIC_CLICHES) {
 const isAnswerFirst = /£\d+|Employment Rights Act|statutory redundancy/i.test(testFaq.split(/[.!?]+/)[0]);
 assert(!foundCliche && isAnswerFirst, 'Anti-AI Quality Guard verifies 0 robotic clichés and strict Answer-First directness');
 
+// Test 5J: Claims & Privacy Auditor verifies zero unverified CAP Code marketing assertions
+const CAP_CODE_PROHIBITED = ['typical settlement', '1 to 3 months', 'most employers', 'average settlement', 'market data'];
+let hasCapCodeViolation = false;
+for (const phrase of CAP_CODE_PROHIBITED) {
+  if (new RegExp(`\\b${phrase}\\b`, 'i').test(combinedCopy)) {
+    hasCapCodeViolation = true;
+    break;
+  }
+}
+assert(!hasCapCodeViolation, 'Claims Auditor verifies zero unverified CAP Code marketing assertions (Rule 3.1 & 3.7)');
+
+// 6. Zero-Fabrication Codebase Claims & Telemetry Invariant Audits (EBIAP)
+console.log('\n--- 6. Zero-Fabrication Codebase Claims & Telemetry Invariant Audits (EBIAP) ---');
+
+function walkCodebase(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  for (const file of list) {
+    const fullPath = path.join(dir, file);
+    const stat = fs.statSync(fullPath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(walkCodebase(fullPath));
+    } else if (fullPath.endsWith('.tsx') || fullPath.endsWith('.ts')) {
+      results.push(fullPath);
+    }
+  }
+  return results;
+}
+
+const prodFiles = [...walkCodebase(path.resolve('app')), ...walkCodebase(path.resolve('components'))];
+
+// Test 6A: Zero unverified aggregate volume counters (£XM+ in offers evaluated)
+let foundVolumeCounter = false;
+let volumeCounterLocation = '';
+const reVolumeCounter = /(over\s+)?£?\d+(\.\d+)?[mbk]\+?\s+(in\s+)?(uk\s+)?(settlement\s+offers?|payouts?|compensation)?\s*(evaluated|reviewed|processed|calculated|secured)/i;
+
+for (const f of prodFiles) {
+  const content = fs.readFileSync(f, 'utf8');
+  if (reVolumeCounter.test(content)) {
+    foundVolumeCounter = true;
+    volumeCounterLocation = f;
+    break;
+  }
+}
+assert(!foundVolumeCounter, `Zero fabricated aggregate volume counters across production components (CAP Code 3.7) [found: ${volumeCounterLocation}]`);
+
+// Test 6B: Zero unverified "offers evaluated" badges
+let foundOffersEvaluated = false;
+let offersEvaluatedLocation = '';
+const reOffersEvaluated = /(offers|settlements)\s+evaluated/i;
+
+for (const f of prodFiles) {
+  const content = fs.readFileSync(f, 'utf8');
+  if (reOffersEvaluated.test(content)) {
+    foundOffersEvaluated = true;
+    offersEvaluatedLocation = f;
+    break;
+  }
+}
+assert(!foundOffersEvaluated, `Zero unverified 'offers evaluated' counters across production components [found: ${offersEvaluatedLocation}]`);
+
+// Test 6C: Zero "Acas Typical Settlement" misattributions
+let foundAcasMisattribution = false;
+let acasLocation = '';
+const reAcas = /acas\s+typical\s+settlement/i;
+
+for (const f of prodFiles) {
+  const content = fs.readFileSync(f, 'utf8');
+  if (reAcas.test(content)) {
+    foundAcasMisattribution = true;
+    acasLocation = f;
+    break;
+  }
+}
+assert(!foundAcasMisattribution, `Zero 'Acas typical settlement' misattributions across production components [found: ${acasLocation}]`);
+
+// Test 6D: Zero fabricated satisfaction scores or star ratings
+let foundFabricatedRatings = false;
+let ratingsLocation = '';
+const reRatings = /\b(\d+(\.\d+)?\s*\/\s*5\s+stars?|\d{2,3}%\s+satisfaction)\b/i;
+
+for (const f of prodFiles) {
+  const content = fs.readFileSync(f, 'utf8');
+  if (reRatings.test(content)) {
+    foundFabricatedRatings = true;
+    ratingsLocation = f;
+    break;
+  }
+}
+assert(!foundFabricatedRatings, `Zero fabricated review scores or satisfaction percentages across production components [found: ${ratingsLocation}]`);
+
 // Summary Report
 console.log('\n====================================================');
 console.log(` Eval Results: ${passedTests}/${totalTests} Passed (${Math.round((passedTests / totalTests) * 100)}%)`);

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   description:
     'Compare a UK settlement agreement vs employment tribunal in 2026 (£123,543 cap). Learn about costs, timelines, and payouts. Free check, no email.',
   alternates: {
-    canonical: '/guides/settlement-agreement-vs-tribunal-claim/',
+    canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-vs-tribunal-claim/',
   },
   openGraph: {
     title: 'Settlement Agreement vs Tribunal 2026 | SettlementCheck',
     description:
       'Compare a UK settlement agreement vs employment tribunal in 2026 (£123,543 cap). Learn about costs, timelines, and payouts. Free check, no email.',
-    url: '/guides/settlement-agreement-vs-tribunal-claim/',
+    url: 'https://settlementcheck.co.uk/guides/settlement-agreement-vs-tribunal-claim/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

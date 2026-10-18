@@ -1,7 +1,7 @@
 /**
- * Dynamic SEO Metadata Resolver for Next.js App Router
+ * Dynamic SEO Metadata & Schema Resolver for Next.js App Router
  * Resolves active optimizations managed by the Autonomous SEO Actuator.
- * If an active optimization package is applied, it overrides title & meta seamlessly in real time.
+ * If an active optimization package is applied, it overrides title, meta, and JSON-LD schema seamlessly.
  */
 
 import type { Metadata } from 'next';
@@ -35,8 +35,37 @@ export async function resolveDynamicSeoMetadata(
         description,
       },
     };
-  } catch (err) {
+  } catch {
     // Fail safe to default static metadata on any resolution issue
     return defaultMetadata;
+  }
+}
+
+/**
+ * Resolves dynamic FAQPage Schema.org JSON-LD structured data for an applied SEO action package
+ */
+export async function resolveDynamicFaqSchema(pathname: string): Promise<Record<string, any> | null> {
+  try {
+    const active = await SeoActuatorService.getActiveOptimization(pathname);
+    if (!active || !active.faqQuestion || !active.faqAnswer) {
+      return null;
+    }
+
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: active.faqQuestion,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: active.faqAnswer,
+          },
+        },
+      ],
+    };
+  } catch {
+    return null;
   }
 }

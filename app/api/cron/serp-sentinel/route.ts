@@ -4,6 +4,7 @@ import { GoogleSearchConsoleClient } from '@/lib/agentic-engine/services/gsc-cli
 import { AutonomousSeoActionService } from '@/lib/agentic-engine/services/autonomous-seo-actions';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 export async function GET(req: NextRequest) {
   return handleSentinel(req);
@@ -34,6 +35,7 @@ async function handleSentinel(req: NextRequest) {
       const gscData = await GoogleSearchConsoleClient.pullLatestSearchData();
       const digest = await AutonomousSeoActionService.executeActionPipeline(gscData, {
         sendEmail: true,
+        batchLimit: 2,
       });
       return NextResponse.json({
         success: true,

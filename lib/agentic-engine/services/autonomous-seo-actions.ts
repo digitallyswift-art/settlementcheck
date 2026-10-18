@@ -14,6 +14,7 @@ import { resend } from '@/lib/resend';
 import { GoogleIndexingClient } from './google-indexing-client';
 import { SeoWorkflowOrchestrator } from '../orchestrator/seo-workflow-orchestrator';
 import { AutonomousSeoActionPackage } from '../types';
+import { SafeFs } from './safe-fs';
 
 export interface AutonomousSeoAction {
   id: string;
@@ -52,7 +53,7 @@ export class AutonomousSeoActionService {
    */
   public static async executeActionPipeline(
     gscData: GscFetchResult,
-    options?: { sendEmail?: boolean; recipientEmail?: string }
+    options?: { sendEmail?: boolean; recipientEmail?: string; batchLimit?: number }
   ): Promise<AutonomousRunDigest> {
     const runId = `digest_${Date.now()}`;
     const executedAt = new Date().toISOString();
@@ -137,13 +138,10 @@ export class AutonomousSeoActionService {
     topClimbers.sort((a, b) => b.clicks - a.clicks);
     strikingDistance.sort((a, b) => b.impressions - a.impressions);
 
-    // Save actions snapshot to disk
+    // Save actions snapshot safely to disk / /tmp
     const actionsDir = path.resolve('data/serp-actions');
-    if (!fs.existsSync(actionsDir)) {
-      fs.mkdirSync(actionsDir, { recursive: true });
-    }
     const actionLogPath = path.join(actionsDir, `actions-${executedAt.replace(/[:.]/g, '-')}.json`);
-    fs.writeFileSync(actionLogPath, JSON.stringify(actions, null, 2));
+    SafeFs.writeFileSyncSafe(actionLogPath, JSON.stringify(actions, null, 2));
 
     // Calculate overall metrics
     const totalImpr = gscData.totalImpressions;
@@ -156,7 +154,7 @@ export class AutonomousSeoActionService {
     let dualAgentPackages: AutonomousSeoActionPackage[] = [];
     let stagedMarkdownPath = '';
     try {
-      const dualResult = await SeoWorkflowOrchestrator.executeDualAgentWorkflow(gscData, { limit: 8 });
+      const dualResult = await SeoWorkflowOrchestrator.executeDualAgentWorkflow(gscData, { limit: options?.batchLimit ?? 8 });
       dualAgentPackages = dualResult.packagesCreated;
       stagedMarkdownPath = dualResult.stagedMarkdownPath;
     } catch (dualErr) {
