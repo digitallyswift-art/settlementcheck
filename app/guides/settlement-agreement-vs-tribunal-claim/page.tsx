@@ -155,7 +155,7 @@ export default function SettlementAgreementVsTribunalGuide() {
               <p className="text-sm font-semibold text-ink mb-3">Core comparison facts</p>
               <ul className="flex flex-col gap-3">
                 {[
-                  'A settlement agreement is a guaranteed, tax-efficient payout completed in weeks.',
+                  'A settlement agreement provides a legally binding, tax-efficient payment completed in weeks.',
                   'An employment tribunal claim is a public dispute that takes over a year to resolve.',
                   'Your employer covers the fees for your solicitor to advise you on a settlement agreement.',
                   'Tribunals have no filing fees, but hiring a solicitor to represent you can cost £5,000 to £15,000.',
@@ -196,7 +196,7 @@ export default function SettlementAgreementVsTribunalGuide() {
                     ],
                     [
                       'Legal Costs',
-                      'Free (your employer pays your solicitor\'s advice fees)',
+                      'Employer-funded (employers standardly contribute £350–£750+ VAT for independent advice)',
                       'No court fees, but solicitor fees can reach £5,000 to £15,000',
                     ],
                     [
@@ -215,9 +215,9 @@ export default function SettlementAgreementVsTribunalGuide() {
                       'Very high',
                     ],
                     [
-                      'Guaranteed Payout',
-                      'Yes, contractually binding once signed',
-                      'No, dependent on winning the case and employer solvency',
+                      'Payment Certainty',
+                      'Legally binding contract once signed',
+                      'Uncertain; dependent on liability, Polkey deductions, and employer solvency',
                     ],
                   ].map(([feature, settlement, tribunal], i) => (
                     <tr key={i} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>

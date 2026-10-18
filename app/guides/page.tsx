@@ -32,7 +32,7 @@ const GUIDES = [
     href: '/guides/settlement-agreement-how-much/',
     eyebrow: 'Payout Benchmarks',
     title: 'Settlement Agreement: How Much Should You Get? UK 2026 Guide',
-    description: 'Find out how much a UK settlement agreement should be in 2026. Typical 1 to 3 months payout ranges, notice pay rules, £751 weekly cap, and tax calculations.',
+    description: 'Find out how much a UK settlement agreement should be in 2026. Commercial negotiation benchmarks, notice pay rules, £751 weekly cap, and tax calculations.',
     readTime: '7 min read',
   },
   {

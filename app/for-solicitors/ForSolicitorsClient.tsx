@@ -937,9 +937,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
   const currentDossier = dossiers[activeDossierTab]
 
   // Economics calculations (based on standard £500 statutory benchmark employer contribution)
-  const introCost = monthlyIntros * 60
   const baselineEmployerFee = monthlyIntros * 500
-  const netFirmRevenue = baselineEmployerFee - introCost
 
   return (
     <div style={{ maxWidth: 1160, margin: '0 auto', padding: '40px 24px 100px' }}>
@@ -1206,7 +1204,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             },
             {
               title: '£0 Monthly Retainer',
-              desc: 'Zero software subscriptions or lock-in. Pay only on verified client introductions.',
+              desc: 'Zero software subscriptions or upfront fees. Dedicated territorial allocation with bespoke terms agreed on onboarding.',
             },
           ].map((pillar) => (
             <div
@@ -1290,8 +1288,8 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               num: '03',
               painTitle: 'High Client Acquisition Costs (CAC)',
               painText: 'Between digital advertising spend, agency retainers, and low conversion rates on cold web traffic, acquiring a signed settlement agreement matter often costs hundreds of pounds in marketing overhead.',
-              solTitle: 'Fixed £60 Introduction Fee',
-              solText: 'No marketing agency retainers, ad budget volatility, or wasted clicks. Pay strictly a flat £60 fee for genuine, OTP-verified instructions.',
+              solTitle: 'Zero-Retainer Partner Model',
+              solText: 'No marketing agency retainers, ad budget volatility, or wasted clicks. Join an accredited SRA panel with zero upfront subscription fees and terms tailored on onboarding.',
             },
             {
               num: '04',
@@ -1629,7 +1627,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               fontFamily: SANS,
             }}
           >
-            Transparent Commercials
+            Partner Economics
           </span>
           <h2
             style={{
@@ -1641,100 +1639,13 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               margin: '8px 0 16px',
             }}
           >
-            Commercial Partner Tiers &amp; Lead Economics
+            Partner Capacity &amp; Revenue Modeling
           </h2>
           <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.6, margin: '0 0 20px', fontFamily: SANS }}>
-            Under Section 203 of the Employment Rights Act 1996, the employer pays your legal fee (£500 to £1,500 + VAT). Choose transparent commercial tiers with automated SRA verification and Stripe intake billing.
+            To ensure an enforceable waiver under Section 203(3) ERA 1996, employers standardly fund independent advice (£500 to £1,500 + VAT). Model your firm&apos;s monthly instruction capacity with zero software fees or upfront retainers.
           </p>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#F0F5FA', border: '1px solid #C4D8EC', padding: '6px 14px', borderRadius: 999, fontSize: 12, color: C.navy, fontWeight: 600, fontFamily: SANS }}>
-            <span style={{ color: C.accent }}>✓</span> Guaranteed £0 Employee Fee Shield: Partner firms guarantee zero out-of-pocket charges to employees for standard statutory sign-offs.
-          </div>
-        </div>
-
-        {/* Transparent Commercial Tiers Table (£150 to £350 CPL) */}
-        <div style={{ maxWidth: 980, margin: '0 auto 48px', padding: '0 16px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
-            {/* Tier 1: Regional Boutique */}
-            <div style={{ background: C.bgCard, border: `1.5px solid ${C.border}`, borderRadius: 14, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 4px 14px rgba(11,31,58,0.04)' }}>
-              <div>
-                <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: C.muted, letterSpacing: '0.08em', fontFamily: SANS }}>Regional Practice Tier</span>
-                <div style={{ fontSize: 32, fontWeight: 700, color: C.navy, fontFamily: SERIF, margin: '8px 0 4px' }}>£150 <span style={{ fontSize: 14, fontWeight: 500, color: C.muted, fontFamily: SANS }}>/ verified lead</span></div>
-                <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.5, margin: '0 0 18px', fontFamily: SANS }}>Ideal for regional practices handling standard statutory redundancy and capability reviews.</p>
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {[
-                    '10-mile radius territorial priority',
-                    'Standard redundancy & unfair dismissal matters',
-                    'Verified employee salary & offer dataset',
-                    'Employer fee coverage guaranteed (£500+ VAT)',
-                    'Guaranteed £0 Employee Fee Shield standard'
-                  ].map((feat, i) => (
-                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: C.navy, fontFamily: SANS }}>
-                      <span style={{ color: C.accent, fontWeight: 700 }}>✓</span>
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <button onClick={() => onStartApplication()} style={{ width: '100%', background: C.navy, color: '#fff', border: 'none', borderRadius: 8, padding: '11px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: SANS }}>
-                Apply for Regional Tier →
-              </button>
-            </div>
-
-            {/* Tier 2: Commercial Boutique (Most Popular) */}
-            <div style={{ background: C.bgCard, border: `2px solid ${C.accent}`, borderRadius: 14, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', boxShadow: '0 8px 24px rgba(217,96,59,0.12)' }}>
-              <span style={{ position: 'absolute', top: -11, left: '50%', transform: 'translateX(-50%)', background: C.accent, color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 12px', borderRadius: 999, fontFamily: SANS }}>
-                Most Selected
-              </span>
-              <div>
-                <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: C.accent, letterSpacing: '0.08em', fontFamily: SANS }}>Commercial Practice Tier</span>
-                <div style={{ fontSize: 32, fontWeight: 700, color: C.navy, fontFamily: SERIF, margin: '8px 0 4px' }}>£250 <span style={{ fontSize: 14, fontWeight: 500, color: C.muted, fontFamily: SANS }}>/ verified lead</span></div>
-                <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.5, margin: '0 0 18px', fontFamily: SANS }}>For dedicated employment boutiques seeking high-value senior exits, discrimination claims, and rapid turnover.</p>
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {[
-                    '30-mile regional hub exclusivity',
-                    'High-value discrimination & PIP capability exits',
-                    '15-minute SLA territorial lock protection',
-                    'Complete AI Pre-Flight Dossier & threat analysis',
-                    '1-Click Clio & LEAP PMS intake payload export',
-                    'Automated Stripe Connect billing integration'
-                  ].map((feat, i) => (
-                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: C.navy, fontFamily: SANS }}>
-                      <span style={{ color: C.accent, fontWeight: 700 }}>✓</span>
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <button onClick={() => onStartApplication()} style={{ width: '100%', background: C.accent, color: '#fff', border: 'none', borderRadius: 8, padding: '11px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: SANS }}>
-                Apply for Commercial Tier →
-              </button>
-            </div>
-
-            {/* Tier 3: National Enterprise */}
-            <div style={{ background: C.bgCard, border: `1.5px solid ${C.border}`, borderRadius: 14, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 4px 14px rgba(11,31,58,0.04)' }}>
-              <div>
-                <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: C.muted, letterSpacing: '0.08em', fontFamily: SANS }}>National Enterprise Network</span>
-                <div style={{ fontSize: 32, fontWeight: 700, color: C.navy, fontFamily: SERIF, margin: '8px 0 4px' }}>£350 <span style={{ fontSize: 14, fontWeight: 500, color: C.muted, fontFamily: SANS }}>/ verified lead</span></div>
-                <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.5, margin: '0 0 18px', fontFamily: SANS }}>For national employment practices commanding director-level, six-figure termination settlements.</p>
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {[
-                    'Nationwide England & Wales remote exclusivity',
-                    'Executive director & whistleblowing claims',
-                    'Direct PMS REST API webhook intake',
-                    'Priority failover cascade routing',
-                    'Dedicated SLA account manager'
-                  ].map((feat, i) => (
-                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: C.navy, fontFamily: SANS }}>
-                      <span style={{ color: C.accent, fontWeight: 700 }}>✓</span>
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <button onClick={() => onStartApplication()} style={{ width: '100%', background: C.navy, color: '#fff', border: 'none', borderRadius: 8, padding: '11px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: SANS }}>
-                Apply for Enterprise Tier →
-              </button>
-            </div>
+            <span style={{ color: C.accent }}>✓</span> Zero Employee Fee Standard: Partner firms agree to zero out-of-pocket charges to employees for standard statutory sign-offs.
           </div>
         </div>
 
@@ -1797,14 +1708,6 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             }}
           >
             <div style={{ background: C.bg, padding: '18px 20px', borderRadius: 8, border: `1px solid ${C.border}` }}>
-              <div style={{ fontSize: 11, color: C.muted, textTransform: 'uppercase', fontWeight: 600 }}>Introduction Cost</div>
-              <div style={{ fontSize: 24, fontWeight: 700, color: C.navy, fontFamily: MONO, marginTop: 4 }}>
-                £{introCost.toLocaleString()}
-              </div>
-              <div style={{ fontSize: 12, color: C.muted, marginTop: 3 }}>Fixed £60 per verified instruction</div>
-            </div>
-
-            <div style={{ background: C.bg, padding: '18px 20px', borderRadius: 8, border: `1px solid ${C.border}` }}>
               <div style={{ fontSize: 11, color: C.muted, textTransform: 'uppercase', fontWeight: 600 }}>Employer Legal Contributions (Baseline)</div>
               <div style={{ fontSize: 24, fontWeight: 700, color: C.navy, fontFamily: MONO, marginTop: 4 }}>
                 £{baselineEmployerFee.toLocaleString()}
@@ -1812,17 +1715,25 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               <div style={{ fontSize: 12, color: C.muted, marginTop: 3 }}>Based on £500 standard benchmark contribution</div>
             </div>
 
-            <div style={{ background: C.successLight, padding: '18px 20px', borderRadius: 8, border: `1px solid ${C.success}40` }}>
-              <div style={{ fontSize: 11, color: C.success, textTransform: 'uppercase', fontWeight: 700 }}>Net Fee Retained (Standard Reviews)</div>
-              <div style={{ fontSize: 24, fontWeight: 700, color: C.success, fontFamily: MONO, marginTop: 4 }}>
-                £{netFirmRevenue.toLocaleString()}
+            <div style={{ background: C.bg, padding: '18px 20px', borderRadius: 8, border: `1px solid ${C.border}` }}>
+              <div style={{ fontSize: 11, color: C.muted, textTransform: 'uppercase', fontWeight: 600 }}>Platform &amp; Software Fees</div>
+              <div style={{ fontSize: 24, fontWeight: 700, color: C.navy, fontFamily: MONO, marginTop: 4 }}>
+                £0
               </div>
-              <div style={{ fontSize: 12, color: C.success, marginTop: 3 }}>£440 net margin per standard sign-off</div>
+              <div style={{ fontSize: 12, color: C.muted, marginTop: 3 }}>Zero monthly retainers or subscription fees</div>
+            </div>
+
+            <div style={{ background: C.successLight, padding: '18px 20px', borderRadius: 8, border: `1px solid ${C.success}40` }}>
+              <div style={{ fontSize: 11, color: C.success, textTransform: 'uppercase', fontWeight: 700 }}>Territorial Allocation</div>
+              <div style={{ fontSize: 24, fontWeight: 700, color: C.success, fontFamily: MONO, marginTop: 4 }}>
+                {monthlyIntros} matters / mo
+              </div>
+              <div style={{ fontSize: 12, color: C.success, marginTop: 3 }}>100% exclusive 1:1 territorial routing</div>
             </div>
           </div>
 
           <p style={{ fontSize: 12, color: C.muted, lineHeight: 1.5, margin: '0 0 28px', textAlign: 'center', fontFamily: SANS }}>
-            * Models a standard Section 203 review and adviser certificate execution at the customary £500 + VAT employer contribution floor. Any fee uplift negotiated with the employer or extended representation agreed with the client represents additional billable income for your firm.
+            * Models a standard Section 203 review and adviser certificate execution at the customary £500 + VAT employer contribution floor. Any fee uplift negotiated with the employer or extended representation agreed with the client represents additional billable income for your firm. Bespoke commercial arrangements and volume allocations are confirmed during onboarding based on practice capacity.
           </p>
 
           <div style={{ textAlign: 'center' }}>
@@ -1841,7 +1752,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
                 boxShadow: '0 4px 14px rgba(217,96,59,0.25)',
               }}
             >
-              Lock In Your Postcode Allocation →
+              Apply to join our panel →
             </button>
           </div>
         </div>
@@ -2010,7 +1921,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             },
             {
               q: 'Are there monthly subscription fees or long-term commitments?',
-              a: 'No. There are zero software fees, no monthly retainers, and no minimum term contracts. You pay solely for verified introductions and can pause or adjust your territory radius at any time.',
+              a: 'No. There are zero software fees, no monthly retainers, and no minimum term contracts. Bespoke commercial terms and territorial allocation are agreed during onboarding, and you can pause or adjust your territory radius at any time.',
             },
             {
               q: 'What are the regulatory requirements to join the panel?',
@@ -2463,7 +2374,6 @@ interface SraSlideProps {
 function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
   const [sraId, setSraId] = useState('568912')
   const [feeShieldAgreed, setFeeShieldAgreed] = useState(true)
-  const [billingPreference, setBillingPreference] = useState<'stripe' | 'invoice'>('stripe')
 
   const isSraFormatValid = /^\d{5,7}$/.test(sraId.trim())
 
@@ -2574,7 +2484,7 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
           />
           <div>
             <span style={{ fontSize: 14, fontWeight: 700, color: C.navy, display: 'block', marginBottom: 4 }}>
-              Binding Covenant: Guaranteed £0 Employee Fee Shield (SC-B-024)
+              Binding Covenant: Zero Employee Fee Standard (SC-B-024)
             </span>
             <p style={{ margin: 0, fontSize: 12, color: C.muted, lineHeight: 1.55 }}>
               We contractually covenant that for standard Section 203(3) Employment Rights Act 1996 statutory reviews where the employer provides a legal advice contribution of £500 + VAT or higher, our firm will never bill the employee for any fee shortfall or invoice them out-of-pocket.
@@ -2583,7 +2493,7 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
         </label>
       </div>
 
-      {/* Stripe Connect / Billing Preference */}
+      {/* Zero Retainer & Commercial Onboarding Commitment */}
       <div
         style={{
           background: C.bgCard,
@@ -2594,47 +2504,12 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
           fontFamily: SANS,
         }}
       >
-        <span style={{ fontSize: 13, fontWeight: 700, color: C.navy, display: 'block', marginBottom: 10 }}>
-          Commercial Lead Billing (Stripe Connect Setup)
+        <span style={{ fontSize: 13, fontWeight: 700, color: C.navy, display: 'block', marginBottom: 6 }}>
+          Zero Retainer &amp; Onboarding Review
         </span>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <button
-            type="button"
-            onClick={() => setBillingPreference('stripe')}
-            style={{
-              padding: '10px 14px',
-              borderRadius: 8,
-              border: `1.5px solid ${billingPreference === 'stripe' ? C.navy : C.border}`,
-              background: billingPreference === 'stripe' ? C.navy : C.bg,
-              color: billingPreference === 'stripe' ? '#fff' : C.navy,
-              fontSize: 12,
-              fontWeight: 600,
-              cursor: 'pointer',
-              textAlign: 'left',
-            }}
-          >
-            <div>Automated Stripe Billing</div>
-            <div style={{ fontSize: 10, opacity: 0.8, marginTop: 2 }}>Card / BACS direct debit on lock</div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setBillingPreference('invoice')}
-            style={{
-              padding: '10px 14px',
-              borderRadius: 8,
-              border: `1.5px solid ${billingPreference === 'invoice' ? C.navy : C.border}`,
-              background: billingPreference === 'invoice' ? C.navy : C.bg,
-              color: billingPreference === 'invoice' ? '#fff' : C.navy,
-              fontSize: 12,
-              fontWeight: 600,
-              cursor: 'pointer',
-              textAlign: 'left',
-            }}
-          >
-            <div>Monthly Firm Invoice</div>
-            <div style={{ fontSize: 10, opacity: 0.8, marginTop: 2 }}>14-day credit terms (Subject to check)</div>
-          </button>
-        </div>
+        <p style={{ margin: 0, fontSize: 12, color: C.muted, lineHeight: 1.55 }}>
+          There are zero upfront joining fees, setup costs, or monthly retainers. Our partner onboarding team will verify your SRA credentials and contact you within 1 business day to confirm territorial exclusivity and agree tailored commercial terms before routing begins.
+        </p>
       </div>
 
       {error && (

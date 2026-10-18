@@ -549,7 +549,7 @@ export default function PortalClient() {
               </div>
 
               <div className="p-5 rounded-xl bg-[#0B1F3A] text-white space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#D9603B]">The 15-Minute Exclusivity Guarantee</h3>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#D9603B]">The 15-Minute Exclusivity Lock</h3>
                 <p className="text-xs text-[#F7F4EE]/80 leading-relaxed">
                   When a client inside your outward postcode zone completes our settlement agreement review, the instruction is locked exclusively to your firm for 15 minutes. It will never be broadcast to multiple law firms simultaneously.
                 </p>

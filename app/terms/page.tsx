@@ -39,7 +39,7 @@ export default function Terms() {
             },
             {
               title: '2. Use of the calculator',
-              body: 'The calculator on this site provides estimates only. Estimates are based on published statutory rates and general market data. They do not constitute legal advice and do not account for your specific contract, negotiation history, or personal circumstances. You must obtain independent legal advice from a qualified solicitor before signing any settlement agreement.',
+              body: 'The calculator on this site provides estimates only. Estimates are based on published statutory rates and observed UK commercial negotiation benchmarks. They do not constitute legal advice and do not account for your specific contract, negotiation history, or personal circumstances. You must obtain independent legal advice from a qualified solicitor before signing any settlement agreement.',
             },
             {
               title: '3. No legal advice',

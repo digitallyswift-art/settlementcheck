@@ -33,7 +33,7 @@ const FAQS = [
   },
   {
     q: 'Should I accept the first offer?',
-    a: 'No. The first offer is almost always below the employer\'s true maximum. If you have any claim strength at all (age, length of service, or disputed circumstances), counter with a higher figure. The employer expects negotiation. A fair counter is to ask the employer to explain the multiplier they have applied to your statutory entitlement. If they cannot justify it, you have room to push.',
+    a: 'No. An initial settlement offer is often an opening proposal and rarely represents the employer\'s full settlement budget. If you have any claim strength at all (age, length of service, or disputed circumstances), counter with a higher figure. The employer expects negotiation. A fair counter is to ask the employer to explain the multiplier they have applied to your statutory entitlement. If they cannot justify it, you have room to negotiate.',
   },
   {
     q: 'What happens if I reject a settlement offer?',
@@ -381,7 +381,7 @@ export default function IsMyOfferFairGuide() {
                 {
                   href: '/guides/how-to-negotiate-a-settlement-agreement/',
                   title: 'How to Negotiate a Settlement Agreement',
-                  description: 'Proven counter-offer strategies and script templates from senior employment lawyers.',
+                  description: 'Proven counter-offer strategies and script templates from senior employment solicitors.',
                   tag: 'Negotiation',
                 },
                 {

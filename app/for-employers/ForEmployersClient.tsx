@@ -165,7 +165,7 @@ ${companyName}`
               </h1>
 
               <p className="text-base md:text-lg text-muted leading-relaxed mb-8">
-                Model collective redundancy severance budgets, generate statutory Section 111A protected conversation packs, and dispatch employee independent legal advice to our vetted SRA solicitor panel with guaranteed turnaround times.
+                Model collective redundancy severance budgets, generate statutory Section 111A protected conversation packs, and dispatch employee independent legal advice to our vetted SRA solicitor panel with rapid 48-hour panel turnaround standards.
               </p>
 
               {/* Navigation Tabs */}
@@ -699,7 +699,7 @@ ${companyName}`}
                           <span className="text-muted">Standard £500 + VAT contribution per employee with zero hidden charges.</span>
                         </div>
                         <div className="p-3.5 bg-paper rounded-xl border border-rule">
-                          <strong className="block text-ink mb-1">Guaranteed 48-Hour SLA</strong>
+                          <strong className="block text-ink mb-1">Target 48-Hour SLA</strong>
                           <span className="text-muted">Specialist employment solicitors assigned and consultation scheduled within 48 hours.</span>
                         </div>
                         <div className="p-3.5 bg-paper rounded-xl border border-rule">
@@ -875,7 +875,7 @@ ${companyName}`}
                       </button>
 
                       <p className="text-[11px] text-muted text-center">
-                        Strict confidentiality guaranteed. We do not share corporate restructure data with external parties.
+                        Strict confidentiality maintained under standard NDA protocols. We do not share corporate restructure data with external parties.
                       </p>
                     </form>
                   )}

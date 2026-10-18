@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Can I Choose My Own Settlement Solicitor? | SettlementCheck',
     description:
-      'You have the legal right to choose your own independent settlement solicitor. Your employer must still pay the legal advice fee. Here is what the law says.',
+      'You have the legal right to choose your own independent settlement solicitor. Your employer standardly funds the independent legal advice fee. Here is what the law says.',
     url: 'https://settlementcheck.co.uk/guides/employer-recommended-solicitor/',
     type: 'website',
     locale: 'en_GB',
@@ -26,14 +26,14 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Can I Choose My Own Settlement Solicitor? | SettlementCheck',
     description:
-      'You have the legal right to choose your own independent settlement solicitor. Your employer must still pay the legal advice fee. Free guide.',
+      'You have the legal right to choose your own independent settlement solicitor. Your employer standardly funds the independent legal advice fee. Free guide.',
   },
 }
 
 const FAQS = [
   {
     q: 'Can my employer refuse to pay fees if I choose my own solicitor?',
-    a: 'No. The legal fees contribution is part of the settlement process. Your employer cannot withhold it because you chose a different solicitor.',
+    a: 'In practice, no. To secure an enforceable waiver under Section 203(3) ERA 1996, the employer must ensure you receive independent advice. Withholding the agreed fee contribution simply because you choose an independent solicitor prevents the agreement from becoming binding.',
   },
   {
     q: 'Does it take longer if I use a different solicitor?',
@@ -168,7 +168,7 @@ export default function EmployerRecommendedSolicitor() {
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">2. Why employers recommend a specific solicitor</h2>
               <p className="guide-body">
-                Most employers suggest a solicitor as a practical convenience. In straightforward cases, the recommended solicitor may be competent and fair. But the relationship they have is with your employer, not with you.
+                Many employers suggest a solicitor as a practical convenience. In straightforward cases, the recommended solicitor may be competent and fair. But the relationship they have is with your employer, not with you.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">

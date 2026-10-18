@@ -503,7 +503,7 @@ export default function PipSettlementGuide() {
                 },
                 {
                   title: '2. Ex-Gratia Compensation',
-                  desc: 'One to three months of gross pay to reflect capability procedure savings. Paid tax-free up to £30,000 under ITEPA 2003 s.403.',
+                  desc: 'As an informal negotiation starting point, one to three months of gross pay to reflect capability procedure savings. Paid tax-free up to £30,000 under ITEPA 2003 s.403.',
                 },
                 {
                   title: '3. Accrued Holiday Pay',
@@ -560,7 +560,7 @@ export default function PipSettlementGuide() {
                   <tr>
                     <td className="p-3 font-medium text-ink">Financial Security</td>
                     <td className="p-3">Salary during PIP, but sudden loss of income if dismissed at the end.</td>
-                    <td className="p-3">Guaranteed tax-free compensation package and notice pay upfront.</td>
+                    <td className="p-3">Contractual notice pay (taxed under PENP) plus negotiated ex-gratia compensation (tax-free up to £30,000 under s.403).</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-medium text-ink">Mental Health</td>

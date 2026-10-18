@@ -2,7 +2,7 @@
   {
     "id": "SC-E-CLM-001",
     "file": "app/calculator/page.tsx",
-    "lineNumber": 140,
+    "lineNumber": 143,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "name: 'What is an average settlement agreement payout in the UK?',",
@@ -13,7 +13,7 @@
   {
     "id": "SC-E-CLM-002",
     "file": "app/calculator/page.tsx",
-    "lineNumber": 180,
+    "lineNumber": 183,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "<li><a href=\"/guides/settlement-agreement-how-much/\">Average Settlement Agreement Amount UK (How Much Should You Get?)</a></li>",
@@ -23,28 +23,6 @@
   },
   {
     "id": "SC-E-CLM-003",
-    "file": "app/disclaimer/page.tsx",
-    "lineNumber": 35,
-    "pattern": "typical settlement",
-    "matchedText": "typical settlement",
-    "context": "body: 'The SettlementCheck calculator applies the UK statutory redundancy formula (using April 2026 rates under SI 2026/310, including the w",
-    "riskReason": "Suggests a standard settlement payout baseline without empirical verification (CAP Code 3.1).",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"typical settlement\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-004",
-    "file": "app/disclaimer/page.tsx",
-    "lineNumber": 35,
-    "pattern": "market data",
-    "matchedText": "market data",
-    "context": "body: 'The SettlementCheck calculator applies the UK statutory redundancy formula (using April 2026 rates under SI 2026/310, including the w",
-    "riskReason": "Implies third-party or representative market data exists unless qualified as internal platform telemetry.",
-    "severity": "P2",
-    "recommendedAction": "Qualify or rephrase \"market data\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-005",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
     "lineNumber": 35,
     "pattern": "average settlement",
@@ -55,7 +33,7 @@
     "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-006",
+    "id": "SC-E-CLM-004",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
     "lineNumber": 65,
     "pattern": "average settlement",
@@ -66,18 +44,18 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-007",
+    "id": "SC-E-CLM-005",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
     "lineNumber": 154,
     "pattern": "average settlement",
-    "matchedText": "average settlement",
-    "context": "The average settlement agreement payout in the UK is £5,000 to £25,000. Here is how to check if your offer is fair in 2026.",
+    "matchedText": "Average Settlement",
+    "context": "Settlement Agreement Payouts UK 2026: Benchmark Ranges &amp; Average Settlement Guide",
     "riskReason": "Implies statistically verified average across UK settlements without published sample data.",
     "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
+    "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-008",
+    "id": "SC-E-CLM-006",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
     "lineNumber": 182,
     "pattern": "average settlement",
@@ -88,53 +66,9 @@
     "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-009",
-    "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 185,
-    "pattern": "typical settlement",
-    "matchedText": "typical settlement",
-    "context": "Based on observed UK commercial negotiation ranges and MoJ employment tribunal compensation benchmarks, typical settlement agreement payouts",
-    "riskReason": "Suggests a standard settlement payout baseline without empirical verification (CAP Code 3.1).",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"typical settlement\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-010",
-    "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 230,
-    "pattern": "typical settlement",
-    "matchedText": "Typical Settlement",
-    "context": "<h2 className=\"sc-section-h2 mb-4\">Typical Settlement Payouts by Scenario</h2>",
-    "riskReason": "Suggests a standard settlement payout baseline without empirical verification (CAP Code 3.1).",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"Typical Settlement\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-011",
-    "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 245,
-    "pattern": "average settlement",
-    "matchedText": "Average settlement",
-    "context": "<caption className=\"sr-only\">Average settlement agreement payouts by scenario UK 2026</caption>",
-    "riskReason": "Implies statistically verified average across UK settlements without published sample data.",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"Average settlement\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-012",
-    "file": "app/guides/employer-recommended-solicitor/page.tsx",
-    "lineNumber": 168,
-    "pattern": "most employers",
-    "matchedText": "Most employers",
-    "context": "Most employers suggest a solicitor as a practical convenience. In straightforward cases, the recommended solicitor may be competent and fair",
-    "riskReason": "Broad, unproven collective assertion about employer conduct or offer values.",
-    "severity": "P2",
-    "recommendedAction": "Qualify or rephrase \"Most employers\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-013",
+    "id": "SC-E-CLM-007",
     "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
-    "lineNumber": 29,
+    "lineNumber": 31,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "q: 'What is the average settlement agreement payout in the UK?',",
@@ -143,42 +77,9 @@
     "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-014",
-    "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
-    "lineNumber": 34,
-    "pattern": "almost always",
-    "matchedText": "almost always",
-    "context": "a: 'No. The first offer is almost always below the employer\\'s true maximum. If you have any claim strength at all (age, length of service, ",
-    "riskReason": "Overstated certainty in legal or negotiation outcomes.",
-    "severity": "P2",
-    "recommendedAction": "Qualify or rephrase \"almost always\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-015",
-    "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
-    "lineNumber": 34,
-    "pattern": "true maximum",
-    "matchedText": "true maximum",
-    "context": "a: 'No. The first offer is almost always below the employer\\'s true maximum. If you have any claim strength at all (age, length of service, ",
-    "riskReason": "Ambiguous claim overlooking uncapped discrimination awards vs statutory compensatory limits.",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"true maximum\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-016",
+    "id": "SC-E-CLM-008",
     "file": "app/guides/page.tsx",
-    "lineNumber": 32,
-    "pattern": "1 to 3 months",
-    "matchedText": "1 to 3 months",
-    "context": "description: 'Find out how much a UK settlement agreement should be in 2026. Typical 1 to 3 months payout ranges, notice pay rules, £751 wee",
-    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-017",
-    "file": "app/guides/page.tsx",
-    "lineNumber": 101,
+    "lineNumber": 104,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payouts UK 2026',",
@@ -187,40 +88,18 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-018",
-    "file": "app/guides/settlement-agreement-acas-calculations/page.tsx",
-    "lineNumber": 45,
-    "pattern": "market data",
-    "matchedText": "market data",
-    "context": "a: 'No. ACAS does not provide an online settlement agreement calculator. ACAS provides free early conciliation and statutory guidance, but d",
-    "riskReason": "Implies third-party or representative market data exists unless qualified as internal platform telemetry.",
-    "severity": "P2",
-    "recommendedAction": "Qualify or rephrase \"market data\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-019",
+    "id": "SC-E-CLM-009",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 14,
+    "lineNumber": 195,
     "pattern": "1 to 3 months",
-    "matchedText": "1 to 3 months",
-    "context": "'Find out how much settlement your employer should pay in 2026. 1 to 3 months pay ranges, notice pay, £751 weekly cap, and tax-free rules. F",
+    "matchedText": "one to three months",
+    "context": "In standard commercial redundancy or capability exits, employers often propose an ex-gratia starting point of one to three months of gross s",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+    "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-020",
-    "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 21,
-    "pattern": "1 to 3 months",
-    "matchedText": "1 to 3 months",
-    "context": "'Find out how much settlement your employer should pay in 2026. 1 to 3 months pay ranges, notice pay, £751 weekly cap, and tax-free rules. F",
-    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-021",
+    "id": "SC-E-CLM-010",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
     "lineNumber": 203,
     "pattern": "1 to 3 months",
@@ -231,84 +110,40 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-022",
+    "id": "SC-E-CLM-011",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
     "lineNumber": 300,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
-    "context": "This is the discretionary compensation offered in exchange for signing away your right to take your employer to an employment tribunal. Typi",
+    "context": "This is the discretionary compensation offered in exchange for signing away your right to take your employer to an employment tribunal. In s",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-023",
-    "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 317,
-    "pattern": "typical settlement",
-    "matchedText": "Typical Settlement",
-    "context": "<h2 className=\"sc-h2 mb-4\">Typical Settlement Payout Benchmarks by Scenario</h2>",
-    "riskReason": "Suggests a standard settlement payout baseline without empirical verification (CAP Code 3.1).",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"Typical Settlement\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-024",
+    "id": "SC-E-CLM-012",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
     "lineNumber": 374,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
-    "context": "Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering one to three months of gross pay is often cheape",
+    "context": "Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering an ex-gratia payment of one to three months of g",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-025",
+    "id": "SC-E-CLM-013",
     "file": "app/guides/settlement-agreement-instead-of-pip/page.tsx",
-    "lineNumber": 485,
+    "lineNumber": 506,
     "pattern": "1 to 3 months",
-    "matchedText": "One to three months",
-    "context": "desc: 'One to three months of gross pay to reflect capability procedure savings. Paid tax-free up to £30,000 under ITEPA 2003 s.403.',",
+    "matchedText": "one to three months",
+    "context": "desc: 'As an informal negotiation starting point, one to three months of gross pay to reflect capability procedure savings. Paid tax-free up",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"One to three months\" to cite specific statutory terms or empirical telemetry."
+    "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-026",
-    "file": "app/guides/settlement-agreement-sick-leave/page.tsx",
-    "lineNumber": 60,
-    "pattern": "typical settlement",
-    "matchedText": "typical settlement",
-    "context": "a: 'A typical settlement package includes full notice pay, accrued untaken holiday pay, and an ex-gratia compensation sum representing one t",
-    "riskReason": "Suggests a standard settlement payout baseline without empirical verification (CAP Code 3.1).",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"typical settlement\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-027",
-    "file": "app/guides/what-is-a-fair-settlement-agreement/page.tsx",
-    "lineNumber": 413,
-    "pattern": "almost always",
-    "matchedText": "almost always",
-    "context": "'Your employer said the offer is final in the first communication. A \"final offer\" on day one is a negotiating position. In practice, employ",
-    "riskReason": "Overstated certainty in legal or negotiation outcomes.",
-    "severity": "P2",
-    "recommendedAction": "Qualify or rephrase \"almost always\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-028",
-    "file": "app/page.tsx",
-    "lineNumber": 169,
-    "pattern": "market data",
-    "matchedText": "market data",
-    "context": "text: 'The calculator gives a general estimate based on UK statutory rates and typical UK settlement market data. It is not legal advice. Yo",
-    "riskReason": "Implies third-party or representative market data exists unless qualified as internal platform telemetry.",
-    "severity": "P2",
-    "recommendedAction": "Qualify or rephrase \"market data\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-029",
+    "id": "SC-E-CLM-014",
     "file": "app/settlement-agreement-tax-calculator/page.tsx",
     "lineNumber": 256,
     "pattern": "average settlement",
@@ -319,20 +154,9 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-030",
+    "id": "SC-E-CLM-015",
     "file": "app/sitemap/page.tsx",
-    "lineNumber": 120,
-    "pattern": "1 to 3 months",
-    "matchedText": "1 to 3 months",
-    "context": "description: 'Find out how much a UK settlement agreement should be, 1 to 3 months benchmarks, statutory redundancy caps, and tax rules.',",
-    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
-    "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-031",
-    "file": "app/sitemap/page.tsx",
-    "lineNumber": 158,
+    "lineNumber": 172,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payout in the UK',",
@@ -341,40 +165,18 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-032",
-    "file": "app/terms/page.tsx",
-    "lineNumber": 41,
-    "pattern": "market data",
-    "matchedText": "market data",
-    "context": "body: 'The calculator on this site provides estimates only. Estimates are based on published statutory rates and general market data. They d",
-    "riskReason": "Implies third-party or representative market data exists unless qualified as internal platform telemetry.",
-    "severity": "P2",
-    "recommendedAction": "Qualify or rephrase \"market data\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-033",
+    "id": "SC-E-CLM-016",
     "file": "components/FaqAccordion.tsx",
-    "lineNumber": 33,
-    "pattern": "market data",
-    "matchedText": "market data",
-    "context": "a: \"The calculator gives a general estimate based on UK statutory rates and typical UK settlement market data. It is not legal advice. Your ",
-    "riskReason": "Implies third-party or representative market data exists unless qualified as internal platform telemetry.",
-    "severity": "P2",
-    "recommendedAction": "Qualify or rephrase \"market data\" to cite specific statutory terms or empirical telemetry."
-  },
-  {
-    "id": "SC-E-CLM-034",
-    "file": "components/InlineEstimator.tsx",
-    "lineNumber": 251,
-    "pattern": "typical settlement",
-    "matchedText": "typical settlement",
-    "context": "Enter your gross salary above to model your statutory redundancy and typical settlement range.",
-    "riskReason": "Suggests a standard settlement payout baseline without empirical verification (CAP Code 3.1).",
+    "lineNumber": 25,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "a: 'In standard commercial redundancy or capability exits, employers often propose an ex-gratia starting point of 1 to 3 months of gross sal",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
-    "recommendedAction": "Qualify or rephrase \"typical settlement\" to cite specific statutory terms or empirical telemetry."
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-035",
+    "id": "SC-E-CLM-017",
     "file": "components/Nav.tsx",
     "lineNumber": 53,
     "pattern": "average settlement",

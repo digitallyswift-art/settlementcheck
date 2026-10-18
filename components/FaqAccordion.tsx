@@ -22,15 +22,15 @@ const DEFAULT_FAQS: FaqItem[] = [
   },
   {
     q: 'How much should an employee settlement agreement be?',
-    a: 'A typical UK settlement agreement pays between one and three months of gross salary, plus notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with the first £30,000 paid tax-free.',
+    a: 'In standard commercial redundancy or capability exits, employers often propose an ex-gratia starting point of 1 to 3 months of gross salary on top of notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with qualifying termination payments up to £30,000 paid tax-free.',
   },
   {
     q: 'Does GOV.UK or ACAS offer an official settlement calculator?',
-    a: 'No. Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. The government only provides a basic statutory redundancy calculator. SettlementCheck is an independent ACAS-based calculator that estimates your full package, including non-statutory compensation, notice pay, and tax exemptions under ITEPA 2003.',
+    a: 'No. Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. The government only provides a basic statutory redundancy calculator. SettlementCheck is an independent settlement calculator applying UK statutory rates and ACAS Code of Practice guidance that estimates your complete package, including non-statutory compensation, notice pay, and tax exemptions under ITEPA 2003.',
   },
   {
     q: 'How accurate is the calculator?',
-    a: "The calculator gives a general estimate based on UK statutory rates and typical UK settlement market data. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
+    a: "The calculator gives a general estimate based on UK statutory rates and observed UK commercial negotiation benchmarks. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
   },
   {
     q: 'When will the solicitor matching service be available?',

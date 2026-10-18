@@ -2,11 +2,12 @@ import React from 'react'
 import Link from 'next/link'
 
 /**
- * SettlementCheck Guaranteed £0 Legal Fee Shield Component
- * Addresses SC-E-COM-001 / SC-B-012 (Legal Fee Reassurance Gap)
+ * SettlementCheck Employer-Funded Legal Fee Protection Component
+ * Addresses SC-E-COM-001 / SC-B-012 (Legal Fee Reassurance)
  * 
- * Under Section 203(3) Employment Rights Act 1996, employers cover independent legal advice fees
- * (typically £500 to £1,500 + VAT) directly to the employee's chosen solicitor.
+ * Under Section 203(3) Employment Rights Act 1996, independent legal advice is a statutory
+ * condition for a valid waiver. Employers customarily contribute £350 to £750 + VAT
+ * directly to the employee's chosen solicitor.
  */
 
 export function LegalFeeAnnouncementBar() {
@@ -20,9 +21,9 @@ export function LegalFeeAnnouncementBar() {
             </svg>
           </span>
           <span>
-            <strong className="text-white font-semibold">Guaranteed £0 Legal Fee Shield:</strong>{' '}
+            <strong className="text-white font-semibold">Legal Fee Coverage:</strong>{' '}
             <span className="text-[#F7F4EE]/85">
-              Under Section 203 ERA 1996, your employer covers your independent legal advice fees (£500 - £1,500 + VAT) directly.
+              To make your settlement legally valid, employers usually contribute £350 to £750 + VAT to your solicitor.
             </span>
           </span>
         </div>
@@ -47,7 +48,7 @@ export function LegalFeeShieldBadge({ className = '' }: { className?: string }) 
         </svg>
       </span>
       <span>
-        <strong>Guaranteed £0 Legal Cost:</strong> Employer covers your fees under Section 203 ERA 1996
+        <strong>Employer-Covered Legal Fee:</strong> Standard review covered under Section 203(3) ERA 1996
       </span>
     </div>
   )
@@ -65,10 +66,10 @@ export function LegalFeeInlineCard({ className = '' }: { className?: string }) {
         </div>
         <div>
           <h3 className="text-sm font-bold text-[#0B1F3A] m-0 mb-1">
-            Section 203 Independent Legal Fee Guarantee
+            Section 203 Independent Legal Fee Protection
           </h3>
           <p className="text-xs text-[#0B1F3A]/70 leading-relaxed m-0 mb-3">
-            For any settlement agreement to be legally binding, you must receive advice from an independent solicitor. Your employer pays for this advice, typically contributing £500 to £1,500 + VAT directly to your solicitor.
+            For a settlement agreement to legally waive employment tribunal claims, Section 203(3) requires you to receive independent legal advice. Employers standardly contribute £350 to £750 + VAT directly to your solicitor to cover this review.
           </p>
           <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#5B6577]">
             <span className="flex items-center gap-1.5 font-medium text-[#0B1F3A]">
@@ -77,7 +78,7 @@ export function LegalFeeInlineCard({ className = '' }: { className?: string }) {
             </span>
             <span className="flex items-center gap-1.5 font-medium text-[#0B1F3A]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9603B]" />
-              Zero out-of-pocket legal fees
+              Zero employee fee for standard sign-off
             </span>
             <span className="flex items-center gap-1.5 font-medium text-[#0B1F3A]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9603B]" />

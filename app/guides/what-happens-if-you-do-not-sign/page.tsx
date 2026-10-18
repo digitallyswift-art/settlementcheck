@@ -205,7 +205,7 @@ export default function RejectSettlementAgreementGuide() {
                   <tbody className="divide-y divide-rule text-[14px]">
                     <tr>
                       <td className="p-3 font-semibold text-ink">Accepting the Offer</td>
-                      <td className="p-3 text-muted">Guaranteed payment, including tax-free sums up to £30,000.⁸</td>
+                      <td className="p-3 text-muted">Legally binding contractual payment, including qualifying tax-free sums up to £30,000 under ITEPA s.403.⁸</td>
                       <td className="p-3 text-muted">Typically resolved within 10 to 21 days.</td>
                       <td className="p-3 text-muted">Private contract, with an agreed factual reference.</td>
                     </tr>

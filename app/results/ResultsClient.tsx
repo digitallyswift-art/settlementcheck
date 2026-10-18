@@ -26,30 +26,63 @@ function CheckIcon({ size = 16 }: { size?: number }) {
   )
 }
 
-/* ── Social proof testimonials ──────────────────────────────────── */
+/* ── Statutory Standards & Protections Card ─────────────────────── */
 
-function Testimonials() {
-  const items = [
+function StatutoryProtectionsCard() {
+  const protections = [
     {
-      quote: 'My initial offer was £14,000. After speaking to a solicitor through SettlementCheck, I settled at £34,500. I almost signed the first figure.',
-      attr: 'Operations manager, logistics sector, 2025',
+      title: 'April 2026 Statutory Caps',
+      statute: 'ERA 1996 s.227 & SI 2026/310',
+      desc: 'Redundancy calculated at £751/week (GB) or £783/week (NI). Unfair dismissal compensatory cap is £123,543.',
     },
     {
-      quote: 'I had no idea the offer was below the legal minimum until I used this calculator. The solicitor recovered an additional £19,200.',
-      attr: 'Project coordinator, financial services, 2024',
+      title: 'Mandatory Independent Advice',
+      statute: 'ERA 1996 s.203(3)',
+      desc: 'Waivers of statutory claims are unenforceable without advice from an independent, insured solicitor. Employers customarily cover this fee.',
+    },
+    {
+      title: '10-Day Consideration Window',
+      statute: 'ACAS Code of Practice 4',
+      desc: 'Parties should be given at least 10 calendar days to review terms. Employers cannot demand immediate sign-off.',
+    },
+    {
+      title: 'Tax-Free Exemption Boundary',
+      statute: 'ITEPA 2003 s.403',
+      desc: 'First £30,000 of compensation for loss of office is exempt from income tax and employee NICs. PILON is taxable under s.402D.',
     },
   ]
   return (
-    <div className="grid gap-4 md:grid-cols-2">
-      {items.map((t, i) => (
-        <blockquote key={i} className="bg-white border border-[#E2DCCE] rounded-lg p-5 flex flex-col gap-3">
-          <p className="text-[14px] text-ink leading-[1.6] m-0">&ldquo;{t.quote}&rdquo;</p>
-          <footer className="text-[11px] text-[#8A93A3] font-semibold uppercase tracking-[0.06em]">{t.attr}</footer>
-        </blockquote>
-      ))}
+    <div className="bg-paper border border-[#E2DCCE] rounded-xl p-5 mb-6">
+      <div className="flex items-center justify-between gap-2 border-b border-[#E2DCCE] pb-3 mb-4">
+        <div>
+          <span className="text-[11px] font-mono uppercase tracking-[0.10em] text-[#D9603B] font-semibold block">
+            Statutory Protections &amp; Standards
+          </span>
+          <h4 className="text-[15px] font-serif font-bold text-ink m-0">
+            How UK Employment Law Protects Your Settlement
+          </h4>
+        </div>
+        <span className="text-[11px] font-mono text-muted hidden sm:inline-block">
+          Active Rates: 2026/27
+        </span>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {protections.map((p, i) => (
+          <div key={i} className="bg-white border border-[#E2DCCE] rounded-lg p-3.5 flex flex-col justify-between">
+            <div>
+              <div className="flex items-baseline justify-between gap-2 mb-1">
+                <span className="text-[13px] font-semibold text-ink">{p.title}</span>
+              </div>
+              <span className="text-[10px] font-mono text-coral font-medium block mb-1.5">{p.statute}</span>
+              <p className="text-[12px] text-muted leading-relaxed m-0">{p.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
+
 
 /* ── Official Government & Statutory Benchmarks Card ────────────── */
 
@@ -128,7 +161,7 @@ function OfficialBenchmarkCard({
         {/* Metric 3: Typical Negotiation Benchmark Range */}
         <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
           <div>
-            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">3. Typical Negotiation Benchmark</span>
+            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">3. Commercial Negotiation Benchmark</span>
             <span className="text-[18px] font-bold text-ink block font-serif">
               {formatCurrency(acasLow)} to {formatCurrency(acasHigh)}
             </span>
@@ -171,7 +204,7 @@ function OfficialBenchmarkCard({
         <div className="flex items-start gap-2">
           <span className="text-[#0B1F3A] font-bold text-[14px] leading-none mt-0.5">§</span>
           <span className="leading-snug">
-            <strong className="text-ink">Statutory Legal Fee Contribution:</strong> Under Section 203(3) of the Employment Rights Act 1996, your settlement is legally void without independent solicitor certification. Employers customarily contribute <strong>£350 to £1,000+ VAT</strong> directly to cover this fee.
+            <strong className="text-ink">Independent Legal Fee Contribution:</strong> Under Section 203(3) of the Employment Rights Act 1996, statutory claim waivers are legally unenforceable without independent solicitor certification. Employers customarily contribute <strong>£350 to £1,000+ VAT</strong> directly to cover this advice.
           </span>
         </div>
         <a
@@ -2183,9 +2216,9 @@ function ResultsContent() {
                   )}
                 </div>
 
-                {/* Social Proof */}
+                {/* Statutory Reassurance & Protections */}
                 <div className="no-print">
-                  <Testimonials />
+                  <StatutoryProtectionsCard />
                 </div>
 
                 {/* Official Statutory & Tribunal Benchmarks */}

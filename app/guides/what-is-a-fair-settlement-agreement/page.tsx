@@ -104,10 +104,10 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Settlement Agreement Guide</p>
             <h1 className="sc-h1 mb-5">
-              A fair settlement agreement in 2026 pays more than your statutory minimum. Here is what the law guarantees you and how to spot when your employer is offering less.
+              A fair settlement agreement in 2026 pays more than your statutory minimum. Here is how your statutory rights protect you and how to spot when your employer is offering less.
             </h1>
             <p className="sc-lead">
-              When your employer offers a settlement agreement, they are paying you to end your employment cleanly and waive your right to bring a tribunal claim. The legal floor is calculated against a weekly pay cap of £751 (SI 2026/310, ERA 1996 s.227). A fair offer goes beyond that floor. This guide shows you how to calculate what the law guarantees you and how to judge whether the number on the table is genuinely fair.
+              When your employer offers a settlement agreement, they are paying you to end your employment cleanly and waive your right to bring a tribunal claim. The legal floor is calculated against a weekly pay cap of £751 (SI 2026/310, ERA 1996 s.227). A fair offer goes beyond that floor. This guide shows you how to calculate your minimum statutory entitlements and how to judge whether the number on the table is genuinely fair.
             </p>
           </div>
         </section>
@@ -136,7 +136,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Statutory Floor</span>
                   <span className="font-bold text-ink text-sm">Redundancy + Notice Pay</span>
-                  <span className="text-muted text-[11px]">Guaranteed by ERA 1996 ss.86 &amp; 162</span>
+                  <span className="text-muted text-[11px]">Protected by ERA 1996 ss.86 &amp; 162</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Ex-Gratia Uplift</span>
@@ -229,7 +229,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             </p>
 
             {/* Statutory floor */}
-            <h3 className="text-base font-semibold text-ink mb-3">The statutory floor: what the law guarantees you</h3>
+            <h3 className="text-base font-semibold text-ink mb-3">The statutory floor: your minimum legal entitlements</h3>
             <p className="sc-body mb-4">
               By law, you are entitled to statutory redundancy pay (if applicable), notice pay, and accrued holiday pay. The statutory floor is not negotiable. It is yours by right. Here is a worked example:
             </p>
@@ -410,7 +410,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                 'You were given fewer than 10 days to decide. UK employment law practice requires a minimum of 10 calendar days from when the draft is presented. A shorter deadline is a pressure tactic, not a legal constraint. If you are being rushed, the employer is protecting themselves, not being fair.',
                 'The offer contains no itemised breakdown. A fair offer lists redundancy, notice, holiday, and any uplift as separate figures. A single lump sum with no detail makes it impossible to verify that all components are present and correct.',
                 'There is no mention of a potential claim, but the circumstances are unclear. If your dismissal involved disputed reasons, unexplained selection, or events shortly after you raised a concern, a fair agreement names those potential claims explicitly. Silence on a possible claim does not mean you have waived it.',
-                'Your employer said the offer is final in the first communication. A "final offer" on day one is a negotiating position. In practice, employers almost always have room to move. The statement is designed to discourage you from pushing back, not to describe an actual ceiling.',
+                'Your employer said the offer is final in the first communication. A "final offer" on day one is a negotiating position. In practice, employers frequently have room to move. The statement is designed to discourage you from pushing back, not to describe an actual ceiling.',
                 'Legal fees are not being contributed. If your employer is offering a settlement but refusing to pay any contribution toward your independent legal advice, that is a red flag. Independent legal advice is a legal requirement for the agreement to be binding. Employers who resist contributing are making it harder for you to protect yourself.',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">

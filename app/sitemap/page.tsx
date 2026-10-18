@@ -121,7 +121,7 @@ const sitemapData: SitemapCategory[] = [
   },
   {
     title: 'Legal Guides & Knowledge Hub',
-    description: 'Practical, lawyer-reviewed advice on negotiating settlements, ACAS rules, and statutory rights.',
+    description: 'Practical, solicitor-reviewed advice on negotiating settlements, ACAS rules, and statutory rights.',
     items: [
       {
         title: 'All Legal Guides',
@@ -131,7 +131,7 @@ const sitemapData: SitemapCategory[] = [
       {
         title: 'Settlement Agreement: How Much Should You Get? UK 2026 Guide',
         href: '/guides/settlement-agreement-how-much/',
-        description: 'Find out how much a UK settlement agreement should be, 1 to 3 months benchmarks, statutory redundancy caps, and tax rules.',
+        description: 'Find out how much a UK settlement agreement should be, negotiation benchmarks, statutory redundancy caps, and tax rules.',
       },
       {
         title: 'Compromise Agreement UK: What It Is, Calculation & 2026 Rules',

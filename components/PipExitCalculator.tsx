@@ -207,7 +207,7 @@ export function PipExitCalculator() {
           ) : (
             <>
               <strong>Under 2 Years Service (Tactical Negotiation Stance):</strong> You have {years} year(s) service and
-              have not yet reached the 2-year ordinary unfair dismissal threshold. Your negotiation leverage relies on PIP
+              have not yet reached the 2-year ordinary unfair dismissal threshold. Your negotiation position relies on PIP
               process cost avoidance ({formatGBP(result.processCostAvoidanceMin)} - {formatGBP(result.processCostAvoidanceMax)}),
               contractual notice pay ({formatGBP(result.contractualNoticePay)}), and potential discrimination or whistleblowing claims.
             </>
@@ -280,7 +280,7 @@ export function PipExitCalculator() {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0B1F3A] text-white p-5 rounded-xl">
         <div>
           <span className="text-xs font-mono uppercase tracking-wider text-[#D9603B] font-semibold block">
-            Mandatory SRA Solicitor Review • 100% Employer Funded
+            Independent SRA Solicitor Review • Employer-Funded Sign-Off
           </span>
           <h4 className="text-base sm:text-lg font-serif font-bold text-white m-0">
             Negotiate Your PIP Settlement with an SRA Specialist

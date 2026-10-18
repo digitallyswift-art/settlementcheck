@@ -248,7 +248,7 @@ export default function InlineEstimator({
 
       {(!result || parsedSalary <= 0) && (
         <div className="p-4 bg-paper rounded-lg text-center text-[13px] text-[#5B6577]">
-          Enter your gross salary above to model your statutory redundancy and typical settlement range.
+          Enter your gross salary above to model your statutory redundancy and estimated settlement range.
         </div>
       )}
     </div>

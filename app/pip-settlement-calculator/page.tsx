@@ -75,7 +75,7 @@ export default function PipSettlementCalculatorPage() {
             <div className="bg-[#F7F4EE] p-4 rounded-xl border border-[#E2DCCE]">
               <strong className="text-sm text-[#0B1F3A] block mb-1">3. Employer-Funded Legal Advice</strong>
               <span>
-                Under Section 203(3) ERA 1996, the settlement is void unless signed by an independent solicitor. Employers standardly contribute £500 to £1,000 + VAT directly to your chosen lawyer.
+                Under Section 203(3) ERA 1996, statutory claim waivers are unenforceable without advice from an independent solicitor. Employers standardly contribute £500 to £1,000 + VAT directly to your chosen solicitor.
               </span>
             </div>
             <div className="bg-[#F7F4EE] p-4 rounded-xl border border-[#E2DCCE]">

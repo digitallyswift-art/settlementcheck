@@ -158,7 +158,7 @@ const faqSchema = {
       name: 'Does GOV.UK or ACAS offer an official settlement calculator?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'No. Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. The government only provides a basic statutory redundancy calculator. SettlementCheck is an independent ACAS-based calculator that estimates your full package, including non-statutory compensation, notice pay, and tax exemptions under ITEPA 2003.',
+        text: 'No. Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. The government only provides a basic statutory redundancy calculator. SettlementCheck is an independent settlement calculator applying UK statutory rates and ACAS Code of Practice guidance that estimates your complete package, including non-statutory compensation, notice pay, and tax exemptions under ITEPA 2003.',
       },
     },
     {
@@ -166,7 +166,7 @@ const faqSchema = {
       name: 'How accurate is the calculator?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The calculator gives a general estimate based on UK statutory rates and typical UK settlement market data. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.',
+        text: 'The calculator gives a general estimate based on UK statutory rates and observed UK commercial negotiation benchmarks. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.',
       },
     },
     {

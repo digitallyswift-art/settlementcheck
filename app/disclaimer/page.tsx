@@ -33,11 +33,11 @@ export default function Disclaimer() {
           {[
             {
               title: 'What the calculator does',
-              body: 'The SettlementCheck calculator applies the UK statutory redundancy formula (using April 2026 rates under SI 2026/310, including the weekly pay cap of £751) and general market data to produce an estimate of the minimum statutory entitlement and typical settlement range for your situation.',
+              body: 'The SettlementCheck calculator applies the UK statutory redundancy formula (using April 2026 rates under SI 2026/310, including the weekly pay cap of £751) and observed UK commercial negotiation benchmarks to produce an estimate of your minimum statutory entitlement and commercial negotiation range.',
             },
             {
               title: 'Independence from ACAS and Official Bodies',
-              body: 'SettlementCheck is an independent educational and estimation platform. It is not affiliated with, endorsed by, or operated by ACAS (the Advisory, Conciliation and Arbitration Service) or any UK government department. Our tools provide ACAS-based and statutory-aligned calculations derived from public UK legislation (Employment Rights Act 1996 and SI 2026/310). For official ACAS conciliation or arbitration services, visit acas.org.uk directly.',
+              body: 'SettlementCheck is an independent educational and estimation platform. It is not affiliated with, endorsed by, or operated by ACAS (the Advisory, Conciliation and Arbitration Service) or any UK government department. Our tools provide calculations derived from public UK legislation (Employment Rights Act 1996 and SI 2026/310) and ACAS Code of Practice guidance. For official ACAS conciliation or arbitration services, visit acas.org.uk directly.',
             },
             {
               title: 'What the calculator does not do',

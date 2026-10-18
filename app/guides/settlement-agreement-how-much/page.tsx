@@ -11,14 +11,14 @@ import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 const STATIC_METADATA: Metadata = {
   title: 'How Much Settlement From Your Employer? | SettlementCheck',
   description:
-    'Find out how much settlement your employer should pay in 2026. 1 to 3 months pay ranges, notice pay, £751 weekly cap, and tax-free rules. Free UK guide.',
+    'Find out how much settlement your employer should pay in 2026. Negotiation benchmarks, notice pay, £751 weekly cap, and tax-free rules. Free UK guide.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-how-much/',
   },
   openGraph: {
     title: 'How Much Settlement From Your Employer? | SettlementCheck',
     description:
-      'Find out how much settlement your employer should pay in 2026. 1 to 3 months pay ranges, notice pay, £751 weekly cap, and tax-free rules. Free UK guide.',
+      'Find out how much settlement your employer should pay in 2026. Negotiation benchmarks, notice pay, £751 weekly cap, and tax-free rules. Free UK guide.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-how-much/',
     type: 'article',
     locale: 'en_GB',
@@ -192,7 +192,7 @@ export default function HowMuchGuidePage() {
               </h2>
               <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                 <p itemProp="text" className="sc-body text-[16px] leading-relaxed text-ink font-medium">
-                  A typical UK settlement pays between one and three months of gross salary. Your package also includes your contractual notice and accrued holiday. Statutory redundancy is capped at £751 per week under SI 2026/310. The first £30,000 of compensation is tax-free under Section 403 of ITEPA 2003.
+                  In standard commercial redundancy or capability exits, employers often propose an ex-gratia starting point of one to three months of gross salary on top of contractual notice and accrued holiday. Statutory redundancy is capped at £751 per week under SI 2026/310. The first £30,000 of compensation is tax-free under Section 403 of ITEPA 2003.
                 </p>
               </div>
 
@@ -201,7 +201,7 @@ export default function HowMuchGuidePage() {
                 <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Ex-Gratia Benchmark</span>
                   <span className="font-bold text-ink text-sm">1 to 3 Months' Gross Pay</span>
-                  <span className="text-muted text-[11px]">Negotiated on top of your statutory floor</span>
+                  <span className="text-muted text-[11px]">Negotiated starting point above statutory floor</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Statutory Weekly Cap</span>
@@ -297,7 +297,7 @@ export default function HowMuchGuidePage() {
               <div className="p-5 rounded-lg border border-rule bg-card">
                 <h3 className="font-semibold text-ink text-[17px] mb-2">3. Ex-Gratia Compensation Payment</h3>
                 <p className="sc-body text-sm mb-2">
-                  This is the discretionary compensation offered in exchange for signing away your right to take your employer to an employment tribunal. Typical packages range from one to three months of gross salary, although disputed dismissals can secure substantially more.
+                  This is the discretionary compensation offered in exchange for signing away your right to take your employer to an employment tribunal. In straightforward exits, opening packages often benchmark around one to three months of gross salary, although disputed dismissals can secure substantially more.
                 </p>
                 <p className="text-xs text-muted">
                   The first £30,000 of compensation is tax-free under Section 403 of ITEPA 2003. Learn how HMRC handles the{' '}
@@ -314,7 +314,7 @@ export default function HowMuchGuidePage() {
         {/* Section 2: Typical Payout Benchmarks Table */}
         <section className="py-12 border-b border-rule bg-paper-2">
           <div className="max-w-3xl mx-auto px-5">
-            <h2 className="sc-h2 mb-4">Typical Settlement Payout Benchmarks by Scenario</h2>
+            <h2 className="sc-h2 mb-4">Settlement Payout Benchmarks by Scenario</h2>
             <p className="sc-body mb-6">
               How much you receive depends heavily on the reason for your departure and your legal standing. Below are typical market benchmarks observed across UK employment settlements:
             </p>
@@ -371,7 +371,7 @@ export default function HowMuchGuidePage() {
                 Employers offer ex-gratia money to buy certainty and finality. Defending an ordinary claim at an employment tribunal costs an employer between £8,500 and £15,000 in legal fees alone, regardless of the outcome.
               </p>
               <p className="sc-body text-sm">
-                Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering one to three months of gross pay is often cheaper and faster for the company than a protracted workplace dispute.
+                Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering an ex-gratia payment of one to three months of gross pay is often cheaper and faster for the company than a protracted workplace dispute.
               </p>
             </div>
           </div>

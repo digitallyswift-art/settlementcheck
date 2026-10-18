@@ -151,7 +151,7 @@ export default function AveragePayoutGuide() {
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Settlement Agreements</p>
             <h1 className="sc-h1 mb-5">
-              The average settlement agreement payout in the UK is £5,000 to £25,000. Here is how to check if your offer is fair in 2026.
+              Settlement Agreement Payouts UK 2026: Benchmark Ranges &amp; Average Settlement Guide
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
               <span>Written by SettlementCheck Editorial Team</span>
@@ -161,7 +161,7 @@ export default function AveragePayoutGuide() {
               <span>Last reviewed: July 2026</span>
             </div>
             <p className="sc-lead">
-              In 2026, observed commercial negotiation ranges for UK settlement agreements typically fall between £5,000 and £25,000 (based on observed commercial settlements and Ministry of Justice tribunal compensation statistics). Under UK employment regulations, your statutory redundancy pay is calculated against a weekly pay cap of £751 in Great Britain <sup>1</sup> (£783 in Northern Ireland <sup>2</sup>). Most fair settlement offers represent 1.5x to 4x of your statutory minimum entitlement. If your employer offers only the statutory minimum, they are paying nothing extra to buy out your right to make a tribunal claim.
+              While private settlement agreements have no official national average, observed UK commercial negotiation ranges for standard disputes typically fall between £5,000 and £25,000 (based on reported commercial settlements and Ministry of Justice tribunal compensation statistics). Under UK employment regulations, your statutory redundancy pay is calculated against a weekly pay cap of £751 in Great Britain <sup>1</sup> (£783 in Northern Ireland <sup>2</sup>). Most fair settlement offers represent 1.5x to 4x of your statutory minimum entitlement. If your employer offers only the statutory minimum, they are paying nothing extra to buy out your right to make a tribunal claim.
             </p>
           </div>
         </section>
@@ -182,7 +182,7 @@ export default function AveragePayoutGuide() {
                 What is the average settlement agreement payout in the UK?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                Based on observed UK commercial negotiation ranges and MoJ employment tribunal compensation benchmarks, typical settlement agreement payouts range between £5,000 and £25,000, representing 1.5 to 4 months of gross salary on top of contractual notice pay. Statutory redundancy is capped at £751 per week under SI 2026/310, and genuine severance up to £30,000 is tax-free under Section 403 of ITEPA 2003.
+                While private settlement agreements have no official national average, observed UK commercial negotiation ranges and MoJ employment tribunal compensation benchmarks indicate that settlement agreement payouts for standard capability and redundancy disputes frequently fall between £5,000 and £25,000. This represents an illustrative 1.5 to 4 months of gross salary on top of contractual notice pay. Statutory redundancy is capped at £751 per week under SI 2026/310, and genuine severance up to £30,000 is tax-free under Section 403 of ITEPA 2003.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -227,7 +227,7 @@ export default function AveragePayoutGuide() {
         {/* Typical Payout Ranges by Scenario */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Typical Settlement Payouts by Scenario</h2>
+            <h2 className="sc-section-h2 mb-4">Commercial Settlement Payout Benchmarks by Scenario</h2>
             <p className="sc-body mb-6">
               Settlement payouts depend heavily on the reason for your departure and the strength of any potential legal claims. For unfair dismissal scenarios, the legal maximum compensation is capped at £123,543 <sup>5</sup> or one year&apos;s gross salary. Use our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link> to check your offer, or estimate with the interactive tool below.
             </p>
@@ -242,7 +242,7 @@ export default function AveragePayoutGuide() {
             />
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
-                <caption className="sr-only">Average settlement agreement payouts by scenario UK 2026</caption>
+                <caption className="sr-only">Settlement agreement payout benchmarks by scenario UK 2026</caption>
                 <thead>
                   <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Departure Scenario</th>

@@ -57,7 +57,7 @@ const FAQS = [
   },
   {
     q: 'How much compensation should I expect in a sick leave settlement?',
-    a: 'A typical settlement package includes full notice pay, accrued untaken holiday pay, and an ex-gratia compensation sum representing one to six months of gross salary. If your illness qualifies as a disability under the Equality Act 2010, the settlement should also reflect potential tribunal awards under the Vento bands, which range from £1,300 to over £62,900.',
+    a: 'In ill-health capability disputes, an agreed settlement package standardly includes full notice pay, accrued untaken holiday pay, and an ex-gratia compensation sum representing one to six months of gross salary. If your illness qualifies as a disability under the Equality Act 2010, the settlement should also reflect potential tribunal awards under the Vento bands, which range from £1,300 to over £62,900.',
   },
 ]
 
@@ -261,7 +261,7 @@ export default function SettlementAgreementSickLeaveGuide() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div className="rounded-xl border border-rule bg-paper p-5">
-                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage block w-fit mb-2">Full Pay Guaranteed</span>
+                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage block w-fit mb-2">Full Statutory Notice Protection</span>
                 <h4 className="text-sm font-semibold text-ink mb-2">Scenario A: Contractual notice matches statutory notice</h4>
                 <p className="sc-body text-xs text-muted mb-2">
                   You have five years of service (five weeks statutory notice). Your contract requires five weeks or one month of notice.

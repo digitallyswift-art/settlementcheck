@@ -452,7 +452,7 @@ export default function ProtectiveAwardClient() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-coral font-bold">✓</span>
-                    <span>Guaranteed government payout up to £6,008</span>
+                    <span>Statutory RPS claim limit up to £6,008</span>
                   </li>
                 </ul>
               </div>
