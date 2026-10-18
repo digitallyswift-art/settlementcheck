@@ -6,25 +6,28 @@ export interface VerdictResult {
   minimum: number;
   typicalLow: number;
   typicalHigh: number;
-  typicalHighUncapped: boolean; // true when discrimination = 'yes' — ceiling not shown
-  discriminationAsterisk: boolean; // true when discrimination = 'not_sure' — show range with note
+  typicalHighUncapped: boolean; // true when discrimination = 'yes' - ceiling not shown
+  discriminationAsterisk: boolean; // true when discrimination = 'not_sure' - show range with note
   redundancy: number;           // statutory redundancy pay (ERA 1996 ss.162-163)
   basicAward: number;           // basic award for unfair dismissal (ERA 1996 ss.118-119)
-  notice: number;               // kept for ResultsClient compat — same as pilon
-  pilon: number;                // payment in lieu of notice (ITEPA 2003 s.402D — always taxable)
+  notice: number;               // kept for ResultsClient compat - same as pilon
+  pilon: number;                // payment in lieu of notice (ITEPA 2003 s.402D - always taxable)
   noticeWeeksUsed: number;
   noticeIsContractual: boolean;
   discriminationFlag: boolean;  // true for 'yes' or 'not_sure'
   // Tax (ITEPA 2003 s.403)
   taxFreeAmount: number;        // SRP portion below £30,000 threshold
   taxableTermination: number;   // SRP portion above £30,000 threshold
-  taxRate: number;              // 0.20 | 0.40 | 0.45 marginal rate from gross salary
-  estimatedTax: number;         // tax on (taxableTermination + pilon)
-  estimatedNet: number;         // offer minus estimated tax
+  taxRate: number;              // effective marginal rate on settlement package
+  estimatedTax: number;         // progressive tiered tax on (taxableTermination + pilon)
+  estimatedNet: number;         // effective offer minus estimated tax
   isScottishNote: boolean;      // flag to show Scottish income tax band note in UI
+  // Notice inclusion handling (SC-B-020)
+  offerIncludesNotice: boolean; // true if offer includes notice pay, false if notice is paid on top
+  effectiveOffer: number;      // total offer package evaluated
   // Collective redundancy (TULRCA 1992 s.189)
   collectiveRedundancy: boolean;
-  protectiveAwardMax: number;   // max 90 days × effective weekly pay — shown separately, never in total
+  protectiveAwardMax: number;   // max 90 days × effective weekly pay - shown separately, never in total
   // Jurisdiction
   weeklyCapUsed: number;        // ERA 1996 s.227 (GB £751) / ERO(NI) 1996 (NI £783)
   jurisdiction: 'GB' | 'NI';
@@ -114,10 +117,38 @@ export function calcNotice(
   };
 }
 
-// ITEPA 2003 — derive marginal income tax rate from gross annual salary.
+// ITEPA 2003 / Income Tax Act 2007: England/Wales/NI progressive tax bands
+// Personal Allowance: £12,570 (tapered by £1 for every £2 of income above £100,000)
+// Basic Rate: 20% on taxable income up to £37,700 (£12,571 to £50,270)
+// Higher Rate: 40% on taxable income between £37,700 and £112,570 (£50,271 to £125,140)
+// Personal Allowance Taper (60% effective marginal trap): £100,001 to £125,140
+// Additional Rate: 45% on income above £125,140
+export function calculateTotalIncomeTax(grossAnnual: number): number {
+  if (grossAnnual <= 12570) return 0;
+  if (grossAnnual <= 50270) {
+    return (grossAnnual - 12570) * 0.20;
+  }
+  if (grossAnnual <= 100000) {
+    const basicTax = (50270 - 12570) * 0.20; // £7,540
+    return basicTax + (grossAnnual - 50270) * 0.40;
+  }
+  if (grossAnnual <= 125140) {
+    const basicTax = (50270 - 12570) * 0.20; // £7,540
+    const higherTax = (100000 - 50270) * 0.40; // £19,892
+    // 60% effective marginal rate due to £1 allowance reduction per £2 earnings
+    return basicTax + higherTax + (grossAnnual - 100000) * 0.60;
+  }
+  // Additional rate 45% (Personal allowance fully tapered to £0 at £125,140)
+  const basicTax = (50270 - 12570) * 0.20; // £7,540
+  const higherTax = (100000 - 50270) * 0.40; // £19,892
+  const trapTax = (125140 - 100000) * 0.60; // £15,084
+  return basicTax + higherTax + trapTax + (grossAnnual - 125140) * 0.45;
+}
+
+// ITEPA 2003: derive baseline marginal income tax rate from gross annual salary.
 // Accounts for the UK Personal Allowance tapering (the 60% tax trap between £100,000 and £125,140).
-// Uses England/Wales/NI bands as baseline (Scottish bands differ — flagged in UI).
-function getTaxRate(grossAnnual: number): number {
+// Uses England/Wales/NI bands as baseline (Scottish bands differ: flagged in UI).
+export function getTaxRate(grossAnnual: number): number {
   if (grossAnnual <= 50_270) return 0.20;  // basic rate
   if (grossAnnual <= 100_000) return 0.40; // higher rate (before personal allowance tapering)
   if (grossAnnual <= 125_140) return 0.60; // 60% tax trap (tapering of personal allowance by £1 for every £2 earned)
@@ -135,6 +166,7 @@ export function getVerdict(
   discrimination: string,
   contractualNoticeWeeks: number,
   jurisdiction: 'GB' | 'NI' = 'GB',
+  offerIncludesNotice: boolean = true,
 ): VerdictResult {
   const weeklyCapUsed = jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB;
   const isCollectiveRedundancy = reason === 'redundancy_collective';
@@ -143,31 +175,46 @@ export function getVerdict(
   // Retrieve correct statutory rates for date
   const rates = getRatesForDate();
 
-  // ERA 1996 ss.162-163 — statutory redundancy pay
+  // ERA 1996 ss.162-163: statutory redundancy pay
   const redundancy =
     reason === 'redundancy' || reason === 'redundancy_collective'
       ? calcRedundancy(salary, totalMonths, age, weeklyCapUsed)
       : 0;
 
-  // ERA 1996 ss.118-119 — basic award (unfair dismissal)
+  // ERA 1996 ss.118-119: basic award (unfair dismissal)
   const basicAward = reason === 'dismissal' ? calcBasicAward(salary, totalMonths, age) : 0;
 
-  // ERA 1996 s.86 + ITEPA 2003 s.402D — PILON (always fully taxable)
+  // ERA 1996 s.86 + ITEPA 2003 s.402D: PILON (always fully taxable)
   const { pay: pilon, weeksUsed: noticeWeeksUsed, isContractual: noticeIsContractual } =
     calcNotice(salary, totalMonths, contractualNoticeWeeks);
 
   const minimum = redundancy + basicAward + pilon;
 
+  // SC-B-020: Notice pay handling and effective offer
+  // If offer includes notice pay, termination payment is offer minus notice pay.
+  // If notice pay is paid on top, the full offer is termination payment, and effective package is offer + pilon.
+  const effectiveOffer = offerIncludesNotice ? offer : (offer + pilon);
+  const terminationPayment = offerIncludesNotice ? Math.max(0, offer - pilon) : offer;
+
   // ── Tax calculation (ITEPA 2003 s.403 + s.402D) ──────────────
-  // The termination payment is the portion of the offer that is not notice pay (PILON)
-  const terminationPayment = Math.max(0, offer - pilon);
   // Only the termination payment (redundancy + ex-gratia) counts toward the £30,000 threshold.
   const taxableTermination = Math.max(0, terminationPayment - TAX_FREE_FLOOR);
   const taxFreeAmount = terminationPayment - taxableTermination;
-  const taxRate = getTaxRate(salary);
-  // Tax = tax on termination payment above floor + tax on all PILON
-  const estimatedTax = Math.round((taxableTermination + pilon) * taxRate);
-  const estimatedNet = Math.max(0, Math.round(offer - estimatedTax));
+
+  // SC-B-019: Progressive tiered tax calculation
+  // Total taxable income including taxable termination and PILON:
+  const taxableSettlement = taxableTermination + pilon;
+  const baseSalaryTax = calculateTotalIncomeTax(salary);
+  const totalTaxWithSettlement = calculateTotalIncomeTax(salary + taxableSettlement);
+  // Progressive marginal tax due on the settlement package:
+  const estimatedTax = Math.max(0, Math.round(totalTaxWithSettlement - baseSalaryTax));
+  const estimatedNet = Math.max(0, Math.round(effectiveOffer - estimatedTax));
+
+  // Effective marginal tax rate for UI display:
+  const taxRate = taxableSettlement > 0
+    ? Number((estimatedTax / taxableSettlement).toFixed(2))
+    : getTaxRate(salary);
+
   const isScottishNote = false; // set to true in UI layer via jurisdiction/locale detection
 
   // ── Protective award (TULRCA 1992 s.189(4)) ──────────────────
@@ -196,24 +243,24 @@ export function getVerdict(
   // Unfair dismissal compensatory cap: lower of gross salary or statutory limit
   const compensatoryCap = Math.round(Math.min(salary, rates.compensatoryAwardLimitGB));
 
-  // Vento bands for 2026/27
+  // Vento bands for 2026/27 (Presidential Guidance Ninth Addendum, applicable from 6 April 2026)
   const ventoBands = {
-    lowerMin: 1200,
-    lowerMax: 11800,
-    middleMin: 11800,
-    middleMax: 35300,
-    upperMin: 35300,
-    upperMax: 58900,
-    exceptionalMin: 58900,
+    lowerMin: 1300,
+    lowerMax: 12600,
+    middleMin: 12600,
+    middleMax: 37700,
+    upperMin: 37700,
+    upperMax: 62900,
+    exceptionalMin: 62900,
   };
 
   // ── Verdict ───────────────────────────────────────────────────
   let verdict: Verdict;
-  if (hasStatutoryFloor && offer < minimum) {
+  if (hasStatutoryFloor && effectiveOffer < minimum) {
     verdict = 'BELOW_MINIMUM';
-  } else if (offer < typicalLowCalc) {
+  } else if (effectiveOffer < typicalLowCalc) {
     verdict = 'BELOW_TYPICAL';
-  } else if (typicalHighUncapped || offer <= typicalHighCalc) {
+  } else if (typicalHighUncapped || effectiveOffer <= typicalHighCalc) {
     verdict = 'WITHIN_RANGE';
   } else {
     verdict = 'ABOVE_TYPICAL';
@@ -239,6 +286,8 @@ export function getVerdict(
     estimatedTax,
     estimatedNet,
     isScottishNote,
+    offerIncludesNotice,
+    effectiveOffer: Math.round(effectiveOffer),
     collectiveRedundancy: isCollectiveRedundancy,
     protectiveAwardMax,
     weeklyCapUsed,
@@ -268,29 +317,8 @@ export function calcPensionSacrifice(
   const currentTaxable = salary + taxableTermination;
   const newTaxable = currentTaxable - sacrificeAmount;
 
-  // Integrates tax bands for English/NI tax rules
-  function getTaxForIncome(income: number): number {
-    if (income <= 12570) return 0;
-    if (income <= 50270) return (income - 12570) * 0.20;
-    if (income <= 100000) {
-      const basicTax = (50270 - 12570) * 0.20;
-      return basicTax + (income - 50270) * 0.40;
-    }
-    if (income <= 125140) {
-      const basicTax = (50270 - 12570) * 0.20;
-      const higherTax = (100000 - 50270) * 0.40;
-      // 60% tax trap due to Personal Allowance tapering
-      return basicTax + higherTax + (income - 100000) * 0.60;
-    }
-    // Additional rate 45% (Personal allowance is fully tapered to 0)
-    const basicTax = (50270 - 12570) * 0.20;
-    const higherTax = (100000 - 50270) * 0.40;
-    const trapTax = (125140 - 100000) * 0.60;
-    return basicTax + higherTax + trapTax + (income - 125140) * 0.45;
-  }
-
-  const currentTax = getTaxForIncome(currentTaxable);
-  const newTax = getTaxForIncome(newTaxable);
+  const currentTax = calculateTotalIncomeTax(currentTaxable);
+  const newTax = calculateTotalIncomeTax(newTaxable);
   const taxSaved = Math.max(0, Math.round(currentTax - newTax));
 
   const pensionGrowth = sacrificeAmount;
@@ -360,11 +388,15 @@ export function calcProtectiveAward({
   // Selected award based on employer status
   const effectiveGrossAward = employerStatus === 'insolvent' ? insolventAward : solventAward;
 
-  // Tax calculation under ITEPA 2003 s.403 (first £30,000 tax-free)
-  const taxFreeAmount = Math.min(effectiveGrossAward, TAX_FREE_FLOOR);
-  const taxableAmount = Math.max(0, effectiveGrossAward - TAX_FREE_FLOOR);
-  const taxRate = getTaxRate(salary);
-  const estimatedTax = Math.round(taxableAmount * taxRate);
+  // Tax treatment under HMRC EIM02550 and ITEPA 2003 s.62:
+  // Protective awards under TULRCA 1992 s.189 are taxable as remuneration/earnings.
+  // They are not termination compensation under s.401, so the s.403 £30,000 exemption does not apply.
+  // Subject to standard PAYE income tax and Class 1 National Insurance.
+  const taxFreeAmount = 0;
+  const taxableAmount = effectiveGrossAward;
+  const baseSalaryTax = calculateTotalIncomeTax(salary);
+  const totalTaxWithAward = calculateTotalIncomeTax(salary + taxableAmount);
+  const estimatedTax = Math.max(0, Math.round(totalTaxWithAward - baseSalaryTax));
   const estimatedNet = effectiveGrossAward - estimatedTax;
 
   return {
@@ -450,8 +482,9 @@ export function calcNhsExit({
   // Tax treatment under ITEPA 2003 s.403 (first £30,000 tax-free)
   const taxFreeAmount = Math.min(grossAward, TAX_FREE_FLOOR);
   const taxableAmount = Math.max(0, grossAward - TAX_FREE_FLOOR);
-  const taxRate = getTaxRate(salary);
-  const estimatedTax = Math.round(taxableAmount * taxRate);
+  const baseSalaryTax = calculateTotalIncomeTax(salary);
+  const totalTaxWithExit = calculateTotalIncomeTax(salary + taxableAmount);
+  const estimatedTax = Math.max(0, Math.round(totalTaxWithExit - baseSalaryTax));
   const estimatedNet = grossAward - estimatedTax;
 
   return {

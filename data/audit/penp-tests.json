@@ -1,0 +1,62 @@
+[
+  {
+    "scenarioId": "PENP-001",
+    "name": "Standard 1 month unworked notice (no contractual PILON paid)",
+    "status": "PASS",
+    "formula": "((BP * D) / P) - T",
+    "inputs": {
+      "BP": 4000,
+      "D": 30,
+      "P": 30,
+      "T": 0
+    },
+    "expectedPenp": 4000,
+    "actualPenp": 4000,
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "scenarioId": "PENP-002",
+    "name": "3 months unworked notice with 1 month contractual PILON already taxed",
+    "status": "PASS",
+    "formula": "((BP * D) / P) - T",
+    "inputs": {
+      "BP": 3000,
+      "D": 90,
+      "P": 30,
+      "T": 3000
+    },
+    "expectedPenp": 6000,
+    "actualPenp": 6000,
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "scenarioId": "PENP-003",
+    "name": "Fully worked notice period (0 days unworked)",
+    "status": "PASS",
+    "formula": "((BP * D) / P) - T",
+    "inputs": {
+      "BP": 5000,
+      "D": 0,
+      "P": 30,
+      "T": 0
+    },
+    "expectedPenp": 0,
+    "actualPenp": 0,
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "scenarioId": "PENP-004",
+    "name": "Partial notice worked (14 days remaining out of 30)",
+    "status": "PASS",
+    "formula": "((BP * D) / P) - T",
+    "inputs": {
+      "BP": 3000,
+      "D": 14,
+      "P": 30,
+      "T": 0
+    },
+    "expectedPenp": 1400,
+    "actualPenp": 1400,
+    "dateChecked": "2026-10-18"
+  }
+]

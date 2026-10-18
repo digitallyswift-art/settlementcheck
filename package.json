@@ -16,7 +16,14 @@
     "sentinel:email": "node scripts/sentinel/send-digest-email.mjs",
     "sentinel:index": "node scripts/sentinel/test-indexing-api.mjs",
     "watchdog:sla": "node scripts/watchdog/sla-watchdog.mjs",
-    "test:gsc": "node scripts/sentinel/test-gsc-connection.mjs"
+    "test:gsc": "node scripts/sentinel/test-gsc-connection.mjs",
+    "audit:calc": "npx tsx scripts/audit/run-calculator-bva.ts",
+    "audit:claims": "npx tsx scripts/audit/scan-marketing-claims.ts",
+    "audit:copy": "npx tsx scripts/audit/scan-copy-brand.ts",
+    "audit:legal": "npx tsx scripts/audit/scan-legal-disclaimers.ts",
+    "audit:penp": "npx tsx scripts/audit/verify-penp.ts",
+    "lint:audit": "npx tsx scripts/audit/lint-audit-naming.ts",
+    "audit:all": "npx tsx scripts/audit/run-all.ts"
   },
   "license": "ISC",
   "dependencies": {

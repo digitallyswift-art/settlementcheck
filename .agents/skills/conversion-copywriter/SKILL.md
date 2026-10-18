@@ -5,22 +5,31 @@ description: Writes and reviews high-converting, empathetic, brand-compliant cop
 
 # Conversion Copywriter Skill
 
-Writes user-facing copy for SettlementCheck tailored to an employee who just received a settlement offer or redundancy notice.
+Writes and audits user-facing copy tailored to a stressed UK employee facing redundancy or a settlement agreement offer.
 
-## Voice & Style Rules (BRAND.md)
+## 1. Quick Reference & Core Invariants
 
-1. **Tone**: Calm, clear, empathetic, on their side. Not aggressive or overly formal.
-2. **Length**: One idea per sentence. Under 20 words where possible. Short paragraphs (2-3 sentences max).
-3. **UK English**: "Solicitor" (never lawyer/attorney), "Redundancy" (never layoff), "Tribunal" (never court).
-4. **Key Reassurance**: Always highlight that **"your employer covers the legal fees"** when discussing solicitor review.
-5. **Non-Negotiables**:
-   - No em dashes (—). Use hyphens or restructure the sentence.
-   - Never write "Don't worry", "reach out", "leverage", "touch base", "low-ball" (use "below typical range").
-   - Never write "claim" for settlement payout (use "settlement" or "amount").
-   - Clear CTAs: "Calculate my estimate →", "Check my offer now →", "Get my free solicitor match →". Never "Submit" or "Click here".
+- **Zero Em Dashes**: Never use em dashes (—). Use hyphens or restructure.
+- **Zero Prompt / CRO Meta-Jargon**: Never use internal framework terms in user-facing copy (e.g. "Attention Economy", "Diagnostic", "Existential Vacuum", "Cognitive Relief"). Use natural employee-centric phrasing.
+- **UK Terminology**: "Solicitor", "Redundancy", "Employment Tribunal", "Settlement".
+- **Legal Fee Reassurance**: Always highlight that **"your employer covers the legal fees"**.
+- **Sentence Economy**: Under 20 words per sentence; maximum 2–3 sentences per paragraph.
 
-## Cognitive Load & Attention Directives
-- **Intent-Matched Placement**: Place interactive tools above the fold on calculator pages; on guides, place the Answer-First direct answer box above the fold, followed immediately by an inline interactive tool.
-- **Progressive Cognitive Relief**: Keep inputs and questions single-concept. Reduce anxiety by giving immediate feedback at each step.
-- **Zero-Friction Value**: Provide statutory calculations freely without email gates to earn user trust.
-- **Actionable Commercial Payoff**: Every verdict must offer a practical next step (such as an objective commercial communication template and independent solicitor matching). Never provide or imply legal advice.
+For banned words, tone rules, and the complete high-converting CTA matrix, see:
+- [Brand Compliance & CTA Playbook Reference](./references/brand-compliance-and-playbook.md)
+
+## 2. Automated Brand Verification
+
+Run the deterministic brand and copy scanner:
+```bash
+npm run audit:copy
+```
+or directly via:
+```bash
+npx tsx scripts/audit/scan-copy-brand.ts
+```
+
+## 3. Core Directives
+
+1. **Cognitive Relief First**: Keep user inputs single-concept and reduce anxiety with instant calculations.
+2. **Action-Oriented Verbs**: Every button must use active, empowering verbs ("Calculate my estimate →", "Check my offer now →"). Never use generic "Submit".

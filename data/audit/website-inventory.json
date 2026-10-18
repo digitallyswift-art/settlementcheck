@@ -1,0 +1,2410 @@
+[
+  {
+    "id": "RT-001",
+    "route": "/api/cron/serp-sentinel",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/cron/serp-sentinel/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-002",
+    "route": "/api/cron/sla-watchdog",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/cron/sla-watchdog/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-003",
+    "route": "/api/health",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/health/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-004",
+    "route": "/api/lead",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/lead/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-005",
+    "route": "/api/leads",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/leads/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-006",
+    "route": "/api/otp/send",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/otp/send/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-007",
+    "route": "/api/otp/verify",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/otp/verify/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-008",
+    "route": "/api/portal/claim",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/portal/claim/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-009",
+    "route": "/api/portal/dossier/[id]",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/portal/dossier/[id]/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-010",
+    "route": "/api/portal/seo-actions",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/portal/seo-actions/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 1
+  },
+  {
+    "id": "RT-011",
+    "route": "/api/review-agreement",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/review-agreement/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-012",
+    "route": "/api/save-results",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/save-results/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-013",
+    "route": "/api/solicitor-application",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/solicitor-application/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-014",
+    "route": "/api/telemetry/settlement-outcome",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/telemetry/settlement-outcome/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-015",
+    "route": "/api/waitlist",
+    "type": "api",
+    "tier": "API Endpoint",
+    "intent": "System / Utility",
+    "file": "app/api/waitlist/route.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-016",
+    "route": "/calculator/",
+    "type": "page",
+    "tier": "Tier 1: Core Conversion Pillar",
+    "intent": "Transactional",
+    "file": "app/calculator/page.tsx",
+    "title": "Free Employee Settlement Agreement Calculator UK (2026)",
+    "description": "Calculate your employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Free.",
+    "canonical": "/calculator/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 1,
+    "h1": "Free Employee Settlement Agreement Calculator UK (2026 Rates)",
+    "primaryCTA": null,
+    "schemas": [
+      "Offer",
+      "Organization",
+      "Thing",
+      "Audience",
+      "Legislation",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "WebApplication",
+      "SoftwareApplication"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 50
+  },
+  {
+    "id": "RT-017",
+    "route": "/calculators/",
+    "type": "page",
+    "tier": "Tier 1: Core Conversion Pillar",
+    "intent": "Navigational",
+    "file": "app/calculators/page.tsx",
+    "title": "Employment & Settlement Calculators UK | SettlementCheck",
+    "description": "Compare all free UK employment calculators: settlement agreements, statutory redundancy (£751 cap), unfair dismissal, tax, and protective awards.",
+    "canonical": "/calculators/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 1,
+    "h1": "Take control of your exit. Free statutory calculators.",
+    "primaryCTA": {
+      "text": "Settlement Checker",
+      "href": "/settlement-agreement-review/"
+    },
+    "schemas": [
+      "WebSite",
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "CollectionPage",
+      "WebPage"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 5
+  },
+  {
+    "id": "RT-018",
+    "route": "/constructive-dismissal-calculator/",
+    "type": "page",
+    "tier": "Tier 2: Programmatic Statutory Calculator",
+    "intent": "Commercial Investigation",
+    "file": "app/constructive-dismissal-calculator/page.tsx",
+    "title": "Constructive Dismissal Calculator UK 2026 | SettlementCheck",
+    "description": "Forced to resign by your employer? Estimate your constructive dismissal settlement using April 2026 statutory rates (£123,543 cap). Free check, no email.",
+    "canonical": "/constructive-dismissal-calculator/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.9,
+    "h1": "Calculate your constructive dismissal settlement",
+    "primaryCTA": {
+      "text": "Estimate my constructive dismissal settlement →",
+      "href": "/calculator/?reason=constructive"
+    },
+    "schemas": [
+      "Offer",
+      "Organization",
+      "Legislation",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "HowTo",
+      "HowToStep",
+      "BreadcrumbList",
+      "ListItem",
+      "WebApplication",
+      "SoftwareApplication"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 11
+  },
+  {
+    "id": "RT-019",
+    "route": "/disclaimer/",
+    "type": "page",
+    "tier": "Tier 6: Legal & Compliance",
+    "intent": "Informational",
+    "file": "app/disclaimer/page.tsx",
+    "title": "Calculator Disclaimer | SettlementCheck",
+    "description": "The SettlementCheck calculator provides estimates only and does not constitute legal advice. You must obtain independent legal advice before signing a settlement agreement.",
+    "canonical": "/disclaimer/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.2,
+    "h1": "Calculator Disclaimer",
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": true,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "£751 weekly cap",
+      "£123,543 compensatory cap"
+    ],
+    "unsupportedClaims": [
+      "market data"
+    ],
+    "inboundLinksCount": 2
+  },
+  {
+    "id": "RT-020",
+    "route": "/dossier/review/[id]/",
+    "type": "page",
+    "tier": "Internal / Solicitor Portal Platform",
+    "intent": "B2B Partner",
+    "file": "app/dossier/review/[id]/page.tsx",
+    "title": "Solicitor Pre-Flight Case Dossier | SettlementCheck",
+    "description": "Confidential SRA solicitor pre-flight matter dossier, statutory floor audit, and Section 203 adviser schedule.",
+    "canonical": null,
+    "canonicalFormat": "missing",
+    "canonicalMatches": false,
+    "robotsDirective": "noindex, nofollow",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": "{matterSummary.clientName}",
+    "primaryCTA": {
+      "text": "Return to Solicitor Portal →",
+      "href": "/portal/"
+    },
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-021",
+    "route": "/for-solicitors/",
+    "type": "page",
+    "tier": "Tier 5: B2B / Panel Solicitor Acquisition",
+    "intent": "B2B Partner",
+    "file": "app/for-solicitors/page.tsx",
+    "title": "Settlement Agreement Instructions for Employment Solicitors | SettlementCheck",
+    "description": "Receive exclusive, pre-calculated settlement agreement instructions from UK employees. Complete statutory redundancy dossiers, PILON splits, and direct employer legal fees. SRA firms only.",
+    "canonical": "https://settlementcheck.co.uk/for-solicitors/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.6,
+    "h1": "Stop losing billable hours to unqualified redundancy enquiries.",
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 5
+  },
+  {
+    "id": "RT-022",
+    "route": "/get-matched/",
+    "type": "page",
+    "tier": "Tier 3: Funnel & Intake Stage",
+    "intent": "Transactional",
+    "file": "app/get-matched/page.tsx",
+    "title": "Get Your Free Specialist Match | SettlementCheck",
+    "description": "Connect with an SRA-regulated employment solicitor who specialises in settlement agreements. Free. No obligation. Your employer covers the legal advice fee.",
+    "canonical": "https://settlementcheck.co.uk/get-matched/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "noindex, nofollow",
+    "isIndexable": false,
+    "isInSitemap": true,
+    "sitemapPriority": 0.9,
+    "h1": "{children}",
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 13
+  },
+  {
+    "id": "RT-023",
+    "route": "/guides/average-settlement-agreement-payout-uk/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
+    "title": "Average Settlement Agreement Payout UK 2026 | SettlementCheck",
+    "description": "Free UK settlement agreement payout guide. Typical ranges (£5,000-£25,000) and 2026 redundancy pay caps (£751/wk). No email. See if your offer is fair.",
+    "canonical": "/guides/average-settlement-agreement-payout-uk/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "The average settlement agreement payout in the UK is £5,000 to £25,000. Here is how to check if your offer is fair in 2026.",
+    "primaryCTA": {
+      "text": "Check your offer against this baseline →",
+      "href": "/calculator/?reason=redundancy"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage",
+      "Legislation"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 5
+  },
+  {
+    "id": "RT-024",
+    "route": "/guides/compromise-agreement-calculator-uk/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/compromise-agreement-calculator-uk/page.tsx",
+    "title": "Compromise Agreement Calculator UK 2026 | SettlementCheck",
+    "description": "Calculate your compromise agreement payout under 2026 UK statutory rules (£751 cap). Redundancy, PILON, and tax-free breakdown. Free, no email required.",
+    "canonical": "/guides/compromise-agreement-calculator-uk/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Compromise Agreement Calculator UK: 2026 Rules &amp; Payout Guide",
+    "primaryCTA": {
+      "text": "Check draft agreement clauses →",
+      "href": "/settlement-agreement-review/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 9
+  },
+  {
+    "id": "RT-025",
+    "route": "/guides/constructive-dismissal-settlement-agreements/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/constructive-dismissal-settlement-agreements/page.tsx",
+    "title": "Constructive Dismissal Settlements 2026 | SettlementCheck",
+    "description": "Free UK constructive dismissal settlement guide. Check 2026 compensation caps (weekly cap £751, max £123,543). No email. Instant fair offer evaluation.",
+    "canonical": "/guides/constructive-dismissal-settlement-agreements/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Constructive Dismissal Settlement Agreements in the UK: Rules and Compensation Limits for 2026",
+    "primaryCTA": {
+      "text": "Guides",
+      "href": "/guides/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage",
+      "Legislation"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 3
+  },
+  {
+    "id": "RT-026",
+    "route": "/guides/discrimination-settlement-agreements/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/discrimination-settlement-agreements/page.tsx",
+    "title": "Discrimination Settlement Agreements UK 2026 | Vento Bands & Tax Rules",
+    "description": "UK guide to discrimination settlement agreements in 2026. Learn about uncapped compensation, the Ninth Addendum Vento bands (£1,300 to £62,900+), and tax rules.",
+    "canonical": "/guides/discrimination-settlement-agreements/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Discrimination Settlement Agreements UK: Compensation, Vento Bands &amp; Tax Rules (2026)",
+    "primaryCTA": {
+      "text": "Calculate my settlement now &rarr;",
+      "href": "/calculator/?discrimination=yes"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 5
+  },
+  {
+    "id": "RT-027",
+    "route": "/guides/employer-recommended-solicitor/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/employer-recommended-solicitor/page.tsx",
+    "title": "Do I Have to Use the Solicitor My Employer Recommends? | SettlementCheck",
+    "description": "No. You are entitled to choose your own solicitor for independent legal advice on a settlement agreement. Here is what the law says.",
+    "canonical": "https://settlementcheck.co.uk/guides/employer-recommended-solicitor/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Do I have to use the solicitor my employer recommends?",
+    "primaryCTA": {
+      "text": "Check my offer →",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203"
+    ],
+    "unsupportedClaims": [
+      "most employers"
+    ],
+    "inboundLinksCount": 19
+  },
+  {
+    "id": "RT-028",
+    "route": "/guides/employment-tribunal-average-awards-uk/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/employment-tribunal-average-awards-uk/page.tsx",
+    "title": "Average Employment Tribunal Awards UK 2026: MoJ Compensation Tables",
+    "description": "Official MoJ employment tribunal compensation tables 2026. Unfair dismissal (£7,564 median), discrimination, £123,543 statutory cap, and settlement comparison.",
+    "canonical": "/guides/employment-tribunal-average-awards-uk/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Average Employment Tribunal Awards UK 2026: Official Compensation Tables",
+    "primaryCTA": {
+      "text": "Calculate My Settlement Range →",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage",
+      "Legislation",
+      "GovernmentService"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 2
+  },
+  {
+    "id": "RT-029",
+    "route": "/guides/fair-work-agency/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/fair-work-agency/page.tsx",
+    "title": "What Is the Fair Work Agency? UK Employment Guide 2026",
+    "description": "The Fair Work Agency is a new UK enforcement body under the Employment Rights Bill 2024-25. Not yet operational. Learn what it will do and how it impacts settlements.",
+    "canonical": "/guides/fair-work-agency/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "What is the Fair Work Agency and does it affect my settlement agreement?",
+    "primaryCTA": {
+      "text": "Calculate my settlement",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "£751 weekly cap"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 3
+  },
+  {
+    "id": "RT-030",
+    "route": "/guides/how-to-negotiate-a-settlement-agreement/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
+    "title": "How to Negotiate a Settlement Agreement 2026 | SettlementCheck",
+    "description": "Negotiate a UK settlement agreement using 2026 rates (£751/wk cap). Without Prejudice rules, counter-offers, and £500+ legal fee contributions. Free guide.",
+    "canonical": "https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "How to Negotiate a Settlement Agreement",
+    "primaryCTA": {
+      "text": "Settlement Calculator →",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 31
+  },
+  {
+    "id": "RT-031",
+    "route": "/guides/is-my-settlement-offer-fair/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
+    "title": "Is My Settlement Offer Fair? 2026 UK Check | SettlementCheck",
+    "description": "Check if your UK settlement offer is fair using 2026 rates (£751/wk cap). Compare against statutory minimums, tribunal medians, and Acas ranges. Free guide.",
+    "canonical": "https://settlementcheck.co.uk/guides/is-my-settlement-offer-fair/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Most settlement offers fall between 1.5x and 4x the statutory minimum. Here is how to spot if yours is genuinely fair.",
+    "primaryCTA": {
+      "text": "settlement calculator",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "WebPage",
+      "Legislation"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 3
+  },
+  {
+    "id": "RT-032",
+    "route": "/guides/nhs-settlement-agreements/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/nhs-settlement-agreements/page.tsx",
+    "title": "NHS Settlement & MARS Calculator 2026 | SettlementCheck",
+    "description": "Calculate your NHS settlement and MARS redundancy payout under Agenda for Change. HM Treasury approval rules, £100k cap, pension rules, and tax-free limits.",
+    "canonical": "/guides/nhs-settlement-agreements/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "NHS Settlement Agreements &amp; MARS Calculator: 2026 Rules &amp; Payouts",
+    "primaryCTA": {
+      "text": "Check NHS agreement clauses →",
+      "href": "/settlement-agreement-review/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage",
+      "Legislation"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 8
+  },
+  {
+    "id": "RT-033",
+    "route": "/guides/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/page.tsx",
+    "title": "Employment Settlement Agreement Guides | SettlementCheck",
+    "description": "Plain-English guides on settlement agreements, negotiation, legal advice, and your rights as an employee in the UK.",
+    "canonical": "https://settlementcheck.co.uk/guides/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Understand your rights. Before you sign.",
+    "primaryCTA": {
+      "text": "Check my offer →",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "CollectionPage",
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 30
+  },
+  {
+    "id": "RT-034",
+    "route": "/guides/pilon-tax-treatment-2026/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/pilon-tax-treatment-2026/page.tsx",
+    "title": "PILON Tax 2026 | Is Notice Pay Tax Free? | SettlementCheck",
+    "description": "Understand PILON tax treatment for 2026. All notice pay is taxable (no £30k exemption). Use our free tool to check your take-home pay. No email.",
+    "canonical": "/guides/pilon-tax-treatment-2026/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "PILON Tax Treatment UK 2026: Pay in Lieu of Notice is Fully Taxable",
+    "primaryCTA": {
+      "text": "Check my draft notice clauses →",
+      "href": "/settlement-agreement-review/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage",
+      "Legislation"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 15
+  },
+  {
+    "id": "RT-035",
+    "route": "/guides/pressured-to-sign/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/pressured-to-sign/page.tsx",
+    "title": "Pressured to Sign a Settlement Agreement? | 10-Day Rule | SettlementCheck",
+    "description": "Understand your rights if your employer is pressuring you to sign a settlement agreement. Learn about the ACAS 10-day rule, improper behaviour, and your options.",
+    "canonical": "https://settlementcheck.co.uk/guides/pressured-to-sign/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "My employer is pressuring me to sign a settlement agreement quickly. What are my rights?",
+    "primaryCTA": {
+      "text": "Settlement Calculator",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer"
+    ],
+    "disclaimers": {
+      "legalAdvice": true,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 20
+  },
+  {
+    "id": "RT-036",
+    "route": "/guides/protected-conversations-without-prejudice/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/protected-conversations-without-prejudice/page.tsx",
+    "title": "Protected Conversations & Without Prejudice UK | Section 111A Guide",
+    "description": "UK employee guide to Section 111A protected conversations and Without Prejudice rules. Learn your rights, improper behaviour limits, and 2026 statutory rates.",
+    "canonical": "/guides/protected-conversations-without-prejudice/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Protected Conversations and Without Prejudice: The UK Employee Guide",
+    "primaryCTA": {
+      "text": "Calculate my estimate →",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 6
+  },
+  {
+    "id": "RT-037",
+    "route": "/guides/protective-award/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/protective-award/page.tsx",
+    "title": "Protective Award Calculator & Rules 2026 | SettlementCheck",
+    "description": "Calculate up to 90 days gross pay for collective redundancy consultation failure. Free calculator, solvent vs insolvent rules, and 2026 statutory caps.",
+    "canonical": "/guides/protective-award/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Protective Award Redundancy Claims: 90 Days Pay Calculator &amp; 2026 Rules",
+    "primaryCTA": {
+      "text": "Check draft agreement clauses →",
+      "href": "/settlement-agreement-review/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage",
+      "Legislation"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 6
+  },
+  {
+    "id": "RT-038",
+    "route": "/guides/redundancy-pay-cap-2026/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/redundancy-pay-cap-2026/page.tsx",
+    "title": "Redundancy Pay Cap 2026 | £751 Weekly Limit | SettlementCheck",
+    "description": "Check the UK redundancy pay cap for 2026 (£751/week limit). Find calculations, worked examples, and what to do if your employer got it wrong. No email.",
+    "canonical": "/guides/redundancy-pay-cap-2026/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "The redundancy weekly pay cap is £751 in 2026. Here is exactly how it limits your statutory entitlement and what to do if your employer gets it wrong.",
+    "primaryCTA": {
+      "text": "Check my draft terms →",
+      "href": "/settlement-agreement-review/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage",
+      "Legislation"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 18
+  },
+  {
+    "id": "RT-039",
+    "route": "/guides/settlement-agreement-acas-calculations/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/settlement-agreement-acas-calculations/page.tsx",
+    "title": "Settlement Agreement ACAS-Based Calculations | SettlementCheck",
+    "description": "How ACAS-based settlement calculations work. Understand the £751 weekly pay cap (April 2026), tax-free limits, PILON tax rules, and the statutory redundancy formula.",
+    "canonical": "https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "How ACAS-Based Settlement Calculations Work: What the £751 Weekly Pay Cap Means for Your Offer",
+    "primaryCTA": {
+      "text": "Calculate my entitlement →",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "WebPage",
+      "Legislation"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [
+      "market data"
+    ],
+    "inboundLinksCount": 13
+  },
+  {
+    "id": "RT-040",
+    "route": "/guides/settlement-agreement-how-much/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/settlement-agreement-how-much/page.tsx",
+    "title": "How Much Settlement Should You Get? 2026 | SettlementCheck",
+    "description": "Find out how much a UK settlement agreement should be in 2026. 1 to 3 months payout ranges, notice pay, £751 weekly cap, and tax rules. Free guide.",
+    "canonical": "https://settlementcheck.co.uk/guides/settlement-agreement-how-much/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Employment Settlement Agreement: How Much Should You Get? (UK 2026 Guide)",
+    "primaryCTA": {
+      "text": "Check my draft clauses →",
+      "href": "/settlement-agreement-review/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "WebPage",
+      "Legislation",
+      "BreadcrumbList",
+      "ListItem"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 4
+  },
+  {
+    "id": "RT-041",
+    "route": "/guides/settlement-agreement-instead-of-pip/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/settlement-agreement-instead-of-pip/page.tsx",
+    "title": "Settlement Agreement Instead of a PIP 2026 | SettlementCheck",
+    "description": "Offered a settlement agreement instead of a PIP? Check 2026 rates (£751/wk), Section 111A rules, negotiation tactics, and £500+ legal fee coverage. Free guide.",
+    "canonical": "/guides/settlement-agreement-instead-of-pip/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Settlement Agreement Instead of a PIP: The UK Employee Guide",
+    "primaryCTA": {
+      "text": "Check my draft exit terms →",
+      "href": "/settlement-agreement-review/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 3
+  },
+  {
+    "id": "RT-042",
+    "route": "/guides/settlement-agreement-sick-leave/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/settlement-agreement-sick-leave/page.tsx",
+    "title": "Settlement Agreement on Sick Leave: UK Rights & Pay (2026)",
+    "description": "Off sick and offered a settlement agreement? Learn your 2026 UK pay rights, full notice pay rules, £30,000 tax relief, and why your employer covers your fees.",
+    "canonical": "/guides/settlement-agreement-sick-leave/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Settlement Agreement on Sick Leave: UK Employee Rights and Pay (2026 Guide)",
+    "primaryCTA": {
+      "text": "free settlement calculator",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 4
+  },
+  {
+    "id": "RT-043",
+    "route": "/guides/settlement-agreement-vs-tribunal-claim/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/settlement-agreement-vs-tribunal-claim/page.tsx",
+    "title": "Settlement Agreement vs Tribunal 2026 | SettlementCheck",
+    "description": "Compare a UK settlement agreement vs employment tribunal in 2026 (£123,543 cap). Learn about costs, timelines, and payouts. Free check, no email.",
+    "canonical": "/guides/settlement-agreement-vs-tribunal-claim/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Settlement Agreement vs Employment Tribunal UK 2026: Cost, Time, and Success Rates compared",
+    "primaryCTA": {
+      "text": "check your offer",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage"
+    ],
+    "disclaimers": {
+      "legalAdvice": true,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 8
+  },
+  {
+    "id": "RT-044",
+    "route": "/guides/tax-free-settlement-30000/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/tax-free-settlement-30000/page.tsx",
+    "title": "Tax-Free Settlement 2026 | £30k Rule | SettlementCheck",
+    "description": "Free UK settlement agreement tax guide. First £30,000 is tax-free. Learn which payments qualify, how the excess is taxed, and check your offer. No email.",
+    "canonical": "/guides/tax-free-settlement-30000/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "The first £30,000 of your settlement agreement is tax-free in 2026. Here is how the exemption works and what is taxable.",
+    "primaryCTA": {
+      "text": "Check my draft tax split →",
+      "href": "/settlement-agreement-review/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage",
+      "Legislation"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 22
+  },
+  {
+    "id": "RT-045",
+    "route": "/guides/unfair-dismissal-settlement-agreements/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/unfair-dismissal-settlement-agreements/page.tsx",
+    "title": "Unfair Dismissal Settlement Agreements UK 2026",
+    "description": "Calculate fair unfair dismissal settlements in 2026. Weekly cap £751, max compensatory award £123,543, tax-free limits, Polkey rules, and negotiation steps.",
+    "canonical": "/guides/unfair-dismissal-settlement-agreements/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "Unfair Dismissal Settlement Agreements UK (2026 Rules)",
+    "primaryCTA": {
+      "text": "Standard Settlement Calculator",
+      "href": "/calculator/?reason=performance"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization",
+      "ImageObject",
+      "WebPage"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 5
+  },
+  {
+    "id": "RT-046",
+    "route": "/guides/what-happens-if-you-do-not-sign/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/what-happens-if-you-do-not-sign/page.tsx",
+    "title": "Not Signing a Settlement Agreement | 2026 Rights | SettlementCheck",
+    "description": "Understand what happens if you reject a settlement agreement in the UK. Learn about alternative workplace procedures, notice pay, and tribunal risks.",
+    "canonical": "https://settlementcheck.co.uk/guides/what-happens-if-you-do-not-sign/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "What happens if you do not sign a settlement agreement",
+    "primaryCTA": {
+      "text": "SettlementCheck calculator",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer"
+    ],
+    "disclaimers": {
+      "legalAdvice": true,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 11
+  },
+  {
+    "id": "RT-047",
+    "route": "/guides/what-is-a-fair-settlement-agreement/",
+    "type": "page",
+    "tier": "Tier 4: Statutory & Educational Guide",
+    "intent": "Informational",
+    "file": "app/guides/what-is-a-fair-settlement-agreement/page.tsx",
+    "title": "What Is a Fair Settlement Agreement UK 2026? | SettlementCheck",
+    "description": "A fair settlement agreement pays more than your statutory minimum. Understand the £751 weekly cap, multiplier ranges, and the red flags that signal an offer is too low.",
+    "canonical": "https://settlementcheck.co.uk/guides/what-is-a-fair-settlement-agreement/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.7,
+    "h1": "A fair settlement agreement in 2026 pays more than your statutory minimum. Here is what the law guarantees you and how to spot when your employer is offering less.",
+    "primaryCTA": {
+      "text": "Check if your offer is fair in 60 seconds →",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Article",
+      "Organization"
+    ],
+    "disclaimers": {
+      "legalAdvice": true,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 24
+  },
+  {
+    "id": "RT-048",
+    "route": "/how-it-works/",
+    "type": "page",
+    "tier": "Tier 3: Funnel & Intake Stage",
+    "intent": "Navigational",
+    "file": "app/how-it-works/page.tsx",
+    "title": "How SettlementCheck Works | Settlement Agreement Advice UK | SettlementCheck",
+    "description": "Three steps: check your offer with our free calculator, get matched with a vetted SRA-regulated employment solicitor within 24 hours, and get honest advice. Your employer pays the fees.",
+    "canonical": "https://settlementcheck.co.uk/how-it-works/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.8,
+    "h1": "How SettlementCheck works",
+    "primaryCTA": {
+      "text": "Check my offer now →",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "FAQPage",
+      "Question",
+      "Answer"
+    ],
+    "disclaimers": {
+      "legalAdvice": true,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203"
+    ],
+    "unsupportedClaims": [
+      "market data"
+    ],
+    "inboundLinksCount": 6
+  },
+  {
+    "id": "RT-049",
+    "route": "/",
+    "type": "page",
+    "tier": "Tier 1: Core Conversion Pillar",
+    "intent": "Navigational",
+    "file": "app/page.tsx",
+    "title": "Settlement Agreement Calculator UK (2026) | Free Employee Payout Tool",
+    "description": "Calculate your employee settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Zero email required.",
+    "canonical": "/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 1,
+    "h1": "{title || ( <> How much should your employment settlement be? )}",
+    "primaryCTA": {
+      "text": "Get matched with an SRA-regulated specialist",
+      "href": "/get-matched/"
+    },
+    "schemas": [
+      "Organization",
+      "AdministrativeArea",
+      "WebSite",
+      "Offer",
+      "Thing",
+      "Legislation",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "WebApplication",
+      "SoftwareApplication"
+    ],
+    "disclaimers": {
+      "legalAdvice": true,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [
+      "market data"
+    ],
+    "inboundLinksCount": 8
+  },
+  {
+    "id": "RT-050",
+    "route": "/portal/",
+    "type": "page",
+    "tier": "Internal / Solicitor Portal Platform",
+    "intent": "B2B Partner",
+    "file": "app/portal/page.tsx",
+    "title": "Partner Solicitor Portal | SettlementCheck Command Center",
+    "description": "Exclusive SRA solicitor portal for territorial matter claims, pre-flight case dossiers, and telemetry benchmarks.",
+    "canonical": null,
+    "canonicalFormat": "missing",
+    "canonicalMatches": false,
+    "robotsDirective": "noindex, nofollow",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": {
+      "text": "Settlement Check",
+      "href": "/"
+    },
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "£751 weekly cap"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 3
+  },
+  {
+    "id": "RT-051",
+    "route": "/privacy/",
+    "type": "page",
+    "tier": "Tier 6: Legal & Compliance",
+    "intent": "Informational",
+    "file": "app/privacy/page.tsx",
+    "title": "Privacy Policy | SettlementCheck",
+    "description": "How SettlementCheck collects, uses, and protects your personal data in accordance with UK GDPR.",
+    "canonical": "https://settlementcheck.co.uk/privacy/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.2,
+    "h1": "Privacy Policy",
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 3
+  },
+  {
+    "id": "RT-052",
+    "route": "/protective-award-calculator/",
+    "type": "page",
+    "tier": "Tier 2: Programmatic Statutory Calculator",
+    "intent": "Commercial Investigation",
+    "file": "app/protective-award-calculator/page.tsx",
+    "title": "Protective Award Calculator UK 2026 | SettlementCheck",
+    "description": "Calculate your protective award under TULRCA 1992 s.189. Up to 90 days gross pay for failure to consult on 20+ redundancies. Free instant UK calculator.",
+    "canonical": "/protective-award-calculator/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.9,
+    "h1": "Protective Award Calculator UK",
+    "primaryCTA": {
+      "text": "Connect with an independent solicitor →",
+      "href": "/get-matched/"
+    },
+    "schemas": [
+      "Offer",
+      "Organization",
+      "Legislation",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "WebApplication",
+      "SoftwareApplication"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 14
+  },
+  {
+    "id": "RT-053",
+    "route": "/redundancy-calculator/",
+    "type": "page",
+    "tier": "Tier 2: Programmatic Statutory Calculator",
+    "intent": "Commercial Investigation",
+    "file": "app/redundancy-calculator/page.tsx",
+    "title": "Redundancy Pay Calculator UK 2026 | SettlementCheck",
+    "description": "Calculate your statutory redundancy pay under April 2026 UK rates (£751 weekly cap). See your true net figure after tax. Free check, no email required.",
+    "canonical": "/redundancy-calculator/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.9,
+    "h1": "Calculate your redundancy pay",
+    "primaryCTA": {
+      "text": "Calculate my redundancy pay →",
+      "href": "/calculator/?reason=redundancy"
+    },
+    "schemas": [
+      "Offer",
+      "Organization",
+      "Legislation",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "HowTo",
+      "HowToStep",
+      "BreadcrumbList",
+      "ListItem",
+      "WebApplication",
+      "SoftwareApplication"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 36
+  },
+  {
+    "id": "RT-054",
+    "route": "/results/",
+    "type": "page",
+    "tier": "Tier 3: Funnel & Intake Stage",
+    "intent": "Transactional",
+    "file": "app/results/page.tsx",
+    "title": "Your Settlement Estimate | SettlementCheck",
+    "description": "Your personalised settlement agreement estimate. Get matched with a vetted employment solicitor. Free, your employer pays.",
+    "canonical": "https://settlementcheck.co.uk/results/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "noindex, nofollow",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": {
+      "text": "Return to calculator",
+      "href": "/calculator/"
+    },
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [
+      "Acas Typical Settlement"
+    ],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-055",
+    "route": "/robots.txt",
+    "type": "robots",
+    "tier": "SEO Directive Endpoint",
+    "intent": "System / Utility",
+    "file": "app/robots.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-056",
+    "route": "/settlement-agreement-review/",
+    "type": "page",
+    "tier": "Tier 1: Core Conversion Pillar",
+    "intent": "Transactional",
+    "file": "app/settlement-agreement-review/page.tsx",
+    "title": "Employment Settlement Agreement Checker | Check Your Offer & Clauses | SettlementCheck",
+    "description": "Check your UK employment settlement agreement clauses and offer amount. Instant confidential check of statutory redundancy caps (£751/week), £30,000 tax rules, and employer legal fees.",
+    "canonical": "https://settlementcheck.co.uk/settlement-agreement-review/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 1,
+    "h1": "Check your employment settlement agreement",
+    "primaryCTA": {
+      "text": "Calculate Statutory Entitlement Baseline",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "WebApplication",
+      "Offer",
+      "Thing",
+      "HowTo",
+      "HowToStep",
+      "FAQPage",
+      "Question",
+      "Answer"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£751 weekly cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 23
+  },
+  {
+    "id": "RT-057",
+    "route": "/settlement-agreement-tax-calculator/",
+    "type": "page",
+    "tier": "Tier 2: Programmatic Statutory Calculator",
+    "intent": "Commercial Investigation",
+    "file": "app/settlement-agreement-tax-calculator/page.tsx",
+    "title": "Settlement Agreement Tax Calculator UK 2026 | SettlementCheck",
+    "description": "Calculate tax on your settlement agreement under April 2026 UK rates. Work out your £30,000 tax exemption, taxable PILON, and net take-home pay. Free check.",
+    "canonical": "/settlement-agreement-tax-calculator/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.9,
+    "h1": "Calculate tax on your settlement agreement",
+    "primaryCTA": {
+      "text": "Calculate my take-home pay →",
+      "href": "/calculator/"
+    },
+    "schemas": [
+      "Offer",
+      "Organization",
+      "Legislation",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "HowTo",
+      "HowToStep",
+      "BreadcrumbList",
+      "ListItem",
+      "WebApplication",
+      "SoftwareApplication"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 9
+  },
+  {
+    "id": "RT-058",
+    "route": "/sitemap/",
+    "type": "page",
+    "tier": "Tier 6: Legal & Compliance",
+    "intent": "Navigational",
+    "file": "app/sitemap/page.tsx",
+    "title": "HTML Sitemap | SettlementCheck",
+    "description": "Complete directory of UK settlement agreement calculators, legal advice guides, redundancy tools, and resources on SettlementCheck.co.uk.",
+    "canonical": "https://settlementcheck.co.uk/sitemap/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.5,
+    "h1": "Website Sitemap &amp; Directory",
+    "primaryCTA": {
+      "text": "Calculate Your Settlement &rarr;",
+      "href": "/calculator/"
+    },
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": true,
+      "taxAdvice": true
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "Equality Act 2010",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 1
+  },
+  {
+    "id": "RT-059",
+    "route": "/sitemap.xml",
+    "type": "sitemap",
+    "tier": "SEO Directive Endpoint",
+    "intent": "System / Utility",
+    "file": "app/sitemap.ts",
+    "title": null,
+    "description": null,
+    "canonical": null,
+    "canonicalFormat": "n/a",
+    "canonicalMatches": false,
+    "robotsDirective": "N/A (Endpoint)",
+    "isIndexable": false,
+    "isInSitemap": false,
+    "sitemapPriority": null,
+    "h1": null,
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": false,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 0
+  },
+  {
+    "id": "RT-060",
+    "route": "/terms/",
+    "type": "page",
+    "tier": "Tier 6: Legal & Compliance",
+    "intent": "Informational",
+    "file": "app/terms/page.tsx",
+    "title": "Terms of Use | SettlementCheck",
+    "description": "Terms of use for SettlementCheck.co.uk, an independent introduction service connecting employees with SRA-regulated employment solicitors.",
+    "canonical": "https://settlementcheck.co.uk/terms/",
+    "canonicalFormat": "absolute",
+    "canonicalMatches": true,
+    "robotsDirective": "index, nofollow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.2,
+    "h1": "Terms of Use",
+    "primaryCTA": null,
+    "schemas": [],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [],
+    "unsupportedClaims": [
+      "market data"
+    ],
+    "inboundLinksCount": 2
+  },
+  {
+    "id": "RT-061",
+    "route": "/unfair-dismissal-calculator/",
+    "type": "page",
+    "tier": "Tier 2: Programmatic Statutory Calculator",
+    "intent": "Commercial Investigation",
+    "file": "app/unfair-dismissal-calculator/page.tsx",
+    "title": "Unfair Dismissal Calculator UK 2026 | SettlementCheck",
+    "description": "Estimate your unfair dismissal basic and compensatory award using April 2026 statutory rates (£123,543 cap). Check where your offer stands in 60 seconds.",
+    "canonical": "/unfair-dismissal-calculator/",
+    "canonicalFormat": "relative",
+    "canonicalMatches": true,
+    "robotsDirective": "index, follow",
+    "isIndexable": true,
+    "isInSitemap": true,
+    "sitemapPriority": 0.9,
+    "h1": "Calculate your unfair dismissal settlement",
+    "primaryCTA": {
+      "text": "Estimate my unfair dismissal award →",
+      "href": "/calculator/?reason=performance"
+    },
+    "schemas": [
+      "Offer",
+      "Organization",
+      "Legislation",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "HowTo",
+      "HowToStep",
+      "BreadcrumbList",
+      "ListItem",
+      "WebApplication",
+      "SoftwareApplication"
+    ],
+    "disclaimers": {
+      "legalAdvice": false,
+      "sraBoundary": true,
+      "employerPaysFees": false,
+      "taxAdvice": false
+    },
+    "statutoryCitations": [
+      "ERA 1996 s.203",
+      "ITEPA 2003",
+      "£751 weekly cap",
+      "£123,543 compensatory cap",
+      "£30,000 tax exemption"
+    ],
+    "unsupportedClaims": [],
+    "inboundLinksCount": 22
+  }
+]

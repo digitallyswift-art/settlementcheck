@@ -9,13 +9,13 @@ const STATIC_METADATA: Metadata = {
   description:
     'Calculate your protective award under TULRCA 1992 s.189. Up to 90 days gross pay for failure to consult on 20+ redundancies. Free instant UK calculator.',
   alternates: {
-    canonical: '/protective-award-calculator/',
+    canonical: 'https://settlementcheck.co.uk/protective-award-calculator/',
   },
   openGraph: {
     title: 'Protective Award Calculator UK 2026 | SettlementCheck',
     description:
       'Calculate your protective award under TULRCA 1992 s.189. Up to 90 days gross pay for failure to consult on 20+ redundancies. Free instant UK calculator.',
-    url: '/protective-award-calculator/',
+    url: 'https://settlementcheck.co.uk/protective-award-calculator/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -51,11 +51,11 @@ const FAQS = [
   },
   {
     q: 'Can I claim a protective award if I sign a settlement agreement?',
-    a: 'No. Standard settlement agreements include an express waiver of all statutory claims, including claims under Section 189 of TULRCA 1992. However, knowing your potential protective award entitlement gives you vital leverage to negotiate a higher compensation payment before signing.',
+    a: 'No. Standard settlement agreements include an express waiver of all statutory claims, including claims under Section 189 of TULRCA 1992. However, knowing your potential protective award entitlement gives you vital negotiation standing to negotiate a higher compensation payment before signing.',
   },
   {
     q: 'Is a protective award taxable in the UK?',
-    a: 'Yes, but it qualifies for the £30,000 tax exemption under Section 403 of ITEPA 2003 as compensation for loss of employment. If your total termination compensation (including redundancy and ex-gratia payments) is under £30,000, your protective award is 100% tax-free with zero employee National Insurance deductions.',
+    a: 'Yes. Under HMRC Employment Income Manual EIM02550 and Section 62 of ITEPA 2003, protective awards are classified as statutory remuneration rather than termination compensation. Because they represent earnings, the Section 403 £30,000 exemption does not apply. Protective awards are subject to standard PAYE income tax and Class 1 National Insurance.',
   },
 ]
 
@@ -81,7 +81,7 @@ const webAppSchema = {
     'Instant protective award calculation up to 90 days gross pay',
     'Solvent employer uncapped liability vs Insolvency Service 8-week cap comparison',
     'Statutory weekly cap rates for Great Britain (£751) and Northern Ireland (£783)',
-    'Tax treatment breakdown under Section 403 of ITEPA 2003 (£30,000 exemption)',
+    'Tax treatment breakdown under HMRC EIM02550 and Section 62 of ITEPA 2003',
     'ACAS 3-month limitation window advisory and solicitor matching pathways',
   ],
   screenshot: 'https://settlementcheck.co.uk/og-image.png',

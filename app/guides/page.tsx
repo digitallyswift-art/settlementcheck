@@ -155,7 +155,7 @@ const GUIDES = [
     href: '/guides/how-to-negotiate-a-settlement-agreement/',
     eyebrow: 'Negotiation',
     title: 'How to Negotiate a Settlement Agreement',
-    description: 'Without Prejudice rules, what leverage you have, counter-offer tactics, and the step-by-step process from first offer to signed agreement.',
+    description: 'Without Prejudice rules, negotiation strategy, counter-offer tactics, and the step-by-step process from first offer to signed agreement.',
     readTime: '8 min read',
   },
   {

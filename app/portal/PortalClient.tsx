@@ -321,7 +321,7 @@ export default function PortalClient() {
 
                     <div className="flex items-center gap-3 w-full md:w-auto">
                       <Link
-                        href={`/dossier/review/${m.id}/`}
+                        href={`/dossier/review/${m.id}/?token=demo_partner_token`}
                         className={`w-full md:w-auto px-5 py-2 rounded-lg text-xs font-semibold text-center transition-all ${
                           m.status === 'locked'
                             ? 'bg-[#D9603B] text-white hover:bg-[#D9603B]/90 shadow-sm'

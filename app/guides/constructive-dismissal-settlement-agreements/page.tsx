@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   description:
     'Free UK constructive dismissal settlement guide. Check 2026 compensation caps (weekly cap £751, max £123,543). No email. Instant fair offer evaluation.',
   alternates: {
-    canonical: '/guides/constructive-dismissal-settlement-agreements/',
+    canonical: 'https://settlementcheck.co.uk/guides/constructive-dismissal-settlement-agreements/',
   },
   openGraph: {
     title: 'Constructive Dismissal Settlements 2026 | SettlementCheck',
     description:
       'Free UK constructive dismissal settlement guide. Check 2026 compensation caps (weekly cap £751, max £123,543). No email. Instant fair offer evaluation.',
-    url: '/guides/constructive-dismissal-settlement-agreements/',
+    url: 'https://settlementcheck.co.uk/guides/constructive-dismissal-settlement-agreements/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

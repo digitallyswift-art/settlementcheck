@@ -131,7 +131,7 @@ export default function PostcodeInput({
             transition: 'border-color 0.2s ease',
           }}
         />
-        {/* Status icon — right-aligned inside input row */}
+        {/* Status icon: right-aligned inside input row */}
         {state === 'checking' && (
           <span style={{ position: 'absolute', right: 4, top: '50%', transform: 'translateY(-50%)', color: ACCENT, fontSize: 13, fontFamily: SANS }}>
             …

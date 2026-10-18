@@ -1,0 +1,178 @@
+[
+  {
+    "route": "/app/api/cron/serp-sentinel",
+    "file": "app/api/cron/serp-sentinel/route.ts",
+    "methods": "GET, POST",
+    "authType": "CRON_SECRET / Bearer",
+    "usesSupabase": false,
+    "tables": [],
+    "usesResend": false,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/cron/sla-watchdog",
+    "file": "app/api/cron/sla-watchdog/route.ts",
+    "methods": "GET, POST",
+    "authType": "CRON_SECRET / Bearer",
+    "usesSupabase": false,
+    "tables": [],
+    "usesResend": false,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/health",
+    "file": "app/api/health/route.ts",
+    "methods": "GET",
+    "authType": "Session / Token",
+    "usesSupabase": true,
+    "tables": [],
+    "usesResend": false,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/lead",
+    "file": "app/api/lead/route.ts",
+    "methods": "POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": true,
+    "tables": [
+      "otp_codes",
+      "leads"
+    ],
+    "usesResend": true,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/leads",
+    "file": "app/api/leads/route.ts",
+    "methods": "POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": true,
+    "tables": [
+      "leads",
+      "solicitor_applications"
+    ],
+    "usesResend": true,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/otp/send",
+    "file": "app/api/otp/send/route.ts",
+    "methods": "POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": true,
+    "tables": [
+      "otp_codes"
+    ],
+    "usesResend": true,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/otp/verify",
+    "file": "app/api/otp/verify/route.ts",
+    "methods": "POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": true,
+    "tables": [
+      "otp_codes"
+    ],
+    "usesResend": false,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/portal/claim",
+    "file": "app/api/portal/claim/route.ts",
+    "methods": "POST",
+    "authType": "Session / Token",
+    "usesSupabase": true,
+    "tables": [
+      "lead_claims"
+    ],
+    "usesResend": false,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/portal/dossier/[id]",
+    "file": "app/api/portal/dossier/[id]/route.ts",
+    "methods": "GET",
+    "authType": "Session / Token",
+    "usesSupabase": true,
+    "tables": [
+      "lead_claims",
+      "leads"
+    ],
+    "usesResend": false,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/portal/seo-actions",
+    "file": "app/api/portal/seo-actions/route.ts",
+    "methods": "GET, POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": true,
+    "tables": [
+      "seo_run_logs"
+    ],
+    "usesResend": false,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/review-agreement",
+    "file": "app/api/review-agreement/route.ts",
+    "methods": "POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": false,
+    "tables": [],
+    "usesResend": false,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/save-results",
+    "file": "app/api/save-results/route.ts",
+    "methods": "POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": true,
+    "tables": [
+      "email_captures"
+    ],
+    "usesResend": true,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/solicitor-application",
+    "file": "app/api/solicitor-application/route.ts",
+    "methods": "POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": true,
+    "tables": [
+      "solicitor_applications"
+    ],
+    "usesResend": true,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/telemetry/settlement-outcome",
+    "file": "app/api/telemetry/settlement-outcome/route.ts",
+    "methods": "GET, POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": true,
+    "tables": [
+      "settlement_benchmark_aggregates",
+      "settlement_outcomes"
+    ],
+    "usesResend": false,
+    "usesAiGateway": true
+  },
+  {
+    "route": "/app/api/waitlist",
+    "file": "app/api/waitlist/route.ts",
+    "methods": "POST",
+    "authType": "Public Unauthenticated",
+    "usesSupabase": true,
+    "tables": [
+      "employee_waitlist"
+    ],
+    "usesResend": false,
+    "usesAiGateway": true
+  }
+]

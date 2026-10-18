@@ -1,0 +1,272 @@
+[
+  {
+    "id": "SC-B-001",
+    "priority": "P0",
+    "status": "Resolved",
+    "category": "SECURITY_PRIVACY",
+    "finding": "SC-E-PRIV-001: Supabase database schema lacks Row Level Security (RLS) policies on core tables, exposing confidential case dossiers and employee contact details if server credentials leak.",
+    "remediation": "Execute ALTER TABLE ... ENABLE ROW LEVEL SECURITY on all Supabase tables and define strict tenant-isolated access policies.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-002",
+    "priority": "P0",
+    "status": "Resolved",
+    "category": "SECURITY_PRIVACY",
+    "finding": "SC-E-SEC-004: Broken Object-Level Authorization (BOLA) on /api/portal/dossier/[id] endpoint allows unauthorized dossier access if claimToken parameter is omitted.",
+    "remediation": "Enforce mandatory claimToken validation and cryptographic bearer signature checks before returning case dossier payloads.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-003",
+    "priority": "P0",
+    "status": "Resolved",
+    "category": "SECURITY_PRIVACY",
+    "finding": "SC-E-PRIV-002: Document review API transmits unredacted settlement agreement text containing Special Category Data (medical/pregnancy details), bank sort codes, and NI numbers to external LLMs.",
+    "remediation": "Implement client-side or edge regex PII/PHI sanitization filter to mask bank accounts, NI numbers, medical conditions, and party names before LLM dispatch.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-004",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "LEGAL_STATUTORY",
+    "finding": "SC-E-LEG-001: lib/calculations.ts:200 has outdated 2024 Eighth Addendum Vento bands instead of the mandatory Ninth Addendum rates (£1,300–£12,600, £12,600–£37,700, £37,700–£62,900) effective April 2026.",
+    "remediation": "Update ventoBands in lib/calculations.ts and lib/statutory-rates.ts to match Ninth Addendum rates.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-005",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "TAX_HMRC",
+    "finding": "SC-E-TAX-001: lib/statutory-rates.ts:107 states 13.8% for employer Class 1A NICs instead of the statutory 15.0% rate enacted in the Autumn Budget effective 6 April 2025/2026.",
+    "remediation": "Update employerClass1ANICRate to 0.150 in lib/statutory-rates.ts and adjust termination tax advice copy.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-006",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "TAX_HMRC",
+    "finding": "SC-E-TAX-002: lib/calculations.ts:363 applies the £30,000 tax exemption to protective awards, violating HMRC EIM02550 which classifies protective awards as taxable remuneration subject to PAYE and Class 1 NICs.",
+    "remediation": "Remove isProtectiveAward from s.403 exempt balance calculation and route protective awards through 100% PAYE taxable notice pay logic.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-007",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "CLAIMS_CAP_CODE",
+    "finding": "SC-E-CLM-034: ResultsClient.tsx labels Step 3 as 'Acas Typical Settlement', violating CAP Code Rule 3.1 because ACAS is an impartial body that does not calculate or endorse typical settlement sums.",
+    "remediation": "Rename Step 3 to 'Typical Negotiation Benchmark' and attribute calculation data to MoJ tribunal compensation statistics and commercial benchmarks.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-008",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "CLAIMS_CAP_CODE",
+    "finding": "SC-E-CLM-005 to 015: 12 routes state 'average settlement agreement payout in the UK is £5,000 to £25,000' as an objective fact without empirical dataset substantiation under ASA CAP Code Rule 3.7.",
+    "remediation": "Qualify all payout figures as 'Observed commercial negotiation ranges' or cite MoJ annual tribunal compensation survey medians with explicit methodology disclaimers.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-009",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "PRODUCT_USER_PROTECTION",
+    "finding": "SC-E-PROD-002: Constructive dismissal calculator flow generates an award estimate without prominent warnings that >95% of constructive dismissal tribunal claims fail and premature resignation forfeits all leverage.",
+    "remediation": "Add high-contrast 'Constructive Dismissal Warning' modal advising employees not to resign before taking SRA legal advice and lodging a formal grievance.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-010",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "PRODUCT_USER_PROTECTION",
+    "finding": "SC-E-PROD-004: Results client and pre-flight dossier contain zero warnings about the strict 3-month minus 1 day employment tribunal deadline or mandatory ACAS Early Conciliation trigger.",
+    "remediation": "Embed dynamic 'Tribunal Limitation Clock' on /results/ and /dossier/ alerting users that negotiations do not stop the limitation clock unless ACAS Early Conciliation is commenced.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-011",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "SEO_AEO_ARCHITECTURE",
+    "finding": "SC-E-SEO-001: /get-matched/ is declared with priority 0.9 in app/sitemap.ts but enforces robots: { index: false, follow: false } in page metadata, generating GSC 'Submitted URL marked noindex' errors.",
+    "remediation": "Align architecture: either remove /get-matched/ from sitemap.ts, or remove noindex and optimize it as a high-intent conversion landing page.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-012",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "CONVERSION_COMMERCIAL",
+    "finding": "SC-E-COM-001: 20 of 44 public pages (45%) omit the fundamental reassurance that the employer covers independent legal advice fees (£500–£1,500 + VAT) under Section 203(3) ERA 1996.",
+    "remediation": "Deploy a global 'Employer Covers Legal Fees' trust badge and micro-copy across all calculator steps, footer layouts, and hero banners.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-013",
+    "priority": "P1",
+    "status": "Resolved",
+    "category": "CONVERSION_COMMERCIAL",
+    "finding": "SC-E-COM-002: 64 brand compliance violations across the codebase (37 em dashes and 27 instances of banned aggressive corporate buzzword 'leverage').",
+    "remediation": "Execute deterministic find-and-replace: replace all em dashes with hyphens (' - '); replace 'leverage' with empathetic terms ('standing', 'position', 'statutory strength').",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-014",
+    "priority": "P1",
+    "status": "Proposed",
+    "category": "FORUM_DEMAND_MOAT",
+    "finding": "SC-E-DEM-003: Employers weaponizing 48-hour or 72-hour artificial ultimatums, violating the ACAS Code of Practice 4 minimum 10-day consideration guideline.",
+    "remediation": "Implement ACAS 10-Day Chrono-Watchdog on /settlement-agreement-review/ calculating remaining days and drafting an ACAS Code 4 extension notice.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-015",
+    "priority": "P1",
+    "status": "Proposed",
+    "category": "FORUM_DEMAND_MOAT",
+    "finding": "SC-E-DEM-002: Employees experiencing paralyzing fear that submitting a counter-proposal will cause the employer to withdraw the offer under the legal rule of Hyde v Wrench [1840].",
+    "remediation": "Introduce 'Without Prejudice Clarification Mode' drafting exploratory inquiries that preserve the existing offer while negotiating terms.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-016",
+    "priority": "P2",
+    "status": "Resolved",
+    "category": "SEO_AEO_ARCHITECTURE",
+    "finding": "SC-E-SEO-006: 52 distinct search queries in GSC (including 'settlement agreement calculator uk' across 8 URLs) suffer from internal keyword cannibalization between guides and calculators.",
+    "remediation": "Implement strict bidirectional hub-and-spoke internal linking where guides pass PageRank to calculator tools via exact-match anchor text, and calculators link to guides for statutory explanations.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-017",
+    "priority": "P2",
+    "status": "Proposed",
+    "category": "SEO_AEO_ARCHITECTURE",
+    "finding": "SC-E-SEO-009: Google AI Overviews suppress organic click-throughs on definitional queries (e.g. 476 zero-click impressions on 'compromise agreement calculator').",
+    "remediation": "Deploy 'Interactive Tool Hooks' in title tags and meta descriptions, and embed comparison markdown tables under H2s to earn AI Overview citation carousel placement.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-018",
+    "priority": "P2",
+    "status": "Proposed",
+    "category": "SEO_AEO_ARCHITECTURE",
+    "finding": "SC-E-SEO-003 & 004: 16 page titles exceed 60 characters and 20 meta descriptions exceed 155 characters, causing truncation and lower CTR in Google search results.",
+    "remediation": "Recalibrate all 16 titles to 50–60 characters and all 20 descriptions to 140–155 characters using Answer-First direct figures and active verbs.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-019",
+    "priority": "P2",
+    "status": "Resolved",
+    "category": "CALCULATOR_CORE",
+    "finding": "SC-E-CALC-002: Flat marginal tax rate estimation in getVerdict() ignores tax bracket spillover, undercounting employee tax liability by up to £4,946 for settlements crossing income bands.",
+    "remediation": "Upgrade getVerdict() to use tiered progressive income tax calculations reflecting exact UK 2026/27 tax bands.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-020",
+    "priority": "P2",
+    "status": "Resolved",
+    "category": "CALCULATOR_CORE",
+    "finding": "SC-E-CALC-003: terminationPayment = Math.max(0, offer - pilon) assumes user-entered offer amount is all-inclusive of notice pay, risking double-counting if offer is ex-gratia only.",
+    "remediation": "Add an explicit intake toggle in SteppedCalculator Step 5: 'Does this offer include your notice pay or is it in addition to notice?'.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-021",
+    "priority": "P2",
+    "status": "Resolved",
+    "category": "CONVERSION_COMMERCIAL",
+    "finding": "SC-E-COM-003: Primary CTAs across 44 pages are severely fragmented with over 25 distinct button text variations, weakening user progression across the funnel.",
+    "remediation": "Standardize all site CTAs to the 5 canonical Playbook variants ('Calculate my estimate →', 'Check my offer now →', 'Get my free solicitor match →', etc.).",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-022",
+    "priority": "P2",
+    "status": "Resolved",
+    "category": "CONVERSION_COMMERCIAL",
+    "finding": "SC-E-COM-004: Significant user drop-off between calculator completion on /results/ and solicitor match intake due to lack of local specialist availability proof.",
+    "remediation": "Add dynamic 'Local SRA Specialist Available' card and 1-click dossier dispatch button immediately below verdict summary on /results/.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-023",
+    "priority": "P2",
+    "status": "Proposed",
+    "category": "CONVERSION_COMMERCIAL",
+    "finding": "SC-E-COM-005: Solicitor partner acquisition on /for-solicitors/ is slowed by lack of transparent commercial tiers (£150–£350 CPL) and self-serve SRA firm verification.",
+    "remediation": "Build transparent B2B pricing table with automated SRA digital register number lookup and Stripe billing integration.",
+    "effort": "High"
+  },
+  {
+    "id": "SC-B-024",
+    "priority": "P2",
+    "status": "Proposed",
+    "category": "FORUM_DEMAND_MOAT",
+    "finding": "SC-E-DEM-005: Fear of solicitor fee shortfall creates friction preventing employees from seeking independent legal advice.",
+    "remediation": "Formalize 'Guaranteed £0 Employee Fee Shield' in partner law firm contracts, ensuring standard reviews never bill the employee.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-025",
+    "priority": "P2",
+    "status": "Proposed",
+    "category": "FORUM_DEMAND_MOAT",
+    "finding": "SC-E-DEM-006: Employers inserting new post-termination restrictive covenants and 12-month non-competes not present in the original employment contract.",
+    "remediation": "Build Restrictive Covenant Risk Scanner in /settlement-agreement-review/ auditing restraint of trade under Tillman v Egon Zehnder [2019].",
+    "effort": "High"
+  },
+  {
+    "id": "SC-B-026",
+    "priority": "P2",
+    "status": "Proposed",
+    "category": "FORUM_DEMAND_MOAT",
+    "finding": "SC-E-DEM-008: High-velocity queries for PIP exits and NHS settlement agreements (1,442 live impressions) lack tailored intake calculator logic.",
+    "remediation": "Launch dedicated programmatic calculators: (1) PIP Exit Valuator and (2) NHS MARS & Agenda for Change Redundancy Engine.",
+    "effort": "High"
+  },
+  {
+    "id": "SC-B-027",
+    "priority": "P3",
+    "status": "Proposed",
+    "category": "CONVERSION_COMMERCIAL",
+    "finding": "SC-E-COM-007: Solicitor pre-flight dossier lacks 1-click Practice Management System (PMS) export (Clio / LEAP), requiring law firms to manually re-key intake data.",
+    "remediation": "Implement 1-click Clio and LEAP PMS intake payload export (JSON / CSV / REST API) on /dossier/review/[id]/.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-028",
+    "priority": "P3",
+    "status": "Proposed",
+    "category": "CONVERSION_COMMERCIAL",
+    "finding": "SC-E-COM-008: Homepage hero lacks dynamic social proof counters and verified SRA network badges above the fold, increasing first-time visitor hesitation.",
+    "remediation": "Add above-the-fold social proof banner ('Over £4.2M evaluated') and SRA regulatory clarification badges.",
+    "effort": "Low"
+  },
+  {
+    "id": "SC-B-029",
+    "priority": "P3",
+    "status": "Proposed",
+    "category": "SECURITY_PRIVACY",
+    "finding": "Partner solicitor portal lacks Multi-Factor Authentication (MFA / TOTP), leaving confidential employee case dossiers vulnerable to credential stuffing.",
+    "remediation": "Enforce mandatory TOTP authenticator app or email OTP verification on /portal/ login.",
+    "effort": "Medium"
+  },
+  {
+    "id": "SC-B-030",
+    "priority": "P3",
+    "status": "Proposed",
+    "category": "ECOSYSTEM_MOAT_FEATURES",
+    "finding": "Employers have zero self-serve tools on the platform, forcing them to conduct redundancy math manually or pay £350/hr for routine compromise agreement drafts.",
+    "remediation": "Launch B2B 'SettlementCheck for Employers' portal allowing HR directors to bulk-calculate redundancy packages and dispatch S.203-compliant agreements to our solicitor network.",
+    "effort": "High"
+  }
+]

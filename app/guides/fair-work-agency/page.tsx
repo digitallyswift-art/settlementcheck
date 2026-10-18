@@ -256,7 +256,7 @@ export default function FairWorkAgencyGuide() {
                 {
                   href: '/guides/how-to-negotiate-a-settlement-agreement/',
                   title: 'How to Negotiate a Settlement Agreement',
-                  description: 'Leverage, Without Prejudice rules, and practical steps to submit a counter-offer.',
+                  description: 'Negotiation strategy, Without Prejudice rules, and practical steps to submit a counter-offer.',
                   tag: 'Negotiation',
                 },
                 {

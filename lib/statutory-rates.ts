@@ -6,7 +6,32 @@ export interface StatutoryRates {
   compensatoryAwardLimitGB: number;
   maxNoticeWeeks: number;
   maxBasicAwardGB: number;
+  employerClass1ANICRate: number;
 }
+
+export interface VentoBands {
+  lowerMin: number;
+  lowerMax: number;
+  middleMin: number;
+  middleMax: number;
+  upperMin: number;
+  upperMax: number;
+  exceptionalMin: number;
+}
+
+/**
+ * Employment Tribunal Presidential Guidance Ninth Addendum rates
+ * Applicable for claims presented on or after 6 April 2026
+ */
+export const VENTO_BANDS_2026_27: VentoBands = {
+  lowerMin: 1300,
+  lowerMax: 12600,
+  middleMin: 12600,
+  middleMax: 37700,
+  upperMin: 37700,
+  upperMax: 62900,
+  exceptionalMin: 62900,
+};
 
 export const STATUTORY_RATES_2025_26: StatutoryRates = {
   weeklyCapGB: 719,
@@ -16,6 +41,7 @@ export const STATUTORY_RATES_2025_26: StatutoryRates = {
   compensatoryAwardLimitGB: 118223,
   maxNoticeWeeks: 12,
   maxBasicAwardGB: 21570, // 20 * 1.5 * 719
+  employerClass1ANICRate: 0.138,
 };
 
 export const STATUTORY_RATES_2026_27: StatutoryRates = {
@@ -26,6 +52,7 @@ export const STATUTORY_RATES_2026_27: StatutoryRates = {
   compensatoryAwardLimitGB: 123543,
   maxNoticeWeeks: 12,
   maxBasicAwardGB: 22530, // 20 * 1.5 * 751
+  employerClass1ANICRate: 0.150,
 };
 
 /**
@@ -104,7 +131,7 @@ export function getTaxStatutoryRows(): StatutoryRow[] {
   return [
     { label: 'Statutory tax-free termination threshold (s.403 ITEPA)', y2425: '£30,000', y2526: '£30,000' },
     { label: 'Notice pay (PILON) tax status', y2425: '100% Taxable (as earnings)', y2526: '100% Taxable (as earnings)' },
-    { label: 'Employer NIC on termination payments over £30k', y2425: '13.8% (Class 1A)', y2526: '13.8% (Class 1A)' },
+    { label: 'Employer NIC on termination payments over £30k', y2425: '13.8% (Class 1A)', y2526: '15.0% (Class 1A)' },
     { label: 'Employee NIC on termination payments over £30k', y2425: '0% (Exempt)', y2526: '0% (Exempt)' },
     { label: 'Statutory weekly pay cap (GB)', y2425: `£${STATUTORY_RATES_2025_26.weeklyCapGB}`, y2526: `£${STATUTORY_RATES_2026_27.weeklyCapGB}` },
     { label: 'Pension sacrifice availability on excess termination', y2425: 'Permitted', y2526: 'Permitted' },

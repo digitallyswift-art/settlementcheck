@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams, useRouter } from 'next/navigation'
-import React, { Suspense, useState, useRef } from 'react'
+import React, { Suspense, useState, useRef, useMemo } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -125,21 +125,21 @@ function OfficialBenchmarkCard({
           </span>
         </div>
 
-        {/* Metric 3: Acas Ex-Gratia Range */}
+        {/* Metric 3: Typical Negotiation Benchmark Range */}
         <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
           <div>
-            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">3. Acas Typical Settlement</span>
+            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">3. Typical Negotiation Benchmark</span>
             <span className="text-[18px] font-bold text-ink block font-serif">
-              {formatCurrency(acasLow)} – {formatCurrency(acasHigh)}
+              {formatCurrency(acasLow)} to {formatCurrency(acasHigh)}
             </span>
           </div>
           <span className="text-[10px] text-[#8A93A3] mt-2 block">
-            Floor + {benchmark.typicalAcasExGratiaMonths.min}–{benchmark.typicalAcasExGratiaMonths.max} mos ex-gratia
+            Floor + {benchmark.typicalAcasExGratiaMonths.min} to {benchmark.typicalAcasExGratiaMonths.max} months negotiation benchmark
           </span>
         </div>
       </div>
 
-      {/* Dynamic Status / Psychology Leverage Callout */}
+      {/* Dynamic Status / Negotiation Standing Callout */}
       {offer > 0 && (
         <div className={`rounded-lg p-3.5 text-[13px] leading-relaxed mb-4 border ${
           isUnderpaid
@@ -155,12 +155,12 @@ function OfficialBenchmarkCard({
           )}
           {isBelowAcas && (
             <p className="m-0">
-              <strong>⚖️ Below Market Standard:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> covers statutory minimums but provides less than the standard Acas conciliation range ({formatCurrency(acasLow)} – {formatCurrency(acasHigh)}). You are releasing full tribunal rights with minimal ex-gratia consideration.
+              <strong>⚖️ Below Market Standard:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> covers statutory minimums but provides less than the standard commercial conciliation range ({formatCurrency(acasLow)} to {formatCurrency(acasHigh)}). You are releasing full tribunal rights with minimal ex-gratia consideration.
             </p>
           )}
           {isHealthyOffer && (
             <p className="m-0">
-              <strong>✓ Solid Settlement Position:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> sits within or above the typical Acas settlement range for this dispute category.
+              <strong>✓ Solid Settlement Position:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> sits within or above the typical commercial settlement range for this dispute category.
             </p>
           )}
         </div>
@@ -715,6 +715,7 @@ interface EditableInputs {
   monthsNum: string
   age: string
   offer: string
+  offerIncludesNotice: string
   reason: string
   discrimination: string
   contractualNotice: string
@@ -810,7 +811,7 @@ function CaseBriefSection({
           <div className="pb-3 border-b border-[#E2DCCE]">
             <h4 className="text-[16px] font-bold text-[#0B1F3A] mb-1 print:text-[18px]">Client Profile & Claims Analysis</h4>
             <p className="text-[13px] text-[#5B6577] leading-relaxed m-0">
-              This intake assessment report compiles client parameters, statutory entitlements, and potential claims value. It is structured to assist legal counsel during intake review to assess settlement viability and evaluate negotiation leverage.
+              This intake assessment report compiles client parameters, statutory entitlements, and potential claims value. It is structured to assist legal counsel during intake review to assess settlement viability and evaluate negotiation strength.
             </p>
           </div>
 
@@ -1476,6 +1477,7 @@ function InputsSummaryPanel({
     { key: 'monthsNum',         label: 'Additional months',     display: v => v ? `${v} month${v === '1' ? '' : 's'}` : '0 months', type: 'number' },
     { key: 'age',               label: 'Age',                   display: v => v || 'Not set', type: 'number' },
     { key: 'offer',             label: 'Settlement offer',      display: v => v ? `£${Number(v).toLocaleString('en-GB')}` : '£0', type: 'number' },
+    { key: 'offerIncludesNotice', label: 'Notice included in offer', display: v => v === 'false' ? 'No (paid on top)' : 'Yes (included)', type: 'pill', options: [{ value: 'true', label: 'Yes (included)' }, { value: 'false', label: 'No (paid on top)' }] },
     { key: 'reason',            label: 'Reason for leaving',    display: v => REASON_LABELS[v] ?? v, type: 'select', options: Object.entries(REASON_LABELS).map(([value, label]) => ({ value, label })) },
     { key: 'discrimination',    label: 'Discrimination element',display: v => DISCRIMINATION_LABELS[v] ?? v, type: 'pill',   options: [{ value: 'no', label: 'No' }, { value: 'yes', label: 'Yes' }, { value: 'not_sure', label: 'Not sure' }] },
     { key: 'contractualNotice', label: 'Contractual notice (weeks)', display: v => v ? `${v} week${v === '1' ? '' : 's'}` : '0 weeks', type: 'number' },
@@ -1638,7 +1640,7 @@ function LeadFAQ() {
   )
 }
 
-/* ── Get Matched CTA — verdict-aware, high-converting ───────────── */
+/* ── Get Matched CTA - verdict-aware, high-converting ───────────── */
 
 function GetMatchedCTA({
   verdict, offer, salary, totalMonths, prefillEmail, onGetMatched,
@@ -1720,13 +1722,197 @@ function GetMatchedCTA({
           className="btn-accent text-[15px] font-semibold px-6 py-3.5 w-full cursor-pointer"
           style={{ borderRadius: 8, boxShadow: '0 4px 16px rgba(217,96,59,0.22)', letterSpacing: '-0.01em' }}
         >
-          {c.cta} →
+          Get my free solicitor match →
         </button>
 
         <p className="text-[11px] text-[#8A93A3] mt-3.5 leading-relaxed m-0 text-center">
           Takes under 2 minutes. Free matching service.
           {prefillEmail ? ' Your email is pre-filled.' : ''}
         </p>
+      </div>
+    </div>
+  )
+}
+
+/* ── Tribunal Limitation Clock (SC-B-010) ───────────────────────── */
+
+function TribunalLimitationClock() {
+  const [terminationDate, setTerminationDate] = useState<string>(() => {
+    return new Date().toISOString().split('T')[0]
+  })
+
+  // Under Employment Tribunals Act 1996 s.18A: 3 months minus 1 day
+  const deadlineDate = useMemo(() => {
+    if (!terminationDate) return null
+    const [y, m, d] = terminationDate.split('-').map(Number)
+    if (!y || !m || !d) return null
+    // Add 3 calendar months then minus 1 day
+    const dt = new Date(y, m - 1 + 3, d)
+    dt.setDate(dt.getDate() - 1)
+    return dt
+  }, [terminationDate])
+
+  const daysRemaining = useMemo(() => {
+    if (!deadlineDate) return 0
+    const now = new Date()
+    now.setHours(0, 0, 0, 0)
+    const diff = deadlineDate.getTime() - now.getTime()
+    return Math.ceil(diff / (1000 * 60 * 60 * 24))
+  }, [deadlineDate])
+
+  const formattedDeadline = useMemo(() => {
+    if (!deadlineDate) return ''
+    return deadlineDate.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
+  }, [deadlineDate])
+
+  return (
+    <div
+      className="bg-white border border-[#E2DCCE] rounded-xl p-5 md:p-6 shadow-sm no-print mb-6"
+      id="tribunal-limitation-clock"
+      style={{ animation: 'sc-fade-in 200ms ease forwards' }}
+    >
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-[#E2DCCE]">
+        <div>
+          <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-[#D9603B] font-semibold block mb-0.5">
+            Employment Tribunals Act 1996 s.18A Watchdog
+          </span>
+          <h3 className="text-[17px] font-serif font-bold text-[#0B1F3A] m-0">
+            Tribunal Limitation Clock: 3 Months Minus 1 Day
+          </h3>
+        </div>
+
+        {daysRemaining > 30 ? (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-[#4F7060]/10 text-[#4F7060] border border-[#4F7060]/20 flex-shrink-0">
+            <span className="w-2 h-2 rounded-full bg-[#4F7060]" />
+            {daysRemaining} Days Remaining
+          </span>
+        ) : daysRemaining > 0 ? (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/30 flex-shrink-0">
+            <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-ping" />
+            Urgent: {daysRemaining} Days Left
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold bg-[#A8341F]/10 text-[#A8341F] border border-[#A8341F]/30 flex-shrink-0">
+            <span className="w-2 h-2 rounded-full bg-[#A8341F]" />
+            Limitation Window Expired
+          </span>
+        )}
+      </div>
+
+      <p className="text-[13px] text-[#5B6577] leading-relaxed my-3">
+        Under UK employment statute, you have exactly <strong>3 months minus 1 day</strong> from your effective date of termination or the incident to contact ACAS. <strong>Settlement discussions do not pause this clock.</strong> If your employer delays signing and this deadline expires, you lose your right to make an Employment Tribunal claim.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg p-4 my-3">
+        <div>
+          <label htmlFor="termination-date-input" className="block text-[12px] font-semibold text-[#0B1F3A] mb-1">
+            Your Dismissal / Termination Date:
+          </label>
+          <input
+            id="termination-date-input"
+            type="date"
+            value={terminationDate}
+            onChange={(e) => setTerminationDate(e.target.value)}
+            className="w-full bg-white border border-[#E2DCCE] rounded-md px-3 py-2 text-[14px] text-[#0B1F3A] font-mono outline-none focus:border-[#0B1F3A]"
+          />
+          <span className="block text-[11px] text-[#8A93A3] mt-1">
+            Defaults to today. Change to your actual or proposed leaving date.
+          </span>
+        </div>
+
+        <div className="border-t md:border-t-0 md:border-l border-[#E2DCCE] pt-3 md:pt-0 md:pl-4">
+          <span className="block text-[11px] text-[#8A93A3] uppercase font-mono tracking-wider mb-0.5">
+            Absolute ACAS Notification Deadline:
+          </span>
+          <span className="block text-[18px] font-serif font-bold text-[#0B1F3A]">
+            {formattedDeadline}
+          </span>
+          <span className="block text-[11px] text-[#5B6577] mt-0.5">
+            Contacting ACAS for Early Conciliation pauses the clock.
+          </span>
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
+        <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
+          Starting ACAS Early Conciliation protects your legal claims while negotiations continue.
+        </p>
+        <a
+          href="https://www.acas.org.uk/early-conciliation"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackOutboundCitation('https://www.acas.org.uk/early-conciliation', 'ACAS Early Conciliation', { component: 'tribunal_limitation_clock' })}
+          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-[#0B1F3A] text-[#0B1F3A] hover:bg-[#0B1F3A] hover:text-white transition-colors text-[13px] font-medium flex-shrink-0 text-center"
+        >
+          <span>Notify ACAS (acas.org.uk)</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+      </div>
+    </div>
+  )
+}
+
+/* ── Local SRA Specialist Availability Card (SC-B-022) ─────────── */
+
+function LocalSpecialistAvailabilityCard({
+  jurisdiction,
+  onGetMatched,
+}: {
+  jurisdiction: 'GB' | 'NI'
+  onGetMatched: () => void
+}) {
+  return (
+    <div
+      className="bg-white border-2 border-[#D9603B] rounded-xl p-5 md:p-6 shadow-sm no-print mb-6"
+      style={{ animation: 'sc-fade-in 200ms ease forwards' }}
+    >
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-[#E2DCCE]">
+        <div className="flex items-center gap-3">
+          <span className="relative flex h-3 w-3 flex-shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D9603B] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#D9603B]"></span>
+          </span>
+          <div>
+            <h3 className="text-[16px] font-bold text-[#0B1F3A] m-0 leading-snug">
+              Local SRA Employment Specialist Available Today
+            </h3>
+            <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
+              Vetted partner panel active in {jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland and Wales'} · 15-minute SLA reserve window
+            </p>
+          </div>
+        </div>
+
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#4F7060]/10 text-[#4F7060] border border-[#4F7060]/20 flex-shrink-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#4F7060]" />
+          Capacity: Available
+        </span>
+      </div>
+
+      <div className="pt-4 grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
+        <div className="md:col-span-2 text-xs text-[#0B1F3A]/80 leading-relaxed">
+          <p className="m-0 mb-2 font-medium text-[#0B1F3A]">
+            <strong>Section 203 ERA 1996 Mandate:</strong> Your settlement agreement cannot be finalized or signed without independent solicitor advice.
+          </p>
+          <p className="m-0 text-[#5B6577]">
+            Your employer pays the legal review fee directly (typically £500 to £1,500 + VAT). You pay £0 out-of-pocket for your statutory sign-off.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <button
+            onClick={onGetMatched}
+            className="w-full py-3.5 px-4 rounded-lg bg-[#D9603B] hover:bg-[#c25230] text-white text-[13px] font-bold shadow-sm transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <span>Get my free solicitor match →</span>
+          </button>
+          <span className="text-[11px] text-center text-[#8A93A3]">
+            1-click dossier dispatch · Zero obligation
+          </span>
+        </div>
       </div>
     </div>
   )
@@ -1739,14 +1925,15 @@ function ResultsContent() {
   const router = useRouter()
 
   const [inputs, setInputs] = useState<EditableInputs>({
-    salary:            searchParams.get('salary')            ?? '0',
-    yearsNum:          searchParams.get('yearsNum')          ?? '0',
-    monthsNum:         searchParams.get('monthsNum')         ?? '0',
-    age:               searchParams.get('age')               ?? '0',
-    offer:             searchParams.get('offer')             ?? '0',
-    reason:            searchParams.get('reason')            ?? '',
-    discrimination:    searchParams.get('discrimination')    ?? 'no',
-    contractualNotice: searchParams.get('contractualNotice') ?? '0',
+    salary:              searchParams.get('salary')              ?? '0',
+    yearsNum:            searchParams.get('yearsNum')            ?? '0',
+    monthsNum:           searchParams.get('monthsNum')           ?? '0',
+    age:                 searchParams.get('age')                 ?? '0',
+    offer:               searchParams.get('offer')               ?? '0',
+    offerIncludesNotice: searchParams.get('offerIncludesNotice') ?? 'true',
+    reason:              searchParams.get('reason')              ?? '',
+    discrimination:      searchParams.get('discrimination')      ?? 'no',
+    contractualNotice:   searchParams.get('contractualNotice')   ?? '0',
   })
 
   // Selected Vento Band for interactive discrimination modeling
@@ -1755,15 +1942,16 @@ function ResultsContent() {
   // Interactive Pension Sacrifice hoisted state
   const [sacrificeVal, setSacrificeVal] = useState(0)
 
-  const salary            = parseFloat(inputs.salary)
-  const yearsNum          = parseFloat(inputs.yearsNum)
-  const monthsNum         = parseFloat(inputs.monthsNum)
-  const totalMonths       = yearsNum * 12 + monthsNum
-  const age               = parseInt(inputs.age)
-  const offer             = parseFloat(inputs.offer)
-  const reason            = inputs.reason
-  const discrimination    = inputs.discrimination
-  const contractualNotice = parseInt(inputs.contractualNotice)
+  const salary              = parseFloat(inputs.salary)
+  const yearsNum            = parseFloat(inputs.yearsNum)
+  const monthsNum           = parseFloat(inputs.monthsNum)
+  const totalMonths         = yearsNum * 12 + monthsNum
+  const age                 = parseInt(inputs.age)
+  const offer               = parseFloat(inputs.offer)
+  const offerIncludesNotice = inputs.offerIncludesNotice !== 'false'
+  const reason              = inputs.reason
+  const discrimination      = inputs.discrimination
+  const contractualNotice   = parseInt(inputs.contractualNotice)
 
   const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>('GB')
   const [showJurisdictionToggle, setShowJurisdictionToggle] = useState(false)
@@ -1772,7 +1960,7 @@ function ResultsContent() {
 
   const valid = salary > 0 && age > 0 && offer >= 0 && reason !== ''
   const result: VerdictResult | null = valid
-    ? getVerdict(salary, totalMonths, age, offer, reason, discrimination, contractualNotice, jurisdiction)
+    ? getVerdict(salary, totalMonths, age, offer, reason, discrimination, contractualNotice, jurisdiction, offerIncludesNotice)
     : null
 
   // ── Pre-offer Simulation / Low Offer Opportunity Mode ─────────────────
@@ -1792,7 +1980,7 @@ function ResultsContent() {
   const displayResult = valid
     ? ((hasOffer && !isOpportunityMode)
         ? result
-        : getVerdict(salary, totalMonths, age, displayOffer, reason, discrimination, contractualNotice, jurisdiction))
+        : getVerdict(salary, totalMonths, age, displayOffer, reason, discrimination, contractualNotice, jurisdiction, offerIncludesNotice))
     : null
 
   const isSimulated = !hasOffer || isOpportunityMode
@@ -1807,7 +1995,7 @@ function ResultsContent() {
     : null
 
   const saveParams = {
-    salary, yearsNum, monthsNum, age, offer, reason, discrimination,
+    salary, yearsNum, monthsNum, age, offer, offerIncludesNotice: String(offerIncludesNotice), reason, discrimination,
     contractualNotice, jurisdiction,
   }
 
@@ -1962,6 +2150,15 @@ function ResultsContent() {
                 <div className="no-print">
                   <VerdictPanel result={result} offer={offer} salary={salary} yearsNum={Math.floor(yearsNum)} age={age} />
                 </div>
+
+                {/* SC-B-022: Dynamic Local SRA Specialist Availability & 1-Click Match Bridge */}
+                <LocalSpecialistAvailabilityCard
+                  jurisdiction={jurisdiction}
+                  onGetMatched={handleSolicitorMatch}
+                />
+
+                {/* SC-B-010: Dynamic Tribunal Limitation Clock (3 Months Minus 1 Day) */}
+                <TribunalLimitationClock />
 
                 {/* Jurisdiction toggles */}
                 <div className="text-[13px] text-muted flex flex-wrap items-center gap-2 no-print">

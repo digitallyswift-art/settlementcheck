@@ -30,11 +30,11 @@ const FAQS = [
   },
   {
     q: 'Can I claim a protective award if I sign a settlement agreement?',
-    a: 'No. Standard settlement agreements include an express waiver of all statutory claims, including claims under Section 189 of TULRCA 1992. However, knowing your potential protective award entitlement gives you vital leverage to negotiate a higher compensation payment before signing.',
+    a: 'No. Standard settlement agreements include an express waiver of all statutory claims, including claims under Section 189 of TULRCA 1992. However, knowing your potential protective award entitlement gives you vital negotiation standing to negotiate a higher compensation payment before signing.',
   },
   {
     q: 'Is a protective award taxable in the UK?',
-    a: 'Yes, but it qualifies for the £30,000 tax exemption under Section 403 of ITEPA 2003 as compensation for loss of employment. If your total termination compensation (including redundancy and ex-gratia payments) is under £30,000, your protective award is 100% tax-free with zero employee National Insurance deductions.',
+    a: 'Yes. Under HMRC Employment Income Manual EIM02550 and Section 62 of ITEPA 2003, protective awards are classified as statutory remuneration (wages) rather than termination compensation. Because they represent taxable earnings, the £30,000 exemption under Section 403 does not apply. Protective awards are subject to standard PAYE income tax and Class 1 National Insurance.',
   },
 ]
 
@@ -354,21 +354,19 @@ export default function ProtectiveAwardClient() {
                     )}
 
                     <div className="flex justify-between py-1 border-b border-rule/60">
-                      <span className="text-muted">Tax Exemption (s.403 ITEPA)</span>
-                      <span className="font-bold text-ink">
-                        {result.taxableAmount === 0 ? '100% Tax-Free' : `${formatCurrency(result.taxFreeAmount)} Tax-Free`}
-                      </span>
+                      <span className="text-muted">Tax Classification (ITEPA s.62)</span>
+                      <span className="font-bold text-ink">Taxable Earnings (PAYE)</span>
                     </div>
 
                     <div className="flex justify-between py-1">
-                      <span className="text-muted">Employee National Insurance</span>
-                      <span className="font-bold text-ink">0% NI Deductions</span>
+                      <span className="text-muted">National Insurance</span>
+                      <span className="font-bold text-ink">Class 1 Deductions</span>
                     </div>
                   </div>
 
                   {/* Tax Note */}
                   <div className="mt-4 p-3 rounded-lg bg-white border border-rule text-xs text-muted leading-relaxed">
-                    Under Section 403 of ITEPA 2003, genuine termination compensation payments up to £30,000 are completely exempt from income tax and employee National Insurance.
+                    Under HMRC EIM02550 and Section 62 of ITEPA 2003, protective awards are treated as remuneration rather than termination compensation. The Section 403 £30,000 exemption does not apply.
                   </div>
 
                   {/* Next Step Primary CTA */}

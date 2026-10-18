@@ -7,24 +7,24 @@ import InlineEstimator from '@/components/InlineEstimator'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Average Settlement Agreement Payout UK 2026 | SettlementCheck',
+  title: 'Average Employment Settlement Payout UK | SettlementCheck',
   description:
     'Free UK settlement agreement payout guide. Typical ranges (£5,000-£25,000) and 2026 redundancy pay caps (£751/wk). No email. See if your offer is fair.',
   alternates: {
-    canonical: '/guides/average-settlement-agreement-payout-uk/',
+    canonical: 'https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/',
   },
   openGraph: {
-    title: 'Average Settlement Agreement Payout UK 2026 | SettlementCheck',
+    title: 'Average Employment Settlement Payout UK | SettlementCheck',
     description:
       'Free UK settlement agreement payout guide. Typical ranges (£5,000-£25,000) and 2026 redundancy pay caps (£751/wk). No email. See if your offer is fair.',
-    url: '/guides/average-settlement-agreement-payout-uk/',
+    url: 'https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Average Settlement Agreement Payout UK 2026 | SettlementCheck',
+    title: 'Average Employment Settlement Payout UK | SettlementCheck',
     description:
       'Free UK settlement agreement payout guide. Typical ranges (£5,000-£25,000) and 2026 redundancy pay caps (£751/wk). No email. See if your offer is fair.',
   },
@@ -161,7 +161,7 @@ export default function AveragePayoutGuide() {
               <span>Last reviewed: July 2026</span>
             </div>
             <p className="sc-lead">
-              In 2026, the average UK settlement agreement payout typically falls between £5,000 and £25,000. Under UK employment regulations, your statutory redundancy pay is calculated against a weekly pay cap of £751 in Great Britain <sup>1</sup> (£783 in Northern Ireland <sup>2</sup>). Most fair settlement offers represent 1.5x to 4x of your statutory minimum entitlement. If your employer offers only the statutory minimum, they are paying nothing extra to buy out your right to make a tribunal claim.
+              In 2026, observed commercial negotiation ranges for UK settlement agreements typically fall between £5,000 and £25,000 (based on observed commercial settlements and Ministry of Justice tribunal compensation statistics). Under UK employment regulations, your statutory redundancy pay is calculated against a weekly pay cap of £751 in Great Britain <sup>1</sup> (£783 in Northern Ireland <sup>2</sup>). Most fair settlement offers represent 1.5x to 4x of your statutory minimum entitlement. If your employer offers only the statutory minimum, they are paying nothing extra to buy out your right to make a tribunal claim.
             </p>
           </div>
         </section>
@@ -182,13 +182,13 @@ export default function AveragePayoutGuide() {
                 What is the average settlement agreement payout in the UK?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                In the UK, the average settlement agreement payout ranges between £5,000 and £25,000, typically representing 1.5 to 4 months of gross salary on top of contractual notice pay. Statutory redundancy is capped at £751 per week under SI 2026/310, and genuine severance up to £30,000 is tax-free under Section 403 of ITEPA 2003.
+                Based on observed UK commercial negotiation ranges and MoJ employment tribunal compensation benchmarks, typical settlement agreement payouts range between £5,000 and £25,000, representing 1.5 to 4 months of gross salary on top of contractual notice pay. Statutory redundancy is capped at £751 per week under SI 2026/310, and genuine severance up to £30,000 is tax-free under Section 403 of ITEPA 2003.
               </p>
 
               {/* Structured Metrics Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Typical Settlement Range</span>
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Observed Settlement Range</span>
                   <span className="font-bold text-ink text-sm">£5,000 to £25,000</span>
                   <span className="text-muted text-[11px]">1.5x to 4x statutory minimum</span>
                 </div>
@@ -208,13 +208,16 @@ export default function AveragePayoutGuide() {
                   <span className="text-muted text-[11px]">Covers your solicitor review (ERA 1996 s.203)</span>
                 </div>
               </div>
+              <p className="text-[11px] text-muted mt-3 italic">
+                * Observed commercial negotiation ranges based on reported settlement terms and Ministry of Justice tribunal compensation statistics. Actual figures depend on individual contractual rights and dispute merits.
+              </p>
 
               <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <span className="text-xs text-muted">
                   Primary statute: <strong>Employment Rights Act 1996 s.162 &amp; SI 2026/310</strong>
                 </span>
-                <Link href="/calculator/?reason=redundancy" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
-                  Check your offer against this baseline →
+                <Link href="/calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
+                  Open Settlement Agreement Calculator UK →
                 </Link>
               </div>
             </div>
@@ -226,7 +229,7 @@ export default function AveragePayoutGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Typical Settlement Payouts by Scenario</h2>
             <p className="sc-body mb-6">
-              Settlement payouts depend heavily on the reason for your departure and the strength of any potential legal claims. For unfair dismissal scenarios, the legal maximum compensation is capped at £123,543 <sup>5</sup> or one year&apos;s gross salary. Use the interactive estimator below to calculate your figures, or view the scenario benchmarks.
+              Settlement payouts depend heavily on the reason for your departure and the strength of any potential legal claims. For unfair dismissal scenarios, the legal maximum compensation is capped at £123,543 <sup>5</sup> or one year&apos;s gross salary. Use our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link> to check your offer, or estimate with the interactive tool below.
             </p>
 
             {/* Interactive Inline Estimator */}
@@ -330,7 +333,7 @@ export default function AveragePayoutGuide() {
                 {
                   n: 2,
                   title: 'Determine the appropriate multiplier',
-                  body: 'Assess your leverage. If your employer followed a poor procedure, apply a multiplier of 1.5x to 2.5x to your baseline. If you have evidence of discrimination, a higher multiplier applies.',
+                  body: 'Assess your negotiation standing. If your employer followed a flawed procedure, apply a multiplier of 1.5x to 2.5x to your baseline. If you have evidence of discrimination, a higher multiplier applies.',
                 },
                 {
                   n: 3,

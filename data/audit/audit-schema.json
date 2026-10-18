@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SettlementCheck Audit Evidence Bus Schema",
+  "type": "object",
+  "definitions": {
+    "EvidenceFinding": {
+      "type": "object",
+      "required": [
+        "id",
+        "sourceLocation",
+        "exactFinding",
+        "evidenceSource",
+        "sourceDate",
+        "dateChecked",
+        "confidence",
+        "severity",
+        "verificationStatus",
+        "classification",
+        "jurisdiction",
+        "userImpact",
+        "recommendedAction",
+        "evidenceRequired"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^SC-E-\\d{3,4}$" },
+        "sourceLocation": { "type": "string" },
+        "exactFinding": { "type": "string" },
+        "evidenceSource": { "type": "string" },
+        "sourceDate": { "type": "string" },
+        "dateChecked": { "type": "string" },
+        "confidence": { "type": "string", "enum": ["High", "Medium", "Low"] },
+        "severity": { "type": "string", "enum": ["P0", "P1", "P2", "P3", "Informational"] },
+        "verificationStatus": { "type": "string", "enum": ["Confirmed", "Partially verified", "Unverified", "Unable to verify", "Resolved"] },
+        "classification": { "type": "string", "enum": ["Confirmed error", "Requires qualification", "Potential risk", "Product gap", "Opportunity", "Correct"] },
+        "jurisdiction": { "type": "string", "enum": ["England and Wales", "Scotland", "Northern Ireland", "UK-wide", "Other", "Not applicable"] },
+        "userImpact": { "type": "string" },
+        "recommendedAction": { "type": "string" },
+        "evidenceRequired": { "type": "string" }
+      }
+    },
+    "CalculatorTestRecord": {
+      "type": "object",
+      "required": ["id", "calculator", "inputs", "expected", "actual", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^SC-T-\\d{3,4}$" },
+        "calculator": { "type": "string" },
+        "inputs": { "type": "object" },
+        "expected": { "type": "object" },
+        "actual": { "type": "object" },
+        "difference": { "type": "string" },
+        "status": { "type": "string", "enum": ["PASS", "FAIL"] }
+      }
+    },
+    "BacklogItem": {
+      "type": "object",
+      "required": ["id", "priority", "status", "category", "finding", "remediation"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^SC-B-\\d{3,4}$" },
+        "priority": { "type": "string", "enum": ["P0", "P1", "P2", "P3"] },
+        "status": { "type": "string", "enum": ["Proposed", "Accepted", "In progress", "Blocked", "Resolved"] },
+        "category": { "type": "string" },
+        "finding": { "type": "string" },
+        "remediation": { "type": "string" },
+        "effort": { "type": "string", "enum": ["Low", "Medium", "High", "Unknown"] }
+      }
+    }
+  }
+}

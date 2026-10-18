@@ -340,7 +340,7 @@ export default function SitemapPage() {
               Check your offer in under 60 seconds with our free statutory calculator and get matched with an independent SRA-regulated solicitor. Your employer pays the legal fees.
             </p>
             <Link href="/calculator/" className="btn-accent inline-block">
-              Calculate Your Settlement &rarr;
+              Calculate my estimate →
             </Link>
           </div>
         </section>

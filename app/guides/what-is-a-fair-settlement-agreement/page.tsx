@@ -7,16 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
-  title: 'What Is a Fair Settlement Agreement UK 2026? | SettlementCheck',
+  title: 'Fair Settlement Agreement From Employer? | SettlementCheck',
   description:
-    'A fair settlement agreement pays more than your statutory minimum. Understand the £751 weekly cap, multiplier ranges, and the red flags that signal an offer is too low.',
+    "Is your employer's settlement agreement fair? Understand the £751 weekly cap, multiplier benchmarks, and red flags for low severance offers. Free check.",
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/what-is-a-fair-settlement-agreement/',
   },
   openGraph: {
-    title: 'What Is a Fair Settlement Agreement UK 2026? | SettlementCheck',
+    title: 'Fair Settlement Agreement From Employer? | SettlementCheck',
     description:
-      'A fair settlement agreement pays more than your statutory minimum. Understand the £751 weekly cap, multiplier ranges, and the red flags that signal an offer is too low.',
+      "Is your employer's settlement agreement fair? Understand the £751 weekly cap, multiplier benchmarks, and red flags for low severance offers. Free check.",
     url: 'https://settlementcheck.co.uk/guides/what-is-a-fair-settlement-agreement/',
     type: 'website',
     locale: 'en_GB',
@@ -35,7 +35,7 @@ const FAQS = [
   },
   {
     q: 'Can I negotiate after I have already been made redundant?',
-    a: 'Yes. Redundancy is the starting point for negotiation, not the end. Once you have been made redundant, your statutory entitlement is fixed, but the employer may still offer a settlement agreement to avoid any claims arising from the process. If there were procedural flaws (inadequate consultation, no proper selection process, no warning) or if there are other claim elements, you have leverage. Counter with a specific figure and a brief explanation. Employers expect negotiation.',
+    a: 'Yes. Redundancy is the starting point for negotiation, not the end. Once you have been made redundant, your statutory entitlement is fixed, but the employer may still offer a settlement agreement to avoid any claims arising from the process. If there were procedural flaws (inadequate consultation, no proper selection process, no warning) or if there are other claim elements, you have negotiation strength. Counter with a specific figure and a brief explanation. Employers expect negotiation.',
   },
   {
     q: 'What happens to my tribunal claim if I sign?',
@@ -300,7 +300,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                 },
                 {
                   title: 'Long service (10 or more years)',
-                  body: 'Long-serving employees have higher statutory redundancy, raising the absolute pound value of the floor. They also have stronger leverage because their knowledge and institutional value is harder to replace. Employers are more risk-averse about tribunal claims from long-serving employees.',
+                  body: 'Long-serving employees have higher statutory redundancy, raising the absolute pound value of the floor. They also have stronger negotiation standing because their knowledge and institutional value is harder to replace. Employers are more risk-averse about tribunal claims from long-serving employees.',
                 },
                 {
                   title: 'Senior role or high earner',

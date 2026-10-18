@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { getVerdict, VerdictResult } from '@/lib/calculations'
+import { LegalFeeShieldBadge } from '@/components/LegalFeeShieldBadge'
 
 export interface CalcPayload {
   inputs: {
@@ -11,6 +12,7 @@ export interface CalcPayload {
     monthsNum: string
     age: string
     offer: string
+    offerIncludesNotice?: string
     reason: string
     discrimination: string
     contractualNotice: string
@@ -24,6 +26,7 @@ export interface InitialCalcValues {
   monthsNum?: string
   age?: string
   offer?: string
+  offerIncludesNotice?: string
   reason?: string
   discrimination?: string
   contractualNotice?: string
@@ -108,6 +111,13 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   const [yearsNum, setYearsNum] = useState(initialValues?.yearsNum || '')
   const [monthsNum, setMonthsNum] = useState(initialValues?.monthsNum || '')
   const [offer, setOffer] = useState(initialValues?.offer || '')
+  const [offerIncludesNotice, setOfferIncludesNotice] = useState<boolean>(() => {
+    if (initialValues?.offerIncludesNotice !== undefined) {
+      return initialValues.offerIncludesNotice !== 'false'
+    }
+    return true
+  })
+  const [showConstructiveModal, setShowConstructiveModal] = useState(false)
   const [offerWarning, setOfferWarning] = useState('')
   const [noticeOption, setNoticeOption] = useState<string | null>(initialValues?.contractualNotice || null)
   const [reason, setReason] = useState<string | null>(() => {
@@ -129,6 +139,9 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         if (!initialValues?.yearsNum && parsed.yearsNum && !yearsNum) setYearsNum(parsed.yearsNum)
         if (!initialValues?.monthsNum && parsed.monthsNum && !monthsNum) setMonthsNum(parsed.monthsNum)
         if (!initialValues?.offer && parsed.offer && !offer) setOffer(parsed.offer)
+        if (initialValues?.offerIncludesNotice === undefined && parsed.offerIncludesNotice !== undefined) {
+          setOfferIncludesNotice(parsed.offerIncludesNotice !== false)
+        }
         if (!initialValues?.contractualNotice && parsed.contractualNotice && !noticeOption) setNoticeOption(parsed.contractualNotice)
         if (!initialValues?.reason && parsed.reason && !reason) setReason(parsed.reason)
         if (!initialValues?.discrimination && parsed.discrimination && !discrimination) setDiscrimination(parsed.discrimination)
@@ -142,13 +155,13 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     try {
       if (typeof window !== 'undefined') {
         sessionStorage.setItem('sc_saved_calc', JSON.stringify({
-          salary, age, yearsNum, monthsNum, offer, contractualNotice: noticeOption, reason, discrimination
+          salary, age, yearsNum, monthsNum, offer, offerIncludesNotice, contractualNotice: noticeOption, reason, discrimination
         }))
       }
     } catch {
       // Safe fallback
     }
-  }, [salary, age, yearsNum, monthsNum, offer, noticeOption, reason, discrimination])
+  }, [salary, age, yearsNum, monthsNum, offer, offerIncludesNotice, noticeOption, reason, discrimination])
 
   useEffect(() => {
     if (!initialValues) return
@@ -157,6 +170,9 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     if (initialValues.yearsNum && !yearsNum) setYearsNum(initialValues.yearsNum)
     if (initialValues.monthsNum && !monthsNum) setMonthsNum(initialValues.monthsNum)
     if (initialValues.offer && !offer) setOffer(initialValues.offer)
+    if (initialValues.offerIncludesNotice !== undefined) {
+      setOfferIncludesNotice(initialValues.offerIncludesNotice !== 'false')
+    }
     if (initialValues.contractualNotice && !noticeOption) setNoticeOption(initialValues.contractualNotice)
     if (initialValues.reason && !reason) {
       setReason(initialValues.reason === 'redundancy' ? 'redundancy_individual' : initialValues.reason)
@@ -337,15 +353,19 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     setTimeout(() => goToStep(6), 300)
   }
 
-  // Step 6: reason selection with 300ms auto-advance
+  // Step 6: reason selection with 300ms auto-advance (or safeguard modal for constructive dismissal)
   function handleReasonSelect(val: string) {
     setReason(val)
-    if (val === 'redundancy_collective') {
+    if (val === 'constructive') {
+      setCollectiveVisible(false)
+      setShowConstructiveModal(true)
+    } else if (val === 'redundancy_collective') {
       setTimeout(() => setCollectiveVisible(true), 50)
+      setTimeout(() => goToStep(7), 300)
     } else {
       setCollectiveVisible(false)
+      setTimeout(() => goToStep(7), 300)
     }
-    setTimeout(() => goToStep(7), 300)
   }
 
   function startLoading() {
@@ -359,7 +379,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     const disc = discrimination || 'no'
     const noticeWeeks = NOTICE_WEEKS[noticeOption || 'statutory'] || 0
 
-    const result = getVerdict(s, totalMonths, a, o, calcReason, disc, noticeWeeks, jurisdiction)
+    const result = getVerdict(s, totalMonths, a, o, calcReason, disc, noticeWeeks, jurisdiction, offerIncludesNotice)
 
     pendingPayload.current = {
       inputs: {
@@ -368,6 +388,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         monthsNum: String(m),
         age: String(a),
         offer: String(o),
+        offerIncludesNotice: String(offerIncludesNotice),
         reason: calcReason,
         discrimination: disc,
         contractualNotice: String(noticeWeeks),
@@ -482,10 +503,10 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         }}
         aria-label="Calculating your settlement results"
       >
-        {/* Static logo mark — no animation */}
+        {/* Static logo mark: no animation */}
         <LogoMark onClick={() => router.push('/')} />
 
-        {/* Cycling text — React key causes remount → sc-fade-in animation fires on each change */}
+        {/* Cycling text: React key causes remount -> sc-fade-in animation fires on each change */}
         <p
           key={readyToReveal ? 'ready' : loadState}
           aria-live="polite"
@@ -507,7 +528,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         </p>
 
         {/* Progress line: 200px mobile, 280px desktop (CSS override in globals.css)
-            Fills left to right over 4 seconds, ease-in-out — CSS animation only, no JS library */}
+            Fills left to right over 4 seconds, ease-in-out: CSS animation only, no JS library */}
         <div
           style={{ height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden', width: 200 }}
           className="sc-progress-wrap"
@@ -524,7 +545,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           }} />
         </div>
 
-        {/* Static trust line — always visible, never animated */}
+        {/* Static trust line: always visible, never animated */}
         <p style={{ fontSize: 13, color: '#8A93A3', textAlign: 'center', margin: 0 }}>
           Your result is calculated using verified 2026 UK statutory rates.
         </p>
@@ -711,10 +732,52 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
               {offerWarning && (
                 <span style={{ ...errSt, color: '#B5802A' }}>{offerWarning}</span>
               )}
+
+              {/* SC-B-020: Notice pay inclusion toggle */}
+              {parseFloat(offer) > 0 && (
+                <div style={{ marginTop: 20, padding: '16px', background: '#fff', border: '1px solid #E2DCCE', borderRadius: 12 }}>
+                  <label style={{ display: 'block', fontSize: 14, fontWeight: 600, color: '#0B1F3A', marginBottom: 4 }}>
+                    Does this £{Number(offer).toLocaleString('en-GB')} include your notice pay?
+                  </label>
+                  <p style={{ fontSize: 13, color: '#5B6577', margin: '0 0 12px', lineHeight: 1.5 }}>
+                    Under ITEPA 2003 s.402D, notice pay (PILON) is taxed separately from compensation. Clarifying this ensures your tax-free allowance and net payout are accurate.
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    <button
+                      type="button"
+                      onClick={() => setOfferIncludesNotice(true)}
+                      style={{
+                        ...optionSt(offerIncludesNotice),
+                        padding: '12px 14px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <span style={{ fontSize: 14 }}>Yes: notice pay is included in this £{Number(offer).toLocaleString('en-GB')}</span>
+                      {offerIncludesNotice && <Tick />}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setOfferIncludesNotice(false)}
+                      style={{
+                        ...optionSt(!offerIncludesNotice),
+                        padding: '12px 14px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <span style={{ fontSize: 14 }}>No: notice pay is being paid on top (in addition)</span>
+                      {!offerIncludesNotice && <Tick />}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
-          {/* ── STEP 5: Notice period (tappable list — NO keyboard) ── */}
+          {/* -- STEP 5: Notice period (tappable list: NO keyboard) -- */}
           {step === 5 && (
             <div>
               <p style={helperSt}>
@@ -738,7 +801,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
             </div>
           )}
 
-          {/* ── STEP 6: Reason for leaving (tappable list — NO keyboard) ── */}
+          {/* -- STEP 6: Reason for leaving (tappable list: NO keyboard) -- */}
           {step === 6 && (
             <div style={{ paddingBottom: 120 }}>
               <p style={helperSt}>This affects which entitlements apply to your situation.</p>
@@ -757,7 +820,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   </button>
                 ))}
               </div>
-              {/* Collective redundancy note — fades in before advancing */}
+              {/* Collective redundancy note: fades in before advancing */}
               <div style={{
                 maxHeight: collectiveVisible ? 100 : 0,
                 overflow: 'hidden',
@@ -784,7 +847,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 If you are not certain, choose Not sure. Many people underestimate whether what happened to them qualifies. You do not need to be certain to flag it.
               </p>
               <h2 style={qSt}>Was discrimination involved?</h2>
-              {/* 56px minimum tap targets — higher than standard 48px due to consequence of mis-tap */}
+              {/* 56px minimum tap targets: higher than standard 48px due to consequence of mis-tap */}
               <div className={shake && !discrimination ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
                 {([
                   { value: 'no', label: 'No' },
@@ -807,7 +870,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         </div>
       </div>
 
-      {/* Fixed advance button — keyboard-aware via visualViewport */}
+      {/* Fixed advance button: keyboard-aware via visualViewport */}
       <div
         ref={advanceBtnRef}
         style={{
@@ -823,6 +886,9 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         }}
       >
         <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
+          <div style={{ marginBottom: 10, width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <LegalFeeShieldBadge />
+          </div>
           <button
             onClick={advance}
             style={{
@@ -835,14 +901,14 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
             {getAdvanceCopy()}
           </button>
 
-          {/* Step 4 midpoint copy — position: below advance button */}
+          {/* Step 4 midpoint copy: position below advance button */}
           {step === 4 && (
             <p style={{ fontSize: 13, color: '#8A93A3', textAlign: 'center', margin: '0 0 12px' }}>
               You are nearly there. Three more questions.
             </p>
           )}
 
-          {/* Back link — text link (not a button visually), from Step 2 onwards */}
+          {/* Back link: text link (not a button visually), from Step 2 onwards */}
           {step > 1 && (
             <button
               type="button"
@@ -862,6 +928,138 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           )}
         </div>
       </div>
+
+      {/* SC-B-009: Constructive Dismissal Safeguard Modal */}
+      {showConstructiveModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 100,
+          background: 'rgba(11, 31, 58, 0.75)',
+          backdropFilter: 'blur(4px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 16,
+        }}>
+          <div style={{
+            background: '#ffffff',
+            borderRadius: 16,
+            maxWidth: 480,
+            width: '100%',
+            padding: '24px 24px 20px',
+            boxShadow: '0 20px 40px rgba(11,31,58,0.25)',
+            border: '2px solid #D9603B',
+            animation: 'sc-fade-in 200ms ease forwards',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+              <span style={{
+                background: 'rgba(217, 96, 59, 0.12)',
+                color: '#D9603B',
+                fontSize: 11,
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 700,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                padding: '4px 10px',
+                borderRadius: 999,
+              }}>
+                Critical Legal Safeguard
+              </span>
+            </div>
+
+            <h3 style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 22,
+              fontWeight: 600,
+              color: '#0B1F3A',
+              margin: '0 0 12px',
+              lineHeight: 1.25,
+            }}>
+              Do not resign before reading this
+            </h3>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, color: '#5B6577', lineHeight: 1.55, marginBottom: 20 }}>
+              <p style={{ margin: 0 }}>
+                Ministry of Justice employment tribunal data shows <strong style={{ color: '#0B1F3A' }}>over 95% of constructive dismissal claims fail</strong> when employees resign prematurely without specialist legal advice.
+              </p>
+              <p style={{ margin: 0 }}>
+                Once you resign, your employer no longer faces ongoing payroll liabilities, which significantly weakens your standing.
+              </p>
+              <p style={{ margin: 0, padding: '10px 12px', background: '#F7F4EE', borderRadius: 8, border: '1px solid #E2DCCE' }}>
+                <strong style={{ color: '#0B1F3A' }}>Your position is strongest while still employed.</strong> In most cases, an SRA-regulated solicitor can negotiate an exit package on your behalf while protecting your salary.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowConstructiveModal(false)
+                  goToStep(7)
+                }}
+                style={{
+                  width: '100%',
+                  background: '#D9603B',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: 10,
+                  padding: '14px 18px',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  fontFamily: 'var(--font-sans)',
+                  textAlign: 'center',
+                }}
+              >
+                I understand: continue calculation →
+              </button>
+
+              <a
+                href="/guides/constructive-dismissal-settlement-agreements/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  background: 'transparent',
+                  color: '#0B1F3A',
+                  border: '1.5px solid #E2DCCE',
+                  borderRadius: 10,
+                  padding: '12px 18px',
+                  fontSize: 14,
+                  fontWeight: 500,
+                  textAlign: 'center',
+                  textDecoration: 'none',
+                  fontFamily: 'var(--font-sans)',
+                  boxSizing: 'border-box',
+                }}
+              >
+                Read constructive dismissal advice guide &nearr;
+              </a>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setShowConstructiveModal(false)
+                  setReason(null)
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#8A93A3',
+                  fontSize: 13,
+                  cursor: 'pointer',
+                  padding: 4,
+                  textAlign: 'center',
+                }}
+              >
+                Choose a different reason
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   )

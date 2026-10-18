@@ -392,7 +392,7 @@ export default function EmployeeLeadTypeform({
   return (
     <div onKeyDown={handleKeyDown} style={{ fontFamily: SANS, WebkitFontSmoothing: 'antialiased' }}>
 
-      {/* Progress — hidden on success */}
+      {/* Progress: hidden on success */}
       {!isSuccess && (
         <ProgressBar step={progressStep} total={TOTAL_SLIDES} />
       )}
@@ -531,7 +531,7 @@ export default function EmployeeLeadTypeform({
           {currentSlide === 'phone' && (
             <div>
               <Q>Best number to reach you?</Q>
-              <Hint>A solicitor will call — no automated systems.</Hint>
+              <Hint>A solicitor will call (no automated systems).</Hint>
               <LineInput
                 inputRef={inputRef} value={form.phone} type="tel"
                 placeholder="07700 900 000" autoComplete="tel"
@@ -659,7 +659,7 @@ export default function EmployeeLeadTypeform({
               <p style={{ fontFamily: SANS, fontSize: 15, color: C.muted, lineHeight: 1.65, margin: 0 }}>
                 On <strong style={{ color: C.navy }}>{form.phone}</strong>,{' '}
                 {form.contactTime.toLowerCase()} preferred.{' '}
-                The advice is free — your employer covers the cost.
+                The advice is free: your employer covers the cost.
               </p>
             </div>
           )}
@@ -667,7 +667,7 @@ export default function EmployeeLeadTypeform({
         </motion.div>
       </AnimatePresence>
 
-      {/* Back link — below slide, not above */}
+      {/* Back link: below slide, not above */}
       {slideIndex > 0 && !isSuccess && (
         <motion.div
           initial={{ opacity: 0 }}

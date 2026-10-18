@@ -18,11 +18,11 @@ const faqSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'How SettlementCheck Works | Settlement Agreement Advice UK | SettlementCheck',
+  title: 'How It Works | Settlement Agreement Advice UK | SettlementCheck',
   description: 'Three steps: check your offer with our free calculator, get matched with a vetted SRA-regulated employment solicitor within 24 hours, and get honest advice. Your employer pays the fees.',
   alternates: { canonical: 'https://settlementcheck.co.uk/how-it-works/' },
   openGraph: {
-    title: 'How SettlementCheck Works',
+    title: 'How It Works | Settlement Agreement Advice UK',
     description: 'Free settlement agreement calculator, vetted solicitor match within 24 hours, employer pays the legal fees.',
     url: 'https://settlementcheck.co.uk/how-it-works/',
     type: 'website',
@@ -69,9 +69,32 @@ export default function HowItWorks() {
                     </svg>
                   ),
                 body: [
-                  "Enter your salary, years of service, age, and the settlement amount your employer has offered. Our calculator uses the UK's statutory redundancy formula (2024/25 rates) to give you an instant estimate.",
-                  'The calculator shows you whether your offer is below the legal minimum, below the typical range, within range, or above the typical range, in plain English, in seconds.',
-                  'If you indicate potential discrimination, we flag this separately. Discrimination claims are uncapped and can significantly increase your settlement value.',
+                  (
+                    <span key="p1">
+                      Enter your salary, years of service, age, and your employer&apos;s offer amount. Use our free{' '}
+                      <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">
+                        Settlement Agreement Calculator UK
+                      </Link>{' '}
+                      to evaluate your offer against April 2026 statutory rates (£751 weekly cap under SI 2026/310).
+                    </span>
+                  ),
+                  (
+                    <span key="p2">
+                      The calculator compares your offer against statutory redundancy, notice pay, and typical negotiation benchmarks in seconds. If you are facing redundancy or tax queries, you can also use our specialized{' '}
+                      <Link href="/redundancy-calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                        Redundancy Pay Calculator
+                      </Link>{' '}
+                      or{' '}
+                      <Link href="/settlement-agreement-tax-calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
+                        Settlement Agreement Tax Calculator
+                      </Link>.
+                    </span>
+                  ),
+                  (
+                    <span key="p3">
+                      If you indicate potential discrimination or unfair treatment, we flag this separately. Discrimination compensation is uncapped under the Equality Act 2010 and can significantly enhance your negotiated settlement.
+                    </span>
+                  ),
                 ],
               },
               {
@@ -144,7 +167,7 @@ export default function HowItWorks() {
                 for their experience in settlement agreements.
               </p>
               <p>
-                Our calculator uses published statutory rates for 2024/25 and general market data to provide
+                Our calculator uses published statutory rates for April 2026 (£751/week cap under SI 2026/310) and general market benchmarks to provide
                 estimates. It is not legal advice and does not replace a solicitor&apos;s review of your specific
                 agreement.
               </p>

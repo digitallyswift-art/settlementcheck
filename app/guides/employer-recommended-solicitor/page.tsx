@@ -139,7 +139,7 @@ export default function EmployerRecommendedSolicitor() {
               </ul>
             </div>
 
-            {/* Section 1 — What the law says */}
+            {/* Section 1: What the law says */}
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">1. What the law actually requires</h2>
               <p className="guide-body">
@@ -161,7 +161,7 @@ export default function EmployerRecommendedSolicitor() {
               badge="Independent Analysis"
             />
 
-            {/* Section 2 — Why employers recommend */}
+            {/* Section 2: Why employers recommend */}
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">2. Why employers recommend a specific solicitor</h2>
               <p className="guide-body">
@@ -200,7 +200,7 @@ export default function EmployerRecommendedSolicitor() {
               </div>
             </div>
 
-            {/* Section 3 — What independent means */}
+            {/* Section 3: What independent means */}
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">3. What "independent" actually means</h2>
               <p className="guide-body">
@@ -223,7 +223,7 @@ export default function EmployerRecommendedSolicitor() {
               </div>
             </div>
 
-            {/* Section 4 — Fees */}
+            {/* Section 4: Fees */}
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">4. Your employer still pays the fees</h2>
               <p className="guide-body">
@@ -246,7 +246,7 @@ export default function EmployerRecommendedSolicitor() {
               </ul>
             </div>
 
-            {/* Section 5 — When to choose your own */}
+            {/* Section 5: When to choose your own */}
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">5. When to choose your own solicitor</h2>
               <p className="guide-body">
@@ -290,7 +290,7 @@ export default function EmployerRecommendedSolicitor() {
               </div>
             </div>
 
-            {/* Section 6 — What to say */}
+            {/* Section 6: What to say */}
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">6. What to say to your employer</h2>
               <p className="guide-body">
@@ -318,7 +318,7 @@ export default function EmployerRecommendedSolicitor() {
               </div>
             </div>
 
-            {/* Section 7 — How to find */}
+            {/* Section 7: How to find */}
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">7. How to find an independent solicitor</h2>
               <p className="guide-body">

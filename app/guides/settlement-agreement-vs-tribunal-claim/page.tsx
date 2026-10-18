@@ -313,7 +313,7 @@ export default function SettlementAgreementVsTribunalGuide() {
                 },
                 {
                   n: 2,
-                  title: 'Assess your legal leverage',
+                  title: 'Assess your legal standing',
                   body: 'Consider whether your employer has followed a fair procedure. If you have evidence of discrimination, whistleblowing, or a clear breach of contract, your negotiating position is stronger.',
                 },
                 {

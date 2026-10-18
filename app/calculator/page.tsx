@@ -9,13 +9,13 @@ const STATIC_METADATA: Metadata = {
   description:
     'Calculate your employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Free.',
   alternates: {
-    canonical: '/calculator/',
+    canonical: 'https://settlementcheck.co.uk/calculator/',
   },
   openGraph: {
     title: 'Free Employee Settlement Agreement Calculator UK (2026)',
     description:
       'Calculate your employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Free.',
-    url: '/calculator/',
+    url: 'https://settlementcheck.co.uk/calculator/',
     type: 'website',
     locale: 'en_GB',
   },
@@ -124,7 +124,7 @@ const JSON_LD = {
           name: 'Is a compromise agreement calculator the same as a settlement agreement calculator?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Yes. Under Section 111A of the Employment Rights Act 1996, the Enterprise and Regulatory Reform Act officially renamed compromise agreements to settlement agreements in July 2013. The statutory calculation principles—notice pay, statutory redundancy capped at £751 per week, and the £30,000 tax-free threshold under ITEPA 2003 s.403—apply identically to both.',
+            text: 'Yes. Under Section 111A of the Employment Rights Act 1996, the Enterprise and Regulatory Reform Act officially renamed compromise agreements to settlement agreements in July 2013. The statutory calculation principles (notice pay, statutory redundancy capped at £751 per week, and the £30,000 tax-free threshold under ITEPA 2003 s.403) apply identically to both.',
           },
         },
         {

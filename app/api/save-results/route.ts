@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
     const jurisdictionLabel = jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland and Wales'
 
     const textBody = [
-      'SettlementCheck — Your Settlement Calculation Results',
+      'SettlementCheck - Your Settlement Calculation Results',
       '=====================================================',
       '',
       `Verdict: ${vLabel}`,

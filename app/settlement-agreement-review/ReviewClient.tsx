@@ -130,13 +130,13 @@ function ReviewBenchmarkCard({
               <strong>⚖️ Below Official MoJ Median:</strong> Your employer&apos;s draft ex-gratia offer of{' '}
               <strong>{formatGBP(offer)}</strong> is{' '}
               <strong>{formatGBP(benchmark.medianTribunalAward - offer)} below the Ministry of Justice median award</strong>{' '}
-              ({formatGBP(benchmark.medianTribunalAward)}) for this complaint type. This provides strong factual leverage to negotiate an uplift before signing.
+              ({formatGBP(benchmark.medianTribunalAward)}) for this complaint type. This provides strong factual negotiation standing to request an uplift before signing.
             </p>
           )}
           {isAboveMedian && (
             <p className="m-0">
               <strong>✓ Above Official MoJ Median:</strong> Your employer&apos;s draft ex-gratia offer of{' '}
-              <strong>{formatGBP(offer)}</strong> exceeds the MoJ median tribunal award ({formatGBP(benchmark.medianTribunalAward)}) for this dispute category. Your primary negotiation leverage should focus on raising employer legal fee contributions to £750–£1,000+ VAT and securing a positive, agreed reference.
+              <strong>{formatGBP(offer)}</strong> exceeds the MoJ median tribunal award ({formatGBP(benchmark.medianTribunalAward)}) for this dispute category. Your primary negotiation focus should be on raising employer legal fee contributions to £750 to £1,000 + VAT and securing a positive, agreed reference.
             </p>
           )}
         </div>
@@ -503,7 +503,7 @@ export default function ReviewClient() {
             {/* Tactical Counter-Offer & Negotiation Points */}
             <div className="bg-paper-2 border border-rule rounded-xl p-5 sm:p-6 mb-6">
               <h3 className="text-base font-serif font-bold text-ink mb-3">
-                Tactical Negotiation Leverage Points
+                Tactical Negotiation Action Points
               </h3>
               <ul className="space-y-2 mb-4">
                 {report.tacticalNegotiationPoints.map((point, idx) => (

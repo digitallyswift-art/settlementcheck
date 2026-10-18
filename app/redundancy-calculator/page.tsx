@@ -13,13 +13,13 @@ const STATIC_METADATA: Metadata = {
   description:
     'Calculate your statutory redundancy pay under April 2026 UK rates (£751 weekly cap). See your true net figure after tax. Free check, no email required.',
   alternates: {
-    canonical: '/redundancy-calculator/',
+    canonical: 'https://settlementcheck.co.uk/redundancy-calculator/',
   },
   openGraph: {
     title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
     description:
       'Calculate your statutory redundancy pay under April 2026 UK rates (£751 weekly cap). See your true net figure after tax. Free check, no email required.',
-    url: '/redundancy-calculator/',
+    url: 'https://settlementcheck.co.uk/redundancy-calculator/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

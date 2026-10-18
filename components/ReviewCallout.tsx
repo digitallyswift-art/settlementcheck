@@ -10,7 +10,7 @@ interface ReviewCalloutProps {
 export default function ReviewCallout({
   title = 'Holding a draft settlement agreement?',
   description = 'Before signing, check whether your employer is paying standard solicitor fee contributions (£500 to £1,500 + VAT), verify your £30,000 tax exemption, and benchmark your severance against tribunal payouts.',
-  ctaText = 'Check my draft clauses →',
+  ctaText = 'Check draft agreement clauses →',
   badge = 'Confidential Clause Checker',
 }: ReviewCalloutProps) {
   return (

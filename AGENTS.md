@@ -57,13 +57,49 @@ Scans all 58+ routes and 710+ internal links to verify:
 - Inclusion in XML (`/sitemap.xml`) and HTML (`/sitemap/`) sitemaps.
 
 ### D. `sentinel-fleet`
-Autonomous background fleet managing SERP intelligence and 15-minute territorial SLA watchdog.
+Specialist autonomous background fleet managing SERP intelligence and 15-minute territorial SLA watchdog.
 
 **Terminal Commands:**
 ```bash
 npm run sentinel:serp  # Runs SERP Sentinel scan, checks climbers/droppers, AI Overviews, saves snapshot
 npm run watchdog:sla   # Inspects lead locks, triggers failover cascade on expired 15-minute locks
 ```
+
+### E. `legal-compliance-auditor`
+Specialist in UK employment law, SRA regulatory boundaries, Section 203(3) ERA 1996 waiver validity, Equality Act 2010 Vento bands, TUPE, and protected conversations.
+
+**Key Commands to prompt the agent with:**
+- `audit legal [page or text]` — Verifies legal claims against primary statutes (legislation.gov.uk) and ACAS codes.
+- `verify s203 [terms]` — Verifies draft settlement terms against the 6 conditions of Section 203(3) ERA 1996.
+- `audit sra-boundary [copy]` — Confirms zero unauthorized practice of law and enforces statutory triage disclaimers.
+
+### F. `tax-compliance-auditor`
+Specialist in ITEPA 2003 Part 6 Chapter 3, HMRC Employment Income Manual (EIM12800–14000), Post-Employment Notice Pay (PENP s.402D), £30k exemption, and Class 1/1A NICs.
+
+**Key Commands to prompt the agent with:**
+- `audit tax [page or calculation]` — Scrutinizes simplified tax claims and checks compliance with HMRC EIM guidance.
+- `calculate penp [params]` — Executes statutory PENP formula `((BP × D) / P) - T` to verify taxable notice pay.
+- `check nic-rates [year]` — Audits employer Class 1A NIC (15.0% for 2026/27) and employee exemptions.
+
+### G. `calculator-auditor`
+Specialist in deterministic formula verification, IEEE boundary value analysis (BVA), and regression testing of statutory redundancy and tax calculation engines.
+
+**Key Commands to prompt the agent with:**
+- `test calculator [scenario]` — Runs deterministic test case against `lib/calculations.ts` using the `SC-T-000` schema.
+- `audit boundaries` — Tests service cap (20 yrs), age multipliers, weekly pay caps (GB £751 vs NI £783), and compensatory caps (£123,543).
+
+### H. `claims-privacy-auditor`
+Specialist in ASA/CAP Code claim substantiation ("average settlement", "market data", "most employers"), UK GDPR, Special Category Data, and document privacy security.
+
+**Key Commands to prompt the agent with:**
+- `audit claims [page]` — Detects unsubstantiated statistics or marketing assertions and logs them in `unsupported-claims-register.md`.
+- `audit privacy [pipeline]` — Inspects data retention, Supabase RLS, OTP flow, and third-party AI gateway data transmission.
+
+### I. `forum-demand-researcher`
+Specialist qualitative researcher mining real-world employee anxieties, settlement questions, and solicitor friction points from public forums (Reddit, MSE, Mumsnet).
+
+**Key Commands to prompt the agent with:**
+- `mine demand [topic]` — Extracts qualitative user demand evidence and builds structured entries for `forum-demand-matrix.md`.
 
 ---
 
@@ -99,6 +135,14 @@ These rules are strictly binding on all AI pair programming sessions:
      ```bash
      npm run test:evals   # 100% statutory and brand guardrail compliance
      npm run check:links  # 0 broken routes and strict trailing-slash enforcement
+     npm run lint:audit   # 100% audit artifact naming, header, and link compliance
      npx tsc --noEmit     # 0 TypeScript type errors
      ```
+
+5. **Strict Audit Deliverables & Naming Invariants**:
+   - All audit deliverables in `docs/audit/` must strictly use two-digit zero-padded prefixes (`phase-01a-`, `phase-01b-`, `phase-02-`, `phase-03-`, ... `phase-10b-`) to enforce deterministic alphabetical and chronological sorting across all OS file trees.
+   - Ad-hoc, unpadded (`phase-1-`), or non-prefixed filenames are strictly prohibited.
+   - Every markdown report's Line 1 H1 must strictly match `# Phase <ID> — <Title> Report`.
+   - All references to other audit documents must be valid local file links.
+
 

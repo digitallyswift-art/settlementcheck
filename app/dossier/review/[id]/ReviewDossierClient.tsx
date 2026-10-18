@@ -302,7 +302,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                   </div>
                 ) : (
                   <div className="p-4 rounded-lg bg-[#0B1F3A]/5 border border-[#0B1F3A]/15 mb-4">
-                    <h4 className="text-xs font-bold text-[#0B1F3A] uppercase tracking-wider mb-1">Commercial Leverage Opportunity</h4>
+                    <h4 className="text-xs font-bold text-[#0B1F3A] uppercase tracking-wider mb-1">Commercial Negotiation Opportunity</h4>
                     <p className="text-xs text-[#0B1F3A]/80">
                       While the offer satisfies the statutory floor, empirical telemetry indicates that comparable matters in this category typically settle for between £{marketNegotiationBrief.typicalSettlementRange.low.toLocaleString('en-GB')} and £{marketNegotiationBrief.typicalSettlementRange.high.toLocaleString('en-GB')}.
                     </p>

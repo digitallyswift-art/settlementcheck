@@ -7,16 +7,16 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 
 export const metadata: Metadata = {
-  title: 'Is My Settlement Offer Fair? 2026 UK Check | SettlementCheck',
+  title: "Is My Employer's Settlement Offer Fair? | SettlementCheck",
   description:
-    'Check if your UK settlement offer is fair using 2026 rates (£751/wk cap). Compare against statutory minimums, tribunal medians, and Acas ranges. Free guide.',
+    "Is your employer's settlement offer fair? Compare your payout against statutory redundancy caps (£751/wk), tribunal medians, and benchmarks. Free UK check.",
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/is-my-settlement-offer-fair/',
   },
   openGraph: {
-    title: 'Is My Settlement Offer Fair? 2026 UK Check | SettlementCheck',
+    title: "Is My Employer's Settlement Offer Fair? | SettlementCheck",
     description:
-      'Check if your UK settlement offer is fair using 2026 rates (£751/wk cap). Compare against statutory minimums, tribunal medians, and Acas ranges. Free guide.',
+      "Is your employer's settlement offer fair? Compare your payout against statutory redundancy caps (£751/wk), tribunal medians, and benchmarks. Free UK check.",
     url: 'https://settlementcheck.co.uk/guides/is-my-settlement-offer-fair/',
     type: 'website',
     locale: 'en_GB',
@@ -35,7 +35,7 @@ const FAQS = [
   },
   {
     q: 'What happens if I reject a settlement offer?',
-    a: 'If you reject a settlement offer, the employer can withdraw it and the negotiation ends. However, you can still pursue a tribunal claim for unfair dismissal, discrimination, or breach of contract. The tribunal route is slower (typically 6 to 9 months), uncertain, and costly in time. A settlement avoids all three, which is why employers prefer a certain, swift, private resolution over tribunal risk. That risk is your leverage.',
+    a: 'If you reject a settlement offer, the employer can withdraw it and the negotiation ends. However, you can still pursue a tribunal claim for unfair dismissal, discrimination, or breach of contract. The tribunal route is slower (typically 6 to 9 months), uncertain, and costly in time. A settlement avoids all three, which is why employers prefer a certain, swift, private resolution over tribunal risk. That risk forms the basis of your negotiation standing.',
   },
   {
     q: 'How long do I have to decide?',
@@ -138,7 +138,7 @@ export default function IsMyOfferFairGuide() {
               Most settlement offers fall between 1.5x and 4x the statutory minimum. Here is how to spot if yours is genuinely fair.
             </h1>
             <p className="sc-lead">
-              When you receive a settlement offer, your employer is paying to end your employment cleanly. The legal floor in 2026 is statutory redundancy and notice pay, calculated against a weekly pay cap of £751 (SI 2026/310). A fair offer goes beyond that floor and reflects the strength of your position. Use the free <Link href="/calculator/" className="text-ink font-semibold underline underline-offset-2 hover:text-coral transition-colors">settlement calculator</Link> below to compare your offer against the statutory baseline instantly.
+              When you receive a settlement offer, your employer is paying to end your employment cleanly. The legal floor in 2026 is statutory redundancy and notice pay, calculated against a weekly pay cap of £751 (SI 2026/310). A fair offer goes beyond that floor and reflects the strength of your position. Use our free <Link href="/calculator/" className="text-coral font-semibold underline underline-offset-2 hover:text-ink transition-colors">Settlement Agreement Calculator UK</Link> to compare your offer against the statutory baseline instantly.
             </p>
           </div>
         </section>
@@ -269,7 +269,7 @@ export default function IsMyOfferFairGuide() {
               {[
                 {
                   title: 'Age and length of service',
-                  body: 'Statutory redundancy scales with both. The formula applies 0.5 weeks per year under age 22, 1 week per year aged 22 to 40, and 1.5 weeks per year aged 41 and over, capped at 20 years (ERA 1996). An older employee with 15 years\' service has a higher statutory baseline and more leverage in negotiation.',
+                  body: 'Statutory redundancy scales with both. The formula applies 0.5 weeks per year under age 22, 1 week per year aged 22 to 40, and 1.5 weeks per year aged 41 and over, capped at 20 years (ERA 1996). An older employee with 15 years\' service has a higher statutory baseline and stronger standing in negotiation.',
                 },
                 {
                   title: 'Claim strength',
@@ -281,7 +281,7 @@ export default function IsMyOfferFairGuide() {
                 },
                 {
                   title: 'Your financial position',
-                  body: 'If you have another job lined up or financial runway, you have stronger leverage. If you need the payment quickly, the employer may sense it. Your walk-away point (the minimum you will accept) shapes every counter-offer you make.',
+                  body: 'If you have another job lined up or financial runway, you have stronger negotiation strength. If you need the payment quickly, the employer may sense it. Your walk-away point (the minimum you will accept) shapes every counter-offer you make.',
                 },
               ].map(({ title, body }) => (
                 <div key={title} className="flex gap-4">

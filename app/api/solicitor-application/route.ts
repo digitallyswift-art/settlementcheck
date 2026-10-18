@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
               </tr>` : ''}
               ${office_postcode ? `<tr>
                 <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Office postcode</td>
-                <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;">${office_postcode}${office_region ? ` — ${office_region}` : ''}</td>
+                <td style="padding: 10px 0; color: #111827; font-weight: 500; border-bottom: 1px solid #f3f4f6;">${office_postcode}${office_region ? ` (${office_region})` : ''}</td>
               </tr>` : ''}
               ${coverage_radius_miles != null ? `<tr>
                 <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Coverage radius</td>

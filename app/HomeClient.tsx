@@ -104,6 +104,7 @@ export interface HomeProps {
   title?: React.ReactNode;
   lead?: React.ReactNode;
   leadBullets?: { label: string; detail: string }[];
+  alertBanner?: React.ReactNode;
   statutoryRows?: StatutoryRow[];
   pageLinks?: PageLink[];
   faqItems?: FaqItem[];
@@ -119,11 +120,12 @@ export default function HomeClient({
   title,
   lead,
   leadBullets,
+  alertBanner,
   statutoryRows = [],
   pageLinks = [],
   faqItems,
   steps,
-  ctaLabel = 'Check my offer →',
+  ctaLabel = 'Calculate my estimate →',
   ctaHref = '/calculator/',
   howItWorksTitle = 'Three steps. Sixty seconds. Zero cost.',
   howItWorksLead = 'From a quick check to a vetted solicitor on the phone. No cost to you.',
@@ -139,6 +141,11 @@ export default function HomeClient({
           style={{ background: '#F7F4EE' }}
         >
           <div className="sc-container relative">
+            {alertBanner && (
+              <div className="mb-6 md:mb-8">
+                {alertBanner}
+              </div>
+            )}
             <div className="hero-grid grid gap-10 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
               <div className="flex flex-col gap-6 md:gap-7 min-w-0">
                 {/* Hero Pill */}
@@ -149,7 +156,7 @@ export default function HomeClient({
                   </span>
                 </div>
 
-                {/* SEO keyword eyebrow — carries primary keyword as visible text, H1 carries the core search intent */}
+                {/* SEO keyword eyebrow: carries primary keyword as visible text, H1 carries the core search intent */}
                 <p className="sc-eyebrow" style={{ letterSpacing: '0.10em' }}>
                   Independent UK Employment Settlement &amp;{' '}
                   <Link
@@ -404,7 +411,7 @@ export default function HomeClient({
                   <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
                     3
                   </div>
-                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Counter-offer leverage points</h3>
+                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Counter-offer negotiation points</h3>
                   <p className="text-[14px] text-muted leading-relaxed">
                     Compare your package against Ministry of Justice tribunal tables and Acas ex-gratia standards. Get specific amendments to counter non-compete and gagging clauses.
                   </p>

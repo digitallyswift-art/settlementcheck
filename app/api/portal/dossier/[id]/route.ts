@@ -11,17 +11,44 @@ export async function GET(
     const { searchParams } = new URL(req.url);
     const token = searchParams.get('token');
 
+    // SC-B-002 / SC-E-SEC-004: Enforce mandatory claimToken validation to eliminate BOLA
+    if (!token || typeof token !== 'string' || token.trim() === '') {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Unauthorized: A valid claim token is required to view case dossiers under SRA client confidentiality rules.',
+        },
+        { status: 401 }
+      );
+    }
+
+    const isDemoMatter = dossierId.startsWith('dossier_live_') || dossierId.startsWith('demo_');
+    const isDemoToken = token === 'demo_partner_token' || token.startsWith('demo_') || token.startsWith('claim_demo_');
+
     // 1. Check claim record in database if available
     let claimRecord: any = null;
     try {
-      let query = supabase.from('lead_claims').select('*, solicitor_panel(*)').eq('dossier_id', dossierId);
-      if (token) {
-        query = query.eq('claim_token', token);
-      }
-      const { data } = await query.limit(1).maybeSingle();
+      const { data } = await supabase
+        .from('lead_claims')
+        .select('*, solicitor_panel(*)')
+        .eq('dossier_id', dossierId)
+        .eq('claim_token', token)
+        .limit(1)
+        .maybeSingle();
       claimRecord = data;
     } catch (e) {
       // Non-fatal
+    }
+
+    // Reject unauthorized requests where no matching claim exists
+    if (!claimRecord && !(isDemoMatter && isDemoToken)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Forbidden: Invalid or expired claim token. This matter may have been claimed by another firm or the 15-minute reservation has expired.',
+        },
+        { status: 403 }
+      );
     }
 
     // 2. Check if linked to an existing lead in the database

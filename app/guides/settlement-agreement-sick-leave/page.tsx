@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   description:
     'Off sick and offered a settlement agreement? Learn your 2026 UK pay rights, full notice pay rules, £30,000 tax relief, and why your employer covers your fees.',
   alternates: {
-    canonical: '/guides/settlement-agreement-sick-leave/',
+    canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-sick-leave/',
   },
   openGraph: {
     title: 'Settlement Agreement on Sick Leave: UK Rights & Pay (2026)',
     description:
       'Off sick and offered a settlement agreement? Learn your 2026 UK pay rights, full notice pay rules, £30,000 tax relief, and why your employer covers your fees.',
-    url: '/guides/settlement-agreement-sick-leave/',
+    url: 'https://settlementcheck.co.uk/guides/settlement-agreement-sick-leave/',
     type: 'article',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -148,7 +148,7 @@ export default function SettlementAgreementSickLeaveGuide() {
               <span>Last reviewed: October 2026</span>
             </div>
             <p className="sc-lead">
-              Under UK employment law, your employer can legally offer you a settlement agreement while you are on sick leave. You are under no obligation to accept the offer or leave your job. In 2026, a fair settlement should include full normal pay for your notice period under Sections 87 to 91 of the Employment Rights Act 1996. This applies even if you currently receive Statutory Sick Pay or nil pay. Genuine termination compensation is tax-free up to £30,000 under Section 403 of ITEPA 2003. Your employer covers the cost of your independent legal advice. You can check what your exit package should look like using our <Link href="/calculator/" className="underline hover:text-ink">free settlement calculator</Link>.
+              Under UK employment law, your employer can legally offer you a settlement agreement while you are on sick leave. You are under no obligation to accept the offer or leave your job. In 2026, a fair settlement should include full normal pay for your notice period under Sections 87 to 91 of the Employment Rights Act 1996. This applies even if you currently receive Statutory Sick Pay or nil pay. Genuine termination compensation is tax-free up to £30,000 under Section 403 of ITEPA 2003. Your employer covers the cost of your independent legal advice. You can check what your exit package should look like using our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link>.
             </p>
           </div>
         </section>
@@ -664,7 +664,7 @@ export default function SettlementAgreementSickLeaveGuide() {
               Evaluate your offer against 2026 statutory caps (£751 weekly cap), calculate your notice pay, and verify your tax-free allowance.
             </p>
             <Link href="/calculator/?reason=mutual" className="btn-accent">
-              Calculate my settlement now &rarr;
+              Check my offer now →
             </Link>
           </div>
         </section>

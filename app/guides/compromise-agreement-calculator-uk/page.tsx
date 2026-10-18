@@ -8,17 +8,17 @@ import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Compromise Agreement Calculator UK 2026 | SettlementCheck',
+  title: 'Employee Compromise Agreement Calculator UK | SettlementCheck',
   description:
-    'Calculate your compromise agreement payout under 2026 UK statutory rules (£751 cap). Redundancy, PILON, and tax-free breakdown. Free, no email required.',
+    'Calculate your employee compromise agreement payout in 2026 (£751 cap). Redundancy, PILON, and tax-free compensation breakdown. Free instant guide.',
   alternates: {
-    canonical: '/guides/compromise-agreement-calculator-uk/',
+    canonical: 'https://settlementcheck.co.uk/guides/compromise-agreement-calculator-uk/',
   },
   openGraph: {
-    title: 'Compromise Agreement Calculator UK 2026 | SettlementCheck',
+    title: 'Employee Compromise Agreement Calculator UK | SettlementCheck',
     description:
-      'Calculate your compromise agreement payout under 2026 UK statutory rules (£751 cap). Redundancy, PILON, and tax-free breakdown. Free, no email required.',
-    url: '/guides/compromise-agreement-calculator-uk/',
+      'Calculate your employee compromise agreement payout in 2026 (£751 cap). Redundancy, PILON, and tax-free compensation breakdown. Free instant guide.',
+    url: 'https://settlementcheck.co.uk/guides/compromise-agreement-calculator-uk/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -207,7 +207,7 @@ export default function CompromiseAgreementCalculatorPage() {
                 How is a compromise agreement calculated in 2026?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                A compromise agreement calculation combines statutory redundancy, notice pay, untaken holiday, and an ex-gratia compensation payment. Under Section 403 of ITEPA 2003, the first £30,000 of compensation is tax-free. Your employer also covers your independent solicitor fees under Section 203(3) of the Employment Rights Act 1996.
+                A compromise agreement calculation combines statutory redundancy, notice pay, untaken holiday, and an ex-gratia compensation payment. Under Section 403 of ITEPA 2003, the first £30,000 of compensation is tax-free. Your employer also covers your independent solicitor fees under Section 203(3) of the Employment Rights Act 1996. To compare your offer against statutory rules, use our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link>.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -243,7 +243,7 @@ export default function CompromiseAgreementCalculatorPage() {
                     Check draft agreement clauses →
                   </Link>
                   <Link href="/calculator/" className="inline-flex items-center text-xs font-bold px-3 py-1.5 rounded bg-coral text-white hover:bg-coral-ink transition-colors">
-                    Launch Compromise Agreement Calculator →
+                    Open Settlement Agreement Calculator UK →
                   </Link>
                 </div>
               </div>

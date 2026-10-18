@@ -9,16 +9,16 @@ import ReviewCallout from '@/components/ReviewCallout'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
-  title: 'How to Negotiate a Settlement Agreement 2026 | SettlementCheck',
+  title: 'Negotiate a Settlement With Your Employer | SettlementCheck',
   description:
-    'Negotiate a UK settlement agreement using 2026 rates (£751/wk cap). Without Prejudice rules, counter-offers, and £500+ legal fee contributions. Free guide.',
+    'Negotiate a settlement with your employer under 2026 UK rates (£751/wk). Without prejudice rules, counter-offers, and legal fee contributions. Free guide.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement/',
   },
   openGraph: {
-    title: 'How to Negotiate a Settlement Agreement 2026 | SettlementCheck',
+    title: 'Negotiate a Settlement With Your Employer | SettlementCheck',
     description:
-      'Negotiate a UK settlement agreement using 2026 rates (£751/wk cap). Without Prejudice rules, counter-offers, and £500+ legal fee contributions. Free guide.',
+      'Negotiate a settlement with your employer under 2026 UK rates (£751/wk). Without prejudice rules, counter-offers, and legal fee contributions. Free guide.',
     url: 'https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement/',
     type: 'website',
     locale: 'en_GB',
@@ -242,10 +242,10 @@ export default function HowToNegotiateGuide() {
             </div>
 
             <ReviewCallout
-              title="Want to know what leverage you have?"
+              title="Want to know what negotiation strength you have?"
               description="Paste your draft settlement agreement into our free checker. In 60 seconds, see where your employer has cut corners on legal fees, notice pay, and statutory compensation."
-              ctaText="Audit your agreement clauses →"
-              badge="Tactical Leverage Tool"
+              ctaText="Check draft agreement clauses →"
+              badge="Tactical Negotiation Tool"
             />
 
             {/* Section 4 */}
@@ -259,10 +259,10 @@ export default function HowToNegotiateGuide() {
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
                   <span className="text-[15px] text-ink">
-                    <strong>Notice Pay:</strong> Payment for the contractual notice period. Note that PILON is always taxable as earnings — see our guide on{' '}
+                    <strong>Notice Pay:</strong> Payment for the contractual notice period. Note that PILON is always taxable as earnings (see our guide on{' '}
                     <Link href="/guides/pilon-tax-treatment-2026/" className="text-coral underline underline-offset-2 hover:text-ink">
                       PILON tax treatment
-                    </Link>.
+                    </Link>).
                   </span>
                 </li>
                 <li className="flex items-start gap-3">

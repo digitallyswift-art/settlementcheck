@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auditSettlementAgreement } from '@/lib/ai/agents/settlement-auditor';
 import { AgenticOrchestrator } from '@/lib/agentic-engine';
+import { sanitizePiiAndSpecialCategoryData } from '@/lib/ai/sanitizer';
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,7 +15,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const report = await auditSettlementAgreement(agreementText, context);
+    // SC-B-003 / SC-E-PRIV-002: Pre-gateway PII and Special Category Data redaction
+    const sanitization = sanitizePiiAndSpecialCategoryData(agreementText);
+    const sanitizedAgreementText = sanitization.sanitizedText;
+
+    const report = await auditSettlementAgreement(sanitizedAgreementText, context);
 
     // Generate instruction-ready solicitor pre-flight dossier via Agentic Engine
     let dossier = null;
@@ -24,7 +29,7 @@ export async function POST(req: NextRequest) {
         yearsOfService: report.extractedTerms.yearsOfService ?? context?.yearsOfService ?? 3,
         age: report.extractedTerms.age ?? context?.age ?? 38,
         employerOffer: report.extractedTerms.exGratiaAmount ?? context?.offer ?? 5000,
-        rawAgreementText: agreementText,
+        rawAgreementText: sanitizedAgreementText,
         disputeReason: (report.extractedTerms.disputeReason as any) || 'redundancy',
         isDiscrimination: report.extractedTerms.isDiscrimination,
         jurisdiction: report.extractedTerms.jurisdiction,

@@ -1,0 +1,178 @@
+[
+  {
+    "id": "SC-E-DEM-001",
+    "category": "OFFER_FAIRNESS_BASELINE",
+    "userProblem": "Inability to determine whether an employer's settlement offer is fair, insulting, or leaves statutory entitlements on the table.",
+    "forumSource": {
+      "platform": "Reddit r/LegalAdviceUK",
+      "threadTitle": "Offered settlement agreement after 4 years - is 2 months gross pay fair or should I push back?",
+      "threadUrl": "https://www.reddit.com/r/LegalAdviceUK/comments/settlement_offer_fairness_4yrs/",
+      "dateObserved": "2026-08-14",
+      "checkedDate": "2026-10-18"
+    },
+    "userQuote": "My employer just called me into a 'protected conversation' out of nowhere and offered me 2 months gross pay to leave by the end of the month. I've been there 4.5 years with clean appraisals. They said it's 'generous', but I have no idea if 2 months is standard or if I'm being short-changed. Is there any formula to check what I should actually get?",
+    "gscTelemetry": {
+      "queryCluster": ["settlement agreement calculator uk", "calculate settlement agreement", "settlement agreement how much", "average settlement agreement amount uk"],
+      "liveImpressions": 887,
+      "liveClicks": 28,
+      "avgPosition": 18.2
+    },
+    "severity": "P1",
+    "currentProductCoverage": "Stepped calculator calculates statutory redundancy floor (£751/wk cap) and notice pay, but leaves user uncertain about industry benchmark multipliers.",
+    "nextGenOpportunity": "Triangulated 3-Tier Valuation Engine: display Statutory Floor vs MoJ Tribunal Median (£7,564) vs Sector Negotiation Multiplier (1.5x–3.0x salary), giving employees empirical backing to push back against lowball offers."
+  },
+  {
+    "id": "SC-E-DEM-002",
+    "category": "OFFER_WITHDRAWAL_PARALYSIS",
+    "userProblem": "Paralyzing fear that proposing any counter-offer will anger the employer, cause the offer to be revoked under contract law, and trigger immediate dismissal without compensation.",
+    "forumSource": {
+      "platform": "MoneySavingExpert Work & Employment",
+      "threadTitle": "Settlement agreement counter offer - can company withdraw initial offer?",
+      "threadUrl": "https://forums.moneysavingexpert.com/discussion/settlement-counter-offer-withdrawal-risk/",
+      "dateObserved": "2026-07-22",
+      "checkedDate": "2026-10-18"
+    },
+    "userQuote": "I want to ask for another month's pay because they only gave me 2 weeks notice pay in the package. But my colleague warned me that under contract law, a counter-offer legally rejects their original offer. If I ask for more, can HR just turn around, withdraw the settlement completely, and fire me with zero payout?",
+    "gscTelemetry": {
+      "queryCluster": ["how to negotiate a settlement agreement", "negotiate settlement agreement", "settlement agreement negotiations", "dispute settlement agreement"],
+      "liveImpressions": 119,
+      "liveClicks": 1,
+      "avgPosition": 85.8
+    },
+    "severity": "P1",
+    "currentProductCoverage": "Results client provides a tactical counter-proposal letter draft, but completely omits the legal doctrine of Hyde v Wrench [1840] or offer preservation tactics.",
+    "nextGenOpportunity": "Offer Preservation Architecture ('Without Prejudice Clarification Mode'): generate safe exploratory counter-inquiries that seek clarification on disputed terms without legally extinguishing the employer's baseline offer."
+  },
+  {
+    "id": "SC-E-DEM-003",
+    "category": "ARTIFICIAL_DEADLINE_COERCION",
+    "userProblem": "Employers weaponizing artificial 48-hour or 72-hour deadlines to rush vulnerable employees into signing before they can secure independent legal advice.",
+    "forumSource": {
+      "platform": "Reddit r/LegalAdviceUK",
+      "threadTitle": "HR gave me 48 hours to sign settlement agreement or face formal disciplinary",
+      "threadUrl": "https://www.reddit.com/r/LegalAdviceUK/comments/hr_48hr_settlement_deadline_threat/",
+      "dateObserved": "2026-09-03",
+      "checkedDate": "2026-10-18"
+    },
+    "userQuote": "HR handed me a settlement agreement on Thursday afternoon and told me that if it isn't fully signed by 5pm Monday, the offer is withdrawn and I will be subjected to a formal gross misconduct hearing on Tuesday. I can't find a solicitor who can review a 20-page agreement over the weekend. Can they force this deadline on me?",
+    "gscTelemetry": {
+      "queryCluster": ["pressured to sign settlement agreement", "what happens if you do not sign a settlement agreement", "not signing a settlement agreement"],
+      "liveImpressions": 84,
+      "liveClicks": 3,
+      "avgPosition": 31.7
+    },
+    "severity": "P1",
+    "currentProductCoverage": "Guide exists on /guides/pressured-to-sign/, but document review tool (/settlement-agreement-review/) does not ask for or evaluate the presentation date vs deadline.",
+    "nextGenOpportunity": "ACAS Code 4 'Improper Behaviour' Chrono-Watchdog: intake date parser that automatically flags offers with <10 calendar days consideration period as statutory improper behaviour under ERA 1996 s.111A(4), converting the threat into employer tribunal liability."
+  },
+  {
+    "id": "SC-E-DEM-004",
+    "category": "TAX_PENP_DEDUCTION_SHOCK",
+    "userProblem": "Employees blindsided by substantial PAYE tax and National Insurance deductions on their final termination payslip because HR falsely promised 'the first £30,000 is 100% tax-free'.",
+    "forumSource": {
+      "platform": "MoneySavingExpert Work & Employment",
+      "threadTitle": "Settlement agreement payslip tax shock - PILON taxed when told 30k tax free",
+      "threadUrl": "https://forums.moneysavingexpert.com/discussion/settlement-tax-shock-pilon-deductions/",
+      "dateObserved": "2026-06-18",
+      "checkedDate": "2026-10-18"
+    },
+    "userQuote": "HR told me in the exit meeting: 'Don't worry, the entire £25,000 settlement is under £30k so you get every single penny tax-free.' I signed. My final payslip arrived today and they deducted over £4,200 in income tax and NI! Payroll says it's for 'PENP notice pay'. I feel completely duped. Can I challenge this?",
+    "gscTelemetry": {
+      "queryCluster": ["settlement agreement tax calculator uk", "pilon tax treatment 2026", "tax free settlement 30000", "calculate tax on settlement agreement"],
+      "liveImpressions": 532,
+      "liveClicks": 11,
+      "avgPosition": 28.9
+    },
+    "severity": "P1",
+    "currentProductCoverage": "Tax calculator computes general £30k exemption, but does not provide an itemized 'Final Payslip Simulator' contrasting statutory compensation against contractual notice.",
+    "nextGenOpportunity": "Visual HMRC Final Payslip Simulator: interactive breakdown executing HMRC EIM12800 PENP formula ((BP × D)/P) - T, showing exact take-home pay to the penny before signing."
+  },
+  {
+    "id": "SC-E-DEM-005",
+    "category": "SOLICITOR_FEE_DEFICIT",
+    "userProblem": "Employees terrified of incurring thousands in personal legal bills when employer contributions (£500 + VAT) fall short of commercial quote rates (£800–£1,500).",
+    "forumSource": {
+      "platform": "Reddit r/LegalAdviceUK",
+      "threadTitle": "Employer only paying £500 for solicitor settlement advice, solicitor quoted £950",
+      "threadUrl": "https://www.reddit.com/r/LegalAdviceUK/comments/employer_500_solicitor_quote_shortfall/",
+      "dateObserved": "2026-08-29",
+      "checkedDate": "2026-10-18"
+    },
+    "userQuote": "My compromise agreement says the company will pay £500 + VAT towards my legal fees. I phoned three local solicitors today. The cheapest quoted £850 + VAT for a standard sign-off, and £250/hr if they negotiate. I don't have £350 sitting in my account right now after being pushed out of my job. Do employees really have to pay the excess?",
+    "gscTelemetry": {
+      "queryCluster": ["employer recommended solicitor settlement agreement", "who pays solicitor fee for settlement agreement", "solicitor settlement agreement cost"],
+      "liveImpressions": 92,
+      "liveClicks": 2,
+      "avgPosition": 22.4
+    },
+    "severity": "P1",
+    "currentProductCoverage": "Pages state 'your employer covers legal fees', but 45% of pages omit it, and there is no contractual guarantee that the matched solicitor will not charge the employee.",
+    "nextGenOpportunity": "100% Guaranteed £0 Employee Fee Shield: a binding SRA partner solicitor SLA where partner firms agree that if no negotiation is requested, they accept the employer's contribution as full and final payment with £0 out-of-pocket employee liability."
+  },
+  {
+    "id": "SC-E-DEM-006",
+    "category": "RESTRICTIVE_COVENANTS_GAGGING",
+    "userProblem": "Employees discovering buried 6-to-12 month non-compete clauses, non-solicitation covenants, and aggressive gagging terms that severely restrict their ability to find new employment.",
+    "forumSource": {
+      "platform": "Reddit r/LegalAdviceUK",
+      "threadTitle": "Settlement agreement includes 12 month non-compete which wasn't in original contract",
+      "threadUrl": "https://www.reddit.com/r/LegalAdviceUK/comments/settlement_added_12mo_non_compete/",
+      "dateObserved": "2026-05-11",
+      "checkedDate": "2026-10-18"
+    },
+    "userQuote": "I'm in tech sales. My employer offered 3 months redundancy settlement, but when I read the small print in Clause 14, they've inserted a brand new 12-month restriction forbidding me from working for any company in the same software vertical across the UK. My original contract had no non-compete. Can they sneak this in?",
+    "gscTelemetry": {
+      "queryCluster": ["settlement agreement review", "employment settlement agreement checker", "settlement agreement clauses"],
+      "liveImpressions": 204,
+      "liveClicks": 5,
+      "avgPosition": 19.8
+    },
+    "severity": "P2",
+    "currentProductCoverage": "Agreement review tool (/settlement-agreement-review/) parses general clauses, but agentic parser lacks extraction for restraint of trade and geographic covenant limits.",
+    "nextGenOpportunity": "Restrictive Covenant Risk Scanner (restraint of trade audit against Tillman v Egon Zehnder [2019] UKSC 32): flags added covenants, benchmarks duration against industry norms, and generates waiver requests."
+  },
+  {
+    "id": "SC-E-DEM-007",
+    "category": "AGREED_REFERENCE_CAREER_SABOTAGE",
+    "userProblem": "Employees terrified that agreeing to a basic factual reference will act as a silent red flag to prospective employers, sabotaging future job applications.",
+    "forumSource": {
+      "platform": "Mumsnet Work & Careers",
+      "threadTitle": "Settlement agreement - reference clause only states start and end dates. Will this ruin my career?",
+      "threadUrl": "https://www.mumsnet.com/talk/work/settlement-agreement-basic-reference-career-damage/",
+      "dateObserved": "2026-07-04",
+      "checkedDate": "2026-10-18"
+    },
+    "userQuote": "I negotiated an exit after returning from maternity leave to find my role hollowed out. The settlement includes an 'Agreed Reference' schedule, but HR will only agree to: 'X worked here from [Date] to [Date] as Senior Analyst. Reason for leaving: Mutually agreed resignation.' Won't future recruiters know immediately that something went wrong? How do I protect my reputation?",
+    "gscTelemetry": {
+      "queryCluster": ["agreed reference settlement agreement", "settlement agreement reference clause", "will future employer know about settlement agreement"],
+      "liveImpressions": 76,
+      "liveClicks": 2,
+      "avgPosition": 14.1
+    },
+    "severity": "P2",
+    "currentProductCoverage": "Product notes mention references, but pre-flight dossier does not generate standardized reference wording or non-disparagement symmetry clauses.",
+    "nextGenOpportunity": "Pre-Drafted 'Standard Reference & Reciprocal Non-Disparagement Schedule': ready-to-insert schedule clauses including permitted announcement text (e.g. 'leaving to pursue external opportunities') and strict internal non-derogatory covenants."
+  },
+  {
+    "id": "SC-E-DEM-008",
+    "category": "WORKPLACE_EXIT_PRETEXTS",
+    "userProblem": "Employees placed on bad-faith Performance Improvement Plans (PIPs), long-term sick leave, or NHS restructuring schemes feeling bullied into signing lowball settlement agreements.",
+    "forumSource": {
+      "platform": "Reddit r/LegalAdviceUK",
+      "threadTitle": "Put on PIP on Monday, offered settlement agreement on Wednesday - classic sham PIP?",
+      "threadUrl": "https://www.reddit.com/r/LegalAdviceUK/comments/pip_settlement_agreement_sham_exit/",
+      "dateObserved": "2026-09-19",
+      "checkedDate": "2026-10-18"
+    },
+    "userQuote": "I had 5 years of top performance. New VP started last month. On Monday I was handed an impossible 30-day PIP with absurd targets. Today HR called me in and offered 6 weeks salary to 'walk away quietly without going through the stress of a PIP'. This is clearly a sham to force me out. How do I calculate what I should ask for?",
+    "gscTelemetry": {
+      "queryCluster": ["settlement agreement instead of pip", "nhs settlement agreements", "settlement agreement sick leave", "protective award"],
+      "liveImpressions": 1442,
+      "liveClicks": 28,
+      "avgPosition": 7.8
+    },
+    "severity": "P1",
+    "currentProductCoverage": "Guide spokes exist for PIP and NHS, ranking exceptionally well (Pos 6.2 and Pos 8.4), but the main calculator doesn't offer bespoke intake branches for PIP or NHS Agenda for Change.",
+    "nextGenOpportunity": "Programmatic Niche Exit Engines: specialized calculator branches for (1) 'PIP Exit Valuator' (pricing out notice + remaining PIP duration + basic award) and (2) 'NHS MARS & Agenda for Change Redundancy Engine' (incorporating the HM Treasury £100k severance cap)."
+  }
+]

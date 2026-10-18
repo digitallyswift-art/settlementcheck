@@ -1,0 +1,92 @@
+import { EvidenceBus, EvidenceFinding } from './evidence-bus';
+
+const newFindings: EvidenceFinding[] = [
+  {
+    id: 'SC-E-INV-001',
+    sourceLocation: 'app/sitemap.ts:22 & app/get-matched/page.tsx:11',
+    exactFinding: "Route '/get-matched/' is declared in sitemap.ts with priority 0.9 but enforces 'robots: { index: false, follow: false }' in page metadata.",
+    evidenceSource: 'app/sitemap.ts and app/get-matched/page.tsx AST inspection',
+    sourceDate: '2026-10-18',
+    dateChecked: '2026-10-18',
+    confidence: 'High',
+    severity: 'P1',
+    verificationStatus: 'Confirmed',
+    classification: 'Confirmed error',
+    jurisdiction: 'UK-wide',
+    userImpact: 'Search engines crawl submitted sitemap URL and encounter noindex directive, generating Google Search Console errors and wasting crawl budget.',
+    recommendedAction: 'Resolve architectural intent: if /get-matched/ is an indexable landing page, remove noindex; if it is a private funnel step, remove it from sitemap.ts.',
+    evidenceRequired: 'Sitemap XML validation and Search Console live URL inspection confirmation.',
+  },
+  {
+    id: 'SC-E-INV-002',
+    sourceLocation: 'app/*/page.tsx (25 routes)',
+    exactFinding: "Canonical URLs are declared inconsistently across the site: 25 pages declare relative paths (canonical: '/calculator/') while 17 declare absolute URLs.",
+    evidenceSource: 'data/audit/website-inventory.json canonical analysis',
+    sourceDate: '2026-10-18',
+    dateChecked: '2026-10-18',
+    confidence: 'High',
+    severity: 'P2',
+    verificationStatus: 'Confirmed',
+    classification: 'Potential risk',
+    jurisdiction: 'UK-wide',
+    userImpact: 'Risk of downstream proxy or CDN protocol mismatch; standard enterprise SEO mandates consistent absolute non-www canonical declarations.',
+    recommendedAction: "Standardize all page metadata to use fully qualified absolute canonical URLs: 'https://settlementcheck.co.uk${route}'.",
+    evidenceRequired: 'HTML head inspection confirming canonical link format across all pages.',
+  },
+  {
+    id: 'SC-E-INV-003',
+    sourceLocation: 'app/*/page.tsx (37 routes)',
+    exactFinding: "Only 7 of 44 pages include explicit inline 'This tool does not constitute legal advice' disclaimers, relying heavily on global footer text.",
+    evidenceSource: 'data/audit/website-inventory.json legal disclaimer scan',
+    sourceDate: '2026-10-18',
+    dateChecked: '2026-10-18',
+    confidence: 'High',
+    severity: 'P2',
+    verificationStatus: 'Confirmed',
+    classification: 'Potential risk',
+    jurisdiction: 'England and Wales',
+    userImpact: 'Users arriving on deep programmatic calculator pages may perceive calculations as legal or tax advice before reaching the footer.',
+    recommendedAction: 'Add a persistent statutory advisory pill / callout banner directly beneath the hero header on all calculator pages.',
+    evidenceRequired: 'Visual and DOM verification of sticky disclaimer callout across calculators.',
+  },
+  {
+    id: 'SC-E-INV-004',
+    sourceLocation: 'app/guides/*/page.tsx (25 routes)',
+    exactFinding: "BreadcrumbList Schema.org JSON-LD is missing across 25 guide spoke pages, present only on hub pages and calculators.",
+    evidenceSource: 'data/audit/website-inventory.json JSON-LD schema analysis',
+    sourceDate: '2026-10-18',
+    dateChecked: '2026-10-18',
+    confidence: 'High',
+    severity: 'P3',
+    verificationStatus: 'Confirmed',
+    classification: 'Opportunity',
+    jurisdiction: 'UK-wide',
+    userImpact: 'Google SERP snippets display raw URLs rather than navigational breadcrumb trails, lowering CTR and site hierarchy clarity.',
+    recommendedAction: "Embed standardized BreadcrumbList schema linking 'Home > Guides > [Topic]' across all 25 guide spoke pages.",
+    evidenceRequired: 'Google Rich Results Test validation for BreadcrumbList on guide URLs.',
+  },
+  {
+    id: 'SC-E-INV-005',
+    sourceLocation: 'app/guides/*/page.tsx (12 routes)',
+    exactFinding: 'Meta descriptions on 12 guide pages exceed Google SERP desktop and mobile display boundaries (>160 characters, up to 178 characters).',
+    evidenceSource: 'data/audit/website-inventory.json metadata length analysis',
+    sourceDate: '2026-10-18',
+    dateChecked: '2026-10-18',
+    confidence: 'High',
+    severity: 'P3',
+    verificationStatus: 'Confirmed',
+    classification: 'Potential risk',
+    jurisdiction: 'UK-wide',
+    userImpact: 'Descriptions are truncated with ellipses on mobile SERPs, reducing user clarity and snippet click-through rates.',
+    recommendedAction: 'Calibrate all meta descriptions strictly between 135 and 155 characters with action-oriented employee copy.',
+    evidenceRequired: 'SERP snippet character count verification across all guide routes.',
+  },
+];
+
+for (const finding of newFindings) {
+  EvidenceBus.addFinding(finding);
+  console.log(`Registered ${finding.id}: ${finding.exactFinding.slice(0, 60)}...`);
+}
+
+const all = EvidenceBus.loadFindings();
+console.log(`Evidence bus now contains ${all.length} total findings.`);

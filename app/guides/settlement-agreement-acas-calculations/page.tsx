@@ -6,16 +6,16 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
-  title: 'Settlement Agreement ACAS-Based Calculations | SettlementCheck',
+  title: 'Employment ACAS Settlement Calculations | SettlementCheck',
   description:
-    'How ACAS-based settlement calculations work. Understand the £751 weekly pay cap (April 2026), tax-free limits, PILON tax rules, and the statutory redundancy formula.',
+    'How employment ACAS settlement calculations work. Learn the £751 weekly cap (April 2026), tax-free limits, notice pay rules, and statutory formulas. Free.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
   },
   openGraph: {
-    title: 'Settlement Agreement ACAS-Based Calculations | SettlementCheck',
+    title: 'Employment ACAS Settlement Calculations | SettlementCheck',
     description:
-      'How ACAS-based settlement calculations work. Understand the £751 weekly pay cap (April 2026), tax-free limits, PILON tax rules, and the statutory redundancy formula.',
+      'How employment ACAS settlement calculations work. Learn the £751 weekly cap (April 2026), tax-free limits, notice pay rules, and statutory formulas. Free.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-acas-calculations/',
     type: 'website',
     locale: 'en_GB',
@@ -141,7 +141,7 @@ export default function AcasCalculationsGuide() {
               How ACAS-Based Settlement Calculations Work: What the £751 Weekly Pay Cap Means for Your Offer
             </h1>
             <p className="sc-lead">
-              ACAS-based settlement calculations use statutory rates set by UK employment law. In April 2026, the weekly pay cap is £751 (SI 2026/310). This figure limits statutory redundancy pay and affects what your employer must offer before discussing additional compensation. This guide explains how ACAS-based entitlements are calculated and what the law says about tax.
+              ACAS-based settlement calculations use statutory rates set by UK employment law. In April 2026, the weekly pay cap is £751 (SI 2026/310). This figure limits statutory redundancy pay and affects what your employer must offer before discussing additional compensation. Use our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link> to check your statutory baseline and tax-free allowances.
             </p>
           </div>
         </section>
@@ -305,7 +305,7 @@ export default function AcasCalculationsGuide() {
                 href="/calculator/"
                 className="btn-accent"
               >
-                Calculate my entitlement →
+                Calculate my estimate →
               </Link>
               <Link
                 href="/redundancy-calculator/"

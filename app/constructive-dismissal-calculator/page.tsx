@@ -13,13 +13,13 @@ const STATIC_METADATA: Metadata = {
   description:
     'Forced to resign by your employer? Estimate your constructive dismissal settlement using April 2026 statutory rates (£123,543 cap). Free check, no email.',
   alternates: {
-    canonical: '/constructive-dismissal-calculator/',
+    canonical: 'https://settlementcheck.co.uk/constructive-dismissal-calculator/',
   },
   openGraph: {
     title: 'Constructive Dismissal Calculator UK 2026 | SettlementCheck',
     description:
       'Forced to resign by your employer? Estimate your constructive dismissal settlement using April 2026 statutory rates (£123,543 cap). Free check, no email.',
-    url: '/constructive-dismissal-calculator/',
+    url: 'https://settlementcheck.co.uk/constructive-dismissal-calculator/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -61,7 +61,7 @@ const CONSTRUCTIVE_DISMISSAL_FAQS: FaqItem[] = [
   },
   {
     q: 'Why does it matter so much that I get advice before resigning?',
-    a: 'Because your position is strongest while you are still employed. Before you resign, a solicitor can assess whether the breach is serious enough to support a claim, advise you on how to document what is happening, and in many cases open without prejudice discussions with your employer. That can result in a negotiated settlement where you leave on agreed terms with a financial package, without the risk and delay of a tribunal claim. If you resign first, without that preparation, you have fewer options and less leverage.',
+    a: 'Because your position is strongest while you are still employed. Before you resign, a solicitor can assess whether the breach is serious enough to support a claim, advise you on how to document what is happening, and in many cases open without prejudice discussions with your employer. That can result in a negotiated settlement where you leave on agreed terms with a financial package, without the risk and delay of a tribunal claim. If you resign first, without that preparation, you have fewer options and weaker negotiation standing.',
   },
   {
     q: 'What does it mean to "affirm" the breach?',
@@ -219,6 +219,44 @@ export default function ConstructiveDismissalCalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />
       <HomeClient
+        alertBanner={
+          <div
+            style={{
+              background: '#ffffff',
+              border: '2px solid #D9603B',
+              borderRadius: 12,
+              padding: '16px 20px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 8,
+              boxShadow: '0 4px 16px rgba(11, 31, 58, 0.06)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <span
+                style={{
+                  background: 'rgba(217, 96, 59, 0.12)',
+                  color: '#D9603B',
+                  fontSize: 11,
+                  fontFamily: 'var(--font-mono)',
+                  fontWeight: 700,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  padding: '3px 8px',
+                  borderRadius: 4,
+                }}
+              >
+                Critical Safeguard
+              </span>
+              <strong style={{ fontSize: 15, color: '#0B1F3A' }}>
+                Do Not Resign Before Seeking Specialist Employment Advice
+              </strong>
+            </div>
+            <p style={{ margin: 0, fontSize: 13, color: '#5B6577', lineHeight: 1.55 }}>
+              Ministry of Justice tribunal records show over 95% of constructive dismissal claims fail if an employee resigns prematurely. Your standing and financial protection are strongest while you remain employed. An SRA-regulated solicitor can often negotiate an agreed exit with legal fees covered by your employer.
+            </p>
+          </div>
+        }
         title={
           <>
             Calculate your{' '}

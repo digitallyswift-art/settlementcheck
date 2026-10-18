@@ -1,0 +1,544 @@
+[
+  {
+    "testId": "SC-T-001",
+    "name": "SRP Service < 24 months (0 months)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Zero service boundary",
+    "rule": "ERA 1996 s.155 (2 years qualifying service required)",
+    "inputs": {
+      "salary": 30000,
+      "totalMonths": 0,
+      "age": 30
+    },
+    "expected": {
+      "redundancy": 0
+    },
+    "actual": {
+      "redundancy": 0
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-002",
+    "name": "SRP Service < 24 months (23 months)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Just below 2-year threshold (23m)",
+    "rule": "ERA 1996 s.155 (2 years qualifying service required)",
+    "inputs": {
+      "salary": 30000,
+      "totalMonths": 23,
+      "age": 30
+    },
+    "expected": {
+      "redundancy": 0
+    },
+    "actual": {
+      "redundancy": 0
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-003",
+    "name": "SRP Service exactly 24 months (Age 21)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "First qualifying threshold, age 21 (<22 band)",
+    "rule": "ERA 1996 s.162 (0.5x multiplier under age 22)",
+    "inputs": {
+      "salary": 26000,
+      "totalMonths": 24,
+      "age": 21
+    },
+    "expected": {
+      "redundancy": 500
+    },
+    "actual": {
+      "redundancy": 500
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-004",
+    "name": "SRP Age transition 21 to 22 (Age 22, 2 years service)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Age 21/22 transition boundary",
+    "rule": "ERA 1996 s.162 (Age 21 to 22 transition)",
+    "inputs": {
+      "salary": 26000,
+      "totalMonths": 24,
+      "age": 22
+    },
+    "expected": {
+      "redundancy": 750
+    },
+    "actual": {
+      "redundancy": 750
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-005",
+    "name": "SRP Standard 22-40 age band (Age 35, 5 years service)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Middle band (22-40)",
+    "rule": "ERA 1996 s.162 (1.0x multiplier for ages 22-40)",
+    "inputs": {
+      "salary": 31200,
+      "totalMonths": 60,
+      "age": 35
+    },
+    "expected": {
+      "redundancy": 3000
+    },
+    "actual": {
+      "redundancy": 3000
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-006",
+    "name": "SRP Age transition 40 to 41 (Age 41, 3 years service)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Age 40/41 transition boundary",
+    "rule": "ERA 1996 s.162 (Age 40 to 41 transition)",
+    "inputs": {
+      "salary": 31200,
+      "totalMonths": 36,
+      "age": 41
+    },
+    "expected": {
+      "redundancy": 2100
+    },
+    "actual": {
+      "redundancy": 2100
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-007",
+    "name": "SRP Upper age band (Age 50, 10 years service)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Upper band (41+)",
+    "rule": "ERA 1996 s.162 (1.5x multiplier for 41+)",
+    "inputs": {
+      "salary": 31200,
+      "totalMonths": 120,
+      "age": 50
+    },
+    "expected": {
+      "redundancy": 9000
+    },
+    "actual": {
+      "redundancy": 9000
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-008",
+    "name": "SRP Weekly pay just below GB statutory cap (Age 50, 10 years, £750/wk)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Just below GB weekly cap (£750 vs £751)",
+    "rule": "ERA 1996 s.227 (Weekly cap threshold)",
+    "inputs": {
+      "salary": 39000,
+      "totalMonths": 120,
+      "age": 50
+    },
+    "expected": {
+      "redundancy": 11250
+    },
+    "actual": {
+      "redundancy": 11250
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-009",
+    "name": "SRP Weekly pay exactly at GB statutory cap (Age 50, 10 years, £751/wk)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Exact GB weekly cap (£751)",
+    "rule": "ERA 1996 s.227 / SI 2026/310 (£751 cap)",
+    "inputs": {
+      "salary": 39052,
+      "totalMonths": 120,
+      "age": 50
+    },
+    "expected": {
+      "redundancy": 11265
+    },
+    "actual": {
+      "redundancy": 11265
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-010",
+    "name": "SRP Weekly pay well above GB statutory cap (Age 50, 10 years, £1,500/wk)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Above GB weekly cap (£1500 capped at £751)",
+    "rule": "ERA 1996 s.227 (Cap enforcement)",
+    "inputs": {
+      "salary": 78000,
+      "totalMonths": 120,
+      "age": 50
+    },
+    "expected": {
+      "redundancy": 11265
+    },
+    "actual": {
+      "redundancy": 11265
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-011",
+    "name": "SRP Maximum statutory cap — 20 years all in 41+ band (Age 62, 20 yrs)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Maximum service cap (20 years in 1.5x band)",
+    "rule": "ERA 1996 s.162(3) (20-year service ceiling in 1.5x band)",
+    "inputs": {
+      "salary": 52000,
+      "totalMonths": 240,
+      "age": 62
+    },
+    "expected": {
+      "redundancy": 22530
+    },
+    "actual": {
+      "redundancy": 22530
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-011b",
+    "name": "SRP Service crossing 40/41 band boundary (Age 55, 20 yrs service)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "20 years service crossing 40/41 threshold",
+    "rule": "ERA 1996 s.162 (Cross-band counting back from termination age)",
+    "inputs": {
+      "salary": 52000,
+      "totalMonths": 240,
+      "age": 55
+    },
+    "expected": {
+      "redundancy": 20653
+    },
+    "actual": {
+      "redundancy": 20653
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-012",
+    "name": "SRP Service exceeding 20-year cap (Age 65, 25 years service)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Service exceeding 20-year cap (25 years)",
+    "rule": "ERA 1996 s.162(3) (20-year service ceiling)",
+    "inputs": {
+      "salary": 52000,
+      "totalMonths": 300,
+      "age": 65
+    },
+    "expected": {
+      "redundancy": 22530
+    },
+    "actual": {
+      "redundancy": 22530
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-013",
+    "name": "SRP Northern Ireland statutory cap (Age 62, 20 years service, NI jurisdiction)",
+    "calculator": "Redundancy",
+    "status": "PASS",
+    "boundaryTested": "Northern Ireland cap (£783/wk vs GB £751/wk)",
+    "rule": "ERO(NI) 1996 (Northern Ireland weekly cap £783)",
+    "inputs": {
+      "salary": 52000,
+      "totalMonths": 240,
+      "age": 62,
+      "jurisdiction": "NI"
+    },
+    "expected": {
+      "redundancy": 23490
+    },
+    "actual": {
+      "redundancy": 23490
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-014",
+    "name": "Notice Service < 1 month (0 weeks)",
+    "calculator": "Notice",
+    "status": "PASS",
+    "boundaryTested": "Notice service < 1 month",
+    "rule": "ERA 1996 s.86(1) (< 1 month = 0 notice)",
+    "inputs": {
+      "salary": 30000,
+      "totalMonths": 0,
+      "age": 30
+    },
+    "expected": {
+      "noticeWeeks": 0
+    },
+    "actual": {
+      "noticeWeeks": 0
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-015",
+    "name": "Notice Service 1 month to 2 years (1 week)",
+    "calculator": "Notice",
+    "status": "PASS",
+    "boundaryTested": "Notice service 18 months",
+    "rule": "ERA 1996 s.86(1)(a) (1 month to 2 years = 1 week)",
+    "inputs": {
+      "salary": 30000,
+      "totalMonths": 18,
+      "age": 30
+    },
+    "expected": {
+      "noticeWeeks": 1
+    },
+    "actual": {
+      "noticeWeeks": 1
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-016",
+    "name": "Notice Service exactly 2 years (2 weeks)",
+    "calculator": "Notice",
+    "status": "PASS",
+    "boundaryTested": "Notice service 2-year boundary",
+    "rule": "ERA 1996 s.86(1)(b) (1 week per year for 2+ years)",
+    "inputs": {
+      "salary": 30000,
+      "totalMonths": 24,
+      "age": 30
+    },
+    "expected": {
+      "noticeWeeks": 2
+    },
+    "actual": {
+      "noticeWeeks": 2
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-017",
+    "name": "Notice Service 12 years (12 weeks)",
+    "calculator": "Notice",
+    "status": "PASS",
+    "boundaryTested": "Notice service 12-year boundary",
+    "rule": "ERA 1996 s.86(1)(b) (12 weeks for 12 years)",
+    "inputs": {
+      "salary": 30000,
+      "totalMonths": 144,
+      "age": 30
+    },
+    "expected": {
+      "noticeWeeks": 12
+    },
+    "actual": {
+      "noticeWeeks": 12
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-018",
+    "name": "Notice Service exceeding 12-year statutory cap (15 years)",
+    "calculator": "Notice",
+    "status": "PASS",
+    "boundaryTested": "Notice service exceeding 12-year cap",
+    "rule": "ERA 1996 s.86(1)(b) (Capped at 12 weeks statutory maximum)",
+    "inputs": {
+      "salary": 30000,
+      "totalMonths": 180,
+      "age": 30
+    },
+    "expected": {
+      "noticeWeeks": 12
+    },
+    "actual": {
+      "noticeWeeks": 12
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-019",
+    "name": "Progressive Tax: Basic rate band only (Salary £30,000, Offer £40,000)",
+    "calculator": "Verdict",
+    "status": "PASS",
+    "boundaryTested": "Basic rate band £12,570 to £50,270",
+    "rule": "ITEPA 2003 s.403 (First £30k tax-free, remaining £10k taxed at 20% basic rate)",
+    "inputs": {
+      "salary": 30000,
+      "totalMonths": 0,
+      "age": 30,
+      "offer": 40000,
+      "reason": "mutual",
+      "contractualNoticeWeeks": 0,
+      "offerIncludesNotice": true
+    },
+    "expected": {
+      "estimatedTax": 2000,
+      "estimatedNet": 38000
+    },
+    "actual": {
+      "estimatedTax": 2000,
+      "estimatedNet": 38000,
+      "effectiveOffer": 40000
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-020",
+    "name": "Progressive Tax Spillover: Crossing Higher Rate threshold £50,270",
+    "calculator": "Verdict",
+    "status": "PASS",
+    "boundaryTested": "Higher rate transition threshold (£50,270)",
+    "rule": "Income Tax Act 2007 (Spillover from 20% to 40% band across £50,270 threshold)",
+    "inputs": {
+      "salary": 45000,
+      "totalMonths": 0,
+      "age": 35,
+      "offer": 40000,
+      "reason": "mutual",
+      "contractualNoticeWeeks": 0,
+      "offerIncludesNotice": true
+    },
+    "expected": {
+      "estimatedTax": 2946,
+      "estimatedNet": 37054
+    },
+    "actual": {
+      "estimatedTax": 2946,
+      "estimatedNet": 37054,
+      "effectiveOffer": 40000
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-021",
+    "name": "Progressive Tax Taper Trap: Crossing £100,000 to £125,140 (60% marginal band)",
+    "calculator": "Verdict",
+    "status": "PASS",
+    "boundaryTested": "Personal allowance taper boundary (£100,000 to £125,140)",
+    "rule": "Income Tax Act 2007 s.35 (Personal allowance tapering produces 60% effective marginal rate)",
+    "inputs": {
+      "salary": 95000,
+      "totalMonths": 0,
+      "age": 40,
+      "offer": 45000,
+      "reason": "mutual",
+      "contractualNoticeWeeks": 0,
+      "offerIncludesNotice": true
+    },
+    "expected": {
+      "estimatedTax": 8000,
+      "estimatedNet": 37000
+    },
+    "actual": {
+      "estimatedTax": 8000,
+      "estimatedNet": 37000,
+      "effectiveOffer": 45000
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-022a",
+    "name": "Notice Intake: Offer includes notice pay (SC-B-020)",
+    "calculator": "Verdict",
+    "status": "PASS",
+    "boundaryTested": "Notice inclusion toggle = true",
+    "rule": "ITEPA 2003 s.402D (PILON £2,000 deducted from £15k offer, leaving £13k tax-free termination)",
+    "inputs": {
+      "salary": 52000,
+      "totalMonths": 24,
+      "age": 35,
+      "offer": 15000,
+      "reason": "mutual",
+      "contractualNoticeWeeks": 2,
+      "offerIncludesNotice": true
+    },
+    "expected": {
+      "effectiveOffer": 15000,
+      "estimatedTax": 800,
+      "estimatedNet": 14200
+    },
+    "actual": {
+      "estimatedTax": 800,
+      "estimatedNet": 14200,
+      "effectiveOffer": 15000
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  },
+  {
+    "testId": "SC-T-022b",
+    "name": "Notice Intake: Notice pay paid on top (SC-B-020)",
+    "calculator": "Verdict",
+    "status": "PASS",
+    "boundaryTested": "Notice inclusion toggle = false",
+    "rule": "ITEPA 2003 s.402D (Notice £2,000 added to £15k offer, total package = £17,000)",
+    "inputs": {
+      "salary": 52000,
+      "totalMonths": 24,
+      "age": 35,
+      "offer": 15000,
+      "reason": "mutual",
+      "contractualNoticeWeeks": 2,
+      "offerIncludesNotice": false
+    },
+    "expected": {
+      "effectiveOffer": 17000,
+      "estimatedTax": 800,
+      "estimatedNet": 16200
+    },
+    "actual": {
+      "estimatedTax": 800,
+      "estimatedNet": 16200,
+      "effectiveOffer": 17000
+    },
+    "difference": "None",
+    "dateChecked": "2026-10-18"
+  }
+]

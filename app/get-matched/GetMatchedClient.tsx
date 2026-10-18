@@ -451,7 +451,7 @@ export default function GetMatchedClient() {
             Back
           </button>
         ) : (
-          /* Back to results link — always visible on step 1 */
+          /* Back to results link - always visible on step 1 */
           <a
             href={typeof window !== 'undefined' ? document.referrer || '/calculator' : '/calculator'}
             onClick={e => { e.preventDefault(); router.back() }}

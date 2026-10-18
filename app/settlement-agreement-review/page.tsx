@@ -34,7 +34,7 @@ const reviewSchema = {
     price: '0',
     priceCurrency: 'GBP',
   },
-  description: 'Confidential review tool for UK employment settlement agreements. Verifies statutory compliance, tax exemptions (s.403), and negotiation leverage.',
+  description: 'Confidential review tool for UK employment settlement agreements. Verifies statutory compliance, tax exemptions (s.403), and negotiation standing.',
   about: {
     '@type': 'Thing',
     name: 'Employment Settlement Agreement UK',

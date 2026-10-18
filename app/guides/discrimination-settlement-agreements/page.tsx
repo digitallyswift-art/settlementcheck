@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   description:
     'UK guide to discrimination settlement agreements in 2026. Learn about uncapped compensation, the Ninth Addendum Vento bands (£1,300 to £62,900+), and tax rules.',
   alternates: {
-    canonical: '/guides/discrimination-settlement-agreements/',
+    canonical: 'https://settlementcheck.co.uk/guides/discrimination-settlement-agreements/',
   },
   openGraph: {
     title: 'Discrimination Settlement Agreements UK 2026 | Vento Bands & Tax Rules',
     description:
       'UK guide to discrimination settlement agreements in 2026. Learn about uncapped compensation, the Ninth Addendum Vento bands (£1,300 to £62,900+), and tax rules.',
-    url: '/guides/discrimination-settlement-agreements/',
+    url: 'https://settlementcheck.co.uk/guides/discrimination-settlement-agreements/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -389,7 +389,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
               Furthermore, the privilege does not protect unlawful acts or &quot;unambiguous impropriety&quot;. An employer cannot use without prejudice discussions to deliver discriminatory ultimatums.
             </p>
             <p className="sc-body">
-              This gives you substantial leverage. Because the employer cannot hide their conduct behind statutory confidentiality, they are far more motivated to reach an agreed settlement outside of public court proceedings.
+              This gives you substantial negotiation strength. Because the employer cannot hide their conduct behind statutory confidentiality, they are far more motivated to reach an agreed settlement outside of public court proceedings.
             </p>
           </div>
         </section>
@@ -546,7 +546,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
               Evaluate your compensation against 2026 statutory caps, calculate your tax-free allowance, and check if your offer is fair.
             </p>
             <Link href="/calculator/?discrimination=yes" className="btn-accent">
-              Calculate my settlement now &rarr;
+              Check my offer now →
             </Link>
           </div>
         </section>

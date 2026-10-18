@@ -13,13 +13,13 @@ const STATIC_METADATA: Metadata = {
   description:
     'Estimate your unfair dismissal basic and compensatory award using April 2026 statutory rates (£123,543 cap). Check where your offer stands in 60 seconds.',
   alternates: {
-    canonical: '/unfair-dismissal-calculator/',
+    canonical: 'https://settlementcheck.co.uk/unfair-dismissal-calculator/',
   },
   openGraph: {
     title: 'Unfair Dismissal Calculator UK 2026 | SettlementCheck',
     description:
       'Estimate your unfair dismissal basic and compensatory award using April 2026 statutory rates (£123,543 cap). Check where your offer stands in 60 seconds.',
-    url: '/unfair-dismissal-calculator/',
+    url: 'https://settlementcheck.co.uk/unfair-dismissal-calculator/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],

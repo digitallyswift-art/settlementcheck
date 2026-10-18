@@ -39,12 +39,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const CALCULATORS_FAQS: FaqItem[] = [
   {
-    q: 'Which calculator should I start with if I have just been given a settlement offer?',
-    a: 'Start with the flagship Settlement Agreement Calculator (/calculator/). It evaluates your entire package - including statutory redundancy baseline, contractual notice pay, and ex-gratia compensation - giving you an instant fairness score and estimated net take-home figure. If you specifically need to verify contract clauses or check employer legal fee contributions, follow up with the Employment Settlement Checker.',
+    q: 'Which calculator should I start with if I have just received a settlement offer?',
+    a: 'Start with the Settlement Agreement Calculator. It evaluates your entire package, including your statutory redundancy baseline, notice pay, and ex-gratia compensation. You receive an instant fairness rating and an estimated net take-home figure. If you need to check contract clauses or legal fee contributions, use our Settlement Agreement Review tool next.',
   },
   {
     q: 'How do I know these calculators are accurate for April 2026?',
-    a: 'All calculators on SettlementCheck are strictly calibrated to the April 2026 statutory rates set out in SI 2026/310: the Great Britain statutory weekly pay cap is £751 (capped at 20 years of service), the maximum unfair dismissal compensatory award is £123,543, and the termination ex-gratia tax-free allowance is £30,000 under Section 403 of the Income Tax (Earnings and Pensions) Act 2003.',
+    a: 'All SettlementCheck calculators use the official April 2026 statutory rates under SI 2026/310. The Great Britain weekly pay cap is £751, capped at 20 years of service. The maximum unfair dismissal compensatory award is £123,543. In addition, the termination tax exemption is £30,000 under Section 403 of ITEPA 2003.',
   },
   {
     q: 'Do I have to pay to use any of these calculators, and is my data saved?',
@@ -52,19 +52,19 @@ const CALCULATORS_FAQS: FaqItem[] = [
   },
   {
     q: 'Can my employer withdraw their settlement offer if I use a calculator or negotiate?',
-    a: 'While formal "without prejudice" or Section 111A settlement proposals can theoretically be withdrawn, statutory rights (such as statutory redundancy pay and accrued wages/notice) cannot be removed. Furthermore, employers propose settlement agreements because they want guaranteed legal finality. Walking into a conversation with accurate statutory figures allows you to negotiate calmly from objective facts rather than emotion.',
+    a: 'Employers can theoretically withdraw without prejudice settlement proposals, but they cannot remove your statutory rights. These include statutory redundancy pay, accrued holiday, and contractual notice pay. Employers propose settlement agreements because they need guaranteed legal finality. Checking your statutory figures gives you objective evidence so you can negotiate calmly.',
   },
   {
     q: 'Does my employer really have to pay for my solicitor to advise me?',
-    a: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is legally void and unenforceable unless you receive advice from an independent, qualified, and insured SRA-regulated solicitor. Because the employer requires a binding waiver, UK employers pay a legal fee contribution—typically £500 to £1,500 + VAT—which means the advice is usually completely free to you.',
+    a: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is legally void unless an independent SRA-regulated solicitor advises you. Your employer covers the fees for this advice because they need a binding waiver. Employers standardly pay £500 to £1,500 plus VAT, which means independent advice costs you nothing.',
   },
   {
     q: 'What is the difference between statutory redundancy pay and a settlement agreement?',
-    a: 'Statutory redundancy pay is the legal minimum entitlement you receive if your job disappears and you have at least 2 years continuous service. A settlement agreement is a voluntary contract where you agree not to bring employment tribunal claims in exchange for an agreed financial package (which usually includes statutory redundancy, notice pay, and an enhanced ex-gratia payment).',
+    a: 'Statutory redundancy pay is the legal minimum you receive if your job is made redundant and you have at least two years of continuous service. A settlement agreement is a voluntary contract where you agree not to bring employment tribunal claims in return for an agreed financial package. This package typically includes statutory redundancy, notice pay, and an enhanced ex-gratia payment.',
   },
   {
     q: 'What if 20 or more staff are being made redundant without proper consultation?',
-    a: 'If an employer proposes to make 20 or more employees redundant at one establishment within 90 days, they are legally required under TULRCA 1992 s.188 to conduct collective consultation for at least 30 days (or 45 days for 100+ employees). If they fail to do so, an Employment Tribunal can award each employee up to 90 days gross actual pay as a protective award—uncapped by the £751 weekly statutory limit.',
+    a: 'If an employer proposes to make 20 or more employees redundant at one establishment within 90 days, they are legally required under TULRCA 1992 s.188 to conduct collective consultation for at least 30 days (or 45 days for 100+ employees). If they fail to do so, an employment tribunal can award each employee up to 90 days gross actual pay as a protective award (uncapped by the £751 weekly statutory limit).',
   },
 ]
 
@@ -200,7 +200,7 @@ export default function CalculatorsHubPage() {
           </div>
         </div>
 
-        {/* Hero Section: Answer-First & Attention Economy Optimized */}
+        {/* Hero Section: Statutory Caps & Instant Baselines */}
         <section className="sc-container pt-12 md:pt-16 pb-12 border-b border-rule">
           <div className="max-w-[840px]">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDF7F4] border border-coral/30 text-coral text-[12px] font-semibold tracking-wider uppercase mb-5">
@@ -214,11 +214,11 @@ export default function CalculatorsHubPage() {
 
             <p className="sc-lead mb-8">
               When your job or income is at risk, corporate HR language leaves you second-guessing everything.
-              Our independent calculators remove the guesswork—giving you exact statutory calculations,
-              tax breakdowns, and the financial clarity you need to negotiate from a position of strength.
+              Our independent calculators give you exact statutory baselines, tax breakdowns, and the financial
+              clarity you need to negotiate from a position of strength.
             </p>
 
-            {/* Reassurance & Attention Anchors */}
+            {/* Reassurance & Statutory Anchors */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
               <div className="p-3.5 rounded-xl bg-card border border-rule/80 flex flex-col gap-1">
                 <span className="text-[11px] font-semibold text-muted uppercase tracking-wider">Statutory Weekly Cap</span>
@@ -244,20 +244,20 @@ export default function CalculatorsHubPage() {
           </div>
         </section>
 
-        {/* The Calculators Engine: Fast-Path Navigator & Cards */}
+        {/* The Calculators Engine: Interactive Tools & Guide Cards */}
         <section className="sc-container py-12 md:py-16">
           <CalculatorsClient />
         </section>
 
-        {/* Dismantling the Existential Vacuum: Restoring Agency & Clarity */}
+        {/* Restoring Agency & Clarity */}
         <section className="border-t border-rule bg-card py-16 md:py-20">
           <div className="sc-container">
             <div className="max-w-[760px] mb-12">
               <div className="text-[12px] font-sans font-semibold tracking-wider text-coral uppercase mb-3">
-                Mindset &amp; Legal Leverage · Eradicating Helplessness
+                Your Rights &amp; Negotiation Standing · Know Where You Stand
               </div>
               <h2 className="sc-h2 mb-4">
-                Why you have far more leverage than HR wants you to believe
+                Why you have far more negotiation strength than HR wants you to believe
               </h2>
               <p className="sc-body text-[16px] md:text-[17px]">
                 Facing job loss, redundancy, or an unexpected protected conversation is disorienting.
@@ -276,7 +276,7 @@ export default function CalculatorsHubPage() {
                 </h3>
                 <p className="text-[14px] md:text-[15px] text-muted leading-relaxed">
                   An unsigned settlement agreement gives your company zero protection. Under UK law, employers cannot buy legal finality
-                  unless you voluntarily agree to sign. They are paying for risk mitigation and peace of mind. Recognizing that you hold
+                  unless you voluntarily agree to sign. They are paying for risk mitigation and peace of mind. Recognising that you hold
                   something they require immediately shifts the power dynamic back in your favour.
                 </p>
               </div>
@@ -289,9 +289,9 @@ export default function CalculatorsHubPage() {
                   Statutory caps are the legal floor, never the ceiling
                 </h3>
                 <p className="text-[14px] md:text-[15px] text-muted leading-relaxed">
-                  HR managers often present statutory redundancy pay (£751/week cap) or standard contractual notice as a generous concession.
-                  In reality, those are the absolute bare legal minimums you are entitled to by law. Any valid settlement agreement must provide
-                  an ex-gratia premium to compensate you for forfeiting your rights to an Employment Tribunal.
+                  HR managers often present statutory redundancy pay (£751 weekly cap) or standard contractual notice as a generous concession.
+                  In reality, those are the legal minimums you are entitled to by law. Any valid settlement agreement must provide
+                  an enhanced ex-gratia amount to compensate you for forfeiting your employment rights.
                 </p>
               </div>
 
@@ -300,12 +300,12 @@ export default function CalculatorsHubPage() {
                   03
                 </div>
                 <h3 className="text-[18px] md:text-[20px] font-serif font-460 text-ink">
-                  Independent legal advice is mandatory—and funded by your employer
+                  Independent legal advice is mandatory (and funded by your employer)
                 </h3>
                 <p className="text-[14px] md:text-[15px] text-muted leading-relaxed">
                   Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is completely void unless you receive advice
-                  from an independent SRA-regulated solicitor. Employers standardly contribute between £500 and £1,500 + VAT towards these fees.
-                  You do not need to fight alone, and getting expert representation will not leave you out of pocket.
+                  from an independent SRA-regulated solicitor. Employers standardly pay a legal fee contribution of £500 to £1,500 plus VAT.
+                  Your employer covers the fees, so getting specialist advice costs you nothing.
                 </p>
               </div>
 
@@ -318,8 +318,8 @@ export default function CalculatorsHubPage() {
                 </h3>
                 <p className="text-[14px] md:text-[15px] text-muted leading-relaxed">
                   Employers often impose 24-hour or 48-hour deadlines to induce panic. However, paragraph 12 of the ACAS Code of Practice
-                  on Settlement Agreements stipulates that employees should be given a minimum of 10 calendar days to consider proposed terms.
-                  Rushing you can constitute improper behaviour, which forfeits the employer&apos;s &quot;without prejudice&quot; secrecy.
+                  on Settlement Agreements gives employees a minimum of 10 calendar days to consider proposed terms.
+                  Rushing you can constitute improper behaviour under Section 111A of the Employment Rights Act 1996, which forfeits the employer&apos;s confidentiality protection.
                 </p>
               </div>
             </div>
@@ -403,7 +403,7 @@ export default function CalculatorsHubPage() {
                 </tr>
                 <tr>
                   <td className="p-4 md:px-6 font-medium text-ink">Legal Advice Funding Benchmark</td>
-                  <td className="p-4 md:px-6 font-semibold text-coral">£500 – £1,500 + VAT</td>
+                  <td className="p-4 md:px-6 font-semibold text-coral">£500 to £1,500 + VAT</td>
                   <td className="p-4 md:px-6">ERA 1996 s.203 Standard Practice</td>
                   <td className="p-4 md:px-6">
                     <Link href="/settlement-agreement-review/" className="text-coral hover:underline">
@@ -450,7 +450,7 @@ export default function CalculatorsHubPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
               <Link href="/calculator/" className="btn-accent text-[15px] px-7 py-3.5">
-                Check my settlement offer →
+                Check my offer now →
               </Link>
               <Link
                 href="/settlement-agreement-review/"

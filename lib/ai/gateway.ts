@@ -3,6 +3,7 @@ import { callGemini } from './providers/gemini';
 import { callAnthropic } from './providers/anthropic';
 import { callOpenAI } from './providers/openai';
 import { callMock } from './providers/mock';
+import { sanitizePiiAndSpecialCategoryData } from './sanitizer';
 
 /**
  * SettlementCheck Unified AI Gateway
@@ -23,17 +24,29 @@ function resolveProvider(requested?: AIProvider): AIProvider {
 export async function callAI(request: AIServiceRequest): Promise<AIServiceResponse> {
   const provider = resolveProvider(request.provider);
 
+  // SC-B-003: Pre-gateway edge scrubbing for any external AI call
+  const sanitizedRequest: AIServiceRequest = {
+    ...request,
+    messages: request.messages?.map(m => ({
+      ...m,
+      content: sanitizePiiAndSpecialCategoryData(m.content).sanitizedText,
+    })) || [],
+    systemPrompt: request.systemPrompt
+      ? sanitizePiiAndSpecialCategoryData(request.systemPrompt).sanitizedText
+      : undefined,
+  };
+
   try {
     switch (provider) {
       case 'gemini':
-        return await callGemini(request);
+        return await callGemini(sanitizedRequest);
       case 'anthropic':
-        return await callAnthropic(request);
+        return await callAnthropic(sanitizedRequest);
       case 'openai':
-        return await callOpenAI(request);
+        return await callOpenAI(sanitizedRequest);
       case 'mock':
       default:
-        return await callMock(request);
+        return await callMock(sanitizedRequest);
     }
   } catch (err: any) {
     console.error(`Primary AI provider (${provider}) failed:`, err.message);

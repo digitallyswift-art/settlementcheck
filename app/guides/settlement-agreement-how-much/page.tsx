@@ -9,16 +9,16 @@ import InlineEstimator from '@/components/InlineEstimator'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
-  title: 'How Much Settlement Should You Get? 2026 | SettlementCheck',
+  title: 'How Much Settlement From Your Employer? | SettlementCheck',
   description:
-    'Find out how much a UK settlement agreement should be in 2026. 1 to 3 months payout ranges, notice pay, £751 weekly cap, and tax rules. Free guide.',
+    'Find out how much settlement your employer should pay in 2026. 1 to 3 months pay ranges, notice pay, £751 weekly cap, and tax-free rules. Free UK guide.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-how-much/',
   },
   openGraph: {
-    title: 'How Much Settlement Should You Get? 2026 | SettlementCheck',
+    title: 'How Much Settlement From Your Employer? | SettlementCheck',
     description:
-      'Find out how much a UK settlement agreement should be in 2026. 1 to 3 months payout ranges, notice pay, £751 weekly cap, and tax rules. Free guide.',
+      'Find out how much settlement your employer should pay in 2026. 1 to 3 months pay ranges, notice pay, £751 weekly cap, and tax-free rules. Free UK guide.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-how-much/',
     type: 'article',
     locale: 'en_GB',

@@ -46,7 +46,7 @@ export default function StickyMobileCta() {
             href="/calculator/"
             className="inline-flex items-center justify-center px-3.5 py-2 text-xs font-medium text-white bg-coral hover:bg-coral-ink rounded-lg shadow-sm transition-colors duration-150 active:scale-[0.98]"
           >
-            Check my offer &rarr;
+            Check my offer now →
           </Link>
           <button
             type="button"

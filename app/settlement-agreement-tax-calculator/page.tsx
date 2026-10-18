@@ -8,26 +8,26 @@ import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Settlement Agreement Tax Calculator UK 2026 | SettlementCheck',
+  title: 'Employment Settlement Tax Calculator UK | SettlementCheck',
   description:
-    'Calculate tax on your settlement agreement under April 2026 UK rates. Work out your £30,000 tax exemption, taxable PILON, and net take-home pay. Free check.',
+    'Calculate tax on employment settlements in 2026. Calculate your £30,000 tax exemption, taxable notice pay (PILON), and net take-home figure. Free check.',
   alternates: {
-    canonical: '/settlement-agreement-tax-calculator/',
+    canonical: 'https://settlementcheck.co.uk/settlement-agreement-tax-calculator/',
   },
   openGraph: {
-    title: 'Settlement Agreement Tax Calculator UK 2026 | SettlementCheck',
+    title: 'Employment Settlement Tax Calculator UK | SettlementCheck',
     description:
-      'Calculate tax on your settlement agreement under April 2026 UK rates. Work out your £30,000 tax exemption, taxable PILON, and net take-home pay. Free check.',
-    url: '/settlement-agreement-tax-calculator/',
+      'Calculate tax on employment settlements in 2026. Calculate your £30,000 tax exemption, taxable notice pay (PILON), and net take-home figure. Free check.',
+    url: 'https://settlementcheck.co.uk/settlement-agreement-tax-calculator/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Settlement Agreement Tax Calculator UK 2026 | SettlementCheck',
+    title: 'Employee Settlement Tax Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate tax on your settlement agreement under 2026 UK rates. Work out your £30k tax-free limit, PILON, and net pay. Free instant calculator.',
+      'Calculate tax on your employee settlement in 2026. Calculate your £30,000 tax exemption, taxable notice pay (PILON), and net take-home figure. Free check.',
   },
 }
 
@@ -64,7 +64,7 @@ const TAX_FAQS: FaqItem[] = [
   },
   {
     q: 'Do I pay National Insurance on settlement agreement payments?',
-    a: 'Employees do not pay National Insurance on genuine termination compensation, even on amounts exceeding £30,000. While income tax applies to any compensation above £30,000 at your marginal rate, employee National Insurance is zero. Employers, however, must pay Class 1A employer National Insurance (13.8%) on compensation over £30,000.',
+    a: 'Employees do not pay National Insurance on genuine termination compensation, even on amounts exceeding £30,000. While income tax applies to any compensation above £30,000 at your marginal rate, employee National Insurance is zero. Employers, however, must pay Class 1A employer National Insurance (15.0%) on compensation over £30,000.',
   },
   {
     q: 'Can I put part of my settlement into a pension to avoid 40% tax?',

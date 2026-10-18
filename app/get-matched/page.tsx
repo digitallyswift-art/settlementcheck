@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://settlementcheck.co.uk/get-matched/',
   },
-  robots: { index: false, follow: false },
+  robots: { index: false, follow: true },
 }
 
 export default function GetMatchedPage() {

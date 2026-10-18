@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { LegalFeeAnnouncementBar } from '@/components/LegalFeeShieldBadge'
 
 const CALCULATOR_LINKS = [
   {
@@ -45,7 +46,7 @@ const GUIDES_LINKS = [
   {
     href: '/guides/how-to-negotiate-a-settlement-agreement/',
     label: 'How to Negotiate a Settlement Agreement',
-    sub: 'Leverage, counter-offers, and the full process',
+    sub: 'Strategy, counter-offers, and the full process',
   },
   {
     href: '/guides/average-settlement-agreement-payout-uk/',
@@ -79,9 +80,10 @@ export default function Nav() {
   return (
     <header
       className="sticky top-0 z-50 border-b border-rule"
-      style={{ height: 68, background: 'rgba(247,244,238,0.88)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
+      style={{ background: 'rgba(247,244,238,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
     >
-      <div className="sc-container h-full flex items-center justify-between gap-8">
+      <LegalFeeAnnouncementBar />
+      <div className="sc-container flex items-center justify-between gap-8" style={{ height: 68 }}>
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0" aria-label="SettlementCheck home">

@@ -80,6 +80,7 @@ Do not alarm them. Do not patronise them. Do not oversell.
 - "Claim" when referring to what an employee might receive (use "settlement" or "amount")
 - Two-word filler openers: "Basically,", "Essentially,", "Simply put,"
 - Passive constructions: "It has been determined that..." just say what is true
+- Internal meta-jargon / prompt leakage: Never expose developer, CRO, or copy-framework terminology in user-facing copy (e.g., "Attention Economy", "Diagnostic", "Existential Vacuum", "Cognitive Relief", "Framework"). Use natural, plain English (e.g., "Find your calculator", "Quick check").
 
 ---
 

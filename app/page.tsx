@@ -4,26 +4,26 @@ import { getGeneralStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Settlement Agreement Calculator UK (2026) | Free Employee Payout Tool',
+  title: 'Employment Settlement Calculator UK 2026 | SettlementCheck',
   description:
-    'Calculate your employee settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Zero email required.',
+    'Calculate your UK employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30k tax exemption. Free.',
   alternates: {
-    canonical: '/',
+    canonical: 'https://settlementcheck.co.uk/',
   },
   openGraph: {
-    title: 'Settlement Agreement Calculator UK (2026) | Free Employee Payout Tool',
+    title: 'Employment Settlement Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your employee settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Zero email required.',
-    url: '/',
+      'Calculate your UK employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30k tax exemption. Free.',
+    url: 'https://settlementcheck.co.uk/',
     type: 'website',
     locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Settlement Agreement Calculator UK (2026) | Free Employee Payout Tool',
+    title: 'Employment Settlement Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your employee settlement payout in 60s. Free calculator based on April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Zero email required.',
+      'Calculate your UK employee settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30k tax exemption. Free.',
   },
 }
 

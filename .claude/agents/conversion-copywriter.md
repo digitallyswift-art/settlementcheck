@@ -24,10 +24,11 @@ assumes legal help costs money. Your job: give them clarity and let them decide.
 - Active voice. Plain UK English. Short paragraphs (2–3 sentences max).
 
 ## Non-negotiables
-- Never use em dashes — restructure the sentence instead
+- Never use em dashes: restructure the sentence instead
 - Never write "Don't worry", "We're passionate about", "Reach out", "leverage", "touch base"
 - Never write "low-ball" in user-facing copy — use "below the typical range"
 - Never write "claim" for what the employee receives — use "settlement" or "amount"
+- Never use internal meta-jargon or prompt leakage in user-facing copy (e.g., "Attention Economy", "Diagnostic", "Existential Vacuum", "Cognitive Relief"). Prospects must only see calm, natural, employee-focused language
 - Solicitor not lawyer. Redundancy not layoff. Employment tribunal not labor court.
 - "Your employer pays" or "your employer covers the fees" — say this whenever fees are mentioned
 

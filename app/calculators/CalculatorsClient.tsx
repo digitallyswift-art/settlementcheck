@@ -24,21 +24,21 @@ const CALCULATORS: CalculatorCardData[] = [
     id: 'settlement-agreement',
     title: 'Settlement Agreement Calculator',
     href: '/calculator/',
-    badge: 'Flagship Evaluation Tool',
+    badge: 'Most Popular · 60-Second Check',
     category: 'settlement',
     statutoryBasis: 'ERA 1996 s.203 · ITEPA 2003 s.403',
     description:
       'Evaluate your employer settlement offer against statutory baselines, notice entitlements, and typical UK payout multiples. Benchmark fairness and calculate net take-home in 60 seconds.',
     outputs: [
-      'Fairness rating (Low, Fair, Strong)',
-      'Statutory redundancy baseline (£751/wk cap)',
-      'Contractual notice / PILON valuation',
-      'Net take-home after £30k tax exemption',
+      'Fairness rating (below, typical, or above range)',
+      'Statutory redundancy baseline (£751/week cap)',
+      'Contractual notice and PILON valuation',
+      'Estimated net take-home after £30,000 tax exemption',
     ],
     timeToComplete: '60 secs',
-    primaryCta: 'Check My Offer Now →',
+    primaryCta: 'Check my offer now →',
     guideHref: '/guides/settlement-agreement-how-much/',
-    guideLabel: 'Read Payout Benchmark Guide',
+    guideLabel: 'Read payout benchmark guide',
     isPrimary: true,
   },
   {
@@ -47,19 +47,19 @@ const CALCULATORS: CalculatorCardData[] = [
     href: '/redundancy-calculator/',
     badge: 'April 2026 Rates (£751 Cap)',
     category: 'redundancy',
-    statutoryBasis: 'ERA 1996 ss.162–163 · SI 2026/310',
+    statutoryBasis: 'ERA 1996 ss.162-163 · SI 2026/310',
     description:
-      'Calculate statutory redundancy pay under the April 2026 statutory rates. Applies age-based multipliers (0.5x, 1.0x, 1.5x) and compares your legal floor against enhanced company packages.',
+      'Calculate statutory redundancy pay under the April 2026 rates. Check your age-based multipliers (0.5x, 1.0x, 1.5x) and compare your statutory legal floor against any enhanced employer offer.',
     outputs: [
       'Statutory redundancy total (up to £22,530)',
       'Age-weighted qualifying service breakdown',
-      'Enhanced redundancy comparison',
+      'Enhanced redundancy package comparison',
       'Statutory notice pay entitlement',
     ],
     timeToComplete: '45 secs',
-    primaryCta: 'Calculate Redundancy Pay →',
+    primaryCta: 'Calculate redundancy pay →',
     guideHref: '/guides/redundancy-pay-cap-2026/',
-    guideLabel: 'Read Statutory Cap Guide',
+    guideLabel: 'Read statutory cap guide',
   },
   {
     id: 'unfair-dismissal',
@@ -67,19 +67,19 @@ const CALCULATORS: CalculatorCardData[] = [
     href: '/unfair-dismissal-calculator/',
     badge: 'Up to £123,543 Statutory Cap',
     category: 'dismissal',
-    statutoryBasis: 'ERA 1996 ss.118–124',
+    statutoryBasis: 'ERA 1996 ss.118-124',
     description:
-      'Estimate potential Employment Tribunal compensation for unfair or wrongful dismissal. Calculates both the basic award and the compensatory award for past and projected future wage loss.',
+      'Estimate potential compensation if you have been dismissed or selected unfairly. Calculates your basic award and compensatory award for past and projected loss of earnings.',
     outputs: [
-      'Basic award calculation (capped at £751/wk)',
-      'Compensatory award (capped at £123,543 or 52 wks)',
+      'Basic award calculation (capped at £751/week)',
+      'Compensatory award (capped at £123,543 or 52 weeks)',
       'Loss of statutory rights valuation',
-      'Polkey reduction & Acas uplift assessment',
+      'ACAS uplift and Polkey deduction assessment',
     ],
     timeToComplete: '60 secs',
-    primaryCta: 'Estimate Dismissal Compensation →',
+    primaryCta: 'Estimate dismissal compensation →',
     guideHref: '/guides/unfair-dismissal-settlement-agreements/',
-    guideLabel: 'Read Unfair Dismissal Guide',
+    guideLabel: 'Read unfair dismissal guide',
   },
   {
     id: 'constructive-dismissal',
@@ -89,17 +89,17 @@ const CALCULATORS: CalculatorCardData[] = [
     category: 'dismissal',
     statutoryBasis: 'ERA 1996 s.95(1)(c) · Western Excavating',
     description:
-      'Driven to resign by toxic treatment, unreasonable conduct, demotion, or unaddressed grievances? Calculate your legal exit baseline and potential claim value before handing in your notice.',
+      'Driven to resign by unreasonable conduct, demotion, pay cuts, or unaddressed grievances? Calculate your statutory exit baseline and potential settlement value before handing in your notice.',
     outputs: [
       'Constructive dismissal exit baseline',
-      'Breach of trust & confidence valuation',
+      'Breach of trust and confidence assessment',
       'Projected net earnings loss during job search',
       'Settlement negotiation counter-offer target',
     ],
     timeToComplete: '60 secs',
-    primaryCta: 'Assess Constructive Claim →',
+    primaryCta: 'Check constructive dismissal →',
     guideHref: '/guides/constructive-dismissal-settlement-agreements/',
-    guideLabel: 'Read Constructive Dismissal Guide',
+    guideLabel: 'Read constructive dismissal guide',
   },
   {
     id: 'settlement-tax',
@@ -109,17 +109,17 @@ const CALCULATORS: CalculatorCardData[] = [
     category: 'tax',
     statutoryBasis: 'ITEPA 2003 ss.402D & 403',
     description:
-      'Stop HR deducting tax they should not. Accurately separate taxable earnings (PILON, accrued holiday) from the £30,000 tax-free termination exemption under Section 403.',
+      'Separate taxable notice pay (PILON) and accrued holiday from your £30,000 tax-free termination exemption under Section 403. Check your true take-home pay.',
     outputs: [
       'Exact £30,000 tax-free exemption allocation',
-      'Post-Employment Notice Pay (PENP / PILON) tax',
-      'Marginal income tax & employee NI deductions',
-      'Guaranteed net take-home in your bank account',
+      'Post-Employment Notice Pay (PENP / PILON) tax breakdown',
+      'Income tax and employee National Insurance deductions',
+      'Estimated net take-home in your bank account',
     ],
     timeToComplete: '45 secs',
-    primaryCta: 'Calculate Net Take-Home →',
+    primaryCta: 'Calculate net take-home →',
     guideHref: '/guides/tax-free-settlement-30000/',
-    guideLabel: 'Read £30,000 Exemption Guide',
+    guideLabel: 'Read £30,000 exemption guide',
   },
   {
     id: 'protective-award',
@@ -129,37 +129,37 @@ const CALCULATORS: CalculatorCardData[] = [
     category: 'redundancy',
     statutoryBasis: 'TULRCA 1992 s.189',
     description:
-      'Were you made redundant alongside 20 or more colleagues without the mandatory 30-day or 45-day collective consultation? Calculate your protective award claim entitlement.',
+      'Were you made redundant alongside 20 or more colleagues without the mandatory 30-day or 45-day collective consultation? Calculate your statutory protective award entitlement.',
     outputs: [
-      'Up to 90 days gross uncapped remuneration',
-      'Calculation based on actual salary (not capped at £751)',
-      'Payable on top of statutory redundancy & notice',
+      'Up to 90 days gross actual pay',
+      'Uncapped salary calculation (not limited to £751/week)',
+      'Payable on top of statutory redundancy and notice',
       'Redundancy Payments Service (RPS) insolvency floor',
     ],
     timeToComplete: '45 secs',
-    primaryCta: 'Calculate Protective Award →',
+    primaryCta: 'Calculate protective award →',
     guideHref: '/guides/protective-award/',
-    guideLabel: 'Read Collective Consultation Guide',
+    guideLabel: 'Read collective consultation guide',
   },
   {
     id: 'settlement-review',
     title: 'Settlement Agreement & Contract Review',
     href: '/settlement-agreement-review/',
-    badge: 'Draft Contract & Clause Audit',
+    badge: 'Draft Agreement & Clause Check',
     category: 'settlement',
     statutoryBasis: 'ERA 1996 s.203 Mandatory Advice',
     description:
-      'Got a written agreement in front of you? Check restrictive covenants, indemnity risks, confidentiality clauses, and verify that your employer is paying the required legal fee contribution.',
+      'Have you received a written settlement agreement? Check restrictive covenants, indemnity risks, confidentiality terms, and verify that your employer is paying the required legal fee contribution.',
     outputs: [
-      'Agreement risk & balance scoring',
-      'Legal fee contribution check (£500–£1,500+VAT benchmark)',
-      'Non-compete & gagging clause verification',
-      'Actionable counter-proposal leverage checklist',
+      'Agreement risk and balance score',
+      'Legal fee contribution check (£500 to £1,500 + VAT benchmark)',
+      'Non-compete and confidentiality clause verification',
+      'Actionable counter-proposal negotiation checklist',
     ],
     timeToComplete: '90 secs',
-    primaryCta: 'Review Draft Agreement →',
+    primaryCta: 'Review draft agreement →',
     guideHref: '/guides/what-is-a-fair-settlement-agreement/',
-    guideLabel: 'Read Fairness Checklist Guide',
+    guideLabel: 'Read fairness checklist guide',
   },
   {
     id: 'nhs-mars',
@@ -171,59 +171,59 @@ const CALCULATORS: CalculatorCardData[] = [
     description:
       'Working in the NHS? Calculate your contractual redundancy or Mutually Agreed Resignation Scheme (MARS) payout under Agenda for Change terms, subject to the £100,000 HM Treasury cap.',
     outputs: [
-      'NHS Agenda for Change Section 16 redundancy',
+      'NHS Agenda for Change Section 16 redundancy calculation',
       'Voluntary MARS severance tariff calculation',
-      'Application of HM Treasury £100,000 severance cap',
+      'Application of the HM Treasury £100,000 severance cap',
       'Pension actuarial reduction guidance',
     ],
     timeToComplete: '60 secs',
-    primaryCta: 'Launch NHS Calculator →',
+    primaryCta: 'Check NHS redundancy pay →',
     guideHref: '/guides/nhs-settlement-agreements/',
-    guideLabel: 'Read NHS Settlement Guide',
+    guideLabel: 'Read NHS settlement guide',
   },
 ]
 
 const SITUATION_FAST_PATHS = [
   {
-    label: 'I received a formal settlement agreement or protected conversation offer',
+    label: 'I received a settlement agreement or my employer requested a protected conversation',
     recommendedId: 'settlement-agreement',
     toolName: 'Settlement Agreement Calculator',
     href: '/calculator/',
   },
   {
-    label: 'My role is at risk of redundancy or undergoing restructuring',
+    label: 'My role is at risk of redundancy or my team is being restructured',
     recommendedId: 'redundancy-pay',
     toolName: 'Redundancy Pay Calculator',
     href: '/redundancy-calculator/',
   },
   {
-    label: 'I was dismissed, pushed out, or selected unfairly',
+    label: 'I was dismissed, pushed out, or selected unfairly for redundancy',
     recommendedId: 'unfair-dismissal',
     toolName: 'Unfair Dismissal Calculator',
     href: '/unfair-dismissal-calculator/',
   },
   {
-    label: 'Work is hostile/toxic and I feel forced to resign',
+    label: 'Work has become intolerable and I feel forced to resign',
     recommendedId: 'constructive-dismissal',
     toolName: 'Constructive Dismissal Calculator',
     href: '/constructive-dismissal-calculator/',
   },
   {
-    label: 'I have a payout figure and need to check tax deductions',
+    label: 'I have an offer amount and need to check tax and net take-home pay',
     recommendedId: 'settlement-tax',
     toolName: 'Settlement Agreement Tax Calculator',
     href: '/settlement-agreement-tax-calculator/',
   },
   {
-    label: '20+ colleagues were dismissed without proper collective consultation',
+    label: 'My employer is making 20 or more staff redundant without proper consultation',
     recommendedId: 'protective-award',
     toolName: 'Protective Award Calculator',
     href: '/protective-award-calculator/',
   },
   {
-    label: 'I have a written draft contract and need to check legal fees & clauses',
+    label: 'I have a draft settlement contract and want to check clauses and legal fees',
     recommendedId: 'settlement-review',
-    toolName: 'Employment Settlement Checker',
+    toolName: 'Settlement Agreement Review',
     href: '/settlement-agreement-review/',
   },
 ]
@@ -250,20 +250,20 @@ export default function CalculatorsClient() {
 
   return (
     <div className="flex flex-col gap-12">
-      {/* Fast-Path Diagnostic: Eradicating Attention Friction */}
+      {/* Quick Match: Find Your Calculator */}
       <div className="rounded-2xl border-2 border-rule bg-card p-6 md:p-8 shadow-sm">
         <div className="flex items-center gap-2 mb-3">
           <span className="w-2.5 h-2.5 rounded-full bg-coral animate-pulse" aria-hidden="true" />
           <span className="text-[12px] font-sans font-semibold tracking-wider text-coral uppercase">
-            Fast-Path Navigator · Attention Economy Diagnostic
+            Quick Match · Find Your Calculator
           </span>
         </div>
         <h2 className="text-[20px] md:text-[24px] font-serif font-460 text-ink tracking-tight mb-2">
           Which calculator matches your exact situation?
         </h2>
         <p className="text-[14px] md:text-[15px] text-muted leading-relaxed mb-6 max-w-[72ch]">
-          When dealing with stressful workplace exits, you do not have time to browse through complex menus.
-          Select the statement below that best describes your position to jump directly to the right statutory tool:
+          When dealing with a stressful workplace situation, you need clear answers without digging through legal jargon.
+          Select the statement below that best describes your position to jump straight to the right statutory tool:
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -384,7 +384,7 @@ export default function CalculatorsClient() {
                 {/* Key Outputs List */}
                 <div className="mb-6 pt-4 border-t border-rule/70">
                   <div className="text-[12px] font-semibold text-ink uppercase tracking-wider mb-2.5">
-                    What this calculator calculates:
+                    What this calculator shows:
                   </div>
                   <ul className="grid grid-cols-1 gap-1.5 text-[13px] text-muted">
                     {calc.outputs.map((out, oIdx) => (
