@@ -4,6 +4,8 @@ import HomeClient from '../HomeClient'
 import type { StatutoryRow, StepItem } from '../HomeClient'
 import type { FaqItem } from '@/components/FaqAccordion'
 import { getConstructiveDismissalStatutoryRows } from '@/lib/statutory-rates'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -216,7 +218,7 @@ export default function ConstructiveDismissalCalculatorPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(JSON_LD) }}
       />
       <HomeClient
         alertBanner={
@@ -321,6 +323,7 @@ export default function ConstructiveDismissalCalculatorPage() {
           },
         ]}
       />
+      <DynamicFaqSection pathname="/constructive-dismissal-calculator/" />
     </>
   )
 }

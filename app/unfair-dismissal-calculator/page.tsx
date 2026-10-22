@@ -4,6 +4,8 @@ import HomeClient from '../HomeClient'
 import type { StatutoryRow, StepItem } from '../HomeClient'
 import type { FaqItem } from '@/components/FaqAccordion'
 import { getUnfairDismissalStatutoryRows } from '@/lib/statutory-rates'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -211,7 +213,7 @@ export default function UnfairDismissalCalculatorPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(JSON_LD) }}
       />
       <HomeClient
         title={
@@ -281,6 +283,7 @@ export default function UnfairDismissalCalculatorPage() {
           },
         ]}
       />
+      <DynamicFaqSection pathname="/unfair-dismissal-calculator/" />
     </>
   )
 }

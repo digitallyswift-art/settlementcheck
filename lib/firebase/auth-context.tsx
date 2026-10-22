@@ -137,7 +137,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       return { success: true };
     }
-    return { success: false, error: 'Invalid administrator passkey. Enter admin2026 or configure Firebase.' };
+    return { success: false, error: 'Invalid administrator passkey.' };
   };
 
   const getIdToken = async (): Promise<string | null> => {

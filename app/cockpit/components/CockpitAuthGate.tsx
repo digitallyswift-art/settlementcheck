@@ -165,12 +165,9 @@ export default function CockpitAuthGate({ children }: { children: React.ReactNod
                     required
                     value={passkey}
                     onChange={(e) => setPasskey(e.target.value)}
-                    placeholder="Enter passkey (e.g. admin2026)"
+                    placeholder="••••••••••••"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-[#0B1F3A]/15 text-xs text-[#0B1F3A] focus:outline-none focus:ring-2 focus:ring-[#D9603B]"
                   />
-                  <span className="text-[10px] text-[#0B1F3A]/50 block mt-1">
-                    Dev default: <code className="bg-[#0B1F3A]/5 px-1 py-0.5 rounded font-mono">admin2026</code>
-                  </span>
                 </div>
                 <button
                   type="submit"

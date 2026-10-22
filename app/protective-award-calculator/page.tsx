@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import ProtectiveAwardClient from './ProtectiveAwardClient'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -138,10 +140,11 @@ const breadcrumbSchema = {
 export default function ProtectiveAwardCalculatorPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(webAppSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(breadcrumbSchema) }} />
       <ProtectiveAwardClient />
+      <DynamicFaqSection pathname="/protective-award-calculator/" />
     </>
   )
 }

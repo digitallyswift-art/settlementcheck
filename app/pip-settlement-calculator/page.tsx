@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import { PipExitCalculator } from '@/components/PipExitCalculator'
 import { LegalFeeInlineCard } from '@/components/LegalFeeShieldBadge'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 export const metadata: Metadata = {
   title: {
@@ -106,6 +107,7 @@ export default function PipSettlementCalculatorPage() {
             </div>
           </div>
         </div>
+        <DynamicFaqSection pathname="/pip-settlement-calculator/" />
       </main>
       <Footer />
     </div>

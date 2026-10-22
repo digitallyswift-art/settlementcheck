@@ -3,6 +3,8 @@ import HomeClient from '../HomeClient'
 import type { StepItem } from '../HomeClient'
 import type { FaqItem } from '@/components/FaqAccordion'
 import { getTaxStatutoryRows } from '@/lib/statutory-rates'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -191,7 +193,7 @@ export default function SettlementTaxCalculatorPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(JSON_LD) }}
       />
       <HomeClient
         title={
@@ -261,6 +263,7 @@ export default function SettlementTaxCalculatorPage() {
           },
         ]}
       />
+      <DynamicFaqSection pathname="/settlement-agreement-tax-calculator/" />
     </>
   )
 }
