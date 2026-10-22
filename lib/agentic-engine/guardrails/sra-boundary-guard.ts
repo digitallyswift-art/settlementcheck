@@ -41,3 +41,84 @@ export function enforceSraRegulatoryBoundary(text: string): { sanitizedText: str
     isModified,
   };
 }
+
+/**
+ * Taxonomizes a search query or dispute context into FINANCIAL_CALCULATION vs EMOTIONAL_DISPUTE
+ * so statutory guardrails enforce either financial caps (£751 / £30,000) OR Section 203 ERA 1996
+ * independent solicitor rights & employer fee coverage for non-redundancy hostile exits.
+ */
+export function classifyStatutoryRequirementCategory(
+  queryOrContext: string
+): 'FINANCIAL_CALCULATION' | 'EMOTIONAL_DISPUTE' {
+  const q = queryOrContext.toLowerCase();
+  const emotionalDisputeTriggers = [
+    'constructive dismissal',
+    'discrimination',
+    'bullying',
+    'harassment',
+    'pressured',
+    'withdraw',
+    'do not sign',
+    "don't sign",
+    'sick leave',
+    'pip',
+    'performance improvement',
+    'protected conversation',
+    'without prejudice',
+    'maternity',
+    'whistleblowing',
+  ];
+
+  for (const trigger of emotionalDisputeTriggers) {
+    if (q.includes(trigger)) {
+      return 'EMOTIONAL_DISPUTE';
+    }
+  }
+
+  return 'FINANCIAL_CALCULATION';
+}
+
+/**
+ * Verifies intent-calibrated statutory tokens in generated snippets
+ */
+export function verifyIntentCalibratedStatutoryTokens(
+  text: string,
+  category: 'FINANCIAL_CALCULATION' | 'EMOTIONAL_DISPUTE',
+  weeklyCapGB: number = 751
+): { isValid: boolean; reason?: string } {
+  const lower = text.toLowerCase();
+
+  if (category === 'EMOTIONAL_DISPUTE') {
+    const hasSection203OrRights =
+      lower.includes('section 203') ||
+      lower.includes('era 1996') ||
+      lower.includes('acas') ||
+      lower.includes('equality act') ||
+      lower.includes('solicitor') ||
+      text.includes(`£${weeklyCapGB}`) ||
+      text.includes('£30,000');
+
+    const hasEmployerFeeGuarantee =
+      lower.includes('employer') && (lower.includes('fee') || lower.includes('cost') || lower.includes('pays') || lower.includes('covers'));
+
+    if (!hasSection203OrRights || !hasEmployerFeeGuarantee) {
+      return {
+        isValid: false,
+        reason:
+          'Emotional/dispute query copy must reference statutory protections (Section 203 ERA 1996 / ACAS / solicitor) and employer legal fee coverage.',
+      };
+    }
+    return { isValid: true };
+  }
+
+  // Default: FINANCIAL_CALCULATION requires statutory financial caps (£751 or £30,000)
+  if (!text.includes(`£${weeklyCapGB}`) && !text.includes('£30,000')) {
+    return {
+      isValid: false,
+      reason: `Financial calculation copy missing required statutory figures (£${weeklyCapGB} or £30,000)`,
+    };
+  }
+
+  return { isValid: true };
+}
+

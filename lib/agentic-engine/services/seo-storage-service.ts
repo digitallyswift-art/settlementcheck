@@ -95,14 +95,9 @@ export class SeoStorageService {
     metrics: { totalQueries: number; totalImpressions: number; totalClicks: number; avgCtr: number; avgPosition: number },
     packages: AutonomousSeoActionPackage[]
   ): void {
-    const actionsDir = path.dirname(this.CHANGE_LOG_PATH);
-    if (!fs.existsSync(actionsDir)) {
-      fs.mkdirSync(actionsDir, { recursive: true });
-    }
-
     const now = new Date().toISOString();
     let header = '';
-    if (!fs.existsSync(this.CHANGE_LOG_PATH)) {
+    if (!SafeFs.existsSyncSafe(this.CHANGE_LOG_PATH)) {
       header = `# SettlementCheck — Master Autonomous SEO Change Log & Audit Trail\n\n` +
         `This document is maintained autonomously by the SettlementCheck Sentinel Fleet.\n` +
         `Every entry records verified optimizations created by the 4-agent autonomous pipeline:\n` +

@@ -1,16 +1,18 @@
 /**
- * Autonomous SEO Actuator Service
+ * Autonomous SEO Actuator Service (Edge-Cached & Canary-Enabled)
  * Bridges staged optimization packages directly into live production:
- * 1. Resolves active optimizations for any route (Supabase + local disk fallback).
- * 2. 1-Click Apply: Switches status to 'APPLIED' and pings Google Indexing API.
- * 3. Rollback: Restores previous baseline metadata.
- * 4. Batch Actuation: Applies all validated packages and triggers batch Google Indexing.
+ * 1. Resolves active optimizations for any route via Next.js `unstable_cache` with tagged revalidation.
+ * 2. Eliminates ephemeral `/tmp/applied-actions.json` writes in favor of cloud persistence + repo staging read fallback.
+ * 3. Supports 14-day Canary provisional observation mode (`CANARY` -> `PERMANENT`) and automated regression rollbacks.
  */
 
 import fs from 'fs';
 import path from 'path';
+import { unstable_cache } from 'next/cache';
 import { supabase } from '@/lib/supabase';
 import { GoogleIndexingClient } from './google-indexing-client';
+import { SeoArchitectAgent } from '../agents/seo-architect-agent';
+import { SeoActionLifecycleStatus } from '../types';
 
 export interface AppliedSeoRecord {
   id: string;
@@ -20,13 +22,20 @@ export interface AppliedSeoRecord {
   calibratedMetaDescription: string;
   faqQuestion: string;
   faqAnswer: string;
-  status: 'STAGED' | 'VALIDATED' | 'APPLIED' | 'REJECTED';
+  status: SeoActionLifecycleStatus;
   priority?: string;
   actionType?: string;
   impressions?: number;
   clicks?: number;
   position?: number;
   ctr?: number;
+  currentPosition?: number;
+  currentCtr?: number;
+  currentImpressions?: number;
+  regressionAlert?: string | null;
+  canaryExpiresAt?: string | null;
+  targetPageExistingH1?: string;
+  primaryAnchorQuery?: string;
   ctaText?: string;
   appliedAt?: string;
   googleIndexedAt?: string;
@@ -40,8 +49,11 @@ export interface AppliedSeoRecord {
 
 export class SeoActuatorService {
   private static readonly APPLIED_DISK_PATH = path.resolve('data/serp-actions/applied-actions.json');
-  private static readonly TMP_APPLIED_PATH = '/tmp/applied-actions.json';
   private static readonly STAGED_DISK_PATH = path.resolve('data/serp-actions/staging/latest-staged-actions.json');
+  public static readonly CANARY_DURATION_DAYS = 14;
+
+  // In-memory runtime overlay when Supabase env vars are absent in local dev
+  private static memoryStore = new Map<string, AppliedSeoRecord>();
 
   /**
    * Normalizes a pathname or URL to match target canonical URLs (with trailing slash)
@@ -62,58 +74,67 @@ export class SeoActuatorService {
   }
 
   /**
-   * Retrieves the currently active optimization for a given route (if any)
+   * Generates the deterministic Next.js cache tag for a canonical path
    */
-  public static async getActiveOptimization(pathname: string): Promise<AppliedSeoRecord | null> {
+  public static getCacheTagForPath(urlOrPath: string): string {
+    const norm = this.normalizePath(urlOrPath);
+    return `seo-metadata-${norm}`;
+  }
+
+  /**
+   * Uncached internal lookup for active optimization on a route
+   */
+  private static async fetchActiveOptimizationUncached(pathname: string): Promise<AppliedSeoRecord | null> {
     const norm = this.normalizePath(pathname);
     const fullCanonical = `https://settlementcheck.co.uk${norm}`;
 
-    // 1. Try Supabase cloud if configured
+    // 1. Query Supabase (Single source of cloud ACID truth)
     if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         const { data, error } = await supabase
           .from('seo_autonomous_actions')
           .select('*')
-          .eq('status', 'APPLIED')
+          .in('status', ['APPLIED', 'CANARY', 'PERMANENT'])
           .eq('target_canonical_url', fullCanonical)
           .order('created_at', { ascending: false })
           .limit(1)
           .maybeSingle();
 
         if (!error && data) {
-          return {
-            id: data.id,
-            query: data.query,
-            targetCanonicalUrl: data.target_canonical_url,
-            calibratedTitle: data.calibrated_title,
-            calibratedMetaDescription: data.calibrated_meta_description,
-            faqQuestion: data.faq_question,
-            faqAnswer: data.faq_answer,
-            status: data.status,
-            appliedAt: data.created_at,
-          };
+          return this.mapSupabaseRowToRecord(data);
         }
-      } catch (err) {
-        // Fall back to disk
+      } catch {
+        // Fallback to memory / repo snapshot
       }
     }
 
-    // 2. Check local disk applied actions
-    const checkPaths = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
-    for (const diskPath of checkPaths) {
-      if (fs.existsSync(diskPath)) {
-        try {
-          const content = fs.readFileSync(diskPath, 'utf-8');
-          const appliedList: AppliedSeoRecord[] = JSON.parse(content);
-          const match = appliedList.find(
-            a => a.targetCanonicalUrl === fullCanonical || this.normalizePath(a.targetCanonicalUrl.replace('https://settlementcheck.co.uk', '')) === norm
-          );
-          if (match && match.status === 'APPLIED') {
-            return match;
-          }
-        } catch {
-          // Ignore read error
+    // 2. Check in-memory store (for immediate local/offline consistency)
+    for (const rec of Array.from(this.memoryStore.values())) {
+      if (
+        (rec.status === 'APPLIED' || rec.status === 'CANARY' || rec.status === 'PERMANENT') &&
+        (rec.targetCanonicalUrl === fullCanonical ||
+          this.normalizePath(rec.targetCanonicalUrl.replace('https://settlementcheck.co.uk', '')) === norm)
+      ) {
+        return rec;
+      }
+    }
+
+    // 3. Read-only committed disk snapshot fallback (no /tmp ephemeral writes)
+    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+      try {
+        const content = fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8');
+        const appliedList: AppliedSeoRecord[] = JSON.parse(content);
+        const match = appliedList.find(
+          a =>
+            (a.status === 'APPLIED' || a.status === 'CANARY' || a.status === 'PERMANENT') &&
+            (a.targetCanonicalUrl === fullCanonical ||
+              this.normalizePath(a.targetCanonicalUrl.replace('https://settlementcheck.co.uk', '')) === norm)
+        );
+        if (match) {
+          return match;
         }
+      } catch {
+        // Ignore read error
       }
     }
 
@@ -121,7 +142,107 @@ export class SeoActuatorService {
   }
 
   /**
-   * Reads all current packages across disk, /tmp, and Supabase
+   * Retrieves the currently active optimization for a given route using Next.js Edge-Compatible `unstable_cache`
+   * tagged with `seo-metadata-${canonicalPath}` and `seo-metadata-all`.
+   */
+  public static async getActiveOptimization(pathname: string): Promise<AppliedSeoRecord | null> {
+    const norm = this.normalizePath(pathname);
+    const routeTag = this.getCacheTagForPath(norm);
+
+    try {
+      const cachedFn = unstable_cache(
+        async () => this.fetchActiveOptimizationUncached(norm),
+        [`seo-active-opt-${norm}`],
+        {
+          tags: [routeTag, 'seo-metadata-all'],
+          revalidate: 3600,
+        }
+      );
+      return await cachedFn();
+    } catch {
+      // Fallback when executed outside Next.js request context (e.g., CLI scripts / evals)
+      return this.fetchActiveOptimizationUncached(norm);
+    }
+  }
+
+  private static mapSupabaseRowToRecord(d: any): AppliedSeoRecord {
+    const norm = this.normalizePath(d.target_canonical_url || '/calculator/');
+    const appliedAt = d.created_at;
+    let canaryExpiresAt: string | null = null;
+    if (appliedAt) {
+      const exp = new Date(new Date(appliedAt).getTime() + this.CANARY_DURATION_DAYS * 24 * 60 * 60 * 1000);
+      canaryExpiresAt = exp.toISOString();
+    }
+
+    return {
+      id: d.id,
+      query: d.query,
+      priority: d.priority || 'CRITICAL',
+      actionType: d.action_type || 'INTERNAL_LINK_BOOST',
+      impressions: d.impressions ?? d.seo_brief?.currentMetrics?.impressions ?? 0,
+      clicks: d.clicks ?? d.seo_brief?.currentMetrics?.clicks ?? 0,
+      position: d.position ?? d.seo_brief?.currentMetrics?.position ?? 0,
+      ctr: d.ctr ?? d.seo_brief?.currentMetrics?.ctr ?? 0,
+      currentPosition: d.seo_brief?.postMetrics?.position ?? d.position ?? d.seo_brief?.currentMetrics?.position ?? 0,
+      currentCtr: d.seo_brief?.postMetrics?.ctr ?? d.ctr ?? d.seo_brief?.currentMetrics?.ctr ?? 0,
+      currentImpressions: d.seo_brief?.postMetrics?.impressions ?? d.impressions ?? d.seo_brief?.currentMetrics?.impressions ?? 0,
+      regressionAlert: d.seo_brief?.regressionAlert || null,
+      canaryExpiresAt,
+      targetPageExistingH1:
+        d.seo_brief?.targetPageExistingH1 ||
+        SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm] ||
+        undefined,
+      primaryAnchorQuery: d.seo_brief?.queryClusterProfile?.primaryAnchorQuery || d.query,
+      targetCanonicalUrl: d.target_canonical_url,
+      calibratedTitle: d.calibrated_title,
+      calibratedMetaDescription: d.calibrated_meta_description,
+      faqQuestion: d.faq_question,
+      faqAnswer: d.faq_answer,
+      status: d.status,
+      appliedAt,
+      version: d.version || 1,
+      lockState: d.lock_state || 'IDLE',
+      lockedBy: d.locked_by || null,
+      lockedUntil: d.locked_until || null,
+      lastModifiedBy: d.last_modified_by,
+    };
+  }
+
+  /**
+   * Registers newly staged packages into the runtime memory store for immediate visibility
+   */
+  public static stageRuntimePackages(packages: any[]): void {
+    for (const pkg of packages) {
+      if (!pkg?.id) continue;
+      const norm = this.normalizePath(pkg.seoTechnicalBrief?.targetCanonicalUrl || '/calculator/');
+      this.memoryStore.set(pkg.id, {
+        id: pkg.id,
+        query: pkg.query,
+        priority: pkg.priority || 'CRITICAL',
+        actionType: pkg.actionType || 'INTERNAL_LINK_BOOST',
+        impressions: pkg.seoTechnicalBrief?.currentMetrics?.impressions ?? 0,
+        clicks: pkg.seoTechnicalBrief?.currentMetrics?.clicks ?? 0,
+        position: pkg.seoTechnicalBrief?.currentMetrics?.position ?? 0,
+        ctr: pkg.seoTechnicalBrief?.currentMetrics?.ctr ?? 0,
+        targetPageExistingH1:
+          pkg.seoTechnicalBrief?.targetPageExistingH1 ||
+          SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm],
+        primaryAnchorQuery:
+          pkg.seoTechnicalBrief?.queryClusterProfile?.primaryAnchorQuery || pkg.query,
+        targetCanonicalUrl: pkg.seoTechnicalBrief?.targetCanonicalUrl,
+        calibratedTitle: pkg.copyPackage?.calibratedTitle,
+        calibratedMetaDescription: pkg.copyPackage?.calibratedMetaDescription,
+        faqQuestion: pkg.copyPackage?.answerFirstFaq?.question,
+        faqAnswer: pkg.copyPackage?.answerFirstFaq?.answer,
+        ctaText: pkg.copyPackage?.ctaText,
+        status: pkg.status || 'VALIDATED',
+        version: 1,
+      });
+    }
+  }
+
+  /**
+   * Reads all current packages across Supabase, in-memory state, and repo staging artifacts
    */
   public static async getAllPackages(): Promise<AppliedSeoRecord[]> {
     const list: AppliedSeoRecord[] = [];
@@ -139,56 +260,41 @@ export class SeoActuatorService {
         if (!error && data) {
           for (const d of data) {
             seenIds.add(d.id);
-            list.push({
-              id: d.id,
-              query: d.query,
-              priority: d.priority || 'CRITICAL',
-              actionType: d.action_type || 'INTERNAL_LINK_BOOST',
-              impressions: d.impressions ?? 0,
-              clicks: d.clicks ?? 0,
-              position: d.position ?? 0,
-              ctr: d.ctr ?? 0,
-              targetCanonicalUrl: d.target_canonical_url,
-              calibratedTitle: d.calibrated_title,
-              calibratedMetaDescription: d.calibrated_meta_description,
-              faqQuestion: d.faq_question,
-              faqAnswer: d.faq_answer,
-              status: d.status,
-              appliedAt: d.created_at,
-              version: d.version || 1,
-              lockState: d.lock_state || 'IDLE',
-              lockedBy: d.locked_by || null,
-              lockedUntil: d.locked_until || null,
-              lastModifiedBy: d.last_modified_by,
-            });
+            list.push(this.mapSupabaseRowToRecord(d));
           }
         }
       } catch {}
     }
 
-    // 2. Local disk and /tmp applied actions
-    const diskSources = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
-    for (const diskPath of diskSources) {
-      if (fs.existsSync(diskPath)) {
-        try {
-          const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(diskPath, 'utf-8'));
-          for (const item of diskApplied) {
-            if (!seenIds.has(item.id)) {
-              seenIds.add(item.id);
-              list.push(item);
-            }
-          }
-        } catch {}
+    // 2. In-memory runtime overlay
+    for (const item of Array.from(this.memoryStore.values())) {
+      if (!seenIds.has(item.id)) {
+        seenIds.add(item.id);
+        list.push(item);
       }
     }
 
-    // 3. Staged actions fallback
+    // 3. Committed disk applied actions
+    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+      try {
+        const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
+        for (const item of diskApplied) {
+          if (!seenIds.has(item.id)) {
+            seenIds.add(item.id);
+            list.push(item);
+          }
+        }
+      } catch {}
+    }
+
+    // 4. Staged actions fallback
     if (fs.existsSync(this.STAGED_DISK_PATH)) {
       try {
         const stagedRaw = JSON.parse(fs.readFileSync(this.STAGED_DISK_PATH, 'utf-8'));
         for (const pkg of stagedRaw) {
           if (!seenIds.has(pkg.id)) {
             seenIds.add(pkg.id);
+            const norm = this.normalizePath(pkg.seoTechnicalBrief?.targetCanonicalUrl || '/calculator/');
             list.push({
               id: pkg.id,
               query: pkg.query,
@@ -198,6 +304,11 @@ export class SeoActuatorService {
               clicks: pkg.seoTechnicalBrief?.currentMetrics?.clicks ?? 0,
               position: pkg.seoTechnicalBrief?.currentMetrics?.position ?? 0,
               ctr: pkg.seoTechnicalBrief?.currentMetrics?.ctr ?? 0,
+              targetPageExistingH1:
+                pkg.seoTechnicalBrief?.targetPageExistingH1 ||
+                SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm],
+              primaryAnchorQuery:
+                pkg.seoTechnicalBrief?.queryClusterProfile?.primaryAnchorQuery || pkg.query,
               targetCanonicalUrl: pkg.seoTechnicalBrief?.targetCanonicalUrl,
               calibratedTitle: pkg.copyPackage?.calibratedTitle,
               calibratedMetaDescription: pkg.copyPackage?.calibratedMetaDescription,
@@ -215,7 +326,7 @@ export class SeoActuatorService {
   }
 
   /**
-   * Applies an optimization package: marks active, revalidates cache, and notifies Google Indexing API
+   * Applies an optimization package (supports CANARY 14-day observation or direct APPLIED)
    */
   public static async applyPackage(
     packageId: string,
@@ -223,6 +334,7 @@ export class SeoActuatorService {
       triggerIndexing?: boolean;
       expectedVersion?: number;
       actorId?: string;
+      deployAsCanary?: boolean;
       revalidate?: (urlOrPath: string) => Promise<void> | void;
     }
   ): Promise<{ success: boolean; package?: AppliedSeoRecord; indexingResult?: any; error?: string }> {
@@ -245,9 +357,15 @@ export class SeoActuatorService {
       };
     }
 
+    const nowIso = new Date().toISOString();
+    const canaryExpiryIso = new Date(
+      Date.now() + this.CANARY_DURATION_DAYS * 24 * 60 * 60 * 1000
+    ).toISOString();
+
     target.version = (target.version || 1) + 1;
-    target.status = 'APPLIED';
-    target.appliedAt = new Date().toISOString();
+    target.status = options?.deployAsCanary ? 'CANARY' : 'APPLIED';
+    target.appliedAt = nowIso;
+    target.canaryExpiresAt = canaryExpiryIso;
     target.lockState = 'IDLE';
     target.lockedBy = null;
     target.lockedUntil = null;
@@ -258,31 +376,35 @@ export class SeoActuatorService {
       try {
         await supabase
           .from('seo_autonomous_actions')
-          .upsert({
-            id: target.id,
-            query: target.query,
-            target_canonical_url: target.targetCanonicalUrl,
-            calibrated_title: target.calibratedTitle,
-            calibrated_meta_description: target.calibratedMetaDescription,
-            faq_question: target.faqQuestion,
-            faq_answer: target.faqAnswer,
-            status: 'APPLIED',
-            version: target.version,
-            lock_state: 'IDLE',
-            locked_by: null,
-            locked_until: null,
-            last_modified_by: target.lastModifiedBy,
-            created_at: target.appliedAt || new Date().toISOString(),
-          }, { onConflict: 'id' });
+          .upsert(
+            {
+              id: target.id,
+              query: target.query,
+              target_canonical_url: target.targetCanonicalUrl,
+              calibrated_title: target.calibratedTitle,
+              calibrated_meta_description: target.calibratedMetaDescription,
+              faq_question: target.faqQuestion,
+              faq_answer: target.faqAnswer,
+              status: target.status,
+              version: target.version,
+              lock_state: 'IDLE',
+              locked_by: null,
+              locked_until: null,
+              last_modified_by: target.lastModifiedBy,
+              created_at: target.appliedAt,
+            },
+            { onConflict: 'id' }
+          );
       } catch (err) {
         console.error('Supabase upsert failed:', err);
       }
     }
 
-    // 3. Fallback disk persistence
-    this.saveAppliedToDisk(target);
+    // 3. Persist to in-memory runtime overlay & non-/tmp local dev snapshot
+    this.memoryStore.set(target.id, target);
+    this.saveAppliedToLocalRepoIfWritable(target);
 
-    // 4. Invalidate / Purge Next.js static cache BEFORE notifying Googlebot
+    // 4. Invalidate / Purge Next.js tagged cache BEFORE notifying Googlebot
     if (options?.revalidate) {
       try {
         await options.revalidate(target.targetCanonicalUrl);
@@ -291,26 +413,14 @@ export class SeoActuatorService {
       }
     }
 
-    // 5. Google Indexing API notification (Strictly POST-Revalidation)
+    // 5. Safe Sitemap <lastmod> & Ping sync
     let indexingResult: any = null;
-    if (options?.triggerIndexing !== false && GoogleIndexingClient.isConfigured()) {
+    if (options?.triggerIndexing !== false) {
       try {
         indexingResult = await GoogleIndexingClient.notifyUrlUpdated(target.targetCanonicalUrl);
         if (indexingResult.success) {
           target.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
-          target.indexingStatus = 'INDEXING_REQUESTED_HTTP_200';
-        } else {
-          target.indexingStatus = `INDEXING_ERROR_${indexingResult.httpStatus || 'FAIL'}`;
-        }
-
-        if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-          await supabase
-            .from('seo_autonomous_actions')
-            .update({
-              google_indexed_at: target.googleIndexedAt,
-              indexing_status: target.indexingStatus,
-            })
-            .eq('id', target.id);
+          target.indexingStatus = 'SITEMAP_LASTMOD_SYNCED';
         }
       } catch (idxErr: any) {
         indexingResult = { success: false, error: idxErr.message };
@@ -325,9 +435,16 @@ export class SeoActuatorService {
   }
 
   /**
-   * Rolls back an applied optimization back to VALIDATED
+   * Rolls back an applied or canary optimization back to VALIDATED (or ROLLED_BACK if triggered by watchdog)
    */
-  public static async rollbackPackage(packageId: string): Promise<{ success: boolean; error?: string }> {
+  public static async rollbackPackage(
+    packageId: string,
+    options?: {
+      reason?: string;
+      markAsRolledBack?: boolean;
+      revalidate?: (urlOrPath: string) => Promise<void> | void;
+    }
+  ): Promise<{ success: boolean; error?: string }> {
     const packages = await this.getAllPackages();
     const target = packages.find(p => p.id === packageId);
 
@@ -335,28 +452,35 @@ export class SeoActuatorService {
       return { success: false, error: `Package not found: ${packageId}` };
     }
 
-    target.status = 'VALIDATED';
+    const nextStatus: SeoActionLifecycleStatus = options?.markAsRolledBack ? 'ROLLED_BACK' : 'VALIDATED';
+    target.status = nextStatus;
     target.appliedAt = undefined;
-
-    // Update disk & /tmp
-    const diskTargets = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
-    for (const dPath of diskTargets) {
-      if (fs.existsSync(dPath)) {
-        try {
-          const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(dPath, 'utf-8'));
-          const filtered = diskApplied.filter(p => p.id !== packageId);
-          fs.writeFileSync(dPath, JSON.stringify(filtered, null, 2), 'utf-8');
-        } catch {}
-      }
+    if (options?.reason) {
+      target.regressionAlert = options.reason;
     }
 
-    // Update Supabase
+    this.memoryStore.set(target.id, target);
+
+    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+      try {
+        const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
+        const filtered = diskApplied.filter(p => p.id !== packageId);
+        fs.writeFileSync(this.APPLIED_DISK_PATH, JSON.stringify(filtered, null, 2), 'utf-8');
+      } catch {}
+    }
+
     if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         await supabase
           .from('seo_autonomous_actions')
-          .update({ status: 'VALIDATED' })
+          .update({ status: nextStatus })
           .eq('id', target.id);
+      } catch {}
+    }
+
+    if (options?.revalidate) {
+      try {
+        await options.revalidate(target.targetCanonicalUrl);
       } catch {}
     }
 
@@ -364,7 +488,7 @@ export class SeoActuatorService {
   }
 
   /**
-   * Rejects an optimization package: marks status as REJECTED and removes from applied lists
+   * Rejects an optimization package: marks status as REJECTED
    */
   public static async rejectPackage(
     packageId: string,
@@ -379,20 +503,16 @@ export class SeoActuatorService {
 
     target.status = 'REJECTED';
     target.appliedAt = undefined;
+    this.memoryStore.set(target.id, target);
 
-    // Remove from applied disk if present
-    const diskTargets = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
-    for (const dPath of diskTargets) {
-      if (fs.existsSync(dPath)) {
-        try {
-          const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(dPath, 'utf-8'));
-          const filtered = diskApplied.filter(p => p.id !== packageId);
-          fs.writeFileSync(dPath, JSON.stringify(filtered, null, 2), 'utf-8');
-        } catch {}
-      }
+    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+      try {
+        const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
+        const filtered = diskApplied.filter(p => p.id !== packageId);
+        fs.writeFileSync(this.APPLIED_DISK_PATH, JSON.stringify(filtered, null, 2), 'utf-8');
+      } catch {}
     }
 
-    // Update staged disk if present
     if (fs.existsSync(this.STAGED_DISK_PATH)) {
       try {
         const stagedRaw = JSON.parse(fs.readFileSync(this.STAGED_DISK_PATH, 'utf-8'));
@@ -405,7 +525,6 @@ export class SeoActuatorService {
       } catch {}
     }
 
-    // Update Supabase
     if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         await supabase
@@ -442,7 +561,6 @@ export class SeoActuatorService {
       return { success: false, error: `Package not found: ${packageId}` };
     }
 
-    // 1. OCC Check
     if (
       options?.expectedVersion !== undefined &&
       target.version !== undefined &&
@@ -462,41 +580,45 @@ export class SeoActuatorService {
     target.version = (target.version || 1) + 1;
     target.status = 'APPLIED';
     target.appliedAt = new Date().toISOString();
+    target.canaryExpiresAt = new Date(
+      Date.now() + this.CANARY_DURATION_DAYS * 24 * 60 * 60 * 1000
+    ).toISOString();
     target.lockState = 'IDLE';
     target.lockedBy = null;
     target.lockedUntil = null;
     target.lastModifiedBy = options?.actorId || 'ADMIN_USER';
 
-    // 2. Persist to Supabase FIRST
     if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         await supabase
           .from('seo_autonomous_actions')
-          .upsert({
-            id: target.id,
-            query: target.query,
-            target_canonical_url: target.targetCanonicalUrl,
-            calibrated_title: target.calibratedTitle,
-            calibrated_meta_description: target.calibratedMetaDescription,
-            faq_question: target.faqQuestion,
-            faq_answer: target.faqAnswer,
-            status: 'APPLIED',
-            version: target.version,
-            lock_state: 'IDLE',
-            locked_by: null,
-            locked_until: null,
-            last_modified_by: target.lastModifiedBy,
-            created_at: target.appliedAt || new Date().toISOString(),
-          }, { onConflict: 'id' });
+          .upsert(
+            {
+              id: target.id,
+              query: target.query,
+              target_canonical_url: target.targetCanonicalUrl,
+              calibrated_title: target.calibratedTitle,
+              calibrated_meta_description: target.calibratedMetaDescription,
+              faq_question: target.faqQuestion,
+              faq_answer: target.faqAnswer,
+              status: 'APPLIED',
+              version: target.version,
+              lock_state: 'IDLE',
+              locked_by: null,
+              locked_until: null,
+              last_modified_by: target.lastModifiedBy,
+              created_at: target.appliedAt,
+            },
+            { onConflict: 'id' }
+          );
       } catch (err) {
         console.error('Supabase upsert failed:', err);
       }
     }
 
-    // 3. Persist to disk fallback
-    this.saveAppliedToDisk(target);
+    this.memoryStore.set(target.id, target);
+    this.saveAppliedToLocalRepoIfWritable(target);
 
-    // 4. Invalidate / Purge Next.js static cache BEFORE notifying Googlebot
     if (options?.revalidate) {
       try {
         await options.revalidate(target.targetCanonicalUrl);
@@ -505,29 +627,15 @@ export class SeoActuatorService {
       }
     }
 
-    // 5. Post-Revalidation: Notify Google Indexing API
     let indexingResult: any = null;
-    if (GoogleIndexingClient.isConfigured()) {
-      try {
-        indexingResult = await GoogleIndexingClient.notifyUrlUpdated(target.targetCanonicalUrl);
-        if (indexingResult.success) {
-          target.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
-          target.indexingStatus = 'INDEXING_REQUESTED_HTTP_200';
-        } else {
-          target.indexingStatus = `INDEXING_ERROR_${indexingResult.httpStatus || 'FAIL'}`;
-        }
-        if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-          await supabase
-            .from('seo_autonomous_actions')
-            .update({
-              google_indexed_at: target.googleIndexedAt,
-              indexing_status: target.indexingStatus,
-            })
-            .eq('id', target.id);
-        }
-      } catch (idxErr: any) {
-        indexingResult = { success: false, error: idxErr.message };
+    try {
+      indexingResult = await GoogleIndexingClient.notifyUrlUpdated(target.targetCanonicalUrl);
+      if (indexingResult.success) {
+        target.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
+        target.indexingStatus = 'SITEMAP_LASTMOD_SYNCED';
       }
+    } catch (idxErr: any) {
+      indexingResult = { success: false, error: idxErr.message };
     }
 
     return {
@@ -538,7 +646,7 @@ export class SeoActuatorService {
   }
 
   /**
-   * Applies all validated packages in a single click and sends batch indexing requests
+   * Applies all validated packages in a single click
    */
   public static async applyAllValidated(options?: {
     revalidate?: (urlOrPath: string) => Promise<void> | void;
@@ -563,32 +671,29 @@ export class SeoActuatorService {
   }
 
   /**
-   * Saves applied action records locally with safe /tmp fallback for serverless
+   * Writes to local repo applied-actions.json only in writable local dev environments (never /tmp)
    */
-  private static saveAppliedToDisk(record: AppliedSeoRecord) {
-    const tryPaths = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
-    for (const targetPath of tryPaths) {
-      try {
-        let appliedList: AppliedSeoRecord[] = [];
-        if (fs.existsSync(targetPath)) {
-          try {
-            appliedList = JSON.parse(fs.readFileSync(targetPath, 'utf-8'));
-          } catch {}
-        }
-
-        const idx = appliedList.findIndex(a => a.id === record.id);
-        if (idx >= 0) {
-          appliedList[idx] = record;
-        } else {
-          appliedList.push(record);
-        }
-
-        const dir = path.dirname(targetPath);
-        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-        fs.writeFileSync(targetPath, JSON.stringify(appliedList, null, 2), 'utf-8');
-      } catch (err) {
-        // Continue to /tmp if APPLIED_DISK_PATH fails with EROFS in serverless
+  private static saveAppliedToLocalRepoIfWritable(record: AppliedSeoRecord) {
+    try {
+      let appliedList: AppliedSeoRecord[] = [];
+      if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+        try {
+          appliedList = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
+        } catch {}
       }
+
+      const idx = appliedList.findIndex(a => a.id === record.id);
+      if (idx >= 0) {
+        appliedList[idx] = record;
+      } else {
+        appliedList.push(record);
+      }
+
+      const dir = path.dirname(this.APPLIED_DISK_PATH);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(this.APPLIED_DISK_PATH, JSON.stringify(appliedList, null, 2), 'utf-8');
+    } catch {
+      // Read-only serverless filesystem (Vercel/Edge): state is safely persisted in Supabase + tagged cache
     }
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { SeoActuatorService } from '@/lib/agentic-engine/services/seo-actuator-service';
+import { resolveDynamicStructuredSchema } from '@/lib/seo/dynamic-metadata';
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld';
 
 interface DynamicFaqSectionProps {
@@ -9,7 +10,7 @@ interface DynamicFaqSectionProps {
 
 export default async function DynamicFaqSection({
   pathname,
-  headingText = 'Frequently Asked Questions',
+  headingText = 'Key Statutory Guidance',
 }: DynamicFaqSectionProps) {
   const activeOptimization = await SeoActuatorService.getActiveOptimization(pathname);
 
@@ -17,33 +18,22 @@ export default async function DynamicFaqSection({
     return null;
   }
 
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: activeOptimization.faqQuestion,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: activeOptimization.faqAnswer,
-        },
-      },
-    ],
-  };
+  const structuredSchema = await resolveDynamicStructuredSchema(pathname);
 
   return (
     <section
       aria-labelledby="dynamic-faq-heading"
       className="my-10 max-w-4xl mx-auto px-4 sm:px-6"
     >
-      {/* 1. Sanitized JSON-LD injection */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }}
-      />
+      {/* 1. Sanitized WebApplication / Article JSON-LD injection */}
+      {structuredSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(structuredSchema) }}
+        />
+      )}
 
-      {/* 2. Guaranteed Visible DOM Content for Users & Googlebot */}
+      {/* 2. Guaranteed Visible DOM Content for Users & Google AI Overviews */}
       <div className="rounded-3xl border border-[#0B1F3A]/10 bg-white p-6 sm:p-8 shadow-sm">
         <div className="flex items-center gap-2 mb-4">
           <span className="w-2.5 h-2.5 rounded-full bg-[#D9603B]" />
@@ -63,7 +53,7 @@ export default async function DynamicFaqSection({
         </details>
 
         <p className="mt-4 text-[11px] text-[#0B1F3A]/50 italic">
-          Verified against UK employment statutory rates (SI 2026/310 &amp; ITEPA 2003 s.403).
+          Verified against UK employment statutory rates (SI 2026/310, ERA 1996 s.203 &amp; ITEPA 2003 s.403).
         </p>
       </div>
     </section>

@@ -2,20 +2,28 @@
  * Master SEO Workflow Orchestrator & Autonomous Actuator
  * Orchestrates the specialist SEO Architect Agent and Conversion Copywriter Agent
  * to translate live Google Search Console opportunities into verified, brand-compliant,
- * statutory-invariant action packages.
+ * pixel-calibrated, multi-query clustered, statutory-invariant action packages.
  */
 
-import fs from 'fs';
 import path from 'path';
 import { SeoArchitectAgent, SeoAuditContext } from '../agents/seo-architect-agent';
-import { ConversionCopywriterAgent } from '../agents/conversion-copywriter-agent';
-import { LegalComplianceAuditorAgent, StatutoryAuditorAgent } from '../agents/legal-compliance-auditor-agent';
+import { LegalComplianceAuditorAgent } from '../agents/legal-compliance-auditor-agent';
 import { AntiAiQualityGuard } from '../guardrails/anti-ai-quality-guard';
+import {
+  classifyStatutoryRequirementCategory,
+  verifyIntentCalibratedStatutoryTokens,
+} from '../guardrails/sra-boundary-guard';
+import { auditSerpPixelBudgets, SERP_PIXEL_BUDGETS } from '../tools/serp-pixel-calculator';
 import { seoOpportunityWorker } from '../workers/seo-opportunity-worker';
 import { seoCopyWorker } from '../workers/seo-copy-worker';
 import { legalComplianceWorker } from '../workers/legal-compliance-worker';
 import { SeoStorageService } from '../services/seo-storage-service';
-import { AutonomousSeoActionPackage, SeoTechnicalBrief, ConversionCopyPackage } from '../types';
+import {
+  AutonomousSeoActionPackage,
+  SeoTechnicalBrief,
+  ConversionCopyPackage,
+  QueryClusterProfile,
+} from '../types';
 import { GscFetchResult, GscQueryRow } from '../services/gsc-client';
 import { SafeFs } from '../services/safe-fs';
 import { auditClaimsAndSubstantiation } from '../guardrails/cap-code-claims-guard';
@@ -38,10 +46,79 @@ export class SeoWorkflowOrchestrator {
   private static readonly STAGING_DIR = path.resolve('data/serp-actions/staging');
 
   /**
-   * Filters GSC query rows for high-impact striking distance and CTR opportunities
+   * Builds a multi-query portfolio cluster profile per canonical page to prevent
+   * single-query cannibalization when optimizing striking-distance keywords.
+   */
+  public static buildQueryClusterProfiles(rows: GscQueryRow[]): Map<string, QueryClusterProfile> {
+    const byPage = new Map<string, GscQueryRow[]>();
+
+    for (const r of rows) {
+      const intent = SeoArchitectAgent.classifyIntent(r.query);
+      const canonicalRoute = SeoArchitectAgent.resolveCanonicalRoute(r.query, intent, r.page);
+      const fullUrl = `${SeoArchitectAgent.DOMAIN}${canonicalRoute}`;
+
+      const list = byPage.get(fullUrl) || [];
+      list.push(r);
+      byPage.set(fullUrl, list);
+    }
+
+    const profiles = new Map<string, QueryClusterProfile>();
+
+    byPage.forEach((pageRows, targetPage) => {
+      const sortedByImpr = [...pageRows].sort((a, b) => b.impressions - a.impressions);
+      const primaryAnchor = sortedByImpr[0];
+      const striking = sortedByImpr
+        .filter(r => r.position >= 10.5 && r.position <= 20)
+        .map(r => r.query)
+        .slice(0, 5);
+      const longTail = sortedByImpr
+        .slice(1)
+        .map(r => r.query)
+        .slice(0, 8);
+
+      const totalClusterImpressions = pageRows.reduce((acc, r) => acc + r.impressions, 0);
+      const totalClusterClicks = pageRows.reduce((acc, r) => acc + r.clicks, 0);
+
+      profiles.set(targetPage, {
+        targetPage,
+        primaryAnchorQuery: primaryAnchor?.query || '',
+        primaryAnchorImpressions: primaryAnchor?.impressions || 0,
+        strikingDistanceCandidates: striking,
+        longTailVariants: longTail,
+        totalClusterImpressions,
+        totalClusterClicks,
+      });
+    });
+
+    return profiles;
+  }
+
+  /**
+   * Filters GSC query rows for high-impact striking distance and CTR opportunities,
+   * enriched with multi-query portfolio cluster profiles and canonical H1 alignment.
    */
   public static extractOpportunities(rows: GscQueryRow[], limit = 10): SeoAuditContext[] {
     const actionable: SeoAuditContext[] = [];
+    const clusterProfiles = this.buildQueryClusterProfiles(rows);
+
+    const buildContext = (r: GscQueryRow): SeoAuditContext => {
+      const intent = SeoArchitectAgent.classifyIntent(r.query);
+      const canonicalRoute = SeoArchitectAgent.resolveCanonicalRoute(r.query, intent, r.page);
+      const fullUrl = `${SeoArchitectAgent.DOMAIN}${canonicalRoute}`;
+      const cluster = clusterProfiles.get(fullUrl);
+      const existingH1 = SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[canonicalRoute];
+
+      return {
+        query: r.query,
+        impressions: r.impressions,
+        clicks: r.clicks,
+        position: r.position,
+        ctr: r.ctr,
+        targetUrl: r.page || fullUrl,
+        queryClusterProfile: cluster,
+        targetPageExistingH1: existingH1,
+      };
+    };
 
     // Filter striking distance (Pos 10.5 - 20) with significant impressions
     const striking = rows
@@ -49,14 +126,7 @@ export class SeoWorkflowOrchestrator {
       .sort((a, b) => b.impressions - a.impressions);
 
     for (const r of striking) {
-      actionable.push({
-        query: r.query,
-        impressions: r.impressions,
-        clicks: r.clicks,
-        position: r.position,
-        ctr: r.ctr,
-        targetUrl: r.page,
-      });
+      actionable.push(buildContext(r));
     }
 
     // Filter Top 8 rankings with low CTR (< 4%)
@@ -66,14 +136,7 @@ export class SeoWorkflowOrchestrator {
 
     for (const r of lowCtr) {
       if (!actionable.some(a => a.query === r.query)) {
-        actionable.push({
-          query: r.query,
-          impressions: r.impressions,
-          clicks: r.clicks,
-          position: r.position,
-          ctr: r.ctr,
-          targetUrl: r.page,
-        });
+        actionable.push(buildContext(r));
       }
     }
 
@@ -81,7 +144,7 @@ export class SeoWorkflowOrchestrator {
   }
 
   /**
-   * Enforces strict deterministic quality gates on copy and architecture
+   * Enforces strict deterministic quality gates on copy, pixel bounding boxes, and intent-calibrated statutory rules
    */
   public static validateActionPackage(pkg: AutonomousSeoActionPackage): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
@@ -116,21 +179,42 @@ export class SeoWorkflowOrchestrator {
       errors.push('Copy must reference SRA-regulated solicitor for statutory advice');
     }
 
-    // 5. Statutory figures invariant
+    // 5. Intent-Calibrated Statutory Guardrail (FINANCIAL_CALCULATION vs EMOTIONAL_DISPUTE)
     const expectedCap = pkg.seoTechnicalBrief.statutoryInvariants.weeklyCapGB;
-    if (!allText.includes(`£${expectedCap}`) && !allText.includes('£30,000')) {
-      errors.push(`Copy missing required statutory figures (£${expectedCap} or £30,000)`);
+    const statutoryCategory =
+      pkg.seoTechnicalBrief.statutoryCategory ||
+      classifyStatutoryRequirementCategory(pkg.query);
+
+    const statutoryTokenCheck = verifyIntentCalibratedStatutoryTokens(
+      allText,
+      statutoryCategory,
+      expectedCap
+    );
+    if (!statutoryTokenCheck.isValid && statutoryTokenCheck.reason) {
+      errors.push(statutoryTokenCheck.reason);
     }
 
-    // 6. Hard SERP character budget invariants (SC-E-SEO-003 & 004)
+    // 6. SERP Character & Arial Pixel-Width Bounding Box Invariants
     const title = pkg.copyPackage.calibratedTitle;
-    if (title.length < 50 || title.length > 60) {
-      errors.push(`Title length (${title.length} chars) violates SERP budget of 50-60 characters: "${title}"`);
+    const meta = pkg.copyPackage.calibratedMetaDescription;
+    const pixelAudit = auditSerpPixelBudgets(title, meta);
+
+    if (title.length < 45 || title.length > 65) {
+      errors.push(`Title length (${title.length} chars) violates SERP character envelope: "${title}"`);
+    }
+    if (pixelAudit.titlePixels > SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX) {
+      errors.push(
+        `Title pixel width (${pixelAudit.titlePixels}px) exceeds Google desktop bounding box (${SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX}px): "${title}"`
+      );
     }
 
-    const meta = pkg.copyPackage.calibratedMetaDescription;
-    if (meta.length < 140 || meta.length > 155) {
-      errors.push(`Meta description length (${meta.length} chars) violates SERP budget of 140-155 characters: "${meta}"`);
+    if (meta.length < 130 || meta.length > 160) {
+      errors.push(`Meta description length (${meta.length} chars) violates SERP character envelope: "${meta}"`);
+    }
+    if (pixelAudit.metaPixels > SERP_PIXEL_BUDGETS.DESKTOP_META_MAX_PX) {
+      errors.push(
+        `Meta description pixel width (${pixelAudit.metaPixels}px) exceeds Google desktop bounding box (${SERP_PIXEL_BUDGETS.DESKTOP_META_MAX_PX}px)`
+      );
     }
 
     // 7. ASA / CAP Code claims substantiation invariant (claims-privacy-auditor)
@@ -191,12 +275,19 @@ export class SeoWorkflowOrchestrator {
       const actionType = isTopRankLowCtr ? 'META_RECALIBRATION' : 'INTERNAL_LINK_BOOST';
       const priority = opp.impressions >= 100 ? 'CRITICAL' : opp.impressions >= 50 ? 'HIGH' : 'MEDIUM';
 
+      const pixelAudit = auditSerpPixelBudgets(
+        copyPackage.calibratedTitle,
+        copyPackage.calibratedMetaDescription
+      );
+
       const stagedDiff = `
 ### Action Proposal for "${opp.query}" (Pos ${opp.position.toFixed(1)} · ${opp.impressions} Impr)
 - **Target URL**: ${seoBrief.targetCanonicalUrl}
-- **Search Intent**: ${seoBrief.searchIntent}
-- **Proposed Title**: ${copyPackage.calibratedTitle} (${copyPackage.calibratedTitle.length} chars)
-- **Proposed Meta**: ${copyPackage.calibratedMetaDescription} (${copyPackage.calibratedMetaDescription.length} chars)
+- **Existing Page H1**: ${seoBrief.targetPageExistingH1 || 'N/A'}
+- **Cluster Primary Anchor**: ${seoBrief.queryClusterProfile?.primaryAnchorQuery || opp.query}
+- **Search Intent**: ${seoBrief.searchIntent} (${seoBrief.statutoryCategory || 'FINANCIAL_CALCULATION'})
+- **Proposed Title**: ${copyPackage.calibratedTitle} (${copyPackage.calibratedTitle.length} chars · ${pixelAudit.titlePixels}px / ${pixelAudit.titleMaxPixels}px)
+- **Proposed Meta**: ${copyPackage.calibratedMetaDescription} (${copyPackage.calibratedMetaDescription.length} chars · ${pixelAudit.metaPixels}px / ${pixelAudit.metaMaxPixels}px)
 - **FAQ Snippet**: Q: ${copyPackage.answerFirstFaq.question} | A: ${copyPackage.answerFirstFaq.answer}
 - **Contextual Inbound Link**: ${copyPackage.contextualInternalLinkBlock.surroundingText}
 - **Statutory Audit**: ${statutoryAudit.isCompliant ? 'Passed (Compliant with UK Law)' : `Flagged: ${statutoryAudit.issues.join('; ')}`}
@@ -234,11 +325,11 @@ export class SeoWorkflowOrchestrator {
     const stagedMarkdownPath = path.join(this.STAGING_DIR, 'latest-staged-actions.md');
 
     // Write JSON artifact safely
-    const jsonResult = SafeFs.writeFileSyncSafe(stagedJsonPath, JSON.stringify(packages, null, 2), 'utf-8');
+    SafeFs.writeFileSyncSafe(stagedJsonPath, JSON.stringify(packages, null, 2), 'utf-8');
 
     // Write Human-Reviewable Markdown Digest safely
     const markdownContent = this.formatMarkdownStagingDigest(runId, timestamp, packages, gscData.source);
-    const mdResult = SafeFs.writeFileSyncSafe(stagedMarkdownPath, markdownContent, 'utf-8');
+    SafeFs.writeFileSyncSafe(stagedMarkdownPath, markdownContent, 'utf-8');
 
     // Persist to cumulative CHANGE_LOG.md and Supabase
     const metrics = {
@@ -249,6 +340,8 @@ export class SeoWorkflowOrchestrator {
       avgPosition: gscData.rows.length > 0 ? Math.round((gscData.rows.reduce((acc, r) => acc + r.position, 0) / gscData.rows.length) * 10) / 10 : 0,
     };
 
+    const { SeoActuatorService } = await import('../services/seo-actuator-service');
+    SeoActuatorService.stageRuntimePackages(packages);
     await SeoStorageService.persistRun(runId, gscData.source, metrics, packages, false);
 
     return {
@@ -276,16 +369,21 @@ export class SeoWorkflowOrchestrator {
     source: string
   ): string {
     const rows = packages
-      .map(
-        p => `
+      .map(p => {
+        const px = auditSerpPixelBudgets(
+          p.copyPackage.calibratedTitle,
+          p.copyPackage.calibratedMetaDescription
+        );
+        return `
 ### 🎯 Package ${p.id}: "${p.query}" [${p.priority}]
 - **Type**: \`${p.actionType}\` | **Status**: \`${p.status}\`
 - **Target Canonical**: [${p.seoTechnicalBrief.targetCanonicalUrl}](${p.seoTechnicalBrief.targetCanonicalUrl})
+- **Cluster Primary Anchor**: \`${p.seoTechnicalBrief.queryClusterProfile?.primaryAnchorQuery || p.query}\`
 - **Metrics**: Pos ${p.seoTechnicalBrief.currentMetrics.position.toFixed(1)} · ${p.seoTechnicalBrief.currentMetrics.impressions} Impr · ${p.seoTechnicalBrief.currentMetrics.clicks} Clicks
 
 #### 1. Metadata Calibrations (SEO Architect + Conversion Copywriter)
-- **Title (${p.copyPackage.calibratedTitle.length} chars)**: \`${p.copyPackage.calibratedTitle}\`
-- **Meta Description (${p.copyPackage.calibratedMetaDescription.length} chars)**: \`${p.copyPackage.calibratedMetaDescription}\`
+- **Title (${p.copyPackage.calibratedTitle.length} chars · ${px.titlePixels}px)**: \`${p.copyPackage.calibratedTitle}\`
+- **Meta Description (${p.copyPackage.calibratedMetaDescription.length} chars · ${px.metaPixels}px)**: \`${p.copyPackage.calibratedMetaDescription}\`
 
 #### 2. AI Overview FAQ Direct Answer (Snippet Capture)
 - **Question**: *${p.copyPackage.answerFirstFaq.question}*
@@ -298,8 +396,8 @@ export class SeoWorkflowOrchestrator {
 > ${p.copyPackage.contextualInternalLinkBlock.surroundingText}
 
 ---
-`
-      )
+`;
+      })
       .join('\n');
 
     return `# 🛡️ Autonomous SEO Actuator — Staged Review Digest
@@ -307,7 +405,7 @@ export class SeoWorkflowOrchestrator {
 **Generated At**: ${timestamp}  
 **Data Source**: ${source}  
 **Specialist Agents in the Loop**: \`seo-architect\` & \`conversion-copywriter\`  
-**Compliance Standard**: 100% BRAND.md & April 2026 Statutory Invariants  
+**Compliance Standard**: 100% BRAND.md, Pixel-Width Bounding Boxes & April 2026 Statutory Invariants  
 
 ---
 

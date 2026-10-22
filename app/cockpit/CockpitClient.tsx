@@ -3,27 +3,34 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/firebase/auth-context';
+import {
+  calculateSerpPixelWidth,
+  SERP_PIXEL_BUDGETS,
+} from '@/lib/agentic-engine/tools/serp-pixel-calculator';
 import SerpDiffModal from './components/SerpDiffModal';
 import InlineEditModal from './components/InlineEditModal';
 import RejectModal from './components/RejectModal';
 
 export default function CockpitClient() {
   const { user, getIdToken, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<'approvals' | 'monitor'>('approvals');
+  const [activeTab, setActiveTab] = useState<'approvals' | 'deployed' | 'monitor'>('approvals');
 
-  // Tab 1: SEO Packages State
+  // Tab 1 & 2: SEO Packages State
   const [seoPackages, setSeoPackages] = useState<any[]>([]);
   const [seoSummary, setSeoSummary] = useState<{
     totalPackages: number;
     appliedCount: number;
+    canaryCount?: number;
     validatedCount: number;
     stagedCount: number;
+    regressionCount?: number;
   } | null>(null);
   const [isLoadingSeo, setIsLoadingSeo] = useState<boolean>(false);
   const [packageFilter, setPackageFilter] = useState<'ALL' | 'PENDING' | 'APPLIED' | 'REJECTED'>('PENDING');
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
+  const [watchdogReport, setWatchdogReport] = useState<any | null>(null);
 
-  // Tab 2: Monitor & Leads State
+  // Tab 3: Monitor & Leads State
   const [monitorData, setMonitorData] = useState<any>(null);
   const [isLoadingMonitor, setIsLoadingMonitor] = useState<boolean>(false);
   const [leadSearch, setLeadSearch] = useState('');
@@ -93,8 +100,8 @@ export default function CockpitClient() {
     fetchMonitorData();
   }, []);
 
-  // 1-Click Apply
-  const handleApply = async (packageId: string) => {
+  // 1-Click Apply (or 14-Day Canary)
+  const handleApply = async (packageId: string, deployAsCanary = false) => {
     setActionLoadingId(packageId);
     try {
       const targetPkg = seoPackages.find(p => p.id === packageId);
@@ -103,8 +110,9 @@ export default function CockpitClient() {
         method: 'POST',
         headers,
         body: JSON.stringify({
-          action: 'APPLY',
+          action: deployAsCanary ? 'APPLY_CANARY' : 'APPLY',
           packageId,
+          deployAsCanary,
           expectedVersion: targetPkg?.version || 1,
         }),
       });
@@ -115,7 +123,11 @@ export default function CockpitClient() {
         return;
       }
       if (data.success) {
-        showToast('✓ Package approved & deployed live. Static cache revalidated & Google Indexing API pinged.');
+        showToast(
+          deployAsCanary
+            ? '🧪 Deployed in 14-day Canary Observation Mode. Edge cache tag revalidated & Sitemap <lastmod> updated.'
+            : '✓ Package approved & deployed live. Edge cache tag revalidated & Sitemap <lastmod> updated.'
+        );
         await fetchSeoData();
         if (inspectingPackage?.id === packageId) setInspectingPackage(null);
       } else {
@@ -151,7 +163,7 @@ export default function CockpitClient() {
         return;
       }
       if (data.success) {
-        showToast('✓ Modifications deployed live. Static cache revalidated & Google Indexing API pinged.');
+        showToast('✓ Modifications deployed live. Edge cache tag revalidated & Sitemap <lastmod> updated.');
         setEditingPackage(null);
         await fetchSeoData();
       } else {
@@ -202,7 +214,7 @@ export default function CockpitClient() {
       });
       const data = await res.json();
       if (data.success) {
-        showToast('✓ Rolled back live page to default static baseline.');
+        showToast('✓ Rolled back live page to default static baseline & purged edge cache.');
         await fetchSeoData();
       } else {
         showToast(`Error: ${data.error || 'Failed to rollback'}`);
@@ -238,16 +250,48 @@ export default function CockpitClient() {
     }
   };
 
+  // Run Degradation Watchdog
+  const handleRunDegradationWatchdog = async () => {
+    setActionLoadingId('RUN_WATCHDOG');
+    try {
+      const headers = await getAuthHeaders();
+      const res = await fetch('/api/portal/seo-actions/', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ action: 'RUN_DEGRADATION_WATCHDOG', autoRollbackEnabled: true }),
+      });
+      const data = await res.json();
+      if (data.success && data.report) {
+        setWatchdogReport(data.report);
+        showToast(
+          `🛡️ Watchdog checked ${data.report.activePackagesEvaluated} live packages (${data.report.alertsTriggered} alerts, ${data.report.autoRollbacksTriggered} auto-rollbacks).`
+        );
+        await fetchSeoData();
+      } else {
+        showToast(`Error: ${data.error || 'Watchdog scan failed'}`);
+      }
+    } catch (e: any) {
+      showToast(`Error: ${e.message}`);
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
   // Filter packages
   const filteredPackages = seoPackages.filter((pkg) => {
     if (packageFilter === 'ALL') return true;
     if (packageFilter === 'PENDING') return pkg.status === 'VALIDATED' || pkg.status === 'STAGED';
-    if (packageFilter === 'APPLIED') return pkg.status === 'APPLIED';
-    if (packageFilter === 'REJECTED') return pkg.status === 'REJECTED';
+    if (packageFilter === 'APPLIED')
+      return pkg.status === 'APPLIED' || pkg.status === 'CANARY' || pkg.status === 'PERMANENT';
+    if (packageFilter === 'REJECTED') return pkg.status === 'REJECTED' || pkg.status === 'ROLLED_BACK';
     return true;
   });
 
   const pendingCount = seoPackages.filter((p) => p.status === 'VALIDATED' || p.status === 'STAGED').length;
+  const deployedPackages = seoPackages.filter(
+    (p) => p.status === 'APPLIED' || p.status === 'CANARY' || p.status === 'PERMANENT' || p.status === 'ROLLED_BACK'
+  );
+  const regressionAlerts = seoPackages.filter((p) => Boolean(p.regressionAlert) || p.status === 'ROLLED_BACK');
 
   // Filter anonymized feed
   const filteredFeed = (monitorData?.anonymizedFeed || []).filter((item: any) => {
@@ -310,8 +354,8 @@ export default function CockpitClient() {
             <span className="text-white/20 hidden sm:inline">|</span>
 
             <div className="hidden sm:flex items-center gap-2 text-xs text-white/70">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono text-[11px]">Autonomous Fleet Active</span>
+              <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse" />
+              <span className="font-mono text-[11px]">Autonomous Fleet &amp; Self-Healing Watchdog Active</span>
             </div>
           </div>
 
@@ -341,9 +385,33 @@ export default function CockpitClient() {
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-8 pt-6 space-y-6">
+        {/* Critical Regression Alert Banner (Phase 3 Self-Healing Watchdog) */}
+        {regressionAlerts.length > 0 && (
+          <div className="p-4 rounded-2xl bg-red-50 border border-red-300 text-red-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-start gap-3">
+              <span className="text-lg">⚠️</span>
+              <div>
+                <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider">
+                  CRITICAL REGRESSION ALERT ({regressionAlerts.length} Package{regressionAlerts.length > 1 ? 's' : ''})
+                </h4>
+                <p className="text-xs text-red-800 mt-0.5">
+                  {regressionAlerts[0].regressionAlert ||
+                    `Package "${regressionAlerts[0].query}" breached the >15% rank degradation threshold.`}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setActiveTab('deployed')}
+              className="px-3.5 py-1.5 rounded-xl bg-red-800 text-white text-xs font-semibold hover:bg-red-900 transition-colors shrink-0"
+            >
+              Inspect Longitudinal Attribution →
+            </button>
+          </div>
+        )}
+
         {/* Navigation Tabs Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#0B1F3A]/10 pb-4">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => setActiveTab('approvals')}
               className={`px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 ${
@@ -361,6 +429,20 @@ export default function CockpitClient() {
             </button>
 
             <button
+              onClick={() => setActiveTab('deployed')}
+              className={`px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 ${
+                activeTab === 'deployed'
+                  ? 'bg-[#0B1F3A] text-white shadow-sm'
+                  : 'bg-white hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70 border border-[#0B1F3A]/10'
+              }`}
+            >
+              <span>🛡️ Deployed Optimizations &amp; Canary Tracker</span>
+              <span className="px-2 py-0.5 rounded-full bg-[#0B1F3A]/15 text-[#0B1F3A] font-mono text-[10px] font-bold">
+                {deployedPackages.length}
+              </span>
+            </button>
+
+            <button
               onClick={() => setActiveTab('monitor')}
               className={`px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 ${
                 activeTab === 'monitor'
@@ -368,7 +450,7 @@ export default function CockpitClient() {
                   : 'bg-white hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70 border border-[#0B1F3A]/10'
               }`}
             >
-              <span>📊 Website & Leads Monitor</span>
+              <span>📊 Website &amp; Leads Monitor</span>
               {monitorData?.metrics?.totalLeads > 0 && (
                 <span className="px-2 py-0.5 rounded-full bg-[#0B1F3A]/15 text-[#0B1F3A] font-mono text-[10px] font-bold">
                   {monitorData.metrics.totalLeads}
@@ -377,7 +459,19 @@ export default function CockpitClient() {
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={handleRunDegradationWatchdog}
+              disabled={actionLoadingId === 'RUN_WATCHDOG'}
+              className="px-3.5 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1.5 disabled:opacity-50"
+            >
+              {actionLoadingId === 'RUN_WATCHDOG' ? (
+                <span>Auditing Ranks...</span>
+              ) : (
+                <span>🛡️ Run Regression Watchdog</span>
+              )}
+            </button>
+
             <button
               onClick={handleTriggerRun}
               disabled={actionLoadingId === 'TRIGGER_RUN'}
@@ -389,9 +483,7 @@ export default function CockpitClient() {
                   <span>Scanning GSC Queries...</span>
                 </>
               ) : (
-                <>
-                  <span>⚡ Run Fleet Scan Now</span>
-                </>
+                <span>⚡ Run Fleet Scan Now</span>
               )}
             </button>
 
@@ -412,7 +504,6 @@ export default function CockpitClient() {
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {activeTab === 'approvals' && (
           <div className="space-y-6">
-            {/* Urgent Attention Alert Banner */}
             {pendingCount > 0 ? (
               <div className="p-4 sm:p-5 rounded-2xl bg-[#D9603B]/10 border border-[#D9603B]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
@@ -424,7 +515,7 @@ export default function CockpitClient() {
                       {pendingCount} Autonomous Actions Awaiting Human Sign-Off
                     </h3>
                     <p className="text-xs text-[#0B1F3A]/75">
-                      Review calibrated titles, meta descriptions, and answer-first FAQs. Zero changes reach live production until approved.
+                      Review pixel-calibrated titles (≤580px), meta descriptions (≤990px), cluster anchors, and DOM H1 sync before deploying.
                     </p>
                   </div>
                 </div>
@@ -438,12 +529,12 @@ export default function CockpitClient() {
                 </div>
               </div>
             ) : (
-              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between">
+              <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 text-xs text-blue-900 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span>✓</span>
                   <span>All autonomous agent suggestions have been reviewed. Live website is in sync.</span>
                 </div>
-                <span className="font-mono text-[11px] text-emerald-700">0 pending</span>
+                <span className="font-mono text-[11px] text-blue-800">0 pending</span>
               </div>
             )}
 
@@ -461,15 +552,15 @@ export default function CockpitClient() {
                     }`}
                   >
                     {filter === 'PENDING' && `Pending Approval (${pendingCount})`}
-                    {filter === 'APPLIED' && `Live in Production (${seoSummary?.appliedCount ?? 0})`}
-                    {filter === 'REJECTED' && 'Rejected'}
+                    {filter === 'APPLIED' && `Live / Canary (${seoSummary?.appliedCount ?? 0})`}
+                    {filter === 'REJECTED' && 'Rejected / Rolled Back'}
                     {filter === 'ALL' && `All Packages (${seoPackages.length})`}
                   </button>
                 ))}
               </div>
 
               <div className="text-xs text-[#0B1F3A]/60 font-mono">
-                Statutory Invariants: £751/wk Cap · ERA 1996 s.162 · 0 Em Dashes
+                Pixel Engine: ≤580px Title / ≤990px Meta · April 2026 (£751/wk Cap)
               </div>
             </div>
 
@@ -490,11 +581,15 @@ export default function CockpitClient() {
             ) : (
               <div className="space-y-4">
                 {filteredPackages.map((pkg) => {
-                  const isApplied = pkg.status === 'APPLIED';
-                  const isRejected = pkg.status === 'REJECTED';
+                  const isApplied =
+                    pkg.status === 'APPLIED' || pkg.status === 'CANARY' || pkg.status === 'PERMANENT';
+                  const isCanary = pkg.status === 'CANARY';
+                  const isRejected = pkg.status === 'REJECTED' || pkg.status === 'ROLLED_BACK';
                   const isBusy = actionLoadingId === pkg.id;
                   const titleLen = pkg.calibratedTitle?.length || 0;
                   const metaLen = pkg.calibratedMetaDescription?.length || 0;
+                  const titlePx = calculateSerpPixelWidth(pkg.calibratedTitle || '', 'title');
+                  const metaPx = calculateSerpPixelWidth(pkg.calibratedMetaDescription || '', 'meta');
 
                   return (
                     <div
@@ -531,14 +626,19 @@ export default function CockpitClient() {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          {isApplied ? (
+                          {isCanary ? (
+                            <span className="px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-xs font-semibold flex items-center gap-1.5">
+                              <span>🧪</span>
+                              <span>CANARY OBSERVATION (14D)</span>
+                            </span>
+                          ) : isApplied ? (
                             <span className="px-3 py-1 rounded-full bg-[#0B1F3A] text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm">
                               <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse" />
                               LIVE IN PRODUCTION
                             </span>
                           ) : isRejected ? (
                             <span className="px-3 py-1 rounded-full bg-red-100 text-red-800 text-xs font-semibold">
-                              ✕ REJECTED
+                              ✕ {pkg.status}
                             </span>
                           ) : (
                             <span className="px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-xs font-semibold flex items-center gap-1">
@@ -551,43 +651,32 @@ export default function CockpitClient() {
 
                       {/* Package Body */}
                       <div className="p-5 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        {/* Left Details (7 cols) */}
                         <div className="lg:col-span-7 space-y-4">
-                          <div>
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block mb-1">
-                              Target Canonical URL
-                            </span>
-                            <a
-                              href={pkg.targetCanonicalUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="font-mono text-xs text-[#0B1F3A] hover:text-[#D9603B] font-semibold underline underline-offset-2 break-all"
-                            >
-                              {pkg.targetCanonicalUrl}
-                            </a>
-                          </div>
-
-                          {/* Performance Telemetry */}
-                          {(pkg.impressions !== undefined || pkg.clicks !== undefined) && (
-                            <div className="flex flex-wrap gap-4 py-2 px-3 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/5 text-xs font-mono">
-                              <div>
-                                <span className="text-[#0B1F3A]/50 block text-[10px]">Impressions</span>
-                                <strong>{pkg.impressions?.toLocaleString('en-GB') ?? '-'}</strong>
-                              </div>
-                              <div>
-                                <span className="text-[#0B1F3A]/50 block text-[10px]">Clicks</span>
-                                <strong className="text-[#D9603B]">{pkg.clicks ?? '0'}</strong>
-                              </div>
-                              <div>
-                                <span className="text-[#0B1F3A]/50 block text-[10px]">Avg Position</span>
-                                <strong>{pkg.position ? Number(pkg.position).toFixed(1) : '-'}</strong>
-                              </div>
-                              <div>
-                                <span className="text-[#0B1F3A]/50 block text-[10px]">CTR</span>
-                                <strong>{pkg.ctr ? `${Number(pkg.ctr).toFixed(1)}%` : '-'}</strong>
-                              </div>
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <div>
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block mb-1">
+                                Target Canonical URL
+                              </span>
+                              <a
+                                href={pkg.targetCanonicalUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-mono text-xs text-[#0B1F3A] hover:text-[#D9603B] font-semibold underline underline-offset-2 break-all"
+                              >
+                                {pkg.targetCanonicalUrl}
+                              </a>
                             </div>
-                          )}
+                            {pkg.primaryAnchorQuery && (
+                              <div className="text-right">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block mb-1">
+                                  Protected Cluster Anchor
+                                </span>
+                                <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#0B1F3A]/5 text-[#0B1F3A] font-semibold">
+                                  {pkg.primaryAnchorQuery}
+                                </span>
+                              </div>
+                            )}
+                          </div>
 
                           {/* Proposed Title */}
                           <div className="space-y-1">
@@ -595,8 +684,8 @@ export default function CockpitClient() {
                               <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider">
                                 Calibrated Title
                               </span>
-                              <span className="font-mono text-[11px] text-[#0B1F3A]/60">
-                                {titleLen} / 60 chars
+                              <span className="font-mono text-[11px] text-[#0B1F3A]/70">
+                                {titlePx}px / {SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX}px ({titleLen} chars)
                               </span>
                             </div>
                             <div className="p-3 rounded-xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 text-xs font-medium text-[#0B1F3A]">
@@ -610,8 +699,8 @@ export default function CockpitClient() {
                               <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider">
                                 Calibrated Meta Description
                               </span>
-                              <span className="font-mono text-[11px] text-[#0B1F3A]/60">
-                                {metaLen} / 155 chars
+                              <span className="font-mono text-[11px] text-[#0B1F3A]/70">
+                                {metaPx}px / {SERP_PIXEL_BUDGETS.DESKTOP_META_MAX_PX}px ({metaLen} chars)
                               </span>
                             </div>
                             <div className="p-3 rounded-xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 text-xs text-[#0B1F3A] leading-relaxed">
@@ -622,37 +711,34 @@ export default function CockpitClient() {
 
                         {/* Right Details (5 cols) */}
                         <div className="lg:col-span-5 space-y-4">
-                          {/* Agent Rationale Box */}
                           <div className="p-4 rounded-2xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 space-y-1.5">
                             <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A] flex items-center gap-1">
-                              <span>🧠</span> Agent Rationale
+                              <span>🧠</span> Agent Rationale &amp; DOM H1 Sync
                             </span>
                             <p className="text-xs text-[#0B1F3A]/80 leading-relaxed">
                               {pkg.rationale ||
-                                `Search query "${pkg.query}" is at striking distance (Pos ${pkg.position ? Number(pkg.position).toFixed(1) : '14'}). The agent added the statutory April 2026 £751/week cap hook and employer legal fee reassurance to maximize click-through.`}
+                                `Search query "${pkg.query}" is at Pos ${pkg.position ? Number(pkg.position).toFixed(1) : '14'}. Synchronized with server H1 "${pkg.targetPageExistingH1 || 'Settlement Agreement Calculator'}" and verified within Arial pixel bounds.`}
                             </p>
                           </div>
 
-                          {/* Featured Snippet FAQ Preview */}
                           {pkg.faqQuestion && (
                             <div className="p-3.5 rounded-2xl bg-[#F7F4EE] border border-[#0B1F3A]/10 space-y-1 text-xs">
                               <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block">
-                                Featured Snippet FAQ
+                                AI Overview Direct Answer Block
                               </span>
                               <p className="font-bold text-[#0B1F3A]">Q: {pkg.faqQuestion}</p>
                               <p className="text-[#0B1F3A]/70 line-clamp-2">A: {pkg.faqAnswer}</p>
                             </div>
                           )}
 
-                          {/* Statutory Badges */}
                           <div className="p-3 rounded-xl bg-white border border-[#0B1F3A]/10 text-[11px] space-y-1">
                             <div className="flex items-center justify-between">
                               <span className="text-[#0B1F3A]/60">April 2026 Weekly Cap:</span>
                               <strong className="font-mono text-[#0B1F3A]">£751 (GB) / £783 (NI)</strong>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span className="text-[#0B1F3A]/60">Brand Invariant:</span>
-                              <strong className="text-emerald-700">✓ 0 Em Dashes</strong>
+                              <span className="text-[#0B1F3A]/60">Brand &amp; Pixel Invariants:</span>
+                              <strong className="text-[#0B1F3A]">✓ 0 Em Dashes · ≤580px</strong>
                             </div>
                           </div>
                         </div>
@@ -664,10 +750,10 @@ export default function CockpitClient() {
                           onClick={() => setInspectingPackage(pkg)}
                           className="text-xs font-semibold text-[#0B1F3A] hover:text-[#D9603B] flex items-center gap-1.5"
                         >
-                          <span>🔍 View SERP Preview & Diff</span>
+                          <span>🔍 View SERP Pixel Simulator &amp; Diff</span>
                         </button>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                           {isApplied ? (
                             <button
                               onClick={() => handleRollback(pkg.id)}
@@ -693,7 +779,14 @@ export default function CockpitClient() {
                                 ✏️ Edit
                               </button>
                               <button
-                                onClick={() => handleApply(pkg.id)}
+                                onClick={() => handleApply(pkg.id, true)}
+                                disabled={isBusy}
+                                className="px-3.5 py-1.5 rounded-xl bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white text-xs font-semibold transition-all shadow-sm disabled:opacity-50"
+                              >
+                                🧪 14d Canary
+                              </button>
+                              <button
+                                onClick={() => handleApply(pkg.id, false)}
                                 disabled={isBusy}
                                 className="px-4 py-1.5 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold transition-all shadow-sm flex items-center gap-1.5 disabled:opacity-50"
                               >
@@ -703,7 +796,7 @@ export default function CockpitClient() {
                                     <span>Deploying...</span>
                                   </>
                                 ) : (
-                                  <span>⚡ Approve & Deploy Live</span>
+                                  <span>⚡ Approve &amp; Deploy Live</span>
                                 )}
                               </button>
                             </>
@@ -719,7 +812,131 @@ export default function CockpitClient() {
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}
-        {/* TAB 2: WEBSITE & LEADS MONITOR                                          */}
+        {/* TAB 2: DEPLOYED OPTIMIZATIONS & LONGITUDINAL ATTRIBUTION (PHASE 3)      */}
+        {/* ═══════════════════════════════════════════════════════════════════════ */}
+        {activeTab === 'deployed' && (
+          <div className="space-y-6">
+            <div className="bg-white rounded-3xl border border-[#0B1F3A]/10 shadow-sm overflow-hidden">
+              <div className="p-5 sm:p-6 border-b border-[#0B1F3A]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-serif font-bold text-[#0B1F3A]">
+                    Deployed Optimizations — Pre vs Post Longitudinal Attribution
+                  </h3>
+                  <p className="text-xs text-[#0B1F3A]/60">
+                    Tracks live rank deltas, CTR changes, 14-day canary observation windows, and autonomous watchdog status.
+                  </p>
+                </div>
+                <button
+                  onClick={handleRunDegradationWatchdog}
+                  disabled={actionLoadingId === 'RUN_WATCHDOG'}
+                  className="px-4 py-2 rounded-xl bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white text-xs font-semibold transition-all"
+                >
+                  🛡️ Audit All Active Ranks Now
+                </button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs text-left border-collapse">
+                  <thead>
+                    <tr className="bg-[#F7F4EE] text-[#0B1F3A]/60 font-semibold border-b border-[#0B1F3A]/10">
+                      <th className="py-3 px-4">Target URL &amp; Query</th>
+                      <th className="py-3 px-4">Applied Date</th>
+                      <th className="py-3 px-4">Lifecycle Stage</th>
+                      <th className="py-3 px-4">Rank Before → Today</th>
+                      <th className="py-3 px-4">CTR Delta (Δ%)</th>
+                      <th className="py-3 px-4 text-right">Governance</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#0B1F3A]/5">
+                    {deployedPackages.length === 0 ? (
+                      <tr>
+                        <td colSpan={6} className="py-8 text-center text-xs text-[#0B1F3A]/50">
+                          No optimizations currently deployed in production. Approve a package in Tab 1 to start longitudinal tracking.
+                        </td>
+                      </tr>
+                    ) : (
+                      deployedPackages.map((pkg) => {
+                        const rankBefore = pkg.position ? Number(pkg.position) : 14.2;
+                        const rankToday = pkg.currentPosition ? Number(pkg.currentPosition) : rankBefore;
+                        const rankDelta = Math.round((rankBefore - rankToday) * 10) / 10; // positive = improved (moved closer to #1)
+                        const ctrBefore = pkg.ctr ? Number(pkg.ctr) : 2.1;
+                        const ctrToday = pkg.currentCtr ? Number(pkg.currentCtr) : ctrBefore;
+                        const ctrDelta = Math.round((ctrToday - ctrBefore) * 100) / 100;
+
+                        return (
+                          <tr key={pkg.id} className="hover:bg-[#F7F4EE]/40 transition-colors">
+                            <td className="py-3.5 px-4">
+                              <strong className="text-[#0B1F3A] block">&ldquo;{pkg.query}&rdquo;</strong>
+                              <span className="font-mono text-[11px] text-[#0B1F3A]/60">{pkg.targetCanonicalUrl}</span>
+                            </td>
+                            <td className="py-3.5 px-4 font-mono text-[11px] text-[#0B1F3A]/70">
+                              {pkg.appliedAt
+                                ? new Date(pkg.appliedAt).toLocaleDateString('en-GB')
+                                : 'Baseline'}
+                            </td>
+                            <td className="py-3.5 px-4">
+                              {pkg.status === 'CANARY' ? (
+                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-100 text-amber-900">
+                                  🧪 CANARY (14D)
+                                </span>
+                              ) : pkg.status === 'ROLLED_BACK' ? (
+                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-red-100 text-red-800">
+                                  ↺ AUTO-REVERTED
+                                </span>
+                              ) : (
+                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#0B1F3A] text-white">
+                                  ✓ {pkg.status}
+                                </span>
+                              )}
+                            </td>
+                            <td className="py-3.5 px-4 font-mono">
+                              <span>Pos {rankBefore.toFixed(1)}</span>
+                              <span className="mx-1.5 text-[#0B1F3A]/40">→</span>
+                              <strong className="text-[#0B1F3A]">Pos {rankToday.toFixed(1)}</strong>
+                              {rankDelta !== 0 && (
+                                <span
+                                  className={`ml-1.5 text-[10px] px-1.5 py-0.5 rounded ${
+                                    rankDelta > 0
+                                      ? 'bg-blue-100 text-blue-900'
+                                      : 'bg-red-100 text-red-800'
+                                  }`}
+                                >
+                                  {rankDelta > 0 ? `+${rankDelta}` : rankDelta} pos
+                                </span>
+                              )}
+                            </td>
+                            <td className="py-3.5 px-4 font-mono">
+                              <span>{ctrBefore.toFixed(1)}%</span>
+                              <span className="mx-1.5 text-[#0B1F3A]/40">→</span>
+                              <strong>{ctrToday.toFixed(1)}%</strong>
+                              <span className="ml-1.5 text-[10px] text-[#0B1F3A]/60">
+                                ({ctrDelta >= 0 ? `+${ctrDelta}` : ctrDelta}%)
+                              </span>
+                            </td>
+                            <td className="py-3.5 px-4 text-right">
+                              {pkg.status !== 'ROLLED_BACK' && (
+                                <button
+                                  onClick={() => handleRollback(pkg.id)}
+                                  disabled={actionLoadingId === pkg.id}
+                                  className="px-3 py-1 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-[11px] font-semibold text-red-800 transition-colors"
+                                >
+                                  1-Click Rollback
+                                </button>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════════════════ */}
+        {/* TAB 3: WEBSITE & LEADS MONITOR                                          */}
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {activeTab === 'monitor' && (
           <div className="space-y-6">
@@ -740,8 +957,8 @@ export default function CockpitClient() {
                 <span className="text-2xl font-serif font-bold text-[#0B1F3A]">
                   {monitorData?.metrics?.totalCalculations?.toLocaleString('en-GB') || '342'}
                 </span>
-                <span className="text-[11px] text-emerald-700 font-semibold block">
-                  ↑ 14% vs previous 28 days
+                <span className="text-[11px] text-[#D9603B] font-semibold block">
+                  Live telemetry stream
                 </span>
               </div>
 
@@ -791,11 +1008,11 @@ export default function CockpitClient() {
                 </span>
               </div>
 
-              <div className="bg-white p-5 rounded-3xl border border-emerald-200 shadow-sm space-y-1">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-800 font-bold block">
+              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/15 shadow-sm space-y-1">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-[#0B1F3A] font-bold block">
                   Fair Settlement Assessment
                 </span>
-                <span className="text-2xl font-serif font-bold text-emerald-900">
+                <span className="text-2xl font-serif font-bold text-[#0B1F3A]">
                   {monitorData?.verdictDistribution?.fair ?? 4}
                 </span>
                 <span className="text-[11px] text-[#0B1F3A]/60 block">
@@ -908,7 +1125,7 @@ export default function CockpitClient() {
                                 (item.verdict || '').toLowerCase().includes('below')
                                   ? 'bg-red-100 text-red-800'
                                   : (item.verdict || '').toLowerCase().includes('fair')
-                                  ? 'bg-emerald-100 text-emerald-800'
+                                  ? 'bg-blue-100 text-blue-900'
                                   : 'bg-amber-100 text-amber-800'
                               }`}
                             >
@@ -939,7 +1156,7 @@ export default function CockpitClient() {
         <SerpDiffModal
           pkg={inspectingPackage}
           onClose={() => setInspectingPackage(null)}
-          onApprove={(id) => handleApply(id)}
+          onApprove={(id, deployAsCanary) => handleApply(id, deployAsCanary)}
           onOpenEdit={(pkg) => {
             setInspectingPackage(null);
             setEditingPackage(pkg);

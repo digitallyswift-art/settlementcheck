@@ -99,10 +99,19 @@ export class ConversionCopywriterAgent {
     const isTax = intent === 'TAX_STATUTORY_EXEMPTION' || /\btax\b/i.test(q) || /\bpilon\b/i.test(q);
     const isCompromise = intent === 'COMPROMISE_AGREEMENT_LEGACY' || /compromise/i.test(q);
     const isGov = intent === 'GOV_ACAS_BENCHMARK' || /\bgov\b/i.test(q) || /\bacas\b/i.test(q);
+    const isEmotionalDispute =
+      intent === 'EMOTIONAL_DISPUTE' ||
+      /constructive|discrimination|bullying|harassment|pressured|pip|sick leave|protected conversation|without prejudice/i.test(q);
 
     let candidates: string[] = [];
 
-    if (isTax) {
+    if (isEmotionalDispute) {
+      candidates = [
+        `Check your UK settlement rights under Section 203 ERA 1996 & ACAS guidelines. Free confidential review. Your employer covers your solicitor fee.`,
+        `Review your UK settlement agreement rights under Section 203 ERA 1996. Free confidential check. Your employer covers your independent solicitor fee.`,
+        `Check your UK settlement agreement rights under Section 203 ERA 1996 (£${taxFreeThreshold.toLocaleString('en-GB')} tax-free limit). Your employer covers your solicitor fee.`,
+      ];
+    } else if (isTax) {
       candidates = [
         `Calculate tax on your UK settlement agreement. See your £${taxFreeThreshold.toLocaleString('en-GB')} statutory tax exemption (ITEPA 2003). Free check. Your employer covers your legal fee.`,
         `Calculate how much tax you will pay on your UK settlement agreement. Free 2026 tax calculator (£${taxFreeThreshold.toLocaleString('en-GB')} exemption). Your employer covers your legal fee.`,
@@ -157,6 +166,16 @@ export class ConversionCopywriterAgent {
     const isTax = intent === 'TAX_STATUTORY_EXEMPTION' || /\btax\b/i.test(q) || /\bpilon\b/i.test(q);
     const isCompromise = intent === 'COMPROMISE_AGREEMENT_LEGACY' || /compromise/i.test(q);
     const isGov = intent === 'GOV_ACAS_BENCHMARK' || /\bgov\b/i.test(q) || /\bacas\b/i.test(q);
+    const isEmotionalDispute =
+      intent === 'EMOTIONAL_DISPUTE' ||
+      /constructive|discrimination|bullying|harassment|pressured|pip|sick leave|protected conversation|without prejudice/i.test(q);
+
+    if (isEmotionalDispute) {
+      return {
+        question: 'What are my legal rights when offered a UK settlement agreement?',
+        answer: `Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally binding after you receive independent advice from an SRA-regulated solicitor. Under ACAS Code of Practice 4, you should be given at least 10 calendar days to consider the offer, and your employer covers your legal fee.`,
+      };
+    }
 
     if (isTax) {
       return {
@@ -308,7 +327,10 @@ Return valid JSON:
         zeroBannedUsTerms: !hasBannedUs,
         ukSpellingVerified: mentionsSolicitor,
         employerFeesMentioned: mentionsEmployerFees,
-        statutoryAccuracyVerified: combinedText.includes(`£${weeklyCap}`) || combinedText.includes(`£${taxFree.toLocaleString('en-GB')}`),
+        statutoryAccuracyVerified:
+          combinedText.includes(`£${weeklyCap}`) ||
+          combinedText.includes(`£${taxFree.toLocaleString('en-GB')}`) ||
+          combinedText.includes('section 203'),
       },
     };
   }

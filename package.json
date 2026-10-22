@@ -16,6 +16,7 @@
     "sentinel:email": "node scripts/sentinel/send-digest-email.mjs",
     "sentinel:index": "node scripts/sentinel/test-indexing-api.mjs",
     "watchdog:sla": "node scripts/watchdog/sla-watchdog.mjs",
+    "watchdog:seo": "npx tsx scripts/watchdog/seo-degradation-watchdog.ts",
     "test:gsc": "node scripts/sentinel/test-gsc-connection.mjs",
     "audit:calc": "npx tsx scripts/audit/run-calculator-bva.ts",
     "audit:claims": "npx tsx scripts/audit/scan-marketing-claims.ts",

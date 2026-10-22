@@ -1,11 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import {
+  calculateSerpPixelWidth,
+  SERP_PIXEL_BUDGETS,
+} from '@/lib/agentic-engine/tools/serp-pixel-calculator';
 
 interface SerpDiffModalProps {
   pkg: any;
   onClose: () => void;
-  onApprove: (id: string) => void;
+  onApprove: (id: string, deployAsCanary?: boolean) => void;
   onOpenEdit: (pkg: any) => void;
   onOpenReject: (pkg: any) => void;
 }
@@ -30,8 +34,26 @@ export default function SerpDiffModal({
   const titleLen = title.length;
   const metaLen = metaDesc.length;
 
-  const titleOk = titleLen >= 45 && titleLen <= 65;
-  const metaOk = metaLen >= 135 && metaLen <= 160;
+  const titlePixels = calculateSerpPixelWidth(title, 'title');
+  const metaPixels = calculateSerpPixelWidth(metaDesc, 'meta');
+
+  const maxTitlePx =
+    deviceView === 'desktop'
+      ? SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX
+      : SERP_PIXEL_BUDGETS.MOBILE_TITLE_MAX_PX;
+  const maxMetaPx =
+    deviceView === 'desktop'
+      ? SERP_PIXEL_BUDGETS.DESKTOP_META_MAX_PX
+      : SERP_PIXEL_BUDGETS.MOBILE_META_MAX_PX;
+
+  const titlePxOk = titlePixels <= maxTitlePx && titlePixels >= SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MIN_PX;
+  const metaPxOk = metaPixels <= maxMetaPx && metaPixels >= 500;
+
+  const existingH1 =
+    pkg.targetPageExistingH1 ||
+    title.replace(/\s*\|\s*SettlementCheck$/i, '').trim();
+
+  const primaryClusterAnchor = pkg.primaryAnchorQuery || pkg.query;
 
   return (
     <div className="fixed inset-0 z-50 bg-[#0B1F3A]/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto font-sans">
@@ -69,7 +91,7 @@ export default function SerpDiffModal({
                   Google SERP Snippet Simulator
                 </span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#0B1F3A]/5 text-[#0B1F3A]/70">
-                  Live Pixel Approximation
+                  Arial 20px / 14px Pixel Bounding Box
                 </span>
               </div>
               <div className="flex items-center gap-1 bg-[#0B1F3A]/5 p-0.5 rounded-lg text-xs font-semibold">
@@ -79,7 +101,7 @@ export default function SerpDiffModal({
                     deviceView === 'desktop' ? 'bg-white shadow-sm text-[#0B1F3A]' : 'text-[#0B1F3A]/60'
                   }`}
                 >
-                  🖥️ Desktop
+                  🖥️ Desktop ({SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX}px)
                 </button>
                 <button
                   onClick={() => setDeviceView('mobile')}
@@ -87,7 +109,7 @@ export default function SerpDiffModal({
                     deviceView === 'mobile' ? 'bg-white shadow-sm text-[#0B1F3A]' : 'text-[#0B1F3A]/60'
                   }`}
                 >
-                  📱 Mobile
+                  📱 Mobile ({SERP_PIXEL_BUDGETS.MOBILE_TITLE_MAX_PX}px)
                 </button>
               </div>
             </div>
@@ -121,11 +143,11 @@ export default function SerpDiffModal({
                 {metaDesc}
               </p>
 
-              {/* FAQ Accordion Extension in SERP */}
+              {/* On-Page Direct Answer Preview */}
               {pkg.faqQuestion && (
                 <div className="pt-2 mt-2 border-t border-[#0B1F3A]/10 space-y-1">
-                  <span className="text-[11px] font-bold text-[#1a0dab] flex items-center gap-1 cursor-pointer">
-                    <span>▾</span> {pkg.faqQuestion}
+                  <span className="text-[11px] font-bold text-[#0B1F3A] flex items-center gap-1">
+                    <span>💡 AI Overview / Direct Answer Block:</span> {pkg.faqQuestion}
                   </span>
                   <p className="text-[11px] text-[#4d5156] pl-3 leading-normal line-clamp-2">
                     {pkg.faqAnswer}
@@ -135,99 +157,99 @@ export default function SerpDiffModal({
             </div>
           </div>
 
-          {/* 2. Character Budget Meters */}
+          {/* 2. Pixel Width & Character Budget Meters */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-3.5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10 space-y-1.5">
               <div className="flex items-center justify-between text-xs font-semibold">
-                <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider">Title Length</span>
+                <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider">
+                  Title Bounding Box (Arial 20px)
+                </span>
                 <span
                   className={`px-2 py-0.5 rounded text-[11px] font-mono ${
-                    titleOk ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                    titlePxOk ? 'bg-blue-100 text-blue-900' : 'bg-amber-100 text-amber-800'
                   }`}
                 >
-                  {titleLen} / 60 chars
+                  {titlePixels}px / {maxTitlePx}px ({titleLen} ch)
                 </span>
               </div>
               <div className="w-full h-2 rounded-full bg-[#0B1F3A]/10 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all ${
-                    titleLen > 65 ? 'bg-red-500' : titleLen < 45 ? 'bg-amber-500' : 'bg-emerald-600'
+                    titlePixels > maxTitlePx
+                      ? 'bg-red-500'
+                      : titlePixels < 320
+                      ? 'bg-amber-500'
+                      : 'bg-[#0B1F3A]'
                   }`}
-                  style={{ width: `${Math.min(100, (titleLen / 65) * 100)}%` }}
+                  style={{ width: `${Math.min(100, (titlePixels / maxTitlePx) * 100)}%` }}
                 />
               </div>
-              <span className="text-[10px] text-[#0B1F3A]/50 block">Target benchmark: 50 to 60 characters</span>
+              <span className="text-[10px] text-[#0B1F3A]/50 block">
+                Google clips desktop titles at ~580px ({titlePixels <= maxTitlePx ? '✓ Safe from ellipsis truncation' : '⚠️ Exceeds pixel bound'})
+              </span>
             </div>
 
             <div className="p-3.5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10 space-y-1.5">
               <div className="flex items-center justify-between text-xs font-semibold">
-                <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider">Meta Description</span>
+                <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider">
+                  Meta Bounding Box (Arial 14px)
+                </span>
                 <span
                   className={`px-2 py-0.5 rounded text-[11px] font-mono ${
-                    metaOk ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                    metaPxOk ? 'bg-blue-100 text-blue-900' : 'bg-amber-100 text-amber-800'
                   }`}
                 >
-                  {metaLen} / 155 chars
+                  {metaPixels}px / {maxMetaPx}px ({metaLen} ch)
                 </span>
               </div>
               <div className="w-full h-2 rounded-full bg-[#0B1F3A]/10 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all ${
-                    metaLen > 165 ? 'bg-red-500' : metaLen < 130 ? 'bg-amber-500' : 'bg-emerald-600'
+                    metaPixels > maxMetaPx
+                      ? 'bg-red-500'
+                      : metaPixels < 500
+                      ? 'bg-amber-500'
+                      : 'bg-[#0B1F3A]'
                   }`}
-                  style={{ width: `${Math.min(100, (metaLen / 160) * 100)}%` }}
+                  style={{ width: `${Math.min(100, (metaPixels / maxMetaPx) * 100)}%` }}
                 />
               </div>
-              <span className="text-[10px] text-[#0B1F3A]/50 block">Target benchmark: 140 to 155 characters</span>
+              <span className="text-[10px] text-[#0B1F3A]/50 block">
+                Google clips desktop snippets at ~990px ({metaPixels <= maxMetaPx ? '✓ Safe from truncation' : '⚠️ Exceeds pixel bound'})
+              </span>
             </div>
           </div>
 
-          {/* 3. Deep Agent Rationale & Search Intent */}
+          {/* 3. On-Page DOM Heading Synchronization & Multi-Query Cluster Shield */}
+          <div className="p-4 rounded-2xl bg-white border border-[#0B1F3A]/10 space-y-2 text-xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A]/70 block">
+              DOM Intent Synchronization &amp; Cannibalization Shield
+            </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div className="p-2.5 rounded-xl bg-[#F7F4EE]/60 border border-[#0B1F3A]/10">
+                <span className="text-[10px] text-[#0B1F3A]/50 block font-mono uppercase">
+                  Server-Rendered Page &lt;h1&gt;
+                </span>
+                <strong className="text-[#0B1F3A] block mt-0.5">{existingH1}</strong>
+              </div>
+              <div className="p-2.5 rounded-xl bg-[#F7F4EE]/60 border border-[#0B1F3A]/10">
+                <span className="text-[10px] text-[#0B1F3A]/50 block font-mono uppercase">
+                  Protected Cluster Anchor
+                </span>
+                <strong className="text-[#D9603B] block mt-0.5">&ldquo;{primaryClusterAnchor}&rdquo;</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* 4. Deep Agent Rationale & Search Intent */}
           <div className="p-4 rounded-2xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A] flex items-center gap-1.5">
-              <span>🧠</span> Autonomous Agent Rationale & Strategy
+              <span>🧠</span> Autonomous Agent Rationale &amp; Strategy
             </span>
             <p className="text-xs text-[#0B1F3A]/85 leading-relaxed">
               {pkg.rationale ||
-                `Search query "${pkg.query}" is currently ranking at average position ${pkg.position ? Number(pkg.position).toFixed(1) : '14.2'} with ${pkg.impressions?.toLocaleString('en-GB') || '500+'} monthly impressions. The agent calibrated the title and description to include the statutory April 2026 £751/week cap hook, ACAS guidance, and employer legal fee reassurance to capture high-intent employee click-through.`}
+                `Search query "${pkg.query}" is currently ranking at average position ${pkg.position ? Number(pkg.position).toFixed(1) : '14.2'} with ${pkg.impressions?.toLocaleString('en-GB') || '500+'} monthly impressions. The agent calibrated the title (${titlePixels}px) and description (${metaPixels}px) within Google's Arial pixel bounding box while protecting primary cluster anchor "${primaryClusterAnchor}".`}
             </p>
-          </div>
-
-          {/* 4. Statutory & Quality Invariant Audits */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl bg-white border border-[#0B1F3A]/10 space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A] block">
-                Statutory Employment Law Check
-              </span>
-              <ul className="text-xs text-[#0B1F3A]/80 space-y-1">
-                <li className="flex items-center gap-1.5 text-emerald-800">
-                  <span>✓</span> Employment Rights Act 1996 s.162 (£751/wk cap)
-                </li>
-                <li className="flex items-center gap-1.5 text-emerald-800">
-                  <span>✓</span> Section 203(3) ERA 1996 Independent Solicitor
-                </li>
-                <li className="flex items-center gap-1.5 text-emerald-800">
-                  <span>✓</span> ITEPA 2003 s.403 (£30k tax exemption cited)
-                </li>
-              </ul>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white border border-[#0B1F3A]/10 space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A] block">
-                Anti-AI & Brand Standards
-              </span>
-              <ul className="text-xs text-[#0B1F3A]/80 space-y-1">
-                <li className="flex items-center gap-1.5 text-emerald-800">
-                  <span>✓</span> Zero Em Dashes (Brand Rule Compliance)
-                </li>
-                <li className="flex items-center gap-1.5 text-emerald-800">
-                  <span>✓</span> Plain UK English (Solicitor, not lawyer/attorney)
-                </li>
-                <li className="flex items-center gap-1.5 text-emerald-800">
-                  <span>✓</span> Authenticity Score: 94% (High burstiness)
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
 
@@ -240,7 +262,7 @@ export default function SerpDiffModal({
             ✕ Reject Recommendation
           </button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => onOpenEdit(pkg)}
               className="px-4 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-colors"
@@ -248,10 +270,16 @@ export default function SerpDiffModal({
               ✏️ Edit Before Approving
             </button>
             <button
-              onClick={() => onApprove(pkg.id)}
+              onClick={() => onApprove(pkg.id, true)}
+              className="px-4 py-2 rounded-xl bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white text-xs font-semibold transition-all shadow-sm"
+            >
+              🧪 Deploy 14-Day Canary
+            </button>
+            <button
+              onClick={() => onApprove(pkg.id, false)}
               className="px-5 py-2 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold transition-all shadow-sm flex items-center gap-1.5"
             >
-              <span>⚡ 1-Click Approve & Deploy Live →</span>
+              <span>⚡ 1-Click Approve &amp; Deploy Live →</span>
             </button>
           </div>
         </div>

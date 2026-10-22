@@ -1,12 +1,14 @@
 /**
  * Specialist SEO Architect Agent
  * Specialises in technical SEO, intent classification, programmatic page architecture,
- * Schema.org JSON-LD generation, character-calibrated constraints, and statutory E-E-A-T compliance.
+ * Schema.org JSON-LD generation, pixel-calibrated constraints, and statutory E-E-A-T compliance.
  */
 
 import { callAI } from '@/lib/ai/gateway';
 import { STATUTORY_RATES_2026_27 } from '@/lib/statutory-rates';
-import { SeoSearchIntent, SeoTechnicalBrief } from '../types';
+import { classifyStatutoryRequirementCategory } from '../guardrails/sra-boundary-guard';
+import { SERP_PIXEL_BUDGETS } from '../tools/serp-pixel-calculator';
+import { QueryClusterProfile, SeoSearchIntent, SeoTechnicalBrief } from '../types';
 
 export interface SeoAuditContext {
   query: string;
@@ -15,10 +17,29 @@ export interface SeoAuditContext {
   position: number;
   ctr: number;
   targetUrl?: string;
+  queryClusterProfile?: QueryClusterProfile;
+  targetPageExistingH1?: string;
 }
 
 export class SeoArchitectAgent {
   public static readonly DOMAIN = 'https://settlementcheck.co.uk';
+
+  /**
+   * Canonical baseline H1 headings per route to enforce Title-to-H1 DOM alignment
+   */
+  public static readonly CANONICAL_ROUTE_H1_MAP: Record<string, string> = {
+    '/': 'Settlement Agreement Calculator & Free Solicitor Check UK',
+    '/calculator/': 'Free Employee Settlement Agreement Calculator UK (2026 Rates)',
+    '/calculators/': 'UK Employment & Settlement Agreement Calculators (2026)',
+    '/redundancy-calculator/': 'Statutory Redundancy Pay Calculator UK (2026 Rates)',
+    '/unfair-dismissal-calculator/': 'Unfair Dismissal Compensation Calculator UK (2026)',
+    '/constructive-dismissal-calculator/': 'Constructive Dismissal Payout Calculator UK (2026)',
+    '/settlement-agreement-tax-calculator/': 'Settlement Agreement Tax Calculator (£30,000 Exemption)',
+    '/protective-award-calculator/': 'Protective Award Calculator UK (90 Days Gross Pay)',
+    '/pip-settlement-calculator/': 'PIP Settlement Agreement Calculator UK',
+    '/guides/compromise-agreement-calculator-uk/': 'Compromise Agreement Calculator UK (2026 Statutory Guide)',
+    '/guides/how-to-negotiate-a-settlement-agreement/': 'How to Negotiate a Settlement Agreement in the UK',
+  };
 
   /**
    * Deterministically classifies search query intent
@@ -34,6 +55,19 @@ export class SeoArchitectAgent {
     }
     if (q.includes('gov') || q.includes('acas')) {
       return 'GOV_ACAS_BENCHMARK';
+    }
+    if (
+      q.includes('constructive') ||
+      q.includes('discrimination') ||
+      q.includes('bullying') ||
+      q.includes('harassment') ||
+      q.includes('pressured') ||
+      q.includes('pip') ||
+      q.includes('sick leave') ||
+      q.includes('protected conversation') ||
+      q.includes('without prejudice')
+    ) {
+      return 'EMOTIONAL_DISPUTE';
     }
     if (q.includes('redundancy') || q.includes('severance') || q.includes('unfair') || q.includes('tribunal') || q.includes('dismissal')) {
       return 'REDUNDANCY_DISPUTE';
@@ -63,6 +97,12 @@ export class SeoArchitectAgent {
       }
     }
 
+    const q = query.toLowerCase();
+    if (q.includes('constructive')) return '/constructive-dismissal-calculator/';
+    if (q.includes('pip')) return '/pip-settlement-calculator/';
+    if (q.includes('discrimination')) return '/guides/discrimination-settlement-agreements/';
+    if (q.includes('pressured')) return '/guides/pressured-to-sign/';
+
     switch (intent) {
       case 'COMPROMISE_AGREEMENT_LEGACY':
         return '/guides/compromise-agreement-calculator-uk/';
@@ -74,6 +114,8 @@ export class SeoArchitectAgent {
         return '/calculator/';
       case 'REDUNDANCY_DISPUTE':
         return '/redundancy-calculator/';
+      case 'EMOTIONAL_DISPUTE':
+        return '/guides/how-to-negotiate-a-settlement-agreement/';
       case 'SOLICITOR_SELECTION':
         return '/for-solicitors/';
       case 'GENERAL_SETTLEMENT':
@@ -90,8 +132,8 @@ export class SeoArchitectAgent {
       '/',
       '/calculator/',
       '/guides/how-to-negotiate-a-settlement-agreement/',
-      '/guides/how-much-should-i-ask-for-in-a-settlement-agreement/',
-      '/guides/without-prejudice-rules-uk-settlement-agreements/',
+      '/guides/settlement-agreement-how-much/',
+      '/guides/protected-conversations-without-prejudice/',
     ];
 
     // Filter out the destination itself
@@ -103,8 +145,10 @@ export class SeoArchitectAgent {
    */
   public static async generateTechnicalBrief(context: SeoAuditContext): Promise<SeoTechnicalBrief> {
     const intent = this.classifyIntent(context.query);
+    const statutoryCategory = classifyStatutoryRequirementCategory(context.query);
     const destinationRoute = this.resolveCanonicalRoute(context.query, intent, context.targetUrl);
     const sourceRoutes = this.resolveInternalLinkSources(destinationRoute);
+    const isCalculatorRoute = destinationRoute.includes('calculator');
 
     const statutoryInvariants = {
       weeklyCapGB: STATUTORY_RATES_2026_27.weeklyCapGB, // £751
@@ -114,7 +158,12 @@ export class SeoArchitectAgent {
       protectiveAwardDays: 90, // TULRCA 1992 s.189
     };
 
-    // Construct deterministic brief
+    const existingH1 =
+      context.targetPageExistingH1 ||
+      this.CANONICAL_ROUTE_H1_MAP[destinationRoute] ||
+      `${context.query.replace(/\b\w/g, c => c.toUpperCase())} UK (2026 Guide)`;
+
+    // Construct deterministic brief (deprecating commercial FAQPage schema in favor of WebApplication / Article)
     const brief: SeoTechnicalBrief = {
       query: context.query,
       currentMetrics: {
@@ -124,16 +173,21 @@ export class SeoArchitectAgent {
         ctr: context.ctr,
       },
       searchIntent: intent,
+      statutoryCategory,
       targetCanonicalUrl: `${this.DOMAIN}${destinationRoute}`,
+      targetPageExistingH1: existingH1,
+      queryClusterProfile: context.queryClusterProfile,
       characterBudgets: {
         titleMin: 50,
         titleMax: 60,
         metaMin: 140,
         metaMax: 155,
+        titleMaxPixels: SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX,
+        metaMaxPixels: SERP_PIXEL_BUDGETS.DESKTOP_META_MAX_PX,
       },
       statutoryInvariants,
       schemaSpecification: {
-        type: intent === 'TRANSACTIONAL_CALCULATOR' ? 'WebApplication' : 'FAQPage',
+        type: isCalculatorRoute ? 'WebApplication' : 'Article',
         primarySubject: context.query,
         targetFaqQuestion: `How does ${context.query} work under UK employment law?`,
       },
@@ -149,14 +203,16 @@ export class SeoArchitectAgent {
       const prompt = `
 You are the senior SEO Architect for SettlementCheck (settlementcheck.co.uk).
 Review this technical brief for query "${context.query}" (Rank: ${context.position}, Impressions: ${context.impressions}).
-Confirm or refine the single most high-intent Schema FAQ question for UK employment law.
+Confirm or refine the single most high-intent direct-answer question for UK employment law.
 Search Intent: ${intent}
-Statutory Caps to honor: £751/week cap (April 2026), £30,000 ITEPA tax-free exemption.
+Statutory Category: ${statutoryCategory}
+Statutory Caps to honor: £751/week cap (April 2026), £30,000 ITEPA tax-free exemption, Section 203 ERA 1996.
+Note: Standalone commercial FAQPage schema is deprecated; use "WebApplication", "Article", or "HowTo".
 
 Return a JSON object:
 {
   "refinedFaqQuestion": string,
-  "schemaType": "FAQPage" | "WebApplication" | "HowTo"
+  "schemaType": "WebApplication" | "Article" | "HowTo"
 }
 `;
 
@@ -171,7 +227,7 @@ Return a JSON object:
         if (data.refinedFaqQuestion) {
           brief.schemaSpecification.targetFaqQuestion = String(data.refinedFaqQuestion);
         }
-        if (data.schemaType) {
+        if (data.schemaType && data.schemaType !== 'FAQPage') {
           brief.schemaSpecification.type = data.schemaType;
         }
       }

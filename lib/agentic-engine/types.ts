@@ -251,8 +251,21 @@ export type SeoSearchIntent =
   | 'TAX_STATUTORY_EXEMPTION'
   | 'GOV_ACAS_BENCHMARK'
   | 'REDUNDANCY_DISPUTE'
+  | 'EMOTIONAL_DISPUTE'
   | 'SOLICITOR_SELECTION'
   | 'GENERAL_SETTLEMENT';
+
+export type SeoStatutoryCategory = 'FINANCIAL_CALCULATION' | 'EMOTIONAL_DISPUTE';
+
+export interface QueryClusterProfile {
+  targetPage: string;
+  primaryAnchorQuery: string;
+  primaryAnchorImpressions: number;
+  strikingDistanceCandidates: string[];
+  longTailVariants: string[];
+  totalClusterImpressions: number;
+  totalClusterClicks: number;
+}
 
 export interface SeoTechnicalBrief {
   query: string;
@@ -263,12 +276,17 @@ export interface SeoTechnicalBrief {
     ctr: number;
   };
   searchIntent: SeoSearchIntent;
+  statutoryCategory?: SeoStatutoryCategory;
   targetCanonicalUrl: string;
+  targetPageExistingH1?: string;
+  queryClusterProfile?: QueryClusterProfile;
   characterBudgets: {
     titleMin: number;
     titleMax: number;
     metaMin: number;
     metaMax: number;
+    titleMaxPixels?: number;
+    metaMaxPixels?: number;
   };
   statutoryInvariants: {
     weeklyCapGB: number;
@@ -278,7 +296,7 @@ export interface SeoTechnicalBrief {
     protectiveAwardDays: number;
   };
   schemaSpecification: {
-    type: 'FAQPage' | 'WebApplication' | 'HowTo';
+    type: 'WebApplication' | 'Article' | 'HowTo' | 'FAQPage';
     primarySubject: string;
     targetFaqQuestion: string;
   };
@@ -336,6 +354,15 @@ export interface AntiAiQualityVerdict {
   humanTouchImprovements: string[];
 }
 
+export type SeoActionLifecycleStatus =
+  | 'STAGED'
+  | 'VALIDATED'
+  | 'CANARY'
+  | 'APPLIED'
+  | 'PERMANENT'
+  | 'ROLLED_BACK'
+  | 'REJECTED';
+
 export interface AutonomousSeoActionPackage {
   id: string;
   query: string;
@@ -346,7 +373,7 @@ export interface AutonomousSeoActionPackage {
   statutoryAudit: StatutoryAuditVerdict;
   antiAiQuality: AntiAiQualityVerdict;
   stagedDiffSummary: string;
-  status: 'STAGED' | 'APPLIED' | 'VALIDATED' | 'REJECTED';
+  status: SeoActionLifecycleStatus;
   timestamp: string;
 }
 

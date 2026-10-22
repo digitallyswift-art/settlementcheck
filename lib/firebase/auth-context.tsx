@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
@@ -45,18 +45,37 @@ const DEV_AUTH_STORAGE_KEY = 'sc_cockpit_admin_auth';
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const fbUserRef = useRef<User | null>(null);
+  const cachedTokenRef = useRef<string | null>(null);
+
+  const syncFirebaseTokenCookie = async (fbUser: User): Promise<string | null> => {
+    try {
+      const token = await fbUser.getIdToken();
+      cachedTokenRef.current = token;
+      if (typeof document !== 'undefined' && token) {
+        document.cookie = `sc_cockpit_auth=${token}; path=/; SameSite=Lax`;
+      }
+      return token;
+    } catch (err) {
+      console.warn('Failed to sync Firebase ID token:', err);
+      return null;
+    }
+  };
 
   useEffect(() => {
     // 1. If Firebase is active and initialized
     if (isFirebaseConfigured && auth) {
-      const unsubscribe = onAuthStateChanged(auth, (fbUser: User | null) => {
+      const unsubscribe = onAuthStateChanged(auth, async (fbUser: User | null) => {
+        fbUserRef.current = fbUser;
         if (fbUser) {
+          await syncFirebaseTokenCookie(fbUser);
           setUser({
             uid: fbUser.uid,
             email: fbUser.email,
             displayName: fbUser.displayName,
           });
         } else {
+          cachedTokenRef.current = null;
           // Check if dev fallback is stored
           checkDevSession();
         }
@@ -74,6 +93,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (typeof window !== 'undefined') {
       const devAuth = sessionStorage.getItem(DEV_AUTH_STORAGE_KEY);
       if (devAuth === 'true') {
+        cachedTokenRef.current = 'dev-passkey-admin2026';
+        document.cookie = 'sc_cockpit_auth=dev-passkey-admin2026; path=/; SameSite=Lax';
         setUser({
           uid: 'dev-admin-uid',
           email: 'admin@settlementcheck.co.uk',
@@ -92,6 +113,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     try {
       const cred = await signInWithEmailAndPassword(auth, email, pass);
+      fbUserRef.current = cred.user;
+      await syncFirebaseTokenCookie(cred.user);
       setUser({
         uid: cred.user.uid,
         email: cred.user.email,
@@ -110,6 +133,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const provider = new GoogleAuthProvider();
       const cred = await signInWithPopup(auth, provider);
+      fbUserRef.current = cred.user;
+      await syncFirebaseTokenCookie(cred.user);
       setUser({
         uid: cred.user.uid,
         email: cred.user.email,
@@ -125,6 +150,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Allows administrator access while awaiting Firebase credential deployment
     const clean = passkey.trim();
     if (clean === 'admin2026' || clean === '568912' || clean === 'settlementcheck') {
+      cachedTokenRef.current = 'dev-passkey-admin2026';
       if (typeof window !== 'undefined') {
         sessionStorage.setItem(DEV_AUTH_STORAGE_KEY, 'true');
         document.cookie = 'sc_cockpit_auth=dev-passkey-admin2026; path=/; SameSite=Lax';
@@ -141,16 +167,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const getIdToken = async (): Promise<string | null> => {
-    if (auth?.currentUser) {
-      try {
-        const token = await auth.currentUser.getIdToken();
-        if (typeof document !== 'undefined') {
-          document.cookie = `sc_cockpit_auth=${token}; path=/; SameSite=Lax`;
-        }
-        return token;
-      } catch (err) {
-        console.warn('Failed to retrieve Firebase ID token:', err);
-      }
+    const activeFbUser = auth?.currentUser || fbUserRef.current;
+    if (activeFbUser) {
+      const token = await syncFirebaseTokenCookie(activeFbUser);
+      if (token) return token;
+    }
+    if (cachedTokenRef.current) {
+      return cachedTokenRef.current;
     }
     if (typeof window !== 'undefined') {
       const devAuth = sessionStorage.getItem(DEV_AUTH_STORAGE_KEY);
@@ -162,6 +185,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
+    fbUserRef.current = null;
+    cachedTokenRef.current = null;
     if (auth && isFirebaseConfigured) {
       try {
         await firebaseSignOut(auth);

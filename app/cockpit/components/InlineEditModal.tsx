@@ -1,6 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import {
+  calculateSerpPixelWidth,
+  SERP_PIXEL_BUDGETS,
+} from '@/lib/agentic-engine/tools/serp-pixel-calculator';
 
 interface InlineEditModalProps {
   pkg: any;
@@ -17,6 +21,8 @@ export default function InlineEditModal({ pkg, onClose, onSaveAndApply }: Inline
 
   const titleLen = title.length;
   const metaLen = metaDesc.length;
+  const titlePixels = calculateSerpPixelWidth(title, 'title');
+  const metaPixels = calculateSerpPixelWidth(metaDesc, 'meta');
   const hasEmDash = title.includes('—') || metaDesc.includes('—') || faqA.includes('—');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -73,12 +79,12 @@ export default function InlineEditModal({ pkg, onClose, onSaveAndApply }: Inline
               <label className="text-[#0B1F3A]">Calibrated Page Title</label>
               <span
                 className={`font-mono text-[11px] px-2 py-0.5 rounded ${
-                  titleLen >= 45 && titleLen <= 65
-                    ? 'bg-emerald-100 text-emerald-800'
+                  titlePixels <= SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX && titleLen >= 45
+                    ? 'bg-blue-100 text-blue-900'
                     : 'bg-amber-100 text-amber-800'
                 }`}
               >
-                {titleLen} / 60 chars
+                {titlePixels}px / {SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX}px ({titleLen} ch)
               </span>
             </div>
             <input
@@ -96,12 +102,12 @@ export default function InlineEditModal({ pkg, onClose, onSaveAndApply }: Inline
               <label className="text-[#0B1F3A]">Calibrated Meta Description</label>
               <span
                 className={`font-mono text-[11px] px-2 py-0.5 rounded ${
-                  metaLen >= 135 && metaLen <= 160
-                    ? 'bg-emerald-100 text-emerald-800'
+                  metaPixels <= SERP_PIXEL_BUDGETS.DESKTOP_META_MAX_PX && metaLen >= 130
+                    ? 'bg-blue-100 text-blue-900'
                     : 'bg-amber-100 text-amber-800'
                 }`}
               >
-                {metaLen} / 155 chars
+                {metaPixels}px / {SERP_PIXEL_BUDGETS.DESKTOP_META_MAX_PX}px ({metaLen} ch)
               </span>
             </div>
             <textarea
@@ -116,7 +122,7 @@ export default function InlineEditModal({ pkg, onClose, onSaveAndApply }: Inline
           {/* FAQ Question */}
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-[#0B1F3A] block">
-              Featured Snippet FAQ Question
+              Featured Snippet / AI Overview Question
             </label>
             <input
               type="text"
@@ -129,7 +135,7 @@ export default function InlineEditModal({ pkg, onClose, onSaveAndApply }: Inline
           {/* FAQ Answer */}
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-[#0B1F3A] block">
-              Featured Snippet FAQ Answer
+              Featured Snippet / AI Overview Answer
             </label>
             <textarea
               rows={3}
@@ -159,7 +165,7 @@ export default function InlineEditModal({ pkg, onClose, onSaveAndApply }: Inline
                   <span>Deploying to Live...</span>
                 </>
               ) : (
-                <span>⚡ Save & Deploy Live Now →</span>
+                <span>⚡ Save &amp; Deploy Live Now →</span>
               )}
             </button>
           </div>

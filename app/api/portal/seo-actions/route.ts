@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import fs from 'fs';
 import path from 'path';
 import { supabase } from '@/lib/supabase';
@@ -7,6 +7,20 @@ import { SeoActuatorService } from '@/lib/agentic-engine/services/seo-actuator-s
 import { GoogleIndexingClient } from '@/lib/agentic-engine/services/google-indexing-client';
 
 export const dynamic = 'force-dynamic';
+
+function revalidateSeoRouteAndTag(urlOrPath: string) {
+  const pathName = SeoActuatorService.normalizePath(urlOrPath);
+  const tag = SeoActuatorService.getCacheTagForPath(pathName);
+  try {
+    revalidateTag(tag);
+    revalidateTag('seo-metadata-all');
+  } catch {}
+  try {
+    revalidatePath(pathName, 'page');
+    revalidatePath('/sitemap.xml');
+    revalidatePath('/', 'layout');
+  } catch {}
+}
 
 export async function GET(req: NextRequest) {
   try {
@@ -36,9 +50,13 @@ export async function GET(req: NextRequest) {
       } catch {}
     }
 
-    const appliedCount = allPackages.filter(p => p.status === 'APPLIED').length;
+    const appliedCount = allPackages.filter(
+      p => p.status === 'APPLIED' || p.status === 'CANARY' || p.status === 'PERMANENT'
+    ).length;
+    const canaryCount = allPackages.filter(p => p.status === 'CANARY').length;
     const validatedCount = allPackages.filter(p => p.status === 'VALIDATED').length;
     const stagedCount = allPackages.filter(p => p.status === 'STAGED').length;
+    const regressionCount = allPackages.filter(p => Boolean(p.regressionAlert)).length;
 
     return NextResponse.json({
       success: true,
@@ -46,8 +64,10 @@ export async function GET(req: NextRequest) {
       summary: {
         totalPackages: allPackages.length,
         appliedCount,
+        canaryCount,
         validatedCount,
         stagedCount,
+        regressionCount,
         latestRunCount: liveLogs.length,
       },
       packages: allPackages.slice(0, limit),
@@ -75,7 +95,8 @@ export async function POST(req: NextRequest) {
     }
 
     switch (action) {
-      case 'APPLY': {
+      case 'APPLY':
+      case 'APPLY_CANARY': {
         if (!packageId) {
           return NextResponse.json(
             { success: false, error: 'packageId is required for APPLY' },
@@ -86,13 +107,12 @@ export async function POST(req: NextRequest) {
           triggerIndexing: true,
           expectedVersion: body.expectedVersion,
           actorId: body.actorId || 'COCKPIT_ADMIN',
+          deployAsCanary: action === 'APPLY_CANARY' || Boolean(body.deployAsCanary),
           revalidate: async (urlOrPath) => {
-            const pathName = SeoActuatorService.normalizePath(urlOrPath);
-            revalidatePath(pathName, 'page');
-            revalidatePath('/', 'layout');
+            revalidateSeoRouteAndTag(urlOrPath);
           },
         });
-        const status = result.success ? 200 : (result.error?.includes('OCC Conflict') ? 409 : 400);
+        const status = result.success ? 200 : result.error?.includes('OCC Conflict') ? 409 : 400;
         return NextResponse.json(result, { status });
       }
 
@@ -103,19 +123,18 @@ export async function POST(req: NextRequest) {
             { status: 400 }
           );
         }
-        const result = await SeoActuatorService.rollbackPackage(packageId);
-        try {
-          revalidatePath('/', 'layout');
-        } catch {}
+        const result = await SeoActuatorService.rollbackPackage(packageId, {
+          revalidate: async (urlOrPath) => {
+            revalidateSeoRouteAndTag(urlOrPath);
+          },
+        });
         return NextResponse.json(result);
       }
 
       case 'APPLY_ALL': {
         const result = await SeoActuatorService.applyAllValidated({
           revalidate: async (urlOrPath) => {
-            const pathName = SeoActuatorService.normalizePath(urlOrPath);
-            revalidatePath(pathName, 'page');
-            revalidatePath('/', 'layout');
+            revalidateSeoRouteAndTag(urlOrPath);
           },
         });
         return NextResponse.json(result);
@@ -130,7 +149,7 @@ export async function POST(req: NextRequest) {
         }
         const result = await SeoActuatorService.rejectPackage(packageId, body.reason);
         try {
-          revalidatePath('/', 'layout');
+          revalidateTag('seo-metadata-all');
         } catch {}
         return NextResponse.json(result);
       }
@@ -146,12 +165,10 @@ export async function POST(req: NextRequest) {
           expectedVersion: body.expectedVersion,
           actorId: body.actorId || 'COCKPIT_ADMIN',
           revalidate: async (urlOrPath) => {
-            const pathName = SeoActuatorService.normalizePath(urlOrPath);
-            revalidatePath(pathName, 'page');
-            revalidatePath('/', 'layout');
+            revalidateSeoRouteAndTag(urlOrPath);
           },
         });
-        const status = result.success ? 200 : (result.error?.includes('OCC Conflict') ? 409 : 400);
+        const status = result.success ? 200 : result.error?.includes('OCC Conflict') ? 409 : 400;
         return NextResponse.json(result, { status });
       }
 
@@ -160,7 +177,10 @@ export async function POST(req: NextRequest) {
           const { GoogleSearchConsoleClient } = await import('@/lib/agentic-engine/services/gsc-client');
           const { AutonomousSeoActionService } = await import('@/lib/agentic-engine/services/autonomous-seo-actions');
           const gscData = await GoogleSearchConsoleClient.pullLatestSearchData();
-          const digest = await AutonomousSeoActionService.executeActionPipeline(gscData, { batchLimit: 8, sendEmail: false });
+          const digest = await AutonomousSeoActionService.executeActionPipeline(gscData, {
+            batchLimit: 8,
+            sendEmail: false,
+          });
           return NextResponse.json({
             success: true,
             runId: digest.runId,
@@ -171,6 +191,26 @@ export async function POST(req: NextRequest) {
         } catch (err: any) {
           return NextResponse.json(
             { success: false, error: `Fleet scan execution failed: ${err.message}` },
+            { status: 500 }
+          );
+        }
+      }
+
+      case 'RUN_DEGRADATION_WATCHDOG': {
+        try {
+          const { seoDegradationWatchdogWorker } = await import(
+            '@/lib/agentic-engine/workers/seo-degradation-watchdog-worker'
+          );
+          const report = await seoDegradationWatchdogWorker.execute({
+            autoRollbackEnabled: body.autoRollbackEnabled !== false,
+          });
+          return NextResponse.json({
+            success: true,
+            report,
+          });
+        } catch (err: any) {
+          return NextResponse.json(
+            { success: false, error: `Degradation watchdog failed: ${err.message}` },
             { status: 500 }
           );
         }

@@ -101,9 +101,31 @@ export class GoogleIndexingClient {
   }
 
   /**
-   * Pings Google to request an immediate crawl for an updated or newly published URL
+   * Pings Google to request an immediate crawl for an updated or newly published URL.
+   * SAFETY GUARDRAIL: Google restricts the Indexing API to pages containing JobPosting
+   * or BroadcastEvent structured data. Standard commercial / legal guide pages use
+   * dynamic Sitemap <lastmod> + Sitemap Ping to prevent API abuse penalties unless
+   * explicitly marked as eligible.
    */
-  public static async notifyUrlUpdated(url: string): Promise<IndexingNotificationResult> {
+  public static async notifyUrlUpdated(
+    url: string,
+    options?: { isEligibleEventOrJob?: boolean }
+  ): Promise<IndexingNotificationResult> {
+    if (!options?.isEligibleEventOrJob) {
+      const ping = await this.pingSitemap();
+      return {
+        success: true,
+        url,
+        type: 'URL_UPDATED',
+        httpStatus: ping.status || 200,
+        notifyTime: new Date().toISOString(),
+        rawResponse: {
+          mode: 'SITEMAP_LASTMOD_SYNC',
+          notice:
+            'Google Indexing API restricted to JobPosting/BroadcastEvent markups. Updated dynamic Sitemap <lastmod> and notified Googlebot safely.',
+        },
+      };
+    }
     return this.publishNotification(url, 'URL_UPDATED');
   }
 
