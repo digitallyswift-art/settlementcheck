@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "file": "app/cockpit/components/InlineEditModal.tsx",
+    "lineNumber": 20,
+    "rule": "EM_DASH_DETECTED",
+    "snippet": "const hasEmDash = title.includes('—') || metaDesc.includes('—') || faqA.includes('—');",
+    "severity": "P1",
+    "guideline": "Strict BRAND.md non-negotiable: 0 em dashes allowed. Use hyphens with spaces or restructure into shorter sentences."
+  },
+  {
+    "file": "app/cockpit/components/InlineEditModal.tsx",
+    "lineNumber": 61,
+    "rule": "EM_DASH_DETECTED",
+    "snippet": "<strong>Brand Invariant Warning:</strong> Em dashes (—) detected. Replace with hyphens (-), colons (",
+    "severity": "P1",
+    "guideline": "Strict BRAND.md non-negotiable: 0 em dashes allowed. Use hyphens with spaces or restructure into shorter sentences."
+  },
+  {
+    "file": "app/cockpit/components/SerpDiffModal.tsx",
+    "lineNumber": 51,
+    "rule": "EM_DASH_DETECTED",
+    "snippet": "&ldquo;{pkg.query}&rdquo; — Agent Recommendation Diff",
+    "severity": "P1",
+    "guideline": "Strict BRAND.md non-negotiable: 0 em dashes allowed. Use hyphens with spaces or restructure into shorter sentences."
+  }
+]

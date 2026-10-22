@@ -401,6 +401,12 @@ export default function PortalClient() {
             <span className="px-2.5 py-1 rounded bg-white/10 text-white font-mono text-[11px] border border-white/10">
               CHARTER PANEL
             </span>
+            <Link
+              href="/cockpit/"
+              className="px-2.5 py-1 rounded bg-[#D9603B] hover:bg-[#D9603B]/90 text-white font-mono text-[11px] font-semibold transition-colors flex items-center gap-1"
+            >
+              <span>⚡</span> Admin Cockpit ↗
+            </Link>
             <button
               onClick={handleSignOut}
               className="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white text-[11px] transition-colors cursor-pointer"

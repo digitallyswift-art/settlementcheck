@@ -29,6 +29,13 @@ export const metadata: Metadata = {
 
 const GUIDES = [
   {
+    href: '/guides/settlement-agreement-restrictive-covenants/',
+    eyebrow: 'Restrictive Covenants',
+    title: 'Restrictive Covenants in Settlement Agreements: UK 2026 Rules',
+    description: 'Received a settlement agreement with restrictive covenants? Learn non-compete rules, Tillman enforceability, and Section 225 tax traps.',
+    readTime: '8 min read',
+  },
+  {
     href: '/guides/settlement-agreement-how-much/',
     eyebrow: 'Payout Benchmarks',
     title: 'Settlement Agreement: How Much Should You Get? UK 2026 Guide',
@@ -181,6 +188,13 @@ const GUIDES = [
     title: 'What happens if you do not sign a settlement agreement?',
     description: 'Your options if you reject the offer, including alternative processes (redundancy or PIPs), tribunal risks, and negotiating a counter-proposal.',
     readTime: '6 min read',
+  },
+  {
+    href: '/guides/can-an-employer-withdraw-a-settlement-agreement/',
+    eyebrow: 'Offer Withdrawal',
+    title: 'Can an Employer Withdraw a Settlement Offer? UK (2026)',
+    description: 'Understand UK contract rules, counter-offer risks under Hyde v Wrench, ACAS 10-day deadlines, and how to safely negotiate without losing your baseline compensation.',
+    readTime: '7 min read',
   },
   {
     href: '/guides/protective-award/',

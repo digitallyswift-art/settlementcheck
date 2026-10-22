@@ -31,6 +31,11 @@ export interface AppliedSeoRecord {
   appliedAt?: string;
   googleIndexedAt?: string;
   indexingStatus?: string;
+  version?: number;
+  lockState?: 'IDLE' | 'REVIEW_LOCKED' | 'APPLYING';
+  lockedBy?: string | null;
+  lockedUntil?: string | null;
+  lastModifiedBy?: string;
 }
 
 export class SeoActuatorService {
@@ -39,13 +44,21 @@ export class SeoActuatorService {
   private static readonly STAGED_DISK_PATH = path.resolve('data/serp-actions/staging/latest-staged-actions.json');
 
   /**
-   * Normalizes a pathname to match target canonical URLs (with trailing slash)
+   * Normalizes a pathname or URL to match target canonical URLs (with trailing slash)
    */
-  public static normalizePath(pathname: string): string {
-    let p = pathname.trim();
-    if (!p.startsWith('/')) p = `/${p}`;
-    if (!p.endsWith('/')) p = `${p}/`;
-    return p;
+  public static normalizePath(urlOrPath: string): string {
+    try {
+      if (urlOrPath.startsWith('http://') || urlOrPath.startsWith('https://')) {
+        const parsed = new URL(urlOrPath);
+        let p = parsed.pathname;
+        if (!p.endsWith('/')) p = `${p}/`;
+        return p;
+      }
+    } catch {}
+    let clean = urlOrPath.split('?')[0].split('#')[0];
+    if (!clean.startsWith('/')) clean = `/${clean}`;
+    if (!clean.endsWith('/')) clean = `${clean}/`;
+    return clean;
   }
 
   /**
@@ -142,6 +155,11 @@ export class SeoActuatorService {
               faqAnswer: d.faq_answer,
               status: d.status,
               appliedAt: d.created_at,
+              version: d.version || 1,
+              lockState: d.lock_state || 'IDLE',
+              lockedBy: d.locked_by || null,
+              lockedUntil: d.locked_until || null,
+              lastModifiedBy: d.last_modified_by,
             });
           }
         }
@@ -197,11 +215,16 @@ export class SeoActuatorService {
   }
 
   /**
-   * Applies an optimization package: marks active and notifies Google Indexing API
+   * Applies an optimization package: marks active, revalidates cache, and notifies Google Indexing API
    */
   public static async applyPackage(
     packageId: string,
-    options?: { triggerIndexing?: boolean }
+    options?: {
+      triggerIndexing?: boolean;
+      expectedVersion?: number;
+      actorId?: string;
+      revalidate?: (urlOrPath: string) => Promise<void> | void;
+    }
   ): Promise<{ success: boolean; package?: AppliedSeoRecord; indexingResult?: any; error?: string }> {
     const packages = await this.getAllPackages();
     const target = packages.find(p => p.id === packageId);
@@ -210,29 +233,27 @@ export class SeoActuatorService {
       return { success: false, error: `Package not found: ${packageId}` };
     }
 
-    target.status = 'APPLIED';
-    target.appliedAt = new Date().toISOString();
-
-    // 1. Google Indexing API notification
-    let indexingResult: any = null;
-    if (options?.triggerIndexing !== false && GoogleIndexingClient.isConfigured()) {
-      try {
-        indexingResult = await GoogleIndexingClient.notifyUrlUpdated(target.targetCanonicalUrl);
-        if (indexingResult.success) {
-          target.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
-          target.indexingStatus = 'INDEXING_REQUESTED_HTTP_200';
-        } else {
-          target.indexingStatus = `INDEXING_ERROR_${indexingResult.httpStatus || 'FAIL'}`;
-        }
-      } catch (idxErr: any) {
-        indexingResult = { success: false, error: idxErr.message };
-      }
+    // 1. Optimistic Concurrency Control Check
+    if (
+      options?.expectedVersion !== undefined &&
+      target.version !== undefined &&
+      target.version !== options.expectedVersion
+    ) {
+      return {
+        success: false,
+        error: `OCC Conflict: Package has been modified by another process (current version: v${target.version}, expected: v${options.expectedVersion}). Please refresh.`,
+      };
     }
 
-    // 2. Persist to disk / /tmp safely
-    this.saveAppliedToDisk(target);
+    target.version = (target.version || 1) + 1;
+    target.status = 'APPLIED';
+    target.appliedAt = new Date().toISOString();
+    target.lockState = 'IDLE';
+    target.lockedBy = null;
+    target.lockedUntil = null;
+    target.lastModifiedBy = options?.actorId || 'ADMIN_USER';
 
-    // 3. Persist to Supabase if available (upsert so it is stored even if read from staging file)
+    // 2. Persist to Supabase FIRST (single source of ACID truth)
     if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         await supabase
@@ -246,10 +267,53 @@ export class SeoActuatorService {
             faq_question: target.faqQuestion,
             faq_answer: target.faqAnswer,
             status: 'APPLIED',
+            version: target.version,
+            lock_state: 'IDLE',
+            locked_by: null,
+            locked_until: null,
+            last_modified_by: target.lastModifiedBy,
             created_at: target.appliedAt || new Date().toISOString(),
           }, { onConflict: 'id' });
       } catch (err) {
         console.error('Supabase upsert failed:', err);
+      }
+    }
+
+    // 3. Fallback disk persistence
+    this.saveAppliedToDisk(target);
+
+    // 4. Invalidate / Purge Next.js static cache BEFORE notifying Googlebot
+    if (options?.revalidate) {
+      try {
+        await options.revalidate(target.targetCanonicalUrl);
+      } catch (revErr: any) {
+        console.warn('Cache revalidation warning:', revErr?.message);
+      }
+    }
+
+    // 5. Google Indexing API notification (Strictly POST-Revalidation)
+    let indexingResult: any = null;
+    if (options?.triggerIndexing !== false && GoogleIndexingClient.isConfigured()) {
+      try {
+        indexingResult = await GoogleIndexingClient.notifyUrlUpdated(target.targetCanonicalUrl);
+        if (indexingResult.success) {
+          target.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
+          target.indexingStatus = 'INDEXING_REQUESTED_HTTP_200';
+        } else {
+          target.indexingStatus = `INDEXING_ERROR_${indexingResult.httpStatus || 'FAIL'}`;
+        }
+
+        if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+          await supabase
+            .from('seo_autonomous_actions')
+            .update({
+              google_indexed_at: target.googleIndexedAt,
+              indexing_status: target.indexingStatus,
+            })
+            .eq('id', target.id);
+        }
+      } catch (idxErr: any) {
+        indexingResult = { success: false, error: idxErr.message };
       }
     }
 
@@ -300,15 +364,194 @@ export class SeoActuatorService {
   }
 
   /**
+   * Rejects an optimization package: marks status as REJECTED and removes from applied lists
+   */
+  public static async rejectPackage(
+    packageId: string,
+    reason?: string
+  ): Promise<{ success: boolean; error?: string }> {
+    const packages = await this.getAllPackages();
+    const target = packages.find(p => p.id === packageId);
+
+    if (!target) {
+      return { success: false, error: `Package not found: ${packageId}` };
+    }
+
+    target.status = 'REJECTED';
+    target.appliedAt = undefined;
+
+    // Remove from applied disk if present
+    const diskTargets = [this.APPLIED_DISK_PATH, this.TMP_APPLIED_PATH];
+    for (const dPath of diskTargets) {
+      if (fs.existsSync(dPath)) {
+        try {
+          const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(dPath, 'utf-8'));
+          const filtered = diskApplied.filter(p => p.id !== packageId);
+          fs.writeFileSync(dPath, JSON.stringify(filtered, null, 2), 'utf-8');
+        } catch {}
+      }
+    }
+
+    // Update staged disk if present
+    if (fs.existsSync(this.STAGED_DISK_PATH)) {
+      try {
+        const stagedRaw = JSON.parse(fs.readFileSync(this.STAGED_DISK_PATH, 'utf-8'));
+        const idx = stagedRaw.findIndex((p: any) => p.id === packageId);
+        if (idx >= 0) {
+          stagedRaw[idx].status = 'REJECTED';
+          stagedRaw[idx].rejectionReason = reason || 'Rejected by administrator';
+          fs.writeFileSync(this.STAGED_DISK_PATH, JSON.stringify(stagedRaw, null, 2), 'utf-8');
+        }
+      } catch {}
+    }
+
+    // Update Supabase
+    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        await supabase
+          .from('seo_autonomous_actions')
+          .update({ status: 'REJECTED' })
+          .eq('id', target.id);
+      } catch {}
+    }
+
+    return { success: true };
+  }
+
+  /**
+   * Edits and applies an optimization package with custom administrator modifications
+   */
+  public static async editAndApplyPackage(
+    packageId: string,
+    updates: {
+      calibratedTitle?: string;
+      calibratedMetaDescription?: string;
+      faqQuestion?: string;
+      faqAnswer?: string;
+    },
+    options?: {
+      expectedVersion?: number;
+      actorId?: string;
+      revalidate?: (urlOrPath: string) => Promise<void> | void;
+    }
+  ): Promise<{ success: boolean; package?: AppliedSeoRecord; indexingResult?: any; error?: string }> {
+    const packages = await this.getAllPackages();
+    const target = packages.find(p => p.id === packageId);
+
+    if (!target) {
+      return { success: false, error: `Package not found: ${packageId}` };
+    }
+
+    // 1. OCC Check
+    if (
+      options?.expectedVersion !== undefined &&
+      target.version !== undefined &&
+      target.version !== options.expectedVersion
+    ) {
+      return {
+        success: false,
+        error: `OCC Conflict: Package has been modified by another process (current version: v${target.version}, expected: v${options.expectedVersion}). Please refresh.`,
+      };
+    }
+
+    if (updates.calibratedTitle) target.calibratedTitle = updates.calibratedTitle;
+    if (updates.calibratedMetaDescription) target.calibratedMetaDescription = updates.calibratedMetaDescription;
+    if (updates.faqQuestion) target.faqQuestion = updates.faqQuestion;
+    if (updates.faqAnswer) target.faqAnswer = updates.faqAnswer;
+
+    target.version = (target.version || 1) + 1;
+    target.status = 'APPLIED';
+    target.appliedAt = new Date().toISOString();
+    target.lockState = 'IDLE';
+    target.lockedBy = null;
+    target.lockedUntil = null;
+    target.lastModifiedBy = options?.actorId || 'ADMIN_USER';
+
+    // 2. Persist to Supabase FIRST
+    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        await supabase
+          .from('seo_autonomous_actions')
+          .upsert({
+            id: target.id,
+            query: target.query,
+            target_canonical_url: target.targetCanonicalUrl,
+            calibrated_title: target.calibratedTitle,
+            calibrated_meta_description: target.calibratedMetaDescription,
+            faq_question: target.faqQuestion,
+            faq_answer: target.faqAnswer,
+            status: 'APPLIED',
+            version: target.version,
+            lock_state: 'IDLE',
+            locked_by: null,
+            locked_until: null,
+            last_modified_by: target.lastModifiedBy,
+            created_at: target.appliedAt || new Date().toISOString(),
+          }, { onConflict: 'id' });
+      } catch (err) {
+        console.error('Supabase upsert failed:', err);
+      }
+    }
+
+    // 3. Persist to disk fallback
+    this.saveAppliedToDisk(target);
+
+    // 4. Invalidate / Purge Next.js static cache BEFORE notifying Googlebot
+    if (options?.revalidate) {
+      try {
+        await options.revalidate(target.targetCanonicalUrl);
+      } catch (revErr: any) {
+        console.warn('Cache revalidation warning:', revErr?.message);
+      }
+    }
+
+    // 5. Post-Revalidation: Notify Google Indexing API
+    let indexingResult: any = null;
+    if (GoogleIndexingClient.isConfigured()) {
+      try {
+        indexingResult = await GoogleIndexingClient.notifyUrlUpdated(target.targetCanonicalUrl);
+        if (indexingResult.success) {
+          target.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
+          target.indexingStatus = 'INDEXING_REQUESTED_HTTP_200';
+        } else {
+          target.indexingStatus = `INDEXING_ERROR_${indexingResult.httpStatus || 'FAIL'}`;
+        }
+        if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+          await supabase
+            .from('seo_autonomous_actions')
+            .update({
+              google_indexed_at: target.googleIndexedAt,
+              indexing_status: target.indexingStatus,
+            })
+            .eq('id', target.id);
+        }
+      } catch (idxErr: any) {
+        indexingResult = { success: false, error: idxErr.message };
+      }
+    }
+
+    return {
+      success: true,
+      package: target,
+      indexingResult,
+    };
+  }
+
+  /**
    * Applies all validated packages in a single click and sends batch indexing requests
    */
-  public static async applyAllValidated(): Promise<{ success: boolean; appliedCount: number; indexingResults: any[] }> {
+  public static async applyAllValidated(options?: {
+    revalidate?: (urlOrPath: string) => Promise<void> | void;
+  }): Promise<{ success: boolean; appliedCount: number; indexingResults: any[] }> {
     const packages = await this.getAllPackages();
     const toApply = packages.filter(p => p.status === 'VALIDATED' || p.status === 'STAGED');
 
     const indexingResults: any[] = [];
     for (const pkg of toApply) {
-      const res = await this.applyPackage(pkg.id, { triggerIndexing: true });
+      const res = await this.applyPackage(pkg.id, {
+        triggerIndexing: true,
+        revalidate: options?.revalidate,
+      });
       if (res.indexingResult) indexingResults.push(res.indexingResult);
     }
 

@@ -438,6 +438,12 @@ export default function HowToNegotiateGuide() {
                   tag: 'Employee Rights',
                 },
                 {
+                  href: '/guides/can-an-employer-withdraw-a-settlement-agreement/',
+                  title: 'Can an Employer Withdraw the Offer?',
+                  description: 'Contract law rules under Hyde v Wrench, ACAS 10-day limits, and safe counter-offer strategies.',
+                  tag: 'Offer Protection',
+                },
+                {
                   href: '/guides/what-happens-if-you-do-not-sign/',
                   title: 'What Happens if You Do Not Sign?',
                   description: 'Your choices and risks if you reject the agreement or fail to reach an accord.',

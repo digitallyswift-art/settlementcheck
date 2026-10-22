@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import CalculatorClient from './CalculatorClient'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
-import DynamicFaqJsonLd from '@/components/seo/DynamicFaqJsonLd'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -169,7 +170,7 @@ export default function CalculatorPage() {
       <h1 className="sr-only">Free Employee Settlement Agreement Calculator UK (2026 Rates)</h1>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(JSON_LD) }}
       />
       <div className="sr-only" aria-hidden="false">
         <h2>Independent Settlement Agreement Calculations for UK Employees</h2>
@@ -186,8 +187,8 @@ export default function CalculatorPage() {
           <li><a href="/guides/how-to-negotiate-a-settlement-agreement/">How to Negotiate a Higher Settlement Agreement Payout</a></li>
         </ul>
       </div>
-      <DynamicFaqJsonLd pathname="/calculator/" />
       <CalculatorClient />
+      <DynamicFaqSection pathname="/calculator/" />
     </>
   )
 }

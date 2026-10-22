@@ -82,16 +82,18 @@ export async function POST(req: NextRequest) {
             { status: 400 }
           );
         }
-        const result = await SeoActuatorService.applyPackage(packageId, { triggerIndexing: true });
-        if (result.success && result.package?.targetCanonicalUrl) {
-          try {
-            const pathName = SeoActuatorService.normalizePath(
-              result.package.targetCanonicalUrl.replace('https://settlementcheck.co.uk', '')
-            );
-            revalidatePath(pathName);
-          } catch {}
-        }
-        return NextResponse.json(result);
+        const result = await SeoActuatorService.applyPackage(packageId, {
+          triggerIndexing: true,
+          expectedVersion: body.expectedVersion,
+          actorId: body.actorId || 'COCKPIT_ADMIN',
+          revalidate: async (urlOrPath) => {
+            const pathName = SeoActuatorService.normalizePath(urlOrPath);
+            revalidatePath(pathName, 'page');
+            revalidatePath('/', 'layout');
+          },
+        });
+        const status = result.success ? 200 : (result.error?.includes('OCC Conflict') ? 409 : 400);
+        return NextResponse.json(result, { status });
       }
 
       case 'ROLLBACK': {
@@ -109,11 +111,69 @@ export async function POST(req: NextRequest) {
       }
 
       case 'APPLY_ALL': {
-        const result = await SeoActuatorService.applyAllValidated();
+        const result = await SeoActuatorService.applyAllValidated({
+          revalidate: async (urlOrPath) => {
+            const pathName = SeoActuatorService.normalizePath(urlOrPath);
+            revalidatePath(pathName, 'page');
+            revalidatePath('/', 'layout');
+          },
+        });
+        return NextResponse.json(result);
+      }
+
+      case 'REJECT': {
+        if (!packageId) {
+          return NextResponse.json(
+            { success: false, error: 'packageId is required for REJECT' },
+            { status: 400 }
+          );
+        }
+        const result = await SeoActuatorService.rejectPackage(packageId, body.reason);
         try {
           revalidatePath('/', 'layout');
         } catch {}
         return NextResponse.json(result);
+      }
+
+      case 'EDIT_AND_APPLY': {
+        if (!packageId || !body.updates) {
+          return NextResponse.json(
+            { success: false, error: 'packageId and updates are required for EDIT_AND_APPLY' },
+            { status: 400 }
+          );
+        }
+        const result = await SeoActuatorService.editAndApplyPackage(packageId, body.updates, {
+          expectedVersion: body.expectedVersion,
+          actorId: body.actorId || 'COCKPIT_ADMIN',
+          revalidate: async (urlOrPath) => {
+            const pathName = SeoActuatorService.normalizePath(urlOrPath);
+            revalidatePath(pathName, 'page');
+            revalidatePath('/', 'layout');
+          },
+        });
+        const status = result.success ? 200 : (result.error?.includes('OCC Conflict') ? 409 : 400);
+        return NextResponse.json(result, { status });
+      }
+
+      case 'TRIGGER_RUN': {
+        try {
+          const { GoogleSearchConsoleClient } = await import('@/lib/agentic-engine/services/gsc-client');
+          const { AutonomousSeoActionService } = await import('@/lib/agentic-engine/services/autonomous-seo-actions');
+          const gscData = await GoogleSearchConsoleClient.pullLatestSearchData();
+          const digest = await AutonomousSeoActionService.executeActionPipeline(gscData, { batchLimit: 8, sendEmail: false });
+          return NextResponse.json({
+            success: true,
+            runId: digest.runId,
+            actionsGenerated: digest.actionsTaken.length,
+            packagesStaged: digest.dualAgentPackages?.length ?? 0,
+            metrics: digest.metrics,
+          });
+        } catch (err: any) {
+          return NextResponse.json(
+            { success: false, error: `Fleet scan execution failed: ${err.message}` },
+            { status: 500 }
+          );
+        }
       }
 
       case 'REINDEX': {

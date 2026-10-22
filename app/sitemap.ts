@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Tier 4: Guides (hub + spokes)
     { url: `${base}/guides/`,                                         lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/settlement-agreement-restrictive-covenants/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-how-much/`,           lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/compromise-agreement-calculator-uk/`,      lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/protected-conversations-without-prejudice/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -39,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/guides/employer-recommended-solicitor/`,          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/pressured-to-sign/`,                       lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/what-happens-if-you-do-not-sign/`,         lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/can-an-employer-withdraw-a-settlement-agreement/`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/tax-free-settlement-30000/`,               lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/redundancy-pay-cap-2026/`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/pilon-tax-treatment-2026/`,                 lastModified: now, changeFrequency: 'monthly', priority: 0.7 },

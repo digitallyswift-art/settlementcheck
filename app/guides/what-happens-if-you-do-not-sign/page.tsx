@@ -310,6 +310,12 @@ export default function RejectSettlementAgreementGuide() {
                   tag: 'Rights & Rules',
                 },
                 {
+                  href: '/guides/can-an-employer-withdraw-a-settlement-agreement/',
+                  title: 'Can an Employer Withdraw the Offer?',
+                  description: 'Learn UK contract rules, counter-offer risks, and how to safely protect your baseline.',
+                  tag: 'Offer Protection',
+                },
+                {
                   href: '/guides/how-to-negotiate-a-settlement-agreement/',
                   title: 'How to Negotiate a Settlement Agreement',
                   description: 'Step-by-step tactics to raise the opening figure and secure better terms.',

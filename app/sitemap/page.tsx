@@ -129,6 +129,12 @@ const sitemapData: SitemapCategory[] = [
         description: 'Browse all in-depth employment law and settlement agreement articles.',
       },
       {
+        title: 'Settlement Agreement Restrictive Covenants & Non-Competes',
+        href: '/guides/settlement-agreement-restrictive-covenants/',
+        description: 'Post-termination restrictions, non-compete enforceability under Tillman, and the HMRC Section 225 tax trap.',
+        badge: 'New Guide',
+      },
+      {
         title: 'Settlement Agreement: How Much Should You Get? UK 2026 Guide',
         href: '/guides/settlement-agreement-how-much/',
         description: 'Find out how much a UK settlement agreement should be, negotiation benchmarks, statutory redundancy caps, and tax rules.',
@@ -212,6 +218,12 @@ const sitemapData: SitemapCategory[] = [
         title: 'What Happens If You Do Not Sign?',
         href: '/guides/what-happens-if-you-do-not-sign/',
         description: 'Understanding your alternatives: negotiation, disciplinary procedures, or tribunal.',
+      },
+      {
+        title: 'Can an Employer Withdraw a Settlement Offer? (2026 Rules)',
+        href: '/guides/can-an-employer-withdraw-a-settlement-agreement/',
+        description: 'Common law contract rules, counter-offer risks under Hyde v Wrench, ACAS 10-day limits, and how to safely negotiate without losing your offer.',
+        badge: 'New Guide',
       },
       {
         title: 'Is My Settlement Offer Fair?',

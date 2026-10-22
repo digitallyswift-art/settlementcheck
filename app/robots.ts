@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/results/', '/portal/', '/dossier/'],
+        disallow: ['/results/', '/portal/', '/cockpit/', '/dossier/', '/api/'],
       },
       {
         userAgent: [
@@ -23,7 +23,7 @@ export default function robots(): MetadataRoute.Robots {
           'DuckAssistBot',
         ],
         allow: '/',
-        disallow: ['/results/', '/portal/', '/dossier/'],
+        disallow: ['/results/', '/portal/', '/cockpit/', '/dossier/', '/api/'],
       },
     ],
     sitemap: 'https://settlementcheck.co.uk/sitemap.xml',
