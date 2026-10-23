@@ -24,7 +24,8 @@
     "audit:legal": "npx tsx scripts/audit/scan-legal-disclaimers.ts",
     "audit:penp": "npx tsx scripts/audit/verify-penp.ts",
     "lint:audit": "npx tsx scripts/audit/lint-audit-naming.ts",
-    "audit:all": "npx tsx scripts/audit/run-all.ts"
+    "audit:all": "npx tsx scripts/audit/run-all.ts",
+    "verify": "node scripts/verify-quiet.mjs"
   },
   "license": "ISC",
   "dependencies": {

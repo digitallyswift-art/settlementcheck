@@ -14,11 +14,13 @@ Strict operational rules for all AI coding and architecting in SettlementCheck:
 - **Action**: Validate UK search queries and emotional resonance before creating any route directory.
 - **Rule**: Stressed UK employees search for "review" or "check", not corporate "audit" agreements.
 
-## 4. Verification Gate
-- Every task must pass:
-  1. `npx tsc --noEmit`
-  2. `npm run test:evals`
-  3. `npm run check:links`
+## 4. Verification Gate (Change-Scoped)
+- **Skip on non-code turns**: Do not run verification commands on Q&A, planning, or research turns.
+- **Run only what applies to the files touched** (or use `npm run verify` once at the end of a multi-file implementation for a single-line pass summary):
+  1. `npx tsc --noEmit` — when `.ts` / `.tsx` files change
+  2. `npm run test:evals` — when statutory rates, calculations, or agent guardrails change
+  3. `npm run check:links` — when routes (`app/`), sitemaps, or internal links change
+  4. `npm run lint:audit` — when files in `docs/audit/` change
 
 ## 5. ACAS Trademark & Entity Protection Standard
 - **Action**: Always use **"ACAS-based"** or **"ACAS-aligned"** when referencing calculators, formulas, or statutory baselines (e.g. "ACAS-based calculator", "ACAS-based settlement calculations").

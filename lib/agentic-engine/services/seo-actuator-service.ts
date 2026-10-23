@@ -3,16 +3,26 @@
  * Bridges staged optimization packages directly into live production:
  * 1. Resolves active optimizations for any route via Next.js `unstable_cache` with tagged revalidation.
  * 2. Eliminates ephemeral `/tmp/applied-actions.json` writes in favor of cloud persistence + repo staging read fallback.
- * 3. Supports 14-day Canary provisional observation mode (`CANARY` -> `PERMANENT`) and automated regression rollbacks.
+ * 3. Supports 14-day Canary provisional observation mode (`CANARY` -> `PERMANENT`), non-destructive additive scope,
+ *    Blast-Radius Risk Scoring, and on-demand Adversarial Head of SEO critiques.
  */
 
-import fs from 'fs';
 import path from 'path';
 import { unstable_cache } from 'next/cache';
 import { supabase } from '@/lib/supabase';
 import { GoogleIndexingClient } from './google-indexing-client';
 import { SeoArchitectAgent } from '../agents/seo-architect-agent';
-import { SeoActionLifecycleStatus } from '../types';
+import { AdversarialSeoHeadAgent } from '../agents/adversarial-seo-head-agent';
+import { evaluateSeoBlastRadius } from '../guardrails/seo-blast-radius-guard';
+import { SeoPolicyRegistry } from './seo-policy-registry';
+import {
+  AdversarialSeoReviewResult,
+  SeoActionLifecycleStatus,
+  SeoActuationScope,
+  SeoDeploymentRiskTier,
+  SeoGuardrailPolicyRule,
+  SeoTradeOffSummary,
+} from '../types';
 import { SafeFs } from './safe-fs';
 
 export interface AppliedSeoRecord {
@@ -23,9 +33,14 @@ export interface AppliedSeoRecord {
   calibratedMetaDescription: string;
   faqQuestion: string;
   faqAnswer: string;
+  contextualLinkSnippet?: string;
   status: SeoActionLifecycleStatus;
   priority?: string;
   actionType?: string;
+  actuationScope?: SeoActuationScope;
+  deploymentRisk?: SeoDeploymentRiskTier;
+  tradeOffSummary?: SeoTradeOffSummary;
+  adversarialReview?: AdversarialSeoReviewResult;
   impressions?: number;
   clicks?: number;
   position?: number;
@@ -83,6 +98,55 @@ export class SeoActuatorService {
   }
 
   /**
+   * Enriches any record with deterministic Blast-Radius Risk Tier, Actuation Scope, and Plain-English Trade-Off Summary
+   */
+  public static enrichRecordWithBlastRadius(rec: AppliedSeoRecord): AppliedSeoRecord {
+    const norm = this.normalizePath(rec.targetCanonicalUrl || '/calculator/');
+    const existingH1 =
+      rec.targetPageExistingH1 ||
+      SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm] ||
+      'Settlement Agreement Calculator & Free Solicitor Check UK';
+    const primaryAnchor =
+      rec.primaryAnchorQuery ||
+      (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : rec.query);
+
+    // Legacy deployed/canary records without explicit actuationScope were deployed as FULL_META_AND_FAQ
+    const isAlreadyLiveLegacy =
+      (rec.status === 'APPLIED' || rec.status === 'CANARY' || rec.status === 'PERMANENT') &&
+      !rec.actuationScope;
+
+    const effectiveScope: SeoActuationScope | undefined = isAlreadyLiveLegacy
+      ? 'FULL_META_AND_FAQ'
+      : rec.actuationScope;
+
+    const blast = evaluateSeoBlastRadius({
+      query: rec.query,
+      targetCanonicalUrl: rec.targetCanonicalUrl,
+      actionType: rec.actionType,
+      actuationScope: effectiveScope,
+      position: rec.position,
+      impressions: rec.impressions,
+      ctr: rec.ctr,
+      primaryAnchorQuery: primaryAnchor,
+      targetPageExistingH1: existingH1,
+      calibratedTitle: rec.calibratedTitle,
+      calibratedMetaDescription: rec.calibratedMetaDescription,
+      faqQuestion: rec.faqQuestion,
+      faqAnswer: rec.faqAnswer,
+      contextualLinkSnippet: rec.contextualLinkSnippet,
+    });
+
+    return {
+      ...rec,
+      targetPageExistingH1: existingH1,
+      primaryAnchorQuery: primaryAnchor,
+      actuationScope: blast.actuationScope,
+      deploymentRisk: blast.deploymentRisk,
+      tradeOffSummary: blast.tradeOffSummary,
+    };
+  }
+
+  /**
    * Uncached internal lookup for active optimization on a route
    */
   private static async fetchActiveOptimizationUncached(pathname: string): Promise<AppliedSeoRecord | null> {
@@ -116,7 +180,7 @@ export class SeoActuatorService {
         (rec.targetCanonicalUrl === fullCanonical ||
           this.normalizePath(rec.targetCanonicalUrl.replace('https://settlementcheck.co.uk', '')) === norm)
       ) {
-        return rec;
+        return this.enrichRecordWithBlastRadius(rec);
       }
     }
 
@@ -132,7 +196,7 @@ export class SeoActuatorService {
               this.normalizePath(a.targetCanonicalUrl.replace('https://settlementcheck.co.uk', '')) === norm)
         );
         if (match) {
-          return match;
+          return this.enrichRecordWithBlastRadius(match);
         }
       } catch {
         // Ignore read error
@@ -178,11 +242,13 @@ export class SeoActuatorService {
     const resolvedId = d.seo_brief?.packageId || d.id;
     const resolvedStatus: SeoActionLifecycleStatus = d.seo_brief?.lifecycleStatus || d.status;
 
-    return {
+    const base: AppliedSeoRecord = {
       id: resolvedId,
       query: d.query,
       priority: d.priority || 'CRITICAL',
       actionType: d.action_type || 'INTERNAL_LINK_BOOST',
+      actuationScope: d.seo_brief?.actuationScope,
+      adversarialReview: d.seo_brief?.adversarialReview,
       impressions: d.impressions ?? d.seo_brief?.currentMetrics?.impressions ?? 0,
       clicks: d.clicks ?? d.seo_brief?.currentMetrics?.clicks ?? 0,
       position: d.position ?? d.seo_brief?.currentMetrics?.position ?? 0,
@@ -196,12 +262,18 @@ export class SeoActuatorService {
         d.seo_brief?.targetPageExistingH1 ||
         SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm] ||
         undefined,
-      primaryAnchorQuery: d.seo_brief?.queryClusterProfile?.primaryAnchorQuery || d.query,
+      primaryAnchorQuery:
+        d.seo_brief?.queryClusterProfile?.primaryAnchorQuery ||
+        (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : d.query),
       targetCanonicalUrl: d.target_canonical_url,
       calibratedTitle: d.calibrated_title,
       calibratedMetaDescription: d.calibrated_meta_description,
       faqQuestion: d.faq_question,
       faqAnswer: d.faq_answer,
+      contextualLinkSnippet:
+        d.contextual_link_snippet ||
+        d.copy_package?.contextualInternalLinkBlock?.surroundingText ||
+        undefined,
       status: resolvedStatus,
       appliedAt,
       version: d.version ?? d.seo_brief?.version ?? 1,
@@ -210,6 +282,8 @@ export class SeoActuatorService {
       lockedUntil: d.locked_until || null,
       lastModifiedBy: d.last_modified_by,
     };
+
+    return this.enrichRecordWithBlastRadius(base);
   }
 
   /**
@@ -219,11 +293,13 @@ export class SeoActuatorService {
     for (const pkg of packages) {
       if (!pkg?.id) continue;
       const norm = this.normalizePath(pkg.seoTechnicalBrief?.targetCanonicalUrl || '/calculator/');
-      this.memoryStore.set(pkg.id, {
+      const base: AppliedSeoRecord = {
         id: pkg.id,
         query: pkg.query,
         priority: pkg.priority || 'CRITICAL',
         actionType: pkg.actionType || 'INTERNAL_LINK_BOOST',
+        actuationScope: pkg.actuationScope,
+        adversarialReview: pkg.adversarialReview,
         impressions: pkg.seoTechnicalBrief?.currentMetrics?.impressions ?? 0,
         clicks: pkg.seoTechnicalBrief?.currentMetrics?.clicks ?? 0,
         position: pkg.seoTechnicalBrief?.currentMetrics?.position ?? 0,
@@ -232,16 +308,19 @@ export class SeoActuatorService {
           pkg.seoTechnicalBrief?.targetPageExistingH1 ||
           SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm],
         primaryAnchorQuery:
-          pkg.seoTechnicalBrief?.queryClusterProfile?.primaryAnchorQuery || pkg.query,
+          pkg.seoTechnicalBrief?.queryClusterProfile?.primaryAnchorQuery ||
+          (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : pkg.query),
         targetCanonicalUrl: pkg.seoTechnicalBrief?.targetCanonicalUrl,
         calibratedTitle: pkg.copyPackage?.calibratedTitle,
         calibratedMetaDescription: pkg.copyPackage?.calibratedMetaDescription,
         faqQuestion: pkg.copyPackage?.answerFirstFaq?.question,
         faqAnswer: pkg.copyPackage?.answerFirstFaq?.answer,
+        contextualLinkSnippet: pkg.copyPackage?.contextualInternalLinkBlock?.surroundingText,
         ctaText: pkg.copyPackage?.ctaText,
         status: pkg.status || 'VALIDATED',
         version: 1,
-      });
+      };
+      this.memoryStore.set(pkg.id, this.enrichRecordWithBlastRadius(base));
     }
   }
 
@@ -252,7 +331,15 @@ export class SeoActuatorService {
     const list: AppliedSeoRecord[] = [];
     const seenIds = new Set<string>();
 
-    // 1. Supabase
+    // 1. In-memory runtime overlay first (reflects immediate local/Challenge/Edit updates)
+    for (const item of Array.from(this.memoryStore.values())) {
+      if (!seenIds.has(item.id)) {
+        seenIds.add(item.id);
+        list.push(this.enrichRecordWithBlastRadius(item));
+      }
+    }
+
+    // 2. Supabase
     if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         const { data, error } = await supabase
@@ -264,7 +351,7 @@ export class SeoActuatorService {
         if (!error && data) {
           for (const d of data) {
             const mapped = this.mapSupabaseRowToRecord(d);
-            if (!seenIds.has(mapped.id)) {
+            if (!seenIds.has(mapped.id) && (!d.id || !seenIds.has(d.id))) {
               seenIds.add(mapped.id);
               if (d.id) seenIds.add(d.id);
               list.push(mapped);
@@ -272,14 +359,6 @@ export class SeoActuatorService {
           }
         }
       } catch {}
-    }
-
-    // 2. In-memory runtime overlay
-    for (const item of Array.from(this.memoryStore.values())) {
-      if (!seenIds.has(item.id)) {
-        seenIds.add(item.id);
-        list.push(item);
-      }
     }
 
     // 3. Committed disk or /tmp applied actions
@@ -290,7 +369,7 @@ export class SeoActuatorService {
         for (const item of diskApplied) {
           if (!seenIds.has(item.id)) {
             seenIds.add(item.id);
-            list.push(item);
+            list.push(this.enrichRecordWithBlastRadius(item));
           }
         }
       } catch {}
@@ -305,11 +384,13 @@ export class SeoActuatorService {
           if (!seenIds.has(pkg.id)) {
             seenIds.add(pkg.id);
             const norm = this.normalizePath(pkg.seoTechnicalBrief?.targetCanonicalUrl || '/calculator/');
-            list.push({
+            const base: AppliedSeoRecord = {
               id: pkg.id,
               query: pkg.query,
               priority: pkg.priority || 'CRITICAL',
               actionType: pkg.actionType || 'INTERNAL_LINK_BOOST',
+              actuationScope: pkg.actuationScope,
+              adversarialReview: pkg.adversarialReview,
               impressions: pkg.seoTechnicalBrief?.currentMetrics?.impressions ?? 0,
               clicks: pkg.seoTechnicalBrief?.currentMetrics?.clicks ?? 0,
               position: pkg.seoTechnicalBrief?.currentMetrics?.position ?? 0,
@@ -318,15 +399,18 @@ export class SeoActuatorService {
                 pkg.seoTechnicalBrief?.targetPageExistingH1 ||
                 SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm],
               primaryAnchorQuery:
-                pkg.seoTechnicalBrief?.queryClusterProfile?.primaryAnchorQuery || pkg.query,
+                pkg.seoTechnicalBrief?.queryClusterProfile?.primaryAnchorQuery ||
+                (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : pkg.query),
               targetCanonicalUrl: pkg.seoTechnicalBrief?.targetCanonicalUrl,
               calibratedTitle: pkg.copyPackage?.calibratedTitle,
               calibratedMetaDescription: pkg.copyPackage?.calibratedMetaDescription,
               faqQuestion: pkg.copyPackage?.answerFirstFaq?.question,
               faqAnswer: pkg.copyPackage?.answerFirstFaq?.answer,
+              contextualLinkSnippet: pkg.copyPackage?.contextualInternalLinkBlock?.surroundingText,
               ctaText: pkg.copyPackage?.ctaText,
               status: pkg.status || 'VALIDATED',
-            });
+            };
+            list.push(this.enrichRecordWithBlastRadius(base));
           }
         }
       } catch {}
@@ -349,7 +433,7 @@ export class SeoActuatorService {
 
     if (fallback && (fallback.query || fallback.calibratedTitle) && fallback.targetCanonicalUrl) {
       const norm = this.normalizePath(fallback.targetCanonicalUrl);
-      const hydrated: AppliedSeoRecord = {
+      const hydrated = this.enrichRecordWithBlastRadius({
         id: packageId,
         query: fallback.query || 'settlement agreement calculator',
         targetCanonicalUrl: fallback.targetCanonicalUrl,
@@ -357,18 +441,23 @@ export class SeoActuatorService {
         calibratedMetaDescription: fallback.calibratedMetaDescription || '',
         faqQuestion: fallback.faqQuestion || '',
         faqAnswer: fallback.faqAnswer || '',
+        contextualLinkSnippet: fallback.contextualLinkSnippet,
         status: fallback.status || 'VALIDATED',
         priority: fallback.priority || 'CRITICAL',
         actionType: fallback.actionType || 'INTERNAL_LINK_BOOST',
+        actuationScope: fallback.actuationScope,
+        adversarialReview: fallback.adversarialReview,
         impressions: fallback.impressions ?? 0,
         clicks: fallback.clicks ?? 0,
         position: fallback.position ?? 0,
         ctr: fallback.ctr ?? 0,
         targetPageExistingH1:
           fallback.targetPageExistingH1 || SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm],
-        primaryAnchorQuery: fallback.primaryAnchorQuery || fallback.query,
+        primaryAnchorQuery:
+          fallback.primaryAnchorQuery ||
+          (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : fallback.query),
         version: fallback.version ?? 1,
-      };
+      });
       this.memoryStore.set(packageId, hydrated);
       return hydrated;
     }
@@ -385,9 +474,15 @@ export class SeoActuatorService {
     const seoBriefPayload = {
       packageId: target.id,
       lifecycleStatus: target.status,
+      actuationScope: target.actuationScope,
+      deploymentRisk: target.deploymentRisk,
+      adversarialReview: target.adversarialReview,
       version: target.version || 1,
       targetPageExistingH1: target.targetPageExistingH1,
       regressionAlert: target.regressionAlert || null,
+      queryClusterProfile: target.primaryAnchorQuery
+        ? { primaryAnchorQuery: target.primaryAnchorQuery }
+        : undefined,
       currentMetrics: {
         impressions: target.impressions ?? 0,
         clicks: target.clicks ?? 0,
@@ -411,7 +506,7 @@ export class SeoActuatorService {
             calibrated_meta_description: target.calibratedMetaDescription,
             faq_question: target.faqQuestion || '',
             faq_answer: target.faqAnswer || '',
-            contextual_link_snippet: '',
+            contextual_link_snippet: target.contextualLinkSnippet || '',
             seo_brief: seoBriefPayload,
             status: target.status,
             version: target.version || 1,
@@ -449,6 +544,7 @@ export class SeoActuatorService {
               calibrated_meta_description: target.calibratedMetaDescription,
               faq_question: target.faqQuestion || '',
               faq_answer: target.faqAnswer || '',
+              contextual_link_snippet: target.contextualLinkSnippet || '',
               status: legacyCompatStatus,
               seo_brief: seoBriefPayload,
             })
@@ -465,7 +561,7 @@ export class SeoActuatorService {
             calibrated_meta_description: target.calibratedMetaDescription,
             faq_question: target.faqQuestion || '',
             faq_answer: target.faqAnswer || '',
-            contextual_link_snippet: '',
+            contextual_link_snippet: target.contextualLinkSnippet || '',
             seo_brief: seoBriefPayload,
           });
         }
@@ -473,6 +569,50 @@ export class SeoActuatorService {
     } catch (err) {
       console.error('Supabase persistence warning:', err);
     }
+  }
+
+  /**
+   * Executes an On-Demand Adversarial Head of SEO Critique on a package and caches the result
+   */
+  public static async runAdversarialReview(
+    packageId: string,
+    fallbackPackage?: Partial<AppliedSeoRecord>
+  ): Promise<{ success: boolean; review?: AdversarialSeoReviewResult; package?: AppliedSeoRecord; error?: string }> {
+    const packages = await this.getAllPackages();
+    const target = this.resolveOrHydratePackage(packages, packageId, fallbackPackage);
+
+    if (!target) {
+      return { success: false, error: `Package not found: ${packageId}` };
+    }
+
+    const review = await AdversarialSeoHeadAgent.evaluatePackage({
+      id: target.id,
+      query: target.query,
+      targetCanonicalUrl: target.targetCanonicalUrl,
+      actionType: target.actionType,
+      actuationScope: target.actuationScope,
+      position: target.position,
+      impressions: target.impressions,
+      ctr: target.ctr,
+      primaryAnchorQuery: target.primaryAnchorQuery,
+      targetPageExistingH1: target.targetPageExistingH1,
+      calibratedTitle: target.calibratedTitle,
+      calibratedMetaDescription: target.calibratedMetaDescription,
+      faqQuestion: target.faqQuestion,
+      faqAnswer: target.faqAnswer,
+      contextualLinkSnippet: target.contextualLinkSnippet,
+    });
+
+    target.adversarialReview = review;
+    const enriched = this.enrichRecordWithBlastRadius(target);
+    this.memoryStore.set(target.id, enriched);
+    await this.persistRecordToSupabase(enriched);
+
+    return {
+      success: true,
+      review,
+      package: enriched,
+    };
   }
 
   /**
@@ -522,17 +662,19 @@ export class SeoActuatorService {
     target.lockedUntil = null;
     target.lastModifiedBy = options?.actorId || 'ADMIN_USER';
 
+    const enriched = this.enrichRecordWithBlastRadius(target);
+
     // 2. Persist to Supabase FIRST (single source of ACID truth)
-    await this.persistRecordToSupabase(target);
+    await this.persistRecordToSupabase(enriched);
 
     // 3. Persist to in-memory runtime overlay & local/tmp snapshot
-    this.memoryStore.set(target.id, target);
-    this.saveAppliedToLocalRepoIfWritable(target);
+    this.memoryStore.set(enriched.id, enriched);
+    this.saveAppliedToLocalRepoIfWritable(enriched);
 
     // 4. Invalidate / Purge Next.js tagged cache BEFORE notifying Googlebot
     if (options?.revalidate) {
       try {
-        await options.revalidate(target.targetCanonicalUrl);
+        await options.revalidate(enriched.targetCanonicalUrl);
       } catch (revErr: any) {
         console.warn('Cache revalidation warning:', revErr?.message);
       }
@@ -542,10 +684,10 @@ export class SeoActuatorService {
     let indexingResult: any = null;
     if (options?.triggerIndexing !== false) {
       try {
-        indexingResult = await GoogleIndexingClient.notifyUrlUpdated(target.targetCanonicalUrl);
+        indexingResult = await GoogleIndexingClient.notifyUrlUpdated(enriched.targetCanonicalUrl);
         if (indexingResult.success) {
-          target.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
-          target.indexingStatus = 'SITEMAP_LASTMOD_SYNCED';
+          enriched.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
+          enriched.indexingStatus = 'SITEMAP_LASTMOD_SYNCED';
         }
       } catch (idxErr: any) {
         indexingResult = { success: false, error: idxErr.message };
@@ -554,7 +696,7 @@ export class SeoActuatorService {
 
     return {
       success: true,
-      package: target,
+      package: enriched,
       indexingResult,
     };
   }
@@ -608,13 +750,14 @@ export class SeoActuatorService {
   }
 
   /**
-   * Rejects an optimization package: marks status as REJECTED
+   * Rejects an optimization package: marks status as REJECTED and optionally promotes a guardrail policy rule
    */
   public static async rejectPackage(
     packageId: string,
     reason?: string,
-    fallbackPackage?: Partial<AppliedSeoRecord>
-  ): Promise<{ success: boolean; error?: string }> {
+    fallbackPackage?: Partial<AppliedSeoRecord>,
+    policyRuleToPromote?: Partial<SeoGuardrailPolicyRule>
+  ): Promise<{ success: boolean; promotedRule?: SeoGuardrailPolicyRule; error?: string }> {
     const packages = await this.getAllPackages();
     const target = this.resolveOrHydratePackage(packages, packageId, fallbackPackage);
 
@@ -625,6 +768,20 @@ export class SeoActuatorService {
     target.status = 'REJECTED';
     target.appliedAt = undefined;
     this.memoryStore.set(target.id, target);
+
+    let promotedRule: SeoGuardrailPolicyRule | undefined;
+    if (policyRuleToPromote && policyRuleToPromote.ruleTitle && policyRuleToPromote.constraintDescription) {
+      promotedRule = SeoPolicyRegistry.promotePolicyRule({
+        scopeType: policyRuleToPromote.scopeType || 'ROUTE',
+        scopeValue: policyRuleToPromote.scopeValue || this.normalizePath(target.targetCanonicalUrl),
+        ruleTitle: policyRuleToPromote.ruleTitle,
+        constraintDescription: policyRuleToPromote.constraintDescription,
+        lockTitleOverwrite: policyRuleToPromote.lockTitleOverwrite,
+        requiredTokens: policyRuleToPromote.requiredTokens,
+        prohibitedPhrases: policyRuleToPromote.prohibitedPhrases,
+        source: 'HUMAN_ADMIN_PROMOTED',
+      });
+    }
 
     const appliedContent = SafeFs.readFileSyncSafe(this.APPLIED_DISK_PATH, 'utf-8');
     if (appliedContent) {
@@ -650,11 +807,11 @@ export class SeoActuatorService {
 
     await this.persistRecordToSupabase(target);
 
-    return { success: true };
+    return { success: true, promotedRule };
   }
 
   /**
-   * Edits and applies an optimization package with custom administrator modifications
+   * Edits and applies an optimization package with custom administrator or Adversarial Counter-Plan modifications
    */
   public static async editAndApplyPackage(
     packageId: string,
@@ -663,6 +820,10 @@ export class SeoActuatorService {
       calibratedMetaDescription?: string;
       faqQuestion?: string;
       faqAnswer?: string;
+      contextualLinkSnippet?: string;
+      actuationScope?: SeoActuationScope;
+      deployAsCanary?: boolean;
+      promotePolicyRule?: Partial<SeoGuardrailPolicyRule>;
     },
     options?: {
       expectedVersion?: number;
@@ -670,7 +831,13 @@ export class SeoActuatorService {
       fallbackPackage?: Partial<AppliedSeoRecord>;
       revalidate?: (urlOrPath: string) => Promise<void> | void;
     }
-  ): Promise<{ success: boolean; package?: AppliedSeoRecord; indexingResult?: any; error?: string }> {
+  ): Promise<{
+    success: boolean;
+    package?: AppliedSeoRecord;
+    promotedRule?: SeoGuardrailPolicyRule;
+    indexingResult?: any;
+    error?: string;
+  }> {
     const packages = await this.getAllPackages();
     const target = this.resolveOrHydratePackage(packages, packageId, options?.fallbackPackage);
 
@@ -693,9 +860,26 @@ export class SeoActuatorService {
     if (updates.calibratedMetaDescription) target.calibratedMetaDescription = updates.calibratedMetaDescription;
     if (updates.faqQuestion) target.faqQuestion = updates.faqQuestion;
     if (updates.faqAnswer) target.faqAnswer = updates.faqAnswer;
+    if (updates.contextualLinkSnippet !== undefined) target.contextualLinkSnippet = updates.contextualLinkSnippet;
+    if (updates.actuationScope) target.actuationScope = updates.actuationScope;
+
+    let promotedRule: SeoGuardrailPolicyRule | undefined;
+    if (updates.promotePolicyRule && updates.promotePolicyRule.ruleTitle && updates.promotePolicyRule.constraintDescription) {
+      promotedRule = SeoPolicyRegistry.promotePolicyRule({
+        id: updates.promotePolicyRule.id,
+        scopeType: updates.promotePolicyRule.scopeType || 'ROUTE',
+        scopeValue: updates.promotePolicyRule.scopeValue || this.normalizePath(target.targetCanonicalUrl),
+        ruleTitle: updates.promotePolicyRule.ruleTitle,
+        constraintDescription: updates.promotePolicyRule.constraintDescription,
+        lockTitleOverwrite: updates.promotePolicyRule.lockTitleOverwrite,
+        requiredTokens: updates.promotePolicyRule.requiredTokens,
+        prohibitedPhrases: updates.promotePolicyRule.prohibitedPhrases,
+        source: updates.promotePolicyRule.source || 'ADVERSARIAL_HEAD_PROMOTED',
+      });
+    }
 
     target.version = (target.version || 1) + 1;
-    target.status = 'APPLIED';
+    target.status = updates.deployAsCanary ? 'CANARY' : 'APPLIED';
     target.appliedAt = new Date().toISOString();
     target.canaryExpiresAt = new Date(
       Date.now() + this.CANARY_DURATION_DAYS * 24 * 60 * 60 * 1000
@@ -705,14 +889,16 @@ export class SeoActuatorService {
     target.lockedUntil = null;
     target.lastModifiedBy = options?.actorId || 'ADMIN_USER';
 
-    await this.persistRecordToSupabase(target);
+    const enriched = this.enrichRecordWithBlastRadius(target);
 
-    this.memoryStore.set(target.id, target);
-    this.saveAppliedToLocalRepoIfWritable(target);
+    await this.persistRecordToSupabase(enriched);
+
+    this.memoryStore.set(enriched.id, enriched);
+    this.saveAppliedToLocalRepoIfWritable(enriched);
 
     if (options?.revalidate) {
       try {
-        await options.revalidate(target.targetCanonicalUrl);
+        await options.revalidate(enriched.targetCanonicalUrl);
       } catch (revErr: any) {
         console.warn('Cache revalidation warning:', revErr?.message);
       }
@@ -720,10 +906,10 @@ export class SeoActuatorService {
 
     let indexingResult: any = null;
     try {
-      indexingResult = await GoogleIndexingClient.notifyUrlUpdated(target.targetCanonicalUrl);
+      indexingResult = await GoogleIndexingClient.notifyUrlUpdated(enriched.targetCanonicalUrl);
       if (indexingResult.success) {
-        target.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
-        target.indexingStatus = 'SITEMAP_LASTMOD_SYNCED';
+        enriched.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
+        enriched.indexingStatus = 'SITEMAP_LASTMOD_SYNCED';
       }
     } catch (idxErr: any) {
       indexingResult = { success: false, error: idxErr.message };
@@ -731,19 +917,28 @@ export class SeoActuatorService {
 
     return {
       success: true,
-      package: target,
+      package: enriched,
+      promotedRule,
       indexingResult,
     };
   }
 
   /**
-   * Applies all validated packages in a single click
+   * Applies all validated packages (or only LOW_RISK validated packages if specified)
    */
   public static async applyAllValidated(options?: {
+    onlyLowRisk?: boolean;
     revalidate?: (urlOrPath: string) => Promise<void> | void;
   }): Promise<{ success: boolean; appliedCount: number; indexingResults: any[] }> {
     const packages = await this.getAllPackages();
-    const toApply = packages.filter(p => p.status === 'VALIDATED' || p.status === 'STAGED');
+    const toApply = packages.filter(p => {
+      const isPending = p.status === 'VALIDATED' || p.status === 'STAGED';
+      if (!isPending) return false;
+      if (options?.onlyLowRisk) {
+        return p.deploymentRisk === 'LOW_RISK';
+      }
+      return true;
+    });
 
     const indexingResults: any[] = [];
     for (const pkg of toApply) {

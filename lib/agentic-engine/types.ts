@@ -363,11 +363,59 @@ export type SeoActionLifecycleStatus =
   | 'ROLLED_BACK'
   | 'REJECTED';
 
+export type SeoActuationScope = 'FULL_META_AND_FAQ' | 'ADDITIVE_CONTENT_AND_LINKS';
+
+export type SeoDeploymentRiskTier = 'LOW_RISK' | 'MEDIUM_RISK' | 'HIGH_RISK' | 'CRITICAL_RISK';
+
+export interface SeoTradeOffSummary {
+  whyTriggered: string;
+  whatChanges: string;
+  riskExplanation: string;
+  preservesLiveTitle: boolean;
+  baselineLiveTitle: string;
+  droppedAnchorTokens: string[];
+}
+
+export interface SeoGuardrailPolicyRule {
+  id: string;
+  scopeType: 'GLOBAL' | 'ROUTE' | 'INTENT';
+  scopeValue: string;
+  ruleTitle: string;
+  constraintDescription: string;
+  lockTitleOverwrite?: boolean;
+  requiredTokens?: string[];
+  prohibitedPhrases?: string[];
+  source: 'BASELINE_INVARIANT' | 'ADVERSARIAL_HEAD_PROMOTED' | 'HUMAN_ADMIN_PROMOTED';
+  createdAt: string;
+}
+
+export interface AdversarialSeoReviewResult {
+  verdict: 'APPROVED_AS_IS' | 'COUNTER_PLAN_RECOMMENDED' | 'VETO_DESTRUCTIVE';
+  deploymentRisk: SeoDeploymentRiskTier;
+  executiveSummary: string;
+  critiquePoints: string[];
+  counterProposal?: {
+    calibratedTitle: string;
+    calibratedMetaDescription: string;
+    faqQuestion: string;
+    faqAnswer: string;
+    contextualLinkSnippet?: string;
+    actuationScope: SeoActuationScope;
+    targetCanonicalUrl?: string;
+  };
+  candidatePolicyRule?: SeoGuardrailPolicyRule;
+  evaluatedAt: string;
+}
+
 export interface AutonomousSeoActionPackage {
   id: string;
   query: string;
   priority: 'CRITICAL' | 'HIGH' | 'MEDIUM';
   actionType: 'META_RECALIBRATION' | 'INTERNAL_LINK_BOOST' | 'SCHEMA_FAQ_SNIPPET' | 'FULL_CLUSTER_PACKAGE';
+  actuationScope?: SeoActuationScope;
+  deploymentRisk?: SeoDeploymentRiskTier;
+  tradeOffSummary?: SeoTradeOffSummary;
+  adversarialReview?: AdversarialSeoReviewResult;
   seoTechnicalBrief: SeoTechnicalBrief;
   copyPackage: ConversionCopyPackage;
   statutoryAudit: StatutoryAuditVerdict;

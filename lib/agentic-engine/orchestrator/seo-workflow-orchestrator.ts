@@ -14,6 +14,11 @@ import {
   verifyIntentCalibratedStatutoryTokens,
 } from '../guardrails/sra-boundary-guard';
 import { auditSerpPixelBudgets, SERP_PIXEL_BUDGETS } from '../tools/serp-pixel-calculator';
+import {
+  evaluateSeoBlastRadius,
+  resolveSafeActuationScope,
+} from '../guardrails/seo-blast-radius-guard';
+import { SeoPolicyRegistry } from '../services/seo-policy-registry';
 import { seoOpportunityWorker } from '../workers/seo-opportunity-worker';
 import { seoCopyWorker } from '../workers/seo-copy-worker';
 import { legalComplianceWorker } from '../workers/legal-compliance-worker';
@@ -270,10 +275,42 @@ export class SeoWorkflowOrchestrator {
       // 4. Specialist Anti-AI Quality & E-E-A-T Guard in the loop
       const antiAiQuality = AntiAiQualityGuard.evaluateQuality(copyPackage);
 
-      // Determine priority and action type
+      // Determine priority, action type, non-destructive actuationScope, and Blast-Radius Risk
       const isTopRankLowCtr = opp.position <= 8.5;
       const actionType = isTopRankLowCtr ? 'META_RECALIBRATION' : 'INTERNAL_LINK_BOOST';
       const priority = opp.impressions >= 100 ? 'CRITICAL' : opp.impressions >= 50 ? 'HIGH' : 'MEDIUM';
+
+      const primaryAnchor = seoBrief.queryClusterProfile?.primaryAnchorQuery || opp.query;
+      const lockTitleByPolicy = SeoPolicyRegistry.isRouteTitleLocked(
+        seoBrief.targetCanonicalUrl,
+        opp.query,
+        primaryAnchor
+      );
+      const safeScope = resolveSafeActuationScope({
+        query: opp.query,
+        targetCanonicalUrl: seoBrief.targetCanonicalUrl,
+        actionType,
+        position: opp.position,
+        primaryAnchorQuery: primaryAnchor,
+        lockTitleByPolicy,
+      });
+
+      const blast = evaluateSeoBlastRadius({
+        query: opp.query,
+        targetCanonicalUrl: seoBrief.targetCanonicalUrl,
+        actionType,
+        actuationScope: safeScope,
+        position: opp.position,
+        impressions: opp.impressions,
+        ctr: opp.ctr,
+        primaryAnchorQuery: primaryAnchor,
+        targetPageExistingH1: seoBrief.targetPageExistingH1,
+        calibratedTitle: copyPackage.calibratedTitle,
+        calibratedMetaDescription: copyPackage.calibratedMetaDescription,
+        faqQuestion: copyPackage.answerFirstFaq.question,
+        faqAnswer: copyPackage.answerFirstFaq.answer,
+        contextualLinkSnippet: copyPackage.contextualInternalLinkBlock.surroundingText,
+      });
 
       const pixelAudit = auditSerpPixelBudgets(
         copyPackage.calibratedTitle,
@@ -283,8 +320,9 @@ export class SeoWorkflowOrchestrator {
       const stagedDiff = `
 ### Action Proposal for "${opp.query}" (Pos ${opp.position.toFixed(1)} · ${opp.impressions} Impr)
 - **Target URL**: ${seoBrief.targetCanonicalUrl}
+- **Deployment Risk**: ${blast.deploymentRisk} (${blast.actuationScope})
 - **Existing Page H1**: ${seoBrief.targetPageExistingH1 || 'N/A'}
-- **Cluster Primary Anchor**: ${seoBrief.queryClusterProfile?.primaryAnchorQuery || opp.query}
+- **Cluster Primary Anchor**: ${primaryAnchor}
 - **Search Intent**: ${seoBrief.searchIntent} (${seoBrief.statutoryCategory || 'FINANCIAL_CALCULATION'})
 - **Proposed Title**: ${copyPackage.calibratedTitle} (${copyPackage.calibratedTitle.length} chars · ${pixelAudit.titlePixels}px / ${pixelAudit.titleMaxPixels}px)
 - **Proposed Meta**: ${copyPackage.calibratedMetaDescription} (${copyPackage.calibratedMetaDescription.length} chars · ${pixelAudit.metaPixels}px / ${pixelAudit.metaMaxPixels}px)
@@ -299,6 +337,9 @@ export class SeoWorkflowOrchestrator {
         query: opp.query,
         priority,
         actionType,
+        actuationScope: blast.actuationScope,
+        deploymentRisk: blast.deploymentRisk,
+        tradeOffSummary: blast.tradeOffSummary,
         seoTechnicalBrief: seoBrief,
         copyPackage,
         statutoryAudit,

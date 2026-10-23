@@ -1,0 +1,38 @@
+[
+  {
+    "id": "policy_route_home_title_lock",
+    "scopeType": "ROUTE",
+    "scopeValue": "/",
+    "ruleTitle": "Protect Homepage Headline & Primary Cluster Anchor",
+    "constraintDescription": "Never overwrite the Homepage (/) <title> or <h1> for secondary or Page 2 queries. Keep actuationScope as ADDITIVE_CONTENT_AND_LINKS unless explicitly recalibrating the primary anchor 'settlement agreement calculator'.",
+    "lockTitleOverwrite": true,
+    "requiredTokens": ["settlement", "agreement", "calculator"],
+    "prohibitedPhrases": ["how to calculate your settlement"],
+    "source": "BASELINE_INVARIANT",
+    "createdAt": "2026-10-23T19:50:00.000Z"
+  },
+  {
+    "id": "policy_route_calculator_title_lock",
+    "scopeType": "ROUTE",
+    "scopeValue": "/calculator/",
+    "ruleTitle": "Protect Main Calculator Transactional Intent",
+    "constraintDescription": "Preserve transactional tool intent on /calculator/. Never replace the <title> with informational 'How to...' phrasing.",
+    "lockTitleOverwrite": true,
+    "requiredTokens": ["settlement", "calculator", "uk"],
+    "prohibitedPhrases": ["how to calculate"],
+    "source": "BASELINE_INVARIANT",
+    "createdAt": "2026-10-23T19:50:00.000Z"
+  },
+  {
+    "id": "policy_global_itepa_tax_precision",
+    "scopeType": "GLOBAL",
+    "scopeValue": "*",
+    "ruleTitle": "ITEPA 2003 s.403 & s.402D PENP Statutory Precision",
+    "constraintDescription": "Never use promissory phrasing like 'You can expect up to £30,000 tax-free'. Always state that genuine non-contractual compensation up to £30,000 can be paid tax-free under s.403 ITEPA 2003, whereas contractual PILON and Post-Employment Notice Pay (s.402D) remain subject to income tax and National Insurance.",
+    "lockTitleOverwrite": false,
+    "requiredTokens": [],
+    "prohibitedPhrases": ["you can expect up to", "guaranteed £30,000"],
+    "source": "BASELINE_INVARIANT",
+    "createdAt": "2026-10-23T19:50:00.000Z"
+  }
+]

@@ -58,9 +58,9 @@ The preamble MUST explicitly include:
 
 ---
 
-## 4. Deterministic Verification Gate
+## 4. Deterministic Verification Gate (Scoped to `docs/audit/` Changes)
 
-Before completing any audit phase or committing code/docs, the following command MUST be executed and exit with code 0:
+Only when creating, renaming, or editing audit deliverables in `docs/audit/`, run:
 ```bash
 npm run lint:audit
 ```

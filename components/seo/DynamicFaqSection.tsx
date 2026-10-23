@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { SeoActuatorService } from '@/lib/agentic-engine/services/seo-actuator-service';
 import { resolveDynamicStructuredSchema } from '@/lib/seo/dynamic-metadata';
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld';
@@ -6,6 +7,40 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld';
 interface DynamicFaqSectionProps {
   pathname: string;
   headingText?: string;
+}
+
+function renderContextualSnippetWithLinks(snippet: string): React.ReactNode {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts: React.ReactNode[] = [];
+  let lastIdx = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = linkRegex.exec(snippet)) !== null) {
+    if (match.index > lastIdx) {
+      parts.push(snippet.slice(lastIdx, match.index));
+    }
+    const anchorText = match[1];
+    let href = match[2];
+    if (href.startsWith('/') && !href.endsWith('/')) {
+      href = `${href}/`;
+    }
+    parts.push(
+      <Link
+        key={`${href}-${match.index}`}
+        href={href}
+        className="font-semibold text-[#D9603B] underline underline-offset-2 hover:text-[#0B1F3A] transition-colors"
+      >
+        {anchorText}
+      </Link>
+    );
+    lastIdx = match.index + match[0].length;
+  }
+
+  if (lastIdx < snippet.length) {
+    parts.push(snippet.slice(lastIdx));
+  }
+
+  return parts.length > 0 ? parts : snippet;
 }
 
 export default async function DynamicFaqSection({
@@ -47,8 +82,13 @@ export default async function DynamicFaqSection({
             <span>{activeOptimization.faqQuestion}</span>
             <span className="transition-transform group-open:rotate-180 text-xs text-[#0B1F3A]/60">▼</span>
           </summary>
-          <div className="mt-3 text-xs sm:text-sm leading-relaxed text-[#0B1F3A]/80 border-t border-[#0B1F3A]/10 pt-3">
-            {activeOptimization.faqAnswer}
+          <div className="mt-3 text-xs sm:text-sm leading-relaxed text-[#0B1F3A]/80 border-t border-[#0B1F3A]/10 pt-3 space-y-2.5">
+            <p>{activeOptimization.faqAnswer}</p>
+            {activeOptimization.contextualLinkSnippet && (
+              <p className="text-xs text-[#0B1F3A]/90 bg-white/80 p-3 rounded-xl border border-[#0B1F3A]/10">
+                {renderContextualSnippetWithLinks(activeOptimization.contextualLinkSnippet)}
+              </p>
+            )}
           </div>
         </details>
 

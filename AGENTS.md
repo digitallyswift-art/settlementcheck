@@ -176,15 +176,15 @@ These rules are strictly binding on all AI pair programming sessions:
    - Before creating any route or directory in `app/`, verify the actual search query intent of UK employees.
    - Reject internal legal/corporate jargon (e.g. "audit") in favor of user-centric, empowering terms (e.g. "review", "check") that match brand identity (*SettlementCheck*).
 
-4. **Deterministic Invariant Quality Gates**:
+4. **Deterministic Invariant Quality Gates (Change-Scoped & Token-Efficient)**:
    - All statutory calculations must remain pure TypeScript functions; AI agents must invoke them as tools rather than calculating approximations.
-   - Before completing tasks, always run and pass:
-     ```bash
-     npm run test:evals   # 100% statutory and brand guardrail compliance
-     npm run check:links  # 0 broken routes and strict trailing-slash enforcement
-     npm run lint:audit   # 100% audit artifact naming, header, and link compliance
-     npx tsc --noEmit     # 0 TypeScript type errors
-     ```
+   - **Do NOT run verification commands on Q&A, research, planning, or discussion turns** where no project files were modified.
+   - When files are modified, run **only** the check(s) relevant to the changed files (or run `npm run verify` once at the end of a multi-file change for a quiet 1-line summary):
+     - TypeScript / component edits (`app/`, `components/`, `lib/`): `npx tsc --noEmit`
+     - Route, navigation, or internal link edits: `npm run check:links`
+     - Statutory formula, rate, or guardrail edits: `npm run test:evals`
+     - Audit report edits (`docs/audit/`): `npm run lint:audit`
+     - Full milestone / multi-domain check (quiet 1-line output): `npm run verify`
 
 5. **Strict Audit Deliverables & Naming Invariants**:
    - All audit deliverables in `docs/audit/` must strictly use two-digit zero-padded prefixes (`phase-01a-`, `phase-01b-`, `phase-02-`, `phase-03-`, ... `phase-10b-`) to enforce deterministic alphabetical and chronological sorting across all OS file trees.

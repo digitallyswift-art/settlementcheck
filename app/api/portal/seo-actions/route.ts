@@ -3,6 +3,7 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import path from 'path';
 import { supabase } from '@/lib/supabase';
 import { SeoActuatorService } from '@/lib/agentic-engine/services/seo-actuator-service';
+import { SeoPolicyRegistry } from '@/lib/agentic-engine/services/seo-policy-registry';
 import { GoogleIndexingClient } from '@/lib/agentic-engine/services/google-indexing-client';
 import { SafeFs } from '@/lib/agentic-engine/services/safe-fs';
 
@@ -28,6 +29,7 @@ export async function GET(req: NextRequest) {
     const limit = Math.min(50, Number(searchParams.get('limit') || 20));
 
     const allPackages = await SeoActuatorService.getAllPackages();
+    const policies = SeoPolicyRegistry.getAllPolicies();
 
     let liveLogs: any[] = [];
     if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -67,8 +69,10 @@ export async function GET(req: NextRequest) {
         stagedCount,
         regressionCount,
         latestRunCount: liveLogs.length,
+        activePoliciesCount: policies.length,
       },
       packages: allPackages.slice(0, limit),
+      policies,
       recentRuns: liveLogs,
       changeLogPreview,
     });
@@ -93,6 +97,35 @@ export async function POST(req: NextRequest) {
     }
 
     switch (action) {
+      case 'ADVERSARIAL_REVIEW': {
+        if (!packageId) {
+          return NextResponse.json(
+            { success: false, error: 'packageId is required for ADVERSARIAL_REVIEW' },
+            { status: 400 }
+          );
+        }
+        const result = await SeoActuatorService.runAdversarialReview(
+          packageId,
+          body.packageSnapshot
+        );
+        return NextResponse.json(result, { status: result.success ? 200 : 400 });
+      }
+
+      case 'PROMOTE_POLICY': {
+        if (!body.rule || !body.rule.ruleTitle || !body.rule.constraintDescription) {
+          return NextResponse.json(
+            { success: false, error: 'Valid rule object is required for PROMOTE_POLICY' },
+            { status: 400 }
+          );
+        }
+        const promoted = SeoPolicyRegistry.promotePolicyRule(body.rule);
+        return NextResponse.json({
+          success: true,
+          promotedRule: promoted,
+          policies: SeoPolicyRegistry.getAllPolicies(),
+        });
+      }
+
       case 'APPLY':
       case 'APPLY_CANARY': {
         if (!packageId) {
@@ -131,8 +164,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(result);
       }
 
-      case 'APPLY_ALL': {
+      case 'APPLY_ALL':
+      case 'APPLY_LOW_RISK': {
         const result = await SeoActuatorService.applyAllValidated({
+          onlyLowRisk: action === 'APPLY_LOW_RISK',
           revalidate: async (urlOrPath) => {
             revalidateSeoRouteAndTag(urlOrPath);
           },
@@ -150,7 +185,8 @@ export async function POST(req: NextRequest) {
         const result = await SeoActuatorService.rejectPackage(
           packageId,
           body.reason,
-          body.packageSnapshot
+          body.packageSnapshot,
+          body.policyRuleToPromote
         );
         try {
           revalidateTag('seo-metadata-all');

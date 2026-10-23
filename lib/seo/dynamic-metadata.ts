@@ -18,6 +18,11 @@ export async function resolveDynamicSeoMetadata(
       return defaultMetadata;
     }
 
+    // Phase 1 Non-Destructive Invariant: Additive packages preserve live <title> and <meta>
+    if (active.actuationScope === 'ADDITIVE_CONTENT_AND_LINKS') {
+      return defaultMetadata;
+    }
+
     const title = active.calibratedTitle;
     const description = active.calibratedMetaDescription;
 
@@ -53,6 +58,10 @@ export async function resolveDynamicPageHeading(
   try {
     const active = await SeoActuatorService.getActiveOptimization(pathname);
     if (!active || !active.calibratedTitle) {
+      return defaultHeading;
+    }
+    // Phase 1 Non-Destructive Invariant: Additive packages preserve the baseline on-page H1
+    if (active.actuationScope === 'ADDITIVE_CONTENT_AND_LINKS') {
       return defaultHeading;
     }
     // Strip trailing brand suffix (" | SettlementCheck") for clean on-page H1 presentation

@@ -10,6 +10,7 @@
 
 import { callAI } from '@/lib/ai/gateway';
 import { sanitizeMarketingClaims } from '../guardrails/cap-code-claims-guard';
+import { SeoPolicyRegistry } from '../services/seo-policy-registry';
 import { ConversionCopyPackage, SeoTechnicalBrief } from '../types';
 
 export class ConversionCopywriterAgent {
@@ -32,7 +33,8 @@ export class ConversionCopywriterAgent {
       .replace(/\battorney\b/gi, 'solicitor')
       .replace(/\bseverance\b/gi, 'settlement')
       .replace(/\blayoff\b/gi, 'redundancy')
-      .replace(/\blabor court\b/gi, 'employment tribunal');
+      .replace(/\blabor court\b/gi, 'employment tribunal')
+      .replace(/\byou can expect up to £30,000 tax-free\b/gi, 'genuine ex-gratia compensation up to £30,000 is tax-free');
 
     // Replace risky unverified marketing claims under CAP Code rules
     sanitized = sanitizeMarketingClaims(sanitized).sanitizedText;
@@ -227,6 +229,7 @@ export class ConversionCopywriterAgent {
 
     // Attempt AI synthesis for tailored high-converting copy
     try {
+      const policyConstraints = SeoPolicyRegistry.formatPromptConstraints(dest, intent);
       const prompt = `
 You are the senior Conversion Copywriter for SettlementCheck (settlementcheck.co.uk).
 Target audience: Stressed UK employee who just received a settlement agreement or redundancy proposal.
@@ -238,15 +241,16 @@ Write high-converting, empathetic, brand-compliant copy for:
 - April 2026 Weekly Cap: £${weeklyCap}
 - Tax-Free Exemption: £${taxFree.toLocaleString('en-GB')} (ITEPA 2003 s.403)
 
-STRICT BRAND RULES:
+STRICT BRAND & STATUTORY GUARDRAIL POLICIES:
 1. Tone: Calm, clear, empathetic, on their side.
 2. UK English only: Use "solicitor" (NEVER lawyer/attorney), "redundancy" (NEVER layoff), "employment tribunal" (NEVER court).
 3. Always include the reassurance: "your employer covers the legal fees" or "your employer pays your fees".
 4. CRITICAL: ZERO EM DASHES (—). Use hyphens or simple punctuation.
-5. Title: exactly 50 to 60 characters.
+5. Title: exactly 50 to 60 characters, preserving the brand suffix "| SettlementCheck".
 6. Meta description: exactly 140 to 155 characters.
-7. FAQ Answer: 40 to 60 words, direct numeric answer in sentence 1, reassurance in sentence 2.
+7. FAQ Answer: 45 to 70 words, distinguishing non-contractual ex-gratia compensation (£30,000 tax-free under s.403 ITEPA 2003) from taxable PILON / notice pay, plus solicitor fee reassurance.
 8. Contextual Link Paragraph: 2 sentences embedding [${q}](${dest}).
+${policyConstraints ? `\nCURATED ROUTE & INTENT POLICIES (MANDATORY):\n${policyConstraints}` : ''}
 
 Return valid JSON:
 {
