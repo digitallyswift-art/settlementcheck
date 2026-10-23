@@ -152,22 +152,27 @@ create index if not exists idx_seo_run_logs_created_at
   on seo_run_logs (created_at desc);
 
 create table if not exists seo_autonomous_actions (
-  id                          uuid primary key default gen_random_uuid(),
-  run_id                      text not null,
+  id                          text primary key default gen_random_uuid()::text,
+  run_id                      text not null default 'manual_actuation',
   query                       text not null,
-  action_type                 text not null,
-  priority                    text not null,
-  status                      text not null default 'STAGED' check (status in ('STAGED', 'VALIDATED', 'APPLIED', 'REJECTED')),
+  action_type                 text not null default 'INTERNAL_LINK_BOOST',
+  priority                    text not null default 'CRITICAL',
+  status                      text not null default 'STAGED' check (status in ('STAGED', 'VALIDATED', 'CANARY', 'APPLIED', 'PERMANENT', 'ROLLED_BACK', 'REJECTED')),
   target_canonical_url        text not null,
   calibrated_title            text not null,
   calibrated_meta_description text not null,
-  faq_question                text not null,
-  faq_answer                  text not null,
-  contextual_link_snippet     text not null,
+  faq_question                text not null default '',
+  faq_answer                  text not null default '',
+  contextual_link_snippet     text not null default '',
   seo_brief                   jsonb not null default '{}'::jsonb,
   copy_package                jsonb not null default '{}'::jsonb,
   statutory_audit             jsonb not null default '{}'::jsonb,
   anti_ai_quality             jsonb not null default '{}'::jsonb,
+  version                     integer not null default 1,
+  lock_state                  text not null default 'IDLE',
+  locked_by                   text,
+  locked_until                timestamptz,
+  last_modified_by            text,
   created_at                  timestamptz not null default now()
 );
 

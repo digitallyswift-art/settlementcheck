@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
-import fs from 'fs';
 import path from 'path';
 import { supabase } from '@/lib/supabase';
 import { SeoActuatorService } from '@/lib/agentic-engine/services/seo-actuator-service';
 import { GoogleIndexingClient } from '@/lib/agentic-engine/services/google-indexing-client';
+import { SafeFs } from '@/lib/agentic-engine/services/safe-fs';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,11 +43,9 @@ export async function GET(req: NextRequest) {
 
     let changeLogPreview = '';
     const changeLogPath = path.resolve('data/serp-actions/CHANGE_LOG.md');
-    if (fs.existsSync(changeLogPath)) {
-      try {
-        const content = fs.readFileSync(changeLogPath, 'utf-8');
-        changeLogPreview = content.slice(0, 4000);
-      } catch {}
+    const changeLogContent = SafeFs.readFileSyncSafe(changeLogPath, 'utf-8');
+    if (changeLogContent) {
+      changeLogPreview = changeLogContent.slice(0, 4000);
     }
 
     const appliedCount = allPackages.filter(
@@ -108,6 +106,7 @@ export async function POST(req: NextRequest) {
           expectedVersion: body.expectedVersion,
           actorId: body.actorId || 'COCKPIT_ADMIN',
           deployAsCanary: action === 'APPLY_CANARY' || Boolean(body.deployAsCanary),
+          fallbackPackage: body.packageSnapshot,
           revalidate: async (urlOrPath) => {
             revalidateSeoRouteAndTag(urlOrPath);
           },
@@ -124,6 +123,7 @@ export async function POST(req: NextRequest) {
           );
         }
         const result = await SeoActuatorService.rollbackPackage(packageId, {
+          fallbackPackage: body.packageSnapshot,
           revalidate: async (urlOrPath) => {
             revalidateSeoRouteAndTag(urlOrPath);
           },
@@ -147,7 +147,11 @@ export async function POST(req: NextRequest) {
             { status: 400 }
           );
         }
-        const result = await SeoActuatorService.rejectPackage(packageId, body.reason);
+        const result = await SeoActuatorService.rejectPackage(
+          packageId,
+          body.reason,
+          body.packageSnapshot
+        );
         try {
           revalidateTag('seo-metadata-all');
         } catch {}
@@ -164,6 +168,7 @@ export async function POST(req: NextRequest) {
         const result = await SeoActuatorService.editAndApplyPackage(packageId, body.updates, {
           expectedVersion: body.expectedVersion,
           actorId: body.actorId || 'COCKPIT_ADMIN',
+          fallbackPackage: body.packageSnapshot,
           revalidate: async (urlOrPath) => {
             revalidateSeoRouteAndTag(urlOrPath);
           },

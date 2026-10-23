@@ -48,8 +48,9 @@ export class SeoStorageService {
 
         await supabase.from('seo_run_logs').insert(runRecord);
 
-        // Insert individual action packages
+        // Insert individual action packages (preserving deterministic package IDs)
         const actionRecords: SeoAutonomousActionRecord[] = packages.map(p => ({
+          id: p.id,
           run_id: runId,
           query: p.query,
           action_type: p.actionType,
@@ -61,14 +62,22 @@ export class SeoStorageService {
           faq_question: p.copyPackage.answerFirstFaq.question,
           faq_answer: p.copyPackage.answerFirstFaq.answer,
           contextual_link_snippet: p.copyPackage.contextualInternalLinkBlock.surroundingText,
-          seo_brief: p.seoTechnicalBrief,
+          seo_brief: { ...p.seoTechnicalBrief, packageId: p.id },
           copy_package: p.copyPackage,
           statutory_audit: p.statutoryAudit,
           anti_ai_quality: p.antiAiQuality,
         }));
 
         if (actionRecords.length > 0) {
-          await supabase.from('seo_autonomous_actions').insert(actionRecords);
+          const { error: upsertErr } = await supabase
+            .from('seo_autonomous_actions')
+            .upsert(actionRecords, { onConflict: 'id' });
+
+          // Fallback if remote DB still has legacy UUID constraint on id column
+          if (upsertErr) {
+            const legacyRecords = actionRecords.map(({ id: _omit, ...rest }) => rest);
+            await supabase.from('seo_autonomous_actions').insert(legacyRecords);
+          }
         }
 
         supabaseSuccess = true;

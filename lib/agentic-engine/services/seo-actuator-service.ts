@@ -13,6 +13,7 @@ import { supabase } from '@/lib/supabase';
 import { GoogleIndexingClient } from './google-indexing-client';
 import { SeoArchitectAgent } from '../agents/seo-architect-agent';
 import { SeoActionLifecycleStatus } from '../types';
+import { SafeFs } from './safe-fs';
 
 export interface AppliedSeoRecord {
   id: string;
@@ -119,11 +120,11 @@ export class SeoActuatorService {
       }
     }
 
-    // 3. Read-only committed disk snapshot fallback (no /tmp ephemeral writes)
-    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+    // 3. Committed disk or /tmp snapshot fallback
+    const appliedContent = SafeFs.readFileSyncSafe(this.APPLIED_DISK_PATH, 'utf-8');
+    if (appliedContent) {
       try {
-        const content = fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8');
-        const appliedList: AppliedSeoRecord[] = JSON.parse(content);
+        const appliedList: AppliedSeoRecord[] = JSON.parse(appliedContent);
         const match = appliedList.find(
           a =>
             (a.status === 'APPLIED' || a.status === 'CANARY' || a.status === 'PERMANENT') &&
@@ -174,8 +175,11 @@ export class SeoActuatorService {
       canaryExpiresAt = exp.toISOString();
     }
 
+    const resolvedId = d.seo_brief?.packageId || d.id;
+    const resolvedStatus: SeoActionLifecycleStatus = d.seo_brief?.lifecycleStatus || d.status;
+
     return {
-      id: d.id,
+      id: resolvedId,
       query: d.query,
       priority: d.priority || 'CRITICAL',
       actionType: d.action_type || 'INTERNAL_LINK_BOOST',
@@ -198,9 +202,9 @@ export class SeoActuatorService {
       calibratedMetaDescription: d.calibrated_meta_description,
       faqQuestion: d.faq_question,
       faqAnswer: d.faq_answer,
-      status: d.status,
+      status: resolvedStatus,
       appliedAt,
-      version: d.version || 1,
+      version: d.version ?? d.seo_brief?.version ?? 1,
       lockState: d.lock_state || 'IDLE',
       lockedBy: d.locked_by || null,
       lockedUntil: d.locked_until || null,
@@ -242,7 +246,7 @@ export class SeoActuatorService {
   }
 
   /**
-   * Reads all current packages across Supabase, in-memory state, and repo staging artifacts
+   * Reads all current packages across Supabase, in-memory state, and repo/tmp staging artifacts
    */
   public static async getAllPackages(): Promise<AppliedSeoRecord[]> {
     const list: AppliedSeoRecord[] = [];
@@ -259,8 +263,12 @@ export class SeoActuatorService {
 
         if (!error && data) {
           for (const d of data) {
-            seenIds.add(d.id);
-            list.push(this.mapSupabaseRowToRecord(d));
+            const mapped = this.mapSupabaseRowToRecord(d);
+            if (!seenIds.has(mapped.id)) {
+              seenIds.add(mapped.id);
+              if (d.id) seenIds.add(d.id);
+              list.push(mapped);
+            }
           }
         }
       } catch {}
@@ -274,10 +282,11 @@ export class SeoActuatorService {
       }
     }
 
-    // 3. Committed disk applied actions
-    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+    // 3. Committed disk or /tmp applied actions
+    const appliedRawContent = SafeFs.readFileSyncSafe(this.APPLIED_DISK_PATH, 'utf-8');
+    if (appliedRawContent) {
       try {
-        const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
+        const diskApplied: AppliedSeoRecord[] = JSON.parse(appliedRawContent);
         for (const item of diskApplied) {
           if (!seenIds.has(item.id)) {
             seenIds.add(item.id);
@@ -287,10 +296,11 @@ export class SeoActuatorService {
       } catch {}
     }
 
-    // 4. Staged actions fallback
-    if (fs.existsSync(this.STAGED_DISK_PATH)) {
+    // 4. Staged actions fallback (checks both repo staging dir and serverless /tmp fallback)
+    const stagedRawContent = SafeFs.readFileSyncSafe(this.STAGED_DISK_PATH, 'utf-8');
+    if (stagedRawContent) {
       try {
-        const stagedRaw = JSON.parse(fs.readFileSync(this.STAGED_DISK_PATH, 'utf-8'));
+        const stagedRaw = JSON.parse(stagedRawContent);
         for (const pkg of stagedRaw) {
           if (!seenIds.has(pkg.id)) {
             seenIds.add(pkg.id);
@@ -326,6 +336,146 @@ export class SeoActuatorService {
   }
 
   /**
+   * Resolves a package from active storage or hydrates it from a client-supplied snapshot
+   * when a serverless cold start or worker hop cleared in-memory state.
+   */
+  private static resolveOrHydratePackage(
+    packages: AppliedSeoRecord[],
+    packageId: string,
+    fallback?: Partial<AppliedSeoRecord>
+  ): AppliedSeoRecord | undefined {
+    const existing = packages.find(p => p.id === packageId);
+    if (existing) return existing;
+
+    if (fallback && (fallback.query || fallback.calibratedTitle) && fallback.targetCanonicalUrl) {
+      const norm = this.normalizePath(fallback.targetCanonicalUrl);
+      const hydrated: AppliedSeoRecord = {
+        id: packageId,
+        query: fallback.query || 'settlement agreement calculator',
+        targetCanonicalUrl: fallback.targetCanonicalUrl,
+        calibratedTitle: fallback.calibratedTitle || '',
+        calibratedMetaDescription: fallback.calibratedMetaDescription || '',
+        faqQuestion: fallback.faqQuestion || '',
+        faqAnswer: fallback.faqAnswer || '',
+        status: fallback.status || 'VALIDATED',
+        priority: fallback.priority || 'CRITICAL',
+        actionType: fallback.actionType || 'INTERNAL_LINK_BOOST',
+        impressions: fallback.impressions ?? 0,
+        clicks: fallback.clicks ?? 0,
+        position: fallback.position ?? 0,
+        ctr: fallback.ctr ?? 0,
+        targetPageExistingH1:
+          fallback.targetPageExistingH1 || SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm],
+        primaryAnchorQuery: fallback.primaryAnchorQuery || fallback.query,
+        version: fallback.version ?? 1,
+      };
+      this.memoryStore.set(packageId, hydrated);
+      return hydrated;
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Persists a package state transition to Supabase with schema fallback resilience
+   */
+  private static async persistRecordToSupabase(target: AppliedSeoRecord): Promise<void> {
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) return;
+
+    const seoBriefPayload = {
+      packageId: target.id,
+      lifecycleStatus: target.status,
+      version: target.version || 1,
+      targetPageExistingH1: target.targetPageExistingH1,
+      regressionAlert: target.regressionAlert || null,
+      currentMetrics: {
+        impressions: target.impressions ?? 0,
+        clicks: target.clicks ?? 0,
+        position: target.position ?? 0,
+        ctr: target.ctr ?? 0,
+      },
+    };
+
+    try {
+      const { error } = await supabase
+        .from('seo_autonomous_actions')
+        .upsert(
+          {
+            id: target.id,
+            run_id: 'cockpit_actuation',
+            query: target.query,
+            action_type: target.actionType || 'INTERNAL_LINK_BOOST',
+            priority: target.priority || 'CRITICAL',
+            target_canonical_url: target.targetCanonicalUrl,
+            calibrated_title: target.calibratedTitle,
+            calibrated_meta_description: target.calibratedMetaDescription,
+            faq_question: target.faqQuestion || '',
+            faq_answer: target.faqAnswer || '',
+            contextual_link_snippet: '',
+            seo_brief: seoBriefPayload,
+            status: target.status,
+            version: target.version || 1,
+            lock_state: 'IDLE',
+            locked_by: null,
+            locked_until: null,
+            last_modified_by: target.lastModifiedBy || 'ADMIN_USER',
+            created_at: target.appliedAt || new Date().toISOString(),
+          },
+          { onConflict: 'id' }
+        );
+
+      // Fallback if remote DB has not yet applied 20261023_fix_seo_autonomous_actions_schema.sql
+      if (error) {
+        const legacyCompatStatus =
+          target.status === 'CANARY' || target.status === 'PERMANENT'
+            ? 'APPLIED'
+            : target.status === 'ROLLED_BACK'
+            ? 'VALIDATED'
+            : target.status;
+
+        const { data: existingRows } = await supabase
+          .from('seo_autonomous_actions')
+          .select('id')
+          .eq('query', target.query)
+          .eq('target_canonical_url', target.targetCanonicalUrl)
+          .order('created_at', { ascending: false })
+          .limit(1);
+
+        if (existingRows && existingRows.length > 0) {
+          await supabase
+            .from('seo_autonomous_actions')
+            .update({
+              calibrated_title: target.calibratedTitle,
+              calibrated_meta_description: target.calibratedMetaDescription,
+              faq_question: target.faqQuestion || '',
+              faq_answer: target.faqAnswer || '',
+              status: legacyCompatStatus,
+              seo_brief: seoBriefPayload,
+            })
+            .eq('id', existingRows[0].id);
+        } else {
+          await supabase.from('seo_autonomous_actions').insert({
+            run_id: 'cockpit_actuation',
+            query: target.query,
+            action_type: target.actionType || 'INTERNAL_LINK_BOOST',
+            priority: target.priority || 'CRITICAL',
+            status: legacyCompatStatus,
+            target_canonical_url: target.targetCanonicalUrl,
+            calibrated_title: target.calibratedTitle,
+            calibrated_meta_description: target.calibratedMetaDescription,
+            faq_question: target.faqQuestion || '',
+            faq_answer: target.faqAnswer || '',
+            contextual_link_snippet: '',
+            seo_brief: seoBriefPayload,
+          });
+        }
+      }
+    } catch (err) {
+      console.error('Supabase persistence warning:', err);
+    }
+  }
+
+  /**
    * Applies an optimization package (supports CANARY 14-day observation or direct APPLIED)
    */
   public static async applyPackage(
@@ -335,11 +485,12 @@ export class SeoActuatorService {
       expectedVersion?: number;
       actorId?: string;
       deployAsCanary?: boolean;
+      fallbackPackage?: Partial<AppliedSeoRecord>;
       revalidate?: (urlOrPath: string) => Promise<void> | void;
     }
   ): Promise<{ success: boolean; package?: AppliedSeoRecord; indexingResult?: any; error?: string }> {
     const packages = await this.getAllPackages();
-    const target = packages.find(p => p.id === packageId);
+    const target = this.resolveOrHydratePackage(packages, packageId, options?.fallbackPackage);
 
     if (!target) {
       return { success: false, error: `Package not found: ${packageId}` };
@@ -372,35 +523,9 @@ export class SeoActuatorService {
     target.lastModifiedBy = options?.actorId || 'ADMIN_USER';
 
     // 2. Persist to Supabase FIRST (single source of ACID truth)
-    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      try {
-        await supabase
-          .from('seo_autonomous_actions')
-          .upsert(
-            {
-              id: target.id,
-              query: target.query,
-              target_canonical_url: target.targetCanonicalUrl,
-              calibrated_title: target.calibratedTitle,
-              calibrated_meta_description: target.calibratedMetaDescription,
-              faq_question: target.faqQuestion,
-              faq_answer: target.faqAnswer,
-              status: target.status,
-              version: target.version,
-              lock_state: 'IDLE',
-              locked_by: null,
-              locked_until: null,
-              last_modified_by: target.lastModifiedBy,
-              created_at: target.appliedAt,
-            },
-            { onConflict: 'id' }
-          );
-      } catch (err) {
-        console.error('Supabase upsert failed:', err);
-      }
-    }
+    await this.persistRecordToSupabase(target);
 
-    // 3. Persist to in-memory runtime overlay & non-/tmp local dev snapshot
+    // 3. Persist to in-memory runtime overlay & local/tmp snapshot
     this.memoryStore.set(target.id, target);
     this.saveAppliedToLocalRepoIfWritable(target);
 
@@ -442,11 +567,12 @@ export class SeoActuatorService {
     options?: {
       reason?: string;
       markAsRolledBack?: boolean;
+      fallbackPackage?: Partial<AppliedSeoRecord>;
       revalidate?: (urlOrPath: string) => Promise<void> | void;
     }
   ): Promise<{ success: boolean; error?: string }> {
     const packages = await this.getAllPackages();
-    const target = packages.find(p => p.id === packageId);
+    const target = this.resolveOrHydratePackage(packages, packageId, options?.fallbackPackage);
 
     if (!target) {
       return { success: false, error: `Package not found: ${packageId}` };
@@ -461,22 +587,16 @@ export class SeoActuatorService {
 
     this.memoryStore.set(target.id, target);
 
-    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+    const appliedContent = SafeFs.readFileSyncSafe(this.APPLIED_DISK_PATH, 'utf-8');
+    if (appliedContent) {
       try {
-        const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
+        const diskApplied: AppliedSeoRecord[] = JSON.parse(appliedContent);
         const filtered = diskApplied.filter(p => p.id !== packageId);
-        fs.writeFileSync(this.APPLIED_DISK_PATH, JSON.stringify(filtered, null, 2), 'utf-8');
+        SafeFs.writeFileSyncSafe(this.APPLIED_DISK_PATH, JSON.stringify(filtered, null, 2), 'utf-8');
       } catch {}
     }
 
-    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      try {
-        await supabase
-          .from('seo_autonomous_actions')
-          .update({ status: nextStatus })
-          .eq('id', target.id);
-      } catch {}
-    }
+    await this.persistRecordToSupabase(target);
 
     if (options?.revalidate) {
       try {
@@ -492,10 +612,11 @@ export class SeoActuatorService {
    */
   public static async rejectPackage(
     packageId: string,
-    reason?: string
+    reason?: string,
+    fallbackPackage?: Partial<AppliedSeoRecord>
   ): Promise<{ success: boolean; error?: string }> {
     const packages = await this.getAllPackages();
-    const target = packages.find(p => p.id === packageId);
+    const target = this.resolveOrHydratePackage(packages, packageId, fallbackPackage);
 
     if (!target) {
       return { success: false, error: `Package not found: ${packageId}` };
@@ -505,34 +626,29 @@ export class SeoActuatorService {
     target.appliedAt = undefined;
     this.memoryStore.set(target.id, target);
 
-    if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+    const appliedContent = SafeFs.readFileSyncSafe(this.APPLIED_DISK_PATH, 'utf-8');
+    if (appliedContent) {
       try {
-        const diskApplied: AppliedSeoRecord[] = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
+        const diskApplied: AppliedSeoRecord[] = JSON.parse(appliedContent);
         const filtered = diskApplied.filter(p => p.id !== packageId);
-        fs.writeFileSync(this.APPLIED_DISK_PATH, JSON.stringify(filtered, null, 2), 'utf-8');
+        SafeFs.writeFileSyncSafe(this.APPLIED_DISK_PATH, JSON.stringify(filtered, null, 2), 'utf-8');
       } catch {}
     }
 
-    if (fs.existsSync(this.STAGED_DISK_PATH)) {
+    const stagedContent = SafeFs.readFileSyncSafe(this.STAGED_DISK_PATH, 'utf-8');
+    if (stagedContent) {
       try {
-        const stagedRaw = JSON.parse(fs.readFileSync(this.STAGED_DISK_PATH, 'utf-8'));
+        const stagedRaw = JSON.parse(stagedContent);
         const idx = stagedRaw.findIndex((p: any) => p.id === packageId);
         if (idx >= 0) {
           stagedRaw[idx].status = 'REJECTED';
           stagedRaw[idx].rejectionReason = reason || 'Rejected by administrator';
-          fs.writeFileSync(this.STAGED_DISK_PATH, JSON.stringify(stagedRaw, null, 2), 'utf-8');
+          SafeFs.writeFileSyncSafe(this.STAGED_DISK_PATH, JSON.stringify(stagedRaw, null, 2), 'utf-8');
         }
       } catch {}
     }
 
-    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      try {
-        await supabase
-          .from('seo_autonomous_actions')
-          .update({ status: 'REJECTED' })
-          .eq('id', target.id);
-      } catch {}
-    }
+    await this.persistRecordToSupabase(target);
 
     return { success: true };
   }
@@ -551,11 +667,12 @@ export class SeoActuatorService {
     options?: {
       expectedVersion?: number;
       actorId?: string;
+      fallbackPackage?: Partial<AppliedSeoRecord>;
       revalidate?: (urlOrPath: string) => Promise<void> | void;
     }
   ): Promise<{ success: boolean; package?: AppliedSeoRecord; indexingResult?: any; error?: string }> {
     const packages = await this.getAllPackages();
-    const target = packages.find(p => p.id === packageId);
+    const target = this.resolveOrHydratePackage(packages, packageId, options?.fallbackPackage);
 
     if (!target) {
       return { success: false, error: `Package not found: ${packageId}` };
@@ -588,33 +705,7 @@ export class SeoActuatorService {
     target.lockedUntil = null;
     target.lastModifiedBy = options?.actorId || 'ADMIN_USER';
 
-    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      try {
-        await supabase
-          .from('seo_autonomous_actions')
-          .upsert(
-            {
-              id: target.id,
-              query: target.query,
-              target_canonical_url: target.targetCanonicalUrl,
-              calibrated_title: target.calibratedTitle,
-              calibrated_meta_description: target.calibratedMetaDescription,
-              faq_question: target.faqQuestion,
-              faq_answer: target.faqAnswer,
-              status: 'APPLIED',
-              version: target.version,
-              lock_state: 'IDLE',
-              locked_by: null,
-              locked_until: null,
-              last_modified_by: target.lastModifiedBy,
-              created_at: target.appliedAt,
-            },
-            { onConflict: 'id' }
-          );
-      } catch (err) {
-        console.error('Supabase upsert failed:', err);
-      }
-    }
+    await this.persistRecordToSupabase(target);
 
     this.memoryStore.set(target.id, target);
     this.saveAppliedToLocalRepoIfWritable(target);
@@ -671,14 +762,15 @@ export class SeoActuatorService {
   }
 
   /**
-   * Writes to local repo applied-actions.json only in writable local dev environments (never /tmp)
+   * Writes to local repo applied-actions.json (or /tmp fallback via SafeFs)
    */
   private static saveAppliedToLocalRepoIfWritable(record: AppliedSeoRecord) {
     try {
       let appliedList: AppliedSeoRecord[] = [];
-      if (fs.existsSync(this.APPLIED_DISK_PATH)) {
+      const existingContent = SafeFs.readFileSyncSafe(this.APPLIED_DISK_PATH, 'utf-8');
+      if (existingContent) {
         try {
-          appliedList = JSON.parse(fs.readFileSync(this.APPLIED_DISK_PATH, 'utf-8'));
+          appliedList = JSON.parse(existingContent);
         } catch {}
       }
 
@@ -689,11 +781,9 @@ export class SeoActuatorService {
         appliedList.push(record);
       }
 
-      const dir = path.dirname(this.APPLIED_DISK_PATH);
-      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(this.APPLIED_DISK_PATH, JSON.stringify(appliedList, null, 2), 'utf-8');
+      SafeFs.writeFileSyncSafe(this.APPLIED_DISK_PATH, JSON.stringify(appliedList, null, 2), 'utf-8');
     } catch {
-      // Read-only serverless filesystem (Vercel/Edge): state is safely persisted in Supabase + tagged cache
+      // State is safely persisted in Supabase + tagged cache
     }
   }
 }

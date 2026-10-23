@@ -114,6 +114,7 @@ export default function CockpitClient() {
           packageId,
           deployAsCanary,
           expectedVersion: targetPkg?.version || 1,
+          packageSnapshot: targetPkg,
         }),
       });
       const data = await res.json();
@@ -154,6 +155,7 @@ export default function CockpitClient() {
           packageId,
           updates,
           expectedVersion: expectedVersion || targetPkg?.version || 1,
+          packageSnapshot: targetPkg,
         }),
       });
       const data = await res.json();
@@ -180,11 +182,17 @@ export default function CockpitClient() {
   const handleConfirmReject = async (packageId: string, reason: string) => {
     setActionLoadingId(packageId);
     try {
+      const targetPkg = seoPackages.find(p => p.id === packageId);
       const headers = await getAuthHeaders();
       const res = await fetch('/api/portal/seo-actions/', {
         method: 'POST',
         headers,
-        body: JSON.stringify({ action: 'REJECT', packageId, reason }),
+        body: JSON.stringify({
+          action: 'REJECT',
+          packageId,
+          reason,
+          packageSnapshot: targetPkg,
+        }),
       });
       const data = await res.json();
       if (data.success) {
@@ -206,11 +214,16 @@ export default function CockpitClient() {
   const handleRollback = async (packageId: string) => {
     setActionLoadingId(packageId);
     try {
+      const targetPkg = seoPackages.find(p => p.id === packageId);
       const headers = await getAuthHeaders();
       const res = await fetch('/api/portal/seo-actions/', {
         method: 'POST',
         headers,
-        body: JSON.stringify({ action: 'ROLLBACK', packageId }),
+        body: JSON.stringify({
+          action: 'ROLLBACK',
+          packageId,
+          packageSnapshot: targetPkg,
+        }),
       });
       const data = await res.json();
       if (data.success) {
