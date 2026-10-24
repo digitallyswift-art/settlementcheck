@@ -981,4 +981,46 @@ export class SeoActuatorService {
       // State is safely persisted in Supabase + tagged cache
     }
   }
+
+  /**
+   * Synchronizes all active cloud SEO optimizations (CANARY, APPLIED, PERMANENT)
+   * from Supabase back into the repository's version-controlled `data/serp-actions/applied-actions.json`.
+   */
+  public static async syncCloudActionsToRepoSnapshot(options?: {
+    onlyPermanent?: boolean;
+  }): Promise<{
+    success: boolean;
+    syncedCount: number;
+    records: AppliedSeoRecord[];
+    outputPath: string;
+  }> {
+    const allPackages = await this.getAllPackages();
+    const activeStatuses: Set<SeoActionLifecycleStatus> = options?.onlyPermanent
+      ? new Set(['PERMANENT'])
+      : new Set(['CANARY', 'APPLIED', 'PERMANENT']);
+
+    // Keep the most recent active record per canonical route
+    const byRoute = new Map<string, AppliedSeoRecord>();
+    for (const pkg of allPackages) {
+      if (!activeStatuses.has(pkg.status)) continue;
+      const normRoute = this.normalizePath(pkg.targetCanonicalUrl);
+      if (!byRoute.has(normRoute)) {
+        byRoute.set(normRoute, pkg);
+      }
+    }
+
+    const syncedRecords = Array.from(byRoute.values());
+    SafeFs.writeFileSyncSafe(
+      this.APPLIED_DISK_PATH,
+      `${JSON.stringify(syncedRecords, null, 2)}\n`,
+      'utf-8'
+    );
+
+    return {
+      success: true,
+      syncedCount: syncedRecords.length,
+      records: syncedRecords,
+      outputPath: this.APPLIED_DISK_PATH,
+    };
+  }
 }

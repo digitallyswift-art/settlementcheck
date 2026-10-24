@@ -17,6 +17,18 @@
     "status": "APPLIED",
     "appliedAt": "2026-10-17T13:33:08.144Z",
     "googleIndexedAt": "2026-10-17T13:33:08.433Z",
-    "indexingStatus": "INDEXING_REQUESTED_HTTP_200"
+    "indexingStatus": "INDEXING_REQUESTED_HTTP_200",
+    "targetPageExistingH1": "Free Employee Settlement Agreement Calculator UK (2026 Rates)",
+    "primaryAnchorQuery": "settlement agreement calculator",
+    "actuationScope": "FULL_META_AND_FAQ",
+    "deploymentRisk": "CRITICAL_RISK",
+    "tradeOffSummary": {
+      "whyTriggered": "People searching Google for \"settlement agreement calculator uk\" currently find your Main Calculator (/calculator/) on Page 2 (Position 16.2, 587 monthly searches), where fewer than 1% of searchers click.",
+      "whatChanges": "HEADLINE OVERWRITE: Replaces the live Google title on your Main Calculator (/calculator/) from \"Free Employee Settlement Agreement Calculator UK (2026 Rates)\" → \"Settlement Agreement Calculator UK (2026) | SettlementCheck\".",
+      "riskExplanation": "Modifies the main Google headline (<title>) and on-page heading of a Core Money Page (/calculator/).",
+      "preservesLiveTitle": false,
+      "baselineLiveTitle": "Free Employee Settlement Agreement Calculator UK (2026 Rates) | SettlementCheck",
+      "droppedAnchorTokens": []
+    }
   }
 ]

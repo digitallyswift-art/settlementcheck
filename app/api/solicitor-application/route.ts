@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
       resend.emails
         .send({
           from: 'SettlementCheck <team@settlementcheck.co.uk>',
-          to: notificationEmail,
+          to: notificationEmail.includes(',') ? notificationEmail.split(',').map(e => e.trim()).filter(Boolean) : notificationEmail,
           subject: `New solicitor application: ${firm_name}`,
           replyTo: email,
           text: `New Solicitor Application\n\nFirm: ${firm_name}\nContact: ${contact_name}\nEmail: ${email}\nPhone: ${phone || 'N/A'}\nOffice: ${office_postcode || 'N/A'}${office_region ? ` (${office_region})` : ''}\nRadius: ${coverage_radius_miles != null ? coverage_radius_miles + ' miles' : 'National'}\nSRA Confirmed: ${sra_confirmed ? 'Yes' : 'No'}`,

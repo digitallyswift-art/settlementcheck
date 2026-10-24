@@ -2,7 +2,7 @@
   {
     "id": "SC-E-CLM-001",
     "file": "app/calculator/page.tsx",
-    "lineNumber": 143,
+    "lineNumber": 144,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "name: 'What is an average settlement agreement payout in the UK?',",
@@ -13,7 +13,7 @@
   {
     "id": "SC-E-CLM-002",
     "file": "app/calculator/page.tsx",
-    "lineNumber": 183,
+    "lineNumber": 184,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "<li><a href=\"/guides/settlement-agreement-how-much/\">Average Settlement Agreement Amount UK (How Much Should You Get?)</a></li>",
@@ -79,7 +79,7 @@
   {
     "id": "SC-E-CLM-008",
     "file": "app/guides/page.tsx",
-    "lineNumber": 104,
+    "lineNumber": 111,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payouts UK 2026',",
@@ -145,7 +145,7 @@
   {
     "id": "SC-E-CLM-014",
     "file": "app/settlement-agreement-tax-calculator/page.tsx",
-    "lineNumber": 256,
+    "lineNumber": 258,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "label: 'Average Settlement Agreement Payouts UK',",
@@ -156,7 +156,7 @@
   {
     "id": "SC-E-CLM-015",
     "file": "app/sitemap/page.tsx",
-    "lineNumber": 172,
+    "lineNumber": 178,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payout in the UK',",

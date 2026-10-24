@@ -7,6 +7,7 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import InlineEstimator from '@/components/InlineEstimator'
 import InteractiveToolHook from '@/components/InteractiveToolHook'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -538,6 +539,7 @@ export default function TaxFreeSettlementGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+            <DynamicFaqSection pathname="/guides/tax-free-settlement-30000/" />
 
             <div className="pt-8">
               <RelatedArticles

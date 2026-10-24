@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import ReviewClient from './ReviewClient'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 const STATIC_METADATA: Metadata = {
   title: 'Settlement Agreement Checker UK (2026) | SettlementCheck',
@@ -123,6 +124,7 @@ export default function SettlementAgreementReviewPage() {
         }>
           <ReviewClient />
         </Suspense>
+        <DynamicFaqSection pathname="/settlement-agreement-review/" />
       </main>
       <Footer />
     </>

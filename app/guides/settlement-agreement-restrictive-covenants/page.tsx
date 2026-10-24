@@ -629,6 +629,12 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                   tag: 'Negotiation',
                 },
                 {
+                  href: '/guides/settlement-agreement-reference/',
+                  title: 'Settlement Agreement Reference Rules & Clauses',
+                  description: 'Agreed reference rights, model clause wording, oral inquiry traps, and career protection.',
+                  tag: 'Career Protection',
+                },
+                {
                   href: '/guides/tax-free-settlement-30000/',
                   title: 'Tax-Free £30,000 Settlement Exemption',
                   description: 'HMRC rules governing tax exemptions on termination payments under s.403.',

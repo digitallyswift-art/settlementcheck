@@ -3,8 +3,10 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
-export const metadata: Metadata = {
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Discrimination Settlement Calculator UK | SettlementCheck',
   description:
@@ -27,6 +29,10 @@ export const metadata: Metadata = {
     description:
       'UK discrimination settlement guide 2026. Uncapped compensation, Ninth Addendum Vento bands (£1,300 to £62,900+), injury to feelings, and tax exemptions.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/guides/discrimination-settlement-agreements/', STATIC_METADATA)
 }
 
 const FAQS = [
@@ -556,6 +562,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+            <DynamicFaqSection pathname="/guides/discrimination-settlement-agreements/" />
           </div>
         </section>
 

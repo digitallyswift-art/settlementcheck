@@ -7,9 +7,18 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld';
 interface DynamicFaqSectionProps {
   pathname: string;
   headingText?: string;
+  suppressSchema?: boolean;
 }
 
-function renderContextualSnippetWithLinks(snippet: string): React.ReactNode {
+function normalizePath(p: string): string {
+  let clean = p.split('?')[0].split('#')[0];
+  if (!clean.startsWith('/')) clean = `/${clean}`;
+  if (!clean.endsWith('/')) clean = `${clean}/`;
+  return clean;
+}
+
+function renderContextualSnippetWithLinks(snippet: string, currentPath: string): React.ReactNode {
+  const normCurrent = normalizePath(currentPath);
   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
   const parts: React.ReactNode[] = [];
   let lastIdx = 0;
@@ -21,18 +30,28 @@ function renderContextualSnippetWithLinks(snippet: string): React.ReactNode {
     }
     const anchorText = match[1];
     let href = match[2];
-    if (href.startsWith('/') && !href.endsWith('/')) {
-      href = `${href}/`;
+    if (href.startsWith('/')) {
+      href = normalizePath(href);
     }
-    parts.push(
-      <Link
-        key={`${href}-${match.index}`}
-        href={href}
-        className="font-semibold text-[#D9603B] underline underline-offset-2 hover:text-[#0B1F3A] transition-colors"
-      >
-        {anchorText}
-      </Link>
-    );
+
+    // Suppress circular self-referential links if target matches current page
+    if (href === normCurrent) {
+      parts.push(
+        <strong key={`${href}-${match.index}`} className="font-semibold text-[#0B1F3A]">
+          {anchorText}
+        </strong>
+      );
+    } else {
+      parts.push(
+        <Link
+          key={`${href}-${match.index}`}
+          href={href}
+          className="font-semibold text-[#D9603B] underline underline-offset-2 hover:text-[#0B1F3A] transition-colors"
+        >
+          {anchorText}
+        </Link>
+      );
+    }
     lastIdx = match.index + match[0].length;
   }
 
@@ -46,6 +65,7 @@ function renderContextualSnippetWithLinks(snippet: string): React.ReactNode {
 export default async function DynamicFaqSection({
   pathname,
   headingText = 'Key Statutory Guidance',
+  suppressSchema = false,
 }: DynamicFaqSectionProps) {
   const activeOptimization = await SeoActuatorService.getActiveOptimization(pathname);
 
@@ -53,7 +73,7 @@ export default async function DynamicFaqSection({
     return null;
   }
 
-  const structuredSchema = await resolveDynamicStructuredSchema(pathname);
+  const structuredSchema = suppressSchema ? null : await resolveDynamicStructuredSchema(pathname);
 
   return (
     <section
@@ -86,7 +106,7 @@ export default async function DynamicFaqSection({
             <p>{activeOptimization.faqAnswer}</p>
             {activeOptimization.contextualLinkSnippet && (
               <p className="text-xs text-[#0B1F3A]/90 bg-white/80 p-3 rounded-xl border border-[#0B1F3A]/10">
-                {renderContextualSnippetWithLinks(activeOptimization.contextualLinkSnippet)}
+                {renderContextualSnippetWithLinks(activeOptimization.contextualLinkSnippet, pathname)}
               </p>
             )}
           </div>

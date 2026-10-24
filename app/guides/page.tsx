@@ -29,6 +29,13 @@ export const metadata: Metadata = {
 
 const GUIDES = [
   {
+    href: '/guides/settlement-agreement-reference/',
+    eyebrow: 'Agreed References',
+    title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',
+    description: 'Offered a settlement agreement? Learn your agreed reference rights, standard clause wording, bad reference remedies, and how solicitors protect your career.',
+    readTime: '7 min read',
+  },
+  {
     href: '/guides/settlement-agreement-restrictive-covenants/',
     eyebrow: 'Restrictive Covenants',
     title: 'Restrictive Covenants in Settlement Agreements: UK 2026 Rules',

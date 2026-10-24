@@ -5,8 +5,9 @@ import Footer from '@/components/Footer'
 import { PipExitCalculator } from '@/components/PipExitCalculator'
 import { LegalFeeInlineCard } from '@/components/LegalFeeShieldBadge'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
-export const metadata: Metadata = {
+const STATIC_METADATA: Metadata = {
   title: {
     absolute: 'PIP Settlement Calculator UK: Value Your Performance Exit',
   },
@@ -15,6 +16,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://settlementcheck.co.uk/pip-settlement-calculator/',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/pip-settlement-calculator/', STATIC_METADATA)
 }
 
 export default function PipSettlementCalculatorPage() {

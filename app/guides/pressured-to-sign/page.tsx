@@ -5,8 +5,10 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
-export const metadata: Metadata = {
+const STATIC_METADATA: Metadata = {
   title: 'Pressured to Sign? The 10-Day ACAS Rule | SettlementCheck',
   description:
     'Rights when pressured to sign a settlement agreement. ACAS Code 4 minimum 10-day rule, improper behaviour under ERA 1996 s.111A, and fee protection.',
@@ -28,6 +30,10 @@ export const metadata: Metadata = {
     description:
       'The ACAS 10-day rule, what counts as improper pressure, and your options if your employer is rushing you. Free guide.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/guides/pressured-to-sign/', STATIC_METADATA)
 }
 
 const FAQS = [
@@ -265,6 +271,7 @@ export default function PressuredToSignGuide() {
               <div className="mt-4">
                 <FaqAccordion faqs={FAQS} />
               </div>
+              <DynamicFaqSection pathname="/guides/pressured-to-sign/" />
             </div>
 
             {/* Related Articles Component */}

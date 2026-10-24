@@ -6,6 +6,7 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import InlineEstimator from '@/components/InlineEstimator'
 import InteractiveToolHook from '@/components/InteractiveToolHook'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
@@ -683,6 +684,7 @@ export default function CompromiseAgreementCalculatorPage() {
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
           </div>
+          <DynamicFaqSection pathname="/guides/compromise-agreement-calculator-uk/" />
         </section>
 
         {/* References */}

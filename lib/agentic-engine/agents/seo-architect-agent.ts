@@ -28,7 +28,7 @@ export class SeoArchitectAgent {
    * Canonical baseline H1 headings per route to enforce Title-to-H1 DOM alignment
    */
   public static readonly CANONICAL_ROUTE_H1_MAP: Record<string, string> = {
-    '/': 'Settlement Agreement Calculator & Free Solicitor Check UK',
+    '/': 'Settlement Agreement Calculator UK (2026 Rates)',
     '/calculator/': 'Free Employee Settlement Agreement Calculator UK (2026 Rates)',
     '/calculators/': 'UK Employment & Settlement Agreement Calculators (2026)',
     '/redundancy-calculator/': 'Statutory Redundancy Pay Calculator UK (2026 Rates)',
@@ -37,8 +37,15 @@ export class SeoArchitectAgent {
     '/settlement-agreement-tax-calculator/': 'Settlement Agreement Tax Calculator (£30,000 Exemption)',
     '/protective-award-calculator/': 'Protective Award Calculator UK (90 Days Gross Pay)',
     '/pip-settlement-calculator/': 'PIP Settlement Agreement Calculator UK',
+    '/settlement-agreement-review/': 'Settlement Agreement Checker UK (2026)',
     '/guides/compromise-agreement-calculator-uk/': 'Compromise Agreement Calculator UK (2026 Statutory Guide)',
     '/guides/how-to-negotiate-a-settlement-agreement/': 'How to Negotiate a Settlement Agreement in the UK',
+    '/guides/redundancy-pay-cap-2026/': 'The Redundancy Pay Cap in 2026: What £751 Per Week Means for Your Settlement',
+    '/guides/settlement-agreement-how-much/': 'How Much Should I Get in a Settlement Agreement? (2026 UK Guide)',
+    '/guides/tax-free-settlement-30000/': 'Tax-Free Settlement Agreements: How the £30,000 Rule Works in 2026',
+    '/guides/discrimination-settlement-agreements/': 'Discrimination Settlement Agreements UK: Compensation, Vento Bands & Tax Rules (2026)',
+    '/guides/pressured-to-sign/': 'My employer is pressuring me to sign a settlement agreement quickly. What are my rights?',
+    '/guides/protected-conversations-without-prejudice/': 'Protected Conversations and Without Prejudice: The UK Employee Guide',
   };
 
   /**
@@ -117,7 +124,9 @@ export class SeoArchitectAgent {
       case 'EMOTIONAL_DISPUTE':
         return '/guides/how-to-negotiate-a-settlement-agreement/';
       case 'SOLICITOR_SELECTION':
-        return '/for-solicitors/';
+        return q.includes('employer') || q.includes('own')
+          ? '/guides/employer-recommended-solicitor/'
+          : '/get-matched/';
       case 'GENERAL_SETTLEMENT':
       default:
         return '/guides/how-to-negotiate-a-settlement-agreement/';

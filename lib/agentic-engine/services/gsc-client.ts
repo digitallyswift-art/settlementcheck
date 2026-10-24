@@ -191,7 +191,39 @@ export class GoogleSearchConsoleClient {
       }
     }
 
-    // Fallback: Read latest local GSC CSV snapshot
+    // Fallback 1: Read empirical live GSC [query, page] pairs from data/audit/live-gsc-performance.json
+    const liveAuditGscPath = path.resolve('data/audit/live-gsc-performance.json');
+    if (fs.existsSync(liveAuditGscPath)) {
+      try {
+        const parsed = JSON.parse(fs.readFileSync(liveAuditGscPath, 'utf-8'));
+        if (parsed && Array.isArray(parsed.rawPairs) && parsed.rawPairs.length > 0) {
+          const rows: GscQueryRow[] = parsed.rawPairs.map((r: any) => ({
+            query: Array.isArray(r.keys) ? r.keys[0] || '' : '',
+            page: Array.isArray(r.keys) && r.keys.length > 1 ? r.keys[1] : undefined,
+            clicks: r.clicks || 0,
+            impressions: r.impressions || 0,
+            ctr: typeof r.ctr === 'number' ? Math.round(r.ctr * 10000) / 100 : 0,
+            position: typeof r.position === 'number' ? Math.round(r.position * 10) / 10 : 0,
+          }));
+          const totalClicks = parsed.totals?.totalClicks ?? rows.reduce((acc, r) => acc + r.clicks, 0);
+          const totalImpressions = parsed.totals?.totalImpressions ?? rows.reduce((acc, r) => acc + r.impressions, 0);
+
+          return {
+            source: 'LOCAL_ARCHIVE_FALLBACK',
+            siteUrl: parsed.siteUrl || this.siteUrl,
+            startDate: parsed.dateRange?.startDate || '2026-07-20',
+            endDate: parsed.dateRange?.endDate || '2026-10-18',
+            rows,
+            totalClicks,
+            totalImpressions,
+          };
+        }
+      } catch {
+        // Proceed to CSV archive fallback
+      }
+    }
+
+    // Fallback 2: Read latest local GSC CSV snapshot
     const gscDir = path.resolve('data/gsc-history');
     let latestFolder = 'settlementcheck.co.uk-Performance-on-Search-2026-10-09';
     if (!fs.existsSync(path.join(gscDir, latestFolder))) {

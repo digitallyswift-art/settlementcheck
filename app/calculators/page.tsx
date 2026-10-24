@@ -8,6 +8,7 @@ import CalculatorsClient from './CalculatorsClient'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import DynamicFaqJsonLd from '@/components/seo/DynamicFaqJsonLd'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -435,6 +436,7 @@ export default function CalculatorsHubPage() {
           <div className="max-w-[800px]">
             <FaqAccordion faqs={CALCULATORS_FAQS} />
           </div>
+          <DynamicFaqSection pathname="/calculators/" />
         </section>
 
         {/* Final Conversion Banner */}

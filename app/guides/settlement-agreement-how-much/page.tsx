@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import InlineEstimator from '@/components/InlineEstimator'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -496,6 +497,7 @@ export default function HowMuchGuidePage() {
             <span className="sc-eyebrow mb-2 block">Common Questions</span>
             <h2 className="sc-h2 mb-6">Frequently Asked Questions About Settlement Amounts</h2>
             <FaqAccordion faqs={FAQS} />
+            <DynamicFaqSection pathname="/guides/settlement-agreement-how-much/" />
           </div>
         </section>
 

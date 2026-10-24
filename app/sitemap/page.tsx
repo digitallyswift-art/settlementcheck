@@ -129,6 +129,12 @@ const sitemapData: SitemapCategory[] = [
         description: 'Browse all in-depth employment law and settlement agreement articles.',
       },
       {
+        title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',
+        href: '/guides/settlement-agreement-reference/',
+        description: 'Agreed job references, model clause wording, oral reference protections, and remedies for breach of contract.',
+        badge: 'New Guide',
+      },
+      {
         title: 'Settlement Agreement Restrictive Covenants & Non-Competes',
         href: '/guides/settlement-agreement-restrictive-covenants/',
         description: 'Post-termination restrictions, non-compete enforceability under Tillman, and the HMRC Section 225 tax trap.',

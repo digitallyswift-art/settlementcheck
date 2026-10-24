@@ -41,7 +41,7 @@ const FAQS = [
   },
   {
     q: 'Do you pay tax on a protective award?',
-    a: 'Yes. A protective award is treated as part of your termination payment. It is tax-free if your total termination payments (including redundancy pay and ex-gratia payments) fall under the £30,000 threshold. Any amount over £30,000 is subject to income tax.',
+    a: 'Yes. Under HMRC guidance (EIM02550 and NIM02310) and Section 62 of ITEPA 2003, a tribunal protective award under Section 189 of TULRCA 1992 is taxed as general earnings rather than termination compensation. The £30,000 tax-free exemption under Section 403 does not apply, meaning the award is subject to standard PAYE income tax and Class 1 National Insurance.',
   },
   {
     q: 'Can you claim a protective award if you sign a settlement agreement?',

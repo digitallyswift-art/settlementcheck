@@ -182,7 +182,7 @@ Consent Verified: Yes`,
       try {
         await resend.emails.send({
           from: 'SettlementCheck <team@settlementcheck.co.uk>',
-          to: targetEmail,
+          to: targetEmail.includes(',') ? targetEmail.split(',').map(e => e.trim()).filter(Boolean) : targetEmail,
           subject: `${isB2B ? '[' + partnerFirmName + ' Widget] ' : ''}New Lead: ${first_name.trim()} (${verdictLabel[verdict] ?? verdict})`,
           replyTo: email.trim(),
           text: `New Settlement Lead (${partnerFirmName})\n\nName: ${first_name.trim()}\nEmail: ${email.trim()}\nPhone: ${phone.trim()}\nVerdict: ${verdictLabel[verdict] ?? verdict}\nOffer: ${offerFormatted}\nSalary: ${salaryFormatted}\nService: ${serviceYears}${source_url ? `\nReferral: ${source_url}` : ''}`,

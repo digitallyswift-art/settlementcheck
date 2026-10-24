@@ -34,7 +34,7 @@ function CalculatorInner() {
       discrimination:    payload.inputs.discrimination,
       contractualNotice: payload.inputs.contractualNotice,
     })
-    router.push(`/results?${p.toString()}`)
+    router.push(`/results/?${p.toString()}`)
   }
 
   return <SteppedCalculator onCalculate={handleCalculate} initialValues={initialValues} />

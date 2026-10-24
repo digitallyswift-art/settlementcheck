@@ -5,8 +5,10 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
-export const metadata: Metadata = {
+const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Protected Conversations: Section 111A | SettlementCheck',
   description:
@@ -29,6 +31,10 @@ export const metadata: Metadata = {
     description:
       'Section 111A protected conversations and Without Prejudice guide. Learn improper behaviour rules, negotiation protections, and April 2026 statutory caps.',
   },
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return resolveDynamicSeoMetadata('/guides/protected-conversations-without-prejudice/', STATIC_METADATA)
 }
 
 const FAQS = [
@@ -639,6 +645,7 @@ export default function ProtectedConversationsGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-6">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+            <DynamicFaqSection pathname="/guides/protected-conversations-without-prejudice/" />
           </div>
         </section>
 

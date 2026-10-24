@@ -105,10 +105,14 @@ export async function POST(req: NextRequest) {
       const salaryFormatted  = salary       != null ? `£${Number(salary).toLocaleString('en-GB')}` : 'Not provided'
       const serviceYears     = months_service != null ? `${Math.floor(months_service / 12)}y ${months_service % 12}m` : 'Not provided'
 
+      const recipients = notificationEmail.includes(',')
+        ? notificationEmail.split(',').map(e => e.trim()).filter(Boolean)
+        : notificationEmail
+
       try {
       await resend.emails.send({
         from:    'SettlementCheck <team@settlementcheck.co.uk>',
-        to:      notificationEmail,
+        to:      recipients,
         subject: `New lead: ${first_name.trim()} (${verdictLabel[verdict] ?? verdict})`,
         replyTo: email.trim(),
         text: `New Lead: ${first_name.trim()}\nEmail: ${email.trim()}\nPhone: ${phone.trim()}\nContact time: ${safeContactTime}\nVerdict: ${verdictLabel[verdict] ?? verdict}\nOffer: ${offerFormatted}\nSalary: ${salaryFormatted}\nService: ${serviceYears}${postcode ? `\nPostcode: ${postcode}` : ''}`,

@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
+import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -413,6 +414,7 @@ export default function HowToNegotiateGuide() {
               <div className="mt-4">
                 <FaqAccordion faqs={FAQS} />
               </div>
+              <DynamicFaqSection pathname="/guides/how-to-negotiate-a-settlement-agreement/" />
             </div>
 
             {/* Related Articles Component */}

@@ -188,7 +188,7 @@ export default function CalculatorPage() {
         </ul>
       </div>
       <CalculatorClient />
-      <DynamicFaqSection pathname="/calculator/" />
+      <DynamicFaqSection pathname="/calculator/" suppressSchema />
     </>
   )
 }
