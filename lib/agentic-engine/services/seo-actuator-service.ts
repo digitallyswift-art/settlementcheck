@@ -750,6 +750,36 @@ export class SeoActuatorService {
   }
 
   /**
+   * Dismisses an acknowledged regression alert so it ceases to display in the Cockpit banner
+   */
+  public static async dismissRegressionAlert(
+    packageId: string
+  ): Promise<{ success: boolean; error?: string }> {
+    const packages = await this.getAllPackages();
+    const target = packages.find((p) => p.id === packageId);
+    if (!target) {
+      return { success: false, error: `Package not found: ${packageId}` };
+    }
+
+    target.regressionAlert = null;
+    this.memoryStore.set(target.id, target);
+
+    const appliedContent = SafeFs.readFileSyncSafe(this.APPLIED_DISK_PATH, 'utf-8');
+    if (appliedContent) {
+      try {
+        const diskApplied: AppliedSeoRecord[] = JSON.parse(appliedContent);
+        const updated = diskApplied.map((p) =>
+          p.id === packageId ? { ...p, regressionAlert: null } : p
+        );
+        SafeFs.writeFileSyncSafe(this.APPLIED_DISK_PATH, JSON.stringify(updated, null, 2), 'utf-8');
+      } catch {}
+    }
+
+    await this.persistRecordToSupabase(target);
+    return { success: true };
+  }
+
+  /**
    * Rejects an optimization package: marks status as REJECTED and optionally promotes a guardrail policy rule
    */
   public static async rejectPackage(

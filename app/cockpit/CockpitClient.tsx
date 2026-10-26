@@ -10,6 +10,8 @@ import {
 import SerpDiffModal from './components/SerpDiffModal';
 import InlineEditModal from './components/InlineEditModal';
 import RejectModal from './components/RejectModal';
+import CockpitDateFilter, { DateRangeMeta } from './components/CockpitDateFilter';
+import CockpitPerformanceChart from './components/CockpitPerformanceChart';
 
 export default function CockpitClient() {
   const { user, getIdToken, signOut } = useAuth();
@@ -34,10 +36,14 @@ export default function CockpitClient() {
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
   const [adversarialLoadingId, setAdversarialLoadingId] = useState<string | null>(null);
   const [watchdogReport, setWatchdogReport] = useState<any | null>(null);
+  const [highlightedPackageId, setHighlightedPackageId] = useState<string | null>(null);
 
   // Tab 3: Monitor & Leads State
   const [monitorData, setMonitorData] = useState<any>(null);
   const [isLoadingMonitor, setIsLoadingMonitor] = useState<boolean>(false);
+  const [dateRangePreset, setDateRangePreset] = useState<string>('28d');
+  const [customStartDate, setCustomStartDate] = useState<string | undefined>(undefined);
+  const [customEndDate, setCustomEndDate] = useState<string | undefined>(undefined);
   const [leadSearch, setLeadSearch] = useState('');
   const [disputeFilter, setDisputeFilter] = useState('ALL');
 
@@ -86,12 +92,21 @@ export default function CockpitClient() {
     }
   };
 
-  // Fetch Monitor & Leads
-  const fetchMonitorData = async () => {
+  // Fetch Monitor & Leads with dynamic date horizon
+  const fetchMonitorData = async (
+    preset = dateRangePreset,
+    startDate = customStartDate,
+    endDate = customEndDate
+  ) => {
     setIsLoadingMonitor(true);
     try {
       const headers = await getAuthHeaders();
-      const res = await fetch('/api/cockpit/monitor/', { headers });
+      const params = new URLSearchParams();
+      if (preset) params.set('preset', preset);
+      if (startDate) params.set('startDate', startDate);
+      if (endDate) params.set('endDate', endDate);
+
+      const res = await fetch(`/api/cockpit/monitor/?${params.toString()}`, { headers });
       const data = await res.json();
       if (data.success) {
         setMonitorData(data);
@@ -101,6 +116,13 @@ export default function CockpitClient() {
     } finally {
       setIsLoadingMonitor(false);
     }
+  };
+
+  const handleSelectDateRange = (preset: string, start?: string, end?: string) => {
+    setDateRangePreset(preset);
+    setCustomStartDate(start);
+    setCustomEndDate(end);
+    fetchMonitorData(preset, start, end);
   };
 
   useEffect(() => {
@@ -334,6 +356,48 @@ export default function CockpitClient() {
     }
   };
 
+  // Dismiss Regression Alert
+  const handleDismissAlert = async (packageId: string) => {
+    setActionLoadingId(`DISMISS_${packageId}`);
+    try {
+      const headers = await getAuthHeaders();
+      const res = await fetch('/api/portal/seo-actions/', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          action: 'DISMISS_ALERT',
+          packageId,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('✓ Regression alert acknowledged and dismissed.');
+        await fetchSeoData();
+      } else {
+        showToast(`Error: ${data.error || 'Failed to dismiss alert'}`);
+      }
+    } catch (e: any) {
+      showToast(`Error: ${e.message}`);
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  // Inspect package in Tab 2 (switches tab, highlights row, and smooth-scrolls)
+  const handleInspectPackage = (packageId?: string) => {
+    setActiveTab('deployed');
+    if (packageId) {
+      setHighlightedPackageId(packageId);
+    }
+    setTimeout(() => {
+      const el = packageId ? document.getElementById(`package-row-${packageId}`) : null;
+      const target = el || document.getElementById('deployed-optimizations-table');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 150);
+  };
+
   // Rollback
   const handleRollback = async (packageId: string) => {
     setActionLoadingId(packageId);
@@ -445,7 +509,7 @@ export default function CockpitClient() {
   const deployedPackages = seoPackages.filter(
     (p) => p.status === 'APPLIED' || p.status === 'CANARY' || p.status === 'PERMANENT' || p.status === 'ROLLED_BACK'
   );
-  const regressionAlerts = seoPackages.filter((p) => Boolean(p.regressionAlert) || p.status === 'ROLLED_BACK');
+  const regressionAlerts = seoPackages.filter((p) => Boolean(p.regressionAlert));
 
   // Filter anonymized feed
   const filteredFeed = (monitorData?.anonymizedFeed || []).filter((item: any) => {
@@ -573,25 +637,40 @@ export default function CockpitClient() {
       <main className="max-w-7xl mx-auto px-3 sm:px-8 pt-5 sm:pt-6 space-y-6">
         {/* Critical Regression Alert Banner (Phase 3 Self-Healing Watchdog) */}
         {regressionAlerts.length > 0 && (
-          <div className="p-4 rounded-2xl bg-red-50 border border-red-300 text-red-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="p-4 sm:p-5 rounded-2xl bg-red-50 border border-red-300 text-red-900 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
             <div className="flex items-start gap-3">
-              <span className="text-lg">⚠️</span>
+              <span className="text-2xl mt-0.5">🛡️</span>
               <div>
-                <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider">
-                  CRITICAL REGRESSION ALERT ({regressionAlerts.length} Package{regressionAlerts.length > 1 ? 's' : ''})
-                </h4>
-                <p className="text-xs text-red-800 mt-0.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-red-950">
+                    Auto-Rollback Triggered ({regressionAlerts.length} Package{regressionAlerts.length > 1 ? 's' : ''})
+                  </h4>
+                  <span className="px-2 py-0.5 text-[10px] font-bold bg-green-100 text-green-800 rounded-full border border-green-200">
+                    Site Protected: Reverted to Baseline
+                  </span>
+                </div>
+                <p className="text-xs text-red-800 mt-1 max-w-3xl leading-relaxed">
                   {regressionAlerts[0].regressionAlert ||
-                    `Package "${regressionAlerts[0].query}" breached the >15% rank degradation threshold.`}
+                    `Package "${regressionAlerts[0].query}" breached the rank degradation threshold. The automated watchdog immediately reverted your page back to the safe baseline.`}
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setActiveTab('deployed')}
-              className="px-3.5 py-1.5 rounded-xl bg-red-800 text-white text-xs font-semibold hover:bg-red-900 transition-colors shrink-0"
-            >
-              Inspect Longitudinal Attribution →
-            </button>
+            <div className="flex items-center gap-2 self-end md:self-center shrink-0">
+              <button
+                onClick={() => handleInspectPackage(regressionAlerts[0].id)}
+                className="px-3.5 py-2 rounded-xl bg-red-800 hover:bg-red-900 text-white text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm"
+              >
+                <span>View Rollback Details</span>
+                <span>↓</span>
+              </button>
+              <button
+                onClick={() => handleDismissAlert(regressionAlerts[0].id)}
+                disabled={actionLoadingId === `DISMISS_${regressionAlerts[0].id}`}
+                className="px-3.5 py-2 rounded-xl border border-red-300 bg-white hover:bg-red-100 text-red-900 text-xs font-semibold transition-colors disabled:opacity-50"
+              >
+                {actionLoadingId === `DISMISS_${regressionAlerts[0].id}` ? 'Dismissing...' : 'Acknowledge & Dismiss'}
+              </button>
+            </div>
           </div>
         )}
 
@@ -1395,7 +1474,7 @@ export default function CockpitClient() {
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {activeTab === 'deployed' && (
           <div className="space-y-6">
-            <div className="bg-white rounded-3xl border border-[#0B1F3A]/10 shadow-sm overflow-hidden">
+            <div id="deployed-optimizations-table" className="bg-white rounded-3xl border border-[#0B1F3A]/10 shadow-sm overflow-hidden">
               <div className="p-5 sm:p-6 border-b border-[#0B1F3A]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h3 className="text-lg font-serif font-bold text-[#0B1F3A]">
@@ -1443,7 +1522,15 @@ export default function CockpitClient() {
                         const ctrDelta = Math.round((ctrToday - ctrBefore) * 100) / 100;
 
                         return (
-                          <tr key={pkg.id} className="hover:bg-[#F7F4EE]/40 transition-colors">
+                          <tr
+                            key={pkg.id}
+                            id={`package-row-${pkg.id}`}
+                            className={`transition-all ${
+                              highlightedPackageId === pkg.id
+                                ? 'bg-amber-50/90 ring-2 ring-red-400 ring-inset'
+                                : 'hover:bg-[#F7F4EE]/40'
+                            }`}
+                          >
                             <td className="py-3.5 px-4">
                               <strong className="text-[#0B1F3A] block">&ldquo;{pkg.query}&rdquo;</strong>
                               <span className="font-mono text-[11px] text-[#0B1F3A]/60">{pkg.targetCanonicalUrl}</span>
@@ -1491,7 +1578,20 @@ export default function CockpitClient() {
                               </span>
                             </td>
                             <td className="py-3.5 px-4 text-right space-x-2">
-                              {pkg.status !== 'ROLLED_BACK' && (
+                              {pkg.status === 'ROLLED_BACK' ? (
+                                <div className="flex items-center justify-end gap-2">
+                                  <span className="text-[10px] text-gray-500 font-medium">Reverted to Baseline</span>
+                                  {pkg.regressionAlert && (
+                                    <button
+                                      onClick={() => handleDismissAlert(pkg.id)}
+                                      disabled={actionLoadingId === `DISMISS_${pkg.id}`}
+                                      className="px-2.5 py-1 rounded-lg border border-red-200 bg-white hover:bg-red-50 text-[11px] font-semibold text-red-800 transition-colors"
+                                    >
+                                      {actionLoadingId === `DISMISS_${pkg.id}` ? 'Dismissing...' : 'Dismiss Alert'}
+                                    </button>
+                                  )}
+                                </div>
+                              ) : (
                                 <button
                                   onClick={() => handleRollback(pkg.id)}
                                   disabled={actionLoadingId === pkg.id}
@@ -1517,46 +1617,167 @@ export default function CockpitClient() {
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {activeTab === 'monitor' && (
           <div className="space-y-6">
-            {/* Top 4 KPI Metrics */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-1">
-                <span className="text-xs text-[#0B1F3A]/60 block">Search Impressions (GSC)</span>
-                <span className="text-2xl font-serif font-bold text-[#0B1F3A]">
-                  {monitorData?.metrics?.totalImpressions?.toLocaleString('en-GB') || '4,890'}
-                </span>
-                <span className="text-[11px] text-[#0B1F3A]/50 block">
-                  {monitorData?.metrics?.totalClicks || '284'} clicks ({monitorData?.metrics?.avgCtr || '5.8'}% CTR)
-                </span>
+            {/* Monitor Header Toolbar: Title, Active Horizon & GSC Calendar Filter */}
+            <div className="bg-white p-4 sm:p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-base sm:text-lg font-serif font-bold text-[#0B1F3A]">
+                    Search Intelligence &amp; Inbound Telemetry
+                  </h2>
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider ${
+                      monitorData?.dateRange?.source === 'GSC_LIVE_API'
+                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                        : 'bg-[#0B1F3A]/10 text-[#0B1F3A]'
+                    }`}
+                  >
+                    {monitorData?.dateRange?.source === 'GSC_LIVE_API'
+                      ? '● Live GSC API'
+                      : '📁 Archive Snapshot'}
+                  </span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 text-xs text-[#0B1F3A]/70">
+                  <span>
+                    📅 Active Horizon: <strong className="text-[#0B1F3A]">{monitorData?.dateRange?.formatted || 'Last 28 days'}</strong> ({monitorData?.dateRange?.daysCount || 28} days)
+                  </span>
+                  <span>·</span>
+                  <span className="text-[11px] text-[#0B1F3A]/60">
+                    ⏱️ GSC verified to {monitorData?.dateRange?.endDate || 'Latest'} (~3d lag) · Leads stream in real-time
+                  </span>
+                </div>
               </div>
 
-              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-1">
-                <span className="text-xs text-[#0B1F3A]/60 block">Calculator Runs</span>
-                <span className="text-2xl font-serif font-bold text-[#0B1F3A]">
-                  {monitorData?.metrics?.totalCalculations?.toLocaleString('en-GB') || '342'}
-                </span>
-                <span className="text-[11px] text-[#D9603B] font-semibold block">
-                  Live telemetry stream
-                </span>
-              </div>
-
-              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-1">
-                <span className="text-xs text-[#0B1F3A]/60 block">Inbound Leads Captured</span>
-                <span className="text-2xl font-serif font-bold text-[#D9603B]">
-                  {monitorData?.metrics?.totalLeads || '18'}
-                </span>
-                <span className="text-[11px] text-[#0B1F3A]/50 block">High-intent employee matches</span>
-              </div>
-
-              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-1">
-                <span className="text-xs text-[#0B1F3A]/60 block">Gross Offers Checked</span>
-                <span className="text-2xl font-serif font-bold text-[#0B1F3A]">
-                  £{(monitorData?.metrics?.totalGrossOffers || 185000).toLocaleString('en-GB')}
-                </span>
-                <span className="text-[11px] text-[#0B1F3A]/50 block">
-                  Avg: £{(monitorData?.metrics?.avgOffer || 24500).toLocaleString('en-GB')} per matter
-                </span>
+              {/* Date Filter Picker (GSC Style) */}
+              <div className="flex items-center gap-2 shrink-0">
+                <CockpitDateFilter
+                  dateRangeMeta={monitorData?.dateRange}
+                  isLoading={isLoadingMonitor}
+                  onSelectRange={handleSelectDateRange}
+                />
               </div>
             </div>
+
+            {/* Top 4 KPI Metrics */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Card 1: GSC Search Impressions */}
+              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-2 relative overflow-hidden">
+                {isLoadingMonitor && (
+                  <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-10">
+                    <span className="w-5 h-5 border-2 border-[#D9603B] border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#0B1F3A]/60 font-semibold block">Search Impressions (GSC)</span>
+                  <span className="px-2 py-0.5 rounded-md bg-[#0B1F3A]/5 text-[#0B1F3A] text-[10px] font-mono font-bold">
+                    {monitorData?.dateRange?.daysCount || 28}d Window
+                  </span>
+                </div>
+                <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block">
+                  {monitorData?.metrics?.totalImpressions !== undefined
+                    ? monitorData.metrics.totalImpressions.toLocaleString('en-GB')
+                    : '—'}
+                </span>
+                <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
+                  <span className="text-[11px] text-[#0B1F3A]/70 block font-medium">
+                    {monitorData?.metrics?.totalClicks ?? 0} clicks ({monitorData?.metrics?.avgCtr ?? 0}% CTR) · Pos {monitorData?.metrics?.avgPosition ?? '—'}
+                  </span>
+                  <span className="text-[10px] font-mono text-[#0B1F3A]/50 block">
+                    📅 GSC: {monitorData?.dateRange?.formatted || 'Last 28 days'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 2: Calculator Runs */}
+              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-2 relative overflow-hidden">
+                {isLoadingMonitor && (
+                  <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-10">
+                    <span className="w-5 h-5 border-2 border-[#D9603B] border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#0B1F3A]/60 font-semibold block">Calculator Runs</span>
+                  <span className="px-2 py-0.5 rounded-md bg-[#D9603B]/10 text-[#D9603B] text-[10px] font-mono font-bold">
+                    Real-Time
+                  </span>
+                </div>
+                <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block">
+                  {monitorData?.metrics?.totalCalculations !== undefined
+                    ? monitorData.metrics.totalCalculations.toLocaleString('en-GB')
+                    : '—'}
+                </span>
+                <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
+                  <span className="text-[11px] text-[#D9603B] font-semibold block">
+                    Live telemetry stream
+                  </span>
+                  <span className="text-[10px] font-mono text-[#0B1F3A]/50 block">
+                    📅 In selected {monitorData?.dateRange?.daysCount || 28}d period
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3: Inbound Leads */}
+              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-2 relative overflow-hidden">
+                {isLoadingMonitor && (
+                  <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-10">
+                    <span className="w-5 h-5 border-2 border-[#D9603B] border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#0B1F3A]/60 font-semibold block">Inbound Leads Captured</span>
+                  <span className="px-2 py-0.5 rounded-md bg-[#0B1F3A]/5 text-[#0B1F3A] text-[10px] font-mono font-bold">
+                    {monitorData?.dateRange?.daysCount || 28}d Window
+                  </span>
+                </div>
+                <span className="text-2xl sm:text-3xl font-serif font-bold text-[#D9603B] block">
+                  {monitorData?.metrics?.totalLeads ?? '—'}
+                </span>
+                <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
+                  <span className="text-[11px] text-[#0B1F3A]/70 block font-medium">
+                    High-intent employee matches
+                  </span>
+                  <span className="text-[10px] font-mono text-[#0B1F3A]/50 block">
+                    📅 In selected {monitorData?.dateRange?.daysCount || 28}d period
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 4: Gross Offers Checked */}
+              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-2 relative overflow-hidden">
+                {isLoadingMonitor && (
+                  <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-10">
+                    <span className="w-5 h-5 border-2 border-[#D9603B] border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#0B1F3A]/60 font-semibold block">Gross Offers Checked</span>
+                  <span className="px-2 py-0.5 rounded-md bg-[#0B1F3A]/5 text-[#0B1F3A] text-[10px] font-mono font-bold">
+                    {monitorData?.dateRange?.daysCount || 28}d Window
+                  </span>
+                </div>
+                <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block">
+                  £{(monitorData?.metrics?.totalGrossOffers || 0).toLocaleString('en-GB')}
+                </span>
+                <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
+                  <span className="text-[11px] text-[#0B1F3A]/70 block font-medium">
+                    Avg: £{(monitorData?.metrics?.avgOffer || 0).toLocaleString('en-GB')} per matter
+                  </span>
+                  <span className="text-[10px] font-mono text-[#0B1F3A]/50 block">
+                    📅 In selected {monitorData?.dateRange?.daysCount || 28}d period
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Google Search Console Daily Performance Chart */}
+            {monitorData?.timeseries && monitorData.timeseries.length > 0 && (
+              <CockpitPerformanceChart
+                timeseries={monitorData.timeseries}
+                source={monitorData.dateRange?.source}
+                formattedRange={monitorData.dateRange?.formatted}
+                totalClicks={monitorData.metrics?.totalClicks}
+                totalImpressions={monitorData.metrics?.totalImpressions}
+              />
+            )}
 
             {/* Privacy & Regulatory Compliance Notice */}
             <div className="p-4 rounded-2xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 flex items-start gap-3 text-xs text-[#0B1F3A]">

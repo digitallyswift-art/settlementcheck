@@ -175,6 +175,17 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(result);
       }
 
+      case 'DISMISS_ALERT': {
+        if (!packageId) {
+          return NextResponse.json(
+            { success: false, error: 'packageId is required for DISMISS_ALERT' },
+            { status: 400 }
+          );
+        }
+        const result = await SeoActuatorService.dismissRegressionAlert(packageId);
+        return NextResponse.json(result);
+      }
+
       case 'REJECT': {
         if (!packageId) {
           return NextResponse.json(
