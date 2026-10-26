@@ -85,6 +85,13 @@ const GUIDES = [
     readTime: '8 min read',
   },
   {
+    href: '/guides/maternity-redundancy-settlement-agreement/',
+    eyebrow: 'Maternity & Redundancy',
+    title: 'Maternity Redundancy Settlement Agreement UK (2026): Rights & Payouts',
+    description: 'Facing redundancy during pregnancy or maternity leave? Learn your 18-month protection window, Regulation 10 vacancy priority, ring-fenced SMP, and payout rules.',
+    readTime: '9 min read',
+  },
+  {
     href: '/guides/discrimination-settlement-agreements/',
     eyebrow: 'Equality Act 2010',
     title: 'Discrimination Settlement Agreements UK 2026',

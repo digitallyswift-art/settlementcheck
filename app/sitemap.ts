@@ -59,6 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/guides/settlement-agreement-instead-of-pip/`,     lastModified: getLastMod(`${base}/guides/settlement-agreement-instead-of-pip/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/unfair-dismissal-settlement-agreements/`,   lastModified: getLastMod(`${base}/guides/unfair-dismissal-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },
         { url: `${base}/guides/whistleblowing-settlement-agreements/`,    lastModified: getLastMod(`${base}/guides/whistleblowing-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/maternity-redundancy-settlement-agreement/`, lastModified: getLastMod(`${base}/guides/maternity-redundancy-settlement-agreement/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/discrimination-settlement-agreements/`,    lastModified: getLastMod(`${base}/guides/discrimination-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/constructive-dismissal-settlement-agreements/`, lastModified: getLastMod(`${base}/guides/constructive-dismissal-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/nhs-settlement-agreements/`,               lastModified: getLastMod(`${base}/guides/nhs-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },

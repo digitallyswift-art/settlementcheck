@@ -1,9 +1,41 @@
 [
   {
     "file": "app/cockpit/CockpitClient.tsx",
-    "lineNumber": 1276,
+    "lineNumber": 1605,
     "rule": "EM_DASH_DETECTED",
     "snippet": "Deployed Optimizations — Pre vs Post Longitudinal Attribution",
+    "severity": "P1",
+    "guideline": "Strict BRAND.md non-negotiable: 0 em dashes allowed. Use hyphens with spaces or restructure into shorter sentences."
+  },
+  {
+    "file": "app/cockpit/CockpitClient.tsx",
+    "lineNumber": 1802,
+    "rule": "EM_DASH_DETECTED",
+    "snippet": ": '—'}",
+    "severity": "P1",
+    "guideline": "Strict BRAND.md non-negotiable: 0 em dashes allowed. Use hyphens with spaces or restructure into shorter sentences."
+  },
+  {
+    "file": "app/cockpit/CockpitClient.tsx",
+    "lineNumber": 1806,
+    "rule": "EM_DASH_DETECTED",
+    "snippet": "{monitorData?.metrics?.totalClicks ?? 0} clicks ({monitorData?.metrics?.avgCtr ?? 0}% CTR) · Pos {mo",
+    "severity": "P1",
+    "guideline": "Strict BRAND.md non-negotiable: 0 em dashes allowed. Use hyphens with spaces or restructure into shorter sentences."
+  },
+  {
+    "file": "app/cockpit/CockpitClient.tsx",
+    "lineNumber": 1830,
+    "rule": "EM_DASH_DETECTED",
+    "snippet": ": '—'}",
+    "severity": "P1",
+    "guideline": "Strict BRAND.md non-negotiable: 0 em dashes allowed. Use hyphens with spaces or restructure into shorter sentences."
+  },
+  {
+    "file": "app/cockpit/CockpitClient.tsx",
+    "lineNumber": 1856,
+    "rule": "EM_DASH_DETECTED",
+    "snippet": "{monitorData?.metrics?.totalLeads ?? '—'}",
     "severity": "P1",
     "guideline": "Strict BRAND.md non-negotiable: 0 em dashes allowed. Use hyphens with spaces or restructure into shorter sentences."
   },

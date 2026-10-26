@@ -83,7 +83,7 @@ export default function Nav() {
       style={{ background: 'rgba(247,244,238,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
     >
       <LegalFeeAnnouncementBar />
-      <div className="sc-container flex items-center justify-between gap-8" style={{ height: 68 }}>
+      <div className="sc-container px-4 sm:px-6 xl:px-8 flex items-center justify-between gap-4 xl:gap-8 h-[68px]">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0" aria-label="SettlementCheck home">
@@ -99,7 +99,7 @@ export default function Nav() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-7" aria-label="Primary">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 flex-nowrap" aria-label="Primary">
           {/* Calculators dropdown */}
           <div
             className="relative"
@@ -108,25 +108,25 @@ export default function Nav() {
           >
             <Link
               href="/calculators/"
-              className="flex items-center gap-1 text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]"
+              className="flex items-center gap-1 text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
             >
               Calculators
               <svg
                 width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"
-                className={`transition-transform duration-150 ${calculatorsOpen ? 'rotate-180' : ''}`}
+                className={`transition-transform duration-150 text-muted/70 ${calculatorsOpen ? 'rotate-180' : ''}`}
               >
                 <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
 
             {calculatorsOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3" style={{ width: 340 }}>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-50" style={{ width: 340 }}>
                 <div
                   className="bg-card border border-rule rounded-xl overflow-hidden"
                   style={{ boxShadow: '0 12px 40px -8px rgba(11,31,58,0.18)' }}
                 >
-                  <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
-                  <div className="p-2">
+                  <div className="absolute top-[3px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
+                  <div className="p-2 relative z-10 bg-card">
                     {CALCULATOR_LINKS.map((c) => (
                       <Link
                         key={c.href}
@@ -158,7 +158,7 @@ export default function Nav() {
           {/* Settlement Agreement & Contract Review Tool */}
           <Link
             href="/settlement-agreement-review/"
-            className="text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]"
+            className="text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
           >
             Review Agreement
           </Link>
@@ -171,25 +171,25 @@ export default function Nav() {
           >
             <Link
               href="/guides/"
-              className="flex items-center gap-1 text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]"
+              className="flex items-center gap-1 text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
             >
               Guides
               <svg
                 width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"
-                className={`transition-transform duration-150 ${guidesOpen ? 'rotate-180' : ''}`}
+                className={`transition-transform duration-150 text-muted/70 ${guidesOpen ? 'rotate-180' : ''}`}
               >
                 <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
 
             {guidesOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3" style={{ width: 340 }}>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-50" style={{ width: 340 }}>
                 <div
                   className="bg-card border border-rule rounded-xl overflow-hidden"
                   style={{ boxShadow: '0 12px 40px -8px rgba(11,31,58,0.18)' }}
                 >
-                  <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
-                  <div className="p-2">
+                  <div className="absolute top-[3px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
+                  <div className="p-2 relative z-10 bg-card">
                     {GUIDES_LINKS.map((g) => (
                       <Link
                         key={g.href}
@@ -218,42 +218,66 @@ export default function Nav() {
             )}
           </div>
 
-          <Link href="/how-it-works/" className="text-[14px] text-muted hover:text-ink transition-colors duration-[160ms]">
+          <Link
+            href="/how-it-works/"
+            className="text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
+          >
             How it works
           </Link>
         </nav>
 
         {/* Desktop CTAs */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link href="/get-matched/" className="text-[13px] font-medium text-coral hover:text-coral-ink transition-colors duration-[160ms] px-1">
+        <div className="hidden lg:flex items-center gap-2 xl:gap-3 flex-nowrap shrink-0">
+          <Link
+            href="/get-matched/"
+            className="text-[12.5px] xl:text-[13.5px] font-medium text-coral hover:text-coral-ink transition-colors duration-[160ms] px-1 whitespace-nowrap"
+          >
             Find a solicitor
           </Link>
-          <Link href="/for-solicitors/" className="text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1">
+          <span className="hidden xl:inline-block w-[1px] h-3.5 bg-rule shrink-0" aria-hidden="true" />
+          <Link
+            href="/for-solicitors/"
+            className="text-[12px] xl:text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1 whitespace-nowrap"
+          >
             For solicitors
           </Link>
-          <Link href="/for-employers/" className="text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1">
+          <Link
+            href="/for-employers/"
+            className="text-[12px] xl:text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1 whitespace-nowrap"
+          >
             For employers
           </Link>
-          <Link href="/calculator/" className="btn-accent text-[14px] px-5 py-2.5">
+          <Link
+            href="/calculator/"
+            className="btn-accent text-[13px] xl:text-[14px] px-3.5 py-2 xl:px-4.5 xl:py-2.5 whitespace-nowrap shrink-0"
+          >
             Check my offer →
           </Link>
         </div>
 
-        {/* Burger */}
-        <button
-          className="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8 p-1"
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          <span className={`block h-[1.5px] w-full bg-ink transition-all duration-200 origin-center ${mobileOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
-          <span className={`block h-[1.5px] w-full bg-ink transition-all duration-200 ${mobileOpen ? 'opacity-0' : ''}`} />
-          <span className={`block h-[1.5px] w-full bg-ink transition-all duration-200 origin-center ${mobileOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
-        </button>
+        {/* Mobile / Tablet Header Controls */}
+        <div className="flex items-center gap-2.5 lg:hidden">
+          <Link
+            href="/calculator/"
+            className="btn-accent text-[12px] sm:text-[13px] px-3 py-1.5 whitespace-nowrap font-medium"
+          >
+            Check my offer →
+          </Link>
+          <button
+            className="flex flex-col justify-center items-center gap-[5px] w-9 h-9 p-1 rounded-md hover:bg-black/5 transition-colors"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            <span className={`block h-[1.5px] w-5 bg-ink transition-all duration-200 origin-center ${mobileOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
+            <span className={`block h-[1.5px] w-5 bg-ink transition-all duration-200 ${mobileOpen ? 'opacity-0' : ''}`} />
+            <span className={`block h-[1.5px] w-5 bg-ink transition-all duration-200 origin-center ${mobileOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-rule bg-paper/95 backdrop-blur-md px-5 py-4 flex flex-col gap-1 max-h-[85vh] overflow-y-auto">
+        <div className="lg:hidden border-t border-rule bg-paper/95 backdrop-blur-md px-5 py-4 flex flex-col gap-1 max-h-[85vh] overflow-y-auto">
           {/* Calculators expandable */}
           <div>
             <button

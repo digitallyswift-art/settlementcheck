@@ -171,6 +171,11 @@ const sitemapData: SitemapCategory[] = [
         description: 'Options when offered a settlement agreement instead of a Performance Improvement Plan.',
       },
       {
+        title: 'Maternity Redundancy Settlement Agreement UK (2026)',
+        href: '/guides/maternity-redundancy-settlement-agreement/',
+        description: '18-month protection window, Regulation 10 vacancy priority, ring-fenced SMP, and 2026 payout benchmarks.',
+      },
+      {
         title: 'Discrimination Settlement Agreements & Vento Bands',
         href: '/guides/discrimination-settlement-agreements/',
         description: 'Uncapped compensation under the Equality Act 2010, 2026 Vento bands, and tax exemption rules.',
