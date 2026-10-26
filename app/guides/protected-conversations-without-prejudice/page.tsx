@@ -311,7 +311,11 @@ export default function ProtectedConversationsGuide() {
                   Under Sections 43A to 43L of the Employment Rights Act 1996, workers who expose regulatory failures, safety risks, or illegal activity are protected whistleblowers.
                 </p>
                 <p className="sc-body text-xs text-muted">
-                  If an employer opens exit negotiations after you disclose protected concerns, Section 111A confidentiality does not apply. Whistleblowing awards at tribunal are also uncapped.
+                  If an employer opens exit negotiations after you disclose protected concerns, Section 111A confidentiality does not apply. Whistleblowing dismissals are automatically unfair from day one and compensation is completely uncapped. Read our dedicated guide on{' '}
+                  <Link href="/guides/whistleblowing-settlement-agreements/" className="text-coral underline hover:text-ink">
+                    whistleblowing settlement agreements
+                  </Link>
+                  .
                 </p>
               </div>
 

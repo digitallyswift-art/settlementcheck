@@ -237,7 +237,11 @@ export default function UnfairDismissalSettlementAgreementGuide() {
               <div className="p-4 rounded-xl border border-rule bg-white">
                 <p className="font-semibold text-ink text-sm mb-1">Whistleblowing (ERA 1996 s.103A)</p>
                 <p className="sc-body text-sm">
-                  Dismissals caused by making a protected disclosure about wrongdoing, legal breaches, or regulatory failures. Compensation for whistleblowing dismissal has no statutory financial cap.
+                  Dismissals caused by making a protected disclosure about wrongdoing, legal breaches, or regulatory failures. Compensation for whistleblowing dismissal has no statutory financial cap. Read our full guide on{' '}
+                  <Link href="/guides/whistleblowing-settlement-agreements/" className="text-coral underline hover:text-ink">
+                    whistleblowing settlement agreements
+                  </Link>
+                  .
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">

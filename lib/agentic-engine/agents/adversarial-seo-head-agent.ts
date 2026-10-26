@@ -56,20 +56,20 @@ export class AdversarialSeoHeadAgent {
     if (q.includes('tax') || q.includes('30,000') || q.includes('30000') || q.includes('pilon')) {
       return {
         question: `How are UK settlement agreement payments taxed under ITEPA 2003?`,
-        answer: `Under Section 403 of ITEPA 2003, up to £${taxFree.toLocaleString('en-GB')} of genuine ex-gratia compensation (including statutory redundancy pay) can be paid free of income tax and National Insurance. However, contractual notice pay (PILON), unworked notice under the Post-Employment Notice Pay (PENP s.402D) formula, and accrued holiday pay are taxed as normal earnings. Under Section 203(3) ERA 1996, your employer covers the legal fee for your independent solicitor review.`,
+        answer: `Under Section 403 of ITEPA 2003, up to £${taxFree.toLocaleString('en-GB')} of genuine ex-gratia compensation (including statutory redundancy pay) can be paid free of income tax and National Insurance. However, contractual notice pay (PILON), unworked notice under the Post-Employment Notice Pay (PENP s.402D) formula, and accrued holiday pay are taxed as normal earnings. Under Section 203(3) ERA 1996, your employer typically covers the legal fee for your independent solicitor review.`,
       };
     }
 
     if (q.includes('redundancy') || normPath.includes('redundancy')) {
       return {
         question: `How is statutory redundancy vs settlement agreement pay calculated in 2026?`,
-        answer: `Under Section 162 of the Employment Rights Act 1996, statutory redundancy pay is calculated using your age, length of service (capped at 20 years), and weekly gross pay capped at £${capGB} in Great Britain (£${STATUTORY_RATES_2026_27.weeklyCapNI} in Northern Ireland). Combined statutory and ex-gratia termination payments up to £${taxFree.toLocaleString('en-GB')} are tax-free under s.403 ITEPA 2003, while notice pay (PILON) remains taxable. Your employer covers your independent solicitor fee.`,
+        answer: `Under Section 162 of the Employment Rights Act 1996, statutory redundancy pay is calculated using your age, length of service (capped at 20 years), and weekly gross pay capped at £${capGB} in Great Britain (£${STATUTORY_RATES_2026_27.weeklyCapNI} in Northern Ireland). Combined statutory and ex-gratia termination payments up to £${taxFree.toLocaleString('en-GB')} are tax-free under s.403 ITEPA 2003, while notice pay (PILON) remains taxable. Your employer typically covers your independent solicitor fee.`,
       };
     }
 
     return {
       question: `How do you calculate a fair UK settlement agreement payout in 2026?`,
-      answer: `A UK settlement agreement payout combines three parts: (1) contractual notice pay (PILON) and accrued holiday (taxable under ITEPA 2003 s.402D), (2) statutory redundancy pay based on age and up to 20 years' service (capped at £${capGB}/week under ERA 1996 s.162), and (3) a negotiated ex-gratia compensation sum. Genuine termination compensation up to £${taxFree.toLocaleString('en-GB')} is tax-free under s.403 ITEPA 2003, and your employer covers your independent solicitor's fee.`,
+      answer: `A UK settlement agreement payout combines three parts: (1) contractual notice pay (PILON) and accrued holiday (taxable under ITEPA 2003 s.402D), (2) statutory redundancy pay based on age and up to 20 years' service (capped at £${capGB}/week under ERA 1996 s.162), and (3) a negotiated ex-gratia compensation sum. Genuine termination compensation up to £${taxFree.toLocaleString('en-GB')} is tax-free under s.403 ITEPA 2003, and your employer typically covers your independent solicitor's fee.`,
     };
   }
 
@@ -177,7 +177,8 @@ export class AdversarialSeoHeadAgent {
         ? '/guides/settlement-agreement-how-much/'
         : '/guides/how-to-negotiate-a-settlement-agreement/';
 
-    const counterContextualLink = `Before signing, use our [${input.primaryAnchorQuery || input.query}](${normPath}) to check your statutory redundancy floor (£${STATUTORY_RATES_2026_27.weeklyCapGB}/week cap) and £30,000 tax-free threshold under Section 403 ITEPA 2003. Under Section 203 ERA 1996, your employer covers your independent solicitor fee.`;
+    const counterLinkTarget = normPath === '/' ? '/calculator/' : normPath;
+    const counterContextualLink = `Before signing, use our [${input.primaryAnchorQuery || input.query}](${counterLinkTarget}) to check your statutory redundancy floor (£${STATUTORY_RATES_2026_27.weeklyCapGB}/week cap) and £30,000 tax-free threshold under Section 403 ITEPA 2003. Under Section 203 ERA 1996, your employer typically covers your independent solicitor fee.`;
 
     let executiveSummary = needsCounterPlan
       ? `Hold on deploying this as-is. The original agent proposal ${

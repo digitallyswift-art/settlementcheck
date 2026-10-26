@@ -78,6 +78,13 @@ const GUIDES = [
     readTime: '7 min read',
   },
   {
+    href: '/guides/whistleblowing-settlement-agreements/',
+    eyebrow: 'Part IVA ERA 1996',
+    title: 'Whistleblowing Settlement Agreements UK 2026',
+    description: 'Learn your rights after making a protected disclosure. Uncapped compensation, day-one rights, void gagging clauses, and 2026 Vento bands.',
+    readTime: '8 min read',
+  },
+  {
     href: '/guides/discrimination-settlement-agreements/',
     eyebrow: 'Equality Act 2010',
     title: 'Discrimination Settlement Agreements UK 2026',

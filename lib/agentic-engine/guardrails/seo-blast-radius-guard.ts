@@ -200,6 +200,30 @@ export function evaluateSeoBlastRadius(
     );
   }
 
+  // Check for self-referential link antipattern
+  if (input.contextualLinkSnippet) {
+    const linkMatch = input.contextualLinkSnippet.match(/\[([^\]]+)\]\(([^)]+)\)/);
+    if (linkMatch) {
+      const linkHref = linkMatch[2];
+      const normLinkPath = normalizeCanonicalPath(linkHref);
+      if (normLinkPath === normPath) {
+        deploymentRisk = 'CRITICAL_RISK';
+        riskReasons.push(
+          `Self-referential link antipattern detected: Snippet attempts to link to "${normLinkPath}" on the same page "${normPath}". Internal links must route PageRank to a dedicated subpage or calculator tool.`
+        );
+      }
+    }
+  }
+
+  // Check for unqualified legal fee claims (SRA & CAP Code 3.1)
+  const combinedFeeText = `${input.calibratedMetaDescription || ''} ${input.faqAnswer || ''} ${input.contextualLinkSnippet || ''}`;
+  if (/\bemployer covers 100% of\b|\bemployer is legally required to pay all\b/i.test(combinedFeeText)) {
+    deploymentRisk = 'HIGH_RISK';
+    riskReasons.push(
+      'Contains absolute legal fee coverage assertion ("employer covers 100%"). Must cite Section 203(3) ERA 1996 statutory contribution standard.'
+    );
+  }
+
   const pageLabel =
     normPath === '/'
       ? 'your Homepage (/)'

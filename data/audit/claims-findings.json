@@ -79,7 +79,7 @@
   {
     "id": "SC-E-CLM-008",
     "file": "app/guides/page.tsx",
-    "lineNumber": 111,
+    "lineNumber": 125,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payouts UK 2026',",
@@ -90,7 +90,7 @@
   {
     "id": "SC-E-CLM-009",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 195,
+    "lineNumber": 196,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
     "context": "In standard commercial redundancy or capability exits, employers often propose an ex-gratia starting point of one to three months of gross s",
@@ -101,7 +101,7 @@
   {
     "id": "SC-E-CLM-010",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 203,
+    "lineNumber": 204,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 Months",
     "context": "<span className=\"font-bold text-ink text-sm\">1 to 3 Months' Gross Pay</span>",
@@ -112,7 +112,7 @@
   {
     "id": "SC-E-CLM-011",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 300,
+    "lineNumber": 301,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
     "context": "This is the discretionary compensation offered in exchange for signing away your right to take your employer to an employment tribunal. In s",
@@ -123,7 +123,7 @@
   {
     "id": "SC-E-CLM-012",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 374,
+    "lineNumber": 375,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
     "context": "Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering an ex-gratia payment of one to three months of g",
@@ -156,7 +156,7 @@
   {
     "id": "SC-E-CLM-015",
     "file": "app/sitemap/page.tsx",
-    "lineNumber": 178,
+    "lineNumber": 184,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payout in the UK',",

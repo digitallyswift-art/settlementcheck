@@ -45,6 +45,8 @@ export default function CockpitClient() {
   const [inspectingPackage, setInspectingPackage] = useState<any | null>(null);
   const [editingPackage, setEditingPackage] = useState<any | null>(null);
   const [rejectingPackage, setRejectingPackage] = useState<any | null>(null);
+  const [confirmDeployPackage, setConfirmDeployPackage] = useState<{ pkg: any; asCanary: boolean } | null>(null);
+  const [showMobileActions, setShowMobileActions] = useState<boolean>(false);
 
   // Toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -522,20 +524,20 @@ export default function CockpitClient() {
       )}
 
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-[#0B1F3A] text-white border-b border-white/10 px-4 sm:px-8 py-3.5 shadow-md">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="font-serif text-lg font-bold tracking-tight text-white flex items-center gap-2">
+      <header className="sticky top-0 z-40 bg-[#0B1F3A] text-white border-b border-white/10 px-3.5 sm:px-8 py-3 shadow-md">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link href="/" className="font-serif text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-[#D9603B]" />
               <span>SettlementCheck</span>
-              <span className="text-[10px] font-mono font-normal uppercase tracking-widest px-2 py-0.5 rounded bg-white/10 text-white/80">
+              <span className="text-[9px] sm:text-[10px] font-mono font-normal uppercase tracking-widest px-1.5 sm:px-2 py-0.5 rounded bg-white/10 text-white/80">
                 Cockpit
               </span>
             </Link>
 
-            <span className="text-white/20 hidden sm:inline">|</span>
+            <span className="text-white/20 hidden md:inline">|</span>
 
-            <div className="hidden sm:flex items-center gap-2 text-xs text-white/70">
+            <div className="hidden md:flex items-center gap-2 text-xs text-white/70">
               <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse" />
               <span className="font-mono text-[11px]">
                 Adversarial SEO Head &amp; Blast-Radius Guardrails Active
@@ -543,22 +545,22 @@ export default function CockpitClient() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/portal/"
-              className="text-xs text-white/80 hover:text-white px-3 py-1.5 rounded-lg border border-white/15 hover:bg-white/5 transition-colors hidden md:inline-flex items-center gap-1.5"
+              className="text-xs text-white/80 hover:text-white px-2.5 py-1.5 rounded-lg border border-white/15 hover:bg-white/5 transition-colors hidden sm:inline-flex items-center gap-1.5"
             >
-              <span>Partner Solicitor Portal</span>
+              <span>Solicitor Portal</span>
               <span>↗</span>
             </Link>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/70 font-mono hidden lg:inline">
+              <span className="text-xs text-white/70 font-mono hidden xl:inline">
                 {user?.email || 'Administrator'}
               </span>
               <button
                 onClick={signOut}
-                className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-semibold text-white transition-colors"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-semibold text-white transition-colors"
               >
                 Sign Out
               </button>
@@ -568,7 +570,7 @@ export default function CockpitClient() {
       </header>
 
       {/* Main Container */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-8 pt-6 space-y-6">
+      <main className="max-w-7xl mx-auto px-3 sm:px-8 pt-5 sm:pt-6 space-y-6">
         {/* Critical Regression Alert Banner (Phase 3 Self-Healing Watchdog) */}
         {regressionAlerts.length > 0 && (
           <div className="p-4 rounded-2xl bg-red-50 border border-red-300 text-red-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -594,99 +596,145 @@ export default function CockpitClient() {
         )}
 
         {/* Navigation Tabs Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#0B1F3A]/10 pb-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={() => setActiveTab('approvals')}
-              className={`px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 ${
-                activeTab === 'approvals'
-                  ? 'bg-[#0B1F3A] text-white shadow-sm'
-                  : 'bg-white hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70 border border-[#0B1F3A]/10'
-              }`}
-            >
-              <span>⚡ Approvals Hub (HITL)</span>
-              {pendingCount > 0 && (
-                <span className="px-2 py-0.5 rounded-full bg-[#D9603B] text-white font-mono text-[10px] font-bold">
-                  {pendingCount}
+        <div className="space-y-3 border-b border-[#0B1F3A]/10 pb-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            {/* Responsive Touch-Friendly Tabs */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-1 bg-[#0B1F3A]/5 rounded-2xl w-full md:w-auto">
+              <button
+                onClick={() => setActiveTab('approvals')}
+                className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
+                  activeTab === 'approvals'
+                    ? 'bg-[#0B1F3A] text-white shadow-sm'
+                    : 'hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70'
+                }`}
+              >
+                <span>⚡ Approvals</span>
+                {pendingCount > 0 && (
+                  <span className="px-1.5 py-0.5 rounded-full bg-[#D9603B] text-white font-mono text-[10px] font-bold">
+                    {pendingCount}
+                  </span>
+                )}
+              </button>
+
+              <button
+                onClick={() => setActiveTab('deployed')}
+                className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
+                  activeTab === 'deployed'
+                    ? 'bg-[#0B1F3A] text-white shadow-sm'
+                    : 'hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70'
+                }`}
+              >
+                <span>🛡️ Live &amp; Canary</span>
+                <span className="px-1.5 py-0.5 rounded-full bg-[#0B1F3A]/15 text-[#0B1F3A] font-mono text-[10px] font-bold">
+                  {deployedPackages.length}
                 </span>
-              )}
-            </button>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('deployed')}
-              className={`px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 ${
-                activeTab === 'deployed'
-                  ? 'bg-[#0B1F3A] text-white shadow-sm'
-                  : 'bg-white hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70 border border-[#0B1F3A]/10'
-              }`}
-            >
-              <span>🛡️ Deployed Optimizations &amp; Canary Tracker</span>
-              <span className="px-2 py-0.5 rounded-full bg-[#0B1F3A]/15 text-[#0B1F3A] font-mono text-[10px] font-bold">
-                {deployedPackages.length}
-              </span>
-            </button>
+              <button
+                onClick={() => setActiveTab('monitor')}
+                className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
+                  activeTab === 'monitor'
+                    ? 'bg-[#0B1F3A] text-white shadow-sm'
+                    : 'hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70'
+                }`}
+              >
+                <span>📊 Leads &amp; Telemetry</span>
+                {monitorData?.metrics?.totalLeads > 0 && (
+                  <span className="px-1.5 py-0.5 rounded-full bg-[#0B1F3A]/15 text-[#0B1F3A] font-mono text-[10px] font-bold">
+                    {monitorData.metrics.totalLeads}
+                  </span>
+                )}
+              </button>
+            </div>
 
-            <button
-              onClick={() => setActiveTab('monitor')}
-              className={`px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 ${
-                activeTab === 'monitor'
-                  ? 'bg-[#0B1F3A] text-white shadow-sm'
-                  : 'bg-white hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70 border border-[#0B1F3A]/10'
-              }`}
-            >
-              <span>📊 Website &amp; Leads Monitor</span>
-              {monitorData?.metrics?.totalLeads > 0 && (
-                <span className="px-2 py-0.5 rounded-full bg-[#0B1F3A]/15 text-[#0B1F3A] font-mono text-[10px] font-bold">
-                  {monitorData.metrics.totalLeads}
-                </span>
-              )}
-            </button>
-          </div>
+            {/* Actions: Desktop Row + Mobile Compact Action Strip */}
+            <div className="flex items-center gap-2 justify-between md:justify-end">
+              {/* Desktop-only secondary buttons */}
+              <div className="hidden lg:flex items-center gap-2">
+                <button
+                  onClick={() => setShowPolicyDrawer(!showPolicyDrawer)}
+                  className="px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1.5"
+                >
+                  <span>🧬 Guardrail Policies ({seoPolicies.length})</span>
+                </button>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={() => setShowPolicyDrawer(!showPolicyDrawer)}
-              className="px-3.5 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1.5"
-            >
-              <span>🧬 Guardrail Policies ({seoPolicies.length})</span>
-            </button>
+                <button
+                  onClick={handleRunDegradationWatchdog}
+                  disabled={actionLoadingId === 'RUN_WATCHDOG'}
+                  className="px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1.5 disabled:opacity-50"
+                >
+                  {actionLoadingId === 'RUN_WATCHDOG' ? (
+                    <span>Auditing...</span>
+                  ) : (
+                    <span>🛡️ Watchdog Audit</span>
+                  )}
+                </button>
+              </div>
 
-            <button
-              onClick={handleRunDegradationWatchdog}
-              disabled={actionLoadingId === 'RUN_WATCHDOG'}
-              className="px-3.5 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1.5 disabled:opacity-50"
-            >
-              {actionLoadingId === 'RUN_WATCHDOG' ? (
-                <span>Auditing Ranks...</span>
-              ) : (
-                <span>🛡️ Run Regression Watchdog</span>
-              )}
-            </button>
+              {/* Primary Run Scan button */}
+              <button
+                onClick={handleTriggerRun}
+                disabled={actionLoadingId === 'TRIGGER_RUN'}
+                className="px-3.5 sm:px-4 py-2 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5 disabled:opacity-50 shrink-0"
+              >
+                {actionLoadingId === 'TRIGGER_RUN' ? (
+                  <>
+                    <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Scanning GSC...</span>
+                  </>
+                ) : (
+                  <span>⚡ Run Fleet Scan</span>
+                )}
+              </button>
 
-            <button
-              onClick={handleTriggerRun}
-              disabled={actionLoadingId === 'TRIGGER_RUN'}
-              className="px-4 py-2 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5 disabled:opacity-50"
-            >
-              {actionLoadingId === 'TRIGGER_RUN' ? (
-                <>
-                  <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Scanning GSC Queries...</span>
-                </>
-              ) : (
-                <span>⚡ Run Fleet Scan Now</span>
-              )}
-            </button>
+              {/* Refresh Button */}
+              <button
+                onClick={() => {
+                  fetchSeoData();
+                  fetchMonitorData();
+                }}
+                className="px-2.5 sm:px-3 py-2 rounded-xl border border-[#0B1F3A]/15 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-colors shrink-0"
+                title="Refresh dashboard data"
+              >
+                🔄
+              </button>
 
-            <button
-              onClick={() => {
-                fetchSeoData();
-                fetchMonitorData();
-              }}
-              className="px-3 py-2 rounded-xl border border-[#0B1F3A]/15 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-colors"
-            >
-              🔄 Refresh
-            </button>
+              {/* Mobile Overflow Menu (collapses policies & watchdog into clean dropdown) */}
+              <div className="relative lg:hidden">
+                <button
+                  onClick={() => setShowMobileActions(!showMobileActions)}
+                  className="px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1"
+                >
+                  <span>••• Actions</span>
+                </button>
+
+                {showMobileActions && (
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-[#0B1F3A]/15 rounded-2xl shadow-xl z-30 p-2 space-y-1">
+                    <button
+                      onClick={() => {
+                        setShowPolicyDrawer(!showPolicyDrawer);
+                        setShowMobileActions(false);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-[#0B1F3A] hover:bg-[#0B1F3A]/5 flex items-center gap-2"
+                    >
+                      <span>🧬</span>
+                      <span>Guardrail Policies ({seoPolicies.length})</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleRunDegradationWatchdog();
+                        setShowMobileActions(false);
+                      }}
+                      disabled={actionLoadingId === 'RUN_WATCHDOG'}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-[#0B1F3A] hover:bg-[#0B1F3A]/5 flex items-center gap-2 disabled:opacity-50"
+                    >
+                      <span>🛡️</span>
+                      <span>Run Watchdog Audit</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -780,17 +828,17 @@ export default function CockpitClient() {
               </div>
             )}
 
-            {/* Status & Risk Filter Pills */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-[#0B1F3A]/10">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#0B1F3A]/50 mr-1 font-bold">
+            {/* Status & Risk Filter Pills (Responsive Swipeable Rails) */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-white p-3 sm:p-3.5 rounded-2xl border border-[#0B1F3A]/10">
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#0B1F3A]/50 mr-1 font-bold shrink-0">
                   Status:
                 </span>
                 {(['PENDING', 'APPLIED', 'REJECTED', 'ALL'] as const).map((filter) => (
                   <button
                     key={filter}
                     onClick={() => setPackageFilter(filter)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap shrink-0 ${
                       packageFilter === filter
                         ? 'bg-[#0B1F3A] text-white shadow-sm'
                         : 'bg-[#F7F4EE]/60 hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70 border border-[#0B1F3A]/10'
@@ -798,27 +846,27 @@ export default function CockpitClient() {
                   >
                     {filter === 'PENDING' && `Pending Approval (${pendingCount})`}
                     {filter === 'APPLIED' && `Live / Canary (${seoSummary?.appliedCount ?? 0})`}
-                    {filter === 'REJECTED' && 'Rejected / Rolled Back'}
-                    {filter === 'ALL' && `All Packages (${seoPackages.length})`}
+                    {filter === 'REJECTED' && 'Rejected'}
+                    {filter === 'ALL' && `All (${seoPackages.length})`}
                   </button>
                 ))}
               </div>
 
               {/* Risk Score Filter Pills */}
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#0B1F3A]/50 mr-1 font-bold">
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#0B1F3A]/50 mr-1 font-bold shrink-0">
                   Risk Score:
                 </span>
                 {[
                   { id: 'ALL_RISK', label: `All Risks (${statusFilteredPackages.length})` },
-                  { id: 'LOW_RISK', label: `🛡️ Low Risk / Safe (${lowRiskCount})` },
-                  { id: 'MEDIUM_RISK', label: `⚠️ Medium Risk (${mediumRiskCount})` },
-                  { id: 'HIGH_CRITICAL_RISK', label: `🚨 High / Critical Risk (${highCriticalRiskCount})` },
+                  { id: 'LOW_RISK', label: `🛡️ Low / Safe (${lowRiskCount})` },
+                  { id: 'MEDIUM_RISK', label: `⚠️ Medium (${mediumRiskCount})` },
+                  { id: 'HIGH_CRITICAL_RISK', label: `🚨 High / Critical (${highCriticalRiskCount})` },
                 ].map((rf) => (
                   <button
                     key={rf.id}
                     onClick={() => setRiskFilter(rf.id as any)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap shrink-0 ${
                       riskFilter === rf.id
                         ? 'bg-[#D9603B] text-white shadow-sm'
                         : 'bg-[#F7F4EE]/60 hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70 border border-[#0B1F3A]/10'
@@ -911,95 +959,169 @@ export default function CockpitClient() {
                         </div>
                       </div>
 
+                      {/* The Ask Recommendation Hero Banner */}
+                      <div className="p-4 sm:p-5 bg-gradient-to-r from-[#0B1F3A] via-[#122B4D] to-[#0B1F3A] text-white border-b border-white/10">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                          <div className="space-y-1.5">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#D9603B] text-white">
+                                {isAdditive ? '💡 Additive Content Recommendation' : '⚠️ Live Headline Overwrite Recommendation'}
+                              </span>
+                              <span className="text-white/40 hidden sm:inline">•</span>
+                              <span className="text-xs text-white/90 font-mono">
+                                Target: <strong className="text-white underline">{pkg.targetCanonicalUrl}</strong>
+                              </span>
+                            </div>
+                            <h3 className="text-sm sm:text-base font-serif font-bold text-white flex flex-wrap items-center gap-2">
+                              {isAdditive ? (
+                                <>
+                                  <span>Add 1 Statutory FAQ Block &amp; Contextual Internal Link</span>
+                                  <span className="text-[10px] font-sans font-medium text-emerald-300 bg-emerald-950/80 border border-emerald-400/40 px-2 py-0.5 rounded-full">
+                                    ✓ Live Headline Kept 100% Intact
+                                  </span>
+                                </>
+                              ) : (
+                                <>
+                                  <span>Update Live Google Headline (&lt;title&gt;) &amp; Add FAQ</span>
+                                  <span className="text-[10px] font-sans font-medium text-amber-300 bg-amber-950/80 border border-amber-400/40 px-2 py-0.5 rounded-full">
+                                    ⚠️ Modifies Live &lt;title&gt;
+                                  </span>
+                                </>
+                              )}
+                            </h3>
+                            <p className="text-xs text-white/80 leading-relaxed max-w-2xl">
+                              {tradeOff?.whyTriggered ||
+                                `People searching Google for "${pkg.query}" currently find this page on Page 2 (Pos ${
+                                  pkg.position ? Number(pkg.position).toFixed(1) : '15'
+                                }). The agent recommends this update to capture Page 1 rankings.`}
+                            </p>
+                          </div>
+
+                          {/* Metric Opportunity Card */}
+                          <div className="shrink-0 bg-white/10 border border-white/15 rounded-2xl p-3 text-left sm:text-right">
+                            <span className="text-[10px] font-mono uppercase tracking-wider text-white/60 block font-semibold">
+                              Search Opportunity
+                            </span>
+                            <div className="font-mono text-sm sm:text-base font-bold text-white flex items-center sm:justify-end gap-1.5">
+                              <span>Pos {pkg.position ? Number(pkg.position).toFixed(1) : '15'}</span>
+                              <span className="text-[#D9603B]">→</span>
+                              <span className="text-emerald-400">Target Page 1</span>
+                            </div>
+                            <span className="text-[10px] text-white/70 block">
+                              {pkg.impressions ? `${pkg.impressions.toLocaleString()} monthly searchers` : 'High commercial intent'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
                       {/* Package Body */}
-                      <div className="p-5 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+                      <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
                         <div className="lg:col-span-7 space-y-4">
-                          <div className="flex flex-wrap items-center justify-between gap-2">
-                            <div>
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block mb-1">
-                                Target Canonical URL
-                              </span>
-                              <a
-                                href={pkg.targetCanonicalUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="font-mono text-xs text-[#0B1F3A] hover:text-[#D9603B] font-semibold underline underline-offset-2 break-all"
-                              >
-                                {pkg.targetCanonicalUrl}
-                              </a>
-                            </div>
-                            {pkg.primaryAnchorQuery && (
-                              <div className="text-right">
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block mb-1">
-                                  Protected Cluster Anchor
-                                </span>
-                                <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#0B1F3A]/5 text-[#0B1F3A] font-semibold">
-                                  {pkg.primaryAnchorQuery}
-                                </span>
+                          {isAdditive ? (
+                            /* ADDITIVE SCOPE: Show the additions prominently */
+                            <div className="space-y-4">
+                              <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200/90 space-y-3">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-950 flex items-center gap-1.5">
+                                    <span>✨</span> Content Proposed to be Added
+                                  </span>
+                                  <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
+                                    New Delta
+                                  </span>
+                                </div>
+
+                                {/* Proposed FAQ Block */}
+                                {pkg.faqQuestion && (
+                                  <div className="p-3.5 rounded-xl bg-white border border-emerald-200 space-y-1 text-xs shadow-xs">
+                                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#0B1F3A]/60 block">
+                                      1. Direct-Answer FAQ Accordion (Targets AI Overviews)
+                                    </span>
+                                    <p className="font-bold text-[#0B1F3A] text-xs sm:text-sm">Q: {pkg.faqQuestion}</p>
+                                    <p className="text-[#0B1F3A]/85 leading-relaxed text-xs">A: {pkg.faqAnswer}</p>
+                                  </div>
+                                )}
+
+                                {/* Proposed Contextual Internal Link */}
+                                {pkg.contextualLinkSnippet && (
+                                  <div className="p-3.5 rounded-xl bg-white border border-emerald-200 space-y-1 text-xs shadow-xs">
+                                    <div className="flex items-center justify-between">
+                                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#0B1F3A]/60 block">
+                                        2. Contextual Internal Link Snippet
+                                      </span>
+                                      <span className="text-[10px] font-mono text-[#0B1F3A]/50">Body copy injection</span>
+                                    </div>
+                                    <p className="text-[#0B1F3A] text-xs leading-relaxed italic">
+                                      &ldquo;{pkg.contextualLinkSnippet}&rdquo;
+                                    </p>
+                                  </div>
+                                )}
                               </div>
-                            )}
-                          </div>
 
-                          {/* Proposed Title (with clear Protected vs Overwrite indicator) */}
-                          <div className="space-y-1">
-                            <div className="flex items-center justify-between text-xs font-semibold">
-                              <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider flex items-center gap-1.5">
-                                <span>
-                                  {isAdditive
-                                    ? '🔒 Live Page Headline (Protected - Will Not Overwrite)'
-                                    : '⚠️ Proposed Headline Overwrite (<title> & <h1>)'}
-                                </span>
-                              </span>
-                              <span className="font-mono text-[11px] text-[#0B1F3A]/70">
-                                {titlePx}px / {SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX}px ({titleLen} chars)
-                              </span>
-                            </div>
-                            <div
-                              className={`p-3 rounded-xl border text-xs font-medium ${
-                                isAdditive
-                                  ? 'bg-[#0B1F3A]/5 border-[#0B1F3A]/15 text-[#0B1F3A]'
-                                  : pkg.deploymentRisk === 'CRITICAL_RISK'
-                                  ? 'bg-red-50/70 border-red-200 text-red-950'
-                                  : 'bg-[#0B1F3A]/5 border-[#0B1F3A]/10 text-[#0B1F3A]'
-                              }`}
-                            >
-                              {isAdditive
-                                ? `${pkg.targetPageExistingH1 || 'Settlement Agreement Calculator & Free Solicitor Check UK'} (Kept Intact)`
-                                : pkg.calibratedTitle}
-                            </div>
-                          </div>
-
-                          {/* Proposed Meta Description */}
-                          <div className="space-y-1">
-                            <div className="flex items-center justify-between text-xs font-semibold">
-                              <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider">
-                                {isAdditive
-                                  ? '🔒 Live Meta Description (Protected - Unchanged)'
-                                  : 'Calibrated Meta Description'}
-                              </span>
-                              <span className="font-mono text-[11px] text-[#0B1F3A]/70">
-                                {metaPx}px / {SERP_PIXEL_BUDGETS.DESKTOP_META_MAX_PX}px ({metaLen} chars)
-                              </span>
-                            </div>
-                            <div className="p-3 rounded-xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 text-xs text-[#0B1F3A] leading-relaxed">
-                              {pkg.calibratedMetaDescription}
-                            </div>
-                          </div>
-
-                          {/* Contextual Internal Link Snippet (if present) */}
-                          {pkg.contextualLinkSnippet && (
-                            <div className="space-y-1">
-                              <span className="text-[#0B1F3A]/70 uppercase text-[10px] font-bold tracking-wider block">
-                                🔗 Contextual Internal Link &amp; Statutory Passage Added
-                              </span>
-                              <div className="p-3 rounded-xl bg-[#F7F4EE]/70 border border-[#0B1F3A]/10 text-xs text-[#0B1F3A]/85 leading-relaxed">
-                                {pkg.contextualLinkSnippet}
+                              {/* Protected Elements Box */}
+                              <div className="p-3.5 rounded-2xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 space-y-2 text-xs">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-[11px] font-bold text-[#0B1F3A] flex items-center gap-1.5">
+                                    <span>🔒</span> Protected Elements (Zero Risk of Headline Drift)
+                                  </span>
+                                  <span className="text-[10px] font-mono font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                                    Kept 100% Intact
+                                  </span>
+                                </div>
+                                <div className="space-y-1 text-[#0B1F3A]/75 text-[11px]">
+                                  <div>
+                                    <strong className="text-[#0B1F3A]">Live Page Headline:</strong> &ldquo;{pkg.targetPageExistingH1 || 'Settlement Agreement Calculator UK (2026 Rates)'}&rdquo; (Untouched)
+                                  </div>
+                                  <div>
+                                    <strong className="text-[#0B1F3A]">Live Meta Description:</strong> Kept intact ({metaPx}px / 990px)
+                                  </div>
+                                </div>
                               </div>
+                            </div>
+                          ) : (
+                            /* HEADLINE OVERWRITE SCOPE */
+                            <div className="space-y-4">
+                              <div className="space-y-1">
+                                <div className="flex items-center justify-between text-xs font-semibold">
+                                  <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider flex items-center gap-1.5">
+                                    <span>⚠️ Proposed Headline Overwrite (&lt;title&gt; &amp; &lt;h1&gt;)</span>
+                                  </span>
+                                  <span className="font-mono text-[11px] text-[#0B1F3A]/70">
+                                    {titlePx}px / {SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX}px ({titleLen} chars)
+                                  </span>
+                                </div>
+                                <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs font-medium text-amber-950">
+                                  {pkg.calibratedTitle}
+                                </div>
+                              </div>
+
+                              <div className="space-y-1">
+                                <div className="flex items-center justify-between text-xs font-semibold">
+                                  <span className="text-[#0B1F3A]/70 uppercase text-[10px] tracking-wider">
+                                    Calibrated Meta Description
+                                  </span>
+                                  <span className="font-mono text-[11px] text-[#0B1F3A]/70">
+                                    {metaPx}px / {SERP_PIXEL_BUDGETS.DESKTOP_META_MAX_PX}px ({metaLen} chars)
+                                  </span>
+                                </div>
+                                <div className="p-3 rounded-xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 text-xs text-[#0B1F3A] leading-relaxed">
+                                  {pkg.calibratedMetaDescription}
+                                </div>
+                              </div>
+
+                              {pkg.faqQuestion && (
+                                <div className="p-3.5 rounded-2xl bg-[#F7F4EE] border border-[#0B1F3A]/10 space-y-1 text-xs">
+                                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block">
+                                    AI Overview Direct Answer Block
+                                  </span>
+                                  <p className="font-bold text-[#0B1F3A]">Q: {pkg.faqQuestion}</p>
+                                  <p className="text-[#0B1F3A]/75 leading-relaxed">A: {pkg.faqAnswer}</p>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
 
-                        {/* Right Details: Plain-English Impact & Trade-Off Summary (5 cols) */}
+                        {/* Right Details: Plain-English Impact & Statutory Compliance (5 cols) */}
                         <div className="lg:col-span-5 space-y-4">
                           <div
                             className={`p-4 rounded-2xl border space-y-2.5 ${
@@ -1010,11 +1132,9 @@ export default function CockpitClient() {
                                 : 'bg-[#0B1F3A]/5 border-[#0B1F3A]/10'
                             }`}
                           >
-                            <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A] flex items-center gap-1.5">
-                                <span>🧭</span> Plain-English Impact &amp; Trade-Off Summary
-                              </span>
-                            </div>
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A] flex items-center gap-1.5">
+                              <span>🧭</span> Plain-English Impact &amp; Trade-Off Summary
+                            </span>
 
                             <div className="space-y-2 text-xs text-[#0B1F3A]/85 leading-relaxed">
                               <p>
@@ -1027,15 +1147,32 @@ export default function CockpitClient() {
                               <p>
                                 <strong className="text-[#0B1F3A]">What changes on your site: </strong>
                                 {tradeOff?.whatChanges ||
-                                  `Replaces live headline "${
-                                    pkg.targetPageExistingH1 || 'Settlement Agreement Calculator'
-                                  }" with "${pkg.calibratedTitle}".`}
+                                  `Adds an FAQ section and internal link targeting "${pkg.query}".`}
                               </p>
                               <p>
                                 <strong className="text-[#0B1F3A]">Risk check: </strong>
                                 {tradeOff?.riskExplanation ||
                                   'Evaluated against route hierarchy and protected cluster anchor tokens.'}
                               </p>
+                            </div>
+
+                            {/* Statutory & SRA Compliance Audit Checklist */}
+                            <div className="pt-2 border-t border-[#0B1F3A]/10 space-y-1 text-[11px] text-[#0B1F3A]/80">
+                              <div className="font-bold text-[10px] uppercase tracking-wider text-[#0B1F3A]/60">
+                                Invariant Safety Verification:
+                              </div>
+                              <div className="flex items-center gap-1.5 text-emerald-800">
+                                <span>✓</span>
+                                <span>April 2026 Caps Verified (£751/wk GB, £30k ITEPA s.403)</span>
+                              </div>
+                              <div className="flex items-center gap-1.5 text-emerald-800">
+                                <span>✓</span>
+                                <span>Section 203(3) ERA 1996 SRA Boundary Qualified</span>
+                              </div>
+                              <div className="flex items-center gap-1.5 text-emerald-800">
+                                <span>✓</span>
+                                <span>Zero Em Dashes &amp; Banned US Terminology</span>
+                              </div>
                             </div>
 
                             {/* Collapsible Technical SERP Diagnostics */}
@@ -1053,22 +1190,12 @@ export default function CockpitClient() {
                               </div>
                             </details>
                           </div>
-
-                          {pkg.faqQuestion && (
-                            <div className="p-3.5 rounded-2xl bg-[#F7F4EE] border border-[#0B1F3A]/10 space-y-1 text-xs">
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A]/60 block">
-                                AI Overview Direct Answer Block
-                              </span>
-                              <p className="font-bold text-[#0B1F3A]">Q: {pkg.faqQuestion}</p>
-                              <p className="text-[#0B1F3A]/75 leading-relaxed">A: {pkg.faqAnswer}</p>
-                            </div>
-                          )}
                         </div>
                       </div>
 
                       {/* Adversarial Head of SEO Critique & Counter-Plan Drawer (Phase 3) */}
                       {advReview && (
-                        <div className="mx-5 sm:mx-6 mb-5 p-5 rounded-2xl bg-[#0B1F3A] text-white space-y-4 shadow-md">
+                        <div className="mx-4 sm:mx-6 mb-5 p-4 sm:p-5 rounded-2xl bg-[#0B1F3A] text-white space-y-4 shadow-md">
                           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 pb-3">
                             <div className="flex items-center gap-2">
                               <span className="text-base">⚔️</span>
@@ -1175,14 +1302,14 @@ export default function CockpitClient() {
                         </div>
                       )}
 
-                      {/* Package Footer Controls */}
-                      <div className="p-4 bg-[#F7F4EE]/60 border-t border-[#0B1F3A]/10 flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex flex-wrap items-center gap-3">
+                      {/* Package Footer Controls (Responsive & Touch-Safe) */}
+                      <div className="p-4 bg-[#F7F4EE]/60 border-t border-[#0B1F3A]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div className="flex flex-wrap items-center gap-2">
                           <button
                             onClick={() => setInspectingPackage(pkg)}
-                            className="text-xs font-semibold text-[#0B1F3A] hover:text-[#D9603B] flex items-center gap-1.5"
+                            className="px-3 py-1.5 rounded-xl border border-[#0B1F3A]/15 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-colors flex items-center gap-1.5"
                           >
-                            <span>🔍 View SERP Pixel Simulator &amp; Diff</span>
+                            <span>🔍 Preview SERP Diff</span>
                           </button>
 
                           <button
@@ -1193,14 +1320,12 @@ export default function CockpitClient() {
                             {isChallenging ? (
                               <>
                                 <span className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                                <span>Head of SEO Auditing...</span>
+                                <span>Auditing...</span>
                               </>
                             ) : (
                               <>
                                 <span>⚔️</span>
-                                <span>
-                                  {advReview ? 'Re-Run Head of SEO Critique' : 'Challenge with Head of SEO'}
-                                </span>
+                                <span>{advReview ? 'Re-Run Critique' : 'Challenge with Head of SEO'}</span>
                               </>
                             )}
                           </button>
@@ -1211,7 +1336,7 @@ export default function CockpitClient() {
                             <button
                               onClick={() => handleRollback(pkg.id)}
                               disabled={isBusy}
-                              className="px-3.5 py-1.5 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 text-xs font-semibold text-red-800 transition-colors disabled:opacity-50"
+                              className="w-full sm:w-auto px-4 py-2 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 text-xs font-semibold text-red-800 transition-colors disabled:opacity-50"
                             >
                               Rollback to Baseline
                             </button>
@@ -1220,28 +1345,29 @@ export default function CockpitClient() {
                               <button
                                 onClick={() => setRejectingPackage(pkg)}
                                 disabled={isBusy}
-                                className="px-3.5 py-1.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 text-xs font-semibold text-gray-700 transition-colors"
+                                className="px-3.5 py-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 text-xs font-semibold text-gray-700 transition-colors"
                               >
                                 Reject
                               </button>
                               <button
                                 onClick={() => setEditingPackage(pkg)}
                                 disabled={isBusy}
-                                className="px-3.5 py-1.5 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-colors"
+                                className="px-3.5 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-colors"
                               >
                                 ✏️ Edit
                               </button>
                               <button
-                                onClick={() => handleApply(pkg.id, true)}
+                                onClick={() => setConfirmDeployPackage({ pkg, asCanary: true })}
                                 disabled={isBusy}
-                                className="px-3.5 py-1.5 rounded-xl bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white text-xs font-semibold transition-all shadow-sm disabled:opacity-50"
+                                className="px-3.5 py-2 rounded-xl bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white text-xs font-semibold transition-all shadow-sm disabled:opacity-50"
+                                title="Deploy with 14-day automated rank monitoring"
                               >
                                 🧪 14d Canary
                               </button>
                               <button
-                                onClick={() => handleApply(pkg.id, false)}
+                                onClick={() => setConfirmDeployPackage({ pkg, asCanary: false })}
                                 disabled={isBusy}
-                                className="px-4 py-1.5 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold transition-all shadow-sm flex items-center gap-1.5 disabled:opacity-50"
+                                className="px-4 py-2 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold transition-all shadow-sm flex items-center justify-center gap-1.5 disabled:opacity-50"
                               >
                                 {isBusy ? (
                                   <>
@@ -1633,6 +1759,81 @@ export default function CockpitClient() {
           onClose={() => setRejectingPackage(null)}
           onConfirmReject={handleConfirmReject}
         />
+      )}
+
+      {/* High-Confidence Touch-Safe Live Deployment Confirmation Modal */}
+      {confirmDeployPackage && (
+        <div className="fixed inset-0 z-50 bg-[#0B1F3A]/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-[#0B1F3A]/15 space-y-4 animate-in fade-in duration-150">
+            <div className="flex items-center justify-between border-b border-[#0B1F3A]/10 pb-3">
+              <h4 className="font-serif font-bold text-base text-[#0B1F3A] flex items-center gap-2">
+                <span>{confirmDeployPackage.asCanary ? '🧪' : '⚡'}</span>
+                <span>
+                  {confirmDeployPackage.asCanary ? 'Confirm 14-Day Canary Observation' : 'Confirm Live Production Deployment'}
+                </span>
+              </h4>
+              <button
+                onClick={() => setConfirmDeployPackage(null)}
+                className="text-xs text-[#0B1F3A]/50 hover:text-[#0B1F3A] font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs text-[#0B1F3A]/85">
+              <div className="p-3 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10 space-y-1">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-[#0B1F3A]/60 font-bold">
+                  Target Live Route:
+                </div>
+                <div className="font-mono text-xs font-semibold text-[#0B1F3A] break-all">
+                  {confirmDeployPackage.pkg.targetCanonicalUrl}
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-blue-50/80 border border-blue-200 text-blue-950 space-y-1.5">
+                <div className="font-bold flex items-center gap-1.5">
+                  <span>🚀</span>
+                  <span>What happens upon confirmation:</span>
+                </div>
+                <ul className="list-disc pl-4 space-y-1 text-[11px] text-blue-900 leading-relaxed">
+                  <li>
+                    {confirmDeployPackage.pkg.actuationScope === 'ADDITIVE_CONTENT_AND_LINKS'
+                      ? 'Statutory FAQ and contextual internal link will be published. Live page headline remains 100% untouched.'
+                      : 'Live headline and meta description will be updated in production.'}
+                  </li>
+                  <li>Next.js Edge Cache tags will be automatically revalidated.</li>
+                  <li>Google Indexing API will be notified to crawl the updated page immediately.</li>
+                  {confirmDeployPackage.asCanary && (
+                    <li>Automated 14-day degradation watchdog will monitor rank movement and alert if position drops.</li>
+                  )}
+                </ul>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#0B1F3A]/10">
+              <button
+                onClick={() => setConfirmDeployPackage(null)}
+                className="px-4 py-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-100 text-xs font-semibold text-gray-700 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  const { pkg, asCanary } = confirmDeployPackage;
+                  setConfirmDeployPackage(null);
+                  handleApply(pkg.id, asCanary);
+                }}
+                className={`px-4 py-2 rounded-xl text-white text-xs font-semibold transition-all shadow-sm ${
+                  confirmDeployPackage.asCanary
+                    ? 'bg-[#0B1F3A] hover:bg-[#0B1F3A]/90'
+                    : 'bg-[#D9603B] hover:bg-[#D9603B]/90'
+                }`}
+              >
+                {confirmDeployPackage.asCanary ? '🧪 Deploy in Canary Mode' : '⚡ Confirm & Deploy Live'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

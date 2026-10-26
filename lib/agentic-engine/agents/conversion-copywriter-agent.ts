@@ -39,6 +39,11 @@ export class ConversionCopywriterAgent {
     // Replace risky unverified marketing claims under CAP Code rules
     sanitized = sanitizeMarketingClaims(sanitized).sanitizedText;
 
+    // SRA & CAP Code fee qualification: replace absolute/unqualified fee coverage claims
+    sanitized = sanitized
+      .replace(/\byour employer covers 100% of your legal fees\b/gi, 'your employer typically covers your independent legal fee')
+      .replace(/\byour employer is legally required to pay all your legal fees\b/gi, 'your employer typically contributes toward your legal advice');
+
     return sanitized;
   }
 
@@ -175,34 +180,34 @@ export class ConversionCopywriterAgent {
     if (isEmotionalDispute) {
       return {
         question: 'What are my legal rights when offered a UK settlement agreement?',
-        answer: `Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally binding after you receive independent advice from an SRA-regulated solicitor. Under ACAS Code of Practice 4, you should be given at least 10 calendar days to consider the offer, and your employer covers your legal fee.`,
+        answer: `Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally binding after you receive independent advice from an SRA-regulated solicitor. Under ACAS Code of Practice 4, you should be given at least 10 calendar days to consider the offer, and your employer typically covers your independent legal fee.`,
       };
     }
 
     if (isTax) {
       return {
         question: 'How is a settlement agreement taxed under UK employment law?',
-        answer: `Under Section 403 of ITEPA 2003, genuine compensation payments up to £${taxFreeThreshold.toLocaleString('en-GB')} are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON) remain subject to normal income tax and National Insurance. Your employer covers the cost of your independent legal review.`,
+        answer: `Under Section 403 of ITEPA 2003, genuine compensation payments up to £${taxFreeThreshold.toLocaleString('en-GB')} are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON) remain subject to normal income tax and National Insurance. Your employer typically covers the cost of your independent legal review.`,
       };
     }
 
     if (isCompromise) {
       return {
         question: 'What is a compromise agreement under UK employment law?',
-        answer: `A compromise agreement (now officially called a settlement agreement) is a legally binding contract waiving employment tribunal claims in return for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, with genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} being tax-free. Your employer covers your independent solicitor fee.`,
+        answer: `A compromise agreement (now officially called a settlement agreement) is a legally binding contract waiving employment tribunal claims in return for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, with genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} being tax-free. Your employer typically covers your independent solicitor fee.`,
       };
     }
 
     if (isGov) {
       return {
         question: 'Does the UK government offer an official settlement agreement calculator?',
-        answer: `The UK government does not provide a settlement agreement calculator, only basic statutory redundancy tools. SettlementCheck calculates your complete payout against official 2026 statutory rates (£${weeklyCap} per week cap under ERA 1996), while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free. Your employer covers your legal fee.`,
+        answer: `The UK government does not provide a settlement agreement calculator, only basic statutory redundancy tools. SettlementCheck calculates your complete payout against official 2026 statutory rates (£${weeklyCap} per week cap under ERA 1996), while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free. Your employer typically covers your legal fee.`,
       };
     }
 
     return {
       question: 'How is a settlement agreement payout calculated under UK employment law?',
-      answer: `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.`,
+      answer: `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free under Section 403 of ITEPA 2003. Under Section 203(3) ERA 1996, your employer typically covers the legal fees for your independent solicitor review.`,
     };
   }
 
@@ -225,7 +230,9 @@ export class ConversionCopywriterAgent {
     let faqQuestion = defaultFaq.question;
     let faqAnswer = defaultFaq.answer;
 
-    let contextualSnippet = `If you have received an offer, you can check where you stand using our [${q}](${dest}). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996.`;
+    // Ensure the contextual link target NEVER points to the host destination page itself (prevent self-referential links)
+    const linkTarget = dest === '/' ? '/calculator/' : dest;
+    let contextualSnippet = `If you have received an offer, you can check where you stand using our [${q}](${linkTarget}). Under Section 203(3) of the Employment Rights Act 1996, your employer typically pays for your independent solicitor review.`;
 
     // Attempt AI synthesis for tailored high-converting copy
     try {
@@ -244,12 +251,12 @@ Write high-converting, empathetic, brand-compliant copy for:
 STRICT BRAND & STATUTORY GUARDRAIL POLICIES:
 1. Tone: Calm, clear, empathetic, on their side.
 2. UK English only: Use "solicitor" (NEVER lawyer/attorney), "redundancy" (NEVER layoff), "employment tribunal" (NEVER court).
-3. Always include the reassurance: "your employer covers the legal fees" or "your employer pays your fees".
+3. Legal fee reassurance: State that "your employer typically covers the legal fees" or "your employer pays your fees" under Section 203(3) ERA 1996 (statutory contribution standard).
 4. CRITICAL: ZERO EM DASHES (—). Use hyphens or simple punctuation.
 5. Title: exactly 50 to 60 characters, preserving the brand suffix "| SettlementCheck".
 6. Meta description: exactly 140 to 155 characters.
 7. FAQ Answer: 45 to 70 words, distinguishing non-contractual ex-gratia compensation (£30,000 tax-free under s.403 ITEPA 2003) from taxable PILON / notice pay, plus solicitor fee reassurance.
-8. Contextual Link Paragraph: 2 sentences embedding [${q}](${dest}).
+8. Contextual Link Paragraph: 2 sentences embedding [${q}](${linkTarget}). CRITICAL: Never link to the same page being edited (prevent self-referential links).
 ${policyConstraints ? `\nCURATED ROUTE & INTENT POLICIES (MANDATORY):\n${policyConstraints}` : ''}
 
 Return valid JSON:

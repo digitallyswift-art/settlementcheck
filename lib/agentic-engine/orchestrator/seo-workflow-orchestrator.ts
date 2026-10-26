@@ -238,6 +238,24 @@ export class SeoWorkflowOrchestrator {
       }
     }
 
+    // 9. Self-referential internal link check (prevent anchor spam on host page)
+    const linkSnippet = pkg.copyPackage.contextualInternalLinkBlock?.surroundingText || '';
+    const linkMatch = linkSnippet.match(/\[([^\]]+)\]\(([^)]+)\)/);
+    if (linkMatch) {
+      const linkHref = linkMatch[2];
+      const normLink = linkHref.startsWith('http')
+        ? linkHref.replace(/^https?:\/\/[^\/]+/, '')
+        : linkHref;
+      const cleanNormLink = normLink.endsWith('/') ? normLink : `${normLink}/`;
+      const targetUrlPath = targetUrl.replace(/^https?:\/\/[^\/]+/, '');
+      const cleanTarget = targetUrlPath.endsWith('/') ? targetUrlPath : `${targetUrlPath}/`;
+      if (cleanNormLink === cleanTarget) {
+        errors.push(
+          `Self-referential internal link antipattern: link inside snippet points to "${cleanNormLink}", which matches the target page.`
+        );
+      }
+    }
+
     return {
       isValid: errors.length === 0,
       errors,

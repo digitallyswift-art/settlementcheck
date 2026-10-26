@@ -91,30 +91,44 @@ export class SeoArchitectAgent {
 
   /**
    * Maps query intent to canonical site route enforcing trailing slash invariant
+   * and preventing cannibalization of dedicated tools by the root homepage.
    */
   public static resolveCanonicalRoute(query: string, intent: SeoSearchIntent, targetUrl?: string): string {
+    const q = query.toLowerCase();
+
+    // Priority 1: Prevent keyword cannibalization of dedicated calculator tools
+    // Computational and calculator queries MUST route to /calculator/ or specialized tool, NEVER root homepage /
+    if (q.includes('constructive')) return '/constructive-dismissal-calculator/';
+    if (q.includes('pip')) return '/pip-settlement-calculator/';
+    if (q.includes('discrimination')) return '/guides/discrimination-settlement-agreements/';
+    if (q.includes('pressured')) return '/guides/pressured-to-sign/';
+    if (q.includes('redundancy') && (q.includes('calc') || q.includes('pay') || q.includes('statutory'))) {
+      return '/redundancy-calculator/';
+    }
+    if ((q.includes('tax') || q.includes('30000') || q.includes('30,000') || q.includes('pilon')) && (q.includes('calc') || intent === 'TAX_STATUTORY_EXEMPTION')) {
+      return '/settlement-agreement-tax-calculator/';
+    }
+    if (intent === 'TRANSACTIONAL_CALCULATOR' || q.includes('calculate') || q.includes('calculator') || q.includes('payout')) {
+      return '/calculator/';
+    }
+
+    // Priority 2: If a specific sub-route was provided in targetUrl (and is not root homepage), honor it
     if (targetUrl && targetUrl.startsWith('http')) {
       try {
         const urlObj = new URL(targetUrl);
         let path = urlObj.pathname;
         if (!path.endsWith('/')) path += '/';
-        return path;
+        if (path !== '/') {
+          return path;
+        }
       } catch {
         // Fall back to intent routing
       }
     }
 
-    const q = query.toLowerCase();
-    if (q.includes('constructive')) return '/constructive-dismissal-calculator/';
-    if (q.includes('pip')) return '/pip-settlement-calculator/';
-    if (q.includes('discrimination')) return '/guides/discrimination-settlement-agreements/';
-    if (q.includes('pressured')) return '/guides/pressured-to-sign/';
-
     switch (intent) {
       case 'COMPROMISE_AGREEMENT_LEGACY':
         return '/guides/compromise-agreement-calculator-uk/';
-      case 'TRANSACTIONAL_CALCULATOR':
-        return '/calculator/';
       case 'TAX_STATUTORY_EXEMPTION':
         return '/settlement-agreement-tax-calculator/';
       case 'GOV_ACAS_BENCHMARK':
