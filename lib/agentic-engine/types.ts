@@ -329,6 +329,67 @@ export interface ConversionCopyPackage {
     employerFeesMentioned: boolean;
     statutoryAccuracyVerified: boolean;
   };
+  workedExample?: StatutoryWorkedCaseStudy;
+  comparisonTable?: StatutoryComparisonTableData;
+  inProsePlacement?: InProseLinkPlacement;
+  contentGapBrief?: ContentGapBrief;
+}
+
+export interface StatutoryWorkedCaseStudy {
+  caseTitle: string;
+  jobTitle: string;
+  grossSalary: number;
+  yearsOfService: number;
+  age: number;
+  statutoryRedundancyFloor: number;
+  noticePayPilon: number;
+  exGratiaCompensation: number;
+  totalSettlementOffer: number;
+  taxFreePortion: number; // s.403 ITEPA 2003 up to £30,000
+  taxablePortion: number;
+  estimatedNetTakeHome: number;
+  statutoryCitations: string[]; // e.g. ["ERA 1996 s.162", "ITEPA 2003 s.403", "PENP s.402D"]
+  narrativeBreakdown: string;
+}
+
+export interface StatutoryComparisonTableRow {
+  element: string;
+  statutoryBasis: string;
+  standardCapGB: string;
+  standardCapNI: string;
+  taxTreatment: string;
+  eligibilityRule: string;
+}
+
+export interface StatutoryComparisonTableData {
+  tableTitle: string;
+  caption?: string;
+  headers: string[];
+  rows: StatutoryComparisonTableRow[];
+  footnoteCitation?: string;
+}
+
+export interface InProseLinkPlacement {
+  targetFilePath: string; // e.g. "app/guides/settlement-agreement-how-much/page.tsx"
+  sourceRoute: string;    // e.g. "/guides/settlement-agreement-how-much/"
+  destinationRoute: string; // e.g. "/settlement-agreement-tax-calculator/"
+  matchedExcerpt: string; // Exact existing sentence or paragraph fragment
+  replacementExcerpt: string; // Updated snippet containing contextual anchor
+  anchorText: string;     // Exact anchor text
+  gitDiffPreview?: string;
+  relevanceRationale: string;
+}
+
+export interface ContentGapBrief {
+  proposedSlug: string; // e.g. "/guides/constructive-dismissal-settlement-agreement/"
+  suggestedH1: string;
+  primaryCluster: string;
+  monthlySearchVolume: number;
+  searchIntent: SeoSearchIntent;
+  targetAudiencePainPoint: string;
+  statutoryAnchors: string[];
+  recommendedOutline: string[];
+  internalLinkDestinations: string[];
 }
 
 export interface StatutoryAuditVerdict {
@@ -407,11 +468,21 @@ export interface AdversarialSeoReviewResult {
   evaluatedAt: string;
 }
 
+export type SeoActionType =
+  | 'META_RECALIBRATION'
+  | 'INTERNAL_LINK_BOOST'
+  | 'SCHEMA_FAQ_SNIPPET'
+  | 'FULL_CLUSTER_PACKAGE'
+  | 'PILLAR_CONTENT_EXPANSION'
+  | 'IN_PROSE_INTERNAL_LINK'
+  | 'CANARY_TITLE_EXPERIMENT'
+  | 'CONTENT_GAP_BRIEF';
+
 export interface AutonomousSeoActionPackage {
   id: string;
   query: string;
   priority: 'CRITICAL' | 'HIGH' | 'MEDIUM';
-  actionType: 'META_RECALIBRATION' | 'INTERNAL_LINK_BOOST' | 'SCHEMA_FAQ_SNIPPET' | 'FULL_CLUSTER_PACKAGE';
+  actionType: SeoActionType;
   actuationScope?: SeoActuationScope;
   deploymentRisk?: SeoDeploymentRiskTier;
   tradeOffSummary?: SeoTradeOffSummary;
@@ -423,6 +494,10 @@ export interface AutonomousSeoActionPackage {
   stagedDiffSummary: string;
   status: SeoActionLifecycleStatus;
   timestamp: string;
+  workedExample?: StatutoryWorkedCaseStudy;
+  comparisonTable?: StatutoryComparisonTableData;
+  inProsePlacement?: InProseLinkPlacement;
+  contentGapBrief?: ContentGapBrief;
 }
 
 export interface SeoAutonomousActionRecord {

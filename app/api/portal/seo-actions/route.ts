@@ -3,6 +3,7 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import path from 'path';
 import { supabase } from '@/lib/supabase';
 import { SeoActuatorService } from '@/lib/agentic-engine/services/seo-actuator-service';
+import { SeoArchitectAgent } from '@/lib/agentic-engine/agents/seo-architect-agent';
 import { SeoPolicyRegistry } from '@/lib/agentic-engine/services/seo-policy-registry';
 import { GoogleIndexingClient } from '@/lib/agentic-engine/services/google-indexing-client';
 import { SafeFs } from '@/lib/agentic-engine/services/safe-fs';
@@ -71,7 +72,13 @@ export async function GET(req: NextRequest) {
         latestRunCount: liveLogs.length,
         activePoliciesCount: policies.length,
       },
-      packages: allPackages.slice(0, limit),
+      packages: allPackages.slice(0, limit).map(pkg => {
+        const risk = SeoArchitectAgent.detectCannibalizationRisk(pkg.query, pkg.targetCanonicalUrl || '');
+        return {
+          ...pkg,
+          cannibalizationWarning: risk.hasRisk ? risk : undefined,
+        };
+      }),
       policies,
       recentRuns: liveLogs,
       changeLogPreview,

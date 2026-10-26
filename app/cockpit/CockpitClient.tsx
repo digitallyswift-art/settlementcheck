@@ -1009,6 +1009,26 @@ export default function CockpitClient() {
                           <span className="font-mono text-[10px] font-bold text-[#D9603B] px-1.5 py-0.5 bg-[#D9603B]/10 rounded border border-[#D9603B]/20">
                             v{pkg.version || 1}
                           </span>
+                          {pkg.workedExample && (
+                            <span className="font-mono text-[10px] font-bold text-[#D9603B] px-2 py-0.5 bg-[#D9603B]/10 rounded border border-[#D9603B]/20">
+                              WORKED_CASE_STUDY
+                            </span>
+                          )}
+                          {pkg.comparisonTable && (
+                            <span className="font-mono text-[10px] font-bold text-[#0B1F3A] px-2 py-0.5 bg-[#0B1F3A]/5 rounded border border-[#0B1F3A]/15">
+                              TABLE_INJECTION
+                            </span>
+                          )}
+                          {pkg.inProsePlacement && (
+                            <span className="font-mono text-[10px] font-bold text-indigo-700 px-2 py-0.5 bg-indigo-50 rounded border border-indigo-200">
+                              IN_PROSE_LINK
+                            </span>
+                          )}
+                          {pkg.cannibalizationWarning && (
+                            <span className="font-mono text-[10px] font-bold text-amber-800 px-2 py-0.5 bg-amber-100 rounded border border-amber-300">
+                              ⚠️ CANNIBALIZATION_RISK
+                            </span>
+                          )}
                           <h4 className="font-serif font-bold text-base text-[#0B1F3A]">
                             &ldquo;{pkg.query}&rdquo;
                           </h4>
@@ -1037,6 +1057,24 @@ export default function CockpitClient() {
                           )}
                         </div>
                       </div>
+
+                      {/* Keyword Cannibalization Warning Banner */}
+                      {pkg.cannibalizationWarning && (
+                        <div className="p-3.5 sm:p-4 bg-amber-50 border-b border-amber-200 flex items-start gap-3 text-xs text-amber-900">
+                          <span className="text-base shrink-0">⚠️</span>
+                          <div className="space-y-1">
+                            <div className="font-bold flex flex-wrap items-center gap-2">
+                              <span>Keyword Cannibalization Risk Detected</span>
+                              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-200 text-amber-900">
+                                Recommended Pillar: {pkg.cannibalizationWarning.preferredRoute}
+                              </span>
+                            </div>
+                            <p className="text-amber-800/90 leading-relaxed text-xs">
+                              {pkg.cannibalizationWarning.reason}
+                            </p>
+                          </div>
+                        </div>
+                      )}
 
                       {/* The Ask Recommendation Hero Banner */}
                       <div className="p-4 sm:p-5 bg-gradient-to-r from-[#0B1F3A] via-[#122B4D] to-[#0B1F3A] text-white border-b border-white/10">
@@ -1135,6 +1173,92 @@ export default function CockpitClient() {
                                   </div>
                                 )}
                               </div>
+
+                              {/* Multi-Vector Asset Previews (Phase 5) */}
+                              {pkg.workedExample && (
+                                <div className="p-4 rounded-2xl bg-white border border-[#D9603B]/30 space-y-2.5 shadow-xs">
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#D9603B] flex items-center gap-1.5">
+                                      <span>📊</span> Worked Mathematical Case Study
+                                    </span>
+                                    <span className="text-[10px] font-mono text-[#0B1F3A]/60">April 2026 Caps Verified</span>
+                                  </div>
+                                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs p-2.5 rounded-xl bg-[#F7F4EE]/60 border border-[#0B1F3A]/5">
+                                    <div>
+                                      <span className="block text-[10px] text-[#0B1F3A]/60">Salary</span>
+                                      <strong className="text-[#0B1F3A]">£{pkg.workedExample.grossSalary?.toLocaleString('en-GB')}</strong>
+                                    </div>
+                                    <div>
+                                      <span className="block text-[10px] text-[#0B1F3A]/60">Statutory Floor</span>
+                                      <strong className="text-[#D9603B]">£{pkg.workedExample.statutoryRedundancyFloor?.toLocaleString('en-GB')}</strong>
+                                    </div>
+                                    <div>
+                                      <span className="block text-[10px] text-[#0B1F3A]/60">Ex-Gratia</span>
+                                      <strong className="text-[#0B1F3A]">£{pkg.workedExample.exGratiaCompensation?.toLocaleString('en-GB')}</strong>
+                                    </div>
+                                    <div>
+                                      <span className="block text-[10px] text-[#0B1F3A]/60">Total Package</span>
+                                      <strong className="text-emerald-700">£{pkg.workedExample.totalSettlementOffer?.toLocaleString('en-GB')}</strong>
+                                    </div>
+                                  </div>
+                                  <p className="text-[11px] text-[#0B1F3A]/80 leading-relaxed italic">
+                                    &ldquo;{pkg.workedExample.narrativeBreakdown}&rdquo;
+                                  </p>
+                                </div>
+                              )}
+
+                              {pkg.comparisonTable && (
+                                <div className="p-4 rounded-2xl bg-white border border-[#0B1F3A]/15 space-y-2.5 shadow-xs">
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A] flex items-center gap-1.5">
+                                      <span>📑</span> Statutory Comparison Table
+                                    </span>
+                                    <span className="text-[10px] font-mono text-[#0B1F3A]/60">4 Components</span>
+                                  </div>
+                                  <div className="overflow-x-auto">
+                                    <table className="w-full text-left text-[11px]">
+                                      <thead className="bg-[#0B1F3A]/5 text-[#0B1F3A] font-semibold">
+                                        <tr>
+                                          <th className="p-2">Component</th>
+                                          <th className="p-2">Statute</th>
+                                          <th className="p-2">2026 Cap (GB)</th>
+                                          <th className="p-2">Tax Treatment</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody className="divide-y divide-[#0B1F3A]/10">
+                                        {pkg.comparisonTable.rows?.map((r: any, rIdx: number) => (
+                                          <tr key={rIdx}>
+                                            <td className="p-2 font-semibold text-[#0B1F3A]">{r.element}</td>
+                                            <td className="p-2 font-mono text-[#0B1F3A]/70">{r.statutoryBasis}</td>
+                                            <td className="p-2 font-semibold text-[#D9603B]">{r.standardCapGB}</td>
+                                            <td className="p-2 text-[#0B1F3A]/80">{r.taxTreatment}</td>
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              )}
+
+                              {pkg.inProsePlacement && (
+                                <div className="p-4 rounded-2xl bg-[#0B1F3A] text-white space-y-2.5 shadow-sm">
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+                                      <span>🔗</span> In-Prose Editorial Link Diff Preview
+                                    </span>
+                                    <span className="text-[10px] font-mono text-white/60">
+                                      Target: {pkg.inProsePlacement.targetFilePath}
+                                    </span>
+                                  </div>
+                                  <div className="p-3 rounded-xl bg-black/40 font-mono text-[11px] text-white/90 space-y-1 overflow-x-auto leading-relaxed border border-white/10">
+                                    <div className="text-red-400">- {pkg.inProsePlacement.matchedExcerpt}</div>
+                                    <div className="text-emerald-400 font-bold">+ {pkg.inProsePlacement.replacementExcerpt}</div>
+                                  </div>
+                                  <div className="text-[11px] text-white/70 italic">
+                                    Rationale: {pkg.inProsePlacement.relevanceRationale}
+                                  </div>
+                                </div>
+                              )}
 
                               {/* Protected Elements Box */}
                               <div className="p-3.5 rounded-2xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 space-y-2 text-xs">

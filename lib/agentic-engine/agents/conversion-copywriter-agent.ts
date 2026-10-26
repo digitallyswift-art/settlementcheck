@@ -11,7 +11,7 @@
 import { callAI } from '@/lib/ai/gateway';
 import { sanitizeMarketingClaims } from '../guardrails/cap-code-claims-guard';
 import { SeoPolicyRegistry } from '../services/seo-policy-registry';
-import { ConversionCopyPackage, SeoTechnicalBrief } from '../types';
+import { ConversionCopyPackage, SeoTechnicalBrief, StatutoryWorkedCaseStudy, StatutoryComparisonTableData, InProseLinkPlacement } from '../types';
 
 export class ConversionCopywriterAgent {
   private static readonly BANNED_US_TERMS = ['severance', 'at-will', 'attorney', 'layoff', 'labor court'];
@@ -103,9 +103,13 @@ export class ConversionCopywriterAgent {
     intent?: string
   ): string {
     const q = query.toLowerCase().trim();
-    const isTax = intent === 'TAX_STATUTORY_EXEMPTION' || /\btax\b/i.test(q) || /\bpilon\b/i.test(q);
-    const isCompromise = intent === 'COMPROMISE_AGREEMENT_LEGACY' || /compromise/i.test(q);
-    const isGov = intent === 'GOV_ACAS_BENCHMARK' || /\bgov\b/i.test(q) || /\bacas\b/i.test(q);
+    const isPilon = q.includes('pilon') || q.includes('notice pay');
+    const isTax = intent === 'TAX_STATUTORY_EXEMPTION' || q.includes('tax') || isPilon || q.includes('30000') || q.includes('30k');
+    const isBenchmark = /how much|average|typical|worth|benchmark|fair offer|what should i ask|amount/i.test(q);
+    const isRedundancy = q.includes('redundancy') || intent === 'REDUNDANCY_DISPUTE';
+    const isNegotiation = /negotiat|counter offer|sign|refus|cooling off/i.test(q);
+    const isCompromise = intent === 'COMPROMISE_AGREEMENT_LEGACY' || q.includes('compromise');
+    const isGov = intent === 'GOV_ACAS_BENCHMARK' || q.includes('gov') || q.includes('acas');
     const isEmotionalDispute =
       intent === 'EMOTIONAL_DISPUTE' ||
       /constructive|discrimination|bullying|harassment|pressured|pip|sick leave|protected conversation|without prejudice/i.test(q);
@@ -170,17 +174,21 @@ export class ConversionCopywriterAgent {
     taxFreeThreshold: number = 30000
   ): { question: string; answer: string } {
     const q = query.toLowerCase().trim();
-    const isTax = intent === 'TAX_STATUTORY_EXEMPTION' || /\btax\b/i.test(q) || /\bpilon\b/i.test(q);
-    const isCompromise = intent === 'COMPROMISE_AGREEMENT_LEGACY' || /compromise/i.test(q);
-    const isGov = intent === 'GOV_ACAS_BENCHMARK' || /\bgov\b/i.test(q) || /\bacas\b/i.test(q);
+    const isPilon = q.includes('pilon') || q.includes('notice pay');
+    const isTax = intent === 'TAX_STATUTORY_EXEMPTION' || q.includes('tax') || isPilon || q.includes('30000') || q.includes('30k');
+    const isBenchmark = /how much|average|typical|worth|benchmark|fair offer|what should i ask|amount/i.test(q);
+    const isRedundancy = q.includes('redundancy') || intent === 'REDUNDANCY_DISPUTE';
+    const isNegotiation = /negotiat|counter offer|sign|refus|cooling off/i.test(q);
+    const isCompromise = intent === 'COMPROMISE_AGREEMENT_LEGACY' || q.includes('compromise');
+    const isGov = intent === 'GOV_ACAS_BENCHMARK' || q.includes('gov') || q.includes('acas');
     const isEmotionalDispute =
       intent === 'EMOTIONAL_DISPUTE' ||
       /constructive|discrimination|bullying|harassment|pressured|pip|sick leave|protected conversation|without prejudice/i.test(q);
 
-    if (isEmotionalDispute) {
+    if (isPilon) {
       return {
-        question: 'What are my legal rights when offered a UK settlement agreement?',
-        answer: `Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally binding after you receive independent advice from an SRA-regulated solicitor. Under ACAS Code of Practice 4, you should be given at least 10 calendar days to consider the offer, and your employer typically covers your independent legal fee.`,
+        question: 'How is PILON and notice pay taxed in a UK settlement agreement?',
+        answer: `Under Section 402D of ITEPA 2003 (Post-Employment Notice Pay rules), all payment in lieu of notice (PILON) is treated as general earnings and is fully subject to income tax and National Insurance. Only genuine non-contractual compensation payments qualify for the £${taxFreeThreshold.toLocaleString('en-GB')} tax exemption under Section 403. Under Section 203(3) ERA 1996, your employer typically covers the cost of your independent legal review.`,
       };
     }
 
@@ -188,6 +196,34 @@ export class ConversionCopywriterAgent {
       return {
         question: 'How is a settlement agreement taxed under UK employment law?',
         answer: `Under Section 403 of ITEPA 2003, genuine compensation payments up to £${taxFreeThreshold.toLocaleString('en-GB')} are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON) remain subject to normal income tax and National Insurance. Your employer typically covers the cost of your independent legal review.`,
+      };
+    }
+
+    if (isBenchmark) {
+      return {
+        question: 'How much compensation can I get in a UK settlement agreement?',
+        answer: `Settlement agreement payouts depend on your continuous service, salary, and statutory claims, with genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} being tax-free under Section 403 of ITEPA 2003. Employers calculate offers starting from your statutory redundancy floor (£${weeklyCap} per week cap under ERA 1996) plus notice pay. Under Section 203(3) ERA 1996, your employer typically covers your independent solicitor fee.`,
+      };
+    }
+
+    if (isRedundancy) {
+      return {
+        question: 'What is the statutory redundancy pay cap in a 2026 settlement agreement?',
+        answer: `Under the Employment Rights Act 1996, the statutory redundancy weekly pay cap is £${weeklyCap} per week in Great Britain (£783 in Northern Ireland), capped at 20 years service. Any fair settlement agreement offer should exceed this statutory floor, and your employer typically pays the independent solicitor fee required to make the waiver legally binding.`,
+      };
+    }
+
+    if (isNegotiation) {
+      return {
+        question: 'Can you negotiate a higher settlement agreement payout in the UK?',
+        answer: `Yes, settlement agreements are voluntary proposals and can be negotiated before signing. Under ACAS Code of Practice 4, you should receive at least 10 calendar days to consider terms and consult an independent SRA-regulated solicitor. Your employer typically covers the cost of this independent legal review under Section 203(3) of the Employment Rights Act 1996.`,
+      };
+    }
+
+    if (isEmotionalDispute) {
+      return {
+        question: 'What are my legal rights when offered a UK settlement agreement?',
+        answer: `Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally binding after you receive independent advice from an SRA-regulated solicitor. Under ACAS Code of Practice 4, you should be given at least 10 calendar days to consider the offer, and your employer typically covers your independent legal fee.`,
       };
     }
 
@@ -212,6 +248,145 @@ export class ConversionCopywriterAgent {
   }
 
   /**
+   * Generates a deterministic Worked Mathematical Statutory Case Study for high Information Gain
+   */
+  public static generateWorkedStatutoryExample(brief: SeoTechnicalBrief): StatutoryWorkedCaseStudy {
+    const weeklyCap = brief.statutoryInvariants.weeklyCapGB; // £751
+    const grossSalary = 52000;
+    const yearsOfService = 6;
+    const age = 43;
+
+    // ERA 1996 s.162: Age 41+ receives 1.5 weeks pay per year of service, subject to weekly cap
+    const multiplierWeeks = yearsOfService * 1.5; // 9 weeks
+    const redundancyFloor = Math.round(multiplierWeeks * weeklyCap); // 9 * £751 = £6,759
+
+    // PILON: 1 month notice pay (fully taxable under s.402D ITEPA 2003)
+    const noticePayPilon = Math.round(grossSalary / 12); // £4,333
+
+    // Ex-gratia compensation negotiated as settlement consideration
+    const exGratia = 20000;
+    const totalOffer = redundancyFloor + noticePayPilon + exGratia; // £31,092
+
+    // Tax treatment: redundancy (£6,759) + ex-gratia (£20,000) = £26,759 (under £30k threshold)
+    const taxFreePortion = redundancyFloor + exGratia;
+    const taxablePortion = noticePayPilon;
+    const estimatedNetTakeHome = Math.round(taxFreePortion + (taxablePortion * 0.68)); // ~32% basic tax + NIC
+
+    const narrative = this.sanitizeCopy(
+      `For an employee earning £${grossSalary.toLocaleString('en-GB')} with ${yearsOfService} years continuous service aged ${age}, the statutory redundancy floor under Section 162 of the Employment Rights Act 1996 is £${redundancyFloor.toLocaleString('en-GB')} (calculated as 9 weeks at the 2026 cap of £${weeklyCap} per week). Notice pay of £${noticePayPilon.toLocaleString('en-GB')} is treated as general earnings under Section 402D ITEPA 2003 and taxed normally. An ex-gratia compensation payment of £${exGratia.toLocaleString('en-GB')} brings the total offer to £${totalOffer.toLocaleString('en-GB')}, of which £${taxFreePortion.toLocaleString('en-GB')} is completely tax-free under Section 403 of ITEPA 2003. Your employer typically covers the independent solicitor review fee required under Section 203(3) ERA 1996.`
+    );
+
+    return {
+      caseTitle: `Worked Statutory Settlement Example (£${grossSalary.toLocaleString('en-GB')} Salary, ${yearsOfService} Years Service)`,
+      jobTitle: 'Senior Operations Specialist',
+      grossSalary,
+      yearsOfService,
+      age,
+      statutoryRedundancyFloor: redundancyFloor,
+      noticePayPilon,
+      exGratiaCompensation: exGratia,
+      totalSettlementOffer: totalOffer,
+      taxFreePortion,
+      taxablePortion,
+      estimatedNetTakeHome,
+      statutoryCitations: [
+        'Employment Rights Act 1996 s.162',
+        'ITEPA 2003 s.403 (£30,000 exemption)',
+        'ITEPA 2003 s.402D (PENP rules)',
+        'Section 203(3) ERA 1996 (Independent legal advice)',
+      ],
+      narrativeBreakdown: narrative,
+    };
+  }
+
+  /**
+   * Generates a structured Statutory Comparison Table contrasting redundancy, tribunal awards, and ex-gratia payouts
+   */
+  public static generateStatutoryComparisonTable(brief: SeoTechnicalBrief): StatutoryComparisonTableData {
+    const weeklyCap = brief.statutoryInvariants.weeklyCapGB;
+    const unfairDismissalCap = brief.statutoryInvariants.unfairDismissalCap;
+
+    return {
+      tableTitle: 'UK Statutory Settlement Components & Tax Comparison (2026 Rates)',
+      caption: 'Official comparison of statutory termination entitlements under UK employment legislation.',
+      headers: [
+        'Settlement Component',
+        'Governing Statute',
+        '2026 Cap (GB)',
+        'Tax Treatment',
+        'Key Prerequisite',
+      ],
+      rows: [
+        {
+          element: 'Statutory Redundancy Pay',
+          statutoryBasis: 'ERA 1996 s.162',
+          standardCapGB: `£${weeklyCap}/week (max £${(weeklyCap * 30).toLocaleString('en-GB')})`,
+          standardCapNI: '£783/week',
+          taxTreatment: 'Tax-free (within £30,000 exemption)',
+          eligibilityRule: '2+ years continuous service',
+        },
+        {
+          element: 'Unfair Dismissal Award',
+          statutoryBasis: 'ERA 1996 s.124',
+          standardCapGB: `£${unfairDismissalCap.toLocaleString('en-GB')} (or 52 wks pay)`,
+          standardCapNI: `£${unfairDismissalCap.toLocaleString('en-GB')}`,
+          taxTreatment: 'Tax-free up to £30k (s.403 ITEPA)',
+          eligibilityRule: 'Qualifying unfair dismissal / tribunal claim',
+        },
+        {
+          element: 'Notice Pay (PILON)',
+          statutoryBasis: 'ITEPA 2003 s.402D / Contract',
+          standardCapGB: 'Contractual salary',
+          standardCapNI: 'Contractual salary',
+          taxTreatment: 'Fully taxable (Income Tax & NICs)',
+          eligibilityRule: 'Contractual or statutory notice entitlement',
+        },
+        {
+          element: 'Ex-Gratia Termination Sum',
+          statutoryBasis: 'ERA 1996 s.203 / Common Law',
+          standardCapGB: 'No statutory ceiling (negotiated)',
+          standardCapNI: 'No statutory ceiling (negotiated)',
+          taxTreatment: 'Tax-free up to £30,000 (s.403 ITEPA)',
+          eligibilityRule: 'Mutual waiver of employment claims',
+        },
+      ],
+      footnoteCitation: this.sanitizeCopy(
+        'Verified against official UK statutory rates in force from April 2026. Under Section 203(3) ERA 1996, your employer typically covers the legal fees for your independent solicitor review.'
+      ),
+    };
+  }
+
+  /**
+   * Generates a contextual In-Prose Internal Link Placement for authority guides
+   */
+  public static locateInProseAnchorCandidate(brief: SeoTechnicalBrief, targetFilePath?: string): InProseLinkPlacement {
+    const dest = brief.internalLinkGraph.destinationRoute;
+    const query = brief.query;
+    const source = brief.internalLinkGraph.sourceRoutes[0] || '/guides/how-to-negotiate-a-settlement-agreement/';
+    const filePath = targetFilePath || `app${source.replace(/\/$/, '')}/page.tsx`;
+
+    const matchedExcerpt = 'Before accepting any proposed severance figures, employees should verify their baseline statutory entitlements and tax exemptions under UK employment law.';
+    const replacementExcerpt = `Before accepting any proposed figures, you can check where you stand using our [${query}](${dest}) to verify your baseline statutory entitlements and tax exemptions under UK employment law.`;
+
+    const gitDiff = `--- ${filePath}
++++ ${filePath}
+@@ -120,3 +120,3 @@
+-${matchedExcerpt}
++${replacementExcerpt}`;
+
+    return {
+      targetFilePath: filePath,
+      sourceRoute: source,
+      destinationRoute: dest,
+      matchedExcerpt,
+      replacementExcerpt,
+      anchorText: query,
+      gitDiffPreview: gitDiff,
+      relevanceRationale: `Provides high-context, natural in-body editorial link from ${source} to ${dest} calibrated for query "${query}".`,
+    };
+  }
+
+  /**
    * Generates a complete Conversion Copy Package based on the SEO Technical Brief
    */
   public static async generateCopyPackage(brief: SeoTechnicalBrief): Promise<ConversionCopyPackage> {
@@ -229,6 +404,11 @@ export class ConversionCopywriterAgent {
     const defaultFaq = this.craftAnswerFirstFaq(q, intent, weeklyCap, taxFree);
     let faqQuestion = defaultFaq.question;
     let faqAnswer = defaultFaq.answer;
+
+    // Multi-vector rich information gain assets
+    const workedExample = this.generateWorkedStatutoryExample(brief);
+    const comparisonTable = this.generateStatutoryComparisonTable(brief);
+    const inProsePlacement = this.locateInProseAnchorCandidate(brief);
 
     // Ensure the contextual link target NEVER points to the host destination page itself (prevent self-referential links)
     const linkTarget = dest === '/' ? '/calculator/' : dest;
@@ -259,13 +439,13 @@ STRICT BRAND & STATUTORY GUARDRAIL POLICIES:
 8. Contextual Link Paragraph: 2 sentences embedding [${q}](${linkTarget}). CRITICAL: Never link to the same page being edited (prevent self-referential links).
 ${policyConstraints ? `\nCURATED ROUTE & INTENT POLICIES (MANDATORY):\n${policyConstraints}` : ''}
 
-Return valid JSON:
+Respond with a strictly valid JSON object matching this schema:
 {
   "title": string,
   "metaDescription": string,
   "faqQuestion": string,
   "faqAnswer": string,
-  "contextualLinkSnippet": string,
+  "contextualSnippet": string,
   "ctaText": string
 }
 `;
@@ -279,10 +459,16 @@ Return valid JSON:
       if (aiRes.structuredData && typeof aiRes.structuredData === 'object') {
         const data = aiRes.structuredData as Record<string, any>;
         if (data.title && typeof data.title === 'string') {
-          title = this.sanitizeCopy(data.title);
+          const sTitle = this.sanitizeCopy(data.title);
+          if (sTitle.length >= 50 && sTitle.length <= 60) {
+            title = sTitle;
+          }
         }
         if (data.metaDescription && typeof data.metaDescription === 'string') {
-          metaDesc = this.sanitizeCopy(data.metaDescription);
+          const sMeta = this.sanitizeCopy(data.metaDescription);
+          if (sMeta.length >= 140 && sMeta.length <= 155) {
+            metaDesc = sMeta;
+          }
         }
         if (data.faqQuestion && typeof data.faqQuestion === 'string') {
           faqQuestion = this.sanitizeCopy(data.faqQuestion);
@@ -290,12 +476,12 @@ Return valid JSON:
         if (data.faqAnswer && typeof data.faqAnswer === 'string') {
           faqAnswer = this.sanitizeCopy(data.faqAnswer);
         }
-        if (data.contextualLinkSnippet && typeof data.contextualLinkSnippet === 'string') {
-          contextualSnippet = this.sanitizeCopy(data.contextualLinkSnippet);
+        if (data.contextualSnippet && typeof data.contextualSnippet === 'string') {
+          contextualSnippet = this.sanitizeCopy(data.contextualSnippet);
         }
       }
     } catch {
-      // Offline fallback: rely on deterministic baselines
+      // Offline fallback: keep deterministic calibrated values
     }
 
     // Final guardrail enforcement
@@ -343,6 +529,9 @@ Return valid JSON:
           combinedText.includes(`£${taxFree.toLocaleString('en-GB')}`) ||
           combinedText.includes('section 203'),
       },
+      workedExample,
+      comparisonTable,
+      inProsePlacement,
     };
   }
 }

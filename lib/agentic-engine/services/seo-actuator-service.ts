@@ -22,6 +22,10 @@ import {
   SeoDeploymentRiskTier,
   SeoGuardrailPolicyRule,
   SeoTradeOffSummary,
+  StatutoryWorkedCaseStudy,
+  StatutoryComparisonTableData,
+  InProseLinkPlacement,
+  ContentGapBrief,
 } from '../types';
 import { SafeFs } from './safe-fs';
 
@@ -61,6 +65,10 @@ export interface AppliedSeoRecord {
   lockedBy?: string | null;
   lockedUntil?: string | null;
   lastModifiedBy?: string;
+  workedExample?: StatutoryWorkedCaseStudy;
+  comparisonTable?: StatutoryComparisonTableData;
+  inProsePlacement?: InProseLinkPlacement;
+  contentGapBrief?: ContentGapBrief;
 }
 
 export class SeoActuatorService {
@@ -281,6 +289,10 @@ export class SeoActuatorService {
       lockedBy: d.locked_by || null,
       lockedUntil: d.locked_until || null,
       lastModifiedBy: d.last_modified_by,
+      workedExample: d.seo_brief?.workedExample || d.copy_package?.workedExample,
+      comparisonTable: d.seo_brief?.comparisonTable || d.copy_package?.comparisonTable,
+      inProsePlacement: d.seo_brief?.inProsePlacement || d.copy_package?.inProsePlacement,
+      contentGapBrief: d.seo_brief?.contentGapBrief || d.copy_package?.contentGapBrief,
     };
 
     return this.enrichRecordWithBlastRadius(base);
@@ -409,6 +421,10 @@ export class SeoActuatorService {
               contextualLinkSnippet: pkg.copyPackage?.contextualInternalLinkBlock?.surroundingText,
               ctaText: pkg.copyPackage?.ctaText,
               status: pkg.status || 'VALIDATED',
+              workedExample: pkg.workedExample || pkg.copyPackage?.workedExample,
+              comparisonTable: pkg.comparisonTable || pkg.copyPackage?.comparisonTable,
+              inProsePlacement: pkg.inProsePlacement || pkg.copyPackage?.inProsePlacement,
+              contentGapBrief: pkg.contentGapBrief || pkg.copyPackage?.contentGapBrief,
             };
             list.push(this.enrichRecordWithBlastRadius(base));
           }
@@ -1052,5 +1068,18 @@ export class SeoActuatorService {
       records: syncedRecords,
       outputPath: this.APPLIED_DISK_PATH,
     };
+  }
+
+  /**
+   * Generates a file-scoped git patch for staged in-prose guide internal links
+   */
+  public static async generateInProseGuidePatch(placement: InProseLinkPlacement): Promise<string> {
+    const diffDir = path.resolve('data/serp-actions/staged-diffs');
+    const safeHash = Buffer.from(placement.sourceRoute + placement.destinationRoute).toString('hex').slice(0, 12);
+    const patchPath = path.join(diffDir, `link-${safeHash}.patch`);
+    const diffContent = placement.gitDiffPreview || `--- ${placement.targetFilePath}\n+++ ${placement.targetFilePath}\n@@ -1,1 +1,1 @@\n-${placement.matchedExcerpt}\n+${placement.replacementExcerpt}\n`;
+
+    const res = SafeFs.writeFileSyncSafe(patchPath, diffContent, 'utf-8');
+    return res.writtenPath;
   }
 }

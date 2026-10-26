@@ -46,6 +46,13 @@ export class SeoArchitectAgent {
     '/guides/discrimination-settlement-agreements/': 'Discrimination Settlement Agreements UK: Compensation, Vento Bands & Tax Rules (2026)',
     '/guides/pressured-to-sign/': 'My employer is pressuring me to sign a settlement agreement quickly. What are my rights?',
     '/guides/protected-conversations-without-prejudice/': 'Protected Conversations and Without Prejudice: The UK Employee Guide',
+    '/guides/average-settlement-agreement-payout-uk/': 'Average Settlement Agreement Payout UK (2026 Official Benchmarks)',
+    '/guides/pilon-tax-treatment-2026/': 'PILON Tax Treatment 2026: Notice Pay & Post-Employment Notice Pay (PENP)',
+    '/guides/what-happens-if-you-do-not-sign/': 'What Happens If You Refuse to Sign a Settlement Agreement? (UK Guide)',
+    '/guides/can-an-employer-withdraw-a-settlement-agreement/': 'Can an Employer Withdraw a Settlement Agreement Offer? (UK Law)',
+    '/guides/settlement-agreement-sick-leave/': 'Settlement Agreements on Sick Leave & Medical Capability (2026 UK Guide)',
+    '/guides/settlement-agreement-instead-of-pip/': 'Settlement Agreement Instead of PIP: Your Legal Rights & Strategy',
+    '/guides/settlement-agreement-acas-calculations/': 'ACAS Settlement Agreement Calculations & Early Conciliation (2026)',
   };
 
   /**
@@ -54,15 +61,30 @@ export class SeoArchitectAgent {
   public static classifyIntent(query: string): SeoSearchIntent {
     const q = query.toLowerCase();
 
-    if (q.includes('compromise agreement')) {
+    // 1. Compromise agreement legacy terminology
+    if (q.includes('compromise agreement') || q.includes('compromise')) {
       return 'COMPROMISE_AGREEMENT_LEGACY';
     }
-    if (q.includes('tax') || q.includes('pilon') || q.includes('30000') || q.includes('£30,000') || q.includes('£30000')) {
+
+    // 2. Tax / Statutory Exemption (ITEPA s.403 / PENP s.402D / £30k exemption)
+    if (
+      q.includes('tax') ||
+      q.includes('pilon') ||
+      q.includes('30000') ||
+      q.includes('30,000') ||
+      q.includes('30k') ||
+      q.includes('itepa') ||
+      q.includes('penp')
+    ) {
       return 'TAX_STATUTORY_EXEMPTION';
     }
-    if (q.includes('gov') || q.includes('acas')) {
+
+    // 3. Government / ACAS official benchmark queries
+    if (q.includes('gov') || q.includes('government') || q.includes('acas')) {
       return 'GOV_ACAS_BENCHMARK';
     }
+
+    // 4. Emotional / Dispute / Tactics / Negotiation queries
     if (
       q.includes('constructive') ||
       q.includes('discrimination') ||
@@ -72,17 +94,27 @@ export class SeoArchitectAgent {
       q.includes('pip') ||
       q.includes('sick leave') ||
       q.includes('protected conversation') ||
-      q.includes('without prejudice')
+      q.includes('without prejudice') ||
+      q.includes('negotiat') ||
+      q.includes('not sign') ||
+      q.includes('refuse') ||
+      q.includes('withdraw')
     ) {
       return 'EMOTIONAL_DISPUTE';
     }
+
+    // 5. Redundancy & dismissal disputes
     if (q.includes('redundancy') || q.includes('severance') || q.includes('unfair') || q.includes('tribunal') || q.includes('dismissal')) {
       return 'REDUNDANCY_DISPUTE';
     }
+
+    // 6. Solicitor selection & legal representation
     if (q.includes('solicitor') || q.includes('lawyer') || q.includes('legal advice') || q.includes('near me')) {
       return 'SOLICITOR_SELECTION';
     }
-    if (q.includes('calculator') || q.includes('calculate') || q.includes('calc') || q.includes('estimate') || q.includes('payout')) {
+
+    // 7. Strictly computational transactional calculator queries
+    if (q.includes('calculator') || q.includes('calculate') || q.includes('calc')) {
       return 'TRANSACTIONAL_CALCULATOR';
     }
 
@@ -90,35 +122,20 @@ export class SeoArchitectAgent {
   }
 
   /**
-   * Maps query intent to canonical site route enforcing trailing slash invariant
-   * and preventing cannibalization of dedicated tools by the root homepage.
+   * Maps query intent to canonical site route enforcing the 4-Pillar Authority Architecture
+   * and trailing slash invariant, preventing keyword cannibalization.
    */
   public static resolveCanonicalRoute(query: string, intent: SeoSearchIntent, targetUrl?: string): string {
     const q = query.toLowerCase();
 
-    // Priority 1: Prevent keyword cannibalization of dedicated calculator tools
-    // Computational and calculator queries MUST route to /calculator/ or specialized tool, NEVER root homepage /
-    if (q.includes('constructive')) return '/constructive-dismissal-calculator/';
-    if (q.includes('pip')) return '/pip-settlement-calculator/';
-    if (q.includes('discrimination')) return '/guides/discrimination-settlement-agreements/';
-    if (q.includes('pressured')) return '/guides/pressured-to-sign/';
-    if (q.includes('redundancy') && (q.includes('calc') || q.includes('pay') || q.includes('statutory'))) {
-      return '/redundancy-calculator/';
-    }
-    if ((q.includes('tax') || q.includes('30000') || q.includes('30,000') || q.includes('pilon')) && (q.includes('calc') || intent === 'TAX_STATUTORY_EXEMPTION')) {
-      return '/settlement-agreement-tax-calculator/';
-    }
-    if (intent === 'TRANSACTIONAL_CALCULATOR' || q.includes('calculate') || q.includes('calculator') || q.includes('payout')) {
-      return '/calculator/';
-    }
-
-    // Priority 2: If a specific sub-route was provided in targetUrl (and is not root homepage), honor it
-    if (targetUrl && targetUrl.startsWith('http')) {
+    // Priority 1: If a specific dedicated deep route was provided in targetUrl, honor it
+    // (Explicitly exclude root '/' and generic '/calculator/' to eliminate legacy cannibalization)
+    if (targetUrl && (targetUrl.startsWith('http://') || targetUrl.startsWith('https://'))) {
       try {
         const urlObj = new URL(targetUrl);
         let path = urlObj.pathname;
         if (!path.endsWith('/')) path += '/';
-        if (path !== '/') {
+        if (path !== '/' && path !== '/calculator/' && path !== '') {
           return path;
         }
       } catch {
@@ -126,25 +143,150 @@ export class SeoArchitectAgent {
       }
     }
 
+    // Priority 2: Pillar 2 — Tax & Exemption (ITEPA / PENP / £30k)
+    if (
+      q.includes('tax') ||
+      q.includes('30000') ||
+      q.includes('30,000') ||
+      q.includes('30k') ||
+      q.includes('itepa') ||
+      q.includes('penp') ||
+      q.includes('pilon') ||
+      intent === 'TAX_STATUTORY_EXEMPTION'
+    ) {
+      if (q.includes('pilon') && !q.includes('calculator')) {
+        return '/guides/pilon-tax-treatment-2026/';
+      }
+      if ((q.includes('30000') || q.includes('30,000') || q.includes('30k')) && !q.includes('calc') && !q.includes('calculator')) {
+        return '/guides/tax-free-settlement-30000/';
+      }
+      return '/settlement-agreement-tax-calculator/';
+    }
+
+    // Priority 3: Pillar 3 — Valuation, Averages & How-Much Benchmarks
+    if (
+      q.includes('how much') ||
+      q.includes('average') ||
+      q.includes('typical') ||
+      q.includes('worth') ||
+      q.includes('benchmark') ||
+      q.includes('payout amount') ||
+      q.includes('settlement amount') ||
+      q.includes('what should i ask') ||
+      q.includes('how much should')
+    ) {
+      if (q.includes('average') && (q.includes('payout') || q.includes('award'))) {
+        return '/guides/average-settlement-agreement-payout-uk/';
+      }
+      return '/guides/settlement-agreement-how-much/';
+    }
+
+    // Priority 4: Pillar 4 — Tactics, Dispute & Statutory Rights
+    if (q.includes('pressured') || q.includes('pressure') || q.includes('rush') || q.includes('deadline')) {
+      return '/guides/pressured-to-sign/';
+    }
+    if (q.includes('without prejudice') || q.includes('protected conversation')) {
+      return '/guides/protected-conversations-without-prejudice/';
+    }
+    if (q.includes('not sign') || q.includes('refuse') || q.includes('refusing') || q.includes('decline')) {
+      return '/guides/what-happens-if-you-do-not-sign/';
+    }
+    if (q.includes('withdraw') || q.includes('withdrawn') || q.includes('retract')) {
+      return '/guides/can-an-employer-withdraw-a-settlement-agreement/';
+    }
+    if (q.includes('sick') || q.includes('illness') || q.includes('stress leave')) {
+      return '/guides/settlement-agreement-sick-leave/';
+    }
+    if (q.includes('pip') || q.includes('performance improvement')) {
+      return q.includes('calculator') || q.includes('calc')
+        ? '/pip-settlement-calculator/'
+        : '/guides/settlement-agreement-instead-of-pip/';
+    }
+    if (q.includes('constructive')) {
+      return q.includes('guide') || q.includes('rights')
+        ? '/guides/constructive-dismissal-settlement-agreements/'
+        : '/constructive-dismissal-calculator/';
+    }
+    if (q.includes('discrimination') || q.includes('harassment') || q.includes('bullying') || q.includes('maternity')) {
+      return '/guides/discrimination-settlement-agreements/';
+    }
+    if (q.includes('unfair dismissal')) {
+      return q.includes('guide') || q.includes('rights')
+        ? '/guides/unfair-dismissal-settlement-agreements/'
+        : '/unfair-dismissal-calculator/';
+    }
+    if (q.includes('negotiat') || q.includes('counter offer') || q.includes('counter-offer')) {
+      return '/guides/how-to-negotiate-a-settlement-agreement/';
+    }
+    if (q.includes('compromise agreement') || q.includes('compromise')) {
+      return '/guides/compromise-agreement-calculator-uk/';
+    }
+    if (q.includes('solicitor') || q.includes('lawyer') || q.includes('legal fee') || q.includes('adviser')) {
+      return q.includes('employer') || q.includes('own')
+        ? '/guides/employer-recommended-solicitor/'
+        : '/get-matched/';
+    }
+
+    // Priority 5: Pillar 1 — Transactional Calculators
+    if (q.includes('redundancy')) {
+      if (q.includes('cap') || q.includes('2026')) {
+        return '/guides/redundancy-pay-cap-2026/';
+      }
+      return '/redundancy-calculator/';
+    }
+    if (q.includes('protective award')) {
+      return '/protective-award-calculator/';
+    }
+    if (
+      intent === 'TRANSACTIONAL_CALCULATOR' ||
+      q.includes('calculator') ||
+      q.includes('calculate') ||
+      q.includes('calc')
+    ) {
+      return '/calculator/';
+    }
+
+    // Fallback based on categorized intent (TAX_STATUTORY_EXEMPTION & TRANSACTIONAL_CALCULATOR already handled above)
     switch (intent) {
       case 'COMPROMISE_AGREEMENT_LEGACY':
         return '/guides/compromise-agreement-calculator-uk/';
-      case 'TAX_STATUTORY_EXEMPTION':
-        return '/settlement-agreement-tax-calculator/';
       case 'GOV_ACAS_BENCHMARK':
-        return '/calculator/';
+        return '/guides/settlement-agreement-acas-calculations/';
       case 'REDUNDANCY_DISPUTE':
         return '/redundancy-calculator/';
       case 'EMOTIONAL_DISPUTE':
         return '/guides/how-to-negotiate-a-settlement-agreement/';
       case 'SOLICITOR_SELECTION':
-        return q.includes('employer') || q.includes('own')
-          ? '/guides/employer-recommended-solicitor/'
-          : '/get-matched/';
+        return '/get-matched/';
       case 'GENERAL_SETTLEMENT':
       default:
-        return '/guides/how-to-negotiate-a-settlement-agreement/';
+        return '/guides/settlement-agreement-how-much/';
     }
+  }
+
+  /**
+   * Detects whether a proposed route causes keyword cannibalization against dedicated authority pillars
+   */
+  public static detectCannibalizationRisk(query: string, proposedRoute: string): {
+    hasRisk: boolean;
+    preferredRoute?: string;
+    reason?: string;
+  } {
+    const normProposed = proposedRoute.endsWith('/') ? proposedRoute : `${proposedRoute}/`;
+    const canonicalRoute = this.resolveCanonicalRoute(query, this.classifyIntent(query));
+
+    if (normProposed !== canonicalRoute) {
+      // Flag if an informational/tax/benchmark query is targeting root homepage or root calculator
+      if ((normProposed === '/' || normProposed === '/calculator/') && canonicalRoute !== '/calculator/' && canonicalRoute !== '/') {
+        return {
+          hasRisk: true,
+          preferredRoute: canonicalRoute,
+          reason: `Query "${query}" exhibits specific pillar intent for ${canonicalRoute}, but is targeted at generic ${normProposed}. This causes keyword cannibalization.`,
+        };
+      }
+    }
+
+    return { hasRisk: false };
   }
 
   /**
