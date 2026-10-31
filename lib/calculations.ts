@@ -87,8 +87,30 @@ export function calcRedundancy(
 }
 
 // ERA 1996 ss.118-119 — basic award for unfair dismissal (identical formula to SRP).
-export function calcBasicAward(salary: number, totalMonths: number, age: number): number {
-  return calcRedundancy(salary, totalMonths, age);
+// Only payable if an unfair dismissal claim succeeds. Uses the jurisdiction's weekly pay cap.
+// The 2-year threshold mirrors ERA 1996 s.108 (ordinary unfair dismissal).
+export function calcBasicAward(
+  salary: number,
+  totalMonths: number,
+  age: number,
+  weeklyPayCap: number = WEEKLY_PAY_CAP,
+): number {
+  return calcRedundancy(salary, totalMonths, age, weeklyPayCap);
+}
+
+// Working Time Regulations 1998 reg. 14 — payment for holiday accrued but not taken on termination.
+// Daily rate = annual salary / 52 weeks / working days per week. Kept separate from the
+// settlement figures because holiday pay is often paid outside the settlement sum.
+export function calcAccruedHolidayPay(
+  salary: number,
+  untakenDays: number,
+  workingDaysPerWeek: number = 5,
+): { pay: number; dailyRate: number } {
+  if (!(salary > 0) || !(untakenDays > 0) || !(workingDaysPerWeek > 0)) {
+    return { pay: 0, dailyRate: salary > 0 && workingDaysPerWeek > 0 ? Math.round((salary / 52 / workingDaysPerWeek) * 100) / 100 : 0 };
+  }
+  const dailyRate = salary / 52 / workingDaysPerWeek;
+  return { pay: Math.round(dailyRate * untakenDays), dailyRate: Math.round(dailyRate * 100) / 100 };
 }
 
 // ERA 1996 s.86 — statutory minimum notice.
@@ -170,7 +192,6 @@ export function getVerdict(
 ): VerdictResult {
   const weeklyCapUsed = jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB;
   const isCollectiveRedundancy = reason === 'redundancy_collective';
-  const hasStatutoryFloor = reason === 'redundancy' || reason === 'redundancy_collective' || reason === 'dismissal';
 
   // Retrieve correct statutory rates for date
   const rates = getRatesForDate();
@@ -182,13 +203,16 @@ export function getVerdict(
       : 0;
 
   // ERA 1996 ss.118-119: basic award (unfair dismissal)
-  const basicAward = reason === 'dismissal' ? calcBasicAward(salary, totalMonths, age) : 0;
+  // Claim-dependent: only payable if an unfair dismissal claim succeeds, so it is NOT part of `minimum`.
+  const basicAward = reason === 'dismissal' ? calcBasicAward(salary, totalMonths, age, weeklyCapUsed) : 0;
 
   // ERA 1996 s.86 + ITEPA 2003 s.402D: PILON (always fully taxable)
   const { pay: pilon, weeksUsed: noticeWeeksUsed, isContractual: noticeIsContractual } =
     calcNotice(salary, totalMonths, contractualNoticeWeeks);
 
-  const minimum = redundancy + basicAward + pilon;
+  // `minimum` = figures calculated from the answers given: notice pay + statutory redundancy pay.
+  // Excludes the basic award (claim-dependent) and accrued holiday (calculated separately).
+  const minimum = redundancy + pilon;
 
   // SC-B-020: Notice pay handling and effective offer
   // If offer includes notice pay, termination payment is offer minus notice pay.
@@ -226,7 +250,9 @@ export function getVerdict(
 
   // ── Typical range ─────────────────────────────────────────────
   const monthSalary = salary / 12;
-  const typicalLowCalc = minimum + monthSalary * 1.5;
+  // Reference range formula (not a record of actual settlements). The basic award is included
+  // here so the reference range is unchanged for dismissal cases.
+  const typicalLowCalc = minimum + basicAward + monthSalary * 1.5;
 
   const completedYears = Math.floor(totalMonths / 12);
   let typicalHighCalc = salary * 0.5;
@@ -256,7 +282,9 @@ export function getVerdict(
 
   // ── Verdict ───────────────────────────────────────────────────
   let verdict: Verdict;
-  if (hasStatutoryFloor && effectiveOffer < minimum) {
+  // BELOW_MINIMUM = the offer is lower than the notice + redundancy figures calculated from the answers.
+  // This is a comparison, not a finding that the offer is unlawful (ERA 1996 s.203(3) allows settlement for any sum).
+  if (minimum > 0 && effectiveOffer < minimum) {
     verdict = 'BELOW_MINIMUM';
   } else if (effectiveOffer < typicalLowCalc) {
     verdict = 'BELOW_TYPICAL';

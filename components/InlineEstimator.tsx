@@ -182,7 +182,7 @@ export default function InlineEstimator({
             <div className="p-3.5 bg-[#F2F5F8] border border-[#C8D3DF] rounded-lg flex flex-col justify-between">
               <div>
                 <span className="text-[#5B6577] text-[10px] uppercase font-bold tracking-wider block mb-0.5">
-                  Statutory Floor (Minimum)
+                  Calculated Statutory Baseline
                 </span>
                 <span className="text-[20px] font-black text-[#0B1F3A]">
                   {formatCurrency(result.minimum)}

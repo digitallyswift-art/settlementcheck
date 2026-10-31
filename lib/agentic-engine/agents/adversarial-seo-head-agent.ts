@@ -150,10 +150,56 @@ export class AdversarialSeoHeadAgent {
       );
     }
 
+    // 4. Check Internal Link Snippet & PageRank Routing (Self-Referential & Misdirected Targets)
+    if (input.contextualLinkSnippet) {
+      const linkMatch = input.contextualLinkSnippet.match(/\[([^\]]+)\]\(([^)]+)\)/);
+      if (linkMatch) {
+        const linkAnchor = linkMatch[1];
+        const linkHref = linkMatch[2];
+        const normLink = normalizeCanonicalPath(linkHref);
+
+        // Anti-pattern 4A: Self-referential internal link
+        if (normLink === normPath) {
+          critiquePoints.push(
+            `Self-Referential Internal Link Antipattern: Contextual snippet attempts to link to "${normLink}" while host page is already "${normPath}". Internal links must pass PageRank forward to a downstream subpage or dedicated tool, never cycle back to the host.`
+          );
+        }
+
+        // Anti-pattern 4B: Cannibalization trap on money pages
+        if (isCoreRoute && normLink === '/calculator/' && normPath === '/calculator/') {
+          critiquePoints.push(
+            `Cannibalization Routing Trap: Injecting anchor "[${linkAnchor}]" targeting /calculator/ on /calculator/ does not consolidate ranking equity. GSC data shows / is already the primary ranking asset (Pos ~10.6 vs /calculator/ at Pos 78+). Link equity should flow to supporting guides or preserve non-cyclical routing.`
+          );
+        }
+      } else {
+        critiquePoints.push(
+          `Malformed Contextual Link: Action requested an internal link snippet, but the snippet does not contain a valid Markdown link [anchor](/route/).`
+        );
+      }
+    }
+
+    // 5. Invariant & Regulatory Blast-Radius Integrity
+    // Inherit any critical risk flags detected by deterministic blast-radius analysis
+    if (blast.riskReasons && blast.riskReasons.length > 0) {
+      for (const reason of blast.riskReasons) {
+        if (
+          !reason.startsWith('Safe additive update') &&
+          !reason.includes('Updates the Google search headline') &&
+          !critiquePoints.some(c => c.toLowerCase().includes(reason.slice(0, 30).toLowerCase()))
+        ) {
+          critiquePoints.push(`Blast-Radius Integrity Guard: ${reason}`);
+        }
+      }
+    }
+
     // Determine Verdict & Counter-Proposal
-    const needsCounterPlan = critiquePoints.length > 0;
-    const isDestructiveVeto =
-      blast.deploymentRisk === 'CRITICAL_RISK' && overwritesTitle;
+    const isCriticalRisk = blast.deploymentRisk === 'CRITICAL_RISK';
+    const hasFatalDefect =
+      isCriticalRisk ||
+      critiquePoints.some(c => c.includes('Self-Referential') || c.includes('Cannibalization') || c.includes('Page 2 Title-Churn'));
+
+    const needsCounterPlan = critiquePoints.length > 0 || isCriticalRisk;
+    const isDestructiveVeto = isCriticalRisk && (overwritesTitle || hasFatalDefect);
 
     const recommendedScope: SeoActuationScope =
       pos > 10.0 || (isCoreRoute && (input.query || '').toLowerCase() !== (input.primaryAnchorQuery || '').toLowerCase())
@@ -177,15 +223,33 @@ export class AdversarialSeoHeadAgent {
         ? '/guides/settlement-agreement-how-much/'
         : '/guides/how-to-negotiate-a-settlement-agreement/';
 
-    const counterLinkTarget = normPath === '/' ? '/calculator/' : normPath;
+    // Calculate non-cyclical, authoritative link destination:
+    // If the host is /calculator/, pass equity down to a relevant guide rather than self-linking.
+    // If the host is a guide or homepage, link to /calculator/ or the appropriate sub-calculator.
+    let counterLinkTarget = '/calculator/';
+    if (normPath === '/calculator/') {
+      const qLower = (input.query || '').toLowerCase();
+      if (qLower.includes('tax') || qLower.includes('pilon')) {
+        counterLinkTarget = '/settlement-agreement-tax-calculator/';
+      } else if (qLower.includes('redundancy')) {
+        counterLinkTarget = '/redundancy-calculator/';
+      } else if (qLower.includes('compromise')) {
+        counterLinkTarget = '/guides/compromise-agreement-calculator-uk/';
+      } else {
+        counterLinkTarget = '/guides/how-to-negotiate-a-settlement-agreement/';
+      }
+    } else if (normPath === '/') {
+      counterLinkTarget = '/calculator/';
+    }
+
     const counterContextualLink = `Before signing, use our [${input.primaryAnchorQuery || input.query}](${counterLinkTarget}) to check your statutory redundancy floor (£${STATUTORY_RATES_2026_27.weeklyCapGB}/week cap) and £30,000 tax-free threshold under Section 403 ITEPA 2003. Under Section 203 ERA 1996, your employer typically covers your independent solicitor fee.`;
 
     let executiveSummary = needsCounterPlan
-      ? `Hold on deploying this as-is. The original agent proposal ${
-          isDestructiveVeto
-            ? `overwrites the headline of ${normPath} for a Page 2 query (Pos ${pos.toFixed(1)}) and weakens your primary keyword anchor.`
-            : `has ${critiquePoints.length} strategic SEO/YMYL weakness(es) that reduce ranking impact.`
-        } I have prepared a safer Counter-Plan below that locks your live headline, upgrades the AI Overview answer with full ITEPA 2003 s.403 / PILON precision, and builds internal link equity instead.`
+      ? isDestructiveVeto
+        ? `Vetoed. This proposal contains high-risk structural defects for ${normPath} (${
+            overwritesTitle ? `destabilises live title for Pos ${pos.toFixed(1)} query` : 'self-referential link / cannibalization detected'
+          }). Review the non-destructive Counter-Plan below.`
+        : `Hold on deploying this as-is. The original agent proposal has ${critiquePoints.length} strategic SEO/YMYL weakness(es) that reduce ranking impact. I have prepared a safer Counter-Plan below that locks your live headline, upgrades the AI Overview answer with full ITEPA 2003 s.403 / PILON precision, and builds non-cyclical internal link equity instead.`
       : `Approved. This package preserves your route architecture, keeps your primary keyword anchor intact, and complies with April 2026 statutory rates (£751/wk cap) and SERP pixel bounds.`;
 
     // Optionally enrich executive summary via fast LLM with active policy constraints
@@ -193,13 +257,18 @@ export class AdversarialSeoHeadAgent {
       const policyContext = SeoPolicyRegistry.formatPromptConstraints(normPath);
       const prompt = `
 You are the Adversarial Head of Legal SEO for SettlementCheck (settlementcheck.co.uk).
-Explain in 2 crisp, plain-English sentences to the site owner why this autonomous SEO proposal for query "${input.query}" (Rank: Pos ${pos.toFixed(1)}, Target: ${normPath}) was flagged:
-Critique points:
+Critically inspect this autonomous SEO proposal for query "${input.query}" (GSC Rank: Pos ${pos.toFixed(1)}, Target Route: ${normPath}).
+Host Page Existing H1: "${baselineH1}"
+Proposed Title: "${input.calibratedTitle}"
+Proposed Meta: "${input.calibratedMetaDescription}"
+Proposed Link Snippet: "${input.contextualLinkSnippet || 'None'}"
+Proposed FAQ: Q: "${input.faqQuestion}" | A: "${input.faqAnswer}"
+Identified Flaws:
 ${critiquePoints.map((c, i) => `${i + 1}. ${c}`).join('\n')}
 Active Guardrail Policies:
 ${policyContext}
 
-Keep it direct, jargon-free, and focused on protecting rankings and legal accuracy. Zero em dashes.
+Explain in 2 crisp, plain-English sentences to the site owner why this proposal is risky or needs adjustment, and what the safer action is. Focus on protecting ranking equity, preventing self-referential linking, and statutory accuracy. Zero em dashes.
 Return JSON: { "plainEnglishVerdict": string }
 `;
       if (needsCounterPlan) {

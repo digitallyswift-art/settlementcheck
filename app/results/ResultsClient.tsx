@@ -33,17 +33,17 @@ function StatutoryProtectionsCard() {
     {
       title: 'April 2026 Statutory Caps',
       statute: 'ERA 1996 s.227 & SI 2026/310',
-      desc: 'Redundancy calculated at £751/week (GB) or £783/week (NI). Unfair dismissal compensatory cap is £123,543.',
+      desc: 'Redundancy pay uses a weekly pay cap of £751 (GB) or £783 (NI). The unfair dismissal compensatory award is capped at £123,543 or 52 weeks\' pay, whichever is lower.',
     },
     {
-      title: 'Mandatory Independent Advice',
+      title: 'Independent Advice',
       statute: 'ERA 1996 s.203(3)',
-      desc: 'Waivers of statutory claims are unenforceable without advice from an independent, insured solicitor. Employers customarily cover this fee.',
+      desc: 'A settlement agreement only settles statutory claims if you have received advice from an independent adviser. You can ask your employer to contribute towards the cost.',
     },
     {
-      title: '10-Day Consideration Window',
+      title: 'Time to Consider',
       statute: 'ACAS Code of Practice 4',
-      desc: 'Parties should be given at least 10 calendar days to review terms. Employers cannot demand immediate sign-off.',
+      desc: 'The ACAS Code says you should be given a reasonable period to consider the terms, normally at least 10 calendar days.',
     },
     {
       title: 'Tax-Free Exemption Boundary',
@@ -92,21 +92,48 @@ function OfficialBenchmarkCard({
   offer,
   result,
   isDiscrimination,
+  totalMonths,
 }: {
   reason: string;
   salary: number;
+  /** The user's REAL employer offer. Never pass a simulated/midpoint figure here. */
   offer: number;
   result: VerdictResult;
   isDiscrimination: boolean;
+  totalMonths: number;
 }) {
   const benchmark = getOfficialBenchmark(reason, isDiscrimination)
   const monthlySalary = salary / 12
-  const acasLow = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.min)
-  const acasHigh = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.max)
+  const refLow = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.min)
+  const refHigh = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.max)
 
-  const isUnderpaid = offer > 0 && offer < result.minimum
-  const isBelowAcas = offer >= result.minimum && offer < acasLow
-  const isHealthyOffer = offer >= acasLow
+  // Reason not confirmed ('other' = "I am not sure", 'mutual' = mutual agreement).
+  const reasonUnconfirmed = reason === 'other' || reason === 'mutual'
+  // Ordinary unfair dismissal needs 2 years' service (ERA 1996 s.108). Tribunal medians for these
+  // claim types are not shown where that threshold is not met on the answers given.
+  const isOrdinaryUnfairDismissalBenchmark =
+    !isDiscrimination && reason !== 'redundancy' && reason !== 'redundancy_collective'
+  const belowQualifyingService = totalMonths < 24
+  const showTribunalMedian = !(isOrdinaryUnfairDismissalBenchmark && belowQualifyingService)
+
+  const categoryLabel = reasonUnconfirmed && !isDiscrimination
+    ? 'Reason not confirmed'
+    : benchmark.jurisdictionCategory
+
+  // Only compare an offer the user actually entered. Uses the effective package
+  // (adds notice pay where the user said it is paid on top).
+  const hasRealOffer = offer > 0
+  const comparedOffer = result.effectiveOffer
+  const isBelowFigures = hasRealOffer && result.minimum > 0 && comparedOffer < result.minimum
+  const isBelowRef = hasRealOffer && !isBelowFigures && comparedOffer < refLow
+  const isWithinOrAboveRef = hasRealOffer && comparedOffer >= refLow
+
+  // Describe exactly what the figure is made of.
+  const floorParts = [
+    result.pilon > 0 ? 'Notice (s.86)' : null,
+    result.redundancy > 0 ? 'Redundancy (s.162)' : null,
+  ].filter(Boolean)
+  const floorLabel = floorParts.length > 0 ? `${floorParts.join(' + ')} ERA 1996` : 'No notice or redundancy pay identified from your answers'
 
   return (
     <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 md:p-6 shadow-sm no-print">
@@ -116,7 +143,7 @@ function OfficialBenchmarkCard({
             Official Statutory &amp; Tribunal Benchmarks
           </span>
           <h3 className="text-[17px] font-serif font-bold text-ink m-0">
-            {benchmark.jurisdictionCategory}: Official Compensation Precedents
+            {categoryLabel}: Official Compensation Precedents
           </h3>
         </div>
         <a
@@ -135,13 +162,13 @@ function OfficialBenchmarkCard({
         {/* Metric 1: Statutory Floor */}
         <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
           <div>
-            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">1. Statutory Legal Minimum</span>
+            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">1. Statutory Baseline</span>
             <span className="text-[18px] font-bold text-ink block font-serif">
               {formatCurrency(result.minimum)}
             </span>
           </div>
           <span className="text-[10px] text-[#8A93A3] mt-2 block">
-            Notice (s.86) + Redundancy (s.162 ERA 1996)
+            {floorLabel}
           </span>
         </div>
 
@@ -150,11 +177,13 @@ function OfficialBenchmarkCard({
           <div>
             <span className="text-[11px] text-[#5B6577] font-medium block mb-1">2. MoJ Tribunal Median Award</span>
             <span className="text-[18px] font-bold text-ink block font-serif">
-              {formatCurrency(benchmark.medianTribunalAward)}
+              {showTribunalMedian ? formatCurrency(benchmark.medianTribunalAward) : 'N/A (< 2 yrs service)'}
             </span>
           </div>
           <span className="text-[10px] text-[#8A93A3] mt-2 block">
-            Mean average: {formatCurrency(benchmark.meanTribunalAward)} (MoJ Tables)
+            {showTribunalMedian
+              ? `Mean average: ${formatCurrency(benchmark.meanTribunalAward)} (MoJ Tables)`
+              : 'Ordinary unfair dismissal claims require 2 years continuous service (ERA 1996 s.108)'}
           </span>
         </div>
 
@@ -163,37 +192,46 @@ function OfficialBenchmarkCard({
           <div>
             <span className="text-[11px] text-[#5B6577] font-medium block mb-1">3. Commercial Negotiation Benchmark</span>
             <span className="text-[18px] font-bold text-ink block font-serif">
-              {formatCurrency(acasLow)} to {formatCurrency(acasHigh)}
+              {formatCurrency(refLow)} to {formatCurrency(refHigh)}
             </span>
           </div>
           <span className="text-[10px] text-[#8A93A3] mt-2 block">
-            Floor + {benchmark.typicalAcasExGratiaMonths.min} to {benchmark.typicalAcasExGratiaMonths.max} months negotiation benchmark
+            Baseline + {benchmark.typicalAcasExGratiaMonths.min} to {benchmark.typicalAcasExGratiaMonths.max} months negotiation benchmark
           </span>
         </div>
       </div>
 
+      {/* No offer entered: neutral guidance, no verdict on a figure the user never gave */}
+      {!hasRealOffer && (
+        <div className="rounded-lg p-3.5 text-[13px] leading-relaxed mb-4 border bg-paper border-[#E2DCCE] text-[#0B1F3A]">
+          <p className="m-0">
+            <strong>No offer entered yet.</strong> These figures provide an objective reference baseline. When your employer makes an offer, enter it to see how it compares.
+          </p>
+        </div>
+      )}
+
       {/* Dynamic Status / Negotiation Standing Callout */}
-      {offer > 0 && (
+      {hasRealOffer && (
         <div className={`rounded-lg p-3.5 text-[13px] leading-relaxed mb-4 border ${
-          isUnderpaid
+          isBelowFigures
             ? 'bg-[#FBF0EE] border-[#F2C4BA] text-[#A8341F]'
-            : isBelowAcas
+            : isBelowRef
             ? 'bg-[#FFF8E6] border-[#F0D597] text-[#7A5B15]'
             : 'bg-[#F0F5FA] border-[#C4D8EC] text-[#0B1F3A]'
         }`}>
-          {isUnderpaid && (
+          {isBelowFigures && (
             <p className="m-0">
-              <strong>⚠️ Critical Legal Discrepancy:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> is <strong>{formatCurrency(result.minimum - offer)} below your statutory floor</strong> ({formatCurrency(result.minimum)}). Under the Employment Rights Act 1996, your employer cannot legally require you to waive rights without providing full statutory entitlements.
+              <strong>Offer Comparison:</strong> Your recorded offer of <strong>{formatCurrency(comparedOffer)}</strong> is <strong>{formatCurrency(result.minimum - comparedOffer)}</strong> lower than the calculated notice and redundancy baseline ({formatCurrency(result.minimum)}). Parties can agree settlement terms under Section 203 of the Employment Rights Act 1996, but this comparison indicates your offer sits below the statutory exit entitlement.
             </p>
           )}
-          {isBelowAcas && (
+          {isBelowRef && (
             <p className="m-0">
-              <strong>⚖️ Below Market Standard:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> covers statutory minimums but provides less than the standard commercial conciliation range ({formatCurrency(acasLow)} to {formatCurrency(acasHigh)}). You are releasing full tribunal rights with minimal ex-gratia consideration.
+              <strong>Offer Comparison:</strong> Your recorded offer of <strong>{formatCurrency(comparedOffer)}</strong> covers the calculated baseline ({formatCurrency(result.minimum)}), but sits below the illustrative negotiation benchmark range ({formatCurrency(refLow)} to {formatCurrency(refHigh)}).
             </p>
           )}
-          {isHealthyOffer && (
+          {isWithinOrAboveRef && (
             <p className="m-0">
-              <strong>✓ Solid Settlement Position:</strong> Your offer of <strong>{formatCurrency(offer)}</strong> sits within or above the typical commercial settlement range for this dispute category.
+              <strong>Offer Comparison:</strong> Your recorded offer of <strong>{formatCurrency(comparedOffer)}</strong> sits within or above the illustrative negotiation benchmark range ({formatCurrency(refLow)} to {formatCurrency(refHigh)}).
             </p>
           )}
         </div>
@@ -204,7 +242,7 @@ function OfficialBenchmarkCard({
         <div className="flex items-start gap-2">
           <span className="text-[#0B1F3A] font-bold text-[14px] leading-none mt-0.5">§</span>
           <span className="leading-snug">
-            <strong className="text-ink">Independent Legal Fee Contribution:</strong> Under Section 203(3) of the Employment Rights Act 1996, statutory claim waivers are legally unenforceable without independent solicitor certification. Employers customarily contribute <strong>£350 to £1,000+ VAT</strong> directly to cover this advice.
+            <strong className="text-ink">Independent Legal Advice:</strong> Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement waiving statutory claims is only valid if you receive advice from an independent solicitor or qualified adviser. Employers customarily contribute toward this fee (commonly <strong>£350 to £750+ VAT</strong>).
           </span>
         </div>
         <a
@@ -276,34 +314,51 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
 
   if (offer === 0) {
     const minEntitlement = result.minimum
+    const breakdownDesc = result.redundancy > 0
+      ? `includes ${formatCurrency(result.pilon)} statutory notice pay and ${formatCurrency(result.redundancy)} statutory redundancy pay`
+      : `reflects ${formatCurrency(result.pilon)} statutory notice pay`
+
     return (
       <div className="rounded-lg p-6 md:p-8 bg-[#F2F5F8] border border-[#C8D3DF]">
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4 bg-white text-[#0B1F3A] border border-[#C8D3DF]">
           Negotiation Baseline
         </span>
-        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Understand your position before you negotiate.</h2>
+        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Understand your position before discussing terms.</h2>
         <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
-          <p>Under UK law, you have a statutory minimum floor of <strong className="text-ink">{formatCurrency(minEntitlement)}</strong> (including statutory redundancy and notice pay) based on your {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, age {age}, and salary.</p>
-          <p>In practice, negotiated settlements typically range from <strong className="text-ink">{formatCurrency(result.typicalLow)}</strong> to {result.typicalHighUncapped ? <strong className="text-ink">a figure depending on circumstances</strong> : <strong className="text-ink">{formatCurrency(result.typicalHigh)}</strong>}.</p>
-          <p>Use the simulator below to explore how structured settlement packages can be optimized for tax efficiency, especially if you negotiate a higher package.</p>
+          <p>
+            Based on your answers ({completedYears} {completedYears === 1 ? 'year' : 'years'} of service, age {age}, and salary), your calculated statutory baseline is <strong className="text-ink">{formatCurrency(minEntitlement)}</strong> ({breakdownDesc}).
+          </p>
+          <p>
+            For reference, illustrative negotiation ranges for similar parameters sit between <strong className="text-ink">{formatCurrency(result.typicalLow)}</strong> and {result.typicalHighUncapped ? <strong className="text-ink">an uncapped figure (depending on circumstances)</strong> : <strong className="text-ink">{formatCurrency(result.typicalHigh)}</strong>}.
+          </p>
+          <p>
+            Under the ACAS Code of Practice 4, parties should generally have at least 10 calendar days to consider settlement agreement proposals. You can use the breakdown and tools below to review your options.
+          </p>
         </div>
       </div>
     )
   }
 
   if (result.verdict === 'BELOW_MINIMUM') {
-    const srp = result.redundancy || result.basicAward
+    const breakdownDesc = result.redundancy > 0
+      ? `notice pay of ${formatCurrency(result.pilon)} and statutory redundancy pay of ${formatCurrency(result.redundancy)}`
+      : `notice pay of ${formatCurrency(result.pilon)}`
     return (
       <div className="rounded-lg p-6 md:p-8" style={{ background: '#FBF0EE', border: '1px solid #D9A99E' }}>
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4" style={{ background: '#fff', color: '#A8341F', border: '1px solid #D9A99E' }}>
-          Below your legal minimum
+          Below Calculated Baseline
         </span>
-        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Your employer may not be meeting their legal obligation.</h2>
+        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Your recorded offer sits below your calculated baseline.</h2>
         <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
-          <p>Under UK law, you are entitled to a minimum of <strong className="text-ink">{formatCurrency(srp)}</strong> in statutory redundancy pay alone, based on your {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, age {age}, and a weekly pay cap of £{result.weeklyCapUsed.toLocaleString('en-GB')}.</p>
-          <p>The offer you have described (<strong className="text-ink">{formatCurrency(offer)}</strong>) does not reach that threshold.</p>
-          <p>This is not a negotiating position. It is a legal floor. <strong className="text-ink">You do not need to accept an offer below it.</strong></p>
-          <p>Before you respond to your employer, read the breakdown below.</p>
+          <p>
+            Based on your inputs, your calculated statutory baseline is <strong className="text-ink">{formatCurrency(result.minimum)}</strong> ({breakdownDesc}).
+          </p>
+          <p>
+            Your recorded offer of <strong className="text-ink">{formatCurrency(offer)}</strong> is lower than this calculated figure.
+          </p>
+          <p>
+            Under Section 203 of the Employment Rights Act 1996, settlement agreements allow parties to mutually compromise claims (subject to independent legal advice). Reviewing this difference helps you assess whether the terms reflect your standard exit entitlements.
+          </p>
         </div>
         <OfferVsRange result={result} offer={offer} />
       </div>
@@ -314,13 +369,19 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
     return (
       <div className="rounded-lg p-6 md:p-8" style={{ background: '#FEFBF0', border: '1px solid #E0CB94' }}>
         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4" style={{ background: '#fff', color: '#B5802A', border: '1px solid #E0CB94' }}>
-          Likely below typical
+          Below Reference Range
         </span>
-        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Your offer covers the legal minimum. Most people in your position receive more.</h2>
+        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Your offer covers the calculated baseline, but sits below the illustrative range.</h2>
         <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
-          <p>Based on your salary, age, and {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, settlements in situations like yours typically fall between <strong className="text-ink">{formatCurrency(result.typicalLow)}</strong> and <strong className="text-ink">{result.typicalHighUncapped ? 'a figure that depends on the specific circumstances' : formatCurrency(result.typicalHigh)}</strong>.</p>
-          <p>Your offer of <strong className="text-ink">{formatCurrency(offer)}</strong> sits below that range.</p>
-          <p>Employers make opening offers. <strong className="text-ink">This is yours.</strong></p>
+          <p>
+            Based on your salary, age, and {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, illustrative commercial settlement ranges for comparable scenarios fall between <strong className="text-ink">{formatCurrency(result.typicalLow)}</strong> and <strong className="text-ink">{result.typicalHighUncapped ? 'an uncapped amount (depending on circumstances)' : formatCurrency(result.typicalHigh)}</strong>.
+          </p>
+          <p>
+            Your recorded offer of <strong className="text-ink">{formatCurrency(offer)}</strong> sits below that illustrative range.
+          </p>
+          <p>
+            Initial offers often provide an opening position for discussion. Independent legal advice can help clarify whether seeking an adjustment to the financial or non-financial terms is appropriate.
+          </p>
         </div>
         <OfferVsRange result={result} offer={offer} />
       </div>
@@ -330,13 +391,13 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
   return (
     <div className="rounded-lg p-6 md:p-8" style={{ background: '#F2F7F3', border: '1px solid #BCD0BF' }}>
       <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4" style={{ background: '#fff', color: '#4F7060', border: '1px solid #BCD0BF' }}>
-        <CheckIcon size={12} /> Your offer looks strong
+        <CheckIcon size={12} /> Within Reference Range
       </span>
-      <h2 className="sc-h2 text-[#0B1F3A] mb-3">This offer appears above the typical range for your circumstances.</h2>
+      <h2 className="sc-h2 text-[#0B1F3A] mb-3">This offer aligns with or exceeds the illustrative range for your circumstances.</h2>
       <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
-        <p>Based on your inputs, your employer&apos;s offer of <strong className="text-ink">{formatCurrency(offer)}</strong> sits at or above what similar cases typically reach.</p>
-        <p>A strong financial figure is not the full picture. Settlement agreements include terms beyond the number: reference wording, confidentiality obligations, and claims you are waiving, all of which can be as significant as the payment itself.</p>
-        <p>A solicitor will review the complete agreement at no cost to you. <strong className="text-ink">Your employer is required to contribute to those fees.</strong></p>
+        <p>Based on your inputs, your employer&apos;s offer of <strong className="text-ink">{formatCurrency(offer)}</strong> sits within or above the illustrative comparison range.</p>
+        <p>In addition to the financial sum, settlement agreements include non-financial clauses such as reference wording, confidentiality restrictions, post-termination covenants, and waiver scope, each of which forms an important part of the overall terms.</p>
+        <p>Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is required for the agreement to be valid. Employers customarily contribute toward this fee (commonly £350 to £750+ VAT).</p>
       </div>
       <OfferVsRange result={result} offer={offer} />
     </div>
@@ -357,7 +418,7 @@ function OfferVsRange({ result, offer }: { result: VerdictResult; offer: number 
         </div>
         <div className="hidden sm:block" style={{ width: 1, background: 'rgba(11,31,58,0.12)', height: '100%' }} aria-hidden="true" />
         <div>
-          <div className="sc-eyebrow mb-1">Typical range</div>
+          <div className="sc-eyebrow mb-1">Reference range</div>
           <div className="font-serif text-ink animate-fade-in" style={{ fontSize: 26, fontWeight: 420, letterSpacing: '-0.015em' }}>
             {result.typicalHighUncapped
               ? <>{formatCurrency(result.typicalLow)} to <span className="text-[18px]">Potentially uncapped</span></>
@@ -365,15 +426,17 @@ function OfferVsRange({ result, offer }: { result: VerdictResult; offer: number 
             }
           </div>
           {result.discriminationAsterisk && (
-            <p className="text-[11px] text-[#8A93A3] mt-2 leading-relaxed">* This range assumes no discrimination element. If discrimination is involved, your position may be significantly stronger and is uncapped.</p>
+            <p className="text-[11px] text-[#8A93A3] mt-2 leading-relaxed">
+              * This range is calculated on a non-discrimination basis. Where an unlawful discrimination or detriment claim under the Equality Act 2010 is established, compensation is uncapped and may include Injury to Feelings awards.
+            </p>
           )}
         </div>
       </div>
 
       <div className="mt-5 pt-4" style={{ borderTop: '1px solid rgba(11,31,58,0.08)' }}>
         <p className="text-[13px] text-[#5B6577] leading-[1.6] m-0">
-          <strong className="text-[#0B1F3A] font-semibold">Where does the typical range come from?</strong>{' '}
-          The lower figure is your statutory floor plus a standard uplift based on typical negotiated outcomes. The upper figure reflects cases where employees negotiated actively, often with legal support. The gap between them is real, and in most cases, recoverable.
+          <strong className="text-[#0B1F3A] font-semibold">Where does the reference range come from?</strong>{' '}
+          The lower figure represents your calculated statutory baseline plus an illustrative negotiation allowance. The upper figure reflects outcomes where broader commercial or dispute factors are negotiated. Actual outcomes vary depending on individual facts and documentation.
         </p>
       </div>
     </div>
@@ -937,13 +1000,13 @@ function CaseBriefSection({
 
           {/* Verdict Overview */}
           <div className="p-4 bg-[#F2F7F3] border border-[#BCD0BF] rounded-lg text-[12px] text-[#5B6577] leading-relaxed">
-            <span className="font-bold text-[#0B1F3A] block mb-1">Assessment Verdict:</span>
+            <span className="font-bold text-[#0B1F3A] block mb-1">Assessment Summary:</span>
             {result.verdict === 'BELOW_MINIMUM' ? (
-              <p className="m-0 text-[#A8341F]"><strong>Critical Warning:</strong> The current settlement offer is below the calculated statutory minimum floor. An exit package cannot legally waive statutory redundancy rights for an amount less than s.162 of the Employment Rights Act 1996. The employer should be notified immediately of this discrepancy.</p>
+              <p className="m-0 text-[#A8341F]"><strong>Baseline Comparison:</strong> The recorded settlement offer is lower than the calculated notice and statutory redundancy baseline. Reviewing counsel can assess whether this variance reflects the commercial context or whether pursuing full statutory figures is appropriate.</p>
             ) : result.verdict === 'BELOW_TYPICAL' ? (
-              <p className="m-0">The current offer meets the statutory floor but sits below the typical negotiated settlement range for this profile. Standard benchmarks indicate that active negotiation supported by legal counsel can yield a significant uplift.</p>
+              <p className="m-0">The recorded offer covers the calculated baseline but sits below the illustrative negotiation range for this profile. Independent counsel can assist in identifying potential avenues for negotiation on financial or non-financial terms.</p>
             ) : (
-              <p className="m-0">The current offer is financially strong and aligns with or exceeds the typical range for this service profile. Emphasis should be shifted to non-financial covenants (reference wording, confidentiality, tax indemnity clauses) to ensure a clean exit.</p>
+              <p className="m-0">The recorded offer aligns with or exceeds the illustrative benchmark range for this profile. Counsel review can focus on non-financial covenants (agreed references, confidentiality, restrictive covenants, and waiver scope) to support a clean exit.</p>
             )}
           </div>
         </div>
@@ -1026,9 +1089,9 @@ function NegotiationDraftsman({
   const [copied, setCopied] = useState(false)
   const [activeTemplate, setActiveTemplate] = useState<'uplift' | 'fee_only'>('uplift')
 
-  const redundancyAmount = result.redundancy || result.basicAward
+  const redundancyAmount = result.redundancy
   const pilonAmount = result.pilon
-  const minFloor = redundancyAmount + pilonAmount
+  const minFloor = result.minimum
   const targetUplift = result.typicalLow > offer ? result.typicalLow : Math.round(offer * 1.25)
 
   const upliftSubject = 'Without Prejudice: Settlement Agreement Proposal - Confidential'
@@ -1038,13 +1101,11 @@ Thank you for discussing the proposed settlement agreement with me.
 
 Having reviewed the statutory baseline under the Employment Rights Act 1996, I would like to clarify our position regarding the current package:
 
-1. Statutory Redundancy / Basic Entitlement: Based on my ${yearsNum} complete ${yearsNum === 1 ? 'year' : 'years'} of continuous service, my statutory floor is ${formatCurrency(redundancyAmount)}.
-2. Notice Pay (PILON): Under my contract and Section 86 of the Employment Rights Act 1996, my accrued notice entitlement is ${formatCurrency(pilonAmount)}.
-3. Total Statutory Baseline: Before considering any compensatory termination payment or waiver of potential claims, my statutory minimum entitlement totals ${formatCurrency(minFloor)}.
+${redundancyAmount > 0 ? `1. Statutory Redundancy: Based on my ${yearsNum} complete ${yearsNum === 1 ? 'year' : 'years'} of continuous service, my statutory redundancy baseline is ${formatCurrency(redundancyAmount)}.\n2. Notice Pay (PILON): Under my contract and Section 86 ERA 1996, my notice entitlement is ${formatCurrency(pilonAmount)}.\n3. Total Calculated Baseline: Before considering any compensatory termination payment or waiver of potential claims, my statutory baseline totals ${formatCurrency(minFloor)}.` : `1. Notice Pay (PILON): Under my contract and Section 86 ERA 1996, my notice entitlement is ${formatCurrency(pilonAmount)}.\n2. Total Calculated Baseline: Before considering any ex-gratia consideration or waiver of potential claims, my baseline totals ${formatCurrency(minFloor)}.`}
 
-The current offer presented is ${formatCurrency(offer)}. To reach an amicable and fair resolution that reflects my service and compensates for waiving my employment rights, I would request that the total settlement package is adjusted to ${formatCurrency(targetUplift)}.
+The current offer presented is ${formatCurrency(offer)}. To reach an amicable and constructive resolution that reflects my service and compensates for waiving my employment rights, I would request that the total settlement package is adjusted to ${formatCurrency(targetUplift)}.
 
-Additionally, in line with standard UK practice and Section 203(3) of the Employment Rights Act 1996, please confirm that the company will provide the standard legal fee contribution of £500 plus VAT for my independent solicitor review.
+Additionally, in line with standard UK practice and Section 203(3) of the Employment Rights Act 1996, please confirm that the company will provide an employer legal fee contribution (commonly £500 plus VAT) for my independent solicitor review.
 
 I look forward to your response and concluding this matter constructively.
 
@@ -1058,7 +1119,7 @@ Thank you for sending through the draft settlement agreement.
 
 Under Section 203(3) of the Employment Rights Act 1996, I am required to receive independent legal advice from an SRA-regulated solicitor before this agreement can become legally binding.
 
-Could you please confirm that the company will provide the standard employer legal fee contribution of £500 plus VAT, paid directly to my appointed solicitor upon completion of the agreement?
+Could you please confirm that the company will provide an employer legal fee contribution (commonly £500 plus VAT), paid directly to my appointed solicitor upon completion of the agreement?
 
 Once confirmed, I will instruct my solicitor to proceed with the review immediately.
 
@@ -1259,10 +1320,10 @@ function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offe
               taxTag={<Tag text="Fully taxable" color="red" />}
             />
             {dividerRow}
-            <Row label="Estimated statutory minimum" value={formatCurrency(result.minimum)} highlight />
-            <Row label="Typical negotiated low" value={formatCurrency(result.typicalLow)} dimmed />
+            <Row label="Calculated statutory baseline" value={formatCurrency(result.minimum)} highlight />
+            <Row label="Illustrative negotiation low" value={formatCurrency(result.typicalLow)} dimmed />
             <Row
-              label="Typical negotiated high"
+              label="Illustrative negotiation high"
               value={result.typicalHighUncapped ? 'Potentially uncapped' : formatCurrency(result.typicalHigh)}
               dimmed
             />
@@ -1298,6 +1359,9 @@ function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offe
       <div className="px-5 py-4 border-t border-rule text-[#8A93A3]">
         <p className="text-[12px] leading-[1.65] m-0">
           * The first £30,000 of genuine termination payments is tax-free under ITEPA 2003 s.403. Payment in lieu of notice (PILON, a lump sum paid instead of working your notice period) is always fully taxable regardless of how it is described in your agreement, under ITEPA 2003 s.402D.
+        </p>
+        <p className="text-[12px] mt-2 leading-[1.65] m-0">
+          * Accrued annual leave: In addition to notice and redundancy, any accrued but untaken statutory holiday pay must also be paid upon termination under the Working Time Regulations 1998 (reg. 14).
         </p>
         <p className="text-[12px] mt-2 leading-[1.65] m-0">
           Tax estimate uses {taxRatePct}% based on your salary. Your actual liability depends on your total income in this tax year.
@@ -1615,7 +1679,7 @@ function InputsSummaryPanel({
 const LEAD_FAQS = [
   {
     q: 'Is this genuinely free for me?',
-    a: 'Yes. UK law requires your employer to pay for your independent legal advice on any settlement agreement. The solicitor\'s fee is covered by your employer, not you. You will not be asked for payment at any point.',
+    a: 'In UK practice, your employer customarily contributes to your independent legal advice (commonly £350 to £750+ VAT, paid directly to the solicitor) so the settlement agreement satisfies Section 203(3) of the Employment Rights Act 1996. Where the advice is covered by the employer\'s contribution, you pay nothing out of pocket.',
   },
   {
     q: 'Will I be contacted by multiple firms?',
@@ -1623,15 +1687,15 @@ const LEAD_FAQS = [
   },
   {
     q: 'What if I have already signed?',
-    a: 'In most cases a solicitor can still review the agreement, particularly if it was signed under pressure or without adequate time to consider the terms. It is worth getting advice even at this stage.',
+    a: 'Once signed with independent legal certification, a settlement agreement is generally binding. However, a solicitor can review whether the statutory requirements were met, particularly if there was undue pressure or misrepresentation.',
   },
   {
     q: 'I am not sure I have a strong position. Should I still proceed?',
-    a: 'Yes. You do not need certainty to get advice. A solicitor will tell you where you stand, what the agreement means, and whether the terms are reasonable. That clarity costs you nothing.',
+    a: 'Yes. An independent solicitor can review the terms, explain what claims are being waived, and advise whether the proposed package is reasonable for your situation.',
   },
   {
     q: 'What if my situation does not fit the calculator?',
-    a: 'The calculator covers the most common scenarios. A solicitor can assess your full situation, including anything the calculator cannot account for, such as discrimination, whistleblowing, or complex bonus structures.',
+    a: 'The calculator covers standard statutory calculations and benchmarks. A qualified solicitor can assess complex circumstances such as whistleblowing, bonus structures, or specific discrimination claims.',
   },
 ]
 
@@ -1683,32 +1747,32 @@ function GetMatchedCTA({
 }) {
   const urgencyMap: Record<string, { badge: string; badgeColor: string; badgeBg: string; badgeBorder: string; heading: string; body: string; cta: string }> = {
     BELOW_MINIMUM: {
-      badge: 'Unlawful offer threshold',
+      badge: 'Offer below calculated baseline',
       badgeColor: '#A8341F', badgeBg: '#FBF0EE', badgeBorder: '#D9A99E',
-      heading: 'Protect your legal rights immediately.',
-      body: 'Your employer pays for your independent legal review under Section 203 of the Employment Rights Act 1996. Let an SRA-regulated solicitor review your agreement terms and advise on securing your full statutory entitlement at no cost to you.',
+      heading: 'Review your baseline before signing.',
+      body: 'Under Section 203 of the Employment Rights Act 1996, an agreement is only binding if you receive independent advice. Employers customarily contribute toward this cost. An SRA-regulated solicitor can examine whether the offer adequately covers your statutory entitlements.',
       cta: 'Match with a specialist solicitor',
     },
     BELOW_TYPICAL: {
       badge: 'Negotiable Range Detected',
       badgeColor: '#B5802A', badgeBg: '#FEFBF0', badgeBorder: '#E0CB94',
-      heading: 'Most employees leave money behind.',
-      body: 'Your offer is below standard market benchmarks. A specialist solicitor will review not just the financial figure, but reference clauses and covenants to secure a proper exit at no cost to you.',
+      heading: 'Explore potential negotiation points.',
+      body: 'Your offer sits below illustrative market benchmarks. A specialist solicitor can review financial terms, reference wording, and restrictive covenants to advise on your negotiation options.',
       cta: 'Match with a specialist solicitor',
     },
     WITHIN_RANGE: {
-      badge: 'Fair offer value',
+      badge: 'Within reference range',
       badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
-      heading: 'Ensure your contract terms are secure.',
-      body: 'While the financial figure aligns with standard ranges, settlement agreements contain strict warranties, post-termination restrictions, and legal waivers. Your employer covers the cost of your independent legal review.',
-      cta: 'Secure your free legal review',
+      heading: 'Ensure contract terms are balanced.',
+      body: 'While the financial figure aligns with standard ranges, settlement agreements include warranties, confidentiality restrictions, and legal waivers. Employers customarily contribute to the cost of your independent legal review.',
+      cta: 'Secure your independent legal review',
     },
     ABOVE_TYPICAL: {
-      badge: 'Strong offer value',
+      badge: 'Above reference range',
       badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
-      heading: 'Lock in your settlement terms.',
-      body: 'Your financial offer is excellent. A solicitor will ensure that the terms are watertight and fully compliant with SRA rules before you sign. The review is paid for entirely by your employer.',
-      cta: 'Secure your free legal review',
+      heading: 'Review terms before final sign-off.',
+      body: 'The financial figure is above standard benchmarks. An independent solicitor will ensure the non-financial covenants and tax allocations are properly structured before you sign. Employers customarily contribute toward this advice.',
+      cta: 'Secure your independent legal review',
     },
   }
 
@@ -1928,10 +1992,10 @@ function LocalSpecialistAvailabilityCard({
       <div className="pt-4 grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
         <div className="md:col-span-2 text-xs text-[#0B1F3A]/80 leading-relaxed">
           <p className="m-0 mb-2 font-medium text-[#0B1F3A]">
-            <strong>Section 203 ERA 1996 Mandate:</strong> Your settlement agreement cannot be finalized or signed without independent solicitor advice.
+            <strong>Section 203 ERA 1996 Requirement:</strong> To be legally binding, a settlement agreement waiving statutory claims requires independent advice from an insured solicitor or qualified adviser.
           </p>
           <p className="m-0 text-[#5B6577]">
-            Your employer pays the legal review fee directly (typically £500 to £1,500 + VAT). You pay £0 out-of-pocket for your statutory sign-off.
+            Employers customarily contribute toward this fee (commonly £350 to £750+ VAT, paid directly to your solicitor). Standard reviews covered by this contribution involve zero out-of-pocket cost to you.
           </p>
         </div>
 
@@ -2225,9 +2289,10 @@ function ResultsContent() {
                 <OfficialBenchmarkCard
                   reason={reason}
                   salary={salary}
-                  offer={isSimulated ? displayOffer : offer}
-                  result={displayResult ?? result}
-                  isDiscrimination={discrimination === 'yes' || discrimination === 'not_sure'}
+                  offer={offer}
+                  result={result}
+                  isDiscrimination={discrimination === 'yes'}
+                  totalMonths={totalMonths}
                 />
 
                 {/* Visual Chart - Dynamic stacked bar */}

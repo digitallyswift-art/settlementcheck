@@ -57,10 +57,10 @@ export async function POST(req: NextRequest) {
     const fmt = (n: number | null) => n != null ? `£${Math.round(n).toLocaleString('en-GB')}` : 'N/A'
 
     const verdictLabel: Record<string, string> = {
-      BELOW_MINIMUM: 'Below your legal minimum',
-      BELOW_TYPICAL: 'Below the typical range',
-      WITHIN_RANGE:  'Within the typical range',
-      ABOVE_TYPICAL: 'Above the typical range',
+      BELOW_MINIMUM: 'Below the notice and redundancy figures calculated',
+      BELOW_TYPICAL: 'Below the calculator reference range',
+      WITHIN_RANGE:  'Within the calculator reference range',
+      ABOVE_TYPICAL: 'Above the calculator reference range',
     }
     const verdictColor: Record<string, string> = {
       BELOW_MINIMUM: '#a8341f',

@@ -173,7 +173,7 @@ Consent Verified: Yes`,
     // ── Partner/Owner notification email ────────────────────────────────────
     if (targetEmail) {
       const verdictLabel: Record<string, string> = {
-        BELOW_MINIMUM: 'Below legal minimum',
+        BELOW_MINIMUM: 'Below notice + redundancy figures',
         BELOW_TYPICAL: 'Below typical range',
         WITHIN_RANGE:  'Within typical range',
         ABOVE_TYPICAL: 'Above typical range',
@@ -276,7 +276,7 @@ Consent Verified: Yes`,
         `Your inquiry has been sent to the specialist team at ${partnerFirmName}.`,
         'An employment solicitor will review your figures and contact you directly within 24 hours to discuss your options.',
         '',
-        'The advice is free. Under UK employment law, your employer is required to contribute towards your legal fees for independent advice on a settlement agreement.',
+        'Employers customarily contribute towards your legal fees (typically £350 to £750+ VAT) for independent legal advice under Section 203 ERA 1996.',
         '',
         '---',
         'SettlementCheck • United Kingdom • team@settlementcheck.co.uk',
@@ -298,7 +298,7 @@ Consent Verified: Yes`,
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">Hi ${first_name.trim()},</p>
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">Thank you for using the settlement agreement calculator. Your inquiry has been sent to the specialist team at <strong>${partnerFirmName}</strong>.</p>
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">An employment solicitor will review your figures and contact you directly within 24 hours to discuss your options.</p>
-            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">The advice is free. Under UK employment law, your employer is required to contribute towards your legal fees for independent advice on a settlement agreement.</p>
+            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">Under UK practice and Section 203 ERA 1996, employers customarily contribute towards your legal fees for independent advice on a settlement agreement.</p>
             <div style="background: #f9fafb; border-radius: 8px; padding: 16px;">
               <p style="color: #6b7280; font-size: 13px; margin: 0; line-height: 1.6;">SettlementCheck widget handles routing to SRA-regulated solicitors. We do not provide legal advice directly.</p>
             </div>

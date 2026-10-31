@@ -83,7 +83,7 @@ const UNFAIR_DISMISSAL_FAQS: FaqItem[] = [
   },
   {
     q: 'Do I need a solicitor to sign a settlement agreement?',
-    a: 'Yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is identified in the agreement. Your employer is required to contribute to that cost, typically between £350 and £750, which in most cases covers the full fee. The settlement agreement cannot validly waive your employment claims without that advice being in place.',
+    a: 'Yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is identified in the agreement. Employers customarily contribute to that cost, typically between £350 and £750, which often covers the full fee. The settlement agreement cannot validly waive your employment claims without that advice being in place.',
   },
   {
     q: 'What is ACAS early conciliation?',

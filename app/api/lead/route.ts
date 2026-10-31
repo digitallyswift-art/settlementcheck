@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
     const notificationEmail = process.env.NOTIFICATION_EMAIL
     if (notificationEmail) {
       const verdictLabel: Record<string, string> = {
-        BELOW_MINIMUM: 'Below legal minimum',
+        BELOW_MINIMUM: 'Below notice + redundancy figures',
         BELOW_TYPICAL: 'Below typical range',
         WITHIN_RANGE:  'Within typical range',
         ABOVE_TYPICAL: 'Above typical range',

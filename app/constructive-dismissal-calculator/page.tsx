@@ -87,7 +87,7 @@ const CONSTRUCTIVE_DISMISSAL_FAQS: FaqItem[] = [
   },
   {
     q: 'Do I need a solicitor to sign a settlement agreement?',
-    a: 'Yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is named in the agreement. Without that, the agreement cannot validly waive your right to bring a claim. Your employer is required to contribute to the legal fees, typically between £350 and £750, which in most cases covers the full cost. The advice is effectively free to you, and it is the only way the agreement is legally valid.',
+    a: 'Yes. Under ERA 1996 s.203, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured, SRA-regulated solicitor who is named in the agreement. Without that, the agreement cannot validly waive your right to bring a claim. Your employer customarily contributes to the legal fees, typically between £350 and £750, which often covers the full cost of standard advice. It is the legal mechanism required to make the waiver binding.',
   },
 ]
 

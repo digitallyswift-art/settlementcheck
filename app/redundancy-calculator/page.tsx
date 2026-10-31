@@ -79,7 +79,7 @@ const REDUNDANCY_FAQS: FaqItem[] = [
   },
   {
     q: 'Do I need a solicitor to sign a redundancy settlement agreement?',
-    a: 'Yes, if your employer is asking you to sign a settlement agreement. Under ERA 1996 s.203, a settlement agreement is only legally valid if you have received independent legal advice from a qualified, SRA-regulated solicitor who is named in the agreement. Importantly, your employer is required to contribute to the cost of that advice, typically between £350 and £750, which in most cases covers the full fee. The advice is free to you in practice. There is no reason to sign without it.',
+    a: 'Yes, if your employer is asking you to sign a settlement agreement. Under ERA 1996 s.203, a settlement agreement is only legally valid if you have received independent legal advice from a qualified, SRA-regulated solicitor who is named in the agreement. Importantly, employers customarily contribute to the cost of that advice, typically between £350 and £750, which often covers the full fee. This ensures you understand the terms before waiving statutory claims.',
   },
   {
     q: 'What counts as a week\'s pay for redundancy purposes?',
