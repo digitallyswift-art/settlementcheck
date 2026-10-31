@@ -29,6 +29,13 @@ export const metadata: Metadata = {
 
 const GUIDES = [
   {
+    href: '/guides/how-long-does-a-settlement-agreement-take/',
+    eyebrow: 'Timeline & Payouts',
+    title: 'How Long Does a Settlement Agreement Take? UK 2026 Timeline',
+    description: 'Offered a settlement agreement? Learn the full UK timeline, Acas 10-day consideration rule, solicitor certification speed, and bank payout dates.',
+    readTime: '8 min read',
+  },
+  {
     href: '/guides/settlement-agreement-reference/',
     eyebrow: 'Agreed References',
     title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',

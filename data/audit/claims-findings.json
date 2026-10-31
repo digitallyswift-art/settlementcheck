@@ -79,7 +79,7 @@
   {
     "id": "SC-E-CLM-008",
     "file": "app/guides/page.tsx",
-    "lineNumber": 125,
+    "lineNumber": 139,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payouts UK 2026',",
@@ -156,7 +156,7 @@
   {
     "id": "SC-E-CLM-015",
     "file": "app/sitemap/page.tsx",
-    "lineNumber": 184,
+    "lineNumber": 189,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payout in the UK',",

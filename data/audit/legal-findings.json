@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "SC-E-LEG-001",
+    "file": "app/guides/maternity-redundancy-settlement-agreement/page.tsx",
+    "lineNumber": 466,
+    "phrase": "severance pay",
+    "context": "All remaining weeks of your 39-week SMP entitlement. This cannot be absorbed into severance pay. It must be paid as a distinct line item sub",
+    "severity": "P1",
+    "issue": "Detected forbidden phrasing or US legal terminology \"severance pay\" violating SRA boundary or UK brand standards."
+  }
+]

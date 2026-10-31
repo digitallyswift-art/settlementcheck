@@ -66,6 +66,12 @@ const COPY_RULES: CopyRule[] = [
     guideline: 'Prescriptive legal instruction violates SRA boundary standards. Use descriptive phrasing (e.g. "Questions to consider with a solicitor", "Calculated illustrative negotiation range", "Offer is below the statutory baseline").',
   },
   {
+    name: 'UNQUALIFIED_TEN_DAY_RIGHT_DETECTED',
+    regex: /\b(legal right to 10 days|cannot withdraw the offer (?:for|within) 10 days)\b/i,
+    severity: 'P1',
+    guideline: 'Under English contract law (Routledge v Grant), employers can set earlier deadlines or revoke offers. ACAS 10 days is guidance only.',
+  },
+  {
     name: 'GENERIC_BUTTON_SUBMIT',
     regex: />\s*(Submit|Click Here)\s*</i,
     severity: 'P2',

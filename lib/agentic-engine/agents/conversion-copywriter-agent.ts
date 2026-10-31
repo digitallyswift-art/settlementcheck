@@ -54,9 +54,14 @@ export class ConversionCopywriterAgent {
       .replace(/\bdo not accept this offer\b/gi, 'offer is below the calculated statutory baseline')
       .replace(/\bdo not sign this offer\b/gi, 'consider reviewing the statutory baseline before signing')
       .replace(/\byour employer is (?:legally )?required to pay £\d+\b/gi, 'employers customarily contribute £350 to £750 + VAT')
-      .replace(/\bwithout prejudice proposal\b/gi, 'discussion agenda / summary of figures')
-      .replace(/\bwithout prejudice: settlement agreement proposal\b/gi, 'settlement agreement discussion - summary of figures')
-      .replace(/\byour employer cannot legally require you to waive\b/gi, 'under Section 203(3) ERA 1996, waiving employment rights requires independent legal advice');
+      .replace(/\bwithout prejudice proposal\b/gi, 'solicitor discussion agenda / summary of figures')
+      .replace(/\bwithout prejudice: settlement agreement proposal\b/gi, 'solicitor discussion agenda: key figures briefing')
+      .replace(/\byour employer cannot legally require you to waive\b/gi, 'under Section 203(3) ERA 1996, waiving employment rights requires independent legal advice')
+      // 5 Adversarial Invariants (Offer Revocation & s.111A Scope)
+      .replace(/\byou have a (?:legal )?right to 10 days\b/gi, 'ACAS Code 4 recommends a minimum of 10 calendar days, though employers may set specific deadlines')
+      .replace(/\byour employer cannot withdraw the offer (?:for|within) 10 days\b/gi, 'ACAS Code 4 recommends 10 calendar days, but employers can set deadlines or revoke offers prior to acceptance')
+      .replace(/\bsection 111a protects all conversations\b/gi, 'Section 111A ERA 1996 protects pre-termination discussions strictly for standard unfair dismissal')
+      .replace(/\bsend this (?:letter|proposal|demand) to your employer\b/gi, 'review this discussion agenda with an independent solicitor before sending');
 
     return sanitized;
   }

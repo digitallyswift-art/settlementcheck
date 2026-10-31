@@ -102,8 +102,8 @@ function ThreeTierFrameworkHeader() {
             1
           </span>
           <div>
-            <strong className="text-[#0B1F3A] block text-[12px]">Tier 1: Statutory Entitlements</strong>
-            <span className="text-[11px] leading-tight block text-[#5B6577]">Pure statutory calculations (ERA 1996 s.86 notice &amp; s.162 redundancy).</span>
+            <strong className="text-[#0B1F3A] block text-[12px]">Tier 1: Statutory Baselines (Subject to Eligibility)</strong>
+            <span className="text-[11px] leading-tight block text-[#5B6577]">Calculated statutory baselines (ERA 1996 s.86 notice &amp; s.162 redundancy, subject to qualifying service &amp; s.141 criteria).</span>
           </div>
         </div>
         <div className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-[#E2DCCE]">
@@ -1179,7 +1179,7 @@ function NegotiationDraftsman({
                 <div className="bg-white p-3 rounded border border-[#E2DCCE]">
                   <span className="text-[11px] font-bold text-[#D9603B] uppercase tracking-wider block mb-1">1. Await First Move</span>
                   <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
-                    Allow your employer to propose terms or initiate a protected conversation (ERA 1996 s.111A) so they set the opening benchmark.
+                    Allow your employer to set the opening terms. Section 111A ERA 1996 protects pre-termination discussions strictly for standard unfair dismissal claims.
                   </p>
                 </div>
                 <div className="bg-white p-3 rounded border border-[#E2DCCE]">
@@ -1189,9 +1189,9 @@ function NegotiationDraftsman({
                   </p>
                 </div>
                 <div className="bg-white p-3 rounded border border-[#E2DCCE]">
-                  <span className="text-[11px] font-bold text-[#D9603B] uppercase tracking-wider block mb-1">3. Take 10 Days</span>
+                  <span className="text-[11px] font-bold text-[#D9603B] uppercase tracking-wider block mb-1">3. Consider Deadlines &amp; ACAS Guidance</span>
                   <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
-                    ACAS Code 4 recommends at least 10 calendar days to review terms. You do not need to sign or agree to anything on the day.
+                    ACAS Code 4 recommends 10 calendar days to consider terms, but employers can set earlier deadlines or withdraw offers before acceptance. Consult a solicitor promptly.
                   </p>
                 </div>
               </div>
@@ -1272,11 +1272,11 @@ Kind regards,
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="bg-[#D9603B] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
-              Discussion Summary
+              Solicitor Briefing Agenda
             </span>
-            <span className="text-[#8A93A3] text-[11px] font-semibold">Key Baseline Figures</span>
+            <span className="text-[#8A93A3] text-[11px] font-semibold">Structured Case Figures</span>
           </div>
-          <h3 className="sc-h3 text-[#0B1F3A] m-0">Key Figures Summary for Your Solicitor or Discussion</h3>
+          <h3 className="sc-h3 text-[#0B1F3A] m-0">Solicitor Discussion Agenda: Key Figures Briefing</h3>
         </div>
         <span
           className="text-[#0B1F3A] font-bold text-[18px] transition-transform duration-200"
@@ -1289,8 +1289,19 @@ Kind regards,
       {open && (
         <div className="p-5 md:p-6 flex flex-col gap-4">
           <p className="text-[14px] text-[#5B6577] m-0 leading-relaxed">
-            When reviewing an agreement with HR or your appointed solicitor, keeping figures clear and factual avoids misunderstandings. Use this structured summary to present your service calculations objectively.
+            When reviewing an agreement, keeping figures clear and factual avoids misunderstandings. Use this structured summary as an objective briefing agenda for your appointed SRA-regulated solicitor.
           </p>
+
+          {/* Privilege Notice Alert */}
+          <div className="bg-[#FFF8F6] border border-[#E08A75] rounded-lg p-3.5 text-[12px] text-[#0B1F3A] flex items-start gap-2.5">
+            <span className="text-[16px] flex-shrink-0 leading-none">⚠️</span>
+            <div>
+              <strong className="text-[#A8341F] block mb-0.5">Important Privilege Notice: Do not send unreviewed financial proposals directly to HR</strong>
+              <span className="text-[#5B6577] leading-relaxed block">
+                In employment disputes, written communications sent without independent legal review can inadvertently compromise your negotiating position or fail to qualify for legal privilege. Use this structured agenda when instructing your independent SRA-regulated solicitor.
+              </span>
+            </div>
+          </div>
 
           {/* Template Switcher */}
           <div className="flex gap-2 p-1 bg-[#F5F1E9] rounded-lg border border-[#E2DCCE] w-fit">
@@ -1351,7 +1362,7 @@ Kind regards,
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                   </svg>
-                  <span>Copy discussion summary</span>
+                  <span>Copy briefing agenda for solicitor</span>
                 </>
               )}
             </button>
@@ -1362,7 +1373,7 @@ Kind regards,
               onClick={onGetMatched}
               className="px-4 py-2.5 rounded-lg text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#c25230] transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
             >
-              <span>Have a solicitor handle negotiations for you →</span>
+              <span>Instruct a solicitor to negotiate for you →</span>
             </button>
           </div>
 

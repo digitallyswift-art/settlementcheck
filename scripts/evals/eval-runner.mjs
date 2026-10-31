@@ -288,6 +288,21 @@ for (const f of prodFiles) {
 }
 assert(!foundPrescriptive, `Zero prescriptive legal instruction or pseudo-legal templates in production components [found: ${prescriptiveLocation}]`);
 
+// Test 6F: Zero unqualified 10-day rights or direct-send litigation traps (Partner Adversarial Invariants)
+let foundAdversarialTrap = false;
+let trapLocation = '';
+const reAdversarialTrap = /\b(legal right to 10 days|cannot withdraw the offer (?:for|within) 10 days|send this (?:letter|proposal) to (?:your employer|hr))\b/i;
+
+for (const f of prodFiles) {
+  const content = fs.readFileSync(f, 'utf8');
+  if (reAdversarialTrap.test(content)) {
+    foundAdversarialTrap = true;
+    trapLocation = f;
+    break;
+  }
+}
+assert(!foundAdversarialTrap, `Zero unqualified 10-day rights or direct-send litigation traps across production components [found: ${trapLocation}]`);
+
 // Summary Report
 console.log('\n====================================================');
 console.log(` Eval Results: ${passedTests}/${totalTests} Passed (${Math.round((passedTests / totalTests) * 100)}%)`);

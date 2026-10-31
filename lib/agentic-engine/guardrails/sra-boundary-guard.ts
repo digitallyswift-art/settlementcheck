@@ -23,9 +23,14 @@ const FORBIDDEN_REPLACEMENTS: Array<[RegExp, string]> = [
   [/\bdo not accept this offer\b/gi, 'this offer is below the calculated statutory baseline'],
   [/\bdo not sign this offer\b/gi, 'consider reviewing the statutory baseline before signing'],
   [/\byour employer is (?:legally )?required to pay £\d+\b/gi, 'employers customarily contribute £350 to £750 + VAT'],
-  [/\bwithout prejudice proposal\b/gi, 'discussion agenda / summary of figures'],
-  [/\bwithout prejudice: settlement agreement proposal\b/gi, 'settlement agreement discussion - summary of figures'],
+  [/\bwithout prejudice proposal\b/gi, 'solicitor discussion agenda / summary of figures'],
+  [/\bwithout prejudice: settlement agreement proposal\b/gi, 'solicitor discussion agenda: key figures briefing'],
   [/\byour employer cannot legally require you to waive\b/gi, 'under Section 203(3) ERA 1996, waiving employment rights requires independent legal advice'],
+  // 5 Adversarial Invariants (Routledge v Grant & s.111A Scope)
+  [/\byou have a (?:legal )?right to 10 days\b/gi, 'ACAS Code 4 recommends a minimum of 10 calendar days, though employers may set specific deadlines'],
+  [/\byour employer cannot withdraw the offer (?:for|within) 10 days\b/gi, 'ACAS Code 4 recommends 10 calendar days, but employers can set deadlines or revoke offers prior to acceptance'],
+  [/\bsection 111a protects all conversations\b/gi, 'Section 111A ERA 1996 protects pre-termination discussions strictly for standard unfair dismissal'],
+  [/\bsend this (?:letter|proposal|demand) to your employer\b/gi, 'review this discussion agenda with an independent solicitor before sending'],
 ];
 
 export function sanitizeAdvicePhrasing(text: string): string {

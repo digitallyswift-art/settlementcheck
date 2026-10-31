@@ -38,16 +38,22 @@ The reader is an employee who has just received a settlement agreement or redund
    - Maximum 2 to 3 sentences per paragraph block.
 7. **Legal Boundary**:
    - **Never provide legal advice**. Present objective statutory calculations and commercial ranges. Independent advice is reserved for SRA-regulated solicitors.
-8. **Prescriptive vs Descriptive Rule (SRA Rule 5 & Unauthorised Practice Prevention)**:
+8. **Prescriptive vs Descriptive Rule & 5 Adversarial Invariants (SRA Rule 5 & Unauthorised Practice Prevention)**:
    - **Never tell the user what to do, demand, sign, reject, or say.** SettlementCheck is an informational calculator and introducer platform, not an authorised law firm or legal representative.
    - **Always describe what the statutory baseline calculates to, what public precedents show, and what questions to discuss with an independent solicitor.**
    - **Master Contrast Matrix**:
-     - ❌ *"What to say to your employer"* -> ✅ *"Questions to consider with a solicitor"* (or *"Key Figures Summary for Your Solicitor or Discussion"*)
+     - ❌ *"What to say to your employer"* -> ✅ *"Questions to consider with a solicitor"* (or *"Solicitor Discussion Agenda: Key Figures Briefing"*)
      - ❌ *"You should ask for £X"* -> ✅ *"Calculated illustrative negotiation range: £X"*
      - ❌ *"The current offer is £0"* -> ✅ *"No employer offer recorded"* (strictly suppress negotiation templates when offer is £0)
      - ❌ *"Do not accept this offer"* / *"Do not sign"* -> ✅ *"Offer is below the calculated statutory baseline"*
      - ❌ *"Your employer is required to pay £500"* -> ✅ *"Employers customarily contribute £350 to £750 + VAT towards independent legal fees"*
-     - ❌ *"Without Prejudice Proposal"* -> ✅ *"Discussion Agenda / Summary of Figures"*
+     - ❌ *"Without Prejudice Proposal"* -> ✅ *"Solicitor Discussion Agenda / Summary of Figures"*
+   - **The 5 Adversarial Invariants**:
+     1. *Offer Revocation & Deadlines (Routledge v Grant)*: Never state that employees have an unconditional right to 10 days. Clarify that ACAS Code 4 recommends 10 calendar days, but employers can set binding deadlines or withdraw offers prior to acceptance.
+     2. *Section 111A Scope Limitation*: Never cite Section 111A without clarifying that confidentiality protects standard unfair dismissal only, excluding discrimination, whistleblowing, or breach of contract.
+     3. *Legal Privilege Protection*: Never encourage unassisted employees to send written settlement demands directly to HR. Always frame drafted text as an agenda for the instructed solicitor to prevent waiver of privilege.
+     4. *Statutory Eligibility (ERA 1996 s.141 & Misconduct)*: Always caveat Tier 1 baselines as subject to qualifying continuous service, absence of gross misconduct, and s.141 suitable alternative employment offers.
+     5. *SRA Rule 5 Introducer Neutrality*: Maintain strict separation between deterministic statutory arithmetic and qualitative legal counsel.
    - **4-Part Descriptive Framing Formula**:
      1. *Statute*: "Under Section 86 of the Employment Rights Act 1996..."
      2. *Calculation*: "...statutory notice calculates to £11,923 based on length of continuous service."
