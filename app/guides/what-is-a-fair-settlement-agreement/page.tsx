@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: 'How long do I have to decide on a settlement agreement?',
-    a: 'Once your employer provides the draft agreement, you have a minimum of 10 calendar days to review it and take independent legal advice. This is standard UK employment law practice and is required for the agreement to be legally binding under ERA 1996 s.203. Your employer cannot require you to sign before this period expires. A specialist solicitor can typically review and advise within 3 to 5 days, leaving time to negotiate if needed.',
+    a: 'Under Paragraph 12 of the ACAS Code of Practice 4 on Settlement Agreements, ACAS recommends a minimum of 10 calendar days as general guidance to review a written draft agreement and take independent legal advice. However, the 10-day guideline is not a statutory condition of validity under ERA 1996 s.203(3), and under English contract law (Routledge v Grant) an employer may set binding deadlines or withdraw an unaccepted offer before acceptance. Never allow an employer\'s deadline to pass without seeking legal advice.',
   },
   {
     q: 'Does a settlement agreement stop me claiming discrimination?',
@@ -186,7 +186,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
 
             <ReviewCallout
               title="Already holding a draft agreement?"
-              description="Do not sign until you check your clauses. Paste your terms to check your legal fee contribution, verify £30,000 tax exemption rules, and benchmark your payout against 2026 tribunal awards."
+              description="Check your draft clauses before consulting your solicitor. Paste your terms to review the customary legal fee contribution, verify £30,000 tax exemption rules, and compare your payout against 2026 tribunal awards."
               ctaText="Check my draft clauses →"
               badge="Confidential Clause Checker"
             />
@@ -229,9 +229,9 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             </p>
 
             {/* Statutory floor */}
-            <h3 className="text-base font-semibold text-ink mb-3">The statutory floor: your minimum legal entitlements</h3>
+            <h3 className="text-base font-semibold text-ink mb-3">Calculated statutory baselines (subject to eligibility)</h3>
             <p className="sc-body mb-4">
-              By law, you are entitled to statutory redundancy pay (if applicable), notice pay, and accrued holiday pay. The statutory floor is not negotiable. It is yours by right. Here is a worked example:
+              Depending on your circumstances, your baseline comprises statutory redundancy pay (subject to eligibility under s.141 ERA 1996 regarding suitable alternative employment), notice pay (subject to absence of summary dismissal for gross misconduct under <em>Boston Deep Sea Fishing v Ansell</em>), and accrued untaken holiday pay. Here is a worked example:
             </p>
             <div className="rounded-xl border border-rule bg-paper p-5 mb-6">
               <p className="text-sm font-semibold text-ink mb-3">Example: Sarah, age 38, 8 years service, earning £32,000 per year (£615/week)</p>
@@ -322,9 +322,9 @@ export default function WhatIsAFairSettlementAgreementGuide() {
         {/* How to calculate the statutory minimum */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">How to calculate the statutory minimum your employer must pay</h2>
+            <h2 className="sc-section-h2 mb-4">How to calculate your statutory redundancy baseline (subject to eligibility)</h2>
             <p className="sc-body mb-6">
-              Statutory redundancy is calculated in three steps. This is the figure your employer cannot legally fall below.
+              Statutory redundancy is calculated in three steps (subject to 2 years&apos; continuous service and eligibility under s.141 ERA 1996).
             </p>
             <ol className="flex flex-col gap-6">
               {[
@@ -407,7 +407,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             <ul className="flex flex-col gap-4">
               {[
                 'The offer equals your statutory entitlement exactly. If redundancy, notice, and holiday add up to the same figure as the settlement, your employer has offered you nothing to settle. They have calculated what they owe you by law and added zero.',
-                'You were given fewer than 10 days to decide. UK employment law practice requires a minimum of 10 calendar days from when the draft is presented. A shorter deadline is a pressure tactic, not a legal constraint. If you are being rushed, the employer is protecting themselves, not being fair.',
+                'You were given fewer than 10 days to decide. ACAS Code of Practice 4 (para 12) recommends a minimum of 10 calendar days as general guidance from when the written draft is presented, although an employer can set shorter contractual deadlines or revoke an unaccepted offer at common law (Routledge v Grant). Never let an employer\'s deadline expire without consulting a solicitor.',
                 'The offer contains no itemised breakdown. A fair offer lists redundancy, notice, holiday, and any uplift as separate figures. A single lump sum with no detail makes it impossible to verify that all components are present and correct.',
                 'There is no mention of a potential claim, but the circumstances are unclear. If your dismissal involved disputed reasons, unexplained selection, or events shortly after you raised a concern, a fair agreement names those potential claims explicitly. Silence on a possible claim does not mean you have waived it.',
                 'Your employer said the offer is final in the first communication. A "final offer" on day one is a negotiating position. In practice, employers frequently have room to move. The statement is designed to discourage you from pushing back, not to describe an actual ceiling.',

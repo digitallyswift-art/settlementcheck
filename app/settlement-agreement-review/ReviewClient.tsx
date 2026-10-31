@@ -130,16 +130,16 @@ function ReviewBenchmarkCard({
         >
           {isBelowMedian && (
             <p className="m-0">
-              <strong>⚖️ Below Official MoJ Median:</strong> Your employer&apos;s draft ex-gratia offer of{' '}
+              <strong>⚖️ Below Official MoJ Median:</strong> Your employer&apos;s recorded ex-gratia figure of{' '}
               <strong>{formatGBP(offer)}</strong> is{' '}
               <strong>{formatGBP(benchmark.medianTribunalAward - offer)} below the Ministry of Justice median award</strong>{' '}
-              ({formatGBP(benchmark.medianTribunalAward)}) for this complaint type. This provides strong factual negotiation standing to request an uplift before signing.
+              ({formatGBP(benchmark.medianTribunalAward)}) for this complaint category. You can explore this comparison with your independent solicitor during your Section 203(3) ERA 1996 consultation.
             </p>
           )}
           {isAboveMedian && (
             <p className="m-0">
-              <strong>✓ Above Official MoJ Median:</strong> Your employer&apos;s draft ex-gratia offer of{' '}
-              <strong>{formatGBP(offer)}</strong> exceeds the MoJ median tribunal award ({formatGBP(benchmark.medianTribunalAward)}) for this dispute category. Your primary negotiation focus should be on raising employer legal fee contributions to £750 to £1,000 + VAT and securing a positive, agreed reference.
+              <strong>✓ Above Official MoJ Median:</strong> Your employer&apos;s recorded ex-gratia figure of{' '}
+              <strong>{formatGBP(offer)}</strong> exceeds the MoJ median tribunal award ({formatGBP(benchmark.medianTribunalAward)}) for this category. Points commonly discussed with an instructed solicitor include confirming the customary legal fee contribution (£350 to £750 + VAT) and attaching an agreed factual reference schedule.
             </p>
           )}
         </div>
@@ -150,7 +150,7 @@ function ReviewBenchmarkCard({
         <div className="flex items-start gap-2">
           <span className="text-ink font-bold text-sm leading-none mt-0.5">§</span>
           <span className="leading-snug">
-            <strong className="text-ink">Mandatory Legal Review:</strong> Under Section 203(3) Employment Rights Act 1996, this settlement is legally void without independent solicitor certification. Standard UK employer contribution is <strong>£500 to £1,000+ VAT</strong> paid directly to your solicitor.
+            <strong className="text-ink">Statutory Validity Requirement:</strong> Under Section 203(3) Employment Rights Act 1996, a settlement agreement is only binding once certified by an independent adviser. Employers customarily contribute <strong>£350 to £750 + VAT</strong> toward independent legal advice as a commercial term of the agreement.
           </span>
         </div>
         <a
@@ -203,7 +203,7 @@ export default function ReviewClient() {
   const steps = [
     'Parsing contractual clauses, financial compensation, and dispute context...',
     'Verifying statutory caps (£751/wk), £30k tax exemption (ITEPA 2003 s.403), and MoJ tribunal tables...',
-    'Synthesizing tactical negotiation points, counter-offer strategy, and solicitor fee coverage...',
+    'Preparing Solicitor Discussion Agenda, illustrative valuation range, and clause briefing...',
   ]
 
   const handleUseSample = () => {
@@ -575,10 +575,10 @@ export default function ReviewClient() {
               ))}
             </div>
 
-            {/* Tactical Counter-Offer & Negotiation Points */}
+            {/* Solicitor Discussion Agenda & Illustrative Range */}
             <div className="bg-paper-2 border border-rule rounded-xl p-5 sm:p-6 mb-6">
               <h3 className="text-base font-serif font-bold text-ink mb-3">
-                Tactical Negotiation Action Points
+                Solicitor Discussion Agenda: Key Figures &amp; Clauses Briefing
               </h3>
               <ul className="space-y-2 mb-4">
                 {report.tacticalNegotiationPoints.map((point, idx) => (
@@ -593,7 +593,7 @@ export default function ReviewClient() {
                 <div className="mt-4 pt-4 border-t border-rule flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <span className="text-xs text-muted uppercase tracking-wider block">
-                      Target Settlement Range
+                      Calculated Illustrative Negotiation Range
                     </span>
                     <span className="text-xl font-bold text-ink font-serif">
                       {formatGBP(report.recommendedCounterOffer.suggestedExGratiaLow)} – {formatGBP(report.recommendedCounterOffer.suggestedExGratiaHigh)}
@@ -601,7 +601,7 @@ export default function ReviewClient() {
                   </div>
                   <div>
                     <span className="text-xs text-muted uppercase tracking-wider block">
-                      Recommended Legal Fee Target
+                      Customary Legal Fee Contribution
                     </span>
                     <span className="text-lg font-bold text-ink">
                       £{report.recommendedCounterOffer.recommendedLegalFeeContribution} + VAT
@@ -615,10 +615,10 @@ export default function ReviewClient() {
             <div className="pt-6 border-t border-rule space-y-6">
               <div className="border-b border-rule pb-2">
                 <span className="text-xs font-mono uppercase tracking-wider text-coral font-semibold block mb-0.5">
-                  Statutory Protection &amp; Negotiation Shield Tools
+                  Statutory Timeline &amp; Solicitor Briefing Tools
                 </span>
                 <h3 className="text-lg font-serif font-bold text-ink">
-                  Acas Consideration Watchdog, Clarification Generator &amp; Covenant Scanner
+                  Acas Consideration Watchdog, Solicitor Intake Agenda &amp; Covenant Scanner
                 </h3>
               </div>
               <AcasWatchdog />
@@ -632,13 +632,13 @@ export default function ReviewClient() {
             <div className="bg-ink text-paper p-6 sm:p-8 rounded-xl space-y-4">
               <div className="space-y-2">
                 <span className="text-xs font-mono uppercase tracking-wider text-coral font-semibold block">
-                  Mandatory Legal Step • 100% Employer Funded
+                  Statutory Requirement • Customary Employer Fee Contribution
                 </span>
                 <h4 className="text-xl sm:text-2xl font-serif font-bold text-white">
-                  Have an SRA-Regulated Employment Solicitor Sign Your Agreement
+                  Have an SRA-Regulated Employment Solicitor Review Your Agreement
                 </h4>
                 <p className="text-xs sm:text-sm text-paper opacity-90 max-w-2xl leading-relaxed">
-                  By UK law (Employment Rights Act 1996 s.203), your settlement agreement is only legally valid once signed off by an independent qualified solicitor. Your employer pays the solicitor fees directly under HMRC rules.
+                  Under UK law (Employment Rights Act 1996 s.203(3)), a settlement agreement is only legally binding once certified by an independent adviser. Employers customarily contribute £350 to £750 + VAT toward your solicitor&apos;s fees as a commercial term of the agreement.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 pt-3">

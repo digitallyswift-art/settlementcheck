@@ -131,21 +131,21 @@ function runVerifierAgent(terms: ExtractedAgreementTerms): { checks: StatutoryAu
     checks.push({
       item: 'Employer Legal Fee Contribution',
       status: 'critical',
-      detail: 'No employer legal fee contribution is specified. For a settlement agreement to be legally binding, you MUST receive advice from an independent qualified solicitor (ERA 1996 s.203). Employers standardly contribute £500 to £1,500 + VAT.',
+      detail: 'No employer legal fee contribution is specified. For a settlement agreement to be legally binding, you must receive advice from an independent qualified solicitor (ERA 1996 s.203). Employers customarily contribute £350 to £750 + VAT as a commercial term of the agreement.',
       governingLegislation: 'Employment Rights Act 1996 s.203(3)',
     });
-  } else if (legalFee < 500) {
+  } else if (legalFee < 350) {
     checks.push({
-      item: 'Employer Legal Fee Contribution Below Standard',
+      item: 'Employer Legal Fee Contribution Below Customary Range',
       status: 'warning',
-      detail: `The employer offer of £${legalFee} towards legal fees is below the standard market contribution of £500 + VAT. You should negotiate this up to avoid out-of-pocket costs.`,
-      governingLegislation: 'SRA Standard Settlement Practice',
+      detail: `The recorded employer contribution of £${legalFee} towards legal fees is below the customary UK commercial contribution range of £350 to £750 + VAT. This can be discussed with your instructed solicitor.`,
+      governingLegislation: 'Employment Rights Act 1996 s.203(3)',
     });
   } else {
     checks.push({
       item: 'Employer Legal Fee Contribution',
       status: 'passed',
-      detail: `The employer contribution of £${legalFee} + VAT meets standard UK benchmark levels for independent solicitor review.`,
+      detail: `The employer contribution of £${legalFee} + VAT aligns with customary UK commercial practice for independent solicitor review.`,
       governingLegislation: 'Employment Rights Act 1996 s.203(3)',
     });
   }
@@ -155,7 +155,7 @@ function runVerifierAgent(terms: ExtractedAgreementTerms): { checks: StatutoryAu
     checks.push({
       item: 'Accrued Pension Rights Waiver',
       status: 'critical',
-      detail: 'The agreement appears to include a waiver of accrued pension rights. Accrued statutory and contractual pension entitlements should never be signed away in standard settlement compromises.',
+      detail: 'The agreement appears to reference a waiver of accrued pension rights. Independent solicitors customarily review pension clauses carefully to ensure accrued statutory and contractual pension entitlements are preserved.',
       governingLegislation: 'Pensions Act 1995 / ERA 1996',
     });
   }
@@ -164,7 +164,7 @@ function runVerifierAgent(terms: ExtractedAgreementTerms): { checks: StatutoryAu
     checks.push({
       item: 'Future Personal Injury Waiver',
       status: 'warning',
-      detail: 'Waivers of unknown future personal injury claims (or latent occupational diseases) should be expressly excluded from the settlement scope.',
+      detail: 'Waivers of unknown future personal injury claims (or latent occupational diseases) are commonly flagged for review with an independent solicitor so appropriate carve-outs can be considered.',
       governingLegislation: 'BCCI v Ali [2001] UKHL 8',
     });
   }
@@ -182,10 +182,10 @@ function runVerifierAgent(terms: ExtractedAgreementTerms): { checks: StatutoryAu
 
     if (calculationSummary.statutoryMinimum > (terms.exGratiaAmount || 0)) {
       checks.push({
-        item: 'Statutory Minimum Floor',
+        item: 'Calculated Statutory Baseline (Subject to Eligibility)',
         status: 'critical',
-        detail: `The offer appears below your statutory redundancy / basic award minimum floor of £${calculationSummary.statutoryMinimum.toLocaleString('en-GB')}.`,
-        governingLegislation: 'Employment Rights Act 1996 s.162',
+        detail: `The recorded offer is below the calculated statutory baseline of £${calculationSummary.statutoryMinimum.toLocaleString('en-GB')} (subject to eligibility under ERA 1996 s.141 and absence of gross misconduct).`,
+        governingLegislation: 'Employment Rights Act 1996 s.141 & s.162',
       });
     }
   }
@@ -194,7 +194,7 @@ function runVerifierAgent(terms: ExtractedAgreementTerms): { checks: StatutoryAu
 }
 
 /**
- * Agent 3: Tactical Strategy & Negotiation Coach
+ * Agent 3: Solicitor Discussion Agenda & Clause Briefing Analyst
  */
 async function runStrategyAgent(
   terms: ExtractedAgreementTerms,
@@ -202,8 +202,8 @@ async function runStrategyAgent(
   calculationSummary?: any,
 ): Promise<{ tacticalNegotiationPoints: string[]; recommendedCounterOffer: AuditReport['recommendedCounterOffer'] }> {
   const prompt = `
-You are the lead UK Employment Negotiation Strategist for SettlementCheck.
-Review the extracted terms and statutory verification checks for an employee's settlement agreement.
+You are a UK Employment Statutory & Clause Information Analyst for SettlementCheck.
+Review the extracted terms and statutory verification checks for an employee's draft settlement agreement.
 
 Extracted Terms:
 ${JSON.stringify(terms, null, 2)}
@@ -214,9 +214,10 @@ ${JSON.stringify(checks, null, 2)}
 Calculation Floor / Range:
 ${JSON.stringify(calculationSummary || {}, null, 2)}
 
-Provide actionable, assertive, yet professional negotiation tactics in plain UK English.
+Provide objective, strictly descriptive points for the employee to discuss with their independent SRA-regulated solicitor in plain UK English.
+NEVER give prescriptive legal advice or use phrases like "You should ask for", "Do not sign", or "Demand".
 NEVER use US legal terminology like "severance", "at-will", "lawyer", or "attorney". Always reference an SRA-regulated solicitor.
-Emphasize that the employer pays the legal fees.
+Note that employers customarily contribute £350 to £750 + VAT toward legal fees as a commercial term under s.203(3) ERA 1996.
 
 Return a valid JSON object matching:
 {
@@ -229,14 +230,14 @@ Return a valid JSON object matching:
     "suggestedExGratiaLow": number,
     "suggestedExGratiaHigh": number,
     "recommendedLegalFeeContribution": number,
-    "keyClauseAmendments": ["amendment 1", "amendment 2"]
+    "keyClauseAmendments": ["clause topic 1", "clause topic 2"]
   }
 }
 `;
 
   const response = await callAI({
     tier: 'reasoning',
-    systemPrompt: 'You are an elite UK employment law negotiation coach. You strictly follow UK legal terminology and output valid JSON.',
+    systemPrompt: 'You are an objective UK employment statutory and clause information analyst. You strictly follow UK legal terminology, never provide prescriptive legal advice, and output valid JSON.',
     messages: [{ role: 'user', content: prompt }],
     jsonMode: true,
   });
@@ -245,17 +246,17 @@ Return a valid JSON object matching:
 
   return {
     tacticalNegotiationPoints: data.tacticalNegotiationPoints || [
-      'Request that the employer raise the legal fee contribution to at least £750 + VAT to ensure complete coverage by an independent SRA-regulated solicitor.',
-      'Ensure the reference clause provides an agreed standard reference with explicit non-derogatory confidentiality obligations on both parties.',
-      'Separate Notice Pay (PILON) from the tax-free ex-gratia compensation to protect the £30,000 exemption under ITEPA 2003 s.403.',
+      'Discuss with your instructed solicitor whether the employer will align the legal fee contribution with the customary £350 to £750 + VAT commercial range under s.203(3) ERA 1996.',
+      'Ask your solicitor to review whether an agreed factual reference schedule and mutual non-derogatory obligations are included.',
+      'Verify with your solicitor that Notice Pay (PILON / PENP under s.402D ITEPA 2003) is clearly separated from the ex-gratia termination sum under s.403 ITEPA 2003.',
     ],
     recommendedCounterOffer: data.recommendedCounterOffer || {
       suggestedExGratiaLow: calculationSummary?.typicalRange?.low || (terms.exGratiaAmount ? Math.round(terms.exGratiaAmount * 1.25) : 5000),
       suggestedExGratiaHigh: calculationSummary?.typicalRange?.high || (terms.exGratiaAmount ? Math.round(terms.exGratiaAmount * 1.6) : 12000),
-      recommendedLegalFeeContribution: Math.max(750, (terms.legalFeeContribution || 0) + 250),
+      recommendedLegalFeeContribution: Math.max(500, (terms.legalFeeContribution || 0)),
       keyClauseAmendments: [
-        'Add mutual non-derogatory undertaking preventing senior management from disparaging the employee.',
-        'Exclude unknown personal injury and accrued statutory pension claims from general waiver.',
+        'Explore mutual non-derogatory undertakings with your independent solicitor.',
+        'Confirm with your solicitor that unknown future personal injury and accrued statutory pension rights are excluded from the general waiver.',
       ],
     },
   };

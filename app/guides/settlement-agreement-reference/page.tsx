@@ -420,7 +420,7 @@ export default function SettlementAgreementReferenceGuide() {
             {/* REVIEW CALLOUT */}
             <ReviewCallout
               title="Have you received a draft settlement agreement?"
-              description="Do not sign until an independent solicitor reviews your reference schedule, non-disparagement terms, and financial settlement. Your employer covers the legal fees."
+              description="Have your independent solicitor review your reference schedule, non-disparagement terms, and financial settlement before signing. Employers customarily contribute toward the legal fees."
               ctaText="Check draft agreement clauses →"
               badge="Confidential Clause Checker"
             />

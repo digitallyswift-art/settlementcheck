@@ -33,43 +33,35 @@ export function WithoutPrejudiceClarification({
   const getTopicBody = (t: ClarificationTopic): string => {
     switch (t) {
       case 'legal_fee':
-        return `Regarding Clause [Legal Fees]: The draft provides for an employer contribution of [£350/£500] + VAT towards independent legal fees. To enable comprehensive review and execution by an independent SRA-regulated employment solicitor (as mandated by Section 203(3) of the Employment Rights Act 1996), I would like to explore whether the employer would be willing to increase this contribution to £750 - £1,000 + VAT. This will ensure both parties can finalize the documentation efficiently without procedural delay.`
+        return `1. Legal Fee Contribution Clause: The draft records an employer contribution of [£350/£500] + VAT toward independent legal advice. Explore with your instructed solicitor whether the employer will agree to increase this commercial contribution to £500 - £750 + VAT so both parties can finalise the s.203(3) ERA 1996 review.`
 
       case 'ex_gratia_benchmark':
-        return `Regarding Clause [Ex-Gratia Termination Payment]: The proposed financial compensation of ${formattedAmount} is currently being reviewed in the context of official Ministry of Justice employment tribunal benchmarks and statutory notice entitlements. Could you clarify whether the employer would be open to an upward adjustment in the ex-gratia component to better reflect the circumstances and ensure a swift, mutually agreed conclusion?`
+        return `2. Ex-Gratia Termination Payment Review: The recorded figure of ${formattedAmount} is being reviewed alongside statutory notice and redundancy baselines. Discuss with your independent solicitor how an exploratory inquiry (Stevenson, Jacques & Co v McLean [1880]) differs from a formal counter-offer (Hyde v Wrench [1840]).`
 
       case 'reference_confidentiality':
-        return `Regarding Clause [Reference & Confidentiality]: I note that the current draft does not yet incorporate an agreed written reference schedule or a mutual non-derogatory undertaking. In the spirit of a constructive and clean resolution, could you confirm whether the company is agreeable to appending an agreed factual reference (job title, dates, and responsibilities) and extending the non-disparagement obligations mutually to senior management?`
+        return `3. Agreed Reference & Mutual Confidentiality: Check with your solicitor whether the draft attaches an agreed factual reference schedule and whether non-derogatory obligations are drafted mutually.`
 
       case 'tax_pilon_structure':
-        return `Regarding Clause [Termination Payment & Notice Allocation]: To ensure complete compliance with HMRC rules (ITEPA 2003 s.402D Post-Employment Notice Pay and Section 403 £30,000 exemption), could you clarify whether the figure of ${formattedAmount} is exclusively ex-gratia compensation or if it includes contractual Payment in Lieu of Notice (PILON)? Establishing this split clearly will enable my legal adviser to confirm correct PAYE and tax-free treatment.`
+        return `4. Tax & Notice Allocation (ITEPA 2003 s.402D & s.403): Ask your solicitor to verify whether ${formattedAmount} is strictly ex-gratia compensation under s.403 ITEPA 2003 or includes taxable Post-Employment Notice Pay (PENP) / contractual PILON.`
     }
   }
 
-  const generatedLetter = `WITHOUT PREJUDICE AND SUBJECT TO CONTRACT
+  const generatedLetter = `INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR: KEY FIGURES & CLAUSE BRIEFING
 
-Date: ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-To: ${recipient.trim() || 'HR Director / Legal Counsel'}
-From: [Your Name]
-Re: Settlement Agreement Discussions - Request for Clarification
+Date Prepared: ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+Employer Contact Recorded: ${recipient.trim() || 'HR Director / Legal Counsel'}
+Date of Employer Draft Offer: ${offerDate}
+Recorded Offer Figure: ${formattedAmount}
 
-Dear ${recipient.trim() || 'HR Director'},
-
-Thank you for providing the draft settlement agreement documentation on ${offerDate}.
-
-I am actively considering your proposal in good faith and preparing to take formal independent legal advice from an SRA-regulated employment solicitor, as required under Section 203(3) of the Employment Rights Act 1996.
-
+AGENDA ITEM FOR SOLICITOR REVIEW (SECTION 203(3) ERA 1996):
 ${getTopicBody(topic)}
 
-IMPORTANT LEGAL RESERVATION:
-For the avoidance of doubt, in accordance with the established legal principles of Stevenson, Jacques & Co v McLean [1880], this letter is solely an exploratory request for clarification and information. It does not constitute a rejection or counter-offer of the settlement terms proposed on ${offerDate}, which remain under active consideration.
+COMMON LAW CONTRACT & PRIVILEGE CONTEXT FOR SOLICITOR DISCUSSION:
+- Under Hyde v Wrench [1840] 3 Beav 334, making an unreviewed counter-offer can extinguish the employer's original offer at common law, whereas a solicitor-led exploratory inquiry under Stevenson, Jacques & Co v McLean [1880] preserves the open offer.
+- Under Rush & Tompkins [1989] and Framlington Group v Barnetson [2007], common law Without Prejudice privilege applies only where a genuine dispute exists, and Section 111A ERA 1996 applies solely to ordinary unfair dismissal claims.
+- Discuss with your solicitor how to finalise any commercial inquiries before the employer's deadline expires.
 
-I look forward to your helpful clarification so that my solicitor and I can proceed to finalize the matter promptly.
-
-Yours sincerely,
-
-[Your Name]
-[Your Contact Information]`
+Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.`
 
   const handleCopy = async () => {
     try {
@@ -87,10 +79,10 @@ Yours sincerely,
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E2DCCE] pb-4 mb-5">
         <div>
           <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-[#D9603B] font-semibold block mb-0.5">
-            Without Prejudice Negotiation Shield
+            Solicitor Discussion Agenda: Key Figures Briefing
           </span>
           <h3 className="text-xl font-serif font-bold text-[#0B1F3A] m-0">
-            Without Prejudice Clarification Mode
+            Intake Agenda for Your Instructed Solicitor
           </h3>
         </div>
         <button
@@ -98,7 +90,7 @@ Yours sincerely,
           onClick={() => setShowLegalExplanation(!showLegalExplanation)}
           className="text-xs text-[#0B1F3A] hover:text-[#D9603B] font-medium underline underline-offset-2 flex items-center gap-1 self-start sm:self-auto transition-colors cursor-pointer"
         >
-          <span>Why this protects you (Hyde v Wrench rule)</span>
+          <span>Contract law context (Hyde v Wrench rule)</span>
           <span>{showLegalExplanation ? '▲' : '▼'}</span>
         </button>
       </div>
@@ -111,13 +103,12 @@ Yours sincerely,
           </p>
           <p className="mb-2">
             Under English contract law (<strong>Hyde v Wrench [1840] 3 Beav 334</strong>), making a firm counter-proposal
-            legally extinguishes and revokes the original offer. If the employer refuses your counter-proposal, you cannot
-            legally force them to honor the original deal.
+            legally extinguishes and revokes the original offer. If the employer refuses a counter-proposal, you cannot
+            legally force them to honour the original deal.
           </p>
           <p className="m-0">
-            However, under <strong>Stevenson, Jacques &amp; Co v McLean [1880] 5 QBD 346</strong>, a mere request for
-            information or exploratory clarification does <em>not</em> terminate the original offer. This generator crafts an
-            inquiry that probes for improvements while preserving your baseline offer intact.
+            Under <strong>Stevenson, Jacques &amp; Co v McLean [1880] 5 QBD 346</strong>, a mere request for
+            information or exploratory clarification does <em>not</em> terminate the original offer. This agenda prepares structured points for your instructed solicitor to review.
           </p>
         </div>
       )}
@@ -230,15 +221,15 @@ Yours sincerely,
         </div>
       </div>
 
-      {/* Letter Output Box */}
+      {/* Agenda Output Box */}
       <div className="bg-[#F7F4EE] border border-[#E2DCCE] rounded-xl p-4 sm:p-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div>
             <h4 className="text-sm font-bold text-[#0B1F3A] m-0">
-              Safe Clarification Inquiry Draft
+              Intake Agenda for Your Instructed Solicitor
             </h4>
             <p className="text-xs text-[#0B1F3A]/70 m-0">
-              Preserves your baseline offer while clarifying key commercial terms.
+              Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
             </p>
           </div>
           <button
@@ -256,7 +247,7 @@ Yours sincerely,
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                 </svg>
-                Copy Without Prejudice Inquiry
+                Copy Solicitor Agenda
               </>
             )}
           </button>

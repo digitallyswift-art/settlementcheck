@@ -17,7 +17,7 @@ export default function InlineEstimator({
   initialYears = 4,
   reason = 'redundancy',
   title = 'Instant Settlement Payout Estimator',
-  subtitle = 'See your statutory floor and typical UK negotiated settlement range in seconds.',
+  subtitle = 'Compare your calculated statutory baselines (subject to eligibility) and illustrative UK settlement range in seconds.',
 }: InlineEstimatorProps) {
   const router = useRouter()
   const [salaryInput, setSalaryInput] = useState<string>(String(initialSalary))
@@ -182,14 +182,14 @@ export default function InlineEstimator({
             <div className="p-3.5 bg-[#F2F5F8] border border-[#C8D3DF] rounded-lg flex flex-col justify-between">
               <div>
                 <span className="text-[#5B6577] text-[10px] uppercase font-bold tracking-wider block mb-0.5">
-                  Calculated Statutory Baseline
+                  Calculated Statutory Baselines (Subject to Eligibility)
                 </span>
                 <span className="text-[20px] font-black text-[#0B1F3A]">
                   {formatCurrency(result.minimum)}
                 </span>
               </div>
               <span className="text-[11px] text-[#5B6577] mt-1.5 leading-tight">
-                Redundancy (capped at £{WEEKLY_CAP_GB}/wk) + notice pay
+                Redundancy (capped at £{WEEKLY_CAP_GB}/wk, subject to s.141 ERA 1996) + notice pay
               </span>
             </div>
 
@@ -209,12 +209,12 @@ export default function InlineEstimator({
             </div>
 
             {/* Tax Exemption Status */}
-            <div className="p-3.5 bg-[#F0F5F1] border border-[#BCD0BF] rounded-lg flex flex-col justify-between">
+            <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg flex flex-col justify-between">
               <div>
-                <span className="text-[#3E584B] text-[10px] uppercase font-bold tracking-wider block mb-0.5">
+                <span className="text-[#0B1F3A] text-[10px] uppercase font-bold tracking-wider block mb-0.5">
                   Tax Treatment
                 </span>
-                <span className="text-[18px] font-black text-[#4F7060]">
+                <span className="text-[18px] font-black text-[#0B1F3A]">
                   First £30,000 Tax-Free
                 </span>
               </div>
@@ -230,7 +230,7 @@ export default function InlineEstimator({
             <div className="flex items-center gap-2 text-[12px] text-[#5B6577]">
               <span className="text-[15px] flex-shrink-0">🛡️</span>
               <span>
-                <strong>Your employer covers the legal fee:</strong> Standard £350 to £750 contribution under s.203.
+                <strong>Customary employer fee contribution:</strong> Employers customarily contribute £350 to £750 + VAT toward independent legal advice under s.203(3) ERA 1996.
               </span>
             </div>
 

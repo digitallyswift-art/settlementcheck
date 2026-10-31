@@ -760,12 +760,12 @@ export default function GetMatchedClient() {
                     transition={{ delay: 0.08, type: 'spring', stiffness: 260, damping: 20 }}
                     style={{
                       width: 64, height: 64, borderRadius: '50%',
-                      background: '#F0FDF4', border: '2px solid #86EFAC',
+                      background: '#F7F4EE', border: '2px solid #0B1F3A',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       marginBottom: 28,
                     }}
                   >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </motion.div>

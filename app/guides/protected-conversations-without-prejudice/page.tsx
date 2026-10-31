@@ -215,7 +215,7 @@ export default function ProtectedConversationsGuide() {
 
             <ReviewCallout
               title="Handed an offer letter after a protected conversation?"
-              description="Check your severance terms confidentially before responding. Verify your statutory redundancy rights, legal fee contribution, and £30,000 tax-free exemption."
+              description="Check your settlement terms confidentially before responding. Verify your calculated statutory baselines, customary legal fee contribution, and £30,000 tax-free exemption."
               ctaText="Check your protected offer terms →"
               badge="Protected Conversation Checker"
             />
@@ -557,9 +557,9 @@ export default function ProtectedConversationsGuide() {
         {/* ── SECTION 7: WHAT TO SAY SCRIPT ────────────────────── */}
         <section className="py-12 border-b border-rule bg-paper-2">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What to say during a protected conversation</h2>
+            <h2 className="sc-section-h2 mb-4">Communicating your choice of solicitor and requesting written terms</h2>
             <p className="sc-body mb-6">
-              When an employer opens an unexpected exit discussion, you do not have to negotiate or make decisions in the room. Use these verbatim scripts:
+              When an employer opens an unexpected pre-termination discussion, employees commonly request the proposal in writing so an independent solicitor can review it:
             </p>
 
             <div className="space-y-4 mb-6">
@@ -575,7 +575,7 @@ export default function ProtectedConversationsGuide() {
                 <p className="text-xs font-semibold uppercase tracking-wider text-coral mb-1">Step 2: If pressed for an immediate answer</p>
                 <p className="font-serif text-[16px] text-ink font-[460] mb-2">Cite the ACAS Code of Practice</p>
                 <blockquote className="border-l-2 border-coral pl-4 py-1 text-sm text-ink/80 italic">
-                  &quot;Under the ACAS Code of Practice 4, employees are entitled to a reasonable period of time to consider a settlement proposal. I will take the document home, review it, and take independent legal advice.&quot;
+                  &quot;Under Paragraph 12 of the ACAS Code of Practice 4, ACAS recommends a minimum of 10 calendar days as general guidance to consider a written settlement proposal and take independent legal advice. I will review the written draft with my instructed solicitor before responding.&quot;
                 </blockquote>
               </div>
 

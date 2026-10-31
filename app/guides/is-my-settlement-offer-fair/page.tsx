@@ -32,16 +32,16 @@ const FAQS = [
     a: 'The average depends entirely on statutory entitlement and claim strength. A typical straightforward redundancy settles at 1.5x to 2.5x the statutory minimum. For someone with £8,000 in statutory entitlement, that is £12,000 to £20,000. If there is a discrimination or whistleblowing element, the range rises to 3x to 5x statutory. There is no single UK average because each case starts from a different statutory floor.',
   },
   {
-    q: 'Should I accept the first offer?',
-    a: 'No. An initial settlement offer is often an opening proposal and rarely represents the employer\'s full settlement budget. If you have any claim strength at all (age, length of service, or disputed circumstances), counter with a higher figure. The employer expects negotiation. A fair counter is to ask the employer to explain the multiplier they have applied to your statutory entitlement. If they cannot justify it, you have room to negotiate.',
+    q: 'Is an initial settlement offer usually final?',
+    a: 'An initial settlement offer is often an opening proposal rather than the employer\'s maximum settlement budget. Where relevant factors exist (such as length of service, procedural flaws, or disputed circumstances), an independent solicitor can explore potential ex-gratia adjustments on your behalf while preserving the open offer.',
   },
   {
     q: 'What happens if I reject a settlement offer?',
-    a: 'If you reject a settlement offer, the employer can withdraw it and the negotiation ends. However, you can still pursue a tribunal claim for unfair dismissal, discrimination, or breach of contract. The tribunal route is slower (typically 6 to 9 months), uncertain, and costly in time. A settlement avoids all three, which is why employers prefer a certain, swift, private resolution over tribunal risk. That risk forms the basis of your negotiation standing.',
+    a: 'Under English contract law (Routledge v Grant and Hyde v Wrench), if you reject a settlement offer or submit an unreviewed counter-offer, the employer can withdraw the offer and end negotiations. While you may still pursue an Employment Tribunal claim, tribunal proceedings typically take 6 to 12 months. Always discuss any proposed response with your instructed solicitor before replying to HR.',
   },
   {
     q: 'How long do I have to decide?',
-    a: 'UK employment law practice requires a minimum of 10 days to consider a settlement agreement once you have received the draft. If your employer is pushing for less, the agreement may not be legally binding. Use the full time available. A specialist solicitor can review the offer and advise on negotiation typically within 3 to 5 days.',
+    a: 'ACAS Code of Practice 4 (para 12) recommends a minimum of 10 calendar days as general guidance to consider a written settlement agreement. However, 10 days is not a statutory condition of validity under s.203(3) ERA 1996, and an employer may set binding deadlines or withdraw an unaccepted offer at common law (Routledge v Grant). Never allow an employer\'s deadline to pass without taking independent legal advice.',
   },
 ]
 

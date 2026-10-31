@@ -295,9 +295,9 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
                 {statutoryAnalysis.isOfferBelowStatutoryMinimum ? (
                   <div className="p-4 rounded-lg bg-[#D9603B]/10 border border-[#D9603B]/30 mb-4">
-                    <h4 className="text-xs font-bold text-[#D9603B] uppercase tracking-wider mb-1">Critical Negotiation Flaw</h4>
+                    <h4 className="text-xs font-bold text-[#D9603B] uppercase tracking-wider mb-1">Statutory Baseline Comparison</h4>
                     <p className="text-xs text-[#0B1F3A]">
-                      The employer offer sits £{statutoryAnalysis.statutoryShortfallDelta.toLocaleString('en-GB')} below the statutory redundancy and notice floor. The employee would be financially better off rejecting the settlement compromise and claiming statutory redundancy directly.
+                      The recorded employer offer sits £{statutoryAnalysis.statutoryShortfallDelta.toLocaleString('en-GB')} below the calculated statutory redundancy and notice baseline (subject to eligibility under ERA 1996 s.141 and absence of summary dismissal for gross misconduct).
                     </p>
                   </div>
                 ) : (
@@ -408,8 +408,8 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                     <td className="py-3 text-right font-semibold">£{statutoryAnalysis.noticePayPilon.toLocaleString('en-GB')}</td>
                   </tr>
                   <tr className="bg-[#F7F4EE]/60 font-bold">
-                    <td className="py-3 text-[#0B1F3A]">Total Non-Negotiable Statutory Floor</td>
-                    <td className="py-3 text-[#0B1F3A]/60 text-xs">ERA 1996 Minimum Threshold</td>
+                    <td className="py-3 text-[#0B1F3A]">Calculated Statutory Baselines (Subject to Eligibility)</td>
+                    <td className="py-3 text-[#0B1F3A]/60 text-xs">ERA 1996 Baseline (Subject to s.141 &amp; Contractual Compliance)</td>
                     <td className="py-3 text-right text-base text-[#0B1F3A]">£{statutoryAnalysis.statutoryMinimumTotal.toLocaleString('en-GB')}</td>
                   </tr>
                   <tr>

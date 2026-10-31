@@ -51,7 +51,7 @@ const TAX_STEPS: StepItem[] = [
   {
     n: '03',
     t: 'Explore pension sacrifice to reduce higher-rate tax',
-    d: 'If your severance package pushes you into the 40% or 45% tax bracket, you can often negotiate to pay part of the taxable excess into your pension. This saves thousands in tax while keeping the full value of your offer.',
+    d: 'If your settlement package pushes you into the 40% or 45% tax bracket, you can discuss with your solicitor whether part of the taxable excess can be structured into your pension under s.408 ITEPA 2003.',
   },
 ]
 
@@ -119,7 +119,7 @@ const JSON_LD = {
         'PENP calculation compliant with ITEPA 2003 Section 402D',
         'Accurate income tax estimation at basic, higher, and additional rates',
         'Zero employee National Insurance calculation on termination compensation',
-        'Interactive pension sacrifice modeling to optimize net settlement payout',
+        'Interactive pension sacrifice modelling to illustrate net settlement payout',
       ],
       screenshot: 'https://settlementcheck.co.uk/og-image.png',
       creator: {
@@ -216,8 +216,8 @@ export default function SettlementTaxCalculatorPage() {
             detail: 'Even on settlement amounts exceeding £30,000, you pay zero employee National Insurance on genuine compensation. Only standard income tax applies to the excess.',
           },
           {
-            label: 'Your employer covers your legal review fee',
-            detail: 'Under UK law, independent legal advice is mandatory before you can sign. Your employer is required to cover the legal fee, paying your solicitor directly.',
+            label: 'Customary employer legal fee contribution',
+            detail: 'Under Section 203(3) ERA 1996, independent legal advice is a statutory condition for a valid settlement agreement. Employers customarily contribute £350 to £750 + VAT toward your legal fee as a commercial term of the agreement, paid directly to your solicitor.',
           },
         ]}
         steps={TAX_STEPS}

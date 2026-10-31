@@ -313,7 +313,7 @@ export default function CompromiseAgreementCalculatorPage() {
                 <li className="flex items-start gap-3">
                   <CheckIcon />
                   <span className="sc-body text-sm">
-                    <strong>10-day consideration period:</strong> Under the ACAS Code of Practice, employers must allow a minimum of 10 calendar days to consider the written proposal.
+                    <strong>10-day consideration guideline:</strong> Under Paragraph 12 of ACAS Code of Practice 4, ACAS recommends a minimum of 10 calendar days as general guidance to consider the written proposal (though under English contract law in <em>Routledge v Grant</em>, an employer may set shorter deadlines or withdraw an unaccepted offer).
                   </span>
                 </li>
               </ul>
@@ -630,7 +630,7 @@ export default function CompromiseAgreementCalculatorPage() {
                 <div>
                   <p className="text-sm font-semibold text-ink mb-1">Take your 10-day consideration period</p>
                   <p className="sc-body text-sm">
-                    Do not sign immediately. Under ACAS Code of Practice 1, you are entitled to at least 10 calendar days to review the proposal and take legal advice.
+                    Review the written terms with an adviser before signing. Under Paragraph 12 of ACAS Code of Practice 4 (Settlement Agreements), ACAS recommends at least 10 calendar days as general guidance to review the proposal and take legal advice, though you should always consult a solicitor before any employer deadline expires.
                   </p>
                 </div>
               </li>

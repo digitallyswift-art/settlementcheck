@@ -40,11 +40,11 @@ const FAQS = [
   },
   {
     q: 'What happens to the deadline if I need more time?',
-    a: 'Your employer sets the deadline, but they must give you reasonable time to consider the offer. Under the ACAS Code of Practice, you should have at least 10 calendar days to review the terms. If you need more time, you should ask your employer for an extension. Inform them that you are arranging independent legal advice as required by law.',
+    a: 'Your employer sets the deadline, though ACAS Code of Practice 4 (para 12) recommends at least 10 calendar days as general guidance to review the terms. Because an employer can withdraw an unaccepted offer at common law (Routledge v Grant), never let an employer\'s deadline expire without consulting an independent solicitor.',
   },
   {
     q: 'Do I still get my notice pay if I do not sign?',
-    a: 'Yes. You are always entitled to your contractual or statutory notice pay if your employment is terminated. Notice pay is a legal right. If you do not sign the agreement and your employment continues, you receive your normal pay. If you are subsequently dismissed, your employer must pay your notice period. Your employer cannot withhold your notice pay as a penalty for refusing to sign the settlement agreement.',
+    a: 'Where employment is terminated by reason of redundancy or ordinary dismissal, you remain entitled to your contractual or statutory notice pay, provided you are not summarily dismissed for gross misconduct (Boston Deep Sea Fishing v Ansell). If you do not sign the agreement and your employment continues, you receive your normal salary while employed.',
   },
 ]
 

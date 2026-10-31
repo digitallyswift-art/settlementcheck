@@ -70,7 +70,7 @@ export default function SerpDiffModal({
               </span>
             </div>
             <h2 className="text-lg sm:text-xl font-serif font-bold text-white">
-              &ldquo;{pkg.query}&rdquo; — Agent Recommendation Diff
+              &ldquo;{pkg.query}&rdquo; - Agent Recommendation Diff
             </h2>
           </div>
           <button

@@ -9,7 +9,7 @@ import ReviewCallout from '@/components/ReviewCallout'
 export const metadata: Metadata = {
   title: 'Can I Choose My Own Settlement Solicitor? | SettlementCheck',
   description:
-    'You have the legal right to choose your own independent settlement solicitor. Your employer must still pay the legal advice fee. Here is what the law says.',
+    'You have the legal right to choose your own independent settlement solicitor. Employers customarily contribute toward the legal advice fee. Here is what the law says.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/employer-recommended-solicitor/',
   },
@@ -137,7 +137,7 @@ export default function EmployerRecommendedSolicitor() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-[15px] text-ink leading-relaxed">Your employer must still pay the legal fees contribution, regardless of which solicitor you choose.</span>
+                  <span className="text-[15px] text-ink leading-relaxed">The employer&apos;s customary legal fee contribution (£350 to £750 + VAT) ordinarily applies regardless of which independent SRA-regulated solicitor you choose.</span>
                 </li>
               </ul>
             </div>
@@ -228,9 +228,9 @@ export default function EmployerRecommendedSolicitor() {
 
             {/* Section 4: Fees */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">4. Your employer still pays the fees</h2>
+              <h2 className="guide-h2 text-[24px]">4. Customary employer legal fee contribution</h2>
               <p className="guide-body">
-                Whichever solicitor you choose, your employer is required to cover the cost of your legal advice. The standard contribution is £350 to £750 for a straightforward case.
+                Whichever independent SRA-regulated solicitor you choose, employers customarily contribute toward the cost of your legal advice (£350 to £750 + VAT for a straightforward review) as a standard commercial term of the agreement.
               </p>
 
               <ul className="space-y-3 bg-paper-2 border border-rule rounded-xl p-6">

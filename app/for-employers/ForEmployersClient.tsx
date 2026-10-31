@@ -165,7 +165,7 @@ ${companyName}`
               </h1>
 
               <p className="text-base md:text-lg text-muted leading-relaxed mb-8">
-                Model collective redundancy severance budgets, generate statutory Section 111A protected conversation packs, and dispatch employee independent legal advice to our vetted SRA solicitor panel with rapid 48-hour panel turnaround standards.
+                Model collective redundancy settlement budgets, generate statutory Section 111A protected conversation packs, and dispatch employee independent legal advice to our vetted SRA solicitor panel with rapid 48-hour panel turnaround standards.
               </p>
 
               {/* Navigation Tabs */}
@@ -321,7 +321,7 @@ ${companyName}`
                     {/* Ex-Gratia Package Scheme */}
                     <div>
                       <label htmlFor="select-package-scheme" className="block text-sm font-semibold text-ink mb-1.5">
-                        Severance Package Multiplier
+                        Settlement Package Multiplier
                       </label>
                       <select
                         id="select-package-scheme"
@@ -421,7 +421,7 @@ ${companyName}`
                       £{grandTotalCost.toLocaleString()}
                     </div>
                     <p className="text-xs text-white/70 border-b border-white/10 pb-4 mb-4">
-                      Estimated all-inclusive commercial liability across {headcount} exiting {headcount === 1 ? 'employee' : 'employees'}, including statutory severance, tax liabilities, and legal sign-off.
+                      Estimated all-inclusive commercial liability across {headcount} exiting {headcount === 1 ? 'employee' : 'employees'}, including statutory redundancy, tax liabilities, and legal sign-off.
                     </p>
 
                     <div className="space-y-3 text-xs">
@@ -430,7 +430,7 @@ ${companyName}`
                         <span className="font-semibold text-white">£{totalStatutoryPool.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-center text-white/80">
-                        <span>Ex-Gratia Severance Pool:</span>
+                        <span>Ex-Gratia Termination Pool:</span>
                         <span className="font-semibold text-white">£{totalExGratiaPool.toLocaleString()}</span>
                       </div>
                       {pilonIncluded && (

@@ -169,7 +169,7 @@ const CALCULATORS: CalculatorCardData[] = [
     category: 'settlement',
     statutoryBasis: 'ERA 1996 s.203 Mandatory Advice',
     description:
-      'Have you received a written settlement agreement? Check restrictive covenants, indemnity risks, confidentiality terms, and verify that your employer is paying the required legal fee contribution.',
+      'Have you received a written settlement agreement? Check restrictive covenants, indemnity risks, confidentiality terms, and check the employer\'s customary legal fee contribution clause (typically £350 to £750 + VAT).',
     outputs: [
       'Agreement risk and balance score',
       'Legal fee contribution check (£500 to £1,500 + VAT benchmark)',

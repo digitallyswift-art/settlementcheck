@@ -258,7 +258,7 @@ export default function MaternityRedundancySettlementGuide() {
 
             <ReviewCallout
               title="Offered a settlement agreement while on maternity leave?"
-              description="Do not sign before checking your statutory protections. Verify your ring-fenced Statutory Maternity Pay, £751 weekly redundancy baseline, and legal fee coverage."
+              description="Check your statutory protections before signing. Verify your ring-fenced Statutory Maternity Pay, £751 weekly redundancy baseline, and customary legal fee contribution."
               ctaText="Check draft agreement terms →"
               badge="Maternity Clause Checker"
             />
@@ -463,7 +463,7 @@ export default function MaternityRedundancySettlementGuide() {
                   <span className="text-xs font-mono font-bold text-coral-ink">All Remaining Weeks</span>
                 </div>
                 <p className="sc-body text-sm mb-2">
-                  All remaining weeks of your 39-week SMP entitlement. This cannot be absorbed into severance pay. It must be paid as a distinct line item subject to PAYE and National Insurance.
+                  All remaining weeks of your 39-week SMP entitlement. This cannot be absorbed into termination compensation. It is paid as a distinct statutory line item subject to PAYE and National Insurance.
                 </p>
                 <p className="sc-body text-xs text-muted">
                   Your employer must continue paying this via monthly payroll or as an upfront lump sum.
@@ -665,22 +665,22 @@ export default function MaternityRedundancySettlementGuide() {
             </p>
 
             <div className="rounded-xl border border-rule bg-paper p-5 mb-8">
-              <h3 className="text-sm font-semibold text-ink mb-3">5 Practical Negotiation Steps</h3>
+              <h3 className="text-sm font-semibold text-ink mb-3">5 Key Points to Review with Your Independent Solicitor</h3>
               <ol className="list-decimal pl-5 flex flex-col gap-2.5 text-sm sc-body">
                 <li>
                   <strong>Request all terms in writing:</strong> Ask for any verbal proposal to be provided in a formal draft settlement agreement.
                 </li>
                 <li>
-                  <strong>Take the 10-day consideration window:</strong> ACAS Code of Practice 4 gives you a minimum of 10 calendar days to consider a settlement proposal. Never feel rushed.
+                  <strong>Note the ACAS 10-day guideline:</strong> ACAS Code of Practice 4 (para 12) recommends a minimum of 10 calendar days as general guidance to consider a settlement proposal, though an employer may set binding deadlines or withdraw an unaccepted offer under English contract law (<em>Routledge v Grant</em>). Consult a solicitor promptly before any deadline expires.
                 </li>
                 <li>
-                  <strong>Audit internal vacancies:</strong> Check your employer&apos;s careers portal and LinkedIn listings for open roles to evidence Regulation 10 breaches.
+                  <strong>Review internal vacancies:</strong> Check your employer&apos;s careers portal and listings for open roles to discuss Regulation 10 priority suitability with your solicitor.
                 </li>
                 <li>
-                  <strong>Demand ring-fenced SMP:</strong> Ensure remaining SMP is explicitly added on top of your redundancy and severance compensation.
+                  <strong>Confirm ring-fenced SMP:</strong> Verify with your solicitor that remaining SMP is explicitly itemised alongside your statutory redundancy and ex-gratia termination compensation.
                 </li>
                 <li>
-                  <strong>Secure an agreed reference:</strong> Agree on positive written reference wording and mutual non-derogatory clauses to protect your future career.
+                  <strong>Confirm an agreed reference:</strong> Discuss attaching an agreed factual written reference schedule and mutual non-derogatory clauses with your solicitor.
                 </li>
               </ol>
             </div>

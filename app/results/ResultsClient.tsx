@@ -540,8 +540,8 @@ function FinancialSplitChart({
         {taxFreePct > 0 && (
           <div
             style={{ width: `${taxFreePct}%` }}
-            className="bg-[#BCD0BF] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-[#0B1F3A] font-bold"
-            title={`Tax-Free Severance: ${formatCurrency(taxFreeAmount)}`}
+            className="bg-[#0B1F3A] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-white font-bold"
+            title={`Tax-Free Termination Payment: ${formatCurrency(taxFreeAmount)}`}
           >
             {taxFreePct > 12 && 'Tax-Free'}
           </div>
@@ -550,7 +550,7 @@ function FinancialSplitChart({
           <div
             style={{ width: `${taxableTermPct}%` }}
             className="bg-[#E0CB94] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-[#0B1F3A] font-bold"
-            title={`Taxable Severance: ${formatCurrency(adjustedTaxableTermination)}`}
+            title={`Taxable Termination Payment: ${formatCurrency(adjustedTaxableTermination)}`}
           >
             {taxableTermPct > 12 && 'Taxable'}
           </div>
@@ -558,7 +558,7 @@ function FinancialSplitChart({
         {pensionPct > 0 && (
           <div
             style={{ width: `${pensionPct}%` }}
-            className="bg-[#4F7060] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-white font-bold"
+            className="bg-[#5B6577] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-white font-bold"
             title={`To Pension: ${formatCurrency(pensionSacrifice)}`}
           >
             {pensionPct > 12 && 'To Pension'}
@@ -578,7 +578,7 @@ function FinancialSplitChart({
       {/* Labels Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-1">
         <div className="flex items-center gap-2">
-          <span className="w-3.5 h-3.5 rounded bg-[#BCD0BF] block border border-[#A4BCA7]"></span>
+          <span className="w-3.5 h-3.5 rounded bg-[#0B1F3A] block border border-[#0B1F3A]"></span>
           <div className="text-[13px] leading-tight">
             <span className="text-[#8A93A3] block text-[10px] uppercase font-bold tracking-wider">Tax-Free Ex-Gratia</span>
             <span className="font-semibold text-[#0B1F3A]">{formatCurrency(taxFreeAmount)}</span>
@@ -593,7 +593,7 @@ function FinancialSplitChart({
         </div>
         {pensionSacrifice > 0 && (
           <div className="flex items-center gap-2">
-            <span className="w-3.5 h-3.5 rounded bg-[#4F7060] block border border-[#3E584B]"></span>
+            <span className="w-3.5 h-3.5 rounded bg-[#5B6577] block border border-[#0B1F3A]"></span>
             <div className="text-[13px] leading-tight">
               <span className="text-[#8A93A3] block text-[10px] uppercase font-bold tracking-wider">To Pension (Tax-Free)</span>
               <span className="font-semibold text-[#0B1F3A]">{formatCurrency(pensionSacrifice)}</span>
@@ -616,7 +616,7 @@ function FinancialSplitChart({
           <span className="text-[16px] font-bold text-[#A8341F]">- {formatCurrency(estimatedTax)}</span>
         </div>
         <div className="flex flex-col items-end">
-          <span className="text-[#4F7060] text-[10px] uppercase tracking-wider font-bold">Net Take-Home Cash</span>
+          <span className="text-[#0B1F3A] text-[10px] uppercase tracking-wider font-bold">Net Take-Home Cash</span>
           <span className="text-[22px] font-extrabold text-[#0B1F3A]">{formatCurrency(netTakeHome)}</span>
         </div>
       </div>
@@ -657,14 +657,14 @@ function PensionSacrificeWidget({
   return (
     <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 shadow-sm flex flex-col gap-4">
       <div>
-        <span className="inline-block bg-[#F2F7F3] text-[#4F7060] text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full mb-1">
-          {isDemoMode ? 'Negotiation Opportunity' : 'Tax Restructuring Optimizer'}
+        <span className="inline-block bg-[#F7F4EE] text-[#0B1F3A] text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full mb-1">
+          {isDemoMode ? 'Illustrative Tax Modelling' : 'Tax Restructuring Optimiser'}
         </span>
         <h3 className="sc-h3 mt-1 text-[#0B1F3A]">Pension Sacrifice Simulator</h3>
         <p className="sc-body mt-1.5 text-[13px] text-[#5B6577] leading-relaxed">
           {isDemoMode ? (
             <>
-              Your current offer details do not include a taxable severance payment above the £30,000 threshold. However, as a high earner, if you negotiate a higher package (e.g. £50,000 ex-gratia), you can structure the portion above £30,000 directly into your pension as an employer contribution to save up to 60% in tax.
+              Your current offer details do not include a taxable termination payment above the £30,000 threshold. However, for higher earners, where a settlement agreement includes an ex-gratia sum above £30,000 (e.g. £50,000), the portion above £30,000 can be structured directly into a registered pension as an employer contribution under s.408 ITEPA 2003.
             </>
           ) : (
             <>
@@ -675,10 +675,10 @@ function PensionSacrificeWidget({
       </div>
 
       {isDemoMode && (
-        <div className="p-3.5 bg-[#F2F7F3] border border-[#BCD0BF] rounded-lg text-[13px] text-[#4F7060] leading-relaxed flex gap-2">
+        <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg text-[13px] text-[#0B1F3A] leading-relaxed flex gap-2">
           <span className="text-[16px] flex-shrink-0">💡</span>
           <div>
-            <strong>Interactive Demo:</strong> Showing a simulated £50,000 settlement package (with £20,000 taxable severance). Adjust the slider below to see how pension sacrifice saves tax for an income of {formatCurrency(salary)}.
+            <strong>Interactive Demo:</strong> Showing a simulated £50,000 settlement package (with £20,000 taxable termination pay). Adjust the slider below to see how pension sacrifice affects tax for an income of {formatCurrency(salary)}.
           </div>
         </div>
       )}
@@ -729,7 +729,7 @@ function PensionSacrificeWidget({
       <div className="grid grid-cols-2 gap-4 border-t border-[#E2DCCE] pt-3.5 mt-1">
         <div className="flex flex-col">
           <span className="text-[#8A93A3] text-[10px] uppercase tracking-wider font-bold">Immediate Tax Saved</span>
-          <span className="text-[17px] font-bold text-[#4F7060]">{res.taxSaved > 0 ? `+${formatCurrency(res.taxSaved)}` : '£0'}</span>
+          <span className="text-[17px] font-bold text-[#0B1F3A]">{res.taxSaved > 0 ? `+${formatCurrency(res.taxSaved)}` : '£0'}</span>
         </div>
         <div className="flex flex-col">
           <span className="text-[#8A93A3] text-[10px] uppercase tracking-wider font-bold">Growth in Pension</span>
@@ -741,7 +741,7 @@ function PensionSacrificeWidget({
         </div>
         <div className="flex flex-col">
           <span className="text-[#8A93A3] text-[10px] uppercase tracking-wider font-bold">Net Wealth Benefit</span>
-          <span className="text-[17px] font-extrabold text-[#4F7060]">{res.netWealthBenefit > 0 ? `+${formatCurrency(res.netWealthBenefit)}` : '£0'}</span>
+          <span className="text-[17px] font-extrabold text-[#D9603B]">{res.netWealthBenefit > 0 ? `+${formatCurrency(res.netWealthBenefit)}` : '£0'}</span>
         </div>
       </div>
 
@@ -1081,12 +1081,12 @@ function CaseBriefSection({
           <div className="flex flex-col gap-3.5 text-[12px] text-[#5B6577] leading-relaxed">
             <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg">
               <span className="font-bold text-[#0B1F3A] block mb-1">Notice Pay (PILON) & Ex-Gratia Tax Allocation</span>
-              Under <strong>s.402D ITEPA 2003</strong>, all payments in lieu of notice (PILON) must be taxed as general earnings under the Post-Employment Notice Pay (PENP) formula. However, genuine ex-gratia redundancy severance qualifies for the first £30,000 tax-free exemption under <strong>s.403 ITEPA 2003</strong>. Any ex-gratia amount exceeding £30,000 is subject to the employee&apos;s marginal income tax rate.
+              Under <strong>s.402D ITEPA 2003</strong>, all payments in lieu of notice (PILON) must be taxed as general earnings under the Post-Employment Notice Pay (PENP) formula. However, genuine ex-gratia termination payments qualify for the first £30,000 tax-free exemption under <strong>s.403 ITEPA 2003</strong>. Any ex-gratia amount exceeding £30,000 is subject to the employee&apos;s marginal income tax rate.
             </div>
 
             <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg">
               <span className="font-bold text-[#0B1F3A] block mb-1">Pension Sacrifice Opportunities</span>
-              If the ex-gratia severance payment exceeds £30,000, the employee can request the employer to pay the excess taxable portion directly into a registered pension scheme as an employer contribution. If completed before the settlement agreement is signed, this restructuring avoids income tax and National Insurance contributions under <strong>s.408 ITEPA 2003</strong>.
+              If the ex-gratia termination payment exceeds £30,000, the employee can discuss with their solicitor whether the employer will pay the excess taxable portion directly into a registered pension scheme as an employer contribution. If completed before the settlement agreement is signed, this restructuring is exempt from income tax and National Insurance contributions under <strong>s.408 ITEPA 2003</strong>.
             </div>
 
             {inputs.discrimination === 'yes' && (
@@ -1105,7 +1105,7 @@ function CaseBriefSection({
 
             <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg">
               <span className="font-bold text-[#0B1F3A] block mb-1">Strict Platform Disclaimer & Compliance Warning</span>
-              <strong>IMPORTANT NOTICE:</strong> This brief is generated dynamically for intake assessment and informational purposes only. SettlementCheck (operated by SettlementCheck Ltd) is an intake support platform, not a legal advisory body, SRA-regulated law firm, or barrister chambers. This report does not constitute formal legal advice, nor does it create a solicitor-client relationship. Under <strong>s.203(3) of the Employment Rights Act 1996</strong>, a settlement agreement is only legally binding if the employee receives independent advice from a qualified adviser (such as a certified solicitor). The recipient of this report must consult a matched solicitor to verify all figures, check contract clauses, and execute the final agreement.
+              <strong>IMPORTANT NOTICE:</strong> This brief is generated dynamically for intake assessment and informational purposes only. SettlementCheck (operated by Digitally Swift Ltd) is an intake support platform, not a legal advisory body, SRA-regulated law firm, or barrister chambers. This report does not constitute formal legal advice, nor does it create a solicitor-client relationship. Under <strong>s.203(3) of the Employment Rights Act 1996</strong>, a settlement agreement is only legally binding if the employee receives independent advice from a qualified adviser (such as a certified solicitor). The recipient of this report must consult a matched solicitor to verify all figures, check contract clauses, and execute the final agreement.
             </div>
           </div>
         </div>
@@ -1417,7 +1417,7 @@ function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offe
   }
 
   function Tag({ text, color }: { text: string; color: string }) {
-    return <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: color === 'green' ? 'rgba(79,112,96,0.12)' : 'rgba(168,52,31,0.10)', color: color === 'green' ? '#4F7060' : '#A8341F', whiteSpace: 'nowrap' }}>{text}</span>
+    return <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: color === 'green' ? 'rgba(11,31,58,0.08)' : 'rgba(168,52,31,0.10)', color: color === 'green' ? '#0B1F3A' : '#A8341F', whiteSpace: 'nowrap' }}>{text}</span>
   }
 
   const dividerRow = (
@@ -1429,12 +1429,12 @@ function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offe
       <div className="px-5 py-4 border-b border-rule flex flex-col sm:flex-row sm:items-center justify-between gap-1">
         <div>
           <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-[#0B1F3A] block mb-0.5">
-            Tier 1: Calculated Statutory Entitlements
+            Tier 1: Calculated Statutory Baselines (Subject to Eligibility)
           </span>
-          <h3 className="sc-h3 text-[#0B1F3A] m-0">Statutory Entitlement Breakdown</h3>
+          <h3 className="sc-h3 text-[#0B1F3A] m-0">Calculated Statutory Baselines (Subject to Eligibility)</h3>
         </div>
         <span className="text-[11px] font-mono text-[#5B6577]">
-          ERA 1996 ss.86 &amp; 162
+          ERA 1996 ss.86, 141 &amp; 162
         </span>
       </div>
 
@@ -1496,9 +1496,12 @@ function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offe
         </div>
       )}
 
-      {/* Tax footnote */}
+      {/* Tax & Statutory Eligibility footnote */}
       <div className="px-5 py-4 border-t border-rule text-[#8A93A3]">
         <p className="text-[12px] leading-[1.65] m-0">
+          * Statutory Eligibility Qualification: Statutory redundancy pay is subject to eligibility under Section 141 of the Employment Rights Act 1996 and can be forfeited if suitable alternative employment is unreasonably refused. Statutory or contractual notice pay can be lost in the event of summary dismissal for gross misconduct (<em>Boston Deep Sea Fishing v Ansell</em>).
+        </p>
+        <p className="text-[12px] mt-2 leading-[1.65] m-0">
           * The first £30,000 of genuine termination payments is tax-free under ITEPA 2003 s.403. Payment in lieu of notice (PILON, a lump sum paid instead of working your notice period) is always fully taxable regardless of how it is described in your agreement, under ITEPA 2003 s.402D.
         </p>
         <p className="text-[12px] mt-2 leading-[1.65] m-0">
@@ -2423,7 +2426,7 @@ function ResultsContent() {
                         Tier 1
                       </span>
                       <h3 className="text-[15px] font-bold text-[#0B1F3A] m-0">
-                        Calculated Statutory Entitlements (Deterministic Law)
+                        Calculated Statutory Baselines (Subject to Eligibility)
                       </h3>
                     </div>
                     <span className="text-[11px] font-mono text-[#5B6577] hidden sm:inline">

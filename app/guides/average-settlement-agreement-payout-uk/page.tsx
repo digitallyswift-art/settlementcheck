@@ -182,7 +182,7 @@ export default function AveragePayoutGuide() {
                 What is the average settlement agreement payout in the UK?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                While private settlement agreements have no official national average, observed UK commercial negotiation ranges and MoJ employment tribunal compensation benchmarks indicate that settlement agreement payouts for standard capability and redundancy disputes frequently fall between £5,000 and £25,000. This represents an illustrative 1.5 to 4 months of gross salary on top of contractual notice pay. Statutory redundancy is capped at £751 per week under SI 2026/310, and genuine severance up to £30,000 is tax-free under Section 403 of ITEPA 2003.
+                While private settlement agreements have no official national average, illustrative UK commercial negotiation ranges and MoJ employment tribunal compensation benchmarks indicate that settlement agreement payouts for standard capability and redundancy disputes frequently fall between £5,000 and £25,000. This represents an illustrative 1.5 to 4 months of gross salary on top of contractual notice pay. Statutory redundancy is capped at £751 per week under SI 2026/310, and genuine termination compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.
               </p>
 
               {/* Structured Metrics Grid */}

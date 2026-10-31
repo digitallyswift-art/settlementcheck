@@ -212,7 +212,7 @@ export default function SettlementAgreementTimelineGuide() {
                 Answer-First Summary: Settlement Timeline 2026
               </p>
               <p className="sc-body text-ink font-medium leading-relaxed">
-                A standard UK settlement agreement takes between one and three weeks from initial offer to completion. Under Acas Code of Practice 4, your employer must give you at least 10 calendar days to consider terms. Once both parties sign and your solicitor issues the adviser certificate, payout typically arrives within 14 to 28 days.
+                A standard UK settlement agreement takes between one and three weeks from initial offer to completion. Under ACAS Code of Practice 4 (para 12), ACAS recommends a minimum of 10 calendar days as general guidance to consider written terms (though an employer may set binding deadlines or withdraw an unaccepted offer under English contract law). Once both parties sign and your solicitor issues the adviser certificate, payout typically arrives within 14 to 28 days.
               </p>
             </div>
 
@@ -242,7 +242,7 @@ export default function SettlementAgreementTimelineGuide() {
 
             <ReviewCallout
               title="Holding a draft settlement agreement?"
-              description="Do not rush into signing under artificial deadlines. Check whether your offer meets 2026 statutory rates, verify your £30,000 tax exemption, and ensure your employer covers your legal fees."
+              description="Before signing under tight deadlines, check how your offer compares against 2026 statutory rates, verify your £30,000 tax exemption, and check the employer's customary legal fee contribution."
               ctaText="Check draft agreement terms →"
               badge="Timeline & Clause Checker"
             />
@@ -257,7 +257,7 @@ export default function SettlementAgreementTimelineGuide() {
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">How long does the settlement agreement process take?</h2>
               <p className="guide-body">
-                Most UK settlement agreements conclude within one to three weeks. If both sides agree on terms quickly, an exit can be finalized within 5 to 10 working days.
+                Most UK settlement agreements conclude within one to three weeks. If both sides agree on terms quickly, an exit can be finalised within 5 to 10 working days.
               </p>
               <p className="guide-body">
                 When you negotiate financial compensation, request changes to post-termination restrictions, or resolve workplace disputes, discussions can take three to six weeks.
@@ -324,7 +324,7 @@ export default function SettlementAgreementTimelineGuide() {
                     Acas 10-day consideration and negotiation period
                   </h3>
                   <p className="text-[14px] text-muted leading-relaxed">
-                    Under Acas Code of Practice 4, you are entitled to at least 10 calendar days to consider the proposal. During this window, you compare the offer against statutory baselines. In 2026, the statutory redundancy pay cap is £751 per week (SI 2026/310), and the unfair dismissal compensatory cap is £123,543. You can prepare counter-proposals on compensation, references, bonuses, or notice pay.
+                    Under ACAS Code of Practice 4 (para 12), ACAS recommends at least 10 calendar days as general guidance to consider the proposal, although under English contract law (<em>Routledge v Grant</em>) an employer may set shorter deadlines or withdraw an unaccepted offer. During this window, you compare the offer against statutory baselines. In 2026, the statutory redundancy pay cap is £751 per week (SI 2026/310), and the unfair dismissal compensatory cap is £123,543. Your instructed solicitor can explore adjustments on compensation, references, bonuses, or notice pay.
                   </p>
                 </div>
 
@@ -607,7 +607,7 @@ export default function SettlementAgreementTimelineGuide() {
                 {
                   href: '/guides/tax-free-settlement-30000/',
                   title: 'The £30,000 Tax-Free Settlement Exemption',
-                  description: 'How HMRC treats severance payments, PENP notice calculations, and Class 1A NIC rules.',
+                  description: 'How HMRC treats termination payments, PENP notice calculations, and Class 1A NIC rules.',
                   tag: 'Tax Rules',
                 },
                 {

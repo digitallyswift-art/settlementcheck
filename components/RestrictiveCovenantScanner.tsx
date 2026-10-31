@@ -148,25 +148,17 @@ export function RestrictiveCovenantScanner({
     handleScan(SAMPLE_COVENANT_TEXT)
   }
 
-  const waiverRequestTemplate = `Subject: Without Prejudice - Settlement Agreement: Post-Termination Restrictions Review
+  const waiverRequestTemplate = `INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR: POST-TERMINATION RESTRICTIONS BRIEFING
 
-Dear [HR Director / Legal Representative],
+Clause Under Review: Post-Termination Restrictions (${result?.detectedDurationMonths ? `${result.detectedDurationMonths}-month restriction detected` : 'post-termination restriction detected'})
 
-In reviewing the draft settlement agreement dated [Date], my legal adviser has identified Clause [Restrictive Covenants], which introduces post-termination covenants including a ${result?.detectedDurationMonths ? `${result.detectedDurationMonths}-month restriction` : 'restriction on employment'}.
+Points to Explore with Your Independent SRA-Regulated Solicitor (s.203(3) ERA 1996):
+1. Restraint of Trade Assessment (Tillman v Egon Zehnder Ltd [2019] UKSC 32): Whether the scope and duration of the restriction exceed what is reasonably necessary to protect legitimate business interests.
+2. Garden Leave Set-Off: Whether the clause deducts time spent on garden leave from the post-termination restriction period.
+3. Tax Allocation (ITEPA 2003 s.225 vs s.403): Under Section 225 of the Income Tax (Earnings and Pensions) Act 2003, separate consideration allocated specifically to new restrictive covenants is subject to PAYE income tax and Class 1 NICs rather than the Section 403 £30,000 exemption.
+4. Solicitor Instructions: Discuss with your solicitor how to finalise any requested covenant adjustments or carve-outs before signing the statutory adviser certificate.
 
-Under English common law and the Supreme Court authority of Tillman v Egon Zehnder Ltd [2019] UKSC 32, post-termination restrictions must be no wider than reasonably necessary to protect legitimate business interests. As drafted, this restriction creates an unreasonable restraint of trade and severely impairs my ability to secure future employment.
-
-Furthermore, under Section 225 of the Income Tax (Earnings and Pensions) Act 2003, any consideration allocated specifically to restrictive covenants is subject to mandatory PAYE deductions and National Insurance, preventing tax-efficient settlement structure.
-
-I respectfully request that the employer agree to:
-1. Delete Clause [Restrictive Covenants] in its entirety, or alternatively;
-2. Reduce the restriction duration to a maximum of 3 months and insert an express clause deducting any period spent on garden leave;
-3. Confirm that the full ex-gratia compensation remains allocated under the Section 403 ITEPA 2003 tax exemption.
-
-I look forward to your confirmation so my SRA solicitor can finalize the statutory certification.
-
-Yours sincerely,
-[Your Name]`
+Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.`
 
   const handleCopyWaiver = async () => {
     try {
@@ -318,18 +310,23 @@ Yours sincerely,
             {result.tillmanAnalysis}
           </div>
 
-          {/* Waiver Request Generator */}
+          {/* Solicitor Discussion Agenda Generator */}
           <div className="bg-[#F7F4EE] border border-[#E2DCCE] rounded-xl p-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-              <span className="text-xs font-bold text-[#0B1F3A]">
-                1-Click Restrictive Covenant Carve-Out Request
-              </span>
+              <div>
+                <span className="text-xs font-bold text-[#0B1F3A] block">
+                  Intake Agenda for Your Instructed Solicitor: Covenant Briefing
+                </span>
+                <span className="text-[11px] text-[#0B1F3A]/70 block">
+                  Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
+                </span>
+              </div>
               <button
                 type="button"
                 onClick={handleCopyWaiver}
                 className="px-3 py-1.5 bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white text-xs font-semibold rounded transition-colors flex items-center gap-1 cursor-pointer self-start sm:self-auto"
               >
-                {copied ? '✓ Copied' : 'Copy Carve-Out Notice'}
+                {copied ? '✓ Copied' : 'Copy Solicitor Agenda'}
               </button>
             </div>
             <pre className="p-3 bg-white border border-[#E2DCCE] rounded text-xs font-mono text-[#0B1F3A] whitespace-pre-wrap max-h-48 overflow-y-auto">

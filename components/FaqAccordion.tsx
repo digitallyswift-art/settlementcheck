@@ -33,8 +33,8 @@ const DEFAULT_FAQS: FaqItem[] = [
     a: "The calculator gives a general estimate based on UK statutory rates and observed UK commercial negotiation benchmarks. It is not legal advice. Your circumstances may justify substantially more or less, and only a solicitor reviewing your contract and reason for leaving can tell you.",
   },
   {
-    q: 'When will the solicitor matching service be available?',
-    a: 'The calculator is live and free to use today. The solicitor matching service is launching shortly. When live, panel solicitors will commit to responding within 24 hours of an introduction, often the same business day.',
+    q: 'How does the solicitor matching service work?',
+    a: 'The calculator and solicitor matching service are live and free to use today. When you submit your details and verify via SMS OTP, we introduce your enquiry to an independent SRA-regulated employment solicitor from our panel who acts solely in your best interest.',
   },
   {
     q: 'What if I want to negotiate a higher amount?',
@@ -42,7 +42,7 @@ const DEFAULT_FAQS: FaqItem[] = [
   },
   {
     q: 'Is my information shared?',
-    a: 'Only with vetted SRA-regulated solicitors you opt in to be introduced to once matching launches. Never with employers, recruiters, or third parties. You can withdraw consent at any point.',
+    a: 'Only with the vetted SRA-regulated solicitor you explicitly opt in to be introduced to. Never with employers, recruiters, or unrelated third parties. You can withdraw consent at any point.',
   },
   {
     q: 'Why is your calculator independent when others are not?',

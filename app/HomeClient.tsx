@@ -34,8 +34,8 @@ const STEPS = [
   },
   {
     n: '03',
-    t: 'Get advice and recover what you are owed',
-    d: 'Your employer covers the cost of your legal advice. A solicitor reviews your offer, tells you what is negotiable, and handles the conversation with your employer\'s legal team. You do not pay.',
+    t: 'Consult an independent SRA-regulated solicitor',
+    d: 'Employers customarily contribute £350 to £750 + VAT toward the cost of independent legal advice under s.203(3) ERA 1996. An independent solicitor reviews your draft terms, explains your options, and communicates with your employer\'s legal team.',
   },
 ]
 
@@ -273,8 +273,8 @@ export default function HomeClient({
                     Free calculator
                   </span>
                   <p style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 420, lineHeight: 1.3, color: '#0B1F3A', margin: '0 0 8px', letterSpacing: '-0.012em' }}>
-                    Most people do not know if their offer is fair.{' '}
-                    <em style={{ fontStyle: 'italic', color: '#D9603B' }}>This tells you.</em>
+                    Most employees want to see how their offer compares.{' '}
+                    <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Compare yours against UK statute.</em>
                   </p>
                   <p style={{ fontSize: 15, color: '#5B6577', margin: '0 0 24px', lineHeight: 1.55 }}>
                     Seven questions. Sixty seconds. No email required.
@@ -425,9 +425,9 @@ export default function HomeClient({
                   <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
                     3
                   </div>
-                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Counter-offer negotiation points</h3>
+                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Solicitor discussion agenda points</h3>
                   <p className="text-[14px] text-muted leading-relaxed">
-                    Compare your package against Ministry of Justice tribunal tables and Acas ex-gratia standards. Get specific amendments to counter non-compete and gagging clauses.
+                    Compare your package against Ministry of Justice tribunal tables and ACAS Code 4 guidance, and identify restrictive covenants and confidentiality clauses to discuss with an independent solicitor.
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">

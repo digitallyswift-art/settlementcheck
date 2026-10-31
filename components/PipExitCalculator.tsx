@@ -268,10 +268,9 @@ export function PipExitCalculator() {
             <strong>{formatGBP(result.contractualNoticePay)}</strong> upon termination.
           </div>
           <div>
-            <strong className="text-[#0B1F3A] block mb-1">Recommended Solicitor Legal Fee Target:</strong>
-            Require the employer to contribute at least{' '}
-            <strong>{formatGBP(result.legalFeeTarget)} + VAT</strong> directly to your independent solicitor under ERA
-            1996 s.203(3), ensuring complete legal representation at zero personal cost.
+            <strong className="text-[#0B1F3A] block mb-1">Customary Solicitor Legal Fee Contribution:</strong>
+            Employers customarily contribute{' '}
+            <strong>{formatGBP(result.legalFeeTarget)} + VAT</strong> (typically £350 to £750 + VAT) toward independent legal advice as a commercial term of the agreement under ERA 1996 s.203(3).
           </div>
         </div>
       </div>

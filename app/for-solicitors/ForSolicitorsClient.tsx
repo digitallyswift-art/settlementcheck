@@ -1639,7 +1639,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               margin: '8px 0 16px',
             }}
           >
-            Partner Capacity &amp; Revenue Modeling
+            Partner Capacity &amp; Revenue Modelling
           </h2>
           <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.6, margin: '0 0 20px', fontFamily: SANS }}>
             To ensure an enforceable waiver under Section 203(3) ERA 1996, employers standardly fund independent advice (£500 to £1,500 + VAT). Model your firm&apos;s monthly instruction capacity with zero software fees or upfront retainers.

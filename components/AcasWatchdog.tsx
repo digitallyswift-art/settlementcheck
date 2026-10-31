@@ -56,24 +56,21 @@ export function AcasWatchdog({
     })
   }
 
-  // Formal ACAS Code 4 Extension Notice Template
-  const extensionNoticeTemplate = `Subject: Without Prejudice - Settlement Agreement Consideration Period (ACAS Code of Practice 4)
+  // Intake Agenda for Instructed Solicitor (Timeline & ACAS Code 4 Briefing)
+  const extensionNoticeTemplate = `INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR: CONSIDERATION TIMELINE BRIEFING
 
-Dear ${employerName.trim() || 'HR Manager'},
+Employer / HR Contact Recorded: ${employerName.trim() || 'HR Manager'}
+Date Draft Settlement Agreement Received: ${isValidReceived ? formatDateDisplay(received) : receivedDate}
+Employer Requested Response Deadline: ${isValidReceived ? formatDateDisplay(actualDeadline) : `within ${deadlineDays} days`} (${deadlineDays} calendar days)
+ACAS Code of Practice 4 (Para 12) Benchmark Date: ${isValidReceived ? formatDateDisplay(acasDeadline) : '10 calendar days'}
 
-Thank you for providing the draft settlement agreement documentation on ${isValidReceived ? formatDateDisplay(received) : receivedDate}.
+Key Points to Discuss with Your Independent Solicitor (s.203(3) ERA 1996):
+1. Consideration Window: ACAS Code of Practice 4 (Paragraph 12) recommends a minimum of 10 calendar days as general guidance to consider written settlement terms and take independent legal advice.
+2. Contractual Revocation Risk (Routledge v Grant [1828]): Under English contract law, an employer is entitled to set binding deadlines or withdraw an unaccepted offer at any point prior to acceptance.
+3. Pre-Termination Confidentiality (s.111A(4) ERA 1996): Under Paragraph 18 of ACAS Code 4, imposing an unreasonably short ultimatum can be assessed by an Employment Tribunal as potential improper behaviour affecting Section 111A confidentiality for ordinary unfair dismissal claims.
+4. Solicitor Extension Request: Ask your instructed SRA-regulated solicitor to contact ${employerName.trim() || 'HR Manager'} directly to confirm their instruction and request an extension to ${isValidReceived ? formatDateDisplay(acasDeadline) : 'the 10-day guideline date'} while preserving the open offer.
 
-Under the ACAS Code of Practice on Settlement Agreements (Code 4, Paragraph 12), parties should be allowed a reasonable period of time to consider the proposed written terms and receive independent legal advice. As a statutory guideline, ACAS specifies that a minimum period of 10 calendar days should be provided to consider terms, unless the parties mutually agree otherwise.
-
-The current proposed deadline of ${isValidReceived ? formatDateDisplay(actualDeadline) : `within ${deadlineDays} days`} provides only ${deadlineDays} calendar days. Under ACAS Code 4, Paragraph 18, setting an unreasonably short deadline can be regarded as improper behaviour under Section 111A(4) of the Employment Rights Act 1996, which may impact the confidentiality of pre-termination negotiations.
-
-In order to comply with ACAS statutory guidance and ensure sufficient time to obtain mandatory independent advice from an SRA-regulated employment solicitor (as required by Section 203(3) of the Employment Rights Act 1996), I respectfully request that the consideration window be extended to 10 calendar days, ending on ${isValidReceived ? formatDateDisplay(acasDeadline) : 'the standard 10-day date'}.
-
-I am actively arranging independent legal advice and will revert promptly once my solicitor has completed the statutory review.
-
-Yours sincerely,
-[Your Name]
-[Contact Information]`
+Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.`
 
   const handleCopyNotice = async () => {
     try {
@@ -169,10 +166,10 @@ Yours sincerely,
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-[#0B1F3A]/90 leading-relaxed mb-3">
-                Your employer has given you only <strong>{deadlineDays} days</strong> to accept (deadline:{' '}
-                {isValidReceived ? formatDateDisplay(actualDeadline) : `${deadlineDays} days`}). Under{' '}
-                <strong>ACAS Code of Practice 4 Paragraph 12</strong>, employers must provide a minimum of{' '}
-                <strong>10 calendar days</strong> for written consideration and independent legal advice.
+                Your employer has specified a <strong>{deadlineDays}-day</strong> response window (deadline:{' '}
+                {isValidReceived ? formatDateDisplay(actualDeadline) : `${deadlineDays} days`}).{' '}
+                <strong>ACAS Code of Practice 4 Paragraph 12</strong> recommends a minimum of{' '}
+                <strong>10 calendar days</strong> as general guidance to consider written terms and obtain independent legal advice. However, under English contract law (<em>Routledge v Grant</em>), an employer may set binding deadlines or revoke an unaccepted offer at any point before acceptance. Never allow an employer&apos;s deadline to pass without taking independent legal advice.
               </p>
               <div className="bg-white/80 border border-[#F3C4B8] rounded-lg p-3 text-xs leading-relaxed text-[#0B1F3A]">
                 <strong>Statutory Protection (ERA 1996 s.111A(4)):</strong> Under Paragraph 18 of ACAS Code 4,
@@ -227,15 +224,15 @@ Yours sincerely,
         </div>
       </div>
 
-      {/* 1-Click Extension Request Generator */}
+      {/* Solicitor Intake Agenda Generator */}
       <div className="bg-[#F7F4EE] border border-[#E2DCCE] rounded-xl p-4 sm:p-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div>
             <h4 className="text-sm font-bold text-[#0B1F3A] m-0">
-              Formal ACAS Code 4 Extension Request Template
+              Intake Agenda for Your Instructed Solicitor: Timeline Briefing
             </h4>
             <p className="text-xs text-[#0B1F3A]/70 m-0">
-              Assert your statutory consideration rights politely and professionally before signing.
+              Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
             </p>
           </div>
           <button
@@ -253,7 +250,7 @@ Yours sincerely,
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                 </svg>
-                Copy Extension Notice
+                Copy Solicitor Agenda
               </>
             )}
           </button>

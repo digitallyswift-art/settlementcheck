@@ -1602,7 +1602,7 @@ export default function CockpitClient() {
               <div className="p-5 sm:p-6 border-b border-[#0B1F3A]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h3 className="text-lg font-serif font-bold text-[#0B1F3A]">
-                    Deployed Optimizations — Pre vs Post Longitudinal Attribution
+                    Deployed Optimizations - Pre vs Post Longitudinal Attribution
                   </h3>
                   <p className="text-xs text-[#0B1F3A]/60">
                     Tracks live rank deltas, CTR changes, 14-day canary observation windows, and autonomous watchdog status.
@@ -1799,11 +1799,11 @@ export default function CockpitClient() {
                 <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block">
                   {monitorData?.metrics?.totalImpressions !== undefined
                     ? monitorData.metrics.totalImpressions.toLocaleString('en-GB')
-                    : '—'}
+                    : '-'}
                 </span>
                 <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
                   <span className="text-[11px] text-[#0B1F3A]/70 block font-medium">
-                    {monitorData?.metrics?.totalClicks ?? 0} clicks ({monitorData?.metrics?.avgCtr ?? 0}% CTR) · Pos {monitorData?.metrics?.avgPosition ?? '—'}
+                    {monitorData?.metrics?.totalClicks ?? 0} clicks ({monitorData?.metrics?.avgCtr ?? 0}% CTR) · Pos {monitorData?.metrics?.avgPosition ?? '-'}
                   </span>
                   <span className="text-[10px] font-mono text-[#0B1F3A]/50 block">
                     📅 GSC: {monitorData?.dateRange?.formatted || 'Last 28 days'}
@@ -1827,7 +1827,7 @@ export default function CockpitClient() {
                 <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block">
                   {monitorData?.metrics?.totalCalculations !== undefined
                     ? monitorData.metrics.totalCalculations.toLocaleString('en-GB')
-                    : '—'}
+                    : '-'}
                 </span>
                 <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
                   <span className="text-[11px] text-[#D9603B] font-semibold block">
@@ -1853,7 +1853,7 @@ export default function CockpitClient() {
                   </span>
                 </div>
                 <span className="text-2xl sm:text-3xl font-serif font-bold text-[#D9603B] block">
-                  {monitorData?.metrics?.totalLeads ?? '—'}
+                  {monitorData?.metrics?.totalLeads ?? '-'}
                 </span>
                 <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
                   <span className="text-[11px] text-[#0B1F3A]/70 block font-medium">

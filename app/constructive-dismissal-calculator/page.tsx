@@ -251,7 +251,7 @@ export default function ConstructiveDismissalCalculatorPage() {
                 Critical Safeguard
               </span>
               <strong style={{ fontSize: 15, color: '#0B1F3A' }}>
-                Do Not Resign Before Seeking Specialist Employment Advice
+                Important Consideration: Seeking Specialist Employment Advice Prior to Resignation
               </strong>
             </div>
             <p style={{ margin: 0, fontSize: 13, color: '#5B6577', lineHeight: 1.55 }}>

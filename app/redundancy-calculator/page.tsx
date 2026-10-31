@@ -41,8 +41,8 @@ export async function generateMetadata(): Promise<Metadata> {
 const REDUNDANCY_STEPS: StepItem[] = [
   {
     n: '01',
-    t: 'Find out what you are legally owed',
-    d: 'Statutory redundancy pay is your legal minimum. Many employers pay exactly that and no more. Enter your age, salary, and length of service and the calculator shows your entitlement under the April 2026 rates, so you know the floor before any negotiation starts.',
+    t: 'Check your calculated statutory redundancy baseline (subject to eligibility)',
+    d: 'Calculated statutory redundancy pay forms the statutory baseline (subject to eligibility under s.141 ERA 1996 regarding suitable alternative employment, and absence of gross misconduct for notice pay). Enter your age, salary, and length of service to see your baseline under April 2026 rates.',
   },
   {
     n: '02',
@@ -219,8 +219,8 @@ export default function RedundancyCalculatorPage() {
         }
         leadBullets={[
           {
-            label: 'Find out what you are legally owed',
-            detail: 'Statutory redundancy pay is the minimum your employer must pay. Based on your age, salary, and length of service at April 2026 rates, the calculator shows your entitlement before any negotiation starts.',
+            label: 'Check your calculated statutory baseline (subject to eligibility)',
+            detail: 'Calculated statutory redundancy pay forms the statutory baseline (subject to eligibility under s.141 ERA 1996). Based on your age, salary, and length of service at April 2026 rates, the calculator shows your baseline before you consult a solicitor.',
           },
           {
             label: 'Check whether your offer is fair',
@@ -231,8 +231,8 @@ export default function RedundancyCalculatorPage() {
             detail: 'Redundancy pay and PILON are taxed differently. The calculator separates both and shows the net figure after tax, because that is the number that actually matters.',
           },
           {
-            label: 'Do not sign until you have had independent advice',
-            detail: 'A settlement agreement is legally binding and waives your right to claim. Your employer is required to pay for your legal advice. There is no good reason to sign without it.',
+            label: 'Independent legal advice under s.203(3) ERA 1996',
+            detail: 'Under Section 203(3) ERA 1996, a settlement agreement is only legally binding once you have received advice from an independent adviser. Employers customarily contribute £350 to £750 + VAT toward your legal advice as a commercial term of the agreement.',
           },
         ]}
         steps={REDUNDANCY_STEPS}

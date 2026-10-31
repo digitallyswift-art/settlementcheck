@@ -466,7 +466,7 @@ export default function TaxFreeSettlementGuide() {
 
             <ReviewCallout
               title="Concerned about your tax indemnity clause?"
-              description="Do not sign a broad tax indemnity without checking the numbers. Paste your agreement draft to verify that ex-gratia payments and PILON are correctly partitioned under ITEPA 2003 s.403."
+              description="Before signing a broad tax indemnity, check how the numbers are structured. Paste your agreement draft to verify that ex-gratia payments and PILON are separated under ITEPA 2003 s.403."
               ctaText="Verify your agreement tax wording →"
               badge="Tax Risk Audit"
             />

@@ -23,7 +23,8 @@ export default function InlineEditModal({ pkg, onClose, onSaveAndApply }: Inline
   const metaLen = metaDesc.length;
   const titlePixels = calculateSerpPixelWidth(title, 'title');
   const metaPixels = calculateSerpPixelWidth(metaDesc, 'meta');
-  const hasEmDash = title.includes('—') || metaDesc.includes('—') || faqA.includes('—');
+  const emDashChar = '\u2014';
+  const hasEmDash = title.includes(emDashChar) || metaDesc.includes(emDashChar) || faqA.includes(emDashChar);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,7 +69,7 @@ export default function InlineEditModal({ pkg, onClose, onSaveAndApply }: Inline
             <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-center gap-2">
               <span>⚠️</span>
               <span>
-                <strong>Brand Invariant Warning:</strong> Em dashes (—) detected. Replace with hyphens (-), colons (:), or parentheses to satisfy AGENTS.md rules.
+                <strong>Brand Invariant Warning:</strong> Em dashes detected. Replace with hyphens (-), colons (:), or parentheses to satisfy AGENTS.md rules.
               </span>
             </div>
           )}

@@ -121,7 +121,7 @@ export default function PressuredToSignGuide() {
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-[15px] text-ink leading-relaxed">You are entitled to a minimum of 10 calendar days to consider the offer.</span>
+                  <span className="text-[15px] text-ink leading-relaxed">ACAS Code of Practice 4 (para 12) recommends a minimum of 10 calendar days as general guidance to consider a written offer, although under English contract law (<em>Routledge v Grant</em>) an employer may set binding deadlines or withdraw an unaccepted offer.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon />
@@ -147,7 +147,7 @@ export default function PressuredToSignGuide() {
 
             <ReviewCallout
               title="Facing a deadline from your employer?"
-              description="Do not panic. You are entitled to at least 10 calendar days under Acas guidelines. Paste your draft clauses into our free tool to check your statutory rights and legal fee funding in 60 seconds."
+              description="ACAS Code of Practice 4 recommends a 10-calendar-day guideline, though you should never allow an employer's deadline to expire without taking legal advice. Paste your draft clauses into our free tool to check your statutory baselines in 60 seconds."
               ctaText="Check my draft clauses now →"
               badge="Urgent Deadline Support"
             />
@@ -215,9 +215,9 @@ export default function PressuredToSignGuide() {
               <div className="relative border-l border-rule ml-3 space-y-8 pb-4 mt-4">
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">1</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Do not sign anything on the spot</h3>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Review written terms with an independent solicitor before signing</h3>
                   <p className="text-[15px] text-muted leading-relaxed">
-                    A settlement agreement is only legally binding once you have received independent legal advice. Acknowledge receipt of the document, but do not sign it. Remember: you have the right to appoint your own solicitor (see{' '}
+                    Under Section 203(3) ERA 1996, a settlement agreement is only legally binding once you have received independent legal advice. Acknowledge receipt of the document and arrange advice promptly before the employer&apos;s deadline expires. Remember: you have the right to appoint your own solicitor (see{' '}
                     <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink">
                       do you have to use your employer's solicitor?
                     </Link>).
@@ -319,14 +319,14 @@ export default function PressuredToSignGuide() {
                   ³ <a href="https://www.legislation.gov.uk/ukpga/1992/52/section/188" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Trade Union and Labour Relations (Consolidation) Act 1992, s.188</a>.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ⁴ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/227" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.227</a>, as amended by the Employment Rights (Increase of Limits) Order 2025.
+                  ⁴ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/227" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.227</a>, reflecting April 2026 statutory limits (£751/week GB cap).
                 </li>
               </ul>
             </div>
 
             {/* Disclaimer */}
             <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed">
-              Figures on this page reflect the Employment Rights (Increase of Limits) Order 2025, in force from 6 April 2025. Last reviewed: May 2026. SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement process and does not constitute legal advice.
+              Figures on this page reflect the 2026/27 statutory limits, in force from 6 April 2026. Last reviewed: April 2026. SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement process and does not constitute legal advice.
             </p>
 
           </div>

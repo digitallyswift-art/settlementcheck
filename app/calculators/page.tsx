@@ -320,9 +320,9 @@ export default function CalculatorsHubPage() {
                   The 10-day consideration period defeats panic tactics
                 </h3>
                 <p className="text-[14px] md:text-[15px] text-muted leading-relaxed">
-                  Employers often impose 24-hour or 48-hour deadlines to induce panic. However, paragraph 12 of the ACAS Code of Practice
-                  on Settlement Agreements gives employees a minimum of 10 calendar days to consider proposed terms.
-                  Rushing you can constitute improper behaviour under Section 111A of the Employment Rights Act 1996, which forfeits the employer&apos;s confidentiality protection.
+                  Employers sometimes impose 24-hour or 48-hour deadlines. Paragraph 12 of the ACAS Code of Practice 4
+                  on Settlement Agreements recommends a minimum of 10 calendar days as general guidance to consider written terms, although under English contract law (Routledge v Grant) an employer may set binding deadlines or withdraw an unaccepted offer.
+                  Unreasonably short ultimatums can be assessed as potential improper behaviour under Section 111A of the Employment Rights Act 1996. Never allow an employer&apos;s deadline to pass without taking independent legal advice.
                 </p>
               </div>
             </div>
@@ -446,7 +446,7 @@ export default function CalculatorsHubPage() {
               Free · Instant · 100% Confidential
             </span>
             <h2 className="font-serif text-[28px] md:text-[40px] font-420 leading-tight max-w-[26ch]">
-              Do not sign away your rights without knowing your true numbers
+              Compare your offer against UK statutory baselines before consulting your solicitor
             </h2>
             <p className="text-white/70 text-[15px] md:text-[17px] max-w-[54ch] leading-relaxed">
               Whether you are facing redundancy, constructive dismissal, or have a draft agreement on your desk,

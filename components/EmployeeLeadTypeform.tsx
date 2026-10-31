@@ -641,12 +641,12 @@ export default function EmployeeLeadTypeform({
                 transition={{ delay: 0.08, type: 'spring', stiffness: 260, damping: 20 }}
                 style={{
                   width: 52, height: 52, borderRadius: '50%',
-                  background: '#F0FDF4', border: '1.5px solid #86EFAC',
+                  background: '#F7F4EE', border: '1.5px solid #0B1F3A',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   marginBottom: 20,
                 }}
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </motion.div>
@@ -659,7 +659,7 @@ export default function EmployeeLeadTypeform({
               <p style={{ fontFamily: SANS, fontSize: 15, color: C.muted, lineHeight: 1.65, margin: 0 }}>
                 On <strong style={{ color: C.navy }}>{form.phone}</strong>,{' '}
                 {form.contactTime.toLowerCase()} preferred.{' '}
-                The advice is free: your employer covers the cost.
+                Employers customarily contribute £350 to £750 + VAT toward your independent legal advice.
               </p>
             </div>
           )}

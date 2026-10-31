@@ -587,49 +587,43 @@ export default function PipSettlementGuide() {
           </div>
         </section>
 
-        {/* SECTION 8: VERBATIM SCRIPTS */}
+        {/* SECTION 8: SOLICITOR INTAKE AGENDA */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Verbatim negotiation scripts for UK employees</h2>
+            <h2 className="sc-section-h2 mb-4">Intake Agenda for Your Instructed Solicitor: PIP Exit Review</h2>
             <p className="sc-body mb-6">
-              During exit discussions, knowing exactly what to say prevents emotional reactions and protects your legal rights. Use these verbatim scripts:
+              During capability or PIP discussions, channelling formal financial proposals through your independent solicitor protects your legal position. Review these structured agenda points with your instructed solicitor:
             </p>
 
             <div className="space-y-4 mb-6">
               <div className="rounded-xl border border-rule bg-paper p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-coral mb-1">Script 1: In the initial meeting</p>
-                <p className="font-serif text-[16px] text-ink font-[460] mb-2">Request written terms and cite ACAS guidelines</p>
-                <blockquote className="border-l-2 border-coral pl-4 py-1 text-sm text-ink/80 italic">
-                  &quot;Thank you for explaining your perspective. Given that this is an unexpected discussion, I am not in a position to discuss terms or make decisions today. Please send the draft settlement agreement and complete financial proposal to me in writing by email. Under the ACAS Code of Practice 4, I will take the recommended 10 calendar days to review the terms and take independent legal advice.&quot;
-                </blockquote>
+                <p className="text-xs font-semibold uppercase tracking-wider text-coral mb-1">Agenda Item 1: Initial Meeting Records</p>
+                <p className="font-serif text-[16px] text-ink font-[460] mb-2">Requesting written terms and noting ACAS Code 4 guidance</p>
+                <p className="text-sm text-ink/80 m-0">
+                  Ask your employer to provide any proposed settlement terms in writing so you can review them with an independent SRA-regulated solicitor. Under Paragraph 12 of ACAS Code of Practice 4, ACAS recommends a minimum of 10 calendar days as general guidance to consider written terms, although under English contract law (<em>Routledge v Grant</em>) an employer may set binding deadlines or withdraw an unaccepted offer. Never allow an employer&apos;s deadline to pass without taking legal advice.
+                </p>
               </div>
 
               <div className="rounded-xl border border-rule bg-paper p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-coral mb-1">Script 2: If given an artificial deadline</p>
-                <p className="font-serif text-[16px] text-ink font-[460] mb-2">Push back against 24 or 48-hour pressure</p>
-                <blockquote className="border-l-2 border-coral pl-4 py-1 text-sm text-ink/80 italic">
-                  &quot;I recognise your wish to resolve this quickly. However, paragraph 12 of the ACAS Code of Practice 4 establishes that employees should receive a minimum of 10 calendar days to consider written settlement terms and obtain independent legal advice. Imposing an immediate deadline prevents me from taking proper legal advice. I am arranging an appointment with an independent employment solicitor and will respond within the standard ACAS timeframe.&quot;
-                </blockquote>
+                <p className="text-xs font-semibold uppercase tracking-wider text-coral mb-1">Agenda Item 2: Section 111A ERA 1996 Scope Boundary</p>
+                <p className="font-serif text-[16px] text-ink font-[460] mb-2">Assessing pre-termination confidentiality limits</p>
+                <p className="text-sm text-ink/80 m-0">
+                  Section 111A ERA 1996 confidentiality applies strictly to ordinary unfair dismissal claims. It provides zero protection for discrimination claims (Equality Act 2010), whistleblowing (s.43B ERA 1996), breach of contract, or where improper behaviour (such as an unreasonable ultimatum under ACAS Code 4 para 18) occurs.
+                </p>
               </div>
 
               <div className="rounded-xl border border-rule bg-paper p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-coral mb-1">Script 3: Written counter-proposal</p>
-                <p className="font-serif text-[16px] text-ink font-[460] mb-2">Counter-offer email template</p>
-                <blockquote className="border-l-2 border-coral pl-4 py-1 text-xs text-ink/80 font-mono leading-relaxed bg-white p-3 rounded border border-rule">
-                  Subject: Strictly Private and Confidential: Without Prejudice / Section 111A ERA 1996<br /><br />
-                  Dear [Manager / HR Name],<br /><br />
-                  Thank you for forwarding the draft settlement agreement.<br /><br />
-                  I have reviewed the initial proposal. The current offer of notice pay and [insert offer] does not adequately reflect my length of service or the time required to complete a formal capability process under the ACAS Code of Practice 1.<br /><br />
-                  To achieve an amicable exit without proceeding to formal capability reviews or grievance procedures, I am prepared to sign on the following adjusted terms:<br />
-                  1. Contractual notice pay in full under PILON ([number] months gross pay).<br />
-                  2. Ex-gratia compensation payment of £[amount] tax-free under Section 403 of ITEPA 2003.<br />
-                  3. Accrued untaken holiday pay up to the termination date.<br />
-                  4. An agreed positive job reference annexed to the agreement.<br />
-                  5. Employer legal fee contribution of £500 plus VAT to my independent solicitor.<br /><br />
-                  If you agree to these terms, I will instruct my solicitor to sign off the agreement promptly.<br /><br />
-                  Yours sincerely,<br />
-                  [Your Name]
-                </blockquote>
+                <p className="text-xs font-semibold uppercase tracking-wider text-coral mb-1">Agenda Item 3: Solicitor Discussion Agenda - Key Figures Briefing</p>
+                <p className="font-serif text-[16px] text-ink font-[460] mb-2">Financial &amp; contractual points to explore with your solicitor</p>
+                <div className="border-l-2 border-coral pl-4 py-2 text-xs text-ink/80 font-mono leading-relaxed bg-white p-3 rounded border border-rule">
+                  INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR (SECTION 203(3) ERA 1996)<br /><br />
+                  1. Contractual Notice (PILON / PENP): Verify full contractual notice pay and taxation under s.402D ITEPA 2003.<br />
+                  2. Ex-Gratia Termination Payment: Explore potential ex-gratia adjustments in light of the time and cost of a formal capability process under ACAS Code of Practice 1, structured within the £30,000 tax-free threshold under s.403 ITEPA 2003.<br />
+                  3. Accrued Untaken Holiday: Confirm payment of accrued statutory and contractual annual leave up to the termination date.<br />
+                  4. Agreed Reference Schedule: Discuss attaching an agreed factual reference schedule and mutual non-derogatory clauses.<br />
+                  5. Legal Fee Contribution: Confirm the employer&apos;s customary legal fee contribution (£350 to £750 + VAT).<br /><br />
+                  Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position (including extinguishing an open offer by way of counter-offer under Hyde v Wrench).
+                </div>
               </div>
             </div>
           </div>
@@ -640,19 +634,19 @@ export default function PipSettlementGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Step-by-step checklist after receiving an offer</h2>
             <p className="sc-body mb-6">
-              Follow this structured sequence to protect your rights from the moment an exit is suggested:
+              Consider this structured sequence when preparing for your independent solicitor consultation:
             </p>
 
             <ol className="space-y-3 mb-6 pl-1">
               {[
-                'Remain composed in the meeting. Do not resign, do not admit fault, and do not accept verbal terms immediately.',
-                'Request everything in writing. Ask for the formal draft agreement to be sent to your personal email.',
-                'Assert your ACAS 10-day right to review the document and instruct an independent solicitor.',
-                'Gather workplace records. Save contracts, positive appraisals, and medical notes to a personal device.',
-                'Benchmark your entitlements using our free calculator against 2026 statutory rates.',
-                'Instruct an independent employment solicitor. Your employer covers the cost of this advice.',
-                'Submit a structured counter-proposal for notice pay, an ex-gratia sum, and an agreed reference.',
-                'Sign the final agreement once agreed, with your solicitor signing the statutory adviser certificate.',
+                'Take comprehensive notes during the meeting and wait to review written terms with an independent solicitor before making decisions.',
+                'Request the formal draft settlement agreement in writing to your personal email.',
+                'Note the ACAS Code 4 10-calendar-day guideline while ensuring you consult a solicitor before any employer deadline expires.',
+                'Gather workplace records, including your employment contract, appraisals, and relevant correspondence.',
+                'Compare your offer against 2026/27 statutory baselines using our free calculator.',
+                'Instruct an independent SRA-regulated employment solicitor (employers customarily contribute £350 to £750 + VAT toward legal fees).',
+                'Discuss potential adjustments to ex-gratia compensation, notice pay, and reference terms with your instructed solicitor.',
+                'Execute the final agreement once agreed, with your solicitor signing the statutory adviser certificate under s.203(3) ERA 1996.',
               ].map((step, idx) => (
                 <li key={step} className="flex items-start gap-3 text-sm text-ink">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-coral/10 text-coral font-semibold text-xs flex items-center justify-center">

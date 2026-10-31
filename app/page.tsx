@@ -171,10 +171,10 @@ const faqSchema = {
     },
     {
       '@type': 'Question',
-      name: 'When will the solicitor matching service be available?',
+      name: 'How does the solicitor matching service work?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The calculator is live and free to use today. The solicitor matching service is launching shortly. When live, panel solicitors will commit to responding within 24 hours of an introduction, often the same business day.',
+        text: 'The calculator and solicitor matching service are live and free to use today. When you submit your details and verify via SMS OTP, we introduce your enquiry to an independent SRA-regulated employment solicitor from our panel who acts solely in your best interest.',
       },
     },
     {
@@ -190,7 +190,7 @@ const faqSchema = {
       name: 'Is my information shared?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Only with vetted SRA-regulated solicitors you opt in to be introduced to once matching launches. Never with employers, recruiters, or third parties. You can withdraw consent at any point.',
+        text: 'Only with the vetted SRA-regulated solicitor you explicitly opt in to be introduced to. Never with employers, recruiters, or unrelated third parties. You can withdraw consent at any point.',
       },
     },
     {

@@ -483,7 +483,7 @@ export default function Calculator({ onCalculate }: Props) {
           Calculate my estimate →
         </button>
         <p style={{ fontSize: 11, color: '#9AA3AE', textAlign: 'center', margin: 0, lineHeight: 1.5 }}>
-          Estimate only. Not legal advice. Based on UK statutory rates 2025/26.
+          Estimate only. Not legal advice. Based on UK statutory rates for 2026/27 (effective 6 April 2026).
         </p>
       </div>
     </form>

@@ -300,7 +300,7 @@ export default function AcasCalculationsGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">The 10-day consideration period in ACAS-based practice</h2>
             <p className="sc-body mb-4">
-              UK employment law practice requires employers to allow a minimum of 10 calendar days for an employee to review a settlement offer before signing. This standard is reflected in ACAS-based guidance. If your employer is pressuring you with an urgent 24-hour deadline, read our guide on{' '}
+              Paragraph 12 of the ACAS Code of Practice 4 recommends a minimum of 10 calendar days as general guidance for an employee to review a written settlement offer before signing, although under English contract law (<em>Routledge v Grant</em>) an employer may set shorter deadlines or withdraw an unaccepted offer. If your employer is pressuring you with an urgent 24-hour deadline, read our guide on{' '}
               <Link href="/guides/pressured-to-sign/" className="text-coral underline underline-offset-2 hover:text-ink">
                 what are your rights when pressured to sign quickly
               </Link>.

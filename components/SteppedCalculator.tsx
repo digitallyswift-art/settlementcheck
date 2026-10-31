@@ -976,7 +976,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
               margin: '0 0 12px',
               lineHeight: 1.25,
             }}>
-              Do not resign before reading this
+              Important statutory context before resigning
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, color: '#5B6577', lineHeight: 1.55, marginBottom: 20 }}>

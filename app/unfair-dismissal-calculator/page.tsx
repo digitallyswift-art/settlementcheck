@@ -237,7 +237,7 @@ export default function UnfairDismissalCalculatorPage() {
           },
           {
             label: 'A settlement agreement needs independent legal advice',
-            detail: 'It is a legal requirement, and your employer must cover the cost. Signing without advice means the agreement may not even be valid.',
+            detail: 'Independent legal advice is a statutory validity condition under s.203(3) ERA 1996, and employers customarily contribute £350 to £750 + VAT toward your solicitor\'s fees as a commercial term of the agreement.',
           },
         ]}
         steps={UNFAIR_DISMISSAL_STEPS}

@@ -316,9 +316,9 @@ export default function CanEmployerWithdrawSettlementGuide() {
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
-                <h3 className="font-semibold text-ink text-sm mb-2">2. Mark all communications Without Prejudice and Subject to Contract</h3>
+                <h3 className="font-semibold text-ink text-sm mb-2">2. Channel correspondence through your instructed solicitor (Privilege Notice)</h3>
                 <p className="sc-body text-xs text-muted mb-0">
-                  Always head your written responses with &quot;Without Prejudice and Subject to Contract&quot;. This signals that negotiations are exploratory and prevents the employer from treating informal discussions as a final, binding position.
+                  Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position. Under <em>Framlington Group v Barnetson</em>, common law Without Prejudice privilege applies only where a genuine legal dispute exists, and Section 111A ERA 1996 applies solely to ordinary unfair dismissal claims.
                 </p>
               </div>
 
@@ -509,13 +509,13 @@ export default function CanEmployerWithdrawSettlementGuide() {
                   </tr>
                   <tr>
                     <td className="p-3 font-medium text-ink">Signed by both parties</td>
-                    <td className="p-3 text-emerald-700 font-semibold">No</td>
+                    <td className="p-3 text-ink font-semibold">No</td>
                     <td className="p-3">Legally binding contract executed under s.203</td>
                     <td className="p-3">Agreement is legally enforceable. Payment must be made as drafted.</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-medium text-ink">ACAS COT3 verbal agreement</td>
-                    <td className="p-3 text-emerald-700 font-semibold">No</td>
+                    <td className="p-3 text-ink font-semibold">No</td>
                     <td className="p-3">Section 18A Employment Tribunals Act 1996</td>
                     <td className="p-3">Binding immediately upon verbal agreement through ACAS conciliator.</td>
                   </tr>
