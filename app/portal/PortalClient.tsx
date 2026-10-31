@@ -775,7 +775,7 @@ export default function PortalClient() {
                               LIVE IN PRODUCTION
                             </span>
                           ) : (
-                            <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold">
+                            <span className="px-3 py-1 rounded-full bg-[#0B1F3A]/5 text-[#0B1F3A] border border-[#0B1F3A]/20 text-xs font-semibold">
                               ✓ STATUTORY VALIDATED
                             </span>
                           )}
@@ -832,7 +832,7 @@ export default function PortalClient() {
                               </span>
                               <span
                                 className={`text-[11px] font-mono font-semibold px-2 py-0.5 rounded ${
-                                  isTitleOk ? 'bg-emerald-50 text-emerald-800' : 'bg-amber-50 text-amber-800'
+                                  isTitleOk ? 'bg-[#0B1F3A]/5 text-[#0B1F3A]' : 'bg-amber-50 text-amber-800'
                                 }`}
                               >
                                 {titleLen} / 60 chars
@@ -851,7 +851,7 @@ export default function PortalClient() {
                               </span>
                               <span
                                 className={`text-[11px] font-mono font-semibold px-2 py-0.5 rounded ${
-                                  isMetaOk ? 'bg-emerald-50 text-emerald-800' : 'bg-amber-50 text-amber-800'
+                                  isMetaOk ? 'bg-[#0B1F3A]/5 text-[#0B1F3A]' : 'bg-amber-50 text-amber-800'
                                 }`}
                               >
                                 {metaLen} / 155 chars

@@ -534,7 +534,7 @@ export default function CanEmployerWithdrawSettlementGuide() {
             </p>
             <ol className="space-y-4">
               {[
-                'Do not panic and do not sign immediately under pressure. Remember that signing waives your right to claim unfair dismissal or discrimination.',
+                'Avoid signing immediately under pressure before taking independent legal advice. Signing waives your right to bring tribunal claims for unfair dismissal or discrimination.',
                 'Remind your employer in writing of paragraph 12 of the ACAS Code of Practice 4, which recommends at least 10 calendar days to consider terms.',
                 'Clarify in writing that you are actively seeking independent legal advice, which is a mandatory requirement under Section 203 of the Employment Rights Act 1996.',
                 'Instruct an SRA-regulated employment solicitor immediately. Your employer pays the legal fee contribution, so you will not be out of pocket for standard advice.',

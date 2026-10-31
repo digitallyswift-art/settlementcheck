@@ -450,7 +450,7 @@ export default function MaternityRedundancySettlementGuide() {
                   <span className="text-xs font-mono font-bold text-coral-ink">Capped at £751/week</span>
                 </div>
                 <p className="sc-body text-sm mb-2">
-                  Calculated based on your age, length of service, and weekly pay up to the 2026 statutory cap of £751 per week (SI 2026/310). This amount forms the non-negotiable statutory floor.
+                  Calculated based on your age, length of service, and weekly pay up to the 2026 statutory cap of £751 per week (SI 2026/310). This amount forms the calculated statutory baseline (subject to eligibility under Section 141 ERA 1996).
                 </p>
                 <p className="sc-body text-xs text-muted">
                   Under Section 403 of ITEPA 2003, statutory redundancy pay is 100% tax-free.

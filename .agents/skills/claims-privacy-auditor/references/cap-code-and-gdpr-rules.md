@@ -1,8 +1,8 @@
-# ASA / CAP Code & UK GDPR Privacy Reference Guide
+# CMA, ASA / CAP Code & UK GDPR Privacy Reference Guide
 
-## 1. ASA & CAP Code (Edition 12) — Substantiation Standards
+## 1. ASA & CAP Code (Edition 12) - Substantiation Standards
 
-### Rule 3.1 & 3.7 — Objective Claims Must Be Substantiated
+### Rule 3.1 & 3.7 - Objective Claims Must Be Substantiated
 Under the UK Code of Non-broadcast Advertising and Direct & Promotional Marketing (CAP Code):
 - Before distributing or submitting a marketing communication for publication, marketers must hold documentary evidence to prove all claims, whether direct or implied, that are capable of objective substantiation.
 - The adequacy of evidence will be judged if such evidence is sampled randomly or if there is a statistically significant sample size.
@@ -18,9 +18,19 @@ Under the UK Code of Non-broadcast Advertising and Direct & Promotional Marketin
 
 ---
 
-## 2. UK GDPR & Data Protection Act 2018 (ICO Guidance)
+## 2. CMA Consumer Protection (DMCC Act 2024 & CPUTR 2008)
 
-### Article 9 — Processing of Special Category Data
+### Misleading Actions & Misleading Omissions on Legal Fees
+Under the Digital Markets, Competition and Consumers Act 2024 (DMCC Act) and the Consumer Protection from Unfair Trading Regulations 2008 (CPUTR):
+1. **Unqualified "Free" Claims Prohibited**: Presenting independent legal advice as unconditionally "Free" or "£0" without material qualification is a misleading omission if the employer's contribution is capped.
+2. **Customary Contribution vs Statutory Requirement**: Section 203(3) ERA 1996 requires independent legal advice for a valid waiver of statutory claims, but does **not** impose a statutory duty on the employer to pay for that advice. Copy must accurately state that employers *customarily contribute £350 to £750 + VAT* as a commercial convention, and that the employee is responsible for any fees exceeding the employer's agreed contribution.
+3. **Introducer Transparency**: Users must be clearly informed before submitting contact details that SettlementCheck operates as an independent introducer platform referring enquiries to panel SRA-regulated solicitors.
+
+---
+
+## 3. UK GDPR & Data Protection Act 2018 (ICO Guidance)
+
+### Article 9 - Processing of Special Category Data
 - Settlement agreements and dispute chronologies frequently contain Special Category Data:
   - Physical or mental health details (disability discrimination, sick leave, stress, psychiatric injury).
   - Trade union membership or activities.

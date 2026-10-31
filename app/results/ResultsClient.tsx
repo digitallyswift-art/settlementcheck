@@ -116,7 +116,7 @@ function ThreeTierFrameworkHeader() {
           </div>
         </div>
         <div className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-[#E2DCCE]">
-          <span className="w-5 h-5 rounded-full bg-[#4F7060] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+          <span className="w-5 h-5 rounded-full bg-[#0B1F3A] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
             3
           </span>
           <div>
@@ -436,7 +436,7 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
 
   return (
     <div className="rounded-lg p-6 md:p-8" style={{ background: '#F2F7F3', border: '1px solid #BCD0BF' }}>
-      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4" style={{ background: '#fff', color: '#4F7060', border: '1px solid #BCD0BF' }}>
+      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4" style={{ background: '#fff', color: '#0B1F3A', border: '1px solid #BCD0BF' }}>
         <CheckIcon size={12} /> Within Reference Range
       </span>
       <h2 className="sc-h2 text-[#0B1F3A] mb-3">This offer aligns with or exceeds the illustrative range for your circumstances.</h2>
@@ -1030,7 +1030,7 @@ function CaseBriefSection({
                   {selectedVentoBand && (
                     <tr className="border-b border-[#E2DCCE]">
                       <td className="p-3 text-[#0B1F3A] font-medium">Injury to Feelings ({selectedVentoBand})</td>
-                      <td className="p-3 text-right font-mono font-semibold text-[#4F7060]">{formatCurrency(ventoVal)}</td>
+                      <td className="p-3 text-right font-mono font-semibold text-[#0B1F3A]">{formatCurrency(ventoVal)}</td>
                       <td className="p-3 text-[#8A93A3] italic">s.124 EqA 2010 (Vento)</td>
                     </tr>
                   )}
@@ -1216,37 +1216,29 @@ function NegotiationDraftsman({
   }
 
   // Active offer mode: offer > 0
-  const upliftSubject = 'Settlement Agreement Discussion - Summary of Figures'
-  const upliftBody = `Dear [HR Manager / Line Manager],
+  const upliftSubject = 'Intake Agenda for Your Instructed Solicitor - Summary of Figures'
+  const upliftBody = `INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR (SECTION 203(3) ERA 1996)
+Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
 
-Thank you for providing the proposed settlement agreement terms for my consideration.
+1. STATUTORY BASELINE CALCULATIONS (SUBJECT TO ELIGIBILITY)
+${redundancyAmount > 0 ? `- Statutory Redundancy: Based on ${yearsNum} complete ${yearsNum === 1 ? 'year' : 'years'} of continuous service, calculated statutory redundancy is ${formatCurrency(redundancyAmount)} (s.162 ERA 1996, subject to s.141 eligibility).\n- Notice Pay (PILON): Under contract and Section 86 ERA 1996, calculated notice baseline is ${formatCurrency(pilonAmount)}.\n- Total Calculated Statutory Baseline: ${formatCurrency(minFloor)}.` : `- Notice Pay (PILON): Under contract and Section 86 ERA 1996, calculated notice baseline is ${formatCurrency(pilonAmount)}.\n- Total Calculated Statutory Baseline: ${formatCurrency(minFloor)}.`}
 
-To assist our discussions, I have reviewed the statutory baseline under the Employment Rights Act 1996 based on my continuous service:
+2. OFFER COMPARISON & DISCUSSION POINTS FOR YOUR SOLICITOR
+- Current Recorded Employer Offer: ${formatCurrency(offer)}
+- Calculated Illustrative Reference Figure to Discuss with Solicitor: ${formatCurrency(targetUplift)}
 
-${redundancyAmount > 0 ? `1. Statutory Redundancy: Based on my ${yearsNum} complete ${yearsNum === 1 ? 'year' : 'years'} of continuous service, my statutory redundancy entitlement is ${formatCurrency(redundancyAmount)} (s.162 ERA 1996).\n2. Notice Pay (PILON): Under my contract and Section 86 ERA 1996, my notice entitlement is ${formatCurrency(pilonAmount)}.\n3. Calculated Statutory Baseline: My calculated baseline entitlement totals ${formatCurrency(minFloor)}.` : `1. Notice Pay (PILON): Under my contract and Section 86 ERA 1996, my notice entitlement is ${formatCurrency(pilonAmount)}.\n2. Calculated Statutory Baseline: My calculated notice baseline totals ${formatCurrency(minFloor)}.`}
+3. INDEPENDENT LEGAL ADVICE FEE CONTRIBUTION
+- Point to confirm with your instructed solicitor: Whether the employer's draft agreement includes the customary commercial legal fee contribution (commonly £350 to £750 plus VAT) toward independent Section 203(3) ERA 1996 review.`
 
-The current proposed figure is ${formatCurrency(offer)}. Having regard to my length of service and the waiver of employment rights required by the agreement, I would like to explore whether the total package can be adjusted to ${formatCurrency(targetUplift)}.
+  const feeSubject = 'Intake Agenda for Your Instructed Solicitor - Fee Contribution Check'
+  const feeBody = `INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR (SECTION 203(3) ERA 1996)
+Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
 
-Additionally, in line with standard UK practice and Section 203(3) of the Employment Rights Act 1996, please confirm that the company will provide an employer legal fee contribution (commonly £500 plus VAT) so that my appointed independent solicitor can review and advise on the terms.
+1. SECTION 203(3) ERA 1996 INDEPENDENT ADVISER REQUIREMENT
+- Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement requires independent legal advice from an SRA-regulated solicitor or certified legal adviser to waive statutory claims.
 
-I look forward to discussing this constructively.
-
-Kind regards,
-[Your Name]`
-
-  const feeSubject = 'Settlement Agreement - Independent Legal Advice Fee Contribution'
-  const feeBody = `Dear [HR Manager / Line Manager],
-
-Thank you for sending through the draft settlement agreement.
-
-Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally binding once the employee has received independent legal advice from an SRA-regulated solicitor or certified legal adviser.
-
-Could you please confirm that the company will provide an employer legal fee contribution (commonly £500 plus VAT), paid directly to my appointed solicitor upon completion of the agreement?
-
-Once confirmed, I will instruct my solicitor to proceed with reviewing the agreement.
-
-Kind regards,
-[Your Name]`
+2. FEE CONTRIBUTION CLAUSE TO VERIFY WITH YOUR SOLICITOR
+- Confirm whether the draft agreement includes a customary employer legal fee contribution clause (commonly £350 to £750 plus VAT, paid directly to the instructed solicitor upon completion), noting that any shortfall above the employer's contribution is payable by the employee unless agreed otherwise.`
 
   const currentSubject = activeTemplate === 'uplift' ? upliftSubject : feeSubject
   const currentBody = activeTemplate === 'uplift' ? upliftBody : feeBody
@@ -1346,8 +1338,8 @@ Kind regards,
               onClick={handleCopy}
               className="px-4 py-2.5 rounded-lg text-[13px] font-bold transition-all flex items-center justify-center gap-2 cursor-pointer border"
               style={{
-                background: copied ? '#4F7060' : '#ffffff',
-                borderColor: copied ? '#4F7060' : '#C8D3DF',
+                background: copied ? '#0B1F3A' : '#ffffff',
+                borderColor: copied ? '#0B1F3A' : '#C8D3DF',
                 color: copied ? '#ffffff' : '#0B1F3A',
               }}
             >
@@ -1906,14 +1898,14 @@ function GetMatchedCTA({
     },
     WITHIN_RANGE: {
       badge: 'Within reference range',
-      badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
+      badgeColor: '#0B1F3A', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
       heading: 'Ensure contract terms are balanced.',
       body: 'While the financial figure aligns with standard ranges, settlement agreements include warranties, confidentiality restrictions, and legal waivers. Employers customarily contribute to the cost of your independent legal review.',
       cta: 'Secure your independent legal review',
     },
     ABOVE_TYPICAL: {
       badge: 'Above reference range',
-      badgeColor: '#4F7060', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
+      badgeColor: '#0B1F3A', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
       heading: 'Review terms before final sign-off.',
       body: 'The financial figure is above standard benchmarks. An independent solicitor will ensure the non-financial covenants and tax allocations are properly structured before you sign. Employers customarily contribute toward this advice.',
       cta: 'Secure your independent legal review',
@@ -1942,12 +1934,12 @@ function GetMatchedCTA({
         {/* Trust USPs */}
         <div className="flex flex-col gap-2.5 mb-6">
           {[
-            '100% Free. Legal fees covered by your employer.',
+            'Legal fees customarily covered by your employer (£350 to £750 + VAT).',
             'Your data is sent to a single matched firm only.',
             'Zero obligation following your introductory call.',
           ].map(t => (
             <div key={t} className="flex items-center gap-2.5">
-              <span className="flex-shrink-0 w-4.5 h-4.5 rounded-full bg-[#4F7060] flex items-center justify-center">
+              <span className="flex-shrink-0 w-4.5 h-4.5 rounded-full bg-[#0B1F3A] flex items-center justify-center">
                 <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
@@ -2027,8 +2019,8 @@ function TribunalLimitationClock() {
         </div>
 
         {daysRemaining > 30 ? (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-[#4F7060]/10 text-[#4F7060] border border-[#4F7060]/20 flex-shrink-0">
-            <span className="w-2 h-2 rounded-full bg-[#4F7060]" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-[#0B1F3A]/10 text-[#0B1F3A] border border-[#0B1F3A]/20 flex-shrink-0">
+            <span className="w-2 h-2 rounded-full bg-[#0B1F3A]" />
             {daysRemaining} Days Remaining
           </span>
         ) : daysRemaining > 0 ? (
@@ -2127,8 +2119,8 @@ function LocalSpecialistAvailabilityCard({
           </div>
         </div>
 
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#4F7060]/10 text-[#4F7060] border border-[#4F7060]/20 flex-shrink-0">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#4F7060]" />
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#0B1F3A]/10 text-[#0B1F3A] border border-[#0B1F3A]/20 flex-shrink-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#0B1F3A]" />
           Capacity: Available
         </span>
       </div>
@@ -2177,7 +2169,7 @@ function ResultsContent() {
     contractualNotice:   searchParams.get('contractualNotice')   ?? '0',
   })
 
-  // Selected Vento Band for interactive discrimination modeling
+  // Selected Vento Band for interactive discrimination modelling
   const [selectedVentoBand, setSelectedVentoBand] = useState<'lower' | 'middle' | 'upper' | 'exceptional' | null>(null)
 
   // Interactive Pension Sacrifice hoisted state
@@ -2381,8 +2373,8 @@ function ResultsContent() {
                 {/* Reassurance progress indicator */}
                 <div className="flex items-center justify-between text-[13px] text-muted border-b border-[#E2DCCE] pb-3 no-print">
                   <span>Case ID: SC-{Math.abs(salary - age * totalMonths).toString(16).toUpperCase()}</span>
-                  <span className="flex items-center gap-1.5 font-semibold text-[#4F7060]">
-                    <span className="w-2 h-2 rounded-full bg-[#4F7060] animate-pulse"></span>
+                  <span className="flex items-center gap-1.5 font-semibold text-[#0B1F3A]">
+                    <span className="w-2 h-2 rounded-full bg-[#0B1F3A] animate-pulse"></span>
                     Verified: 2026 UK Statutory Rates
                   </span>
                 </div>
@@ -2513,9 +2505,9 @@ function ResultsContent() {
 
                 {/* ── TIER 3: MATTERS FOR INDEPENDENT LEGAL REVIEW ── */}
                 <div className="flex flex-col gap-4 mt-2">
-                  <div className="flex items-center justify-between border-b-2 border-[#4F7060] pb-2">
+                  <div className="flex items-center justify-between border-b-2 border-[#0B1F3A] pb-2">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#4F7060] text-white">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#0B1F3A] text-white">
                         Tier 3
                       </span>
                       <h3 className="text-[15px] font-bold text-[#0B1F3A] m-0">

@@ -323,7 +323,7 @@ export default function ProtectiveAwardGuide() {
               The UK Government has introduced the Employment Rights Bill 2024-25, which proposes significant changes to collective redundancy consultation rules <sup>6</sup>.
             </p>
             <p className="sc-body mb-4">
-              These proposals include doubling the maximum protective award from 90 days to 180 days. They also propose removing the requirement that the 20 redundancies must occur at one establishment. Under these proposals, the redundancies would be calculated across the entire business, preventing employers from avoiding consultation by splitting layoffs across different offices.
+              These proposals include doubling the maximum protective award from 90 days to 180 days. They also propose removing the requirement that the 20 redundancies must occur at one establishment. Under these proposals, the redundancies would be calculated across the entire business, preventing employers from avoiding consultation by splitting redundancies across different offices.
             </p>
             <div className="bg-[#FFF8F6] border border-coral/20 rounded-lg p-5 flex items-start gap-3">
               <AlertIcon />

@@ -65,8 +65,8 @@ export async function POST(req: NextRequest) {
     const verdictColor: Record<string, string> = {
       BELOW_MINIMUM: '#a8341f',
       BELOW_TYPICAL: '#b5802a',
-      WITHIN_RANGE:  '#4f7060',
-      ABOVE_TYPICAL: '#4f7060',
+      WITHIN_RANGE:  '#0B1F3A',
+      ABOVE_TYPICAL: '#0B1F3A',
     }
 
     const vLabel = verdictLabel[verdict] ?? verdict

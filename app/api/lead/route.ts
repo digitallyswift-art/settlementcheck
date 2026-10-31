@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
               </tr>
               <tr>
                 <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Verdict</td>
-                <td style="padding: 10px 0; font-weight: 600; border-bottom: 1px solid #f3f4f6; color: ${verdict === 'BELOW_MINIMUM' ? '#a8341f' : verdict === 'BELOW_TYPICAL' ? '#b5802a' : '#4f7060'};">${verdictLabel[verdict] ?? verdict}</td>
+                <td style="padding: 10px 0; font-weight: 600; border-bottom: 1px solid #f3f4f6; color: ${verdict === 'BELOW_MINIMUM' ? '#a8341f' : verdict === 'BELOW_TYPICAL' ? '#b5802a' : '#0B1F3A'};">${verdictLabel[verdict] ?? verdict}</td>
               </tr>
               <tr>
                 <td style="padding: 10px 0; color: #6b7280; border-bottom: 1px solid #f3f4f6;">Offer amount</td>
@@ -180,7 +180,7 @@ export async function POST(req: NextRequest) {
         'Your details are with us.',
         `We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (${safeContactTime.toLowerCase()}).`,
         '',
-        'The advice is free. Your employer is required to cover the legal fees for your independent advice on a settlement agreement.',
+        'Employers customarily contribute toward the legal fees (£350 to £750 + VAT) for your independent advice on a settlement agreement under Section 203(3) of the Employment Rights Act 1996.',
         '',
         '---',
         'SettlementCheck • United Kingdom • team@settlementcheck.co.uk',
@@ -201,7 +201,7 @@ export async function POST(req: NextRequest) {
             <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0 0 16px; letter-spacing: -0.02em;">Your details are with us</h1>
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">Hi ${first_name.trim()},</p>
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (${safeContactTime.toLowerCase()}).</p>
-            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">The advice is free. Your employer is required to cover the legal fees for your independent advice on a settlement agreement.</p>
+            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">Employers customarily contribute toward the legal fees (£350 to £750 + VAT) for your independent advice on a settlement agreement under Section 203(3) of the Employment Rights Act 1996.</p>
             <div style="background: #f9fafb; border-radius: 8px; padding: 16px;">
               <p style="color: #6b7280; font-size: 13px; margin: 0; line-height: 1.6;">SettlementCheck is an introduction service, not a law firm. We connect you with SRA-regulated solicitors. We do not provide legal advice.</p>
             </div>

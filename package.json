@@ -26,7 +26,8 @@
     "audit:penp": "npx tsx scripts/audit/verify-penp.ts",
     "lint:audit": "npx tsx scripts/audit/lint-audit-naming.ts",
     "audit:all": "npx tsx scripts/audit/run-all.ts",
-    "verify": "node scripts/verify-quiet.mjs"
+    "verify": "node scripts/verify-quiet.mjs",
+    "prepare": "node scripts/install-git-hooks.mjs"
   },
   "license": "ISC",
   "dependencies": {

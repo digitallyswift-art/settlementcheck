@@ -303,6 +303,51 @@ for (const f of prodFiles) {
 }
 assert(!foundAdversarialTrap, `Zero unqualified 10-day rights or direct-send litigation traps across production components [found: ${trapLocation}]`);
 
+// Test 6G: Zero FCA Claims Management evaluation phrases (FSMA 2000 RAO 2001 art. 89G)
+let foundFcaCmc = false;
+let fcaLocation = '';
+const reFcaCmc = /\b(we will recover what you are owed|your claim is worth £|you have a strong tribunal case|guaranteed tribunal win)\b/i;
+
+for (const f of prodFiles) {
+  const content = fs.readFileSync(f, 'utf8');
+  if (reFcaCmc.test(content)) {
+    foundFcaCmc = true;
+    fcaLocation = f;
+    break;
+  }
+}
+assert(!foundFcaCmc, `Zero FCA regulated Claims Management evaluation phrases across production components [found: ${fcaLocation}]`);
+
+// Test 6H: Zero Trap 4 unqualified statutory floors or Trap 5 / CMA false statutory fee obligations
+let foundTrap4Or5 = false;
+let trap4Or5Location = '';
+const reTrap4Or5 = /\b(non-negotiable statutory floor|employer is (?:legally )?required to (?:pay|cover)|employers must (?:pay|cover) (?:the cost of )?your legal (?:advice|fee)|100% free legal advice)\b/i;
+
+for (const f of prodFiles) {
+  const content = fs.readFileSync(f, 'utf8');
+  if (reTrap4Or5.test(content)) {
+    foundTrap4Or5 = true;
+    trap4Or5Location = f;
+    break;
+  }
+}
+assert(!foundTrap4Or5, `Zero Trap 4 unqualified floors or Trap 5 / CMA false statutory fee obligations across production components [found: ${trap4Or5Location}]`);
+
+// Test 6I: Zero US English spellings across production components
+let foundUsSpelling = false;
+let usSpellingLocation = '';
+const reUsSpelling = /\b(modeling|optimizer|finalize|finalizing|honor|honored|layoffs?|labor court)\b/i;
+
+for (const f of prodFiles) {
+  const content = fs.readFileSync(f, 'utf8');
+  if (reUsSpelling.test(content)) {
+    foundUsSpelling = true;
+    usSpellingLocation = f;
+    break;
+  }
+}
+assert(!foundUsSpelling, `Zero US English spellings across production components [found: ${usSpellingLocation}]`);
+
 // Summary Report
 console.log('\n====================================================');
 console.log(` Eval Results: ${passedTests}/${totalTests} Passed (${Math.round((passedTests / totalTests) * 100)}%)`);

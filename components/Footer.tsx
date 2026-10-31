@@ -59,13 +59,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* For solicitors */}
+          {/* Solicitors & Partners */}
           <div>
-            <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Solicitors</h4>
+            <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Solicitors &amp; Partners</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
                 { href: '/get-matched/', label: 'Find a solicitor' },
-                { href: '/for-solicitors/', label: 'Join our panel' },
+                { href: '/for-solicitors/', label: 'For solicitors' },
                 { href: '/for-employers/', label: 'For employers' },
                 { href: '/for-solicitors/#how-it-works', label: 'How it works for firms' },
                 { href: '/portal/', label: 'Partner portal' },

@@ -10,7 +10,7 @@ import { STATUTORY_RATES_2026_27 } from '@/lib/statutory-rates'
 export default function ForEmployersClient() {
   const [activeTab, setActiveTab] = useState<'calculator' | 's111a' | 'dispatch'>('calculator')
 
-  // Redundancy & Exit Modeler State
+  // Redundancy & Exit Modeller State
   const [headcount, setHeadcount] = useState<number>(5)
   const [avgSalary, setAvgSalary] = useState<number>(42000)
   const [avgTenure, setAvgTenure] = useState<number>(4)
@@ -37,7 +37,7 @@ export default function ForEmployersClient() {
   const [dispatchNotes, setDispatchNotes] = useState<string>('')
   const [dispatchSubmitted, setDispatchSubmitted] = useState<boolean>(false)
 
-  // Deterministic Mathematical Modeling
+  // Deterministic Mathematical Modelling
   const ageMultiplier = ageBand === 'under22' ? 0.5 : ageBand === '41plus' ? 1.5 : 1.0
   const weeklyPay = avgSalary / 52
   const cappedWeeklyPay = Math.min(weeklyPay, STATUTORY_RATES_2026_27.weeklyCapGB)
@@ -124,7 +124,7 @@ ${companyName}`
       a: 'Yes. Under Section 111A of the Employment Rights Act 1996, employers can initiate confidential pre-termination discussions without an existing dispute. Provided there is no "improper behaviour" (such as ultimatums or unworkable deadlines under ACAS Code 4), these discussions are inadmissible in ordinary unfair dismissal tribunal proceedings.',
     },
     {
-      q: 'Why is an employer required to pay for the employee’s independent solicitor?',
+      q: 'Why do employers customarily contribute toward the employee’s independent solicitor?',
       a: 'Under Section 203(3) of the Employment Rights Act 1996, an employee cannot legally waive statutory employment tribunal claims unless they receive advice from a qualified, insured independent adviser (an SRA-regulated solicitor). To make the waiver legally binding, employers cover this fee as standard practice, typically contributing £350 to £750 + VAT.',
     },
     {
@@ -179,7 +179,7 @@ ${companyName}`
                       : 'text-muted hover:text-ink hover:bg-paper'
                   }`}
                 >
-                  1. Exit &amp; Redundancy Modeler
+                  1. Exit &amp; Redundancy Modeller
                 </button>
                 <button
                   type="button"
@@ -208,7 +208,7 @@ ${companyName}`
           </div>
         </section>
 
-        {/* Tab 1: Interactive Redundancy & Exit Budget Modeler */}
+        {/* Tab 1: Interactive Redundancy & Exit Budget Modeller */}
         {activeTab === 'calculator' && (
           <section className="py-12 bg-canvas">
             <div className="sc-container">

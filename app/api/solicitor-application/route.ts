@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
               </tr>`}
               <tr>
                 <td style="padding: 10px 0; color: #6b7280;">SRA confirmed</td>
-                <td style="padding: 10px 0; color: #16a34a; font-weight: 600;">${sra_confirmed ? '&#10003; Yes' : '&#10007; No'}</td>
+                <td style="padding: 10px 0; color: #0B1F3A; font-weight: 600;">${sra_confirmed ? '&#10003; Yes' : '&#10007; No'}</td>
               </tr>
             </table>
             <div style="margin-top: 32px; padding: 16px; background: #f9fafb; border-radius: 8px;">

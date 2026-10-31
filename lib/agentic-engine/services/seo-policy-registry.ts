@@ -49,6 +49,26 @@ const BASELINE_POLICIES: SeoGuardrailPolicyRule[] = [
     source: 'BASELINE_INVARIANT',
     createdAt: '2026-10-23T19:50:00.000Z',
   },
+  {
+    id: 'policy_global_sra_fca_cma_adversarial_invariants',
+    scopeType: 'GLOBAL',
+    scopeValue: '*',
+    ruleTitle: 'SRA, FCA, CMA & 5 Adversarial Legal Traps Compliance',
+    constraintDescription:
+      "Use strictly descriptive phrasing (never prescriptive imperatives like 'Do not sign', 'Do not accept', 'You should ask for', or 'What to say to your employer'). Clarify that ACAS Code 4 (10 calendar days) is statutory guidance rather than an irrevocable right (Routledge v Grant), that s.111A applies only to ordinary unfair dismissal, and that employers customarily contribute £350 to £750 + VAT toward independent legal advice as a commercial practice rather than a statutory obligation.",
+    lockTitleOverwrite: false,
+    requiredTokens: [],
+    prohibitedPhrases: [
+      'do not sign',
+      'do not accept this offer',
+      'what to say to your employer',
+      'legal right to 10 days',
+      'legally required to pay your legal fees',
+      'without prejudice proposal',
+    ],
+    source: 'BASELINE_INVARIANT',
+    createdAt: '2026-10-31T23:00:00.000Z',
+  },
 ];
 
 export class SeoPolicyRegistry {

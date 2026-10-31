@@ -441,7 +441,7 @@ export default function EmployeeWaitlistCapture() {
                 height="18"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#16a34a"
+                stroke="#0B1F3A"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"

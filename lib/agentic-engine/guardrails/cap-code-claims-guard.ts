@@ -133,6 +133,14 @@ export const CAP_CODE_RESTRICTED_PATTERNS: Array<{
     severity: 'P1',
     safeReplacement: 'independent UK settlement calculator',
   },
+  {
+    phrase: 'cma unqualified free legal advice claim',
+    regex: /\b(100%\s+free\s+legal\s+advice|completely\s+free\s+solicitor\s+representation|your\s+employer\s+is\s+legally\s+required\s+to\s+pay\s+all\s+your\s+legal\s+fees)\b/i,
+    riskReason: 'Misleading omission under CMA DMCC Act 2024 / CPUTR 2008: Employers customarily contribute £350-£750 + VAT toward legal advice, and any excess is payable by the employee.',
+    capCodeRule: 'CMA DMCC Act 2024 / CAP Code 3.1 (Pricing & Fee Transparency)',
+    severity: 'P1',
+    safeReplacement: 'your employer customarily contributes toward your independent legal advice',
+  },
 ];
 
 /**

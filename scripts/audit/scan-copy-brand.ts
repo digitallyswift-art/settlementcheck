@@ -1,7 +1,10 @@
 /**
- * Deterministic Brand & Copy Compliance Scanner
- * Scans app/ and components/ for em dashes, banned buzzwords, US legal terms, and generic CTAs
- * 
+ * Deterministic Brand, Linguistic & UK English Compliance Scanner
+ * Scans app/ and components/ for em dashes, banned buzzwords, US English spellings,
+ * forbidden green palette tokens, and prescriptive CTAs.
+ *
+ * Exits with code 1 if any P1 or P2 violation is detected.
+ *
  * Usage:
  *   npx tsx scripts/audit/scan-copy-brand.ts
  */
@@ -33,7 +36,7 @@ const COPY_RULES: CopyRule[] = [
     name: 'BANNED_BUZZWORD_REACH_OUT',
     regex: /\breach\s+out\b/i,
     severity: 'P2',
-    guideline: 'Corporate cliché. Use "contact", "speak to", or "instruct".',
+    guideline: 'Corporate cliche. Use "contact", "speak to", or "instruct".',
   },
   {
     name: 'BANNED_BUZZWORD_TOUCH_BASE',
@@ -51,7 +54,7 @@ const COPY_RULES: CopyRule[] = [
     name: 'AI_CLICHE_TAPESTRY_DELVE',
     regex: /\b(tapestry|delve|navigating\s+the\s+complexities)\b/i,
     severity: 'P1',
-    guideline: 'Robotic AI cliché prohibited by Anti-AI Quality Guard.',
+    guideline: 'Robotic AI cliche prohibited by Anti-AI Quality Guard.',
   },
   {
     name: 'INTERNAL_CRO_META_JARGON',
@@ -60,10 +63,22 @@ const COPY_RULES: CopyRule[] = [
     guideline: 'Internal CRO or prompt framework leakage. Never use internal meta-jargon in frontend prospect copy.',
   },
   {
+    name: 'US_ENGLISH_SPELLING_DETECTED',
+    regex: /\b(modeling|optimizer|finalize|finalizing|honor|honored)\b/i,
+    severity: 'P1',
+    guideline: 'Strict British English required: use "modelling", "optimiser", "finalise", "honour".',
+  },
+  {
+    name: 'FORBIDDEN_GREEN_PALETTE_TOKEN',
+    regex: /(?:text-emerald-|bg-emerald-|border-emerald-|#4F7060|#16a34a|#86EFAC)/i,
+    severity: 'P1',
+    guideline: 'Brand Hard Stop (AGENTS.md Section 3): Never use green on consumer routes. Use Navy (#0B1F3A), Coral (#D9603B), or Off-white (#F7F4EE).',
+  },
+  {
     name: 'PRESCRIPTIVE_LEGAL_ADVICE_DETECTED',
     regex: /\b(what to say to your employer|you should ask for|do not accept this offer|the current offer is £0|without prejudice proposal)\b/i,
     severity: 'P1',
-    guideline: 'Prescriptive legal instruction violates SRA boundary standards. Use descriptive phrasing (e.g. "Questions to consider with a solicitor", "Calculated illustrative negotiation range", "Offer is below the statutory baseline").',
+    guideline: 'Prescriptive legal instruction violates SRA boundary standards. Use descriptive phrasing.',
   },
   {
     name: 'UNQUALIFIED_TEN_DAY_RIGHT_DETECTED',
@@ -117,7 +132,15 @@ const issues: Finding[] = [];
 
 for (const f of files) {
   const rel = path.relative(process.cwd(), f).replace(/\\/g, '/');
-  if (rel.includes('test') || rel.includes('audit') || rel.includes('agentic-engine/guardrails')) continue;
+  if (
+    rel.includes('test') ||
+    rel.includes('audit') ||
+    rel.includes('agentic-engine/guardrails') ||
+    rel.startsWith('app/cockpit/') ||
+    rel.startsWith('app/admin/')
+  ) {
+    continue;
+  }
 
   const content = fs.readFileSync(f, 'utf-8');
   const lines = content.split('\n');
@@ -154,3 +177,7 @@ if (!fs.existsSync(outputDir)) {
 const outPath = path.join(outputDir, 'brand-copy-findings.json');
 fs.writeFileSync(outPath, JSON.stringify(issues, null, 2), 'utf-8');
 console.log(`Structured copy findings saved to: ${outPath}`);
+
+if (issues.length > 0) {
+  process.exit(1);
+}

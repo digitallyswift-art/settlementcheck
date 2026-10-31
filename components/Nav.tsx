@@ -99,7 +99,7 @@ export default function Nav() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 flex-nowrap" aria-label="Primary">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 flex-nowrap" aria-label="Primary">
           {/* Calculators dropdown */}
           <div
             className="relative"
@@ -226,30 +226,11 @@ export default function Nav() {
           </Link>
         </nav>
 
-        {/* Desktop CTAs */}
-        <div className="hidden lg:flex items-center gap-2 xl:gap-3 flex-nowrap shrink-0">
-          <Link
-            href="/get-matched/"
-            className="text-[12.5px] xl:text-[13.5px] font-medium text-coral hover:text-coral-ink transition-colors duration-[160ms] px-1 whitespace-nowrap"
-          >
-            Find a solicitor
-          </Link>
-          <span className="hidden xl:inline-block w-[1px] h-3.5 bg-rule shrink-0" aria-hidden="true" />
-          <Link
-            href="/for-solicitors/"
-            className="text-[12px] xl:text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1 whitespace-nowrap"
-          >
-            For solicitors
-          </Link>
-          <Link
-            href="/for-employers/"
-            className="text-[12px] xl:text-[13px] text-muted hover:text-ink transition-colors duration-[160ms] px-1 whitespace-nowrap"
-          >
-            For employers
-          </Link>
+        {/* Desktop Primary CTA */}
+        <div className="hidden lg:flex items-center flex-nowrap shrink-0">
           <Link
             href="/calculator/"
-            className="btn-accent text-[13px] xl:text-[14px] px-3.5 py-2 xl:px-4.5 xl:py-2.5 whitespace-nowrap shrink-0"
+            className="btn-accent text-[13px] xl:text-[14px] px-4 py-2 xl:px-5 xl:py-2.5 whitespace-nowrap shrink-0"
           >
             Check my offer →
           </Link>
@@ -365,15 +346,6 @@ export default function Nav() {
 
           <Link href="/how-it-works/" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
             How it works
-          </Link>
-          <Link href="/get-matched/" className="text-[15px] font-medium text-coral py-2" onClick={() => setMobileOpen(false)}>
-            Find a solicitor
-          </Link>
-          <Link href="/for-solicitors/" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
-            For solicitors
-          </Link>
-          <Link href="/for-employers/" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
-            For employers
           </Link>
           <Link
             href="/calculator/"

@@ -15,7 +15,7 @@
  */
 
 import { STATUTORY_RATES_2026_27 } from '@/lib/statutory-rates';
-import { enforceSraRegulatoryBoundary } from '../guardrails/sra-boundary-guard';
+import { enforceSraRegulatoryBoundary, auditRegulatoryAndAdversarialTraps } from '../guardrails/sra-boundary-guard';
 import { auditClaimsAndSubstantiation } from '../guardrails/cap-code-claims-guard';
 import { StatutoryAuditVerdict, ConversionCopyPackage, SeoTechnicalBrief } from '../types';
 
@@ -104,25 +104,29 @@ export class LegalComplianceAuditorAgent {
       governingLegislation.push('Equality Act 2010 (Vento Guidance 2026/27)');
     }
 
-    // 6. Audit Employer Legal Fee Contribution
+    // 6. Audit Employer Legal Fee Contribution (Trap 5 & CMA Fee Transparency)
     const hasEmployerFees = lower.includes('employer') && 
-      (lower.includes('fee') || lower.includes('cost'));
+      (lower.includes('fee') || lower.includes('cost') || lower.includes('contribut'));
     if (!hasEmployerFees) {
-      issues.push('Missing statutory employee protection note: Must indicate employer covers legal advice fees.');
+      issues.push('Missing statutory employee protection note: Must indicate employers customarily contribute toward independent legal advice fees.');
     }
 
-    // 7. Audit SRA Regulatory Boundary (Legal Services Act 2007)
+    // 7. Audit SRA, FCA, CMA & 5 Adversarial Legal Traps
     const boundaryCheck = enforceSraRegulatoryBoundary(fullText);
-    const sraPassed = !boundaryCheck.isModified;
+    const trapAudit = auditRegulatoryAndAdversarialTraps(fullText);
+    const sraPassed = !boundaryCheck.isModified && trapAudit.isCompliant;
     if (!sraPassed) {
-      issues.push('SRA Boundary warning: Phrasing crossed into formal legal advice rather than objective statutory calculation/triage.');
+      issues.push('SRA / FCA / CMA Boundary warning: Phrasing crossed into formal legal advice, regulated claims management, or an adversarial legal trap.');
+      for (const v of trapAudit.violations) {
+        issues.push(`[${v.regulator}] ${v.rule}: ${v.detail}`);
+      }
     }
 
-    // 8. Audit Marketing Claims under ASA / CAP Code (claims-privacy-auditor)
+    // 8. Audit Marketing Claims under CMA / ASA CAP Code (claims-privacy-auditor)
     const claimsCheck = auditClaimsAndSubstantiation(fullText);
     if (!claimsCheck.isCompliant) {
       for (const v of claimsCheck.violations) {
-        issues.push(`CAP Code substantiation risk: "${v.phrase}" violates ${v.capCodeRule} (${v.riskReason})`);
+        issues.push(`CMA / CAP Code substantiation risk: "${v.phrase}" violates ${v.capCodeRule} (${v.riskReason})`);
       }
     }
 
