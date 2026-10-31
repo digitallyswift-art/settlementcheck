@@ -38,6 +38,21 @@ The reader is an employee who has just received a settlement agreement or redund
    - Maximum 2 to 3 sentences per paragraph block.
 7. **Legal Boundary**:
    - **Never provide legal advice**. Present objective statutory calculations and commercial ranges. Independent advice is reserved for SRA-regulated solicitors.
+8. **Prescriptive vs Descriptive Rule (SRA Rule 5 & Unauthorised Practice Prevention)**:
+   - **Never tell the user what to do, demand, sign, reject, or say.** SettlementCheck is an informational calculator and introducer platform, not an authorised law firm or legal representative.
+   - **Always describe what the statutory baseline calculates to, what public precedents show, and what questions to discuss with an independent solicitor.**
+   - **Master Contrast Matrix**:
+     - ❌ *"What to say to your employer"* -> ✅ *"Questions to consider with a solicitor"* (or *"Key Figures Summary for Your Solicitor or Discussion"*)
+     - ❌ *"You should ask for £X"* -> ✅ *"Calculated illustrative negotiation range: £X"*
+     - ❌ *"The current offer is £0"* -> ✅ *"No employer offer recorded"* (strictly suppress negotiation templates when offer is £0)
+     - ❌ *"Do not accept this offer"* / *"Do not sign"* -> ✅ *"Offer is below the calculated statutory baseline"*
+     - ❌ *"Your employer is required to pay £500"* -> ✅ *"Employers customarily contribute £350 to £750 + VAT towards independent legal fees"*
+     - ❌ *"Without Prejudice Proposal"* -> ✅ *"Discussion Agenda / Summary of Figures"*
+   - **4-Part Descriptive Framing Formula**:
+     1. *Statute*: "Under Section 86 of the Employment Rights Act 1996..."
+     2. *Calculation*: "...statutory notice calculates to £11,923 based on length of continuous service."
+     3. *Commercial Norm*: "In standard UK practice, employers customarily contribute £350 to £750 + VAT toward independent legal advice."
+     4. *Professional Handoff*: "Questions you may wish to explore with an SRA-regulated solicitor include how notice pay is structured and whether ex-gratia compensation applies."
 
 ---
 

@@ -44,6 +44,20 @@ export class ConversionCopywriterAgent {
       .replace(/\byour employer covers 100% of your legal fees\b/gi, 'your employer typically covers your independent legal fee')
       .replace(/\byour employer is legally required to pay all your legal fees\b/gi, 'your employer typically contributes toward your legal advice');
 
+    // SRA Rule 5 & Descriptive Tone Invariants: eliminate prescriptive legal demands and statements
+    sanitized = sanitized
+      .replace(/\bwhat to say to your employer\b/gi, 'questions to consider with a solicitor')
+      .replace(/\byou should ask for £?(\d[\d,]*)\b/gi, 'calculated illustrative negotiation range: £$1')
+      .replace(/\byou should ask for\b/gi, 'calculated illustrative negotiation range')
+      .replace(/\byou should counter\b/gi, 'you may explore negotiating')
+      .replace(/\bthe current offer (?:presented )?is £0\b/gi, 'no employer offer recorded')
+      .replace(/\bdo not accept this offer\b/gi, 'offer is below the calculated statutory baseline')
+      .replace(/\bdo not sign this offer\b/gi, 'consider reviewing the statutory baseline before signing')
+      .replace(/\byour employer is (?:legally )?required to pay £\d+\b/gi, 'employers customarily contribute £350 to £750 + VAT')
+      .replace(/\bwithout prejudice proposal\b/gi, 'discussion agenda / summary of figures')
+      .replace(/\bwithout prejudice: settlement agreement proposal\b/gi, 'settlement agreement discussion - summary of figures')
+      .replace(/\byour employer cannot legally require you to waive\b/gi, 'under Section 203(3) ERA 1996, waiving employment rights requires independent legal advice');
+
     return sanitized;
   }
 

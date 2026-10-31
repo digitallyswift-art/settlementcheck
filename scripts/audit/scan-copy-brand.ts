@@ -60,6 +60,12 @@ const COPY_RULES: CopyRule[] = [
     guideline: 'Internal CRO or prompt framework leakage. Never use internal meta-jargon in frontend prospect copy.',
   },
   {
+    name: 'PRESCRIPTIVE_LEGAL_ADVICE_DETECTED',
+    regex: /\b(what to say to your employer|you should ask for|do not accept this offer|the current offer is £0|without prejudice proposal)\b/i,
+    severity: 'P1',
+    guideline: 'Prescriptive legal instruction violates SRA boundary standards. Use descriptive phrasing (e.g. "Questions to consider with a solicitor", "Calculated illustrative negotiation range", "Offer is below the statutory baseline").',
+  },
+  {
     name: 'GENERIC_BUTTON_SUBMIT',
     regex: />\s*(Submit|Click Here)\s*</i,
     severity: 'P2',

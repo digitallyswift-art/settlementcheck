@@ -293,9 +293,9 @@ export default function EmployerRecommendedSolicitor() {
               </div>
             </div>
 
-            {/* Section 6: What to say */}
+            {/* Section 6: Communicating your choice */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">6. What to say to your employer</h2>
+              <h2 className="guide-h2 text-[24px]">6. Communicating your choice of solicitor to your employer</h2>
               <p className="guide-body">
                 You do not need to explain or justify your choice of solicitor. A brief, factual response is all that is needed. Learn more in our full guide on{' '}
                 <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">

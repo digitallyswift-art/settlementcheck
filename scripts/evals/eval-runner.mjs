@@ -273,6 +273,21 @@ for (const f of prodFiles) {
 }
 assert(!foundFabricatedRatings, `Zero fabricated review scores or satisfaction percentages across production components [found: ${ratingsLocation}]`);
 
+// Test 6E: Zero prescriptive legal advice phrases in production files (SRA Rule 5 & Descriptive Invariant)
+let foundPrescriptive = false;
+let prescriptiveLocation = '';
+const rePrescriptive = /\b(what to say to your employer|you should ask for|do not accept this offer|the current offer is £0|without prejudice proposal)\b/i;
+
+for (const f of prodFiles) {
+  const content = fs.readFileSync(f, 'utf8');
+  if (rePrescriptive.test(content)) {
+    foundPrescriptive = true;
+    prescriptiveLocation = f;
+    break;
+  }
+}
+assert(!foundPrescriptive, `Zero prescriptive legal instruction or pseudo-legal templates in production components [found: ${prescriptiveLocation}]`);
+
 // Summary Report
 console.log('\n====================================================');
 console.log(` Eval Results: ${passedTests}/${totalTests} Passed (${Math.round((passedTests / totalTests) * 100)}%)`);

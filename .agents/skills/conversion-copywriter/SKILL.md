@@ -10,6 +10,7 @@ Writes and audits user-facing copy tailored to a stressed UK employee facing red
 ## 1. Quick Reference & Core Invariants
 
 - **Zero Em Dashes**: Never use em dashes (—). Use hyphens or restructure.
+- **Strictly Descriptive Tone (Zero Prescriptive Legal Advice)**: Never tell the user what to do, demand, say, sign, or reject. Never output "What to say to your employer" or pseudo-legal negotiation demands. Always describe calculated baselines and formulate objective questions to consider with an independent solicitor.
 - **Zero Prompt / CRO Meta-Jargon**: Never use internal framework terms in user-facing copy (e.g. "Attention Economy", "Diagnostic", "Existential Vacuum", "Cognitive Relief"). Use natural employee-centric phrasing.
 - **UK Terminology**: "Solicitor", "Redundancy", "Employment Tribunal", "Settlement".
 - **Legal Fee Reassurance**: Always highlight that **"your employer covers the legal fees"**.

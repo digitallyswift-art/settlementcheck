@@ -14,6 +14,18 @@ const FORBIDDEN_REPLACEMENTS: Array<[RegExp, string]> = [
   [/\bas your legal representative\b/gi, 'for your independent legal adviser'],
   [/\bI advise you to\b/gi, 'the statutory analysis suggests'],
   [/\bthis legal advice confirms\b/gi, 'this statutory audit confirms'],
+  // SRA Rule 5 & Descriptive Tone Invariants
+  [/\bwhat to say to your employer\b/gi, 'questions to consider with a solicitor'],
+  [/\byou should ask for £?(\d[\d,]*)\b/gi, 'calculated illustrative negotiation figure of £$1'],
+  [/\byou should ask for\b/gi, 'calculated illustrative negotiation range'],
+  [/\byou should counter\b/gi, 'you may explore negotiating'],
+  [/\bthe current offer (?:presented )?is £0\b/gi, 'no employer offer recorded'],
+  [/\bdo not accept this offer\b/gi, 'this offer is below the calculated statutory baseline'],
+  [/\bdo not sign this offer\b/gi, 'consider reviewing the statutory baseline before signing'],
+  [/\byour employer is (?:legally )?required to pay £\d+\b/gi, 'employers customarily contribute £350 to £750 + VAT'],
+  [/\bwithout prejudice proposal\b/gi, 'discussion agenda / summary of figures'],
+  [/\bwithout prejudice: settlement agreement proposal\b/gi, 'settlement agreement discussion - summary of figures'],
+  [/\byour employer cannot legally require you to waive\b/gi, 'under Section 203(3) ERA 1996, waiving employment rights requires independent legal advice'],
 ];
 
 export function sanitizeAdvicePhrasing(text: string): string {
