@@ -279,7 +279,7 @@ export default function IsMyOfferFairGuide() {
                         <> See our guide on being <Link href="/guides/pressured-to-sign/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">pressured to sign a settlement agreement</Link>.</>
                       )}
                       {i === 1 && (
-                        <> Check our advice regarding <Link href="/guides/employer-recommended-solicitor/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">employer-recommended solicitors and independent legal advice</Link>.</>
+                        <> Review our guide regarding <Link href="/guides/employer-recommended-solicitor/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">employer-recommended solicitors and independent legal advice</Link>.</>
                       )}
                     </p>
                   </div>

@@ -321,7 +321,7 @@ assert(!foundFcaCmc, `Zero FCA regulated Claims Management evaluation phrases ac
 // Test 6H: Zero Trap 4 unqualified statutory floors or Trap 5 / CMA false statutory fee obligations
 let foundTrap4Or5 = false;
 let trap4Or5Location = '';
-const reTrap4Or5 = /\b(non-negotiable statutory floor|employer is (?:legally )?required to (?:pay|cover)|employers must (?:pay|cover) (?:the cost of )?your legal (?:advice|fee)|100% free legal advice)\b/i;
+const reTrap4Or5 = /\b(non-negotiable statutory floor|employer is (?:legally )?required to (?:pay|cover)|employers must (?:pay|cover) (?:the cost of )?your legal (?:advice|fee)|100% free legal advice|free\s+(?:settlement\s+)?advice|our\s+advice|free\s+to\s+you|costs\s+you\s+nothing)\b/i;
 
 for (const f of prodFiles) {
   const content = fs.readFileSync(f, 'utf8');

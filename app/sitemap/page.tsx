@@ -121,7 +121,7 @@ const sitemapData: SitemapCategory[] = [
   },
   {
     title: 'Legal Guides & Knowledge Hub',
-    description: 'Practical, solicitor-reviewed advice on negotiating settlements, ACAS rules, and statutory rights.',
+    description: 'Practical, solicitor-reviewed guides on negotiating settlements, ACAS rules, and statutory rights.',
     items: [
       {
         title: 'All Legal Guides',

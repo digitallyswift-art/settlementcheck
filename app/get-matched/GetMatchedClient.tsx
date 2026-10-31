@@ -783,7 +783,7 @@ export default function GetMatchedClient() {
                       during the {form.contactTime.toLowerCase()}.
                     </p>
                     <p style={{ fontFamily: SANS, fontSize: 15, color: C.muted, lineHeight: 1.65, margin: '0 0 32px' }}>
-                      The standard review is free to you. Your employer covers the cost of your independent legal advice under Section 203 of the Employment Rights Act 1996.
+                      Employers customarily contribute £350 to £750 + VAT toward independent legal advice under Section 203 of the Employment Rights Act 1996.
                     </p>
 
                     {/* Trust signals */}

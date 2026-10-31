@@ -148,7 +148,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
           />
           <span className="text-sm text-muted leading-relaxed">
             I agree to be matched with an employment solicitor regarding my settlement agreement. I understand this
-            service is free and my employer pays the legal fees.
+            service is confidential and employers customarily contribute toward independent legal advice.
           </span>
         </label>
         {errors.consent && <p className="text-xs text-crimson mt-1">{errors.consent}</p>}

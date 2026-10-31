@@ -78,7 +78,7 @@ const TAX_FAQS: FaqItem[] = [
   },
   {
     q: 'Who pays the solicitor legal fees to check my settlement agreement?',
-    a: 'Under Section 203 of the Employment Rights Act 1996, you must receive independent legal advice for the agreement to be binding. Your employer covers this cost, typically contributing between £350 and £750 plus VAT directly to your solicitor. The advice is free to you.',
+    a: 'Under Section 203 of the Employment Rights Act 1996, you must receive independent legal advice for the agreement to be binding. Employers customarily contribute between £350 and £750 plus VAT directly to your solicitor toward this cost as a standard commercial term.',
   },
 ]
 

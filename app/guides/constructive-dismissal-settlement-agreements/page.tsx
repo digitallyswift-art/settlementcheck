@@ -399,7 +399,7 @@ export default function ConstructiveDismissalGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Receiving independent legal advice</h2>
             <p className="sc-body mb-4">
-              You must receive independent legal advice to make a settlement agreement legally binding. This is a statutory requirement under Section 203 of the Employment Rights Act 1996 <sup>5</sup>. Before signing, you should check our advice on how to <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">negotiate a settlement agreement</Link>.
+              You must receive independent legal advice to make a settlement agreement legally binding. This is a statutory requirement under Section 203 of the Employment Rights Act 1996 <sup>5</sup>. Before signing, you may review our guide on how to <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">negotiate a settlement agreement</Link>.
             </p>
             <p className="sc-body mb-4">
               The advice must come from a qualified solicitor or a certified adviser. They must be independent of your employer. They explain the terms of the agreement and their effect on your ability to bring future tribunal cases.

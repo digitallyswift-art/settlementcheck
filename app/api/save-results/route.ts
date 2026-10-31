@@ -79,15 +79,15 @@ export async function POST(req: NextRequest) {
       '=====================================================',
       '',
       `Verdict: ${vLabel}`,
-      `Jurisdiction: ${jurisdictionLabel} (2025/26 rates)`,
+      `Jurisdiction: ${jurisdictionLabel} (2026/27 rates)`,
       '',
       `Your offer:               ${fmt(offer)}`,
-      `Legal statutory minimum:  ${fmt(minimum)}`,
+      `Calculated statutory baseline: ${fmt(minimum)}`,
       `Typical negotiated range: ${fmt(typicalLow)} to ${rangeHigh}`,
       `Estimated net take-home:  ${fmt(estimatedNet)}`,
       '',
       'What happens next?',
-      'For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). Your employer covers the cost of this review as standard practice, meaning it is free to you. A solicitor review typically takes 24 to 48 hours, and you are under no obligation after the first call.',
+      'For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). Employers customarily contribute £350 to £750 + VAT toward your independent legal advice as a commercial term of the agreement. A solicitor review typically takes 24 to 48 hours, and you are under no obligation after the first call.',
       '',
       'Get matched with an SRA-regulated solicitor:',
       'https://settlementcheck.co.uk/get-matched/',
@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
           <div style="background:#F7F4EE;border-radius:10px;padding:20px 24px;margin-bottom:24px;">
             <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#8A93A3;margin:0 0 6px;">Verdict</p>
             <p style="font-size:20px;font-weight:700;color:${vColor};margin:0 0 4px;">${vLabel}</p>
-            <p style="font-size:13px;color:#5B6577;margin:0;">Based on ${jurisdictionLabel} rates (2025/26)</p>
+            <p style="font-size:13px;color:#5B6577;margin:0;">Based on ${jurisdictionLabel} rates (2026/27)</p>
           </div>
 
           <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px;">
@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
               <td style="padding:10px 0;color:#0B1F3A;font-weight:600;text-align:right;">${fmt(offer)}</td>
             </tr>
             <tr style="border-bottom:1px solid #E2DCCE;">
-              <td style="padding:10px 0;color:#5B6577;">Legal minimum</td>
+              <td style="padding:10px 0;color:#5B6577;">Calculated statutory baseline</td>
               <td style="padding:10px 0;color:#0B1F3A;font-weight:600;text-align:right;">${fmt(minimum)}</td>
             </tr>
             <tr style="border-bottom:1px solid #E2DCCE;">
@@ -145,7 +145,7 @@ export async function POST(req: NextRequest) {
 
           <div style="background:#FBF0EE;border-radius:10px;padding:18px 20px;margin-bottom:28px;">
             <p style="font-size:14px;font-weight:600;color:#0B1F3A;margin:0 0 6px;">What happens next?</p>
-            <p style="font-size:13px;color:#5B6577;line-height:1.6;margin:0;">For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). Your employer covers the cost of this review as standard practice, meaning it is free to you. A solicitor review typically takes 24 to 48 hours, and you are under no obligation after the first call.</p>
+            <p style="font-size:13px;color:#5B6577;line-height:1.6;margin:0;">For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). Employers customarily contribute £350 to £750 + VAT toward your independent legal advice as a commercial term of the agreement. A solicitor review typically takes 24 to 48 hours, and you are under no obligation after the first call.</p>
           </div>
 
           <a href="https://settlementcheck.co.uk/get-matched/"

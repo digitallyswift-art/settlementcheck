@@ -461,7 +461,7 @@ export default function HowMuchGuidePage() {
               , a settlement agreement is not legally binding unless you receive advice from an independent, insured solicitor.
             </p>
             <p className="sc-body mb-4">
-              Because this advice is mandatory, your employer covers the legal fees for this review. The typical employer contribution is between £350 and £750 plus VAT. This fee is paid directly to your solicitor, meaning specialist legal advice costs you nothing. You also have the right to choose your own adviser rather than an{' '}
+              To obtain a binding waiver, employers customarily contribute toward the legal fees for this review. The typical commercial employer contribution is between £350 and £750 plus VAT, paid directly to your instructed solicitor upon completion. You also have the right to choose your own adviser rather than an{' '}
               <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-coral">
                 employer-recommended solicitor
               </Link>

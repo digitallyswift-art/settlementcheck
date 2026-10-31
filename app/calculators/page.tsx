@@ -58,7 +58,7 @@ const CALCULATORS_FAQS: FaqItem[] = [
   },
   {
     q: 'Does my employer really have to pay for my solicitor to advise me?',
-    a: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is legally void unless an independent SRA-regulated solicitor advises you. Your employer covers the fees for this advice because they need a binding waiver. Employers standardly pay £500 to £1,500 plus VAT, which means independent advice costs you nothing.',
+    a: 'Under Section 203 of the Employment Rights Act 1996, a settlement agreement is legally void unless an independent SRA-regulated solicitor advises you. To obtain a valid waiver, employers customarily contribute £350 to £750 + VAT (and up to £1,500 for senior exits) toward your independent legal advice as a commercial term of the agreement.',
   },
   {
     q: 'What is the difference between statutory redundancy pay and a settlement agreement?',
@@ -240,8 +240,8 @@ export default function CalculatorsHubPage() {
               </div>
               <div className="p-3.5 rounded-xl bg-card border border-rule/80 flex flex-col gap-1">
                 <span className="text-[11px] font-semibold text-muted uppercase tracking-wider">Legal Fee Cost</span>
-                <span className="text-[18px] md:text-[20px] font-bold text-coral">£0 To You</span>
-                <span className="text-[11px] text-muted">Employer covers advice</span>
+                <span className="text-[18px] md:text-[20px] font-bold text-coral">£350 - £750+</span>
+                <span className="text-[11px] text-muted">Customary employer contribution</span>
               </div>
             </div>
           </div>
@@ -307,8 +307,8 @@ export default function CalculatorsHubPage() {
                 </h3>
                 <p className="text-[14px] md:text-[15px] text-muted leading-relaxed">
                   Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is completely void unless you receive advice
-                  from an independent SRA-regulated solicitor. Employers standardly pay a legal fee contribution of £500 to £1,500 plus VAT.
-                  Your employer covers the fees, so getting specialist advice costs you nothing.
+                  from an independent SRA-regulated solicitor.
+                  Employers customarily contribute £350 to £750 + VAT (and up to £1,500 for senior exits) toward your independent legal advice as a commercial term of the agreement.
                 </p>
               </div>
 

@@ -6,14 +6,14 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'Employment Settlement Agreement Guides | SettlementCheck',
   description:
-    'Expert UK settlement agreement guides on negotiation tactics, tax exemptions, statutory caps, and legal rights. Free advice, your employer covers fees.',
+    'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Employers customarily contribute toward legal fees.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/',
   },
   openGraph: {
     title: 'Employment Settlement Agreement Guides | SettlementCheck',
     description:
-      'Expert UK settlement agreement guides on negotiation tactics, tax exemptions, statutory caps, and legal rights. Free advice, your employer covers fees.',
+      'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Employers customarily contribute toward legal fees.',
     url: 'https://settlementcheck.co.uk/guides/',
     type: 'website',
     locale: 'en_GB',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Employment Settlement Agreement Guides | SettlementCheck',
     description:
-      'Expert UK settlement agreement guides on negotiation tactics, tax exemptions, statutory caps, and legal rights. Free advice, your employer covers fees.',
+      'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Employers customarily contribute toward legal fees.',
   },
 }
 

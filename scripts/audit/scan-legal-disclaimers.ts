@@ -119,9 +119,23 @@ const FORBIDDEN_LEGAL_PHRASES: Array<{
   {
     phrase: 'Trap 5 / CMA (False statutory fee obligation or unqualified free claim)',
     regulator: 'CMA',
-    regex: /\b(employer is (?:legally )?required to (?:pay|cover)|employers must (?:pay|cover) (?:the cost of )?your legal (?:advice|fee)|required to pay for your legal advice|employer must cover the cost|100% free legal advice)\b/i,
+    regex: /\b(employer is (?:legally )?required to (?:pay|cover)|employers must (?:pay|cover) (?:the cost of )?your legal (?:advice|fee)|required to pay for your legal advice|employer must cover the cost|100% free legal advice|free to you|costs you nothing|advice is free to you)\b/i,
     severity: 'P1',
     issue: 'Trap 5 & CMA DMCC Act 2024: Employers customarily contribute £350 to £750 + VAT toward legal fees as a commercial convention, not a statutory obligation.',
+  },
+  {
+    phrase: 'Platform purporting to provide legal advice',
+    regulator: 'SRA',
+    regex: /\b(free\s+(?:settlement\s+)?advice|our\s+advice|advice\s+for\s+uk\s+employees)\b/i,
+    severity: 'P0',
+    issue: 'Platform describes itself or its guides as providing "advice" violating SRA and LSA 2007 s.12 boundaries.',
+  },
+  {
+    phrase: 'Outdated statutory rates citation',
+    regulator: 'UK_JURISDICTION',
+    regex: /\b(2025\/26\s+rates|2024\/25\s+rates)\b/i,
+    severity: 'P1',
+    issue: 'Outdated statutory year reference. All rates must cite 2026/27 rates (£751/week cap).',
   },
 
   // US Legal Terminology
