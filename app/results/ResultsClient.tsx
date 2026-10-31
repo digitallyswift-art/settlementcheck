@@ -55,7 +55,7 @@ function StatutoryProtectionsCard() {
     <div className="bg-paper border border-[#E2DCCE] rounded-xl p-5 mb-6">
       <div className="flex items-center justify-between gap-2 border-b border-[#E2DCCE] pb-3 mb-4">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.10em] text-[#D9603B] font-semibold block">
+          <span className="text-[11px] font-mono uppercase tracking-[0.10em] text-[#0B1F3A] font-semibold block">
             Statutory Protections &amp; Standards
           </span>
           <h4 className="text-[15px] font-serif font-bold text-ink m-0">
@@ -78,6 +78,52 @@ function StatutoryProtectionsCard() {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  )
+}
+
+/* ── 3-Tier Regulatory & Information Architecture Header ────────── */
+
+function ThreeTierFrameworkHeader() {
+  return (
+    <div className="bg-[#FAF8F5] border border-[#E2DCCE] rounded-xl p-4 no-print text-[12px] text-[#5B6577] flex flex-col gap-2.5 mb-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-[#E2DCCE] pb-2">
+        <span className="font-mono text-[10px] uppercase font-bold tracking-wider text-[#0B1F3A]">
+          3-Tier Legal &amp; Information Architecture
+        </span>
+        <span className="text-[11px] text-[#8A93A3]">
+          Clear separation: statutory calculation, public precedents, and independent legal advice
+        </span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-[#E2DCCE]">
+          <span className="w-5 h-5 rounded-full bg-[#0B1F3A] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+            1
+          </span>
+          <div>
+            <strong className="text-[#0B1F3A] block text-[12px]">Tier 1: Statutory Entitlements</strong>
+            <span className="text-[11px] leading-tight block text-[#5B6577]">Pure statutory calculations (ERA 1996 s.86 notice &amp; s.162 redundancy).</span>
+          </div>
+        </div>
+        <div className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-[#E2DCCE]">
+          <span className="w-5 h-5 rounded-full bg-[#D9603B] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+            2
+          </span>
+          <div>
+            <strong className="text-[#0B1F3A] block text-[12px]">Tier 2: Public Benchmarks</strong>
+            <span className="text-[11px] leading-tight block text-[#5B6577]">MoJ tribunal median precedents &amp; ACAS conciliation guidelines.</span>
+          </div>
+        </div>
+        <div className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-[#E2DCCE]">
+          <span className="w-5 h-5 rounded-full bg-[#4F7060] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+            3
+          </span>
+          <div>
+            <strong className="text-[#0B1F3A] block text-[12px]">Tier 3: Independent Legal Review</strong>
+            <span className="text-[11px] leading-tight block text-[#5B6577]">Qualitative legal advice &amp; Section 203(3) ERA 1996 solicitor certification.</span>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -140,7 +186,7 @@ function OfficialBenchmarkCard({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E2DCCE] pb-3 mb-4">
         <div>
           <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-[#D9603B] font-semibold block mb-0.5">
-            Official Statutory &amp; Tribunal Benchmarks
+            Tier 2: Published Tribunal &amp; Conciliation Benchmarks
           </span>
           <h3 className="text-[17px] font-serif font-bold text-ink m-0">
             {categoryLabel}: Official Compensation Precedents
@@ -866,9 +912,9 @@ function CaseBriefSection({
       >
         <div>
           <span className="text-[#8A93A3] text-[10px] font-bold uppercase tracking-wider block mb-1">
-            Barrister-Grade Intake Brief
+            Tier 3: Solicitor Intake Brief
           </span>
-          <h3 className="sc-h3 text-[#0B1F3A] m-0">Case Assessment Summary</h3>
+          <h3 className="sc-h3 text-[#0B1F3A] m-0">Case Assessment Summary for Instructed Solicitor</h3>
         </div>
         <span
           className="text-[#0B1F3A] font-bold text-[18px] transition-transform duration-200"
@@ -1089,39 +1135,115 @@ function NegotiationDraftsman({
   const [copied, setCopied] = useState(false)
   const [activeTemplate, setActiveTemplate] = useState<'uplift' | 'fee_only'>('uplift')
 
+  const hasOffer = offer > 0
   const redundancyAmount = result.redundancy
   const pilonAmount = result.pilon
   const minFloor = result.minimum
   const targetUplift = result.typicalLow > offer ? result.typicalLow : Math.round(offer * 1.25)
 
-  const upliftSubject = 'Without Prejudice: Settlement Agreement Proposal - Confidential'
+  // Pre-offer mode: offer === 0
+  // When no offer exists, we strictly suppress the counter-offer template to prevent
+  // users from sending an unsolicited financial demand or referencing a £0 offer.
+  if (!hasOffer) {
+    return (
+      <div className="bg-white border border-[#E2DCCE] rounded-xl overflow-hidden shadow-sm" id="negotiation-draftsman">
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="w-full p-5 text-left flex justify-between items-center bg-[#F7F4EE] border-b border-[#E2DCCE] focus:outline-none cursor-pointer"
+        >
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="bg-[#0B1F3A] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+                Pre-Offer Strategy
+              </span>
+              <span className="text-[#8A93A3] text-[11px] font-semibold">Before You Negotiate</span>
+            </div>
+            <h3 className="sc-h3 text-[#0B1F3A] m-0">Preparing for discussions with your employer</h3>
+          </div>
+          <span
+            className="text-[#0B1F3A] font-bold text-[18px] transition-transform duration-200"
+            style={{ transform: open ? 'rotate(180deg)' : 'none' }}
+          >
+            ▾
+          </span>
+        </button>
+
+        {open && (
+          <div className="p-5 md:p-6 flex flex-col gap-4">
+            <div className="bg-[#FAF8F5] border border-[#E2DCCE] rounded-lg p-4 text-[13px] text-[#2B3445] leading-relaxed flex flex-col gap-3">
+              <p className="m-0 font-medium text-[#0B1F3A]">
+                <strong>No formal offer recorded yet:</strong> In UK employment practice, submitting an unsolicited financial proposal before your employer has tabled terms can weaken your negotiating position.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+                <div className="bg-white p-3 rounded border border-[#E2DCCE]">
+                  <span className="text-[11px] font-bold text-[#D9603B] uppercase tracking-wider block mb-1">1. Await First Move</span>
+                  <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
+                    Allow your employer to propose terms or initiate a protected conversation (ERA 1996 s.111A) so they set the opening benchmark.
+                  </p>
+                </div>
+                <div className="bg-white p-3 rounded border border-[#E2DCCE]">
+                  <span className="text-[11px] font-bold text-[#D9603B] uppercase tracking-wider block mb-1">2. Request in Writing</span>
+                  <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
+                    Listen calmly in any verbal meeting, take detailed notes, and ask HR to provide any proposed terms and draft agreement in writing.
+                  </p>
+                </div>
+                <div className="bg-white p-3 rounded border border-[#E2DCCE]">
+                  <span className="text-[11px] font-bold text-[#D9603B] uppercase tracking-wider block mb-1">3. Take 10 Days</span>
+                  <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
+                    ACAS Code 4 recommends at least 10 calendar days to review terms. You do not need to sign or agree to anything on the day.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between pt-1">
+              <p className="text-[12px] text-[#5B6577] m-0">
+                A specialist solicitor can guide your preparation and advise on strategy before formal discussions commence.
+              </p>
+              <button
+                type="button"
+                onClick={onGetMatched}
+                className="px-4 py-2.5 rounded-lg text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#c25230] transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm flex-shrink-0"
+              >
+                <span>Have a solicitor guide your strategy →</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  // Active offer mode: offer > 0
+  const upliftSubject = 'Settlement Agreement Discussion - Summary of Figures'
   const upliftBody = `Dear [HR Manager / Line Manager],
 
-Thank you for discussing the proposed settlement agreement with me.
+Thank you for providing the proposed settlement agreement terms for my consideration.
 
-Having reviewed the statutory baseline under the Employment Rights Act 1996, I would like to clarify our position regarding the current package:
+To assist our discussions, I have reviewed the statutory baseline under the Employment Rights Act 1996 based on my continuous service:
 
-${redundancyAmount > 0 ? `1. Statutory Redundancy: Based on my ${yearsNum} complete ${yearsNum === 1 ? 'year' : 'years'} of continuous service, my statutory redundancy baseline is ${formatCurrency(redundancyAmount)}.\n2. Notice Pay (PILON): Under my contract and Section 86 ERA 1996, my notice entitlement is ${formatCurrency(pilonAmount)}.\n3. Total Calculated Baseline: Before considering any compensatory termination payment or waiver of potential claims, my statutory baseline totals ${formatCurrency(minFloor)}.` : `1. Notice Pay (PILON): Under my contract and Section 86 ERA 1996, my notice entitlement is ${formatCurrency(pilonAmount)}.\n2. Total Calculated Baseline: Before considering any ex-gratia consideration or waiver of potential claims, my baseline totals ${formatCurrency(minFloor)}.`}
+${redundancyAmount > 0 ? `1. Statutory Redundancy: Based on my ${yearsNum} complete ${yearsNum === 1 ? 'year' : 'years'} of continuous service, my statutory redundancy entitlement is ${formatCurrency(redundancyAmount)} (s.162 ERA 1996).\n2. Notice Pay (PILON): Under my contract and Section 86 ERA 1996, my notice entitlement is ${formatCurrency(pilonAmount)}.\n3. Calculated Statutory Baseline: My calculated baseline entitlement totals ${formatCurrency(minFloor)}.` : `1. Notice Pay (PILON): Under my contract and Section 86 ERA 1996, my notice entitlement is ${formatCurrency(pilonAmount)}.\n2. Calculated Statutory Baseline: My calculated notice baseline totals ${formatCurrency(minFloor)}.`}
 
-The current offer presented is ${formatCurrency(offer)}. To reach an amicable and constructive resolution that reflects my service and compensates for waiving my employment rights, I would request that the total settlement package is adjusted to ${formatCurrency(targetUplift)}.
+The current proposed figure is ${formatCurrency(offer)}. Having regard to my length of service and the waiver of employment rights required by the agreement, I would like to explore whether the total package can be adjusted to ${formatCurrency(targetUplift)}.
 
-Additionally, in line with standard UK practice and Section 203(3) of the Employment Rights Act 1996, please confirm that the company will provide an employer legal fee contribution (commonly £500 plus VAT) for my independent solicitor review.
+Additionally, in line with standard UK practice and Section 203(3) of the Employment Rights Act 1996, please confirm that the company will provide an employer legal fee contribution (commonly £500 plus VAT) so that my appointed independent solicitor can review and advise on the terms.
 
-I look forward to your response and concluding this matter constructively.
+I look forward to discussing this constructively.
 
 Kind regards,
 [Your Name]`
 
-  const feeSubject = 'Without Prejudice: Independent Legal Advice Fee Contribution'
+  const feeSubject = 'Settlement Agreement - Independent Legal Advice Fee Contribution'
   const feeBody = `Dear [HR Manager / Line Manager],
 
 Thank you for sending through the draft settlement agreement.
 
-Under Section 203(3) of the Employment Rights Act 1996, I am required to receive independent legal advice from an SRA-regulated solicitor before this agreement can become legally binding.
+Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally binding once the employee has received independent legal advice from an SRA-regulated solicitor or certified legal adviser.
 
 Could you please confirm that the company will provide an employer legal fee contribution (commonly £500 plus VAT), paid directly to my appointed solicitor upon completion of the agreement?
 
-Once confirmed, I will instruct my solicitor to proceed with the review immediately.
+Once confirmed, I will instruct my solicitor to proceed with reviewing the agreement.
 
 Kind regards,
 [Your Name]`
@@ -1150,11 +1272,11 @@ Kind regards,
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="bg-[#D9603B] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
-              Practical Next Step
+              Discussion Summary
             </span>
-            <span className="text-[#8A93A3] text-[11px] font-semibold">HR Response Draft</span>
+            <span className="text-[#8A93A3] text-[11px] font-semibold">Key Baseline Figures</span>
           </div>
-          <h3 className="sc-h3 text-[#0B1F3A] m-0">What to say to your employer</h3>
+          <h3 className="sc-h3 text-[#0B1F3A] m-0">Key Figures Summary for Your Solicitor or Discussion</h3>
         </div>
         <span
           className="text-[#0B1F3A] font-bold text-[18px] transition-transform duration-200"
@@ -1167,7 +1289,7 @@ Kind regards,
       {open && (
         <div className="p-5 md:p-6 flex flex-col gap-4">
           <p className="text-[14px] text-[#5B6577] m-0 leading-relaxed">
-            Replying to an employer requires a calm, objective tone. Use this draft to state your statutory entitlements clearly without escalating tension.
+            When reviewing an agreement with HR or your appointed solicitor, keeping figures clear and factual avoids misunderstandings. Use this structured summary to present your service calculations objectively.
           </p>
 
           {/* Template Switcher */}
@@ -1181,7 +1303,7 @@ Kind regards,
                   : 'text-[#5B6577] hover:text-[#0B1F3A]'
               }`}
             >
-              Negotiate Uplift
+              Figures &amp; Adjustment Discussion
             </button>
             <button
               type="button"
@@ -1192,7 +1314,7 @@ Kind regards,
                   : 'text-[#5B6577] hover:text-[#0B1F3A]'
               }`}
             >
-              Legal Fee Contribution
+              Legal Fee Contribution Only
             </button>
           </div>
 
@@ -1229,7 +1351,7 @@ Kind regards,
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                   </svg>
-                  <span>Copy draft template</span>
+                  <span>Copy discussion summary</span>
                 </>
               )}
             </button>
@@ -1240,7 +1362,7 @@ Kind regards,
               onClick={onGetMatched}
               className="px-4 py-2.5 rounded-lg text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#c25230] transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
             >
-              <span>Have a solicitor negotiate this for you →</span>
+              <span>Have a solicitor handle negotiations for you →</span>
             </button>
           </div>
 
@@ -1248,7 +1370,7 @@ Kind regards,
           <div className="rounded-lg p-3 bg-[#F2F5F8] border border-[#C8D3DF] text-[12px] text-[#5B6577] flex items-start gap-2.5">
             <span className="text-[15px] flex-shrink-0 leading-none">🛡</span>
             <p className="m-0 leading-relaxed">
-              <strong>Your employer covers the legal fee:</strong> Under UK employment convention, employers pay £350 to £750 toward independent legal advice. An SRA-regulated solicitor can handle these negotiations directly with HR so you do not have to.
+              <strong>Your employer covers the legal fee:</strong> Under UK employment convention, employers pay £350 to £750 toward independent legal advice. An SRA-regulated solicitor can handle these discussions directly so you do not have to negotiate alone.
             </p>
           </div>
         </div>
@@ -1293,8 +1415,16 @@ function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offe
 
   return (
     <div className="bg-card border border-rule rounded-lg overflow-hidden bg-white">
-      <div className="px-5 py-4 border-b border-rule">
-        <h3 className="sc-h3 text-[#0B1F3A]">Statutory Entitlement Breakdown</h3>
+      <div className="px-5 py-4 border-b border-rule flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+        <div>
+          <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-[#0B1F3A] block mb-0.5">
+            Tier 1: Calculated Statutory Entitlements
+          </span>
+          <h3 className="sc-h3 text-[#0B1F3A] m-0">Statutory Entitlement Breakdown</h3>
+        </div>
+        <span className="text-[11px] font-mono text-[#5B6577]">
+          ERA 1996 ss.86 &amp; 162
+        </span>
       </div>
 
       <div style={{ overflowX: 'auto' }}>
@@ -2248,15 +2378,6 @@ function ResultsContent() {
                   <VerdictPanel result={result} offer={offer} salary={salary} yearsNum={Math.floor(yearsNum)} age={age} />
                 </div>
 
-                {/* SC-B-022: Dynamic Local SRA Specialist Availability & 1-Click Match Bridge */}
-                <LocalSpecialistAvailabilityCard
-                  jurisdiction={jurisdiction}
-                  onGetMatched={handleSolicitorMatch}
-                />
-
-                {/* SC-B-010: Dynamic Tribunal Limitation Clock (3 Months Minus 1 Day) */}
-                <TribunalLimitationClock />
-
                 {/* Jurisdiction toggles */}
                 <div className="text-[13px] text-muted flex flex-wrap items-center gap-2 no-print">
                   <span>Results calculated for {jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland and Wales'} (£{jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB} per week cap).</span>
@@ -2280,83 +2401,146 @@ function ResultsContent() {
                   )}
                 </div>
 
-                {/* Statutory Reassurance & Protections */}
-                <div className="no-print">
-                  <StatutoryProtectionsCard />
-                </div>
+                {/* ── 3-TIER LEGAL & INFORMATION FRAMEWORK HEADER ── */}
+                <ThreeTierFrameworkHeader />
 
-                {/* Official Statutory & Tribunal Benchmarks */}
-                <OfficialBenchmarkCard
-                  reason={reason}
-                  salary={salary}
-                  offer={offer}
-                  result={result}
-                  isDiscrimination={discrimination === 'yes'}
-                  totalMonths={totalMonths}
-                />
+                {/* ── TIER 1: CALCULATED STATUTORY ENTITLEMENTS ── */}
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center justify-between border-b-2 border-[#0B1F3A] pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#0B1F3A] text-white">
+                        Tier 1
+                      </span>
+                      <h3 className="text-[15px] font-bold text-[#0B1F3A] m-0">
+                        Calculated Statutory Entitlements (Deterministic Law)
+                      </h3>
+                    </div>
+                    <span className="text-[11px] font-mono text-[#5B6577] hidden sm:inline">
+                      ERA 1996 ss.86 &amp; 162 &bull; ITEPA 2003
+                    </span>
+                  </div>
 
-                {/* Visual Chart - Dynamic stacked bar */}
-                <div className="no-print">
-                  <FinancialSplitChart
-                    offer={isSimulated ? displayOffer : offer}
-                    pilon={displayResult?.pilon ?? 0}
-                    taxFreeAmount={displayResult?.taxFreeAmount ?? 0}
-                    taxableTermination={displayResult?.taxableTermination ?? 0}
-                    estimatedTax={(displayResult?.estimatedTax ?? 0) - (pensionRes?.taxSaved ?? 0)}
-                    netTakeHome={(displayResult?.estimatedNet ?? 0) - adjustedSacrificeVal + (pensionRes?.taxSaved ?? 0)}
-                    isSimulated={isSimulated}
-                    pensionSacrifice={adjustedSacrificeVal}
-                  />
-                </div>
-
-                {/* Interactive Pension Sacrifice Slider */}
-                {(maxSacrifice > 0 || salary >= 100000) && (
+                  {/* Statutory breakdown table */}
                   <div className="no-print">
-                    <PensionSacrificeWidget
-                      taxableTermination={maxSacrifice}
-                      salary={salary}
-                      sacrificeVal={adjustedSacrificeVal}
-                      setSacrificeVal={setSacrificeVal}
+                    <BreakdownTable result={result} offer={offer} salary={salary} />
+                  </div>
+
+                  {/* Visual Chart - Dynamic stacked bar */}
+                  <div className="no-print">
+                    <FinancialSplitChart
+                      offer={isSimulated ? displayOffer : offer}
+                      pilon={displayResult?.pilon ?? 0}
+                      taxFreeAmount={displayResult?.taxFreeAmount ?? 0}
+                      taxableTermination={displayResult?.taxableTermination ?? 0}
+                      estimatedTax={(displayResult?.estimatedTax ?? 0) - (pensionRes?.taxSaved ?? 0)}
+                      netTakeHome={(displayResult?.estimatedNet ?? 0) - adjustedSacrificeVal + (pensionRes?.taxSaved ?? 0)}
                       isSimulated={isSimulated}
-                      simulatedOffer={isSimulated ? displayOffer : 0}
+                      pensionSacrifice={adjustedSacrificeVal}
                     />
                   </div>
-                )}
 
-                {/* Interactive Vento Band Selector */}
-                {result.discriminationFlag && result.ventoBands && (
+                  {/* Interactive Pension Sacrifice Slider */}
+                  {(maxSacrifice > 0 || salary >= 100000) && (
+                    <div className="no-print">
+                      <PensionSacrificeWidget
+                        taxableTermination={maxSacrifice}
+                        salary={salary}
+                        sacrificeVal={adjustedSacrificeVal}
+                        setSacrificeVal={setSacrificeVal}
+                        isSimulated={isSimulated}
+                        simulatedOffer={isSimulated ? displayOffer : 0}
+                      />
+                    </div>
+                  )}
+
+                  {/* Statutory Reassurance & Protections */}
                   <div className="no-print">
-                    <VentoBandWidget
-                      ventoBands={result.ventoBands}
-                      selectedBand={selectedVentoBand}
-                      onBandSelect={(band) => setSelectedVentoBand(band)}
-                    />
+                    <StatutoryProtectionsCard />
                   </div>
-                )}
-
-                {/* Statutory breakdown table */}
-                <div className="no-print">
-                  <BreakdownTable result={result} offer={offer} salary={salary} />
                 </div>
 
-                {/* Negotiation Response Draftsman (Practical Next Step) */}
-                <div className="no-print">
-                  <NegotiationDraftsman
-                    result={result}
-                    offer={offer}
+                {/* ── TIER 2: PUBLISHED TRIBUNAL & CONCILIATION BENCHMARKS ── */}
+                <div className="flex flex-col gap-4 mt-2">
+                  <div className="flex items-center justify-between border-b-2 border-[#D9603B] pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#D9603B] text-white">
+                        Tier 2
+                      </span>
+                      <h3 className="text-[15px] font-bold text-[#0B1F3A] m-0">
+                        Published Tribunal &amp; Conciliation Benchmarks (Historical Context)
+                      </h3>
+                    </div>
+                    <span className="text-[11px] font-mono text-[#5B6577] hidden sm:inline">
+                      MoJ Tables &bull; ACAS Research
+                    </span>
+                  </div>
+
+                  {/* Official Statutory & Tribunal Benchmarks */}
+                  <OfficialBenchmarkCard
+                    reason={reason}
                     salary={salary}
-                    yearsNum={Math.floor(yearsNum)}
+                    offer={offer}
+                    result={result}
+                    isDiscrimination={discrimination === 'yes'}
+                    totalMonths={totalMonths}
+                  />
+
+                  {/* Interactive Vento Band Selector */}
+                  {result.discriminationFlag && result.ventoBands && (
+                    <div className="no-print">
+                      <VentoBandWidget
+                        ventoBands={result.ventoBands}
+                        selectedBand={selectedVentoBand}
+                        onBandSelect={(band) => setSelectedVentoBand(band)}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* ── TIER 3: MATTERS FOR INDEPENDENT LEGAL REVIEW ── */}
+                <div className="flex flex-col gap-4 mt-2">
+                  <div className="flex items-center justify-between border-b-2 border-[#4F7060] pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#4F7060] text-white">
+                        Tier 3
+                      </span>
+                      <h3 className="text-[15px] font-bold text-[#0B1F3A] m-0">
+                        Matters for Independent Legal Review (SRA-Regulated Solicitor)
+                      </h3>
+                    </div>
+                    <span className="text-[11px] font-mono text-[#5B6577] hidden sm:inline">
+                      ERA 1996 s.203(3)
+                    </span>
+                  </div>
+
+                  {/* SC-B-022: Dynamic Local SRA Specialist Availability & 1-Click Match Bridge */}
+                  <LocalSpecialistAvailabilityCard
+                    jurisdiction={jurisdiction}
                     onGetMatched={handleSolicitorMatch}
                   />
-                </div>
 
-                {/* Barrister-Ready Case Brief (Intake brief) */}
-                <CaseBriefSection
-                  inputs={inputs}
-                  result={result}
-                  selectedVentoBand={selectedVentoBand}
-                  ventoBands={result.ventoBands}
-                />
+                  {/* Negotiation Response Draftsman (Practical Next Step) */}
+                  <div className="no-print">
+                    <NegotiationDraftsman
+                      result={result}
+                      offer={offer}
+                      salary={salary}
+                      yearsNum={Math.floor(yearsNum)}
+                      onGetMatched={handleSolicitorMatch}
+                    />
+                  </div>
+
+                  {/* SC-B-010: Dynamic Tribunal Limitation Clock (3 Months Minus 1 Day) */}
+                  <TribunalLimitationClock />
+
+                  {/* Barrister-Ready Case Brief (Intake brief) */}
+                  <CaseBriefSection
+                    inputs={inputs}
+                    result={result}
+                    selectedVentoBand={selectedVentoBand}
+                    ventoBands={result.ventoBands}
+                  />
+                </div>
 
                 {/* FAQ obection handling */}
                 <div className="no-print">
