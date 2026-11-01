@@ -29,7 +29,8 @@
     "verify": "node scripts/verify-quiet.mjs",
     "prepare": "node scripts/install-git-hooks.mjs",
     "experiment:digest": "node scripts/experiments/send-ab-digest.mjs",
-    "experiment:evaluate": "node scripts/experiments/evaluate-winner.mjs"
+    "experiment:evaluate": "node scripts/experiments/evaluate-winner.mjs",
+    "test:triage": "npx tsx scripts/audit/test-lead-triage-e2e.ts"
   },
   "license": "ISC",
   "dependencies": {
