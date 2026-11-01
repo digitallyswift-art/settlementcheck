@@ -165,7 +165,6 @@ export class AutonomousSeoActionService {
     let recipients: string[] = [
       'support@digitallyswift.com',
       'digitallyswift@gmail.com',
-      'yesmarioo@gmail.com',
     ];
 
     if (options?.recipientEmail) {

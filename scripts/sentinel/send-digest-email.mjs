@@ -25,7 +25,6 @@ if (!resendKey) {
 let recipients = [
   'support@digitallyswift.com',
   'digitallyswift@gmail.com',
-  'yesmarioo@gmail.com',
 ];
 
 if (process.env.SEO_ALERT_EMAILS) {
