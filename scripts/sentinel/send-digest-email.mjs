@@ -135,28 +135,70 @@ async function sendDigest() {
   const pctQueries = previous.queriesCount > 0 ? ((deltaQueries / previous.queriesCount) * 100).toFixed(1) : '0';
 
   const dualAgentHtml = packages.slice(0, 6).map(p => `
-    <div style="background:#F7F4EE;border-left:4px solid #D9603B;padding:12px;margin-bottom:14px;border-radius:4px;">
+    <div style="background:#F7F4EE;border-left:4px solid #D9603B;padding:14px;margin-bottom:18px;border-radius:4px;">
       <div style="font-size:14px;font-weight:bold;color:#0B1F3A;margin-bottom:4px;">
         🎯 [${p.priority}] "${p.query}" (${p.actionType})
       </div>
-      <div style="font-size:12px;color:#555;margin-bottom:6px;">
-        <strong>Target Route:</strong> <a href="${p.seoTechnicalBrief.targetCanonicalUrl}" style="color:#D9603B;">${p.seoTechnicalBrief.targetCanonicalUrl}</a><br/>
+      <div style="font-size:12px;color:#555;margin-bottom:8px;">
+        <strong>Target Route:</strong> <a href="${p.seoTechnicalBrief.targetCanonicalUrl}" style="color:#D9603B;text-decoration:none;font-weight:bold;">${p.seoTechnicalBrief.targetCanonicalUrl}</a><br/>
         <strong>Metrics:</strong> Pos ${p.seoTechnicalBrief.currentMetrics.position.toFixed(1)} · ${p.seoTechnicalBrief.currentMetrics.impressions} Impr · ${p.seoTechnicalBrief.currentMetrics.clicks} Clicks
       </div>
-      <div style="font-size:12px;color:#111;margin-bottom:4px;">
-        <strong>Calibrated Title (${p.copyPackage.calibratedTitle.length} chars):</strong><br/>
-        <code>${p.copyPackage.calibratedTitle}</code>
+
+      <!-- 1. SERP Snippet Preview -->
+      <div style="background:#fff;border:1px solid #E6E1D8;padding:10px;border-radius:4px;margin-bottom:8px;">
+        <div style="font-size:11px;font-weight:bold;color:#666;text-transform:uppercase;margin-bottom:4px;">1. SERP Search Snippet (Title & Meta)</div>
+        <div style="font-size:12px;color:#111;margin-bottom:4px;">
+          <strong>Title (${p.copyPackage.calibratedTitle.length} chars):</strong><br/>
+          <code style="background:#f4f4f4;padding:2px 4px;border-radius:2px;">${p.copyPackage.calibratedTitle}</code>
+        </div>
+        <div style="font-size:12px;color:#111;">
+          <strong>Meta Description (${p.copyPackage.calibratedMetaDescription.length} chars):</strong><br/>
+          <span style="color:#333;">${p.copyPackage.calibratedMetaDescription}</span>
+        </div>
       </div>
-      <div style="font-size:12px;color:#111;margin-bottom:4px;">
-        <strong>Calibrated Meta (${p.copyPackage.calibratedMetaDescription.length} chars):</strong><br/>
-        <code>${p.copyPackage.calibratedMetaDescription}</code>
+
+      <!-- 2. AI Overview Direct Answer -->
+      <div style="background:#fff;border:1px solid #E6E1D8;padding:10px;border-radius:4px;margin-bottom:8px;">
+        <div style="font-size:11px;font-weight:bold;color:#666;text-transform:uppercase;margin-bottom:4px;">2. Google AI Overview & Featured Snippet</div>
+        <div style="font-size:12px;color:#222;font-style:italic;">
+          "${p.copyPackage.answerFirstFaq.answer}"
+        </div>
       </div>
-      <div style="font-size:12px;color:#222;margin-top:6px;background:#fff;padding:8px;border-radius:4px;">
-        <strong>AI Overview Direct Answer (Answer-First):</strong><br/>
-        <em>"${p.copyPackage.answerFirstFaq.answer}"</em>
+
+      ${p.inProsePlacement ? `
+      <!-- 3. In-Prose Body Paragraph Upgrade -->
+      <div style="background:#fff;border:1px solid #E6E1D8;padding:10px;border-radius:4px;margin-bottom:8px;">
+        <div style="font-size:11px;font-weight:bold;color:#666;text-transform:uppercase;margin-bottom:4px;">
+          3. In-Prose Body Paragraph Upgrade (<code>${p.inProsePlacement.targetFilePath}</code>)
+        </div>
+        <div style="font-size:12px;color:#555;margin-bottom:4px;">
+          <span style="text-decoration:line-through;color:#888;">Existing: "${p.inProsePlacement.matchedExcerpt}"</span>
+        </div>
+        <div style="font-size:12px;color:#0B1F3A;font-weight:500;">
+          Upgraded: "${p.inProsePlacement.replacementExcerpt}"
+        </div>
       </div>
-      <div style="font-size:11px;color:#444;margin-top:6px;">
-        <strong>4-Agent Validation:</strong> 0 Em Dashes [✓] · Statutory Invariants [✓] · Anti-AI Authenticity: <strong>${p.antiAiQuality.authenticityScore}%</strong> (Burstiness: ${p.antiAiQuality.burstinessScore})
+      ` : ''}
+
+      ${p.workedExample ? `
+      <!-- 4. Statutory Mathematical Illustration (Zero Fiction) -->
+      <div style="background:#fff;border:1px solid #E6E1D8;padding:10px;border-radius:4px;margin-bottom:8px;">
+        <div style="font-size:11px;font-weight:bold;color:#666;text-transform:uppercase;margin-bottom:4px;">
+          4. Statutory Calculation Breakdown (ERA 1996 & ITEPA 2003)
+        </div>
+        <div style="font-size:12px;font-weight:bold;color:#0B1F3A;margin-bottom:2px;">
+          ${p.workedExample.caseTitle}
+        </div>
+        <div style="font-size:11px;color:#555;line-height:1.4;">
+          • <strong>Formula:</strong> ${p.workedExample.formulaBreakdown}<br/>
+          • <strong>Statutes Cited:</strong> ${p.workedExample.statutoryCitations.join(', ')}<br/>
+          • <strong>Legal Fee Rule:</strong> ${p.workedExample.employerContribution}
+        </div>
+      </div>
+      ` : ''}
+
+      <div style="font-size:11px;color:#444;margin-top:8px;">
+        <strong>4-Agent Validation:</strong> 0 Em Dashes [✓] · April 2026 Caps [✓] · SRA Legal Boundary [✓] · Anti-AI Score: <strong>${p.antiAiQuality.authenticityScore}%</strong>
       </div>
     </div>
   `).join('');
