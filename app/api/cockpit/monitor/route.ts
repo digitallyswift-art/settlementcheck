@@ -63,7 +63,7 @@ function formatUkDateRange(startStr: string, endStr: string): string {
   const end = new Date(endStr);
   const startFmt = start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   const endFmt = end.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-  return `${startFmt} – ${endFmt}`;
+  return `${startFmt} - ${endFmt}`;
 }
 
 export async function GET(req: NextRequest) {

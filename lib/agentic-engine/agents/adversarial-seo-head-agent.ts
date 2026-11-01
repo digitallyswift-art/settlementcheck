@@ -13,6 +13,7 @@ import {
   evaluateSeoBlastRadius,
   normalizeCanonicalPath,
 } from '../guardrails/seo-blast-radius-guard';
+import { auditRegulatoryAndAdversarialTraps } from '../guardrails/sra-boundary-guard';
 import { SeoPolicyRegistry } from '../services/seo-policy-registry';
 import {
   AdversarialSeoReviewResult,
@@ -190,6 +191,73 @@ export class AdversarialSeoHeadAgent {
           critiquePoints.push(`Blast-Radius Integrity Guard: ${reason}`);
         }
       }
+    }
+
+    // 6. SRA Regulatory Boundary & Unauthorized Practice of Law Guard (Legal Services Act 2007)
+    const allPackageCopy = `${input.calibratedTitle || ''} ${input.calibratedMetaDescription || ''} ${input.faqQuestion || ''} ${input.faqAnswer || ''} ${input.contextualLinkSnippet || ''}`;
+    const trapCheck = auditRegulatoryAndAdversarialTraps(allPackageCopy);
+    if (!trapCheck.isCompliant) {
+      for (const v of trapCheck.violations) {
+        critiquePoints.push(`Regulatory Boundary (${v.regulator} - ${v.rule}): ${v.detail}`);
+      }
+    }
+
+    // Explicit check for prescriptive legal advice imperatives
+    if (/\b(?:we advise you to|our legal advice is|as your solicitor|we will advise you on whether)\b/i.test(allPackageCopy)) {
+      critiquePoints.push(
+        `SRA Legal Advice Crossing: Copy claims or implies SettlementCheck provides direct legal advice or representation. Under LSA 2007 s.12, formal statutory advice must be delivered exclusively by an independent SRA-regulated solicitor.`
+      );
+    }
+
+    // 7. FCA Claims Management & CMA Fee Transparency Check
+    if (/\b(?:we will recover what you are owed|guaranteed payout|maximize your claim|no win no fee)\b/i.test(allPackageCopy)) {
+      critiquePoints.push(
+        `FCA Regulated Claims Activity Breach: Copy uses aggressive CMC marketing promises ("recover what you are owed", "guaranteed payout"). SettlementCheck is an independent calculation and triage platform, not an FCA-regulated claims management company.`
+      );
+    }
+    if (/\b(?:employer (?:is legally required to|must) pay 100%|employer covers all costs in all cases)\b/i.test(allPackageCopy)) {
+      critiquePoints.push(
+        `CMA Fee Misstatement (DMCC Act 2024 / CPUTR 2008): Promising 100% employer fee coverage without qualification is misleading. Employers customarily contribute £350 to £750 + VAT toward independent legal advice, and excess fees may apply for extensive negotiations.`
+      );
+    }
+
+    // 8. Calculation Intent & Above-The-Fold CRO Displacement Guard
+    // When optimizing a calculation tool (/calculator/ or /*-calculator/), verify that copy does not displace the UI
+    const isInteractiveCalculatorRoute = normPath.includes('calculator') || normPath === '/';
+    if (isInteractiveCalculatorRoute) {
+      // Check if proposed action attempts to inject massive informational copy above the tool
+      if ((input.faqAnswer || '').length > 600) {
+        critiquePoints.push(
+          `Calculator Above-The-Fold Displacement: FAQ answer exceeds 600 characters (${input.faqAnswer?.length} chars). On mobile devices, large text blocks displace interactive calculator inputs below the fold, causing bounce rate spikes and Google Helpful Content demotions.`
+        );
+      }
+    }
+
+    // 9. AEO / Information Gain: Concrete Worked Statutory Calculation Standard
+    // Payout and calculation intent queries require concrete 3-part statutory grounding
+    const isPayoutOrCalcIntent = /calculate|calculator|payout|how much|amount|redundancy|severance/i.test(input.query);
+    if (isPayoutOrCalcIntent && input.faqAnswer) {
+      const mentionsRedundancyCap = input.faqAnswer.includes(String(STATUTORY_RATES_2026_27.weeklyCapGB)) || input.faqAnswer.includes('751');
+      const mentionsTaxFreeCap = input.faqAnswer.includes('30,000') || input.faqAnswer.includes('30000');
+      const mentionsPilonOrNotice = /pilon|notice|contractual/i.test(input.faqAnswer);
+
+      if (!mentionsRedundancyCap || !mentionsTaxFreeCap) {
+        critiquePoints.push(
+          `AEO Statutory Grounding Gap: The proposed answer targets calculation intent ("${input.query}") but lacks concrete 2026 statutory figures (£${STATUTORY_RATES_2026_27.weeklyCapGB}/wk redundancy cap under ERA 1996 s.162 or £30,000 tax exemption under ITEPA 2003 s.403). Google AI Overviews cite worked statutory calculations over general statements.`
+        );
+      } else if (!mentionsPilonOrNotice) {
+        critiquePoints.push(
+          `AEO Information Gain Gap: Answer omits contractual notice pay (PILON) taxation under ITEPA 2003 s.402D. A high-ranking settlement calculation answer must clarify the 3-part structure (PILON + Statutory Redundancy + Ex-Gratia).`
+        );
+      }
+    }
+
+    // 10. Structured Schema Entity Parity
+    // Ensure calculator pages are flagged if structured data is missing or restricted to deprecated FAQPage
+    if (isInteractiveCalculatorRoute && input.actionType === 'SCHEMA_FAQ_SNIPPET') {
+      critiquePoints.push(
+        `Structured Data Entity Warning: Standalone commercial FAQPage schema is deprecated by Google (Aug 2023 update). On ${normPath}, structured data must declare the primary entity as WebApplication with applicationCategory: FinanceApplication.`
+      );
     }
 
     // Determine Verdict & Counter-Proposal

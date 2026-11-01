@@ -16,41 +16,33 @@ const STATS = [
 const STEPS = [
   {
     n: '01',
-    t: 'Know your position before you respond',
-    d: 'Enter your salary, length of service, and the offer on the table. You will get an instant read on whether it sits below the typical range, within range, or above it. That is the information you need before you reply to anything.',
+    t: 'Calculate your position in 60 seconds',
+    d: 'Enter your salary, length of service, and current offer. You will get an instant calculation of your statutory redundancy entitlement, notice pay, and whether your offer sits below, within, or above typical UK benchmarks.',
   },
   {
     n: '02',
-    t: 'Match with an independent solicitor',
-    d: (
-      <>
-        Your employer covers the legal advice fee under s.203(3) of the Employment Rights Act 1996.{' '}
-        <Link href="/get-matched/" className="underline hover:text-coral transition-colors font-medium">
-          Get matched with an SRA-regulated specialist
-        </Link>{' '}
-        to review your terms and negotiate an uplift.
-      </>
-    ),
+    t: 'Review draft clauses and tax split',
+    d: 'Verify how your package is taxed under ITEPA 2003, check your £30,000 tax-free exemption, and inspect clauses such as restrictive covenants, confidentiality terms, and agreed references.',
   },
   {
     n: '03',
-    t: 'Consult an independent SRA-regulated solicitor',
-    d: 'Employers customarily contribute £350 to £750 + VAT toward the cost of independent legal advice under s.203(3) ERA 1996. An independent solicitor reviews your draft terms, explains your options, and communicates with your employer\'s legal team.',
+    t: 'Get independent legal advice at zero cost',
+    d: (
+      <>
+        To make your settlement legally binding under s.203(3) ERA 1996, you must receive independent legal advice. Your employer covers this fee (typically £350 to £750 + VAT), meaning zero cost to you.{' '}
+        <Link href="/get-matched/" className="underline hover:text-coral transition-colors font-medium">
+          Connect with an SRA-regulated specialist
+        </Link>{' '}
+        to review your terms.
+      </>
+    ),
   },
 ]
 
 const TRUST: { t: string; d: React.ReactNode }[] = [
   {
     t: 'Genuinely independent',
-    d: 'Every other settlement calculator online was built by a firm that wants your case. This one was not. There is no firm behind this result. What you see is what the numbers say.',
-  },
-  {
-    t: 'Why is there no official GOV.UK or ACAS settlement calculator?',
-    d: 'GOV.UK only provides a basic statutory redundancy calculator. ACAS facilitates conciliation without estimating individual financial settlements. SettlementCheck fills this gap as the independent UK standard calculator applying official April 2026 statutory rates (£751 weekly cap) and ITEPA 2003 tax rules.',
-  },
-  {
-    t: 'Your employer pays',
-    d: 'Under UK practice, your employer pays £350 to £750 toward the cost of independent legal advice on a settlement. In most cases, that covers the full fee.',
+    d: 'Every other settlement calculator online was built by a firm that wants your case. This one was not. There is no law firm behind this result. What you see is what the numbers say.',
   },
   {
     t: 'Built on UK statute',
@@ -79,12 +71,16 @@ const TRUST: { t: string; d: React.ReactNode }[] = [
     ),
   },
   {
-    t: 'SRA-regulated solicitor panel',
-    d: 'We connect you with vetted employment law solicitors authorised and regulated by the Solicitors Regulation Authority. Your independent review is paid for by your employer, with zero cost to you.',
+    t: 'Clear tax separation',
+    d: 'We separate statutory redundancy and ex-gratia compensation from Payment in Lieu of Notice (PILON), so you see your estimated net take-home figure after tax.',
   },
   {
-    t: 'Independent alternative to GOV.UK and ACAS',
-    d: 'Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. SettlementCheck is an independent platform that calculates your complete package. It includes ex-gratia compensation and tax exemptions under 2026 statutory rates.',
+    t: 'Your employer covers legal fees',
+    d: 'Under Section 203(3) of the Employment Rights Act 1996, your employer pays £350 to £750 toward independent legal advice. In most cases, this covers the full fee.',
+  },
+  {
+    t: 'SRA-regulated solicitor panel',
+    d: 'We connect you with vetted employment law solicitors authorised and regulated by the Solicitors Regulation Authority who act exclusively in your best interest.',
   },
 ]
 
@@ -533,35 +529,26 @@ export default function HomeClient({
                 <h2 className="sc-section-h2">What people ask before they start.</h2>
                 <p className="sc-lead">What employees want to know before clicking &ldquo;calculate.&rdquo;</p>
 
-                {/* Answer-First Featured Snippet Callout: Baseline Amount */}
-                <div
-                  itemScope
-                  itemType="https://schema.org/Question"
-                  className="mt-3 p-5 rounded-lg border border-rule bg-card"
-                >
-                  <h3 itemProp="name" className="text-[16px] font-semibold text-ink leading-snug">
-                    How much should an employee settlement agreement be?
-                  </h3>
-                  <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer" className="mt-2.5">
-                    <p itemProp="text" className="sc-body text-[14px] leading-relaxed">
-                      A typical UK settlement agreement pays between one and three months of gross salary, plus notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with the first £30,000 paid tax-free.
-                    </p>
+                <div className="mt-4 p-6 rounded-xl border border-rule bg-card flex flex-col gap-3">
+                  <div className="text-[15px] font-semibold text-ink font-serif">
+                    Need guidance on your specific situation?
                   </div>
-                </div>
-
-                {/* Answer-First Featured Snippet Callout: GOV.UK & ACAS Comparison */}
-                <div
-                  itemScope
-                  itemType="https://schema.org/Question"
-                  className="p-5 rounded-lg border border-rule bg-card"
-                >
-                  <h3 itemProp="name" className="text-[16px] font-semibold text-ink leading-snug">
-                    Does GOV.UK or ACAS offer an official settlement agreement calculator?
-                  </h3>
-                  <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer" className="mt-2.5">
-                    <p itemProp="text" className="sc-body text-[14px] leading-relaxed">
-                      No. Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. GOV.UK only calculates statutory redundancy pay (£751 weekly cap), while ACAS provides conciliation without estimating payouts. SettlementCheck provides the independent UK standard calculator combining statutory redundancy, notice pay, and tax exemptions under ITEPA 2003.
-                    </p>
+                  <p className="sc-body text-[14px] leading-relaxed">
+                    Every settlement agreement is unique. Explore our in-depth guides on negotiation, ACAS codes, and redundancy, or have your draft clauses reviewed by an independent specialist.
+                  </p>
+                  <div className="pt-2 flex flex-col gap-2">
+                    <Link
+                      href="/guides/"
+                      className="text-[13px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
+                    >
+                      Browse settlement agreement guides →
+                    </Link>
+                    <Link
+                      href="/settlement-agreement-review/"
+                      className="text-[13px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
+                    >
+                      Review draft agreement clauses →
+                    </Link>
                   </div>
                 </div>
               </div>

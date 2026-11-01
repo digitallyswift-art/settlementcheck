@@ -125,9 +125,63 @@ export default function CockpitClient() {
     fetchMonitorData(preset, start, end);
   };
 
+  const handleTabChange = (tab: 'approvals' | 'deployed' | 'monitor', updateHash = true) => {
+    setActiveTab(tab);
+    if (updateHash && typeof window !== 'undefined') {
+      window.history.replaceState(null, '', `#${tab}`);
+    }
+  };
+
+  const handleTogglePolicyDrawer = (open?: boolean) => {
+    const nextState = open !== undefined ? open : !showPolicyDrawer;
+    setShowPolicyDrawer(nextState);
+    if (typeof window !== 'undefined') {
+      if (nextState) {
+        window.history.replaceState(null, '', '#policies');
+      } else {
+        window.history.replaceState(null, '', `#${activeTab}`);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchSeoData();
     fetchMonitorData();
+
+    // Deep-link hash routing & back/forward history synchronization
+    const syncFromHash = () => {
+      if (typeof window === 'undefined') return;
+      const rawHash = window.location.hash.toLowerCase().replace(/^#/, '').trim();
+      if (!rawHash) return;
+
+      if (rawHash === 'approvals' || rawHash === 'pending') {
+        setActiveTab('approvals');
+        setShowPolicyDrawer(false);
+      } else if (rawHash === 'deployed' || rawHash === 'live' || rawHash === 'canary') {
+        setActiveTab('deployed');
+        setShowPolicyDrawer(false);
+      } else if (rawHash === 'monitor' || rawHash === 'leads' || rawHash === 'telemetry') {
+        setActiveTab('monitor');
+        setShowPolicyDrawer(false);
+      } else if (rawHash === 'policies' || rawHash === 'guardrails') {
+        setShowPolicyDrawer(true);
+      } else if (rawHash.startsWith('pkg-') || rawHash.startsWith('package-')) {
+        const pkgId = rawHash.replace(/^pkg-|^package-/, '');
+        setActiveTab('deployed');
+        setShowPolicyDrawer(false);
+        setHighlightedPackageId(pkgId);
+        setTimeout(() => {
+          const el = document.getElementById(`package-row-${pkgId}`);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 300);
+      }
+    };
+
+    syncFromHash();
+    window.addEventListener('hashchange', syncFromHash);
+    return () => window.removeEventListener('hashchange', syncFromHash);
   }, []);
 
   // 1-Click Apply (or 14-Day Canary)
@@ -386,6 +440,9 @@ export default function CockpitClient() {
   // Inspect package in Tab 2 (switches tab, highlights row, and smooth-scrolls)
   const handleInspectPackage = (packageId?: string) => {
     setActiveTab('deployed');
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', packageId ? `#pkg-${packageId}` : '#deployed');
+    }
     if (packageId) {
       setHighlightedPackageId(packageId);
     }
@@ -645,7 +702,7 @@ export default function CockpitClient() {
                   <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-red-950">
                     Auto-Rollback Triggered ({regressionAlerts.length} Package{regressionAlerts.length > 1 ? 's' : ''})
                   </h4>
-                  <span className="px-2 py-0.5 text-[10px] font-bold bg-green-100 text-green-800 rounded-full border border-green-200">
+                  <span className="px-2 py-0.5 text-[10px] font-bold bg-[#0B1F3A]/10 text-[#0B1F3A] rounded-full border border-[#0B1F3A]/20">
                     Site Protected: Reverted to Baseline
                   </span>
                 </div>
@@ -678,10 +735,10 @@ export default function CockpitClient() {
         <div className="space-y-3 border-b border-[#0B1F3A]/10 pb-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             {/* Responsive Touch-Friendly Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-1 bg-[#0B1F3A]/5 rounded-2xl w-full md:w-auto">
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-1.5 bg-[#0B1F3A]/5 rounded-2xl w-full md:w-auto">
               <button
-                onClick={() => setActiveTab('approvals')}
-                className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
+                onClick={() => handleTabChange('approvals')}
+                className={`min-h-[44px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
                   activeTab === 'approvals'
                     ? 'bg-[#0B1F3A] text-white shadow-sm'
                     : 'hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70'
@@ -696,8 +753,8 @@ export default function CockpitClient() {
               </button>
 
               <button
-                onClick={() => setActiveTab('deployed')}
-                className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
+                onClick={() => handleTabChange('deployed')}
+                className={`min-h-[44px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
                   activeTab === 'deployed'
                     ? 'bg-[#0B1F3A] text-white shadow-sm'
                     : 'hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70'
@@ -710,8 +767,8 @@ export default function CockpitClient() {
               </button>
 
               <button
-                onClick={() => setActiveTab('monitor')}
-                className={`px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
+                onClick={() => handleTabChange('monitor')}
+                className={`min-h-[44px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
                   activeTab === 'monitor'
                     ? 'bg-[#0B1F3A] text-white shadow-sm'
                     : 'hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70'
@@ -731,8 +788,8 @@ export default function CockpitClient() {
               {/* Desktop-only secondary buttons */}
               <div className="hidden lg:flex items-center gap-2">
                 <button
-                  onClick={() => setShowPolicyDrawer(!showPolicyDrawer)}
-                  className="px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1.5"
+                  onClick={() => handleTogglePolicyDrawer()}
+                  className="min-h-[40px] px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1.5"
                 >
                   <span>🧬 Guardrail Policies ({seoPolicies.length})</span>
                 </button>
@@ -740,7 +797,7 @@ export default function CockpitClient() {
                 <button
                   onClick={handleRunDegradationWatchdog}
                   disabled={actionLoadingId === 'RUN_WATCHDOG'}
-                  className="px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1.5 disabled:opacity-50"
+                  className="min-h-[40px] px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1.5 disabled:opacity-50"
                 >
                   {actionLoadingId === 'RUN_WATCHDOG' ? (
                     <span>Auditing...</span>
@@ -754,7 +811,7 @@ export default function CockpitClient() {
               <button
                 onClick={handleTriggerRun}
                 disabled={actionLoadingId === 'TRIGGER_RUN'}
-                className="px-3.5 sm:px-4 py-2 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5 disabled:opacity-50 shrink-0"
+                className="min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5 disabled:opacity-50 shrink-0"
               >
                 {actionLoadingId === 'TRIGGER_RUN' ? (
                   <>
@@ -772,7 +829,7 @@ export default function CockpitClient() {
                   fetchSeoData();
                   fetchMonitorData();
                 }}
-                className="px-2.5 sm:px-3 py-2 rounded-xl border border-[#0B1F3A]/15 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-colors shrink-0"
+                className="min-h-[40px] px-2.5 sm:px-3 py-2 rounded-xl border border-[#0B1F3A]/15 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-colors shrink-0"
                 title="Refresh dashboard data"
               >
                 🔄
@@ -782,7 +839,7 @@ export default function CockpitClient() {
               <div className="relative lg:hidden">
                 <button
                   onClick={() => setShowMobileActions(!showMobileActions)}
-                  className="px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1"
+                  className="min-h-[40px] px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1"
                 >
                   <span>••• Actions</span>
                 </button>
@@ -791,10 +848,10 @@ export default function CockpitClient() {
                   <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-[#0B1F3A]/15 rounded-2xl shadow-xl z-30 p-2 space-y-1">
                     <button
                       onClick={() => {
-                        setShowPolicyDrawer(!showPolicyDrawer);
+                        handleTogglePolicyDrawer(true);
                         setShowMobileActions(false);
                       }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-[#0B1F3A] hover:bg-[#0B1F3A]/5 flex items-center gap-2"
+                      className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold text-[#0B1F3A] hover:bg-[#0B1F3A]/5 flex items-center gap-2"
                     >
                       <span>🧬</span>
                       <span>Guardrail Policies ({seoPolicies.length})</span>
@@ -805,7 +862,7 @@ export default function CockpitClient() {
                         setShowMobileActions(false);
                       }}
                       disabled={actionLoadingId === 'RUN_WATCHDOG'}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-[#0B1F3A] hover:bg-[#0B1F3A]/5 flex items-center gap-2 disabled:opacity-50"
+                      className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold text-[#0B1F3A] hover:bg-[#0B1F3A]/5 flex items-center gap-2 disabled:opacity-50"
                     >
                       <span>🛡️</span>
                       <span>Run Watchdog Audit</span>
@@ -814,6 +871,21 @@ export default function CockpitClient() {
                 )}
               </div>
             </div>
+          </div>
+
+          {/* Context & View Helper Strip */}
+          <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs text-[#0B1F3A]/70">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D9603B]" />
+              <span className="font-medium text-[11px] sm:text-xs">
+                {activeTab === 'approvals' && 'Review non-destructive SEO recommendations before pushing live. Live headlines remain protected.'}
+                {activeTab === 'deployed' && 'Track live production assets, 14-day canary observation windows, and 1-click safe rollbacks.'}
+                {activeTab === 'monitor' && 'Real-time Google Search Console performance and anonymized dispute calculation intake.'}
+              </span>
+            </div>
+            <span className="text-[10px] font-mono text-[#0B1F3A]/50 hidden sm:inline">
+              Deep-link: #{activeTab}
+            </span>
           </div>
         </div>
 
@@ -831,7 +903,7 @@ export default function CockpitClient() {
                 </p>
               </div>
               <button
-                onClick={() => setShowPolicyDrawer(false)}
+                onClick={() => handleTogglePolicyDrawer(false)}
                 className="text-xs font-semibold text-[#0B1F3A]/60 hover:text-[#0B1F3A]"
               >
                 Close ✕
@@ -1427,15 +1499,37 @@ export default function CockpitClient() {
                           </p>
 
                           {advReview.critiquePoints && advReview.critiquePoints.length > 0 && (
-                            <div className="space-y-1.5 bg-white/5 p-3.5 rounded-xl border border-white/10">
+                            <div className="space-y-2 bg-white/5 p-3.5 sm:p-4 rounded-xl border border-white/10">
                               <span className="text-[10px] font-mono uppercase tracking-wider text-[#D9603B] font-bold block">
-                                Specific Flaws Caught in Agent Proposal:
+                                Strategic &amp; Statutory Flaws Caught in Proposal:
                               </span>
-                              <ul className="list-disc pl-4 space-y-1 text-xs text-white/85">
-                                {advReview.critiquePoints.map((pt: string, idx: number) => (
-                                  <li key={idx}>{pt}</li>
-                                ))}
-                              </ul>
+                              <div className="space-y-2 text-xs">
+                                {advReview.critiquePoints.map((pt: string, idx: number) => {
+                                  let tagBadge: { label: string; bg: string; text: string } | null = null;
+                                  if (pt.startsWith('Regulatory Boundary') || pt.startsWith('SRA Legal Advice')) {
+                                    tagBadge = { label: 'SRA / LSA 2007', bg: 'bg-red-500/20 border-red-500/40', text: 'text-red-200' };
+                                  } else if (pt.startsWith('FCA Regulated') || pt.startsWith('CMA Fee')) {
+                                    tagBadge = { label: 'FCA / CMA Fee Guard', bg: 'bg-[#D9603B]/25 border-[#D9603B]/40', text: 'text-[#D9603B]' };
+                                  } else if (pt.startsWith('Calculator Above-The-Fold')) {
+                                    tagBadge = { label: 'CRO Displacement', bg: 'bg-amber-400/20 border-amber-400/40', text: 'text-amber-200' };
+                                  } else if (pt.startsWith('AEO Statutory Grounding') || pt.startsWith('AEO Information Gain')) {
+                                    tagBadge = { label: 'AEO Statutory Standard', bg: 'bg-blue-400/20 border-blue-400/40', text: 'text-blue-200' };
+                                  } else if (pt.startsWith('Structured Data Entity')) {
+                                    tagBadge = { label: 'Schema Entity', bg: 'bg-purple-400/20 border-purple-400/40', text: 'text-purple-200' };
+                                  }
+
+                                  return (
+                                    <div key={idx} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                                      {tagBadge && (
+                                        <span className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider shrink-0 border self-start ${tagBadge.bg} ${tagBadge.text}`}>
+                                          {tagBadge.label}
+                                        </span>
+                                      )}
+                                      <span className="text-white/90 leading-relaxed">{pt}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
                             </div>
                           )}
 
@@ -2009,8 +2103,53 @@ export default function CockpitClient() {
                 </div>
               </div>
 
-              {/* Anonymized Feed Table */}
-              <div className="overflow-x-auto">
+              {/* Mobile Card Feed (visible on small mobile screens) */}
+              <div className="sm:hidden divide-y divide-[#0B1F3A]/5">
+                {filteredFeed.length === 0 ? (
+                  <div className="p-6 text-center text-xs text-[#0B1F3A]/50">
+                    No cases matching current filter.
+                  </div>
+                ) : (
+                  filteredFeed.map((item: any) => (
+                    <div key={item.id} className="p-4 space-y-2 bg-white hover:bg-[#F7F4EE]/30 transition-colors">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-mono font-bold text-xs text-[#0B1F3A]">
+                          {item.id}
+                        </span>
+                        <span
+                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider ${
+                            (item.verdict || '').toLowerCase().includes('below')
+                              ? 'bg-red-100 text-red-800'
+                              : (item.verdict || '').toLowerCase().includes('fair')
+                              ? 'bg-blue-100 text-blue-900'
+                              : 'bg-amber-100 text-amber-800'
+                          }`}
+                        >
+                          {item.verdict?.replace(/_/g, ' ') || 'Evaluation'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-semibold text-[#D9603B]">
+                          {item.offer_bucket || 'Undisclosed'}
+                        </span>
+                        <span className="font-mono text-[10px] uppercase px-2 py-0.5 rounded bg-[#0B1F3A]/5 text-[#0B1F3A]/80 border border-[#0B1F3A]/10">
+                          {item.status || 'Active'}
+                        </span>
+                      </div>
+                      <div className="text-[10px] font-mono text-[#0B1F3A]/50">
+                        {new Date(item.created_at).toLocaleDateString('en-GB')}{' '}
+                        {new Date(item.created_at).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Desktop Table Feed (hidden on small mobile screens) */}
+              <div className="hidden sm:block overflow-x-auto">
                 <table className="w-full text-xs text-left border-collapse">
                   <thead>
                     <tr className="bg-[#F7F4EE] text-[#0B1F3A]/60 font-semibold border-b border-[#0B1F3A]/10">

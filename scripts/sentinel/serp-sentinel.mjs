@@ -164,7 +164,7 @@ async function pullLiveGscApiIfConfigured() {
         body: JSON.stringify({
           startDate,
           endDate,
-          dimensions: ['query'],
+          dimensions: ['query', 'page'],
           rowLimit: 2500,
         }),
       }
@@ -176,6 +176,7 @@ async function pullLiveGscApiIfConfigured() {
       source: 'GSC_LIVE_API',
       rows: (data.rows || []).map(r => ({
         query: r.keys[0],
+        page: r.keys[1] || '',
         clicks: r.clicks,
         impressions: r.impressions,
         ctr: r.ctr,
@@ -216,6 +217,7 @@ async function runSentinel() {
     dataSource = 'GSC_LIVE_API (Direct Service Account Connection)';
     latestQueries = liveApiResult.rows.map(r => ({
       'Top queries': r.query,
+      Page: r.page || '',
       Clicks: String(r.clicks),
       Impressions: String(r.impressions),
       CTR: `${(r.ctr * 100).toFixed(2)}%`,

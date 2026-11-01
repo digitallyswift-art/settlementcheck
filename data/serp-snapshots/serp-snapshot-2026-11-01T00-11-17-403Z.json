@@ -1,0 +1,426 @@
+{
+  "runAt": "2026-11-01T00:11:17.404Z",
+  "dataSource": "GSC_LIVE_API (Direct Service Account Connection)",
+  "totalTrackedQueries": 495,
+  "totalImpressions": 5170,
+  "totalClicks": 43,
+  "topMovers": [
+    {
+      "query": "settlement agreement calculator",
+      "prevPos": 78.49,
+      "curPos": 31.600775193798448,
+      "change": 46.9,
+      "clicks": 1,
+      "impr": 258,
+      "ctr": 0.39
+    },
+    {
+      "query": "calculate settlement agreement",
+      "prevPos": 61.75,
+      "curPos": 25.917582417582416,
+      "change": 35.8,
+      "clicks": 0,
+      "impr": 182,
+      "ctr": 0
+    },
+    {
+      "query": "acas settlement agreement calculator",
+      "prevPos": 99,
+      "curPos": 4.426136363636363,
+      "change": 94.6,
+      "clicks": 19,
+      "impr": 176,
+      "ctr": 10.8
+    },
+    {
+      "query": "settlement agreement calculator uk",
+      "prevPos": 63.89,
+      "curPos": 30.986842105263158,
+      "change": 32.9,
+      "clicks": 6,
+      "impr": 152,
+      "ctr": 3.95
+    },
+    {
+      "query": "settlement calculator",
+      "prevPos": 68.89,
+      "curPos": 32.83098591549296,
+      "change": 36.1,
+      "clicks": 0,
+      "impr": 142,
+      "ctr": 0
+    },
+    {
+      "query": "compromise agreement calculator",
+      "prevPos": 74.73,
+      "curPos": 13.315384615384616,
+      "change": 61.4,
+      "clicks": 0,
+      "impr": 130,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement calculator gov",
+      "prevPos": 99,
+      "curPos": 10.758928571428571,
+      "change": 88.2,
+      "clicks": 2,
+      "impr": 112,
+      "ctr": 1.79
+    },
+    {
+      "query": "settlement calculator uk",
+      "prevPos": 67.14,
+      "curPos": 33.4954954954955,
+      "change": 33.6,
+      "clicks": 0,
+      "impr": 111,
+      "ctr": 0
+    },
+    {
+      "query": "negotiate settlement agreement",
+      "prevPos": 99,
+      "curPos": 87.52884615384616,
+      "change": 11.5,
+      "clicks": 0,
+      "impr": 104,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement negotiations",
+      "prevPos": 99,
+      "curPos": 84.61855670103093,
+      "change": 14.4,
+      "clicks": 0,
+      "impr": 97,
+      "ctr": 0
+    },
+    {
+      "query": "average settlement agreement amount uk",
+      "prevPos": 78,
+      "curPos": 28.094736842105263,
+      "change": 49.9,
+      "clicks": 0,
+      "impr": 95,
+      "ctr": 0
+    },
+    {
+      "query": "employment settlement agreement calculator uk",
+      "prevPos": 65.98,
+      "curPos": 28.266666666666666,
+      "change": 37.7,
+      "clicks": 1,
+      "impr": 90,
+      "ctr": 1.11
+    },
+    {
+      "query": "how to negotiate a settlement agreement",
+      "prevPos": 99,
+      "curPos": 81.28048780487805,
+      "change": 17.7,
+      "clicks": 0,
+      "impr": 82,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement how much",
+      "prevPos": 99,
+      "curPos": 38.69444444444444,
+      "change": 60.3,
+      "clicks": 0,
+      "impr": 72,
+      "ctr": 0
+    },
+    {
+      "query": "nhs settlement agreement",
+      "prevPos": 99,
+      "curPos": 58.45070422535211,
+      "change": 40.5,
+      "clicks": 0,
+      "impr": 71,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement negotiation",
+      "prevPos": 99,
+      "curPos": 89.03030303030303,
+      "change": 10,
+      "clicks": 0,
+      "impr": 66,
+      "ctr": 0
+    },
+    {
+      "query": "compensation calculator",
+      "prevPos": 99,
+      "curPos": 67.47540983606558,
+      "change": 31.5,
+      "clicks": 0,
+      "impr": 61,
+      "ctr": 0
+    },
+    {
+      "query": "notice pay calculator",
+      "prevPos": 99,
+      "curPos": 57.01639344262295,
+      "change": 42,
+      "clicks": 0,
+      "impr": 61,
+      "ctr": 0
+    },
+    {
+      "query": "redundancy pay calculator",
+      "prevPos": 99,
+      "curPos": 65.98275862068965,
+      "change": 33,
+      "clicks": 0,
+      "impr": 58,
+      "ctr": 0
+    },
+    {
+      "query": "how to negotiate settlement agreement",
+      "prevPos": 99,
+      "curPos": 86.37037037037037,
+      "change": 12.6,
+      "clicks": 0,
+      "impr": 54,
+      "ctr": 0
+    },
+    {
+      "query": "negotiate a settlement agreement",
+      "prevPos": 99,
+      "curPos": 82.86792452830188,
+      "change": 16.1,
+      "clicks": 0,
+      "impr": 53,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement calculator acas",
+      "prevPos": 78.81,
+      "curPos": 13.173076923076923,
+      "change": 65.6,
+      "clicks": 0,
+      "impr": 52,
+      "ctr": 0
+    },
+    {
+      "query": "pip settlement",
+      "prevPos": 99,
+      "curPos": 18.08,
+      "change": 80.9,
+      "clicks": 0,
+      "impr": 50,
+      "ctr": 0
+    },
+    {
+      "query": "unfair dismissal claim calculator uk",
+      "prevPos": 99,
+      "curPos": 47.92,
+      "change": 51.1,
+      "clicks": 0,
+      "impr": 50,
+      "ctr": 0
+    },
+    {
+      "query": "protective award claim calculator",
+      "prevPos": 99,
+      "curPos": 4.244897959183673,
+      "change": 94.8,
+      "clicks": 0,
+      "impr": 49,
+      "ctr": 0
+    }
+  ],
+  "emergingKeywords": [
+    {
+      "query": "employment settlement calculator",
+      "impr": 25,
+      "pos": 18.84
+    },
+    {
+      "query": "average discrimination settlement uk",
+      "impr": 40,
+      "pos": 35.85
+    },
+    {
+      "query": "average settlement compromise agreement",
+      "impr": 25,
+      "pos": 56.64
+    },
+    {
+      "query": "average unfair dismissal payout",
+      "impr": 39,
+      "pos": 32.794871794871796
+    },
+    {
+      "query": "basic award calculator unfair dismissal",
+      "impr": 39,
+      "pos": 79.82051282051282
+    },
+    {
+      "query": "calculate my redundancy",
+      "impr": 30,
+      "pos": 12.1
+    },
+    {
+      "query": "compensation calculator",
+      "impr": 61,
+      "pos": 67.47540983606558
+    },
+    {
+      "query": "compensation unfair dismissal calculator",
+      "impr": 29,
+      "pos": 88.10344827586206
+    },
+    {
+      "query": "compromise agreement",
+      "impr": 33,
+      "pos": 89.12121212121212
+    },
+    {
+      "query": "employment tribunal settlement tactics",
+      "impr": 35,
+      "pos": 72.05714285714286
+    },
+    {
+      "query": "fair work agency",
+      "impr": 48,
+      "pos": 78.83333333333333
+    },
+    {
+      "query": "how to negotiate a settlement agreement",
+      "impr": 82,
+      "pos": 81.28048780487805
+    },
+    {
+      "query": "how to negotiate settlement agreement",
+      "impr": 54,
+      "pos": 86.37037037037037
+    },
+    {
+      "query": "negotiate a settlement agreement",
+      "impr": 53,
+      "pos": 82.86792452830188
+    },
+    {
+      "query": "negotiate settlement agreement",
+      "impr": 104,
+      "pos": 87.52884615384616
+    }
+  ],
+  "aiOverviewCandidates": [
+    {
+      "query": "acas settlement agreement calculator",
+      "curPos": 4.426136363636363,
+      "cited": true
+    },
+    {
+      "query": "how to negotiate a settlement agreement with employer",
+      "curPos": 84.91666666666667,
+      "cited": false
+    },
+    {
+      "query": "acas protective award",
+      "curPos": 5,
+      "cited": true
+    },
+    {
+      "query": "acas redundancy calculator",
+      "curPos": 69.5,
+      "cited": false
+    },
+    {
+      "query": "acas unfair dismissal compensation",
+      "curPos": 94,
+      "cited": false
+    },
+    {
+      "query": "difference between without prejudice and protected conversation",
+      "curPos": 86.57142857142857,
+      "cited": false
+    },
+    {
+      "query": "how to ask for a settlement agreement",
+      "curPos": 83.63636363636364,
+      "cited": false
+    },
+    {
+      "query": "how to calculate a settlement agreement",
+      "curPos": 42.333333333333336,
+      "cited": false
+    },
+    {
+      "query": "how to calculate redundancy pay",
+      "curPos": 89,
+      "cited": false
+    },
+    {
+      "query": "how to calculate settlement amount employee",
+      "curPos": 1,
+      "cited": true
+    },
+    {
+      "query": "how to negotiate a better settlement agreement",
+      "curPos": 87.5,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a commercial settlement agreement",
+      "curPos": 85.33333333333333,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a settlement",
+      "curPos": 59,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a settlement agreement",
+      "curPos": 81.28048780487805,
+      "cited": false
+    },
+    {
+      "query": "how to negotiate a settlement agreement with an employee",
+      "curPos": 100,
+      "cited": false
+    }
+  ],
+  "autonomousActions": [
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement agreement calculator gov",
+      "rank": 10.758928571428571,
+      "impressions": 112,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "compromise agreement calculator",
+      "rank": 13.315384615384616,
+      "impressions": 130,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "pip settlement",
+      "rank": 18.08,
+      "impressions": 50,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "protective award claim calculator",
+      "rank": 4.244897959183673,
+      "impressions": 49,
+      "ctr": 0,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement agreement calculator acas",
+      "rank": 13.173076923076923,
+      "impressions": 52,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    }
+  ]
+}
