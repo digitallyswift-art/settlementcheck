@@ -19,7 +19,7 @@ function CalculatorInner() {
       monthsNum:         searchParams.get('monthsNum') || searchParams.get('months') || '',
       age:               searchParams.get('age') || '',
       offer:             searchParams.get('offer') || '',
-      offerIncludesNotice: searchParams.get('offerIncludesNotice') || '',
+      offerIncludesNotice: searchParams.get('offerIncludesNotice') ?? undefined,
       reason:            searchParams.get('reason') || '',
       discrimination:    searchParams.get('discrimination') || '',
       contractualNotice: searchParams.get('contractualNotice') || searchParams.get('notice') || '',
@@ -110,6 +110,7 @@ function CalculatorInner() {
       reason:            payload.inputs.reason,
       discrimination:    payload.inputs.discrimination,
       contractualNotice: payload.inputs.contractualNotice,
+      jurisdiction:      searchParams.get('jurisdiction') || 'GB',
       variant:           variant,
     })
     router.push(`/results/?${p.toString()}`)

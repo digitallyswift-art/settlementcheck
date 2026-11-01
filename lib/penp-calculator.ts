@@ -72,7 +72,9 @@ export function calculatePenp(input: PenpCalculationInput): PenpCalculationResul
   const taxableDeductions = Math.max(0, input.taxableNoticeAlreadyPaid || 0)
 
   // Statutory formula: ((BP * D) / P) - T
-  const rawPenp = periodDays > 0
+  const rawPenp = (noticeUnit === 'months' && Number.isInteger(unworkedUnits))
+    ? (basicPayPeriod * unworkedUnits) - taxableDeductions
+    : periodDays > 0
     ? ((basicPayPeriod * unworkedDays) / periodDays) - taxableDeductions
     : 0
 

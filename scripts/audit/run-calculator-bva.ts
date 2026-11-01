@@ -37,6 +37,8 @@ interface TestCase {
   };
   expected: {
     redundancy?: number;
+    basicAward?: number;
+    verdict?: string;
     noticeWeeks?: number;
     noticePay?: number;
     taxRate?: number;
@@ -272,6 +274,33 @@ const TEST_CASES: TestCase[] = [
     rule: 'ITEPA 2003 s.402D (Notice £2,000 added to £15k offer, total package = £17,000)',
     boundaryTested: 'Notice inclusion toggle = false',
   },
+  {
+    id: 'SC-T-023',
+    name: 'Phantom PILON Tax Prevention: Offer < PILON with notice included',
+    calculator: 'Verdict',
+    inputs: { salary: 52000, totalMonths: 144, age: 40, offer: 5000, reason: 'redundancy', contractualNoticeWeeks: 12, offerIncludesNotice: true },
+    expected: { effectiveOffer: 5000, estimatedTax: 2000, estimatedNet: 3000 },
+    rule: 'ITEPA 2003 s.402D(1) / HMRC EIM13874 (Taxable notice received capped at actual offer proceeds)',
+    boundaryTested: 'Offer lower than statutory/contractual PILON boundary',
+  },
+  {
+    id: 'SC-T-024',
+    name: 'Discrimination Verdict Above Typical: High offer with uncapped potential',
+    calculator: 'Verdict',
+    inputs: { salary: 30000, totalMonths: 24, age: 30, offer: 150000, reason: 'dismissal', discrimination: 'yes', contractualNoticeWeeks: 1, offerIncludesNotice: true },
+    expected: { verdict: 'ABOVE_TYPICAL' },
+    rule: 'Equality Act 2010 s.124 (High settlement offer correctly reflects ABOVE_TYPICAL status)',
+    boundaryTested: 'Uncapped discrimination above reference ceiling',
+  },
+  {
+    id: 'SC-T-025',
+    name: 'Constructive Dismissal: Basic award preservation',
+    calculator: 'Verdict',
+    inputs: { salary: 45000, totalMonths: 60, age: 35, offer: 10000, reason: 'constructive', contractualNoticeWeeks: 4, offerIncludesNotice: true },
+    expected: { basicAward: 3755 },
+    rule: 'ERA 1996 ss.118-119 & s.95(1)(c) (Constructive dismissal entitles employee to statutory basic award)',
+    boundaryTested: 'Constructive dismissal reason mapping boundary',
+  },
 ];
 
 console.log('================================================================');
@@ -324,6 +353,17 @@ for (const tc of TEST_CASES) {
     actualOutput.estimatedTax = verdictRes.estimatedTax;
     actualOutput.estimatedNet = verdictRes.estimatedNet;
     actualOutput.effectiveOffer = verdictRes.effectiveOffer;
+    actualOutput.verdict = verdictRes.verdict;
+    actualOutput.basicAward = verdictRes.basicAward;
+
+    if (tc.expected.verdict !== undefined && verdictRes.verdict !== tc.expected.verdict) {
+      isPass = false;
+      diff = `Expected verdict ${tc.expected.verdict}, got ${verdictRes.verdict}`;
+    }
+    if (tc.expected.basicAward !== undefined && verdictRes.basicAward !== tc.expected.basicAward) {
+      isPass = false;
+      diff = `Expected basicAward £${tc.expected.basicAward}, got £${verdictRes.basicAward}`;
+    }
 
     if (tc.expected.estimatedTax !== undefined && verdictRes.estimatedTax !== tc.expected.estimatedTax) {
       isPass = false;

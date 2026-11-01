@@ -73,7 +73,7 @@ export function calcRedundancy(
   age: number,
   weeklyPayCap: number = WEEKLY_PAY_CAP,
 ): number {
-  if (totalMonths < 24) return 0; // ERA 1996 s.155: statutory redundancy requires 2 complete years continuous service
+  if (salary <= 0 || totalMonths < 24) return 0; // ERA 1996 s.155: statutory redundancy requires 2 complete years continuous service
   const weeklyPay = Math.min(salary / 52, weeklyPayCap);
   const completedYears = Math.min(Math.floor(totalMonths / 12), MAX_SERVICE_YEARS);
   let total = 0;
@@ -129,13 +129,14 @@ export function calcNotice(
   totalMonths: number,
   contractualNoticeWeeks: number,
 ): { pay: number; weeksUsed: number; isContractual: boolean } {
-  const weeklyPay = salary / 52;
+  const weeklyPay = Math.max(0, salary) / 52;
   const statWeeks = statutoryNoticeWeeks(totalMonths);
-  const weeksUsed = Math.max(statWeeks, contractualNoticeWeeks);
+  const cleanContractual = isNaN(contractualNoticeWeeks) || contractualNoticeWeeks < 0 ? 0 : contractualNoticeWeeks;
+  const weeksUsed = Math.max(statWeeks, cleanContractual);
   return {
     pay: Math.round(weeklyPay * weeksUsed),
     weeksUsed,
-    isContractual: contractualNoticeWeeks > statWeeks,
+    isContractual: cleanContractual > statWeeks,
   };
 }
 
@@ -171,6 +172,7 @@ export function calculateTotalIncomeTax(grossAnnual: number): number {
 // Accounts for the UK Personal Allowance tapering (the 60% tax trap between £100,000 and £125,140).
 // Uses England/Wales/NI bands as baseline (Scottish bands differ: flagged in UI).
 export function getTaxRate(grossAnnual: number): number {
+  if (grossAnnual <= 0) return 0;
   if (grossAnnual <= 50_270) return 0.20;  // basic rate
   if (grossAnnual <= 100_000) return 0.40; // higher rate (before personal allowance tapering)
   if (grossAnnual <= 125_140) return 0.60; // 60% tax trap (tapering of personal allowance by £1 for every £2 earned)
@@ -204,7 +206,7 @@ export function getVerdict(
 
   // ERA 1996 ss.118-119: basic award (unfair dismissal)
   // Claim-dependent: only payable if an unfair dismissal claim succeeds, so it is NOT part of `minimum`.
-  const basicAward = reason === 'dismissal' ? calcBasicAward(salary, totalMonths, age, weeklyCapUsed) : 0;
+  const basicAward = (reason === 'dismissal' || reason === 'constructive' || reason === 'performance') ? calcBasicAward(salary, totalMonths, age, weeklyCapUsed) : 0;
 
   // ERA 1996 s.86 + ITEPA 2003 s.402D: PILON (always fully taxable)
   const { pay: pilon, weeksUsed: noticeWeeksUsed, isContractual: noticeIsContractual } =
@@ -227,7 +229,9 @@ export function getVerdict(
 
   // SC-B-019: Progressive tiered tax calculation
   // Total taxable income including taxable termination and PILON:
-  const taxableSettlement = taxableTermination + pilon;
+  // Section 402D ITEPA 2003 / HMRC EIM13874: Where offer includes notice, taxable notice received is capped at the offer amount
+  const actualNoticeReceived = offerIncludesNotice ? Math.min(offer, pilon) : pilon;
+  const taxableSettlement = taxableTermination + actualNoticeReceived;
   const baseSalaryTax = calculateTotalIncomeTax(salary);
   const totalTaxWithSettlement = calculateTotalIncomeTax(salary + taxableSettlement);
   // Progressive marginal tax due on the settlement package:
@@ -288,7 +292,7 @@ export function getVerdict(
     verdict = 'BELOW_MINIMUM';
   } else if (effectiveOffer < typicalLowCalc) {
     verdict = 'BELOW_TYPICAL';
-  } else if (typicalHighUncapped || effectiveOffer <= typicalHighCalc) {
+  } else if (effectiveOffer <= typicalHighCalc) {
     verdict = 'WITHIN_RANGE';
   } else {
     verdict = 'ABOVE_TYPICAL';

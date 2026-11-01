@@ -45,6 +45,19 @@ const NOTICE_WEEKS: Record<string, number> = {
   '4_6m': 20,
   '6plus': 39,
   unsure: 0,
+  '0': 0,
+  '4': 4,
+  '10': 10,
+  '20': 20,
+  '39': 39,
+}
+
+const WEEKS_TO_OPTION: Record<string, string> = {
+  '0': 'statutory',
+  '4': '1m_or_less',
+  '10': '2_3m',
+  '20': '4_6m',
+  '39': '6plus',
 }
 
 // Stage 3 reason → calculation engine reason type
@@ -55,6 +68,9 @@ const REASON_MAP: Record<string, string> = {
   constructive: 'dismissal',
   mutual: 'mutual',
   unsure: 'other',
+  redundancy: 'redundancy',
+  dismissal: 'dismissal',
+  other: 'other',
 }
 
 const WEEKLY_CAP = { GB: 751, NI: 783 }
@@ -137,6 +153,14 @@ function InfoPill({ label, children }: { label: string; children: React.ReactNod
   )
 }
 
+function cleanCurrencyInput(val: string): string {
+  const noCurrency = val.replace(/[^0-9.]/g, '')
+  if (noCurrency.includes('.')) {
+    return noCurrency.split('.')[0]
+  }
+  return noCurrency
+}
+
 export default function ThematicCalculator({ onCalculate, initialValues }: Props) {
   const router = useRouter()
   const [stage, setStage] = useState(1)
@@ -164,10 +188,15 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     return initialValues?.offerIncludesNotice !== 'false'
   })
 
-  const [noticeOption, setNoticeOption] = useState<string | null>(initialValues?.contractualNotice || null)
+  const [noticeOption, setNoticeOption] = useState<string | null>(() => {
+    if (!initialValues?.contractualNotice) return null
+    return WEEKS_TO_OPTION[initialValues.contractualNotice] || initialValues.contractualNotice
+  })
   const [reason, setReason] = useState<string | null>(() => {
     if (!initialValues?.reason) return null
     if (initialValues.reason === 'redundancy') return 'redundancy_individual'
+    if (initialValues.reason === 'dismissal') return 'performance'
+    if (initialValues.reason === 'other') return 'unsure'
     return initialValues.reason
   })
   const [discrimination, setDiscrimination] = useState<string | null>(initialValues?.discrimination || null)
@@ -175,6 +204,79 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
   const pendingPayload = useRef<CalcPayload | null>(null)
   const onCalculateRef = useRef(onCalculate)
   useEffect(() => { onCalculateRef.current = onCalculate }, [onCalculate])
+
+  const loadingTimers = useRef<NodeJS.Timeout[]>([])
+  useEffect(() => {
+    return () => {
+      loadingTimers.current.forEach(clearTimeout)
+    }
+  }, [])
+
+  // Smart session storage persistence
+  useEffect(() => {
+    try {
+      const saved = typeof window !== 'undefined' ? sessionStorage.getItem('sc_saved_calc') : null
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (!initialValues?.salary && parsed.salary && !rawSalary) setRawSalary(parsed.salary)
+        if (!initialValues?.age && parsed.age && !age) setAge(parsed.age)
+        if (!initialValues?.yearsNum && parsed.yearsNum && !yearsNum) setYearsNum(parsed.yearsNum)
+        if (!initialValues?.monthsNum && parsed.monthsNum && !monthsNum) setMonthsNum(parsed.monthsNum)
+        if (!initialValues?.offer && parsed.offer && !offer) {
+          setOffer(parsed.offer)
+          setHasOffer(parseFloat(parsed.offer) > 0)
+        }
+        if (initialValues?.offerIncludesNotice === undefined && parsed.offerIncludesNotice !== undefined) {
+          setOfferIncludesNotice(parsed.offerIncludesNotice !== false)
+        }
+        if (!initialValues?.contractualNotice && parsed.contractualNotice && !noticeOption) {
+          setNoticeOption(WEEKS_TO_OPTION[parsed.contractualNotice] || parsed.contractualNotice)
+        }
+        if (!initialValues?.reason && parsed.reason && !reason) setReason(parsed.reason)
+        if (!initialValues?.discrimination && parsed.discrimination && !discrimination) setDiscrimination(parsed.discrimination)
+      }
+    } catch {
+      // Safe fallback
+    }
+  }, [])
+
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('sc_saved_calc', JSON.stringify({
+          salary: rawSalary, age, yearsNum, monthsNum, offer, offerIncludesNotice, contractualNotice: noticeOption, reason, discrimination
+        }))
+      }
+    } catch {
+      // Safe fallback
+    }
+  }, [rawSalary, age, yearsNum, monthsNum, offer, offerIncludesNotice, noticeOption, reason, discrimination])
+
+  useEffect(() => {
+    if (!initialValues) return
+    if (initialValues.salary && !rawSalary) setRawSalary(initialValues.salary)
+    if (initialValues.age && !age) setAge(initialValues.age)
+    if (initialValues.yearsNum && !yearsNum) setYearsNum(initialValues.yearsNum)
+    if (initialValues.monthsNum && !monthsNum) setMonthsNum(initialValues.monthsNum)
+    if (initialValues.offer && !offer) {
+      setOffer(initialValues.offer)
+      setHasOffer(parseFloat(initialValues.offer) > 0)
+    }
+    if (initialValues.offerIncludesNotice !== undefined) {
+      setOfferIncludesNotice(initialValues.offerIncludesNotice !== 'false')
+    }
+    if (initialValues.contractualNotice && !noticeOption) {
+      setNoticeOption(WEEKS_TO_OPTION[initialValues.contractualNotice] || initialValues.contractualNotice)
+    }
+    if (initialValues.reason && !reason) {
+      let r = initialValues.reason
+      if (r === 'redundancy') r = 'redundancy_individual'
+      else if (r === 'dismissal') r = 'performance'
+      else if (r === 'other') r = 'unsure'
+      setReason(r)
+    }
+    if (initialValues.discrimination && !discrimination) setDiscrimination(initialValues.discrimination)
+  }, [initialValues])
 
   // Track enrollment & stage view telemetry
   useEffect(() => {
@@ -237,8 +339,8 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
       goToStage(2)
     } else if (stage === 2) {
       const a = parseInt(age, 10)
-      if (!age || isNaN(a) || a < 16 || a > 80) {
-        setAgeError('Please verify the age entered (must be between 16 and 80).')
+      if (!age || isNaN(a) || a < 16 || a > 100) {
+        setAgeError('Please verify the age entered (must be 16 or older).')
         triggerShake()
         return
       }
@@ -253,7 +355,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
         triggerShake()
         return
       }
-      if (hasOffer && (!offer || parseFloat(offer) < 0)) {
+      if (hasOffer && (!offer || parseFloat(offer) <= 0)) {
         triggerShake()
         return
       }
@@ -278,7 +380,9 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     const disc = discrimination || 'no'
     const noticeWeeks = NOTICE_WEEKS[noticeOption || 'statutory'] || 0
 
-    const result = getVerdict(s, totalMonths, a, o, calcReason, disc, noticeWeeks, 'GB', offerIncludesNotice)
+    // Guard against phantom PILON offer when hasOffer is false
+    const effectiveIncludesNotice = hasOffer ? offerIncludesNotice : true
+    const result = getVerdict(s, totalMonths, a, o, calcReason, disc, noticeWeeks, 'GB', effectiveIncludesNotice)
 
     pendingPayload.current = {
       inputs: {
@@ -287,7 +391,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
         monthsNum: String(m),
         age: String(a),
         offer: String(o),
-        offerIncludesNotice: String(offerIncludesNotice),
+        offerIncludesNotice: String(effectiveIncludesNotice),
         reason: calcReason,
         discrimination: disc,
         contractualNotice: String(noticeWeeks),
@@ -305,17 +409,20 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
         experiment_id: 'calc_ux_v2',
         variant: 'thematic',
         event_type: 'completed',
-        stage_number: 5,
+        stage_number: 4,
       }),
     }).catch(() => {})
 
-    setTimeout(() => setLoadStep(2), 800)
-    setTimeout(() => setLoadStep(3), 1600)
-    setTimeout(() => {
-      if (pendingPayload.current) {
-        onCalculateRef.current(pendingPayload.current)
-      }
-    }, 2400)
+    loadingTimers.current.forEach(clearTimeout)
+    loadingTimers.current = [
+      setTimeout(() => setLoadStep(2), 800),
+      setTimeout(() => setLoadStep(3), 1600),
+      setTimeout(() => {
+        if (pendingPayload.current) {
+          onCalculateRef.current(pendingPayload.current)
+        }
+      }, 2400),
+    ]
   }
 
   // Inline styling tokens
@@ -508,7 +615,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                     inputMode="numeric"
                     placeholder={salaryPeriod === 'annual' ? '45,000' : salaryPeriod === 'monthly' ? '3,750' : '865'}
                     value={rawSalary}
-                    onChange={e => setRawSalary(e.target.value.replace(/[^0-9]/g, ''))}
+                    onChange={e => setRawSalary(cleanCurrencyInput(e.target.value))}
                     onKeyDown={e => e.key === 'Enter' && advance()}
                     style={numInputSt}
                   />
@@ -693,7 +800,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                   </button>
                   <button
                     type="button"
-                    onClick={() => { setHasOffer(false); setOffer('0') }}
+                    onClick={() => setHasOffer(false)}
                     style={{
                       flex: 1,
                       padding: '10px 12px',
@@ -720,7 +827,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                         inputMode="numeric"
                         placeholder="15,000"
                         value={offer}
-                        onChange={e => setOffer(e.target.value.replace(/[^0-9]/g, ''))}
+                        onChange={e => setOffer(cleanCurrencyInput(e.target.value))}
                         onKeyDown={e => e.key === 'Enter' && advance()}
                         style={numInputSt}
                       />

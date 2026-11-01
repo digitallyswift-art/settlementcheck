@@ -18,7 +18,7 @@
       "redundancy": 0
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-002",
@@ -39,7 +39,7 @@
       "redundancy": 0
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-003",
@@ -60,7 +60,7 @@
       "redundancy": 500
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-004",
@@ -81,7 +81,7 @@
       "redundancy": 750
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-005",
@@ -102,7 +102,7 @@
       "redundancy": 3000
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-006",
@@ -123,7 +123,7 @@
       "redundancy": 2100
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-007",
@@ -144,7 +144,7 @@
       "redundancy": 9000
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-008",
@@ -165,7 +165,7 @@
       "redundancy": 11250
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-009",
@@ -186,7 +186,7 @@
       "redundancy": 11265
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-010",
@@ -207,7 +207,7 @@
       "redundancy": 11265
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-011",
@@ -228,7 +228,7 @@
       "redundancy": 22530
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-011b",
@@ -249,7 +249,7 @@
       "redundancy": 20653
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-012",
@@ -270,7 +270,7 @@
       "redundancy": 22530
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-013",
@@ -292,7 +292,7 @@
       "redundancy": 23490
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-014",
@@ -313,7 +313,7 @@
       "noticeWeeks": 0
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-015",
@@ -334,7 +334,7 @@
       "noticeWeeks": 1
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-016",
@@ -355,7 +355,7 @@
       "noticeWeeks": 2
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-017",
@@ -376,7 +376,7 @@
       "noticeWeeks": 12
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-018",
@@ -397,7 +397,7 @@
       "noticeWeeks": 12
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-019",
@@ -422,10 +422,12 @@
     "actual": {
       "estimatedTax": 2000,
       "estimatedNet": 38000,
-      "effectiveOffer": 40000
+      "effectiveOffer": 40000,
+      "verdict": "ABOVE_TYPICAL",
+      "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-020",
@@ -450,10 +452,12 @@
     "actual": {
       "estimatedTax": 2946,
       "estimatedNet": 37054,
-      "effectiveOffer": 40000
+      "effectiveOffer": 40000,
+      "verdict": "ABOVE_TYPICAL",
+      "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-021",
@@ -478,10 +482,12 @@
     "actual": {
       "estimatedTax": 8000,
       "estimatedNet": 37000,
-      "effectiveOffer": 45000
+      "effectiveOffer": 45000,
+      "verdict": "WITHIN_RANGE",
+      "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-022a",
@@ -507,10 +513,12 @@
     "actual": {
       "estimatedTax": 800,
       "estimatedNet": 14200,
-      "effectiveOffer": 15000
+      "effectiveOffer": 15000,
+      "verdict": "WITHIN_RANGE",
+      "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
   },
   {
     "testId": "SC-T-022b",
@@ -536,9 +544,101 @@
     "actual": {
       "estimatedTax": 800,
       "estimatedNet": 16200,
-      "effectiveOffer": 17000
+      "effectiveOffer": 17000,
+      "verdict": "WITHIN_RANGE",
+      "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-10-31"
+    "dateChecked": "2026-11-01"
+  },
+  {
+    "testId": "SC-T-023",
+    "name": "Phantom PILON Tax Prevention: Offer < PILON with notice included",
+    "calculator": "Verdict",
+    "status": "PASS",
+    "boundaryTested": "Offer lower than statutory/contractual PILON boundary",
+    "rule": "ITEPA 2003 s.402D(1) / HMRC EIM13874 (Taxable notice received capped at actual offer proceeds)",
+    "inputs": {
+      "salary": 52000,
+      "totalMonths": 144,
+      "age": 40,
+      "offer": 5000,
+      "reason": "redundancy",
+      "contractualNoticeWeeks": 12,
+      "offerIncludesNotice": true
+    },
+    "expected": {
+      "effectiveOffer": 5000,
+      "estimatedTax": 2000,
+      "estimatedNet": 3000
+    },
+    "actual": {
+      "estimatedTax": 2000,
+      "estimatedNet": 3000,
+      "effectiveOffer": 5000,
+      "verdict": "BELOW_MINIMUM",
+      "basicAward": 0
+    },
+    "difference": "None",
+    "dateChecked": "2026-11-01"
+  },
+  {
+    "testId": "SC-T-024",
+    "name": "Discrimination Verdict Above Typical: High offer with uncapped potential",
+    "calculator": "Verdict",
+    "status": "PASS",
+    "boundaryTested": "Uncapped discrimination above reference ceiling",
+    "rule": "Equality Act 2010 s.124 (High settlement offer correctly reflects ABOVE_TYPICAL status)",
+    "inputs": {
+      "salary": 30000,
+      "totalMonths": 24,
+      "age": 30,
+      "offer": 150000,
+      "reason": "dismissal",
+      "discrimination": "yes",
+      "contractualNoticeWeeks": 1,
+      "offerIncludesNotice": true
+    },
+    "expected": {
+      "verdict": "ABOVE_TYPICAL"
+    },
+    "actual": {
+      "estimatedTax": 50217,
+      "estimatedNet": 99783,
+      "effectiveOffer": 150000,
+      "verdict": "ABOVE_TYPICAL",
+      "basicAward": 1154
+    },
+    "difference": "None",
+    "dateChecked": "2026-11-01"
+  },
+  {
+    "testId": "SC-T-025",
+    "name": "Constructive Dismissal: Basic award preservation",
+    "calculator": "Verdict",
+    "status": "PASS",
+    "boundaryTested": "Constructive dismissal reason mapping boundary",
+    "rule": "ERA 1996 ss.118-119 & s.95(1)(c) (Constructive dismissal entitles employee to statutory basic award)",
+    "inputs": {
+      "salary": 45000,
+      "totalMonths": 60,
+      "age": 35,
+      "offer": 10000,
+      "reason": "constructive",
+      "contractualNoticeWeeks": 4,
+      "offerIncludesNotice": true
+    },
+    "expected": {
+      "basicAward": 3755
+    },
+    "actual": {
+      "estimatedTax": 865,
+      "estimatedNet": 9135,
+      "effectiveOffer": 10000,
+      "verdict": "BELOW_TYPICAL",
+      "basicAward": 3755
+    },
+    "difference": "None",
+    "dateChecked": "2026-11-01"
   }
 ]

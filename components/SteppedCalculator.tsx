@@ -41,6 +41,15 @@ interface Props {
 // Notice option → contractual notice weeks (ERA 1996 s.86)
 const NOTICE_WEEKS: Record<string, number> = {
   statutory: 0, '1m_or_less': 4, '2_3m': 10, '4_6m': 20, '6plus': 39, unsure: 0,
+  '0': 0, '4': 4, '10': 10, '20': 20, '39': 39,
+}
+
+const WEEKS_TO_OPTION: Record<string, string> = {
+  '0': 'statutory',
+  '4': '1m_or_less',
+  '10': '2_3m',
+  '20': '4_6m',
+  '39': '6plus',
 }
 
 // Step 6 reason → calculation engine reason type
@@ -51,6 +60,9 @@ const REASON_MAP: Record<string, string> = {
   constructive: 'dismissal',
   mutual: 'mutual',
   unsure: 'other',
+  redundancy: 'redundancy',
+  dismissal: 'dismissal',
+  other: 'other',
 }
 
 // ERA 1996 s.227 (GB) / ERO(NI) 1996 — April 2025 rates
@@ -97,6 +109,14 @@ function Tick() {
 
 /* ── Main Component ─────────────────────────────────────────────── */
 
+function cleanCurrencyInput(val: string): string {
+  const noCurrency = val.replace(/[^0-9.]/g, '')
+  if (noCurrency.includes('.')) {
+    return noCurrency.split('.')[0]
+  }
+  return noCurrency
+}
+
 export default function SteppedCalculator({ onCalculate, initialValues }: Props) {
   const router = useRouter()
   const [phase, setPhase] = useState<Phase>('steps')
@@ -119,10 +139,15 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   })
   const [showConstructiveModal, setShowConstructiveModal] = useState(false)
   const [offerWarning, setOfferWarning] = useState('')
-  const [noticeOption, setNoticeOption] = useState<string | null>(initialValues?.contractualNotice || null)
+  const [noticeOption, setNoticeOption] = useState<string | null>(() => {
+    if (!initialValues?.contractualNotice) return null
+    return WEEKS_TO_OPTION[initialValues.contractualNotice] || initialValues.contractualNotice
+  })
   const [reason, setReason] = useState<string | null>(() => {
     if (!initialValues?.reason) return null
     if (initialValues.reason === 'redundancy') return 'redundancy_individual'
+    if (initialValues.reason === 'dismissal') return 'performance'
+    if (initialValues.reason === 'other') return 'unsure'
     return initialValues.reason
   })
   const [collectiveVisible, setCollectiveVisible] = useState(false)
@@ -173,9 +198,15 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     if (initialValues.offerIncludesNotice !== undefined) {
       setOfferIncludesNotice(initialValues.offerIncludesNotice !== 'false')
     }
-    if (initialValues.contractualNotice && !noticeOption) setNoticeOption(initialValues.contractualNotice)
+    if (initialValues.contractualNotice && !noticeOption) {
+      setNoticeOption(WEEKS_TO_OPTION[initialValues.contractualNotice] || initialValues.contractualNotice)
+    }
     if (initialValues.reason && !reason) {
-      setReason(initialValues.reason === 'redundancy' ? 'redundancy_individual' : initialValues.reason)
+      let r = initialValues.reason
+      if (r === 'redundancy') r = 'redundancy_individual'
+      else if (r === 'dismissal') r = 'performance'
+      else if (r === 'other') r = 'unsure'
+      setReason(r)
     }
     if (initialValues.discrimination && !discrimination) setDiscrimination(initialValues.discrimination)
   }, [initialValues])
@@ -315,8 +346,8 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
       goToStep(2)
     } else if (step === 2) {
       const a = parseInt(age, 10)
-      if (!age || isNaN(a) || a < 16 || a > 80) {
-        setAgeError('Please check the age you have entered.')
+      if (!age || isNaN(a) || a < 16 || a > 100) {
+        setAgeError('Please verify the age you have entered (must be 16 or older).')
         triggerShake()
         return
       }
@@ -330,10 +361,13 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
       const s = parseFloat(salary)
       if (!isNaN(o) && !isNaN(s) && s > 0 && o > 0) {
         const monthly = s / 12
-        if (Math.abs(o - monthly) / monthly < 0.05) {
+        if (Math.abs(o - monthly) / monthly < 0.05 && !offerWarning) {
           setOfferWarning('Just to confirm: is this the total settlement figure, not a monthly amount?')
+          triggerShake()
+          return
         }
       }
+      setOfferWarning('')
       goToStep(5)
     } else if (step === 5) {
       if (!noticeOption) { triggerShake(); return }
@@ -606,7 +640,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   value={salary}
                   autoComplete="off"
                   autoCorrect="off"
-                  onChange={e => setSalary(e.target.value.replace(/[^0-9]/g, ''))}
+                  onChange={e => setSalary(cleanCurrencyInput(e.target.value))}
                   onKeyDown={e => e.key === 'Enter' && advance()}
                   style={numInputSt}
                 />
@@ -724,7 +758,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   autoCorrect="off"
                   autoCapitalize="none"
                   spellCheck={false}
-                  onChange={e => { setOffer(e.target.value.replace(/[^0-9]/g, '')); setOfferWarning('') }}
+                  onChange={e => { setOffer(cleanCurrencyInput(e.target.value)); setOfferWarning('') }}
                   onKeyDown={e => e.key === 'Enter' && advance()}
                   style={numInputSt}
                 />

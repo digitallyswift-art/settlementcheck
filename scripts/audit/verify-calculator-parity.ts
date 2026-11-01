@@ -106,6 +106,32 @@ const PARITY_SCENARIOS: ParityScenario[] = [
     jurisdiction: 'GB',
     offerIncludesNotice: true,
   },
+  {
+    id: 'PAR-08',
+    name: 'Serialized 3-Month Notice Re-entry: 10 contractual notice weeks decoded',
+    salary: 65000,
+    tenureMonths: 24,
+    age: 38,
+    offer: 20000,
+    reason: 'redundancy',
+    discrimination: 'no',
+    noticeWeeks: 10,
+    jurisdiction: 'GB',
+    offerIncludesNotice: true,
+  },
+  {
+    id: 'PAR-09',
+    name: 'Constructive Dismissal Flow Parity',
+    salary: 45000,
+    tenureMonths: 48,
+    age: 35,
+    offer: 12000,
+    reason: 'constructive',
+    discrimination: 'no',
+    noticeWeeks: 4,
+    jurisdiction: 'GB',
+    offerIncludesNotice: true,
+  },
 ]
 
 export function runParitySuite(): boolean {

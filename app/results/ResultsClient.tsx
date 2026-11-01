@@ -1048,7 +1048,9 @@ function CaseBriefSection({
           {/* Verdict Overview */}
           <div className="p-4 bg-[#F2F7F3] border border-[#BCD0BF] rounded-lg text-[12px] text-[#5B6577] leading-relaxed">
             <span className="font-bold text-[#0B1F3A] block mb-1">Assessment Summary:</span>
-            {result.verdict === 'BELOW_MINIMUM' ? (
+            {parseFloat(inputs.offer) <= 0 ? (
+              <p className="m-0"><strong>Pre-Offer Assessment:</strong> No employer settlement offer recorded yet. The client is evaluating their statutory baselines and negotiation benchmarks prior to receiving terms.</p>
+            ) : result.verdict === 'BELOW_MINIMUM' ? (
               <p className="m-0 text-[#A8341F]"><strong>Baseline Comparison:</strong> The recorded settlement offer is lower than the calculated notice and statutory redundancy baseline. Reviewing counsel can assess whether this variance reflects the commercial context or whether pursuing full statutory figures is appropriate.</p>
             ) : result.verdict === 'BELOW_TYPICAL' ? (
               <p className="m-0">The recorded offer covers the calculated baseline but sits below the illustrative negotiation range for this profile. Independent counsel can assist in identifying potential avenues for negotiation on financial or non-financial terms.</p>
@@ -1671,6 +1673,8 @@ const REASON_LABELS: Record<string, string> = {
   dismissal:             'Unfair dismissal',
   constructive:          'Constructive dismissal',
   resignation:           'Resignation / mutual agreement',
+  mutual:                'Mutual agreement',
+  other:                 'Other / Unspecified',
 }
 const DISCRIMINATION_LABELS: Record<string, string> = {
   no:       'No',
@@ -1913,7 +1917,15 @@ function GetMatchedCTA({
     },
   }
 
-  const c = urgencyMap[verdict] ?? urgencyMap['BELOW_TYPICAL']
+  const preOfferConfig = {
+    badge: 'Pre-Offer Negotiation Planning',
+    badgeColor: '#0B1F3A', badgeBg: '#F7F4EE', badgeBorder: '#E2DCCE',
+    heading: 'Get prepared before your employer makes an offer.',
+    body: 'Understanding your statutory baselines and market precedents helps you understand your legal standing before formal terms are offered. An SRA-regulated solicitor can help structure your strategy. Under Section 203 ERA 1996, employers customarily contribute toward your independent advice.',
+    cta: 'Match with a specialist solicitor',
+  }
+
+  const c = offer <= 0 ? preOfferConfig : (urgencyMap[verdict] ?? urgencyMap['BELOW_TYPICAL'])
 
   return (
     <div className="bg-card border border-rule rounded-lg overflow-hidden bg-white">
@@ -2230,9 +2242,12 @@ function ResultsContent() {
   const offerIncludesNotice = inputs.offerIncludesNotice !== 'false'
   const reason              = inputs.reason
   const discrimination      = inputs.discrimination
-  const contractualNotice   = parseInt(inputs.contractualNotice)
+  const contractualNotice   = isNaN(parseInt(inputs.contractualNotice, 10)) ? 0 : parseInt(inputs.contractualNotice, 10)
 
-  const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>('GB')
+  const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>(() => {
+    const j = searchParams.get('jurisdiction')
+    return j === 'NI' ? 'NI' : 'GB'
+  })
   const [showJurisdictionToggle, setShowJurisdictionToggle] = useState(false)
   const [prefillEmail, setPrefillEmail] = useState(searchParams.get('email') ?? '')
   const saveCardRef = useRef<HTMLDivElement>(null)

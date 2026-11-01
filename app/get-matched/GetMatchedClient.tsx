@@ -819,7 +819,7 @@ export default function GetMatchedClient() {
                     </div>
 
                     <button
-                      onClick={() => router.push('/results' + (typeof window !== 'undefined' ? window.location.search.replace(/([?&])ev=1/, '$1').replace(/([?&])(offer|salary|months|verdict|email)[^&]*/g, '') : ''))}
+                      onClick={() => router.push('/results/' + (typeof window !== 'undefined' ? window.location.search.replace(/([?&])ev=1(&|$)/, '$1') : ''))}
                       style={{
                         background: 'none', border: `1px solid ${C.border}`, borderRadius: 8,
                         padding: '10px 18px', color: C.muted, cursor: 'pointer',
