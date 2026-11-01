@@ -33,16 +33,16 @@ export function WithoutPrejudiceClarification({
   const getTopicBody = (t: ClarificationTopic): string => {
     switch (t) {
       case 'legal_fee':
-        return `1. Legal Fee Contribution Clause: The draft records an employer contribution of [£350/£500] + VAT toward independent legal advice. Explore with your instructed solicitor whether the employer will agree to increase this commercial contribution to £500 - £750 + VAT so both parties can finalise the s.203(3) ERA 1996 review.`
+        return `1. Legal Fee Contribution Clause: The draft records an employer contribution of [£350/£500] + VAT toward independent legal advice. Instructed solicitors routinely review whether the employer will agree to increase this commercial contribution to £500 - £750 + VAT to conclude the s.203(3) ERA 1996 review.`
 
       case 'ex_gratia_benchmark':
-        return `2. Ex-Gratia Termination Payment Review: The recorded figure of ${formattedAmount} is being reviewed alongside statutory notice and redundancy baselines. Discuss with your independent solicitor how an exploratory inquiry (Stevenson, Jacques & Co v McLean [1880]) differs from a formal counter-offer (Hyde v Wrench [1840]).`
+        return `2. Ex-Gratia Termination Payment Review: The recorded figure of ${formattedAmount} is being reviewed alongside statutory notice and redundancy baselines. Consultation with an independent solicitor allows exploratory inquiries (Stevenson, Jacques & Co v McLean [1880]) to proceed without inadvertently triggering counter-offer rejection rules (Hyde v Wrench [1840]).`
 
       case 'reference_confidentiality':
-        return `3. Agreed Reference & Mutual Confidentiality: Check with your solicitor whether the draft attaches an agreed factual reference schedule and whether non-derogatory obligations are drafted mutually.`
+        return `3. Agreed Reference & Mutual Confidentiality: Solicitors standardly verify that draft agreements attach an agreed factual reference schedule and establish reciprocal non-derogatory obligations.`
 
       case 'tax_pilon_structure':
-        return `4. Tax & Notice Allocation (ITEPA 2003 s.402D & s.403): Ask your solicitor to verify whether ${formattedAmount} is strictly ex-gratia compensation under s.403 ITEPA 2003 or includes taxable Post-Employment Notice Pay (PENP) / contractual PILON.`
+        return `4. Tax & Notice Allocation (ITEPA 2003 s.402D & s.403): Solicitors examine whether ${formattedAmount} constitutes genuine ex-gratia compensation under s.403 ITEPA 2003 or contains taxable Post-Employment Notice Pay (PENP) under s.402D.`
     }
   }
 
@@ -59,9 +59,9 @@ ${getTopicBody(topic)}
 COMMON LAW CONTRACT & PRIVILEGE CONTEXT FOR SOLICITOR DISCUSSION:
 - Under Hyde v Wrench [1840] 3 Beav 334, making an unreviewed counter-offer can extinguish the employer's original offer at common law, whereas a solicitor-led exploratory inquiry under Stevenson, Jacques & Co v McLean [1880] preserves the open offer.
 - Under Rush & Tompkins [1989] and Framlington Group v Barnetson [2007], common law Without Prejudice privilege applies only where a genuine dispute exists, and Section 111A ERA 1996 applies solely to ordinary unfair dismissal claims.
-- Discuss with your solicitor how to finalise any commercial inquiries before the employer's deadline expires.
+- Solicitor discussions determine how to finalise commercial inquiries before employer consideration deadlines expire.
 
-Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.`
+Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.`
 
   const handleCopy = async () => {
     try {
@@ -229,7 +229,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
               Intake Agenda for Your Instructed Solicitor
             </h4>
             <p className="text-xs text-[#0B1F3A]/70 m-0">
-              Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
+              Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.
             </p>
           </div>
           <button

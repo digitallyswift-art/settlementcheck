@@ -12,7 +12,7 @@ const STATIC_METADATA: Metadata = {
     absolute: 'PIP Settlement Calculator UK: Value Your Performance Exit',
   },
   description:
-    'Calculate fair settlement payouts when facing a PIP in the UK. Compare employer process costs, statutory notice, and £30,000 tax-free exit terms.',
+    'Estimate fair settlement payouts when facing a PIP in the UK. Compare employer process costs, statutory notice, and £30,000 tax-free exit terms.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/pip-settlement-calculator/',
   },
@@ -36,7 +36,7 @@ export default function PipSettlementCalculatorPage() {
             PIP Settlement Agreement Calculator
           </h1>
           <p className="text-base sm:text-lg text-[#0B1F3A]/80 max-w-2xl mx-auto leading-relaxed">
-            Placed on a Performance Improvement Plan or offered a protected conversation? Value your exit package based on employer process cost avoidance, statutory notice, and tribunal caps.
+            Placed on a Performance Improvement Plan or offered a protected conversation? Valuing exit packages based on employer process cost avoidance, statutory notice, and statutory caps.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export default function PipSettlementCalculatorPage() {
             <div className="bg-[#F7F4EE] p-4 rounded-xl border border-[#E2DCCE]">
               <strong className="text-sm text-[#0B1F3A] block mb-1">1. Full Notice Pay (PILON)</strong>
               <span>
-                You must receive your contractual or statutory notice pay in full. Under Section 402D ITEPA 2003, Post-Employment Notice Pay is subject to PAYE tax and National Insurance deductions.
+                Contractual or statutory notice pay is legally payable in full under ERA 1996 s.86. Under Section 402D ITEPA 2003, Post-Employment Notice Pay is subject to PAYE tax and National Insurance deductions.
               </span>
             </div>
             <div className="bg-[#F7F4EE] p-4 rounded-xl border border-[#E2DCCE]">
@@ -87,14 +87,14 @@ export default function PipSettlementCalculatorPage() {
             <div className="bg-[#F7F4EE] p-4 rounded-xl border border-[#E2DCCE]">
               <strong className="text-sm text-[#0B1F3A] block mb-1">4. Agreed Reference &amp; Clean Exit</strong>
               <span>
-                Ensure your agreement specifies an agreed standard factual reference and mutual non-derogatory undertakings, protecting your professional reputation for future roles.
+                Settlement agreements standardly incorporate an agreed factual reference and mutual non-derogatory undertakings, protecting professional reputation for future roles.
               </span>
             </div>
           </div>
 
           <div className="pt-4 border-t border-[#E2DCCE] flex flex-wrap items-center justify-between gap-4">
             <span className="text-xs text-[#0B1F3A]/70">
-              Need your draft agreement reviewed? Run our confidential clause check.
+              Reviewing draft settlement agreement terms with an SRA specialist.
             </span>
             <div className="flex gap-3">
               <Link

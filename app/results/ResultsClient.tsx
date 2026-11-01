@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams, useRouter } from 'next/navigation'
-import React, { Suspense, useState, useRef, useMemo } from 'react'
+import React, { Suspense, useState, useRef, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -15,6 +15,7 @@ import {
 } from '@/lib/calculations'
 import { getOfficialBenchmark } from '@/lib/statutory-rates'
 import { trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
+import { LegalFeeShieldBadge, LegalFeeInlineCard } from '@/components/LegalFeeShieldBadge'
 
 /* ── Shared tiny components ─────────────────────────────────────── */
 
@@ -1421,7 +1422,7 @@ function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offe
       <div className="px-5 py-4 border-b border-rule flex flex-col sm:flex-row sm:items-center justify-between gap-1">
         <div>
           <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-[#0B1F3A] block mb-0.5">
-            Tier 1: Calculated Statutory Baselines (Subject to Eligibility)
+            Tier 1: Statutory Entitlements Breakdown
           </span>
           <h3 className="sc-h3 text-[#0B1F3A] m-0">Calculated Statutory Baselines (Subject to Eligibility)</h3>
         </div>
@@ -2151,6 +2152,51 @@ function LocalSpecialistAvailabilityCard({
   )
 }
 
+/* ── Sticky Mobile Action Bar (Direction B CRO) ─────────────────── */
+
+function StickyResultsMobileBar({ onGetMatched }: { onGetMatched: () => void }) {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 380) {
+        setVisible(true)
+      } else {
+        setVisible(false)
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  if (!visible) return null
+
+  return (
+    <div
+      role="region"
+      aria-label="Solicitor match quick action"
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#F7F4EE]/95 backdrop-blur-md border-t border-[#E2DCCE] px-4 py-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_rgba(11,31,58,0.12)] transition-all duration-200 no-print"
+    >
+      <div className="flex items-center justify-between gap-3 max-w-lg mx-auto">
+        <div className="min-w-0 flex-1">
+          <p className="text-[12px] font-bold text-[#0B1F3A] leading-tight truncate m-0">
+            Independent Legal Review
+          </p>
+          <p className="text-[11px] text-[#5B6577] leading-tight mt-0.5 truncate m-0">
+            Employer covers fees (£350 to £750 + VAT)
+          </p>
+        </div>
+        <button
+          onClick={onGetMatched}
+          className="inline-flex items-center justify-center px-4 py-2 text-[13px] font-semibold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg shadow-sm transition-colors duration-150 flex-shrink-0 cursor-pointer"
+        >
+          Match Solicitor &rarr;
+        </button>
+      </div>
+    </div>
+  )
+}
+
 /* ── Main results content ───────────────────────────────────────── */
 
 function ResultsContent() {
@@ -2239,11 +2285,13 @@ function ResultsContent() {
       offer,
       salary,
     })
+    const variantParam = searchParams.get('variant') || (typeof window !== 'undefined' ? sessionStorage.getItem('sc_calc_assigned_variant') : null) || 'sequential'
     const p = new URLSearchParams({
       verdict: result.verdict,
       offer:   String(offer),
       salary:  String(salary),
       months:  String(totalMonths),
+      variant: variantParam,
     })
     if (prefillEmail) { p.set('email', prefillEmail); p.set('ev', '1') }
     router.push(`/get-matched/?${p.toString()}`)
@@ -2405,6 +2453,35 @@ function ResultsContent() {
                       ))}
                     </div>
                   )}
+                </div>
+
+                {/* Mobile Immediate Match CTA (Directly below verdict on mobile devices) */}
+                <div className="block lg:hidden no-print">
+                  <div className="bg-white border border-[#E2DCCE] rounded-xl p-4 shadow-sm flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-[#D9603B] font-bold">
+                        Next Statutory Step
+                      </span>
+                      <span className="text-[11px] text-[#5B6577] bg-[#F7F4EE] px-2 py-0.5 rounded font-medium">
+                        ERA 1996 s.203(3)
+                      </span>
+                    </div>
+                    <p className="text-[13px] text-[#0B1F3A] font-semibold m-0 leading-snug">
+                      Settlement agreements are only legally binding once certified by an independent solicitor. Employers customarily contribute £350 to £750 + VAT to cover this cost.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleSolicitorMatch}
+                      className="w-full bg-[#D9603B] hover:bg-[#B14A28] text-white font-semibold py-3 px-4 rounded-lg text-[14px] flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer"
+                    >
+                      <span>Connect with a specialist solicitor</span>
+                      <span>&rarr;</span>
+                    </button>
+                    <div className="flex items-center justify-between text-[11px] text-[#8A93A3] pt-1 border-t border-[#F0EBE0]">
+                      <span>✓ Free matching service</span>
+                      <span>✓ Employer covers standard fees</span>
+                    </div>
+                  </div>
                 </div>
 
                 {/* ── 3-TIER LEGAL & INFORMATION FRAMEWORK HEADER ── */}
@@ -2607,6 +2684,7 @@ function ResultsContent() {
           )}
         </div>
       </main>
+      <StickyResultsMobileBar onGetMatched={handleSolicitorMatch} />
       <Footer />
     </>
   )

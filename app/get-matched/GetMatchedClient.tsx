@@ -408,6 +408,19 @@ export default function GetMatchedClient() {
       const w = window as any
       if (typeof w.gtag === 'function') w.gtag('event', 'lead_submitted', { event_category: 'employee_lead', verdict })
       if (Array.isArray(w.dataLayer)) w.dataLayer.push({ event: 'lead_submitted', verdict })
+
+      // Dispatch experiment lead submission telemetry
+      const assignedVariant = params.get('variant') || (typeof window !== 'undefined' ? sessionStorage.getItem('sc_calc_assigned_variant') : null) || 'sequential'
+      fetch('/api/telemetry/experiment-event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          experiment_id: 'calc_ux_v2',
+          variant: assignedVariant === 'thematic' ? 'thematic' : 'sequential',
+          event_type: 'lead_submitted',
+        }),
+      }).catch(() => {})
+
       advance()
     } catch {
       setFieldError('Something went wrong. Please try again.')

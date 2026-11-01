@@ -3,6 +3,14 @@
     {
       "path": "/api/cron/serp-sentinel",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/ab-digest",
+      "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/cron/evaluate-ab-winner",
+      "schedule": "0 9 * * *"
     }
   ]
 }

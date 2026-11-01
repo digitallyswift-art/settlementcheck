@@ -158,7 +158,7 @@ Points to Explore with Your Independent SRA-Regulated Solicitor (s.203(3) ERA 19
 3. Tax Allocation (ITEPA 2003 s.225 vs s.403): Under Section 225 of the Income Tax (Earnings and Pensions) Act 2003, separate consideration allocated specifically to new restrictive covenants is subject to PAYE income tax and Class 1 NICs rather than the Section 403 £30,000 exemption.
 4. Solicitor Instructions: Discuss with your solicitor how to finalise any requested covenant adjustments or carve-outs before signing the statutory adviser certificate.
 
-Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.`
+Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.`
 
   const handleCopyWaiver = async () => {
     try {
@@ -318,7 +318,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
                   Intake Agenda for Your Instructed Solicitor: Covenant Briefing
                 </span>
                 <span className="text-[11px] text-[#0B1F3A]/70 block">
-                  Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
+                  Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.
                 </span>
               </div>
               <button

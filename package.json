@@ -27,7 +27,9 @@
     "lint:audit": "npx tsx scripts/audit/lint-audit-naming.ts",
     "audit:all": "npx tsx scripts/audit/run-all.ts",
     "verify": "node scripts/verify-quiet.mjs",
-    "prepare": "node scripts/install-git-hooks.mjs"
+    "prepare": "node scripts/install-git-hooks.mjs",
+    "experiment:digest": "node scripts/experiments/send-ab-digest.mjs",
+    "experiment:evaluate": "node scripts/experiments/evaluate-winner.mjs"
   },
   "license": "ISC",
   "dependencies": {

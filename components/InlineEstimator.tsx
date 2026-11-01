@@ -12,12 +12,32 @@ interface InlineEstimatorProps {
   subtitle?: string
 }
 
+function InfoPill({ label, children }: { label: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="my-1.5">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="inline-flex items-center gap-1.5 text-xs text-[#5B6577] hover:text-[#0B1F3A] font-medium underline underline-offset-2 cursor-pointer bg-transparent border-0 p-0 transition-colors"
+      >
+        <span>ℹ️</span> {label} {open ? '▲' : '▼'}
+      </button>
+      {open && (
+        <div className="mt-2 p-3 bg-white border border-[#E2DCCE] rounded-lg text-xs leading-relaxed text-[#4A5568]">
+          {children}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function InlineEstimator({
   initialSalary = 45000,
   initialYears = 4,
   reason = 'redundancy',
   title = 'Instant Settlement Payout Estimator',
-  subtitle = 'Compare your calculated statutory baselines (subject to eligibility) and illustrative UK settlement range in seconds.',
+  subtitle = 'Calculated statutory baselines (subject to eligibility) and illustrative UK settlement ranges.',
 }: InlineEstimatorProps) {
   const router = useRouter()
   const [salaryInput, setSalaryInput] = useState<string>(String(initialSalary))
@@ -172,6 +192,10 @@ export default function InlineEstimator({
 
       </div>
 
+      <InfoPill label="Statutory calculation baselines & April 2026 limits">
+        Statutory redundancy pay is calculated under ERA 1996 s.162 using completed continuous service (capped at 20 years), age multipliers (0.5 week for age under 22, 1.0 week for ages 22 to 40, 1.5 weeks for 41+), and statutory weekly pay capped at £751 from April 2026. Illustrative settlement ranges reflect commercial negotiation benchmarks combining statutory redundancy, notice, and ex-gratia compensation.
+      </InfoPill>
+
       {/* Dynamic Results Display */}
       {result && parsedSalary > 0 && (
         <div className="bg-white border border-[#E2DCCE] rounded-xl p-4 md:p-5 flex flex-col gap-4 shadow-sm">
@@ -239,7 +263,7 @@ export default function InlineEstimator({
               onClick={handleLaunchCalculator}
               className="px-5 py-2.5 rounded-lg text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#c25230] transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm whitespace-nowrap"
             >
-              <span>Calculate my full breakdown →</span>
+              <span>View full calculation breakdown →</span>
             </button>
           </div>
 
@@ -248,7 +272,7 @@ export default function InlineEstimator({
 
       {(!result || parsedSalary <= 0) && (
         <div className="p-4 bg-paper rounded-lg text-center text-[13px] text-[#5B6577]">
-          Enter your gross salary above to model your statutory redundancy and estimated settlement range.
+          Providing gross annual salary above displays statutory redundancy baselines and illustrative settlement ranges.
         </div>
       )}
     </div>

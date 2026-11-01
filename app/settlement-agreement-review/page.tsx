@@ -6,6 +6,7 @@ import ReviewClient from './ReviewClient'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   title: 'Settlement Agreement Checker UK (2026) | SettlementCheck',
@@ -53,18 +54,18 @@ const howToSchema = {
   step: [
     {
       '@type': 'HowToStep',
-      name: 'Paste draft agreement terms',
-      text: 'Copy and paste clause snippets or your settlement offer letter into the confidential review tool.',
+      name: 'Input draft agreement terms',
+      text: 'Submitting clause text or settlement offer proposals initiates statutory compliance evaluation.',
     },
     {
       '@type': 'HowToStep',
       name: 'Verify statutory compliance and tax rules',
-      text: 'The tool checks the £751/week redundancy cap, £30,000 tax exemption under ITEPA 2003 s.403, and £500 to £1,500+VAT legal fee contributions.',
+      text: 'The audit evaluates the April 2026 £751/week statutory cap, £30,000 tax exemption under ITEPA 2003 s.403, and Section 203(3) legal fee contributions.',
     },
     {
       '@type': 'HowToStep',
-      name: 'Review tactical counter-offer points',
-      text: 'Compare your compensation against Ministry of Justice tribunal tables and get actionable amendments for restrictive covenants.',
+      name: 'Assess tactical negotiation benchmarks',
+      text: 'Comparing proposed compensation against Ministry of Justice tribunal tables and evaluating restrictive covenants.',
     },
   ],
 }
@@ -78,7 +79,7 @@ const faqSchema = {
       name: 'Can I check my settlement agreement before speaking to a solicitor?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. Checking your draft clauses beforehand allows you to verify statutory redundancy baselines (£751/week), check whether your employer is paying standard solicitor fees (£500 to £1,500 + VAT), and understand your tax exemption before speaking with an independent SRA-regulated solicitor.',
+        text: 'Yes. Checking draft clauses beforehand allows verification of statutory redundancy baselines (£751/week), confirmation that the employer is paying standard solicitor fees (£350 to £750 + VAT), and review of tax exemptions under ITEPA 2003 s.403 before consulting an independent SRA-regulated solicitor.',
       },
     },
     {
@@ -86,7 +87,7 @@ const faqSchema = {
       name: 'How much should an employer pay towards settlement agreement legal fees?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'In the UK, employers typically pay between £500 and £1,500 plus VAT towards your independent solicitor fees, as independent legal advice is a mandatory statutory requirement under Section 203 of the Employment Rights Act 1996.',
+        text: 'In the UK, employers customarily contribute between £350 and £750 plus VAT towards independent legal advice, as certification by an independent SRA-regulated solicitor is a mandatory statutory requirement under Section 203(3) of the Employment Rights Act 1996.',
       },
     },
     {
@@ -105,15 +106,15 @@ export default function SettlementAgreementReviewPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(reviewSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(howToSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }}
       />
       <Nav />
       <main className="bg-paper min-h-screen py-10">

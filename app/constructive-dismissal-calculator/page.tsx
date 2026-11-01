@@ -41,18 +41,18 @@ export async function generateMetadata(): Promise<Metadata> {
 const CONSTRUCTIVE_DISMISSAL_STEPS: StepItem[] = [
   {
     n: '01',
-    t: 'Get advice before you resign, not after',
-    d: 'This is the most important step. Once you resign, your options change significantly. A solicitor can assess whether what you are experiencing amounts to a fundamental breach of contract and, in many cases, can open negotiations with your employer while you are still employed, often achieving a better outcome than resigning and claiming.',
+    t: 'Reviewing legal standing before resignation, not after',
+    d: 'Legal rights change significantly once resignation occurs. Under ERA 1996 s.95(1)(c), an employee must establish that employer conduct constituted a fundamental breach of contract and that resignation occurred in direct response. Consulting an SRA-regulated solicitor before taking action preserves statutory options, as negotiations can often proceed while still in employment.',
   },
   {
     n: '02',
-    t: 'See what a constructive dismissal settlement could look like',
-    d: 'A constructive dismissal claim is valued the same way as unfair dismissal. Enter your age, salary, and length of service and the calculator shows your basic award and where your total package could sit against the compensatory cap of £123,543 or 52 weeks\' pay, whichever is lower.',
+    t: 'Assessing statutory basic and compensatory award ceilings',
+    d: 'Constructive dismissal claims are assessed using the statutory unfair dismissal formula. Inputting age, weekly earnings, and completed service outlines the statutory basic award alongside the April 2026 compensatory cap of £123,543 or 52 weeks gross pay, whichever is lower (ERA 1996 s.124).',
   },
   {
     n: '03',
-    t: 'Know the net figure before you make any decisions',
-    d: 'The first £30,000 of a constructive dismissal settlement is tax-free. PILON is taxed separately as earnings. The calculator gives you the estimated net take-home figure, because that is the number that actually matters when you are weighing your options.',
+    t: 'Evaluating estimated net take-home figures',
+    d: 'Under ITEPA 2003 s.403, the first £30,000 of compensation for loss of office is exempt from income tax and employee NICs. Contractual notice pay (PILON) is taxed separately as earnings under s.402D. Examining estimated net proceeds provides an accurate financial baseline.',
   },
 ]
 
@@ -94,14 +94,14 @@ const CONSTRUCTIVE_DISMISSAL_FAQS: FaqItem[] = [
 const FAQ_SCHEMA_ITEMS = CONSTRUCTIVE_DISMISSAL_FAQS.map(({ q, a }) => ({ question: q, answer: a }))
 
 const HOWTOCALCULATE_STEPS = [
-  'Identify the fundamental breach of contract: the specific act or omission by your employer that made your position untenable.',
-  'Confirm you resigned in direct response to the breach and did not affirm the contract by continuing to work without raising the issue.',
-  'Verify you have at least two years of continuous employment, or identify whether an automatically unfair reason applies. ERA 1996 s.94.',
-  'Calculate the basic award: capped weekly pay (£751), years of service (up to 20), and age multiplier (0.5/1.0/1.5). ERA 1996 ss.162-163.',
-  'Estimate the compensatory award: loss of earnings from resignation date, future loss, lost benefits, and pension loss.',
-  'Apply the compensatory cap: the lower of £123,543 or 52 weeks\' gross pay. ERA 1996 s.124.',
-  'Consider an ACAS uplift of up to 25% if your employer failed to follow the ACAS Code of Practice on disciplinary and grievance procedures.',
-  'Apply the £30,000 tax-free threshold to eligible termination elements under ITEPA 2003 s.403. PILON is always taxed as earnings under ITEPA 2003 s.402D.',
+  'Identifying the fundamental breach of contract: the specific act or omission by an employer that made the employment relationship untenable.',
+  'Confirming resignation occurred in direct response to the breach without affirming the contract through ongoing unprotested service.',
+  'Verifying at least two years continuous employment under ERA 1996 s.108, or identifying whether an automatically unfair reason applies.',
+  'Calculating the statutory basic award: capped weekly pay (£751), years of service (up to 20), and age multipliers under ERA 1996 ss.162-163.',
+  'Estimating the compensatory award: financial losses arising from termination under ERA 1996 s.123.',
+  'Applying the statutory compensatory cap: the lower of £123,543 or 52 weeks gross pay under ERA 1996 s.124.',
+  'Assessing potential Acas uplift of up to 25% where an employer unreasonably failed to comply with statutory grievance procedures.',
+  'Applying the £30,000 tax-free threshold to eligible termination elements under ITEPA 2003 s.403, with notice pay taxed as earnings under s.402D.',
 ]
 
 const JSON_LD = {
@@ -286,7 +286,7 @@ export default function ConstructiveDismissalCalculatorPage() {
         ]}
         steps={CONSTRUCTIVE_DISMISSAL_STEPS}
         faqItems={CONSTRUCTIVE_DISMISSAL_FAQS}
-        ctaLabel="Estimate my constructive dismissal settlement →"
+        ctaLabel="Calculate constructive dismissal estimate →"
         ctaHref="/calculator/?reason=constructive"
         howItWorksTitle="Three steps to understand your constructive dismissal position."
         howItWorksLead="From what you could be owed, to the net figure after tax. Free, no email required. Independent, not a law firm."

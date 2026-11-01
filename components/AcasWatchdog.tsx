@@ -68,9 +68,9 @@ Key Points to Discuss with Your Independent Solicitor (s.203(3) ERA 1996):
 1. Consideration Window: ACAS Code of Practice 4 (Paragraph 12) recommends a minimum of 10 calendar days as general guidance to consider written settlement terms and take independent legal advice.
 2. Contractual Revocation Risk (Routledge v Grant [1828]): Under English contract law, an employer is entitled to set binding deadlines or withdraw an unaccepted offer at any point prior to acceptance.
 3. Pre-Termination Confidentiality (s.111A(4) ERA 1996): Under Paragraph 18 of ACAS Code 4, imposing an unreasonably short ultimatum can be assessed by an Employment Tribunal as potential improper behaviour affecting Section 111A confidentiality for ordinary unfair dismissal claims.
-4. Solicitor Extension Request: Ask your instructed SRA-regulated solicitor to contact ${employerName.trim() || 'HR Manager'} directly to confirm their instruction and request an extension to ${isValidReceived ? formatDateDisplay(acasDeadline) : 'the 10-day guideline date'} while preserving the open offer.
+4. Solicitor Extension Request: Instructing an SRA-regulated solicitor allows a formal extension request to be submitted directly to ${employerName.trim() || 'HR Manager'} to preserve open negotiations through to ${isValidReceived ? formatDateDisplay(acasDeadline) : 'the 10-day guideline date'}.
 
-Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.`
+Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.`
 
   const handleCopyNotice = async () => {
     try {
@@ -232,7 +232,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
               Intake Agenda for Your Instructed Solicitor: Timeline Briefing
             </h4>
             <p className="text-xs text-[#0B1F3A]/70 m-0">
-              Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
+              Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.
             </p>
           </div>
           <button

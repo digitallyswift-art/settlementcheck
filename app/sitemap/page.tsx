@@ -85,6 +85,12 @@ const sitemapData: SitemapCategory[] = [
         description: 'Value fair settlement packages during performance improvement plans based on employer process cost avoidance and s.111A discussions.',
         badge: 'New Tool',
       },
+      {
+        title: 'Post-Employment Notice Pay (PENP) Calculator',
+        href: '/penp-calculator/',
+        description: 'Statutory calculation of Post-Employment Notice Pay under ITEPA 2003 s.402D and partitioning of £30,000 tax-free termination compensation.',
+        badge: 'New Tool',
+      },
     ],
   },
   {

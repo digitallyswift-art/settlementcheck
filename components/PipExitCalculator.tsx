@@ -8,6 +8,26 @@ function formatGBP(val: number): string {
   return `£${Math.round(val).toLocaleString('en-GB')}`
 }
 
+function InfoPill({ label, children }: { label: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="my-2">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="inline-flex items-center gap-1.5 text-xs text-[#5B6577] hover:text-[#0B1F3A] font-medium underline underline-offset-2 cursor-pointer bg-transparent border-0 p-0 transition-colors"
+      >
+        <span>ℹ️</span> {label} {open ? '▲' : '▼'}
+      </button>
+      {open && (
+        <div className="mt-2 p-3 bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 rounded-lg text-xs leading-relaxed text-[#4A5568]">
+          {children}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function PipExitCalculator() {
   const [salary, setSalary] = useState<string>('55000')
   const [years, setYears] = useState<number>(3)
@@ -45,9 +65,12 @@ export function PipExitCalculator() {
       <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1F3A] mb-2">
         PIP Settlement &amp; Exit Valuation Calculator
       </h3>
-      <p className="text-xs sm:text-sm text-[#0B1F3A]/80 mb-6 leading-relaxed">
-        Calculate the commercial cost for your employer to conclude a Performance Improvement Plan (PIP) versus offering an immediate agreed settlement package under Section 111A.
+      <p className="text-xs sm:text-sm text-[#0B1F3A]/80 mb-2 leading-relaxed">
+        Commercial valuation of employer process costs versus an agreed settlement package under Section 111A.
       </p>
+      <InfoPill label="Statutory framework for protected conversations (ERA 1996 s.111A)">
+        Section 111A Employment Rights Act 1996 permits confidential pre-termination settlement negotiations that cannot be disclosed in standard unfair dismissal proceedings. Under Acas Code of Practice 4, employees are entitled to a reasonable period (standardly 10 calendar days) to consider written settlement proposals and obtain independent SRA legal advice.
+      </InfoPill>
 
       {/* Input Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -114,6 +137,9 @@ export function PipExitCalculator() {
               />
             </div>
           </div>
+          <InfoPill label="Salary baseline & notice rights (ERA 1996 s.86)">
+            Gross salary serves as the baseline for statutory notice calculations under Section 86 ERA 1996 and taxable notice pay (PENP) under ITEPA 2003 s.402D. Where contractual notice exceeds statutory minimums, the contractual entitlement applies.
+          </InfoPill>
         </div>
 
         <div className="space-y-4">
@@ -165,6 +191,9 @@ export function PipExitCalculator() {
                 </span>
               </button>
             </div>
+            <InfoPill label="Acas Code 1 capability requirements & procedure">
+              Under Acas Code of Practice 1, employers must establish fair performance benchmarks, provide structured support, allow reasonable evaluation periods (commonly 30 to 90 days), and offer the statutory right to be accompanied at formal hearings under ERA 1996 s.10. Unreasonable failure to follow procedures exposes employers to tribunal uplifts of up to 25%.
+            </InfoPill>
           </div>
 
           <div>
@@ -282,15 +311,23 @@ export function PipExitCalculator() {
             Independent SRA Solicitor Review • Employer-Funded Sign-Off
           </span>
           <h4 className="text-base sm:text-lg font-serif font-bold text-white m-0">
-            Negotiate Your PIP Settlement with an SRA Specialist
+            Connect with an SRA Settlement Specialist
           </h4>
         </div>
-        <Link
-          href={`/get-matched/?salary=${parsedSalary}&reason=pip&offer=${parsedOffer || result.recommendedSettlementTarget}`}
-          className="px-5 py-3 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white font-semibold text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap shadow-sm text-center"
-        >
-          Get My Free Solicitor Match →
-        </Link>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto">
+          <Link
+            href={`/calculator/?salary=${parsedSalary}&years=${years}&notice=${noticeWeeks}&reason=performance`}
+            className="px-4 py-3 bg-white/10 hover:bg-white/15 text-white font-medium text-xs rounded-lg transition-colors whitespace-nowrap text-center border border-white/20"
+          >
+            Model full breakdown →
+          </Link>
+          <Link
+            href={`/get-matched/?salary=${parsedSalary}&reason=pip&offer=${parsedOffer || result.recommendedSettlementTarget}`}
+            className="px-5 py-3 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white font-semibold text-xs sm:text-sm rounded-lg transition-colors whitespace-nowrap shadow-sm text-center"
+          >
+            Match with an SRA solicitor →
+          </Link>
+        </div>
       </div>
     </div>
   )

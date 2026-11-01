@@ -294,6 +294,6 @@ export async function auditSettlementAgreement(
     tacticalNegotiationPoints,
     recommendedCounterOffer,
     officialBenchmark,
-    disclaimer: 'This audit provides guidance and statutory calculation checks for negotiation preparation. By law (ERA 1996 s.203), you must have your final settlement agreement reviewed and signed off by an independent qualified solicitor or legal adviser before it becomes binding.',
+    disclaimer: 'This audit provides statutory verification checks and objective negotiation preparation information. Under Section 203(3) Employment Rights Act 1996, a settlement agreement is only legally binding once certified by an independent qualified SRA-regulated solicitor.',
   };
 }

@@ -21,6 +21,26 @@ function formatGBP(val: number): string {
   return `£${val.toLocaleString('en-GB')}`
 }
 
+function InfoPill({ label, children }: { label: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="my-2">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="inline-flex items-center gap-1.5 text-xs text-[#5B6577] hover:text-[#0B1F3A] font-medium underline underline-offset-2 cursor-pointer bg-transparent border-0 p-0 transition-colors"
+      >
+        <span>ℹ️</span> {label} {open ? '▲' : '▼'}
+      </button>
+      {open && (
+        <div className="mt-2 p-3 bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 rounded-lg text-xs leading-relaxed text-[#4A5568]">
+          {children}
+        </div>
+      )}
+    </div>
+  )
+}
+
 /* ── Benchmark Precedents Card Component for Agreement Review ───── */
 function ReviewBenchmarkCard({
   benchmark,
@@ -286,7 +306,7 @@ export default function ReviewClient() {
           Check your employment settlement agreement
         </h1>
         <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto">
-          Paste your draft clauses or protected conversation offer. In seconds, see if your employment termination payout meets UK statutory rates, compare against Ministry of Justice tribunal tables, and check £30k tax rules.
+          Confidential evaluation of draft clauses, protected conversation proposals, and employer fee contributions against UK statutory rates, Ministry of Justice tribunal tables, and Section 403 tax rules.
         </p>
       </div>
 
@@ -381,12 +401,15 @@ export default function ReviewClient() {
               rows={8}
               value={agreementText}
               onChange={(e) => setAgreementText(e.target.value)}
-              placeholder="Paste clause snippets, compensation amounts, legal fee contributions, or termination terms here..."
+              placeholder="Draft clause snippets, compensation amounts, legal fee contributions, or termination terms..."
               className="w-full p-3.5 border border-rule rounded-lg font-mono text-xs sm:text-sm text-ink bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
             />
             <p className="text-xs text-muted-2 mt-1.5">
               Strictly confidential. No names or personal data are stored. Your employer covers your solicitor fees.
             </p>
+            <InfoPill label="Statutory conditions for binding settlement agreements (ERA 1996 s.203(3))">
+              Under Section 203(3) Employment Rights Act 1996, an agreement waiving employment claims is only valid if: in writing, relating to the particular proceedings or complaint (*Bathgate v Technip [2023]*), certified by a relevant independent adviser with professional indemnity insurance, and stating that the statutory conditions are satisfied. Employers customarily contribute £350 to £750 + VAT directly toward your solicitor&apos;s advice.
+            </InfoPill>
           </div>
 
           {/* Optional Context Inputs */}
@@ -466,7 +489,7 @@ export default function ReviewClient() {
             disabled={loading}
             className="w-full sm:w-auto px-6 py-3.5 bg-coral hover:bg-coral-ink text-white font-medium rounded-lg text-sm transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
           >
-            {loading ? 'Auditing agreement terms against UK statutory rates...' : 'Check my agreement now →'}
+            {loading ? 'Auditing agreement terms against UK statutory rates...' : 'Review agreement clauses against statutory rates →'}
           </button>
         </form>
 
@@ -652,13 +675,13 @@ export default function ReviewClient() {
                   }
                   className="inline-flex justify-center items-center px-6 py-3.5 bg-coral hover:bg-coral-ink text-white font-semibold rounded-lg text-sm transition-colors text-center shadow-md cursor-pointer"
                 >
-                  Get Matched with an SRA Solicitor Now →
+                  Match with an SRA solicitor →
                 </Link>
                 <Link
                   href="/calculator/"
                   className="inline-flex justify-center items-center px-5 py-3.5 bg-transparent border border-paper text-white hover:bg-white hover:text-ink font-medium rounded-lg text-sm transition-colors text-center"
                 >
-                  Calculate Statutory Entitlement Baseline
+                  Calculate statutory entitlement baseline
                 </Link>
                 <Link
                   href="/how-it-works/"

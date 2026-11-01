@@ -44,6 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/settlement-agreement-tax-calculator/`,            lastModified: getLastMod(`${base}/settlement-agreement-tax-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/protective-award-calculator/`,                    lastModified: getLastMod(`${base}/protective-award-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/pip-settlement-calculator/`,                      lastModified: getLastMod(`${base}/pip-settlement-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/penp-calculator/`,                                lastModified: getLastMod(`${base}/penp-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
 
     // Tier 3: Explainer + how-it-works
     { url: `${base}/how-it-works/`,                                   lastModified: getLastMod(`${base}/how-it-works/`), changeFrequency: 'monthly', priority: 0.8 },

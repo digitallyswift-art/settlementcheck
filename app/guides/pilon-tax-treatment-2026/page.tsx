@@ -208,6 +208,9 @@ export default function PilonTaxTreatmentGuide() {
                   Primary statute: <strong>ITEPA 2003 s.402D &amp; HMRC PENP formula</strong>
                 </span>
                 <div className="flex flex-wrap gap-2">
+                  <Link href="/penp-calculator/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
+                    Calculate statutory PENP →
+                  </Link>
                   <Link href="/settlement-agreement-review/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
                     Check my draft notice clauses →
                   </Link>

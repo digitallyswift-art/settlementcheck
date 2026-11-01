@@ -9,6 +9,7 @@
 import fs from 'fs';
 import path from 'path';
 import { calcNotice } from '../../lib/calculations';
+import { calculatePenp } from '../../lib/penp-calculator';
 
 interface PenpScenario {
   id: string;

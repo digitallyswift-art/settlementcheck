@@ -172,7 +172,7 @@ const CALCULATORS: CalculatorCardData[] = [
       'Have you received a written settlement agreement? Check restrictive covenants, indemnity risks, confidentiality terms, and check the employer\'s customary legal fee contribution clause (typically £350 to £750 + VAT).',
     outputs: [
       'Agreement risk and balance score',
-      'Legal fee contribution check (£500 to £1,500 + VAT benchmark)',
+      'Legal fee contribution check (£350 to £750 + VAT benchmark)',
       'Non-compete and confidentiality clause verification',
       'Actionable counter-proposal negotiation checklist',
     ],
@@ -180,6 +180,26 @@ const CALCULATORS: CalculatorCardData[] = [
     primaryCta: 'Review draft agreement →',
     guideHref: '/guides/what-is-a-fair-settlement-agreement/',
     guideLabel: 'Read fairness checklist guide',
+  },
+  {
+    id: 'penp-calculator',
+    title: 'Post-Employment Notice Pay (PENP) Calculator',
+    href: '/penp-calculator/',
+    badge: 'HMRC Statutory Formula · s.402D',
+    category: 'settlement',
+    statutoryBasis: 'ITEPA 2003 s.402D · EIM12800',
+    description:
+      'Calculate Post-Employment Notice Pay (PENP) using the statutory HMRC formula ((BP x D) / P) - T. Partition taxable notice pay from the £30,000 tax-free ex-gratia exemption.',
+    outputs: [
+      'Statutory PENP taxable earnings slice (PAYE & Class 1 NICs)',
+      'Tax-free ex-gratia compensation allowance (up to £30,000)',
+      'Taxable ex-gratia excess breakdown for high-value exits',
+      'Estimated net take-home calculation after tax deductions',
+    ],
+    timeToComplete: '45 secs',
+    primaryCta: 'Calculate PENP now →',
+    guideHref: '/guides/pilon-tax-treatment-2026/',
+    guideLabel: 'Read PILON & PENP tax guide',
   },
   {
     id: 'nhs-mars',
