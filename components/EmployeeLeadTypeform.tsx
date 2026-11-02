@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import PostcodeInput from '@/components/PostcodeInput'
 import { PostcodeLookup } from '@/lib/postcodes'
+import { Ga4TelemetryClient } from '@/components/telemetry/Ga4TelemetryClient'
 
 // ── Brand tokens ──────────────────────────────────────────────────────────────
 const C = {
@@ -227,6 +228,10 @@ export default function EmployeeLeadTypeform({
   }, [resendCooldown])
 
   useEffect(() => {
+    Ga4TelemetryClient.trackLeadFunnelStarted('lead_typeform', verdict)
+  }, [verdict])
+
+  useEffect(() => {
     const t = setTimeout(() => {
       if (currentSlide === 'otp') {
         otpRefs.current[0]?.focus()
@@ -257,6 +262,7 @@ export default function EmployeeLeadTypeform({
 
   // ── OTP ──────────────────────────────────────────────────────────────────────
   const sendOtp = useCallback(async (emailAddr: string) => {
+    Ga4TelemetryClient.trackLeadOtpRequested()
     setOtpSending(true)
     try {
       const res = await fetch('/api/otp/send', {
@@ -375,6 +381,7 @@ export default function EmployeeLeadTypeform({
         }),
       })
       if (!res.ok) throw new Error()
+      Ga4TelemetryClient.trackLeadCompleted(true)
       advance()
     } catch {
       setFieldError('Something went wrong. Please try again.')

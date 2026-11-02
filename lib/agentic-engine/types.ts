@@ -567,3 +567,47 @@ export interface HandoffValidationResult {
   interceptedViolations?: string[];
 }
 
+
+// ── Conversion Improvement Packages (CIP) & GA4 Behavioral Telemetry ─────────
+
+export type CipCategory =
+  | 'LEAKY_BUCKET_CONVERSION'
+  | 'FUNNEL_STEP_DECAY'
+  | 'PRIVACY_FRICTION_REDUCTION'
+  | 'MOBILE_VIEWPORT_RECOVERY';
+
+export type CipStatus = 'STAGED' | 'APPLIED' | 'REJECTED' | 'CANARY_OBSERVATION';
+
+export interface ConversionImprovementPackage {
+  id: string;
+  targetRoute: string;
+  targetComponent: string;
+  category: CipCategory;
+  metrics: {
+    baselineConversionRate: number;
+    observedDropOffPct: number;
+    sampleSize: number;
+    pValue: number;
+    zScore: number;
+    estimatedRecoverableLeads: number;
+  };
+  adversarialAnalysis: {
+    frictionProsecutorPerspective: string;
+    trustDefensePerspective: string;
+    synthesizedInsight: string;
+  };
+  proposedDiff: {
+    currentTextOrCta: string;
+    proposedReplacement: string;
+    placement: string;
+  };
+  regulatorySignoff: {
+    sraCompliant: boolean;
+    capCodeCompliant: boolean;
+    statutoryBasis: string;
+  };
+  status: CipStatus;
+  stagedAt: string;
+  appliedAt?: string;
+  canaryExpiresAt?: string;
+}

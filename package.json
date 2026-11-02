@@ -20,6 +20,7 @@
     "seo:sync-git": "npx tsx scripts/sentinel/sync-seo-to-git.ts",
     "test:gsc": "node scripts/sentinel/test-gsc-connection.mjs",
     "test:ga4": "node scripts/sentinel/test-ga4-connection.mjs",
+    "audit:cro": "npx tsx scripts/audit/run-cro-funnel-audit.ts",
     "audit:calc": "npx tsx scripts/audit/run-calculator-bva.ts",
     "audit:claims": "npx tsx scripts/audit/scan-marketing-claims.ts",
     "audit:copy": "npx tsx scripts/audit/scan-copy-brand.ts",

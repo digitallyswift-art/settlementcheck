@@ -13,6 +13,7 @@ import RejectModal from './components/RejectModal';
 import CockpitDateFilter, { DateRangeMeta } from './components/CockpitDateFilter';
 import CockpitPerformanceChart from './components/CockpitPerformanceChart';
 import CockpitGa4RealtimeCard from './components/CockpitGa4RealtimeCard';
+import CockpitConversionCard from './components/CockpitConversionCard';
 
 export default function CockpitClient() {
   const { user, getIdToken, signOut } = useAuth();
@@ -1878,6 +1879,9 @@ export default function CockpitClient() {
 
             {/* Google Analytics 4 Realtime Telemetry */}
             <CockpitGa4RealtimeCard />
+
+            {/* Adversarial CRO Intelligence & Funnel Optimization */}
+            <CockpitConversionCard />
 
             {/* Top 4 KPI Metrics */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

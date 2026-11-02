@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { getVerdict, VerdictResult } from '@/lib/calculations'
+import { Ga4TelemetryClient } from '@/components/telemetry/Ga4TelemetryClient'
 
 export interface CalcPayload {
   inputs: {
@@ -172,6 +173,7 @@ export default function Calculator({ onCalculate }: Props) {
       form.discrimination,
       contractualNoticeWeeks,
     )
+    Ga4TelemetryClient.trackCalcCompleted(form.offer, result.verdict === 'BELOW_MINIMUM', form.reason)
     onCalculate({ inputs: form, result })
   }
 

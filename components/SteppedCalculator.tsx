@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { getVerdict, VerdictResult } from '@/lib/calculations'
 import { LegalFeeShieldBadge } from '@/components/LegalFeeShieldBadge'
+import { Ga4TelemetryClient } from '@/components/telemetry/Ga4TelemetryClient'
 
 export interface CalcPayload {
   inputs: {
@@ -315,6 +316,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   /* ── Helpers ──────────────────────────────────────────────────── */
 
   function goToStep(next: number) {
+    Ga4TelemetryClient.trackCalcStep(next, reason, yearsNum)
     setStepVisible(false)
     setShake(false)
     setTimeout(() => { setStep(next); setStepVisible(true) }, 150)
@@ -415,6 +417,8 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
 
     const result = getVerdict(s, totalMonths, a, o, calcReason, disc, noticeWeeks, jurisdiction, offerIncludesNotice)
 
+    Ga4TelemetryClient.trackCalcCompleted(String(o), result.verdict === 'BELOW_MINIMUM', calcReason)
+    Ga4TelemetryClient.trackVerdictViewed(result.verdict, String(o))
     pendingPayload.current = {
       inputs: {
         salary: String(s),

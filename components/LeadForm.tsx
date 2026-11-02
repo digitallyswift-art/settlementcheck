@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Ga4TelemetryClient } from '@/components/telemetry/Ga4TelemetryClient'
 
 interface Props {
   verdict: string
@@ -15,6 +16,10 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
   const [contact, setContact] = useState('morning')
   const [form, setForm] = useState({ firstName: '', email: '', phone: '', consent: false })
   const [errors, setErrors] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    Ga4TelemetryClient.trackLeadFunnelStarted('lead_form_standard', verdict)
+  }, [verdict])
 
   function validate() {
     const e: Record<string, string> = {}
@@ -47,6 +52,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
         }),
       })
       if (!res.ok) throw new Error('submit_failed')
+      Ga4TelemetryClient.trackLeadCompleted(true)
       setSubmitted(true)
     } catch {
       setErrors({ form: 'Something went wrong. Please try again.' })
