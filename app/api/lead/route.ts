@@ -221,7 +221,7 @@ export async function POST(req: NextRequest) {
         'Your details are with us.',
         `We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (${safeContactTime.toLowerCase()}).`,
         '',
-        'Employers customarily contribute toward the legal fees (£350 to £750 + VAT) for your independent advice on a settlement agreement under Section 203(3) of the Employment Rights Act 1996.',
+        'Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor\'s terms.',
         '',
         '---',
         'SettlementCheck • United Kingdom • team@settlementcheck.co.uk',
@@ -242,7 +242,7 @@ export async function POST(req: NextRequest) {
             <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0 0 16px; letter-spacing: -0.02em;">Your details are with us</h1>
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">Hi ${first_name.trim()},</p>
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (${safeContactTime.toLowerCase()}).</p>
-            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">Employers customarily contribute toward the legal fees (£350 to £750 + VAT) for your independent advice on a settlement agreement under Section 203(3) of the Employment Rights Act 1996.</p>
+            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor's terms.</p>
             <div style="background: #f9fafb; border-radius: 8px; padding: 16px;">
               <p style="color: #6b7280; font-size: 13px; margin: 0; line-height: 1.6;">SettlementCheck is an introduction service, not a law firm. We connect you with SRA-regulated solicitors. We do not provide legal advice.</p>
             </div>

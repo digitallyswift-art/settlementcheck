@@ -54,11 +54,11 @@ const CALCULATORS_FAQS: FaqItem[] = [
   },
   {
     q: 'Can my employer withdraw their settlement offer if I use a calculator or negotiate?',
-    a: 'Employers can theoretically withdraw without prejudice settlement proposals, but they cannot remove your statutory rights. These include statutory redundancy pay, accrued holiday, and contractual notice pay. Employers propose settlement agreements because they need guaranteed legal finality. Checking your statutory figures gives you objective evidence so you can negotiate calmly.',
+    a: 'Under English contract law (Routledge v Grant; Hyde v Wrench), an employer is legally entitled to withdraw an unaccepted settlement offer at any time prior to signed completion, and submitting a counter-offer legally extinguishes their original proposal. However, withdrawing a settlement offer does not remove your statutory baseline rights, such as statutory redundancy pay, accrued untaken holiday, and contractual notice. Always discuss negotiation strategy with your instructed SRA solicitor before responding to an offer.',
   },
   {
     q: 'Does my employer really have to pay for my solicitor to advise me?',
-    a: 'Under Section 203 of the Employment Rights Act 1996, a settlement agreement is legally void unless an independent SRA-regulated solicitor advises you. To obtain a valid waiver, employers customarily contribute £350 to £750 + VAT (and up to £1,500 for senior exits) toward your independent legal advice as a commercial term of the agreement.',
+    a: "Under Section 203 of the Employment Rights Act 1996, a settlement agreement is legally void unless an independent SRA-regulated solicitor advises you. To obtain a valid waiver, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT, and up to £1,500 for senior exits) directly to your solicitor upon completion of the agreement. If you choose not to sign or instructions exceed the cap, fees remain subject to the solicitor's terms.",
   },
   {
     q: 'What is the difference between statutory redundancy pay and a settlement agreement?',
@@ -303,12 +303,12 @@ export default function CalculatorsHubPage() {
                   03
                 </div>
                 <h3 className="text-[18px] md:text-[20px] font-serif font-460 text-ink">
-                  Independent legal advice is mandatory (and funded by your employer)
+                  Independent legal advice is mandatory (with employer contribution upon completion)
                 </h3>
                 <p className="text-[14px] md:text-[15px] text-muted leading-relaxed">
                   Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is completely void unless you receive advice
                   from an independent SRA-regulated solicitor.
-                  Employers customarily contribute £350 to £750 + VAT (and up to £1,500 for senior exits) toward your independent legal advice as a commercial term of the agreement.
+                  In practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT, and up to £1,500 for senior exits) directly to your solicitor upon completion of the agreement.
                 </p>
               </div>
 

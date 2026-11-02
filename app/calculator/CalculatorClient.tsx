@@ -23,6 +23,7 @@ function CalculatorInner() {
       reason:            searchParams.get('reason') || '',
       discrimination:    searchParams.get('discrimination') || '',
       contractualNotice: searchParams.get('contractualNotice') || searchParams.get('notice') || '',
+      jurisdiction: (searchParams.get('jurisdiction') === 'NI' ? 'NI' : 'GB') as 'GB' | 'NI',
     }
   }, [searchParams])
 
@@ -110,7 +111,7 @@ function CalculatorInner() {
       reason:            payload.inputs.reason,
       discrimination:    payload.inputs.discrimination,
       contractualNotice: payload.inputs.contractualNotice,
-      jurisdiction:      searchParams.get('jurisdiction') || 'GB',
+      jurisdiction:      payload.inputs.jurisdiction || searchParams.get('jurisdiction') || 'GB',
       variant:           variant,
     })
     router.push(`/results/?${p.toString()}`)

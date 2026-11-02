@@ -30,7 +30,7 @@ export default function PipSettlementCalculatorPage() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E2DCCE] text-xs font-mono text-[#0B1F3A] mb-4">
             <span className="w-2 h-2 rounded-full bg-[#D9603B] inline-block animate-pulse" />
-            ERA 1996 s.111A Protected Discussions • 100% Free
+            ERA 1996 s.111A Protected Discussions • Free Calculator • No Email Gating
           </div>
           <h1 className="text-3xl sm:text-4xl font-serif text-[#0B1F3A] font-bold mb-3">
             PIP Settlement Agreement Calculator

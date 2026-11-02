@@ -213,13 +213,13 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
           </span>
         </div>
         <div className="bg-[#F7F4EE] p-3 rounded-lg border border-[#E2DCCE]">
-          <span className="text-[11px] text-[#0B1F3A]/70 block mb-0.5">Statutory Acas Deadline</span>
+          <span className="text-[11px] text-[#0B1F3A]/70 block mb-0.5">ACAS Code 4 Guideline Date</span>
           <span className="text-lg font-bold text-[#0B1F3A] font-mono">
             {isValidReceived ? formatDateDisplay(acasDeadline) : '10 days'}
           </span>
         </div>
         <div className="bg-[#F7F4EE] p-3 rounded-lg border border-[#E2DCCE]">
-          <span className="text-[11px] text-[#0B1F3A]/70 block mb-0.5">Days Left in Acas Window</span>
+          <span className="text-[11px] text-[#0B1F3A]/70 block mb-0.5">Days Left in ACAS Guideline</span>
           <span className="text-lg font-bold text-[#0B1F3A] font-mono">{daysRemainingAcas} days</span>
         </div>
       </div>

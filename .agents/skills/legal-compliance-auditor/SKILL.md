@@ -22,7 +22,7 @@ Specialist legal and regulatory compliance auditor for **SettlementCheck.co.uk**
 - **FCA Consumer Duty (Principle 12 & PRIN 2A):** Communications must be clear, fair, and not misleading, preventing foreseeable harm to distressed employees (such as having an exit offer revoked due to unreviewed correspondence or missed deadlines).
 
 ### C. CMA Consumer Protection (DMCC Act 2024 / CPUTR 2008) & ASA CAP Code
-- **Fee Contribution Transparency (Zero Misleading Omissions):** Never state that legal advice is unconditionally *"100% free"* or that an employer is *"legally required"* to pay solicitor fees. Always disclose that employers *customarily contribute £350 to £750 + VAT* toward independent legal advice as a commercial term of the agreement, and that the employee covers any shortfall if fees exceed the employer's contribution.
+- **Fee Contribution Transparency & Personal Liability (DMCC Act 2024 / SRA Rule 5.1 / CAP Code 3.1):** Never state that legal advice is unconditionally *"100% free"*, that an employer is *"legally required"* to pay solicitor fees, or that fees are paid "under Section 203". Always disclose that employers standardly provide a *capped commercial contribution (typically £350 to £500+ plus VAT)* paid directly to the solicitor *upon completion of the agreement*. Explicitly warn that if the employee rejects the deal, aborts negotiations, or incurs costs beyond the agreed cap, they may be liable for fees under their solicitor's engagement terms.
 - **Zero False Urgency or Unsubstantiated Claims:** Never use fabricated market averages, unverified payout multipliers, or artificial countdown pressure.
 
 ---
@@ -44,9 +44,9 @@ Every route, component, and AI-generated content block must be audited against t
 4. **Trap 4 - Statutory Baseline Qualification (ERA 1996 s.141 & *Boston Deep Sea Fishing*):**
    - *Forbidden:* Presenting statutory redundancy or notice figures as unconditional *"Non-Negotiable Statutory Floors"* or guaranteed payouts.
    - *Required:* Label figures as **"Calculated Statutory Baselines (Subject to Eligibility)"**, noting that statutory redundancy can be forfeited under Section 141 ERA 1996 if suitable alternative employment is unreasonably refused, and notice pay can be lost in cases of gross misconduct.
-5. **Trap 5 - Fee Contribution Accuracy (ERA 1996 s.203(3)):**
-   - *Forbidden:* Claiming employers are *"legally required to pay for your legal advice"* or *"must cover the cost of your solicitor"*.
-   - *Required:* State that while Section 203(3) ERA 1996 requires the employee to receive advice from a relevant independent adviser for a waiver to be valid, the employer's legal fee contribution (customarily £350 to £750 + VAT) is a standard commercial practice rather than a statutory obligation.
+5. **Trap 5 - Fee Contribution Accuracy & Personal Liability (ERA 1996 s.203(3) & DMCC Act 2024):**
+   - *Forbidden:* Claiming employers are *"legally required to pay for your legal advice"*, asserting that *"under Section 203 your employer pays"*, or stating that advice is *"free"* without disclosing the completion contingency and fee caps.
+   - *Required:* State that while Section 203(3) ERA 1996 requires independent legal advice for a waiver to be valid, employer contributions (typically £350 to £500+ plus VAT) are a standard commercial practice contingent upon the agreement completing. Clarify that abortive costs (if the agreement is not signed) or fees exceeding the cap remain subject to the instructed solicitor's terms.
 
 ---
 
@@ -58,7 +58,7 @@ Every route, component, and AI-generated content block must be audited against t
 | `"You should ask for £X"` / `"You should counter"` | `"Calculated illustrative negotiation range: £X"` |
 | `"The current offer is £0"` / `"The current offer presented is £0"` | `"No employer offer recorded"` |
 | `"Do not accept this offer"` / `"Do not sign"` / `"Do not resign"` | `"Offer is below the calculated statutory baseline"` / `"Consider speaking with an independent solicitor before signing"` |
-| `"Your employer is legally required to pay £500"` / `"must cover the cost"` | `"Employers customarily contribute £350 to £750 + VAT toward independent legal advice"` |
+| `"Your employer is legally required to pay £500"` / `"must cover the cost"` / `"employer covers legal fees under s.203"` | `"Employers standardly provide a capped contribution (typically £350 to £500+ +VAT) upon agreement completion"` |
 | `"Without Prejudice Proposal"` / `"Dear [HR / Manager]"` | `"Intake Agenda for Your Instructed Solicitor"` |
 | `"Demand a higher settlement"` | `"Exploring potential ex-gratia adjustments with an independent solicitor"` |
 | `"Non-Negotiable Statutory Floor"` | `"Calculated Statutory Baselines (Subject to Eligibility)"` |

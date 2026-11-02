@@ -13,7 +13,7 @@ Writes and audits user-facing copy tailored to a stressed UK employee facing red
 - **Strictly Descriptive Tone (Zero Prescriptive Legal Advice)**: Never tell the user what to do, demand, say, sign, or reject. Never output "What to say to your employer" or pseudo-legal negotiation demands. Always describe calculated baselines and formulate objective questions to consider with an independent solicitor.
 - **Zero Prompt / CRO Meta-Jargon**: Never use internal framework terms in user-facing copy (e.g. "Attention Economy", "Diagnostic", "Existential Vacuum", "Cognitive Relief"). Use natural employee-centric phrasing.
 - **UK Terminology**: "Solicitor", "Redundancy", "Employment Tribunal", "Settlement".
-- **Legal Fee Reassurance**: Always highlight that **"your employer covers the legal fees"**.
+- **Legal Fee Transparency (CMA & SRA Compliant)**: Never make unqualified claims that legal advice is "free" or that "your employer covers the legal fees". Frame fee contributions as standard commercial practice, capped in amount (typically £350–£500+ +VAT), and conditional upon completion of the agreement. Remind users that scope exceeding the cap or abortive work remains subject to the solicitor's terms.
 - **Sentence Economy**: Under 20 words per sentence; maximum 2–3 sentences per paragraph.
 
 For banned words, tone rules, and the complete high-converting CTA matrix, see:

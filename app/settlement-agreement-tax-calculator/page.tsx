@@ -78,7 +78,7 @@ const TAX_FAQS: FaqItem[] = [
   },
   {
     q: 'Who pays the solicitor legal fees to check my settlement agreement?',
-    a: 'Under Section 203 of the Employment Rights Act 1996, you must receive independent legal advice for the agreement to be binding. Employers customarily contribute between £350 and £750 plus VAT directly to your solicitor toward this cost as a standard commercial term.',
+    a: "Under Section 203 of the Employment Rights Act 1996, you must receive independent legal advice for the agreement to be binding. In practice, employers standardly provide a capped contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion of the agreement. If you choose not to sign or work exceeds the cap, fees remain subject to the solicitor's terms.",
   },
 ]
 
@@ -216,8 +216,8 @@ export default function SettlementTaxCalculatorPage() {
             detail: 'Even on settlement amounts exceeding £30,000, you pay zero employee National Insurance on genuine compensation. Only standard income tax applies to the excess.',
           },
           {
-            label: 'Customary employer legal fee contribution',
-            detail: 'Under Section 203(3) ERA 1996, independent legal advice is a statutory condition for a valid settlement agreement. Employers customarily contribute £350 to £750 + VAT toward your legal fee as a commercial term of the agreement, paid directly to your solicitor.',
+            label: 'Employer legal fee contribution',
+            detail: 'Under Section 203(3) ERA 1996, independent legal advice is a statutory condition for a valid settlement agreement. In practice, employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your solicitor upon completion.',
           },
         ]}
         steps={TAX_STEPS}

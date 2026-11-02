@@ -135,11 +135,11 @@ export const CAP_CODE_RESTRICTED_PATTERNS: Array<{
   },
   {
     phrase: 'cma unqualified free legal advice claim',
-    regex: /\b(100%\s+free\s+legal\s+advice|completely\s+free\s+solicitor\s+representation|your\s+employer\s+is\s+legally\s+required\s+to\s+pay\s+all\s+your\s+legal\s+fees)\b/i,
-    riskReason: 'Misleading omission under CMA DMCC Act 2024 / CPUTR 2008: Employers customarily contribute £350-£750 + VAT toward legal advice, and any excess is payable by the employee.',
+    regex: /\b(100%\s+free\s+legal\s+advice|completely\s+free\s+solicitor\s+representation|your\s+employer\s+is\s+legally\s+required\s+to\s+pay\s+all\s+your\s+legal\s+fees|your\s+employer\s+covers\s+legal\s+fees\s+under\s+s(?:ection)?\.?\s*203)\b/i,
+    riskReason: 'Misleading omission under CMA DMCC Act 2024 / CPUTR 2008: Advice is a statutory validity condition, but employer fee contributions are a commercial practice capped in amount and conditional upon completion.',
     capCodeRule: 'CMA DMCC Act 2024 / CAP Code 3.1 (Pricing & Fee Transparency)',
     severity: 'P1',
-    safeReplacement: 'your employer customarily contributes toward your independent legal advice',
+    safeReplacement: 'employers standardly provide a capped contribution toward independent legal advice upon completion',
   },
 ];
 

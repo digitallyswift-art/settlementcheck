@@ -9,7 +9,7 @@ import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 const STATS = [
   { n: '10 days', l: 'ACAS consideration period' },
   { n: '£751',    l: 'Weekly pay cap 2026/27' },
-  { n: '£0',      l: 'Cost to employee (employer pays)' },
+  { n: '£0',      l: 'To check your rights (no email required)' },
   { n: 'Net pay', l: 'PILON and £30k exemption split' },
 ]
 
@@ -26,10 +26,10 @@ const STEPS = [
   },
   {
     n: '03',
-    t: 'Get independent legal advice at zero cost',
+    t: 'Independent legal advice with employer contribution',
     d: (
       <>
-        To make your settlement legally binding under s.203(3) ERA 1996, you must receive independent legal advice. Your employer covers this fee (typically £350 to £750 + VAT), meaning zero cost to you.{' '}
+        To make your settlement legally binding under s.203(3) ERA 1996, you must receive independent legal advice. In practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.{' '}
         <Link href="/get-matched/" className="underline hover:text-coral transition-colors font-medium">
           Connect with an SRA-regulated specialist
         </Link>{' '}
@@ -75,8 +75,8 @@ const TRUST: { t: string; d: React.ReactNode }[] = [
     d: 'We separate statutory redundancy and ex-gratia compensation from Payment in Lieu of Notice (PILON), so you see your estimated net take-home figure after tax.',
   },
   {
-    t: 'Your employer covers legal fees',
-    d: 'Under Section 203(3) of the Employment Rights Act 1996, your employer pays £350 to £750 toward independent legal advice. In most cases, this covers the full fee.',
+    t: 'Employer legal fee contribution',
+    d: 'While Section 203(3) requires independent advice for your agreement to be valid, employers standardly offer a capped contribution (£350 to £500+ plus VAT) to your solicitor upon completion to ensure the waiver is binding.',
   },
   {
     t: 'SRA-regulated solicitor panel',

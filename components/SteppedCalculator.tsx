@@ -17,6 +17,7 @@ export interface CalcPayload {
     reason: string
     discrimination: string
     contractualNotice: string
+    jurisdiction?: 'GB' | 'NI'
   }
   result: VerdictResult
 }
@@ -31,6 +32,7 @@ export interface InitialCalcValues {
   reason?: string
   discrimination?: string
   contractualNotice?: string
+  jurisdiction?: 'GB' | 'NI'
 }
 
 interface Props {
@@ -153,6 +155,15 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   })
   const [collectiveVisible, setCollectiveVisible] = useState(false)
   const [discrimination, setDiscrimination] = useState<string | null>(initialValues?.discrimination || null)
+  // Jurisdiction: default to GB (~96% of users) with explicit Northern Ireland toggle
+  const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>(() => {
+    if (initialValues?.jurisdiction === 'NI' || initialValues?.jurisdiction === 'GB') {
+      return initialValues.jurisdiction
+    }
+    return 'GB'
+  })
+  const weeklyCapAmount = WEEKLY_CAP[jurisdiction]
+
 
   // Smart session storage persistence
   useEffect(() => {
@@ -171,6 +182,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         if (!initialValues?.contractualNotice && parsed.contractualNotice && !noticeOption) setNoticeOption(parsed.contractualNotice)
         if (!initialValues?.reason && parsed.reason && !reason) setReason(parsed.reason)
         if (!initialValues?.discrimination && parsed.discrimination && !discrimination) setDiscrimination(parsed.discrimination)
+        if (!initialValues?.jurisdiction && (parsed.jurisdiction === 'GB' || parsed.jurisdiction === 'NI')) setJurisdiction(parsed.jurisdiction)
       }
     } catch {
       // Safe fallback for restricted or private browsing
@@ -181,13 +193,13 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     try {
       if (typeof window !== 'undefined') {
         sessionStorage.setItem('sc_saved_calc', JSON.stringify({
-          salary, age, yearsNum, monthsNum, offer, offerIncludesNotice, contractualNotice: noticeOption, reason, discrimination
+          salary, age, yearsNum, monthsNum, offer, offerIncludesNotice, contractualNotice: noticeOption, reason, discrimination, jurisdiction
         }))
       }
     } catch {
       // Safe fallback
     }
-  }, [salary, age, yearsNum, monthsNum, offer, offerIncludesNotice, noticeOption, reason, discrimination])
+  }, [salary, age, yearsNum, monthsNum, offer, offerIncludesNotice, noticeOption, reason, discrimination, jurisdiction])
 
   useEffect(() => {
     if (!initialValues) return
@@ -210,6 +222,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
       setReason(r)
     }
     if (initialValues.discrimination && !discrimination) setDiscrimination(initialValues.discrimination)
+    if (initialValues.jurisdiction && (initialValues.jurisdiction === 'GB' || initialValues.jurisdiction === 'NI')) setJurisdiction(initialValues.jurisdiction)
   }, [initialValues])
 
   // Loading animation state
@@ -221,9 +234,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   const onCalculateRef = useRef(onCalculate)
   useEffect(() => { onCalculateRef.current = onCalculate }, [onCalculate])
 
-  // Jurisdiction — best-effort default to GB (~96% of users)
-  const jurisdiction: 'GB' | 'NI' = 'GB'
-  const weeklyCapAmount = WEEKLY_CAP[jurisdiction]
+
 
   // Refs for auto-focus
   const salaryRef = useRef<HTMLInputElement>(null)
@@ -430,6 +441,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         reason: calcReason,
         discrimination: disc,
         contractualNotice: String(noticeWeeks),
+        jurisdiction,
       },
       result,
     }
@@ -652,6 +664,55 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
               {shake && (!salary || parseFloat(salary) <= 0) && (
                 <span style={errSt}>Please enter your salary to continue.</span>
               )}
+              <div style={{ marginTop: 24, paddingTop: 16, borderTop: '1px solid #E2DCCE' }}>
+                <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#0B1F3A', marginBottom: 8 }}>
+                  Statutory Jurisdiction
+                </label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                  <button
+                    type="button"
+                    onClick={() => setJurisdiction('GB')}
+                    style={{
+                      padding: '10px 12px',
+                      borderRadius: 8,
+                      border: `1.5px solid ${jurisdiction === 'GB' ? '#0B1F3A' : '#E2DCCE'}`,
+                      background: jurisdiction === 'GB' ? '#0B1F3A' : '#ffffff',
+                      color: jurisdiction === 'GB' ? '#ffffff' : '#0B1F3A',
+                      fontSize: 13,
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      transition: 'all 150ms ease',
+                    }}
+                  >
+                    <div style={{ fontWeight: 600, fontSize: 13 }}>England, Scotland &amp; Wales</div>
+                    <div style={{ fontSize: 11, opacity: jurisdiction === 'GB' ? 0.85 : 0.65, marginTop: 2 }}>
+                      £751/wk statutory cap
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setJurisdiction('NI')}
+                    style={{
+                      padding: '10px 12px',
+                      borderRadius: 8,
+                      border: `1.5px solid ${jurisdiction === 'NI' ? '#0B1F3A' : '#E2DCCE'}`,
+                      background: jurisdiction === 'NI' ? '#0B1F3A' : '#ffffff',
+                      color: jurisdiction === 'NI' ? '#ffffff' : '#0B1F3A',
+                      fontSize: 13,
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      transition: 'all 150ms ease',
+                    }}
+                  >
+                    <div style={{ fontWeight: 600, fontSize: 13 }}>Northern Ireland</div>
+                    <div style={{ fontSize: 11, opacity: jurisdiction === 'NI' ? 0.85 : 0.65, marginTop: 2 }}>
+                      £783/wk statutory cap
+                    </div>
+                  </button>
+                </div>
+              </div>
             </div>
           )}
 

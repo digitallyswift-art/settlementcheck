@@ -21,9 +21,9 @@ The reader is an employee who has just received a settlement agreement or redund
    - "Your employer" (never "the company" or "your organization").
    - UK spellings: colour, favour, recognise, organise, licence (noun).
    - Natural UK phrases: "find out where you stand", "what you're entitled to", "get advice", "sort this out".
-3. **Legal Fee Reassurance**:
-   - Whenever mentioning independent legal advice, always state:
-     **"Your employer covers the legal fees"** (typically £500 to £1,500 + VAT under Section 203 ERA 1996).
+3. **Legal Fee Transparency (CMA / SRA / DMCC Act 2024 Compliant)**:
+   - When mentioning independent legal advice, never state that legal advice is unconditionally "free" or that "your employer covers the legal fees" without qualification.
+   - Always state that employers standardly provide a **capped contribution (typically £350 to £500+ plus VAT)** directly to your solicitor **upon completion of the agreement**, and clarify that independent advice is a statutory validity condition under Section 203(3) ERA 1996 rather than a statutory payment mandate. Note that advice exceeding the cap or abortive work remains subject to the solicitor's engagement terms.
 4. **Banned Buzzwords & Corporate Clichés**:
    - Never write: *"don't worry"*, *"reach out"*, *"touch base"*, *"leverage"*, *"essentially"*, *"basically"*, *"navigating the complexities"*, *"tapestry"*, *"delve"*, *"please be advised"*, *"going forward"*, *"we're passionate about"*.
    - Never use *"low-ball"* in user-facing copy (use *"below the typical range"*).
@@ -46,7 +46,7 @@ The reader is an employee who has just received a settlement agreement or redund
      - ❌ *"You should ask for £X"* -> ✅ *"Calculated illustrative negotiation range: £X"*
      - ❌ *"The current offer is £0"* -> ✅ *"No employer offer recorded"* (strictly suppress negotiation templates when offer is £0)
      - ❌ *"Do not accept this offer"* / *"Do not sign"* -> ✅ *"Offer is below the calculated statutory baseline"*
-     - ❌ *"Your employer is required to pay £500"* -> ✅ *"Employers customarily contribute £350 to £750 + VAT towards independent legal fees"*
+     - ❌ *"Your employer is required to pay £500"* / *"Employer covers legal fees under s.203"* -> ✅ *"Employers standardly provide a capped contribution (typically £350 to £500+ +VAT) toward legal fees upon completion"*
      - ❌ *"Without Prejudice Proposal"* -> ✅ *"Solicitor Discussion Agenda / Summary of Figures"*
    - **The 5 Adversarial Invariants**:
      1. *Offer Revocation & Deadlines (Routledge v Grant)*: Never state that employees have an unconditional right to 10 days. Clarify that ACAS Code 4 recommends 10 calendar days, but employers can set binding deadlines or withdraw offers prior to acceptance.
@@ -57,7 +57,7 @@ The reader is an employee who has just received a settlement agreement or redund
    - **4-Part Descriptive Framing Formula**:
      1. *Statute*: "Under Section 86 of the Employment Rights Act 1996..."
      2. *Calculation*: "...statutory notice calculates to £11,923 based on length of continuous service."
-     3. *Commercial Norm*: "In standard UK practice, employers customarily contribute £350 to £750 + VAT toward independent legal advice."
+     3. *Commercial Norm*: "In standard UK practice, employers routinely offer a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion."
      4. *Professional Handoff*: "Questions you may wish to explore with an SRA-regulated solicitor include how notice pay is structured and whether ex-gratia compensation applies."
 
 ---

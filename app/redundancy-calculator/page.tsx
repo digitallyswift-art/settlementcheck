@@ -46,7 +46,7 @@ const REDUNDANCY_STEPS: StepItem[] = [
   },
   {
     n: '02',
-    t: 'See whether your offer is fair or just the minimum',
+    t: 'Compare your offer against statutory and negotiation baselines',
     d: 'There is often a gap between what an employer first offers and what a reasonable settlement looks like. If you are also signing away the right to bring tribunal claims, the total package should reflect that. The calculator shows where your offer sits.',
   },
   {
@@ -232,7 +232,7 @@ export default function RedundancyCalculatorPage() {
           },
           {
             label: 'Independent legal advice under s.203(3) ERA 1996',
-            detail: 'Under Section 203(3) ERA 1996, a settlement agreement is only legally binding once you have received advice from an independent adviser. Employers customarily contribute £350 to £750 + VAT toward your legal advice as a commercial term of the agreement.',
+            detail: 'Under Section 203(3) ERA 1996, a settlement agreement is only legally binding once you have received advice from an independent adviser. In practice, employers standardly provide a capped contribution (£350 to £500+ plus VAT) toward legal fees upon completion.',
           },
         ]}
         steps={REDUNDANCY_STEPS}

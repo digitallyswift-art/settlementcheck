@@ -227,7 +227,7 @@ export class AdversarialSeoHeadAgent {
     }
     if (/\b(?:employer (?:is legally required to|must) pay|employer covers all costs|your employer pays (?:all |your )?fees|pays towards your case|zero fees to you)\b/i.test(allPackageCopy)) {
       critiquePoints.push(
-        `CMA Fee Misstatement (DMCC Act 2024 / CPUTR 2008 & ERA 1996 s.203(3)): Stating that an employer pays your fees or pays for your case is misleading. Section 203 does not mandate employer payment; employers customarily contribute £350 to £750 + VAT toward independent legal advice.`
+        `CMA Fee Misstatement (DMCC Act 2024 / CPUTR 2008 & ERA 1996 s.203(3)): Stating that an employer pays your fees or pays for your case is misleading. Section 203 does not mandate employer payment; employers standardly provide a capped contribution (typically £350 to £500+ +VAT) upon agreement completion, and unapproved abortive fees remain subject to the solicitor retainer.`
       );
     }
 

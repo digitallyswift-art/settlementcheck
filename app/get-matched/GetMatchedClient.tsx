@@ -755,11 +755,11 @@ export default function GetMatchedClient() {
                     onMouseEnter={e => { if (!submitting) e.currentTarget.style.background = C.accentHover }}
                     onMouseLeave={e => { e.currentTarget.style.background = submitting ? C.borderStrong : C.accent }}
                   >
-                    {submitting ? 'Submitting' : 'Confirm and get my free specialist match'}
+                    {submitting ? 'Submitting…' : 'Connect with specialist solicitor →'}
                   </button>
 
                   <p style={{ fontFamily: SANS, fontSize: 13, color: C.muted, margin: '16px 0 0', lineHeight: 1.65 }}>
-                    Your details go to one SRA-regulated solicitor only. No obligation after the first call. Your employer covers your independent legal advice fee under Section 203 of the Employment Rights Act 1996.
+                    SettlementCheck introduces independent SRA-regulated solicitors and is not a law firm. In standard UK practice, employers provide a capped contribution (typically £350–£500+ +VAT) upon agreement completion. Your matched solicitor will confirm their exact terms, fee scope, and retainer in their formal client care letter before undertaking work.
                   </p>
                 </div>
               )}
@@ -796,7 +796,7 @@ export default function GetMatchedClient() {
                       during the {form.contactTime.toLowerCase()}.
                     </p>
                     <p style={{ fontFamily: SANS, fontSize: 15, color: C.muted, lineHeight: 1.65, margin: '0 0 32px' }}>
-                      Employers customarily contribute £350 to £750 + VAT toward independent legal advice under Section 203 of the Employment Rights Act 1996.
+                      Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon agreement completion.
                     </p>
 
                     {/* Trust signals */}

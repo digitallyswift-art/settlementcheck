@@ -279,6 +279,17 @@ function OfficialBenchmarkCard({
           {isWithinOrAboveRef && (
             <p className="m-0">
               <strong>Offer Comparison:</strong> Your recorded offer of <strong>{formatCurrency(comparedOffer)}</strong> sits within or above the illustrative negotiation benchmark range ({formatCurrency(refLow)} to {formatCurrency(refHigh)}).
+
+
+          {/* Critical Contract Law Advisory (Offer Revocation Risk) */}
+          <div className="mt-3 pt-3 border-t border-black/10 text-[11px] leading-relaxed">
+            <span className="font-semibold block mb-0.5 text-ink">
+              ⚠️ Contract Law Advisory (Risk of Offer Revocation):
+            </span>
+            <span>
+              Under English contract law (<em>Hyde v Wrench [1840]</em>), submitting a counter-proposal or formal rejection legally extinguishes your employer&apos;s existing offer. Furthermore, an employer is legally entitled to withdraw an unaccepted offer at any time prior to signed completion (<em>Routledge v Grant [1828]</em>). Do not reject an offer, issue counter-demands, or let deadlines expire without consulting your instructed SRA solicitor.
+            </span>
+          </div>
             </p>
           )}
         </div>
@@ -289,7 +300,7 @@ function OfficialBenchmarkCard({
         <div className="flex items-start gap-2">
           <span className="text-[#0B1F3A] font-bold text-[14px] leading-none mt-0.5">§</span>
           <span className="leading-snug">
-            <strong className="text-ink">Independent Legal Advice:</strong> Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement waiving statutory claims is only valid if you receive advice from an independent solicitor or qualified adviser. Employers customarily contribute toward this fee (commonly <strong>£350 to £750+ VAT</strong>).
+            <strong className="text-ink">Independent Legal Advice:</strong> Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement waiving statutory claims is only valid if you receive advice from an independent solicitor or qualified adviser. Employers standardly provide a capped commercial contribution toward this fee upon agreement completion (commonly <strong>£350 to £500+ +VAT</strong>). If negotiations abort or legal work exceeds the employer&apos;s agreed cap, personal liability remains subject to your instructed solicitor&apos;s retainer.
           </span>
         </div>
         <a
@@ -444,7 +455,7 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
       <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
         <p>Based on your inputs, your employer&apos;s offer of <strong className="text-ink">{formatCurrency(offer)}</strong> sits within or above the illustrative comparison range.</p>
         <p>In addition to the financial sum, settlement agreements include non-financial clauses such as reference wording, confidentiality restrictions, post-termination covenants, and waiver scope, each of which forms an important part of the overall terms.</p>
-        <p>Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is required for the agreement to be valid. Employers customarily contribute toward this fee (commonly £350 to £750+ VAT).</p>
+        <p>Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is required for the agreement to be valid. Employers standardly provide a capped contribution toward this fee upon completion (commonly £350 to £500+ +VAT).</p>
       </div>
       <OfferVsRange result={result} offer={offer} />
     </div>
@@ -1221,7 +1232,7 @@ function NegotiationDraftsman({
   // Active offer mode: offer > 0
   const upliftSubject = 'Intake Agenda for Your Instructed Solicitor - Summary of Figures'
   const upliftBody = `INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR (SECTION 203(3) ERA 1996)
-Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
+Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.
 
 1. STATUTORY BASELINE CALCULATIONS (SUBJECT TO ELIGIBILITY)
 ${redundancyAmount > 0 ? `- Statutory Redundancy: Based on ${yearsNum} complete ${yearsNum === 1 ? 'year' : 'years'} of continuous service, calculated statutory redundancy is ${formatCurrency(redundancyAmount)} (s.162 ERA 1996, subject to s.141 eligibility).\n- Notice Pay (PILON): Under contract and Section 86 ERA 1996, calculated notice baseline is ${formatCurrency(pilonAmount)}.\n- Total Calculated Statutory Baseline: ${formatCurrency(minFloor)}.` : `- Notice Pay (PILON): Under contract and Section 86 ERA 1996, calculated notice baseline is ${formatCurrency(pilonAmount)}.\n- Total Calculated Statutory Baseline: ${formatCurrency(minFloor)}.`}
@@ -1235,7 +1246,7 @@ ${redundancyAmount > 0 ? `- Statutory Redundancy: Based on ${yearsNum} complete 
 
   const feeSubject = 'Intake Agenda for Your Instructed Solicitor - Fee Contribution Check'
   const feeBody = `INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR (SECTION 203(3) ERA 1996)
-Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
+Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.
 
 1. SECTION 203(3) ERA 1996 INDEPENDENT ADVISER REQUIREMENT
 - Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement requires independent legal advice from an SRA-regulated solicitor or certified legal adviser to waive statutory claims.
@@ -1293,7 +1304,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
             <div>
               <strong className="text-[#A8341F] block mb-0.5">Important Privilege Notice: Do not send unreviewed financial proposals directly to HR</strong>
               <span className="text-[#5B6577] leading-relaxed block">
-                In employment disputes, written communications sent without independent legal review can inadvertently compromise your negotiating position or fail to qualify for legal privilege. Use this structured agenda when instructing your independent SRA-regulated solicitor.
+                Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.
               </span>
             </div>
           </div>
@@ -1376,7 +1387,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
           <div className="rounded-lg p-3 bg-[#F2F5F8] border border-[#C8D3DF] text-[12px] text-[#5B6577] flex items-start gap-2.5">
             <span className="text-[15px] flex-shrink-0 leading-none">🛡</span>
             <p className="m-0 leading-relaxed">
-              <strong>Your employer covers the legal fee:</strong> Under UK employment convention, employers pay £350 to £750 toward independent legal advice. An SRA-regulated solicitor can handle these discussions directly so you do not have to negotiate alone.
+              <strong className="text-[#0B1F3A]">Employer legal fee contribution:</strong> Under UK commercial practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. Independent SRA-regulated solicitors confirm all terms before starting work.
             </p>
           </div>
         </div>
@@ -1506,6 +1517,25 @@ function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offe
           Tax estimate uses {taxRatePct}% based on your salary. Your actual liability depends on your total income in this tax year.
           {result.isScottishNote && ' Scottish taxpayers have different income tax bands. This estimate uses UK standard rates as a baseline.'}
         </p>
+      </div>
+
+      {/* Micro-Warning B: Important Legal & Fee Note */}
+      <div className="mx-5 my-4 p-4 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[12px] text-[#0B1F3A]">
+        <div className="font-bold text-[13px] text-[#0B1F3A] mb-2 flex items-center gap-2">
+          <span aria-hidden="true">⚖️</span>
+          <span>Important Legal &amp; Fee Information</span>
+        </div>
+        <ul className="space-y-1.5 pl-4 list-disc text-[#5B6577] leading-relaxed m-0">
+          <li>
+            <strong className="text-[#0B1F3A]">Not Legal Advice:</strong> Calculations are indicative estimates and do not constitute formal legal or tax advice.
+          </li>
+          <li>
+            <strong className="text-[#0B1F3A]">Conditional Fee Contribution:</strong> Under Section 203(3) ERA 1996, independent advice is mandatory for validity. Employer fee contributions (typically £350 to £500+ plus VAT) are a standard commercial practice paid upon agreement completion, not a statutory mandate.
+          </li>
+          <li>
+            <strong className="text-[#0B1F3A]">Personal Liability:</strong> If negotiations collapse, you choose not to sign, or work exceeds the employer&apos;s agreed cap, legal costs remain subject to your instructed solicitor&apos;s retainer.
+          </li>
+        </ul>
       </div>
 
       {/* View legal sources toggle */}
@@ -1891,7 +1921,7 @@ function GetMatchedCTA({
       badge: 'Offer below calculated baseline',
       badgeColor: '#A8341F', badgeBg: '#FBF0EE', badgeBorder: '#D9A99E',
       heading: 'Review your baseline before signing.',
-      body: 'Under Section 203 of the Employment Rights Act 1996, an agreement is only binding if you receive independent advice. Employers customarily contribute toward this cost. An SRA-regulated solicitor can examine whether the offer adequately covers your statutory entitlements.',
+      body: 'Under Section 203 of the Employment Rights Act 1996, an agreement is only binding if you receive independent advice. Employers standardly provide a capped contribution upon completion. An SRA-regulated solicitor can examine whether the offer adequately covers your statutory entitlements.',
       cta: 'Match with a specialist solicitor',
     },
     BELOW_TYPICAL: {
@@ -1905,14 +1935,14 @@ function GetMatchedCTA({
       badge: 'Within reference range',
       badgeColor: '#0B1F3A', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
       heading: 'Ensure contract terms are balanced.',
-      body: 'While the financial figure aligns with standard ranges, settlement agreements include warranties, confidentiality restrictions, and legal waivers. Employers customarily contribute to the cost of your independent legal review.',
+      body: 'While the financial figure aligns with standard ranges, settlement agreements include warranties, confidentiality restrictions, and legal waivers. Employers standardly provide a capped contribution toward independent legal advice upon completion.',
       cta: 'Secure your independent legal review',
     },
     ABOVE_TYPICAL: {
       badge: 'Above reference range',
       badgeColor: '#0B1F3A', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
       heading: 'Review terms before final sign-off.',
-      body: 'The financial figure is above standard benchmarks. An independent solicitor will ensure the non-financial covenants and tax allocations are properly structured before you sign. Employers customarily contribute toward this advice.',
+      body: 'The financial figure is above standard benchmarks. An independent solicitor will ensure the non-financial covenants and tax allocations are properly structured before you sign. Employers standardly contribute toward this advice upon completion.',
       cta: 'Secure your independent legal review',
     },
   }
@@ -1921,7 +1951,7 @@ function GetMatchedCTA({
     badge: 'Pre-Offer Negotiation Planning',
     badgeColor: '#0B1F3A', badgeBg: '#F7F4EE', badgeBorder: '#E2DCCE',
     heading: 'Get prepared before your employer makes an offer.',
-    body: 'Understanding your statutory baselines and market precedents helps you understand your legal standing before formal terms are offered. An SRA-regulated solicitor can help structure your strategy. Under Section 203 ERA 1996, employers customarily contribute toward your independent advice.',
+    body: 'Understanding your statutory baselines and market precedents helps you understand your legal standing before formal terms are offered. An SRA-regulated solicitor can help structure your strategy. In practice, employers standardly provide a capped contribution toward independent advice upon completion.',
     cta: 'Match with a specialist solicitor',
   }
 
@@ -1947,7 +1977,7 @@ function GetMatchedCTA({
         {/* Trust USPs */}
         <div className="flex flex-col gap-2.5 mb-6">
           {[
-            'Legal fees customarily covered by your employer (£350 to £750 + VAT).',
+            'Standard legal fee contribution provided by your employer upon completion (£350 to £500+ +VAT).',
             'Your data is sent to a single matched firm only.',
             'Zero obligation following your introductory call.',
           ].map(t => (
@@ -1968,11 +1998,11 @@ function GetMatchedCTA({
           className="btn-accent text-[15px] font-semibold px-6 py-3.5 w-full cursor-pointer"
           style={{ borderRadius: 8, boxShadow: '0 4px 16px rgba(217,96,59,0.22)', letterSpacing: '-0.01em' }}
         >
-          Get my free solicitor match →
+          Connect with an SRA-regulated solicitor →
         </button>
 
         <p className="text-[11px] text-[#8A93A3] mt-3.5 leading-relaxed m-0 text-center">
-          Takes under 2 minutes. Free matching service.
+          Takes under 2 minutes. Independent solicitor matching. Employer fee contribution applies upon completion.
           {prefillEmail ? ' Your email is pre-filled.' : ''}
         </p>
       </div>
@@ -2144,7 +2174,7 @@ function LocalSpecialistAvailabilityCard({
             <strong>Section 203 ERA 1996 Requirement:</strong> To be legally binding, a settlement agreement waiving statutory claims requires independent advice from an insured solicitor or qualified adviser.
           </p>
           <p className="m-0 text-[#5B6577]">
-            Employers customarily contribute toward this fee (commonly £350 to £750+ VAT, paid directly to your solicitor). Standard reviews covered by this contribution involve zero out-of-pocket cost to you.
+            Employers standardly provide a capped contribution toward this fee (commonly £350 to £500+ +VAT, paid directly to your solicitor upon completion). Standard reviews within this cap are covered by the contribution.
           </p>
         </div>
 
@@ -2153,7 +2183,7 @@ function LocalSpecialistAvailabilityCard({
             onClick={onGetMatched}
             className="w-full py-3.5 px-4 rounded-lg bg-[#D9603B] hover:bg-[#c25230] text-white text-[13px] font-bold shadow-sm transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
           >
-            <span>Get my free solicitor match →</span>
+            <span>Connect with specialist solicitor →</span>
           </button>
           <span className="text-[11px] text-center text-[#8A93A3]">
             1-click dossier dispatch · Zero obligation
@@ -2195,7 +2225,7 @@ function StickyResultsMobileBar({ onGetMatched }: { onGetMatched: () => void }) 
             Independent Legal Review
           </p>
           <p className="text-[11px] text-[#5B6577] leading-tight mt-0.5 truncate m-0">
-            Employer covers fees (£350 to £750 + VAT)
+            Capped employer fee contribution (£350–£500+ +VAT)
           </p>
         </div>
         <button
@@ -2482,7 +2512,7 @@ function ResultsContent() {
                       </span>
                     </div>
                     <p className="text-[13px] text-[#0B1F3A] font-semibold m-0 leading-snug">
-                      Settlement agreements are only legally binding once certified by an independent solicitor. Employers customarily contribute £350 to £750 + VAT to cover this cost.
+                      Settlement agreements are only legally binding once certified by an independent solicitor. Employers standardly provide a capped contribution (typically £350 to £500+ +VAT) upon completion.
                     </p>
                     <button
                       type="button"
@@ -2494,7 +2524,7 @@ function ResultsContent() {
                     </button>
                     <div className="flex items-center justify-between text-[11px] text-[#8A93A3] pt-1 border-t border-[#F0EBE0]">
                       <span>✓ Free matching service</span>
-                      <span>✓ Employer covers standard fees</span>
+                      <span>✓ Capped employer fee contribution</span>
                     </div>
                   </div>
                 </div>
@@ -2650,7 +2680,7 @@ function ResultsContent() {
                 </div>
 
                 <p className="text-[11px] text-[#8A93A3] leading-[1.6] text-center px-4 m-0 no-print">
-                  Calculation estimates are based on UK statutory rates (weekly cap £{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI, 2026/27). This utility is an intake support platform, not a legal advisory body. SettlementCheck connects users with independent, SRA-regulated solicitors.
+                  Calculation estimates are based on UK statutory rates (weekly cap £{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI, 2026/27). This utility is an independent technology platform and introducer, not a law firm or tax practice. We do not provide legal or tax advice. Employer fee contributions are a commercial standard, capped, and conditional upon completion. SettlementCheck introduces independent, SRA-regulated solicitors.
                 </p>
               </div>
 

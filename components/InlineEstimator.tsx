@@ -254,7 +254,7 @@ export default function InlineEstimator({
             <div className="flex items-center gap-2 text-[12px] text-[#5B6577]">
               <span className="text-[15px] flex-shrink-0">🛡️</span>
               <span>
-                <strong>Customary employer fee contribution:</strong> Employers customarily contribute £350 to £750 + VAT toward independent legal advice under s.203(3) ERA 1996.
+                <strong className="text-[#0B1F3A]">Employer legal fee contribution:</strong> In practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion (s.203(3) ERA 1996 advice requirement).
               </span>
             </div>
 

@@ -276,7 +276,7 @@ Consent Verified: Yes`,
         `Your inquiry has been sent to the specialist team at ${partnerFirmName}.`,
         'An employment solicitor will review your figures and contact you directly within 24 hours to discuss your options.',
         '',
-        'Employers customarily contribute towards your legal fees (typically £350 to £750+ VAT) for independent legal advice under Section 203 ERA 1996.',
+        'Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor\'s terms.',
         '',
         '---',
         'SettlementCheck • United Kingdom • team@settlementcheck.co.uk',
@@ -298,7 +298,7 @@ Consent Verified: Yes`,
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">Hi ${first_name.trim()},</p>
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">Thank you for using the settlement agreement calculator. Your inquiry has been sent to the specialist team at <strong>${partnerFirmName}</strong>.</p>
             <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">An employment solicitor will review your figures and contact you directly within 24 hours to discuss your options.</p>
-            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">Under UK practice and Section 203 ERA 1996, employers customarily contribute towards your legal fees for independent advice on a settlement agreement.</p>
+            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor's terms.</p>
             <div style="background: #f9fafb; border-radius: 8px; padding: 16px;">
               <p style="color: #6b7280; font-size: 13px; margin: 0; line-height: 1.6;">SettlementCheck widget handles routing to SRA-regulated solicitors. We do not provide legal advice directly.</p>
             </div>

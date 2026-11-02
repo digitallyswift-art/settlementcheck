@@ -69,7 +69,7 @@ export function PipExitCalculator() {
         Commercial valuation of employer process costs versus an agreed settlement package under Section 111A.
       </p>
       <InfoPill label="Statutory framework for protected conversations (ERA 1996 s.111A)">
-        Section 111A Employment Rights Act 1996 permits confidential pre-termination settlement negotiations that cannot be disclosed in standard unfair dismissal proceedings. Under Acas Code of Practice 4, employees are entitled to a reasonable period (standardly 10 calendar days) to consider written settlement proposals and obtain independent SRA legal advice.
+        Section 111A Employment Rights Act 1996 permits confidential pre-termination settlement negotiations that cannot be disclosed in standard unfair dismissal proceedings. Under Acas Code of Practice 4, it is recommended that employees receive a reasonable period (standardly a minimum of 10 calendar days) to consider written settlement proposals and obtain independent SRA legal advice. An employer&apos;s stated deadline remains contractually operative on their offer.
       </InfoPill>
 
       {/* Input Grid */}
@@ -297,9 +297,9 @@ export function PipExitCalculator() {
             <strong>{formatGBP(result.contractualNoticePay)}</strong> upon termination.
           </div>
           <div>
-            <strong className="text-[#0B1F3A] block mb-1">Customary Solicitor Legal Fee Contribution:</strong>
-            Employers customarily contribute{' '}
-            <strong>{formatGBP(result.legalFeeTarget)} + VAT</strong> (typically £350 to £750 + VAT) toward independent legal advice as a commercial term of the agreement under ERA 1996 s.203(3).
+            <strong className="text-[#0B1F3A] block mb-1">Employer Legal Fee Contribution:</strong>
+            In practice, employers standardly provide a capped contribution of{' '}
+            <strong>{formatGBP(result.legalFeeTarget)} + VAT</strong> (typically £350 to £500+ plus VAT) directly to your solicitor upon completion to satisfy Section 203(3) ERA 1996 validity requirements.
           </div>
         </div>
       </div>

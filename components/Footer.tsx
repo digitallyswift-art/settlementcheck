@@ -12,10 +12,14 @@ export default function Footer() {
               <span className="text-white">Check</span>
             </div>
             <p className="text-[14px] leading-[1.6] max-w-[34ch]">
-              Independent settlement agreement calculator and solicitor matching for UK employees. Employers customarily contribute toward legal fees.
+              Independent settlement agreement calculator and solicitor matching for UK employees. Standard employer fee contributions apply upon agreement completion.
             </p>
             <p className="text-[12px] text-white/55 mt-6 max-w-[38ch] leading-[1.6]">
-              SettlementCheck is an independent introduction and calculation platform, not a law firm, and is not affiliated with ACAS or GOV.UK. We are not regulated by the SRA. Solicitors on our panel are independently SRA-regulated.
+              SettlementCheck is an independent technology platform and introducer, not a law firm, and is not affiliated with ACAS or GOV.UK. We do not provide legal or tax advice. Legal fee contributions are a commercial standard, capped, and conditional on completion. Panel solicitors are independently SRA-regulated.{' '}
+              <Link href="/disclaimer/" className="underline hover:text-white transition-colors">
+                Full legal disclaimer
+              </Link>
+              .
             </p>
           </div>
 

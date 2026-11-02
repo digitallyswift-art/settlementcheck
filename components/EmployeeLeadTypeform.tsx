@@ -630,11 +630,11 @@ export default function EmployeeLeadTypeform({
                 onMouseEnter={e => { if (!submitting) e.currentTarget.style.background = C.accentHover }}
                 onMouseLeave={e => { e.currentTarget.style.background = submitting ? C.borderStrong : C.accent }}
               >
-                {submitting ? 'Submitting…' : 'Confirm and get my free match'}
+                {submitting ? 'Submitting…' : 'Connect with specialist solicitor →'}
               </button>
 
               <p style={{ fontFamily: SANS, fontSize: 12, color: C.muted, margin: '12px 0 0', lineHeight: 1.6 }}>
-                Your details go to one solicitor only. No obligation after the first call. Your employer covers the legal fee.
+                SettlementCheck is operated by Digitally Swift Ltd and is not an authorised law firm. We introduce independent, SRA-regulated employment solicitors and receive a fixed administrative introduction fee from panel firms. Instructed solicitors act with complete professional independence in your sole interest. Employers standardly provide a capped commercial contribution (typically £350–£500+ +VAT) upon agreement completion. If negotiations break down, the agreement is aborted, or legal work exceeds the agreed contribution cap, you may be liable for fees under your solicitor&apos;s client care agreement. You are under no obligation to use our panel and remain free to instruct any qualified solicitor of your choice.
               </p>
             </div>
           )}
@@ -666,7 +666,7 @@ export default function EmployeeLeadTypeform({
               <p style={{ fontFamily: SANS, fontSize: 15, color: C.muted, lineHeight: 1.65, margin: 0 }}>
                 On <strong style={{ color: C.navy }}>{form.phone}</strong>,{' '}
                 {form.contactTime.toLowerCase()} preferred.{' '}
-                Employers customarily contribute £350 to £750 + VAT toward your independent legal advice.
+                Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.
               </p>
             </div>
           )}

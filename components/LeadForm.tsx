@@ -153,11 +153,17 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
             onChange={(e) => setForm({ ...form, consent: e.target.checked })}
           />
           <span className="text-sm text-muted leading-relaxed">
-            I agree to be matched with an employment solicitor regarding my settlement agreement. I understand this
-            service is confidential and employers customarily contribute toward independent legal advice.
+            I agree to be introduced to an independent SRA-regulated employment solicitor regarding my settlement agreement. I understand SettlementCheck is an independent platform (receiving an administrative fee from panel firms), panel solicitors act with complete professional independence in my sole interest, and employer fee contributions (£350–£500+ +VAT) are conditional upon agreement completion.
+
           </span>
         </label>
         {errors.consent && <p className="text-xs text-crimson mt-1">{errors.consent}</p>}
+      </div>
+
+      {/* SRA Rule 5.1 Introducer Disclosure */}
+      <div className="rounded-lg bg-paper-2 border border-rule p-3 text-[11px] text-muted leading-relaxed">
+        <strong className="text-ink font-semibold block mb-0.5">SRA Rule 5.1 Introducer &amp; Fee Disclosure:</strong>
+        SettlementCheck is operated by Digitally Swift Ltd and is not an authorised law firm. We introduce you to independent, SRA-regulated solicitors and receive a fixed administrative introduction fee. Instructed solicitors act with complete professional independence in your sole interest. You have free choice of representation and are not required to instruct our panel.
       </div>
 
       {errors.form && <p className="text-sm text-crimson">{errors.form}</p>}
@@ -167,7 +173,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
         disabled={loading}
         className="btn-accent w-full py-4 px-6 text-base disabled:opacity-60"
       >
-        {loading ? 'Submitting...' : 'Get my free solicitor match →'}
+        {loading ? 'Submitting...' : 'Connect with an independent solicitor →'}
       </button>
     </form>
   )

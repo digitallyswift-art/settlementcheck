@@ -6,14 +6,14 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'Employment Settlement Agreement Guides | SettlementCheck',
   description:
-    'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Employers customarily contribute toward legal fees.',
+    'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Standard employer fee contributions apply upon completion.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/',
   },
   openGraph: {
     title: 'Employment Settlement Agreement Guides | SettlementCheck',
     description:
-      'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Employers customarily contribute toward legal fees.',
+      'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Standard employer fee contributions apply upon completion.',
     url: 'https://settlementcheck.co.uk/guides/',
     type: 'website',
     locale: 'en_GB',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Employment Settlement Agreement Guides | SettlementCheck',
     description:
-      'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Employers customarily contribute toward legal fees.',
+      'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Standard employer fee contributions apply upon completion.',
   },
 }
 

@@ -41,12 +41,12 @@ export class ConversionCopywriterAgent {
 
     // SRA & CAP Code fee qualification: replace absolute/unqualified fee coverage claims
     sanitized = sanitized
-      .replace(/\byour employer covers 100% of your legal fees\b/gi, 'employers customarily contribute toward independent legal advice')
-      .replace(/\byour employer is legally required to pay all your legal fees\b/gi, 'employers customarily contribute toward independent legal advice')
-      .replace(/\byour employer covers (?:your |the )?(?:solicitor |legal )?fees?\b/gi, 'employers customarily contribute toward independent legal advice')
-      .replace(/\byour employer pays (?:your |the )?(?:solicitor |legal )?fees?\b/gi, 'employers customarily contribute toward independent legal advice')
-      .replace(/\byour employer pays £\d+ to £\d+ towards your case\b/gi, 'employers customarily contribute toward independent legal advice')
-      .replace(/\bzero fees to you \(your employer pays\b/gi, 'customary employer legal contribution applies (');
+      .replace(/\byour employer covers 100% of your legal fees\b/gi, 'employers standardly provide a capped contribution toward independent legal advice upon completion')
+      .replace(/\byour employer is legally required to pay all your legal fees\b/gi, 'employers standardly provide a capped contribution toward independent legal advice upon completion')
+      .replace(/\byour employer covers (?:your |the )?(?:solicitor |legal )?fees?\b/gi, 'employers standardly provide a capped contribution toward independent legal advice upon completion')
+      .replace(/\byour employer pays (?:your |the )?(?:solicitor |legal )?fees?\b/gi, 'employers standardly provide a capped contribution toward independent legal advice upon completion')
+      .replace(/\byour employer pays £\d+ to £\d+ towards your case\b/gi, 'employers standardly provide a capped contribution toward independent legal advice upon completion')
+      .replace(/\bzero fees to you \(your employer pays\b/gi, 'capped employer legal contribution applies upon completion (');
 
     // SRA Rule 5 & Descriptive Tone Invariants: eliminate prescriptive legal demands and statements
     sanitized = sanitized
@@ -374,7 +374,7 @@ export class ConversionCopywriterAgent {
         },
       ],
       footnoteCitation: this.sanitizeCopy(
-        'Verified against official UK statutory rates in force from April 2026. Under Section 203(3) ERA 1996, your employer typically covers the legal fees for your independent solicitor review.'
+        'Verified against official UK statutory rates in force from April 2026. Under Section 203(3) ERA 1996, independent advice is required; employers standardly offer a capped contribution upon completion.'
       ),
     };
   }
@@ -454,11 +454,11 @@ Write high-converting, empathetic, brand-compliant copy for:
 STRICT BRAND & STATUTORY GUARDRAIL POLICIES:
 1. Tone: Calm, clear, empathetic, on their side.
 2. UK English only: Use "solicitor" (NEVER lawyer/attorney), "redundancy" (NEVER layoff), "employment tribunal" (NEVER court).
-3. Legal fee reassurance: State that "employers customarily contribute toward independent solicitor advice" under Section 203(3) ERA 1996. NEVER state that employers pay all fees or pay for the employee's entire case.
+3. Legal fee transparency (CMA & SRA Compliant): State that independent advice is required under Section 203(3) ERA 1996, and in practice employers standardly provide a capped fee contribution upon completion. NEVER state that advice is unconditionally free, that employers pay all fees, or that Section 203 mandates payment.
 4. CRITICAL: ZERO EM DASHES (—). Use hyphens or simple punctuation.
 5. Title: exactly 50 to 60 characters, preserving the brand suffix "| SettlementCheck".
 6. Meta description: exactly 140 to 155 characters.
-7. FAQ Answer: 45 to 70 words, distinguishing non-contractual ex-gratia compensation (£30,000 tax-free under s.403 ITEPA 2003) from taxable PILON / notice pay, plus customary fee contribution reassurance.
+7. FAQ Answer: 45 to 70 words, distinguishing non-contractual ex-gratia compensation (£30,000 tax-free under s.403 ITEPA 2003) from taxable PILON / notice pay, plus qualified employer fee contribution upon agreement completion.
 8. Contextual Link Paragraph: 2 sentences embedding [${q}](${linkTarget}). CRITICAL: Never link to the same page being edited (prevent self-referential links).
 ${policyConstraints ? `\nCURATED ROUTE & INTENT POLICIES (MANDATORY):\n${policyConstraints}` : ''}
 

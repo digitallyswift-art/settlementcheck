@@ -11,12 +11,12 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 const STATIC_METADATA: Metadata = {
   title: 'Settlement Agreement Checker UK (2026) | SettlementCheck',
   description:
-    'Check your UK settlement agreement clauses and offer value. Free confidential audit of statutory caps (£751/wk), tax exemptions, and employer legal fees.',
+    'Check your UK settlement agreement clauses and offer value. Confidential audit of statutory caps (£751/wk), tax exemptions, and employer legal fee contributions.',
   alternates: { canonical: 'https://settlementcheck.co.uk/settlement-agreement-review/' },
   openGraph: {
     title: 'Settlement Agreement Checker UK (2026) | SettlementCheck',
     description:
-      'Check your UK settlement agreement clauses and offer value. Free confidential audit of statutory caps (£751/wk), tax exemptions, and employer legal fees.',
+      'Check your UK settlement agreement clauses and offer value. Confidential audit of statutory caps (£751/wk), tax exemptions, and employer legal fee contributions.',
     url: 'https://settlementcheck.co.uk/settlement-agreement-review/',
     type: 'website',
   },
@@ -79,7 +79,7 @@ const faqSchema = {
       name: 'Can I check my settlement agreement before speaking to a solicitor?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. Checking draft clauses beforehand allows verification of statutory redundancy baselines (£751/week), confirmation that the employer is paying standard solicitor fees (£350 to £750 + VAT), and review of tax exemptions under ITEPA 2003 s.403 before consulting an independent SRA-regulated solicitor.',
+        text: "Yes. Checking draft clauses beforehand allows verification of statutory redundancy baselines (£751/week), confirmation of the employer's offered legal fee contribution (£350 to £500+ plus VAT), and review of tax exemptions under ITEPA 2003 s.403 before consulting an independent SRA-regulated solicitor.",
       },
     },
     {
@@ -87,7 +87,7 @@ const faqSchema = {
       name: 'How much should an employer pay towards settlement agreement legal fees?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'In the UK, employers customarily contribute between £350 and £750 plus VAT towards independent legal advice, as certification by an independent SRA-regulated solicitor is a mandatory statutory requirement under Section 203(3) of the Employment Rights Act 1996.',
+        text: 'In the UK, employers standardly provide a capped contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion, as certification by an independent SRA-regulated solicitor is a mandatory statutory requirement under Section 203(3) of the Employment Rights Act 1996.',
       },
     },
     {

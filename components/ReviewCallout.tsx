@@ -9,7 +9,7 @@ interface ReviewCalloutProps {
 
 export default function ReviewCallout({
   title = 'Holding a draft settlement agreement?',
-  description = 'Before signing, check whether your draft includes a customary employer legal fee contribution (£350 to £750 + VAT), verify your £30,000 tax exemption under s.403 ITEPA 2003, and compare your settlement figures against UK statutory baselines.',
+  description = 'Before signing, check whether your draft includes a capped employer legal fee contribution clause (£350 to £500+ +VAT upon completion), verify your £30,000 tax exemption under s.403 ITEPA 2003, and compare your settlement figures against UK statutory baselines.',
   ctaText = 'Check draft agreement clauses →',
   badge = 'Confidential Clause Checker',
 }: ReviewCalloutProps) {

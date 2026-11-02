@@ -126,7 +126,7 @@ const faqSchema = {
       name: 'Does it cost me anything?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'No. For a settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). To secure this binding waiver, employers cover your legal fees as standard practice, typically contributing £350 to £750 + VAT. You pay nothing for a standard review, and you can choose an independent specialist who genuinely advises you.',
+        text: 'For a settlement agreement to be legally binding, you must receive independent legal advice under Section 203(3) ERA 1996. To secure this binding waiver, employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. For a standard review within this cap, the employer contribution covers the solicitor\'s fee, and your solicitor will confirm all terms before starting work.',
       },
     },
     {

@@ -23,7 +23,7 @@ export function LegalFeeAnnouncementBar() {
           <span>
             <strong className="text-white font-semibold">Legal Fee Coverage:</strong>{' '}
             <span className="text-[#F7F4EE]/85">
-              To make your settlement legally valid, employers usually contribute £350 to £750 + VAT to your solicitor.
+              Independent advice is required under Section 203(3) ERA 1996. Employers standardly provide a capped contribution (£350 to £500+ +VAT) upon completion.
             </span>
           </span>
         </div>
@@ -48,7 +48,7 @@ export function LegalFeeShieldBadge({ className = '' }: { className?: string }) 
         </svg>
       </span>
       <span>
-        <strong>Employer-Covered Legal Fee:</strong> Standard review covered under Section 203(3) ERA 1996
+        <strong>Employer Fee Contribution:</strong> Capped contribution upon agreement completion (s.203(3) ERA 1996 advice requirement)
       </span>
     </div>
   )
@@ -66,19 +66,19 @@ export function LegalFeeInlineCard({ className = '' }: { className?: string }) {
         </div>
         <div>
           <h3 className="text-sm font-bold text-[#0B1F3A] m-0 mb-1">
-            Section 203 Independent Legal Fee Protection
+            Independent Legal Advice Fee Contribution
           </h3>
           <p className="text-xs text-[#0B1F3A]/70 leading-relaxed m-0 mb-3">
-            For a settlement agreement to legally waive employment tribunal claims, Section 203(3) requires you to receive independent legal advice. Employers standardly contribute £350 to £750 + VAT directly to your solicitor to cover this review.
+            For a settlement agreement to legally waive employment tribunal claims, Section 203(3) requires you to receive independent legal advice. Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon agreement completion. If negotiations abort or legal work exceeds the agreed cap, liability depends on your solicitor&apos;s terms of engagement.
           </p>
           <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#5B6577]">
             <span className="flex items-center gap-1.5 font-medium text-[#0B1F3A]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9603B]" />
-              100% Free matching
+              Independent matching service
             </span>
             <span className="flex items-center gap-1.5 font-medium text-[#0B1F3A]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9603B]" />
-              Zero employee fee for standard sign-off
+              Capped employer fee contribution upon completion
             </span>
             <span className="flex items-center gap-1.5 font-medium text-[#0B1F3A]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9603B]" />

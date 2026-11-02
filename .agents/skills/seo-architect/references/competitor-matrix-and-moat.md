@@ -35,4 +35,4 @@ Competitors fall into two distinct tiers:
 3. **Statutory Tax Separation**:
    - Correctly splits statutory redundancy (under £30,000 exemption, ITEPA 2003 s.403) from PILON (fully taxable as earnings under s.402D).
 4. **Empathetic UK Emotional Register**:
-   - Written for someone receiving news at 11pm on a Tuesday. Crisp, under 20 words per sentence, zero corporate jargon, reassuring that employer covers legal fees under Section 203 ERA 1996.
+   - Written for someone receiving news at 11pm on a Tuesday. Crisp, under 20 words per sentence, zero corporate jargon, reassuring that employers standardly provide a capped fee contribution upon agreement completion (Section 203(3) ERA 1996 advice requirement).

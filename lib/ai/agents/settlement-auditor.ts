@@ -131,21 +131,21 @@ function runVerifierAgent(terms: ExtractedAgreementTerms): { checks: StatutoryAu
     checks.push({
       item: 'Employer Legal Fee Contribution',
       status: 'critical',
-      detail: 'No employer legal fee contribution is specified. For a settlement agreement to be legally binding, you must receive advice from an independent qualified solicitor (ERA 1996 s.203). Employers customarily contribute £350 to £750 + VAT as a commercial term of the agreement.',
+      detail: 'No employer legal fee contribution is recorded in the draft terms. While Section 203(3) ERA 1996 mandates independent legal advice for a waiver to be valid, employer fee contributions are a commercial term agreed upon completion. Standard commercial practice is £350 to £500+ plus VAT.',
       governingLegislation: 'Employment Rights Act 1996 s.203(3)',
     });
   } else if (legalFee < 350) {
     checks.push({
-      item: 'Employer Legal Fee Contribution Below Customary Range',
+      item: 'Employer Legal Fee Contribution Below Standard Commercial Benchmark',
       status: 'warning',
-      detail: `The recorded employer contribution of £${legalFee} towards legal fees is below the customary UK commercial contribution range of £350 to £750 + VAT. This can be discussed with your instructed solicitor.`,
+      detail: `The recorded employer contribution of £${legalFee} towards legal fees is below standard UK commercial benchmarks (£350 to £500+ +VAT). Your instructed solicitor can explore requesting an uplift upon completion.`,
       governingLegislation: 'Employment Rights Act 1996 s.203(3)',
     });
   } else {
     checks.push({
       item: 'Employer Legal Fee Contribution',
       status: 'passed',
-      detail: `The employer contribution of £${legalFee} + VAT aligns with customary UK commercial practice for independent solicitor review.`,
+      detail: `The employer contribution of £${legalFee} + VAT meets standard UK commercial benchmarks for independent solicitor review upon completion.`,
       governingLegislation: 'Employment Rights Act 1996 s.203(3)',
     });
   }
@@ -217,7 +217,7 @@ ${JSON.stringify(calculationSummary || {}, null, 2)}
 Provide objective, strictly descriptive points for the employee to discuss with their independent SRA-regulated solicitor in plain UK English.
 NEVER give prescriptive legal advice or use phrases like "You should ask for", "Do not sign", or "Demand".
 NEVER use US legal terminology like "severance", "at-will", "lawyer", or "attorney". Always reference an SRA-regulated solicitor.
-Note that employers customarily contribute £350 to £750 + VAT toward legal fees as a commercial term under s.203(3) ERA 1996.
+In standard practice, employers provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion to satisfy s.203(3) ERA 1996 advice requirements.
 
 Return a valid JSON object matching:
 {
@@ -246,7 +246,7 @@ Return a valid JSON object matching:
 
   return {
     tacticalNegotiationPoints: data.tacticalNegotiationPoints || [
-      'Discuss with your instructed solicitor whether the employer will align the legal fee contribution with the customary £350 to £750 + VAT commercial range under s.203(3) ERA 1996.',
+      'Discuss with your instructed solicitor whether the employer will align the legal fee contribution with standard commercial benchmarks (£350 to £500+ plus VAT) upon completion.',
       'Ask your solicitor to review whether an agreed factual reference schedule and mutual non-derogatory obligations are included.',
       'Verify with your solicitor that Notice Pay (PILON / PENP under s.402D ITEPA 2003) is clearly separated from the ex-gratia termination sum under s.403 ITEPA 2003.',
     ],

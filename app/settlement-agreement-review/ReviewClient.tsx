@@ -105,7 +105,7 @@ function ReviewBenchmarkCard({
         {/* Metric 2: Acas Typical Ex-Gratia Range */}
         <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
           <div>
-            <span className="text-xs text-muted font-medium block mb-1">2. Acas Typical Ex-Gratia</span>
+            <span className="text-xs text-muted font-medium block mb-1">2. Negotiation Benchmark Range</span>
             <span className="text-xl font-bold text-ink font-serif block">
               {monthlySalary > 0
                 ? `${formatGBP(acasLow)} – ${formatGBP(acasHigh)}`
@@ -115,7 +115,7 @@ function ReviewBenchmarkCard({
           <span className="text-[11px] text-muted-2 mt-2 block">
             {annualSalary > 0
               ? `Based on ${formatGBP(annualSalary)} salary (${benchmark.typicalAcasExGratiaMonths.min}–${benchmark.typicalAcasExGratiaMonths.max} mos)`
-              : 'Typical conciliated ex-gratia months'}
+              : 'Illustrative commercial negotiation range'}
           </span>
         </div>
 
@@ -158,8 +158,19 @@ function ReviewBenchmarkCard({
           )}
           {isAboveMedian && (
             <p className="m-0">
-              <strong>✓ Above Official MoJ Median:</strong> Your employer&apos;s recorded ex-gratia figure of{' '}
+              <strong>Above Official MoJ Median:</strong> Your employer&apos;s recorded ex-gratia figure of{' '}
               <strong>{formatGBP(offer)}</strong> exceeds the MoJ median tribunal award ({formatGBP(benchmark.medianTribunalAward)}) for this category. Points commonly discussed with an instructed solicitor include confirming the customary legal fee contribution (£350 to £750 + VAT) and attaching an agreed factual reference schedule.
+
+
+          {/* Critical Contract Law Advisory (Offer Revocation Risk) */}
+          <div className="mt-3 pt-3 border-t border-black/10 text-[11px] leading-relaxed">
+            <span className="font-semibold block mb-0.5 text-ink">
+              ⚠️ Contract Law Advisory (Risk of Offer Revocation):
+            </span>
+            <span>
+              Under English contract law (<em>Hyde v Wrench [1840]</em>), submitting a counter-proposal or formal rejection legally extinguishes your employer&apos;s existing offer. Furthermore, an employer is legally entitled to withdraw an unaccepted offer at any time prior to signed completion (<em>Routledge v Grant [1828]</em>). Do not reject an offer, issue counter-demands, or let deadlines expire without consulting your instructed SRA solicitor.
+            </span>
+          </div>
             </p>
           )}
         </div>
@@ -170,7 +181,7 @@ function ReviewBenchmarkCard({
         <div className="flex items-start gap-2">
           <span className="text-ink font-bold text-sm leading-none mt-0.5">§</span>
           <span className="leading-snug">
-            <strong className="text-ink">Statutory Validity Requirement:</strong> Under Section 203(3) Employment Rights Act 1996, a settlement agreement is only binding once certified by an independent adviser. Employers customarily contribute <strong>£350 to £750 + VAT</strong> toward independent legal advice as a commercial term of the agreement.
+            <strong className="text-ink">Statutory Validity Requirement:</strong> Under Section 203(3) Employment Rights Act 1996, a settlement agreement is only binding once certified by an independent adviser. Employers customarily provide a capped commercial contribution (typically <strong>£350 to £500+ +VAT</strong>) upon agreement completion. If negotiations break down or legal advice exceeds the agreed cap, liability remains subject to your solicitor&apos;s retainer.
           </span>
         </div>
         <a
@@ -300,7 +311,7 @@ export default function ReviewClient() {
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-paper-2 border border-rule text-xs font-mono text-ink mb-4">
           <span className="w-2 h-2 rounded-full bg-coral inline-block animate-pulse" />
-          Confidential UK Employment Settlement Check • 100% Free
+          Confidential UK Employment Settlement Check • Free Online Review
         </div>
         <h1 className="text-3xl sm:text-4xl font-serif text-ink font-bold mb-3">
           Check your employment settlement agreement

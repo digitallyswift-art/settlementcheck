@@ -303,23 +303,23 @@ export default function TribunalAverageAwardsGuide() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="p-4 rounded-lg bg-paper border border-rule">
                   <span className="text-xs font-mono uppercase font-bold text-muted block mb-1">Lower Band</span>
-                  <span className="text-xl font-bold text-ink font-serif block mb-2">£1,200 to £12,000</span>
+                  <span className="text-xl font-bold text-ink font-serif block mb-2">£1,300 to £12,600</span>
                   <p className="text-xs text-muted leading-relaxed m-0">
                     Appropriate for isolated, one-off discriminatory remarks or minor unlawful detriments with limited long-term impact on wellbeing.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-paper border border-rule">
                   <span className="text-xs font-mono uppercase font-bold text-muted block mb-1">Middle Band</span>
-                  <span className="text-xl font-bold text-ink font-serif block mb-2">£12,000 to £36,000</span>
+                  <span className="text-xl font-bold text-ink font-serif block mb-2">£12,600 to £37,700</span>
                   <p className="text-xs text-muted leading-relaxed m-0">
                     Applied to serious, recurring discriminatory conduct, discriminatory dismissals, or persistent failure to implement reasonable adjustments.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-paper border border-rule">
                   <span className="text-xs font-mono uppercase font-bold text-muted block mb-1">Upper Band</span>
-                  <span className="text-xl font-bold text-ink font-serif block mb-2">£36,000 to £60,000+</span>
+                  <span className="text-xl font-bold text-ink font-serif block mb-2">£37,700 to £62,900+</span>
                   <p className="text-xs text-muted leading-relaxed m-0">
-                    Reserved for the most egregious, prolonged campaigns of discriminatory bullying, sexual harassment, or career-ending victimisation. Exceptional cases exceed £60,000.
+                    Reserved for the most egregious, prolonged campaigns of discriminatory bullying, sexual harassment, or career-ending victimisation. Exceptional cases exceed £62,900.
                   </p>
                 </div>
               </div>

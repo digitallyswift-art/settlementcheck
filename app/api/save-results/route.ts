@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
       `Estimated net take-home:  ${fmt(estimatedNet)}`,
       '',
       'What happens next?',
-      'For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). Employers customarily contribute £350 to £750 + VAT toward your independent legal advice as a commercial term of the agreement. A solicitor review typically takes 24 to 48 hours, and you are under no obligation after the first call.',
+      'For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). In practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor\'s terms. A review typically takes 24 to 48 hours, and you are under no obligation after the first call.',
       '',
       'Get matched with an SRA-regulated solicitor:',
       'https://settlementcheck.co.uk/get-matched/',
@@ -145,7 +145,7 @@ export async function POST(req: NextRequest) {
 
           <div style="background:#FBF0EE;border-radius:10px;padding:18px 20px;margin-bottom:28px;">
             <p style="font-size:14px;font-weight:600;color:#0B1F3A;margin:0 0 6px;">What happens next?</p>
-            <p style="font-size:13px;color:#5B6577;line-height:1.6;margin:0;">For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). Employers customarily contribute £350 to £750 + VAT toward your independent legal advice as a commercial term of the agreement. A solicitor review typically takes 24 to 48 hours, and you are under no obligation after the first call.</p>
+            <p style="font-size:13px;color:#5B6577;line-height:1.6;margin:0;">For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). In practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor's terms. A review typically takes 24 to 48 hours, and you are under no obligation after the first call.</p>
           </div>
 
           <a href="https://settlementcheck.co.uk/get-matched/"

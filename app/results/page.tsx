@@ -4,7 +4,7 @@ import ResultsClient from './ResultsClient'
 export const metadata: Metadata = {
   title: 'Your Settlement Agreement Estimate | SettlementCheck',
   description:
-    'Your personalised settlement agreement estimate and breakdown. Get matched with a vetted SRA employment solicitor. Free service, your employer pays.',
+    'Your personalised settlement agreement estimate and breakdown. Get matched with a vetted independent SRA employment solicitor. Free calculation, standard employer fee contribution applies upon completion.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/results/',
   },

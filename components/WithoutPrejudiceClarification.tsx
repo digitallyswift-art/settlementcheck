@@ -61,7 +61,7 @@ COMMON LAW CONTRACT & PRIVILEGE CONTEXT FOR SOLICITOR DISCUSSION:
 - Under Rush & Tompkins [1989] and Framlington Group v Barnetson [2007], common law Without Prejudice privilege applies only where a genuine dispute exists, and Section 111A ERA 1996 applies solely to ordinary unfair dismissal claims.
 - Solicitor discussions determine how to finalise commercial inquiries before employer consideration deadlines expire.
 
-Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.`
+Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.`
 
   const handleCopy = async () => {
     try {
@@ -229,7 +229,7 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
               Intake Agenda for Your Instructed Solicitor
             </h4>
             <p className="text-xs text-[#0B1F3A]/70 m-0">
-              Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.
+              Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.
             </p>
           </div>
           <button

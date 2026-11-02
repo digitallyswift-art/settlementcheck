@@ -88,7 +88,7 @@ export default function InteractiveToolHook({
               />
             </svg>
             <span>
-              Free confidential calculation. Your employer covers independent legal fees.
+              Free statutory calculation. Employer legal fee contribution applies upon completion.
             </span>
           </div>
 

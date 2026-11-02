@@ -9,9 +9,9 @@
    - "Redundancy" (never layoff).
    - "Employment tribunal" (never labour court, labor court, court).
    - "Settlement agreement" (never severance package).
-3. **Key Fee Reassurance**:
-   - Whenever mentioning independent legal advice, always reassure the employee:
-     *"Your employer covers the legal fees (typically £500 to £1,500 + VAT)."*
+3. **Key Fee Transparency (CMA / SRA / DMCC Act 2024 Compliant)**:
+   - When mentioning independent legal advice, never state that legal advice is unconditionally "free" or that employers pay under Section 203.
+   - Always state: *"In standard practice, employers offer a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion."* Note that advice exceeding the cap or abortive work remains subject to the solicitor's engagement terms.
 4. **Banned Corporate Buzzwords**:
    - Never write: *"don't worry"*, *"reach out"*, *"touch base"*, *"leverage"*, *"essentially"*, *"basically"*, *"navigating the complexities"*, *"tapestry"*, *"delve"*.
 5. **Zero Prompt / CRO Meta-Jargon**:
@@ -46,6 +46,6 @@
 | :--- | :--- | :--- |
 | **Homepage Hero** | `Calculate my estimate →` | Free, confidential, no email required |
 | **Guide Inline Tool** | `Check my offer now →` | Takes 60 seconds · Instant statutory baseline |
-| **Results Summary** | `Get my free solicitor match →` | Employer covers the legal fees under S.203 |
+| **Results Summary** | `Connect with independent solicitor →` | Standard review covered by employer contribution upon completion |
 | **Dossier Generation** | `Generate pre-flight briefing →` | Ready for your independent solicitor discussion |
 | **Partner Portal** | `Claim instruction (15m lock) →` | Direct PMS intake into Clio / LEAP |
