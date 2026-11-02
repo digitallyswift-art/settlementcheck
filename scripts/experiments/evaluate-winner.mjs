@@ -23,10 +23,13 @@ const forcedWinner = winnerArg ? winnerArg.split('=')[1] : null
 const resendKey = process.env.RESEND_API_KEY
 const resend = resendKey ? new Resend(resendKey) : null
 
-let recipients = ['support@digitallyswift.com', 'digitallyswift@gmail.com']
-if (process.env.SEO_ALERT_EMAILS) {
-  recipients = process.env.SEO_ALERT_EMAILS.split(',').map(e => e.trim()).filter(Boolean)
-}
+const configuredEmails = [
+  ...(process.env.NOTIFICATION_EMAIL?.split(',') || []),
+  ...(process.env.SEO_ALERT_EMAILS?.split(',') || []),
+  ...(process.env.SEO_ALERT_EMAIL?.split(',') || []),
+].map(e => e.trim()).filter(Boolean);
+
+let recipients = Array.from(new Set(['digitallyswift@gmail.com', ...configuredEmails]));
 
 function normalCdf(x) {
   const t = 1 / (1 + 0.2316419 * Math.abs(x))

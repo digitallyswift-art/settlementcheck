@@ -35,10 +35,13 @@ async function handleDigest(req: NextRequest) {
     const promoteSequentialUrl = `${baseUrl}/api/experiments/promote/?id=${experimentId}&winner=sequential&token=${adminToken}`
     const resetSplitUrl = `${baseUrl}/api/experiments/promote/?id=${experimentId}&winner=split&token=${adminToken}`
 
-    let recipients = ['support@digitallyswift.com', 'digitallyswift@gmail.com']
-    if (process.env.SEO_ALERT_EMAILS) {
-      recipients = process.env.SEO_ALERT_EMAILS.split(',').map(e => e.trim()).filter(Boolean)
-    }
+    const configuredEmails = [
+      ...(process.env.NOTIFICATION_EMAIL?.split(',') || []),
+      ...(process.env.SEO_ALERT_EMAILS?.split(',') || []),
+      ...(process.env.SEO_ALERT_EMAIL?.split(',') || []),
+    ].map(e => e.trim()).filter(Boolean)
+
+    const recipients = Array.from(new Set(['digitallyswift@gmail.com', ...configuredEmails]))
 
     const html = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #0B1F3A; padding: 20px;">

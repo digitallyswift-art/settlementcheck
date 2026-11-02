@@ -23,12 +23,13 @@ if (!resendKey) {
 const resend = resendKey ? new Resend(resendKey) : null
 
 // Recipients list
-let recipients = ['support@digitallyswift.com', 'digitallyswift@gmail.com']
-if (process.env.SEO_ALERT_EMAILS) {
-  recipients = process.env.SEO_ALERT_EMAILS.split(',').map(e => e.trim()).filter(Boolean)
-} else if (process.env.SEO_ALERT_EMAIL) {
-  recipients = Array.from(new Set([...recipients, ...process.env.SEO_ALERT_EMAIL.split(',').map(e => e.trim()).filter(Boolean)]))
-}
+const configuredEmails = [
+  ...(process.env.NOTIFICATION_EMAIL?.split(',') || []),
+  ...(process.env.SEO_ALERT_EMAILS?.split(',') || []),
+  ...(process.env.SEO_ALERT_EMAIL?.split(',') || []),
+].map(e => e.trim()).filter(Boolean);
+
+let recipients = Array.from(new Set(['digitallyswift@gmail.com', ...configuredEmails]));
 
 const toArg = process.argv.find(a => a.startsWith('--to='))
 if (toArg) {

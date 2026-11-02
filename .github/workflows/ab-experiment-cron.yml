@@ -1,0 +1,54 @@
+name: Calculator A/B Test Autonomous Cloud Fleet
+
+on:
+  schedule:
+    # Runs daily at 08:00 UTC for telemetry digest and winner evaluation
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI anytime
+
+jobs:
+  run-ab-experiments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Execute Daily A/B Test Digest & Statistical Evaluation
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SEO_ALERT_EMAILS: ${{ secrets.SEO_ALERT_EMAILS }}
+          NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL }}
+          EXPERIMENT_ADMIN_TOKEN: ${{ secrets.EXPERIMENT_ADMIN_TOKEN }}
+        run: |
+          node scripts/experiments/send-ab-digest.mjs
+          node scripts/experiments/evaluate-winner.mjs
+
+      - name: Commit & Push Experiment State Updates
+        run: |
+          git config --global user.name "SettlementCheck Experiment Fleet"
+          git config --global user.email "experiments@settlementcheck.co.uk"
+          git add data/experiments/
+          if git diff --staged --quiet; then
+            echo "No experiment state changes to commit."
+          else
+            git commit -m "chore(experiments): autonomous state update"
+            git push origin main
+          fi
