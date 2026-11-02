@@ -309,7 +309,7 @@ export default function AveragePayoutGuide() {
               <div className="border-l-2 border-coral pl-4 py-1">
                 <strong className="text-ink block text-[16px]">4. Solicitor Legal Fees Contribution</strong>
                 <span className="text-muted text-[15px]">
-                  A settlement agreement is only legally binding if an independent, qualified adviser reviews it with you. Your employer pays your fees for this review. This contribution is paid directly to your solicitor and is tax-free under HMRC Extra-Statutory Concession A81 <sup>6</sup>.
+                  A settlement agreement is only legally binding if an independent, qualified adviser reviews it with you. Under Section 203(3) ERA 1996, employers standardly provide a capped commercial contribution (typically £350 to £500+ +VAT) paid directly to your solicitor upon completion, tax-free under HMRC Extra-Statutory Concession A81 <sup>6</sup>.
                 </span>
               </div>
             </div>

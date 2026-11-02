@@ -44,7 +44,7 @@ export interface VerdictResult {
   };
 }
 
-import { STATUTORY_RATES, getRatesForDate } from './statutory-rates';
+import { STATUTORY_RATES, getRatesForDate, VENTO_BANDS_2026_27 } from './statutory-rates';
 
 // ERA 1996 s.227 — weekly pay cap, England/Scotland/Wales.
 export const WEEKLY_CAP_GB = STATUTORY_RATES.weeklyCapGB;
@@ -274,15 +274,7 @@ export function getVerdict(
   const compensatoryCap = Math.round(Math.min(salary, rates.compensatoryAwardLimitGB));
 
   // Vento bands for 2026/27 (Presidential Guidance Ninth Addendum, applicable from 6 April 2026)
-  const ventoBands = {
-    lowerMin: 1300,
-    lowerMax: 12600,
-    middleMin: 12600,
-    middleMax: 37700,
-    upperMin: 37700,
-    upperMax: 62900,
-    exceptionalMin: 62900,
-  };
+  const ventoBands = VENTO_BANDS_2026_27;
 
   // ── Verdict ───────────────────────────────────────────────────
   let verdict: Verdict;

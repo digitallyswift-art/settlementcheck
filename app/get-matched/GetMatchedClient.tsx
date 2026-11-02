@@ -216,6 +216,8 @@ export default function GetMatchedClient() {
   const [otpVerifying, setOtpVerifying]   = useState(false)
   const [resendCooldown, setResendCooldown] = useState(0)
   const [submitting, setSubmitting]       = useState(false)
+  const [consentSol, setConsentSol]       = useState(false)
+  const [consentGdpr, setConsentGdpr]     = useState(false)
 
   const inputRef      = useRef<HTMLInputElement>(null)
   const otpRefs       = useRef<(HTMLInputElement | null)[]>([null,null,null,null,null,null])
@@ -383,6 +385,10 @@ export default function GetMatchedClient() {
 
   // ── Submit ────────────────────────────────────────────────────────────────────
   const submitLead = useCallback(async () => {
+    if (!consentSol || !consentGdpr) {
+      setFieldError('Please confirm both consent checkboxes before connecting with a solicitor.')
+      return
+    }
     setSubmitting(true); setFieldError('')
     try {
       const res = await fetch('/api/lead', {
@@ -397,6 +403,7 @@ export default function GetMatchedClient() {
           salary:          salaryAmount,
           months_service:  totalMonths,
           consent:         true,
+          gdpr_consent:    true,
           postcode:        form.postcode,
           postcode_region: form.postcode_region,
           postcode_lat:    form.postcode_lat,
@@ -426,7 +433,7 @@ export default function GetMatchedClient() {
       setFieldError('Something went wrong. Please try again.')
       setSubmitting(false)
     }
-  }, [form, verdict, offerAmount, salaryAmount, totalMonths, advance])
+  }, [form, verdict, offerAmount, salaryAmount, totalMonths, advance, consentSol, consentGdpr])
 
   // ── Render ────────────────────────────────────────────────────────────────────
   return (
@@ -739,6 +746,45 @@ export default function GetMatchedClient() {
                     ))}
                   </div>
 
+                  {/* SRA Rule 5.1 & Fee Disclosure Notice */}
+                  <div style={{
+                    padding: '14px 16px', background: '#FAF8F5',
+                    border: `1px solid ${C.border}`, borderRadius: 10,
+                    marginBottom: 14, fontSize: 12, lineHeight: 1.6, color: C.muted,
+                  }}>
+                    <strong style={{ display: 'block', color: C.navy, marginBottom: 4, fontWeight: 600 }}>
+                      SRA Rule 5.1 Introducer &amp; Fee Disclosure:
+                    </strong>
+                    SettlementCheck is operated by Digitally Swift Ltd and is an independent technology platform, not an authorised law firm. We introduce you to independent, SRA-regulated employment solicitors and receive a fixed administrative introduction fee from panel firms. Panel solicitors act with complete professional independence in your sole interest. Employers standardly provide a capped commercial contribution (typically £350–£500+ +VAT) paid directly to your solicitor upon completion. You are under no obligation to use our panel and remain free to instruct any qualified solicitor of your choice.
+                  </div>
+
+                  {/* Consent Checkboxes */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 18 }}>
+                    <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, cursor: 'pointer', fontSize: 13, lineHeight: 1.5, color: C.navy }}>
+                      <input
+                        type="checkbox"
+                        checked={consentSol}
+                        onChange={(e) => setConsentSol(e.target.checked)}
+                        style={{ marginTop: 3, accentColor: C.accent, flexShrink: 0 }}
+                      />
+                      <span>
+                        I agree to be introduced to an independent SRA-regulated employment solicitor. I understand SettlementCheck receives an administrative fee from panel firms, panel solicitors act with complete professional independence in my sole interest, and employer fee contributions are conditional upon agreement completion.
+                      </span>
+                    </label>
+
+                    <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, cursor: 'pointer', fontSize: 13, lineHeight: 1.5, color: C.navy }}>
+                      <input
+                        type="checkbox"
+                        checked={consentGdpr}
+                        onChange={(e) => setConsentGdpr(e.target.checked)}
+                        style={{ marginTop: 3, accentColor: C.accent, flexShrink: 0 }}
+                      />
+                      <span>
+                        I explicitly consent to SettlementCheck temporarily processing my dispute details and case parameters under UK GDPR Article 9 safeguards, shared only with my instructed SRA panel solicitor under professional confidentiality.
+                      </span>
+                    </label>
+                  </div>
+
                   {fieldError && <FieldError msg={fieldError} />}
 
                   <button
@@ -757,10 +803,6 @@ export default function GetMatchedClient() {
                   >
                     {submitting ? 'Submitting…' : 'Connect with specialist solicitor →'}
                   </button>
-
-                  <p style={{ fontFamily: SANS, fontSize: 13, color: C.muted, margin: '16px 0 0', lineHeight: 1.65 }}>
-                    SettlementCheck introduces independent SRA-regulated solicitors and is not a law firm. In standard UK practice, employers provide a capped contribution (typically £350–£500+ +VAT) upon agreement completion. Your matched solicitor will confirm their exact terms, fee scope, and retainer in their formal client care letter before undertaking work.
-                  </p>
                 </div>
               )}
 

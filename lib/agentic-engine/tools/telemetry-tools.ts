@@ -82,7 +82,7 @@ export const querySettlementBenchmarksTool: AIToolDefinition = {
     }
 
     if (isDiscrimination) {
-      tacticalPoints.push('Compensation for unlawful discrimination is uncapped at Employment Tribunal under the Equality Act 2010; injury to feelings awards follow the Vento guidelines (£1,200 to £58,700+).');
+      tacticalPoints.push('Compensation for unlawful discrimination is uncapped at Employment Tribunal under the Equality Act 2010; injury to feelings awards follow the Ninth Addendum Vento guidelines (£1,300 to £62,900+).');
     }
 
     const report: MarketBenchmarkReport = {

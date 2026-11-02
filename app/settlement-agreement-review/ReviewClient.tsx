@@ -275,6 +275,7 @@ export default function ReviewClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           agreementText,
+          consent: gdprConsent,
           context: {
             salary: salary ? Number(salary) : undefined,
             yearsOfService: yearsOfService ? Number(yearsOfService) : undefined,
@@ -423,7 +424,7 @@ export default function ReviewClient() {
               className="w-full p-3.5 border border-rule rounded-lg font-mono text-xs sm:text-sm text-ink bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
             />
             <p className="text-xs text-muted-2 mt-1.5">
-              Strictly confidential. No names or personal data are stored. Your employer covers your solicitor fees.
+              Strictly confidential. Ephemeral processing under UK GDPR Article 9. Employers standardly provide a capped commercial contribution upon completion.
             </p>
 
             {/* Client-Side Redaction & PII Scrubbing Safeguard */}

@@ -55,16 +55,16 @@ export async function callAI(request: AIServiceRequest): Promise<AIServiceRespon
     if (provider !== 'mock') {
       console.warn('Falling back to secondary provider or mock...');
       if (provider !== 'gemini' && process.env.GEMINI_API_KEY) {
-        return await callGemini(request);
+        return await callGemini(sanitizedRequest);
       }
       if (provider !== 'anthropic' && process.env.ANTHROPIC_API_KEY) {
-        return await callAnthropic(request);
+        return await callAnthropic(sanitizedRequest);
       }
       if (provider !== 'openai' && process.env.OPENAI_API_KEY) {
-        return await callOpenAI(request);
+        return await callOpenAI(sanitizedRequest);
       }
       // If no other live provider configured, fallback to mock
-      return await callMock(request);
+      return await callMock(sanitizedRequest);
     }
 
     throw err;

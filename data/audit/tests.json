@@ -18,7 +18,7 @@
       "redundancy": 0
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-002",
@@ -39,7 +39,7 @@
       "redundancy": 0
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-003",
@@ -60,7 +60,7 @@
       "redundancy": 500
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-004",
@@ -81,7 +81,7 @@
       "redundancy": 750
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-005",
@@ -102,7 +102,7 @@
       "redundancy": 3000
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-006",
@@ -123,7 +123,7 @@
       "redundancy": 2100
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-007",
@@ -144,7 +144,7 @@
       "redundancy": 9000
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-008",
@@ -165,7 +165,7 @@
       "redundancy": 11250
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-009",
@@ -186,7 +186,7 @@
       "redundancy": 11265
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-010",
@@ -207,7 +207,7 @@
       "redundancy": 11265
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-011",
@@ -228,7 +228,7 @@
       "redundancy": 22530
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-011b",
@@ -249,7 +249,7 @@
       "redundancy": 20653
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-012",
@@ -270,7 +270,7 @@
       "redundancy": 22530
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-013",
@@ -292,7 +292,7 @@
       "redundancy": 23490
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-014",
@@ -313,7 +313,7 @@
       "noticeWeeks": 0
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-015",
@@ -334,7 +334,7 @@
       "noticeWeeks": 1
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-016",
@@ -355,7 +355,7 @@
       "noticeWeeks": 2
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-017",
@@ -376,7 +376,7 @@
       "noticeWeeks": 12
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-018",
@@ -397,7 +397,7 @@
       "noticeWeeks": 12
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-019",
@@ -427,7 +427,7 @@
       "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-020",
@@ -457,7 +457,7 @@
       "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-021",
@@ -487,7 +487,7 @@
       "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-022a",
@@ -518,7 +518,7 @@
       "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-022b",
@@ -549,7 +549,7 @@
       "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-023",
@@ -580,7 +580,7 @@
       "basicAward": 0
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-024",
@@ -610,7 +610,7 @@
       "basicAward": 1154
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   },
   {
     "testId": "SC-T-025",
@@ -639,6 +639,6 @@
       "basicAward": 3755
     },
     "difference": "None",
-    "dateChecked": "2026-11-01"
+    "dateChecked": "2026-11-02"
   }
 ]

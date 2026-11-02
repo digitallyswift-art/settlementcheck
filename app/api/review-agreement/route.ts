@@ -6,11 +6,18 @@ import { sanitizePiiAndSpecialCategoryData } from '@/lib/ai/sanitizer';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { agreementText, context } = body;
+    const { agreementText, context, consent } = body;
 
     if (!agreementText || typeof agreementText !== 'string' || agreementText.trim().length < 20) {
       return NextResponse.json(
         { error: 'Please provide the text or key clauses of your settlement agreement (minimum 20 characters).' },
+        { status: 400 },
+      );
+    }
+
+    if (consent !== true) {
+      return NextResponse.json(
+        { error: 'Explicit affirmative consent is required under UK GDPR Article 9 to process settlement agreement text.' },
         { status: 400 },
       );
     }
