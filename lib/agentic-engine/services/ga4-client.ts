@@ -326,7 +326,7 @@ export class GoogleAnalytics4Client {
 
   /**
    * Queries Realtime Live Telemetry for GA4
-   * Uses batchRunRealtimeReports for unified single-request telemetry
+   * Uses parallel runRealtimeReport requests (Google Analytics Data API v1beta)
    */
   public static async getRealtimeTelemetry(): Promise<Ga4RealtimeData> {
     const propId = this.getPropertyId();
@@ -335,76 +335,65 @@ export class GoogleAnalytics4Client {
     }
 
     const token = await this.getAccessToken();
-    const endpoint = `https://analyticsdata.googleapis.com/v1beta/properties/${propId}:batchRunRealtimeReports`;
+    const endpoint = `https://analyticsdata.googleapis.com/v1beta/properties/${propId}:runRealtimeReport`;
 
-    // 4 queries combined:
-    // 1. Total active users & pageviews
-    // 2. Active users by minute (last 30 mins)
-    // 3. Top active pages
-    // 4. Device category breakdown
-    // 5. Geographic locations (city & country)
-    const payload = {
-      requests: [
-        // Request 0: Overall active users and screen page views
-        {
-          metrics: [{ name: 'activeUsers' }, { name: 'screenPageViews' }],
+    const query = async (body: any) => {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
-        // Request 1: Active users by minute (minutesAgo: 0 to 29)
-        {
-          dimensions: [{ name: 'minutesAgo' }],
-          metrics: [{ name: 'activeUsers' }],
-          orderBys: [
-            {
-              dimension: {
-                dimensionName: 'minutesAgo',
-                orderType: 'NUMERIC',
-              },
-              desc: false,
-            },
-          ],
-        },
-        // Request 2: Top active screens / pages
-        {
-          dimensions: [{ name: 'unifiedScreenName' }],
-          metrics: [{ name: 'activeUsers' }, { name: 'screenPageViews' }],
-          limit: 10,
-        },
-        // Request 3: Device breakdown
-        {
-          dimensions: [{ name: 'deviceCategory' }],
-          metrics: [{ name: 'activeUsers' }],
-        },
-        // Request 4: Location breakdown
-        {
-          dimensions: [{ name: 'country' }, { name: 'city' }],
-          metrics: [{ name: 'activeUsers' }],
-          limit: 8,
-        },
-      ],
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`GA4 runRealtimeReport failed (${res.status}): ${errText}`);
+      }
+      return res.json();
     };
 
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(`GA4 batchRunRealtimeReports failed (${res.status}): ${errText}`);
-    }
-
-    const json = await res.json();
-    const reports = json.reports || [];
+    // Execute 5 focused realtime telemetry reports in parallel:
+    // 0: Total active users in last 30 minutes
+    // 1: Minute-by-minute trend (0 to 29 minutes ago)
+    // 2: Top active screens / pages
+    // 3: Device breakdown
+    // 4: Location breakdown
+    const [rTotal, rMinutes, rPages, rDevices, rLocations] = await Promise.all([
+      query({ metrics: [{ name: 'activeUsers' }] }),
+      query({
+        dimensions: [{ name: 'minutesAgo' }],
+        metrics: [{ name: 'activeUsers' }],
+        orderBys: [
+          {
+            dimension: {
+              dimensionName: 'minutesAgo',
+              orderType: 'NUMERIC',
+            },
+            desc: false,
+          },
+        ],
+      }),
+      query({
+        dimensions: [{ name: 'unifiedScreenName' }],
+        metrics: [{ name: 'activeUsers' }, { name: 'screenPageViews' }],
+        limit: 10,
+      }),
+      query({
+        dimensions: [{ name: 'deviceCategory' }],
+        metrics: [{ name: 'activeUsers' }],
+      }),
+      query({
+        dimensions: [{ name: 'country' }, { name: 'city' }],
+        metrics: [{ name: 'activeUsers' }],
+        limit: 8,
+      }),
+    ]);
 
     // Parse overall active users
     let totalActiveUsers = 0;
-    const r0 = reports[0];
-    if (r0?.rows?.[0]?.metricValues?.[0]?.value) {
-      totalActiveUsers = parseInt(r0.rows[0].metricValues[0].value, 10) || 0;
+    if (rTotal?.rows?.[0]?.metricValues?.[0]?.value) {
+      totalActiveUsers = parseInt(rTotal.rows[0].metricValues[0].value, 10) || 0;
     }
 
     // Parse minute trend (fill missing 0-29 minutes with 0)
@@ -412,9 +401,8 @@ export class GoogleAnalytics4Client {
     for (let m = 0; m < 30; m++) {
       minuteMap.set(m, 0);
     }
-    const r1 = reports[1];
-    if (r1?.rows) {
-      for (const row of r1.rows) {
+    if (rMinutes?.rows) {
+      for (const row of rMinutes.rows) {
         const minute = parseInt(row.dimensionValues?.[0]?.value ?? '', 10);
         const users = parseInt(row.metricValues?.[0]?.value ?? '', 10) || 0;
         if (!isNaN(minute)) {
@@ -428,9 +416,8 @@ export class GoogleAnalytics4Client {
 
     // Parse top pages / screens
     const topPages: Ga4RealtimeActivePage[] = [];
-    const r2 = reports[2];
-    if (r2?.rows) {
-      for (const row of r2.rows) {
+    if (rPages?.rows) {
+      for (const row of rPages.rows) {
         const screenName = row.dimensionValues?.[0]?.value || 'Home';
         const activeUsers = parseInt(row.metricValues?.[0]?.value ?? '', 10) || 0;
         const screenPageViews = parseInt(row.metricValues?.[1]?.value ?? '', 10) || 0;
@@ -440,9 +427,8 @@ export class GoogleAnalytics4Client {
 
     // Parse devices
     const devices: Ga4RealtimeDevice[] = [];
-    const r3 = reports[3];
-    if (r3?.rows) {
-      for (const row of r3.rows) {
+    if (rDevices?.rows) {
+      for (const row of rDevices.rows) {
         const deviceCategory = row.dimensionValues?.[0]?.value || 'desktop';
         const activeUsers = parseInt(row.metricValues?.[0]?.value ?? '', 10) || 0;
         devices.push({ deviceCategory, activeUsers });
@@ -451,9 +437,8 @@ export class GoogleAnalytics4Client {
 
     // Parse locations
     const locations: Ga4RealtimeLocation[] = [];
-    const r4 = reports[4];
-    if (r4?.rows) {
-      for (const row of r4.rows) {
+    if (rLocations?.rows) {
+      for (const row of rLocations.rows) {
         const country = row.dimensionValues?.[0]?.value || 'United Kingdom';
         const city = row.dimensionValues?.[1]?.value || '(not set)';
         const activeUsers = parseInt(row.metricValues?.[0]?.value ?? '', 10) || 0;

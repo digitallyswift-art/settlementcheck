@@ -755,16 +755,17 @@ export default function CockpitClient() {
         <div className="space-y-3 border-b border-[#0B1F3A]/10 pb-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             {/* Responsive Touch-Friendly Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-1.5 bg-[#0B1F3A]/5 rounded-2xl w-full md:w-auto">
+            <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar p-1 sm:p-1.5 bg-[#0B1F3A]/5 rounded-2xl w-full md:w-auto">
               <button
                 onClick={() => handleTabChange('approvals')}
-                className={`min-h-[44px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
+                className={`min-h-[44px] px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-1.5 sm:gap-2 shrink-0 ${
                   activeTab === 'approvals'
                     ? 'bg-[#0B1F3A] text-white shadow-sm'
                     : 'hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70'
                 }`}
               >
-                <span>⚡ Approvals</span>
+                <span>⚡</span>
+                <span>Approvals</span>
                 {pendingCount > 0 && (
                   <span className="px-1.5 py-0.5 rounded-full bg-[#D9603B] text-white font-mono text-[10px] font-bold">
                     {pendingCount}
@@ -774,13 +775,15 @@ export default function CockpitClient() {
 
               <button
                 onClick={() => handleTabChange('deployed')}
-                className={`min-h-[44px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
+                className={`min-h-[44px] px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-1.5 sm:gap-2 shrink-0 ${
                   activeTab === 'deployed'
                     ? 'bg-[#0B1F3A] text-white shadow-sm'
                     : 'hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70'
                 }`}
               >
-                <span>🛡️ Live &amp; Canary</span>
+                <span>🛡️</span>
+                <span className="sm:hidden">Canary</span>
+                <span className="hidden sm:inline">Live &amp; Canary</span>
                 <span className="px-1.5 py-0.5 rounded-full bg-[#0B1F3A]/15 text-[#0B1F3A] font-mono text-[10px] font-bold">
                   {deployedPackages.length}
                 </span>
@@ -788,13 +791,15 @@ export default function CockpitClient() {
 
               <button
                 onClick={() => handleTabChange('monitor')}
-                className={`min-h-[44px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-2 shrink-0 ${
+                className={`min-h-[44px] px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap flex items-center gap-1.5 sm:gap-2 shrink-0 ${
                   activeTab === 'monitor'
                     ? 'bg-[#0B1F3A] text-white shadow-sm'
                     : 'hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70'
                 }`}
               >
-                <span>📊 Leads &amp; Telemetry</span>
+                <span>📊</span>
+                <span className="sm:hidden">Leads</span>
+                <span className="hidden sm:inline">Leads &amp; Telemetry</span>
                 {monitorData?.metrics?.totalLeads > 0 && (
                   <span className="px-1.5 py-0.5 rounded-full bg-[#0B1F3A]/15 text-[#0B1F3A] font-mono text-[10px] font-bold">
                     {monitorData.metrics.totalLeads}
@@ -804,7 +809,7 @@ export default function CockpitClient() {
             </div>
 
             {/* Actions: Desktop Row + Mobile Compact Action Strip */}
-            <div className="flex items-center gap-2 justify-between md:justify-end">
+            <div className="flex items-center gap-1.5 sm:gap-2 justify-between md:justify-end">
               {/* Desktop-only secondary buttons */}
               <div className="hidden lg:flex items-center gap-2">
                 <button
@@ -831,15 +836,19 @@ export default function CockpitClient() {
               <button
                 onClick={handleTriggerRun}
                 disabled={actionLoadingId === 'TRIGGER_RUN'}
-                className="min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5 disabled:opacity-50 shrink-0"
+                className="min-h-[40px] px-3 sm:px-4 py-2 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5 disabled:opacity-50 shrink-0"
               >
                 {actionLoadingId === 'TRIGGER_RUN' ? (
                   <>
                     <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Scanning GSC...</span>
+                    <span>Scanning...</span>
                   </>
                 ) : (
-                  <span>⚡ Run Fleet Scan</span>
+                  <>
+                    <span>⚡</span>
+                    <span className="sm:hidden">Scan</span>
+                    <span className="hidden sm:inline">Run Fleet Scan</span>
+                  </>
                 )}
               </button>
 
@@ -859,9 +868,10 @@ export default function CockpitClient() {
               <div className="relative lg:hidden">
                 <button
                   onClick={() => setShowMobileActions(!showMobileActions)}
-                  className="min-h-[40px] px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1"
+                  className="min-h-[40px] px-2.5 sm:px-3 py-2 rounded-xl border border-[#0B1F3A]/20 bg-white hover:bg-[#0B1F3A]/5 text-xs font-semibold text-[#0B1F3A] transition-all flex items-center gap-1"
                 >
-                  <span>••• Actions</span>
+                  <span>•••</span>
+                  <span className="hidden sm:inline">Actions</span>
                 </button>
 
                 {showMobileActions && (
@@ -1938,7 +1948,7 @@ export default function CockpitClient() {
             {/* Monitor Header Toolbar: Title, Active Horizon & GSC Calendar Filter */}
             <div className="bg-white p-4 sm:p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <h2 className="text-base sm:text-lg font-serif font-bold text-[#0B1F3A]">
                     Search Intelligence &amp; Inbound Telemetry
                   </h2>
@@ -1975,122 +1985,122 @@ export default function CockpitClient() {
               </div>
             </div>
 
-            {/* Google Analytics 4 Realtime Telemetry */}
-            <CockpitGa4RealtimeCard />
-
-            {/* Adversarial CRO Intelligence & Funnel Optimization */}
-            <CockpitConversionCard />
-
-            {/* Top 4 KPI Metrics */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Top 4 KPI Metrics - High Priority Strategic Telemetry */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {/* Card 1: GSC Search Impressions */}
-              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-2 relative overflow-hidden">
+              <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-1.5 sm:space-y-2 relative overflow-hidden">
                 {isLoadingMonitor && (
                   <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-10">
                     <span className="w-5 h-5 border-2 border-[#D9603B] border-t-transparent rounded-full animate-spin" />
                   </div>
                 )}
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-[#0B1F3A]/60 font-semibold block">Search Impressions (GSC)</span>
-                  <span className="px-2 py-0.5 rounded-md bg-[#0B1F3A]/5 text-[#0B1F3A] text-[10px] font-mono font-bold">
-                    {monitorData?.dateRange?.daysCount || 28}d Window
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[11px] sm:text-xs text-[#0B1F3A]/60 font-semibold block truncate">Search Impressions</span>
+                  <span className="px-1.5 py-0.5 rounded-md bg-[#0B1F3A]/5 text-[#0B1F3A] text-[9px] sm:text-[10px] font-mono font-bold shrink-0">
+                    {monitorData?.dateRange?.daysCount || 28}d
                   </span>
                 </div>
-                <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block">
+                <span className="text-xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block truncate">
                   {monitorData?.metrics?.totalImpressions !== undefined
                     ? monitorData.metrics.totalImpressions.toLocaleString('en-GB')
                     : '-'}
                 </span>
                 <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
-                  <span className="text-[11px] text-[#0B1F3A]/70 block font-medium">
-                    {monitorData?.metrics?.totalClicks ?? 0} clicks ({monitorData?.metrics?.avgCtr ?? 0}% CTR) · Pos {monitorData?.metrics?.avgPosition ?? '-'}
+                  <span className="text-[10px] sm:text-[11px] text-[#0B1F3A]/70 block font-medium truncate">
+                    {monitorData?.metrics?.totalClicks ?? 0} clicks ({monitorData?.metrics?.avgCtr ?? 0}% CTR)
                   </span>
-                  <span className="text-[10px] font-mono text-[#0B1F3A]/50 block">
-                    📅 GSC: {monitorData?.dateRange?.formatted || 'Last 28 days'}
+                  <span className="text-[9px] sm:text-[10px] font-mono text-[#0B1F3A]/50 block truncate">
+                    Pos {monitorData?.metrics?.avgPosition ?? '-'} · GSC Live
                   </span>
                 </div>
               </div>
 
               {/* Card 2: Calculator Runs */}
-              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-2 relative overflow-hidden">
+              <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-1.5 sm:space-y-2 relative overflow-hidden">
                 {isLoadingMonitor && (
                   <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-10">
                     <span className="w-5 h-5 border-2 border-[#D9603B] border-t-transparent rounded-full animate-spin" />
                   </div>
                 )}
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-[#0B1F3A]/60 font-semibold block">Calculator Runs</span>
-                  <span className="px-2 py-0.5 rounded-md bg-[#D9603B]/10 text-[#D9603B] text-[10px] font-mono font-bold">
-                    Real-Time
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[11px] sm:text-xs text-[#0B1F3A]/60 font-semibold block truncate">Calculator Runs</span>
+                  <span className="px-1.5 py-0.5 rounded-md bg-[#D9603B]/10 text-[#D9603B] text-[9px] sm:text-[10px] font-mono font-bold shrink-0">
+                    Live
                   </span>
                 </div>
-                <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block">
+                <span className="text-xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block truncate">
                   {monitorData?.metrics?.totalCalculations !== undefined
                     ? monitorData.metrics.totalCalculations.toLocaleString('en-GB')
                     : '-'}
                 </span>
                 <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
-                  <span className="text-[11px] text-[#D9603B] font-semibold block">
-                    Live telemetry stream
+                  <span className="text-[10px] sm:text-[11px] text-[#D9603B] font-semibold block truncate">
+                    Dispute intake stream
                   </span>
-                  <span className="text-[10px] font-mono text-[#0B1F3A]/50 block">
-                    📅 In selected {monitorData?.dateRange?.daysCount || 28}d period
+                  <span className="text-[9px] sm:text-[10px] font-mono text-[#0B1F3A]/50 block truncate">
+                    {monitorData?.dateRange?.daysCount || 28}d telemetry
                   </span>
                 </div>
               </div>
 
               {/* Card 3: Inbound Leads */}
-              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-2 relative overflow-hidden">
+              <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-1.5 sm:space-y-2 relative overflow-hidden">
                 {isLoadingMonitor && (
                   <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-10">
                     <span className="w-5 h-5 border-2 border-[#D9603B] border-t-transparent rounded-full animate-spin" />
                   </div>
                 )}
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-[#0B1F3A]/60 font-semibold block">Inbound Leads Captured</span>
-                  <span className="px-2 py-0.5 rounded-md bg-[#0B1F3A]/5 text-[#0B1F3A] text-[10px] font-mono font-bold">
-                    {monitorData?.dateRange?.daysCount || 28}d Window
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[11px] sm:text-xs text-[#0B1F3A]/60 font-semibold block truncate">Leads Captured</span>
+                  <span className="px-1.5 py-0.5 rounded-md bg-[#0B1F3A]/5 text-[#0B1F3A] text-[9px] sm:text-[10px] font-mono font-bold shrink-0">
+                    {monitorData?.dateRange?.daysCount || 28}d
                   </span>
                 </div>
-                <span className="text-2xl sm:text-3xl font-serif font-bold text-[#D9603B] block">
+                <span className="text-xl sm:text-3xl font-serif font-bold text-[#D9603B] block truncate">
                   {monitorData?.metrics?.totalLeads ?? '-'}
                 </span>
                 <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
-                  <span className="text-[11px] text-[#0B1F3A]/70 block font-medium">
-                    High-intent employee matches
+                  <span className="text-[10px] sm:text-[11px] text-[#0B1F3A]/70 block font-medium truncate">
+                    High-intent matches
                   </span>
-                  <span className="text-[10px] font-mono text-[#0B1F3A]/50 block">
-                    📅 In selected {monitorData?.dateRange?.daysCount || 28}d period
+                  <span className="text-[9px] sm:text-[10px] font-mono text-[#0B1F3A]/50 block truncate">
+                    Verified OTP leads
                   </span>
                 </div>
               </div>
 
               {/* Card 4: Gross Offers Checked */}
-              <div className="bg-white p-5 rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-2 relative overflow-hidden">
+              <div className="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-[#0B1F3A]/10 shadow-sm space-y-1.5 sm:space-y-2 relative overflow-hidden">
                 {isLoadingMonitor && (
                   <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex items-center justify-center z-10">
                     <span className="w-5 h-5 border-2 border-[#D9603B] border-t-transparent rounded-full animate-spin" />
                   </div>
                 )}
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-[#0B1F3A]/60 font-semibold block">Gross Offers Checked</span>
-                  <span className="px-2 py-0.5 rounded-md bg-[#0B1F3A]/5 text-[#0B1F3A] text-[10px] font-mono font-bold">
-                    {monitorData?.dateRange?.daysCount || 28}d Window
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[11px] sm:text-xs text-[#0B1F3A]/60 font-semibold block truncate">Offers Checked</span>
+                  <span className="px-1.5 py-0.5 rounded-md bg-[#0B1F3A]/5 text-[#0B1F3A] text-[9px] sm:text-[10px] font-mono font-bold shrink-0">
+                    {monitorData?.dateRange?.daysCount || 28}d
                   </span>
                 </div>
-                <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block">
+                <span className="text-xl sm:text-3xl font-serif font-bold text-[#0B1F3A] block truncate">
                   £{(monitorData?.metrics?.totalGrossOffers || 0).toLocaleString('en-GB')}
                 </span>
                 <div className="pt-1 border-t border-[#0B1F3A]/5 space-y-0.5">
-                  <span className="text-[11px] text-[#0B1F3A]/70 block font-medium">
-                    Avg: £{(monitorData?.metrics?.avgOffer || 0).toLocaleString('en-GB')} per matter
+                  <span className="text-[10px] sm:text-[11px] text-[#0B1F3A]/70 block font-medium truncate">
+                    Avg £{(monitorData?.metrics?.avgOffer || 0).toLocaleString('en-GB')} / matter
                   </span>
-                  <span className="text-[10px] font-mono text-[#0B1F3A]/50 block">
-                    📅 In selected {monitorData?.dateRange?.daysCount || 28}d period
+                  <span className="text-[9px] sm:text-[10px] font-mono text-[#0B1F3A]/50 block truncate">
+                    Cumulative pipeline
                   </span>
                 </div>
               </div>
             </div>
+
+            {/* Google Analytics 4 Realtime Telemetry (Compact & Collapsible) */}
+            <CockpitGa4RealtimeCard />
+
+            {/* Adversarial CRO Intelligence & Funnel Optimization */}
+            <CockpitConversionCard />
 
             {/* Google Search Console Daily Performance Chart */}
             {monitorData?.timeseries && monitorData.timeseries.length > 0 && (
