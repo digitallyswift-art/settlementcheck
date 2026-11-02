@@ -87,7 +87,7 @@ export class AutonomousSeoActionService {
           rationale: `Ranking in top 8 (Pos ${pos}) with ${impr} impressions, but CTR is only ${ctr}%. Meta title copy is missing statutory carrot.`,
           proposedChanges: {
             recommendedTitle: `${q.replace(/\b\w/g, l => l.toUpperCase())} | April 2026 Statutory Rates`,
-            recommendedMetaDescription: `Calculate your legal entitlement in under 2 minutes. Free, confidential, SRA-standard settlement agreement check. Your employer pays the fee.`,
+            recommendedMetaDescription: `Calculate your legal entitlement in under 2 minutes. Free, confidential, SRA-standard settlement agreement check. SRA solicitor contribution applies.`,
           },
           status: 'PENDING_APPROVAL',
         });

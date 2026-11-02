@@ -18,6 +18,7 @@ import { SeoPolicyRegistry } from './seo-policy-registry';
 import {
   AdversarialSeoReviewResult,
   SeoActionLifecycleStatus,
+  SeoActionType,
   SeoActuationScope,
   SeoDeploymentRiskTier,
   SeoGuardrailPolicyRule,
@@ -331,6 +332,10 @@ export class SeoActuatorService {
         ctaText: pkg.copyPackage?.ctaText,
         status: pkg.status || 'VALIDATED',
         version: 1,
+        workedExample: pkg.workedExample || pkg.copyPackage?.workedExample,
+        comparisonTable: pkg.comparisonTable || pkg.copyPackage?.comparisonTable,
+        inProsePlacement: pkg.inProsePlacement || pkg.copyPackage?.inProsePlacement,
+        contentGapBrief: pkg.contentGapBrief || pkg.copyPackage?.contentGapBrief,
       };
       this.memoryStore.set(pkg.id, this.enrichRecordWithBlastRadius(base));
     }
@@ -617,6 +622,10 @@ export class SeoActuatorService {
       faqQuestion: target.faqQuestion,
       faqAnswer: target.faqAnswer,
       contextualLinkSnippet: target.contextualLinkSnippet,
+      workedExample: target.workedExample,
+      comparisonTable: target.comparisonTable,
+      inProsePlacement: target.inProsePlacement,
+      contentGapBrief: target.contentGapBrief,
     });
 
     target.adversarialReview = review;
@@ -870,6 +879,11 @@ export class SeoActuatorService {
       actuationScope?: SeoActuationScope;
       deployAsCanary?: boolean;
       promotePolicyRule?: Partial<SeoGuardrailPolicyRule>;
+      actionType?: SeoActionType;
+      workedExample?: StatutoryWorkedCaseStudy;
+      comparisonTable?: StatutoryComparisonTableData;
+      inProsePlacement?: InProseLinkPlacement;
+      contentGapBrief?: ContentGapBrief;
     },
     options?: {
       expectedVersion?: number;
@@ -908,6 +922,11 @@ export class SeoActuatorService {
     if (updates.faqAnswer) target.faqAnswer = updates.faqAnswer;
     if (updates.contextualLinkSnippet !== undefined) target.contextualLinkSnippet = updates.contextualLinkSnippet;
     if (updates.actuationScope) target.actuationScope = updates.actuationScope;
+    if (updates.actionType) target.actionType = updates.actionType;
+    if (updates.workedExample) target.workedExample = updates.workedExample;
+    if (updates.comparisonTable) target.comparisonTable = updates.comparisonTable;
+    if (updates.inProsePlacement) target.inProsePlacement = updates.inProsePlacement;
+    if (updates.contentGapBrief) target.contentGapBrief = updates.contentGapBrief;
 
     let promotedRule: SeoGuardrailPolicyRule | undefined;
     if (updates.promotePolicyRule && updates.promotePolicyRule.ruleTitle && updates.promotePolicyRule.constraintDescription) {

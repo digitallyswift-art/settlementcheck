@@ -463,6 +463,11 @@ export interface AdversarialSeoReviewResult {
     contextualLinkSnippet?: string;
     actuationScope: SeoActuationScope;
     targetCanonicalUrl?: string;
+    actionType?: SeoActionType;
+    workedExample?: StatutoryWorkedCaseStudy;
+    comparisonTable?: StatutoryComparisonTableData;
+    inProsePlacement?: InProseLinkPlacement;
+    contentGapBrief?: ContentGapBrief;
   };
   candidatePolicyRule?: SeoGuardrailPolicyRule;
   evaluatedAt: string;
@@ -476,7 +481,10 @@ export type SeoActionType =
   | 'PILLAR_CONTENT_EXPANSION'
   | 'IN_PROSE_INTERNAL_LINK'
   | 'CANARY_TITLE_EXPERIMENT'
-  | 'CONTENT_GAP_BRIEF';
+  | 'CONTENT_GAP_BRIEF'
+  | 'STATUTORY_CASE_STUDY'
+  | 'STATUTORY_COMPARISON_TABLE'
+  | 'INTERACTIVE_TOOL_EMBED';
 
 export interface AutonomousSeoActionPackage {
   id: string;

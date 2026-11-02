@@ -29,6 +29,13 @@ export const metadata: Metadata = {
 
 const GUIDES = [
   {
+    href: '/guides/settlement-agreement-time-limits/',
+    eyebrow: 'Time Limits & Tribunal Rules',
+    title: 'Settlement Agreement Time Limits: 3-Month Tribunal Rule (2026)',
+    description: 'Understand settlement agreement time limits, the ACAS 10-day consideration rule, and why negotiations do not pause the 3-month tribunal deadline.',
+    readTime: '8 min read',
+  },
+  {
     href: '/guides/how-long-does-a-settlement-agreement-take/',
     eyebrow: 'Timeline & Payouts',
     title: 'How Long Does a Settlement Agreement Take? UK 2026 Timeline',

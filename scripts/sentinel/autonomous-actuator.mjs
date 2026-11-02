@@ -464,9 +464,9 @@ function buildCalibratedCopy(opp) {
   if (route.includes('protective-award')) {
     searchIntent = 'PROTECTIVE_AWARD_CLAIM';
     title = 'Protective Award Calculator UK (90 Days) | SettlementCheck';
-    meta = 'Calculate your protective award payout (up to 90 days gross pay under TULRCA 1992 s.189). Free 2-minute check. Your employer covers your legal fee.';
+    meta = 'Calculate your protective award payout (up to 90 days gross pay under TULRCA 1992 s.189). Free 2-minute check. SRA solicitor review contribution applies.';
     faqQ = 'What is a protective award under UK employment law?';
-    faqA = 'A protective award is compensation of up to 90 days gross pay ordered by an Employment Tribunal under Section 189 of TULRCA 1992 when an employer fails to follow collective redundancy consultation rules. It is paid in addition to statutory redundancy and notice pay. Your employer covers the cost of independent solicitor review.';
+    faqA = 'A protective award is compensation of up to 90 days gross pay ordered by an Employment Tribunal under Section 189 of TULRCA 1992 when an employer fails to follow collective redundancy consultation rules. It is paid in addition to statutory redundancy and notice pay. Employers customarily contribute toward independent solicitor advice.';
   }
   // 2. Sector: NHS Settlement Agreements
   else if (route.includes('nhs')) {
@@ -474,23 +474,23 @@ function buildCalibratedCopy(opp) {
     title = 'NHS Settlement Agreements & MARS (2026) | SettlementCheck';
     meta = 'Check your NHS settlement agreement or MARS payout under UK employment law. Free confidential check. See tax exemptions and SRA solicitor review terms.';
     faqQ = 'What is an NHS settlement agreement or MARS scheme payout?';
-    faqA = 'An NHS settlement agreement (often via the Mutually Agreed Resignation Scheme or MARS) provides compensation in return for waiving tribunal claims. Genuine ex-gratia compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer pays the fee for your independent solicitor review under Section 203 of the Employment Rights Act 1996.';
+    faqA = 'An NHS settlement agreement (often via the Mutually Agreed Resignation Scheme or MARS) provides compensation in return for waiving tribunal claims. Genuine ex-gratia compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward independent solicitor review under Section 203(3) ERA 1996.';
   }
   // 3. Dispute: Constructive Dismissal
   else if (route.includes('constructive-dismissal')) {
     searchIntent = 'CONSTRUCTIVE_DISMISSAL_DISPUTE';
     title = 'Constructive Dismissal Calculator UK (2026) | SettlementCheck';
-    meta = 'Calculate your constructive dismissal settlement payout under 2026 statutory rates (£123,543 cap). Free check. Your employer covers your legal fee.';
+    meta = 'Calculate your constructive dismissal settlement payout under 2026 statutory rates (£123,543 cap). Free check. SRA solicitor contribution guidance.';
     faqQ = 'How is compensation for constructive dismissal calculated in the UK?';
-    faqA = 'Constructive dismissal compensation consists of a statutory basic award (capped at £751 per week under ERA 1996) plus a compensatory award for financial loss up to £123,543 (from April 2026). Genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers your legal review fee.';
+    faqA = 'Constructive dismissal compensation consists of a statutory basic award (capped at £751 per week under ERA 1996) plus a compensatory award for financial loss up to £123,543 (from April 2026). Genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward independent legal advice.';
   }
   // 4. Tax & £30k Exemption
   else if (route.includes('tax') || route.includes('30000') || route.includes('pilon')) {
     searchIntent = 'TAX_STATUTORY_EXEMPTION';
     title = 'Settlement Agreement Tax Calculator 2026 | SettlementCheck';
-    meta = 'Calculate tax on your UK settlement agreement. See your £30,000 statutory tax exemption (ITEPA 2003). Free check. Your employer covers your legal fee.';
+    meta = 'Calculate tax on your UK settlement agreement. See your £30,000 statutory tax exemption (ITEPA 2003). Free check. SRA solicitor advice contribution.';
     faqQ = 'How is a settlement agreement taxed under UK employment law?';
-    faqA = 'Under Section 403 of ITEPA 2003, genuine compensation payments up to £30,000 are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON under PENP rules) remain subject to normal income tax and National Insurance. Your employer covers the cost of your independent legal review.';
+    faqA = 'Under Section 403 of ITEPA 2003, genuine compensation payments up to £30,000 are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON under PENP rules) remain subject to normal income tax and National Insurance. Employers customarily contribute toward independent legal advice.';
   }
   // 5. Redundancy Pay Cap 2026
   else if (route.includes('redundancy-pay-cap') || route.includes('redundancy-calculator')) {
@@ -498,39 +498,39 @@ function buildCalibratedCopy(opp) {
     title = 'Redundancy Pay Cap 2026 (£751/wk) | SettlementCheck';
     meta = 'Check the UK statutory redundancy pay cap for 2026 (£751/week limit). See maximum statutory entitlement (£22,530) and tax-free rules. Free check.';
     faqQ = 'What is the UK statutory redundancy pay cap in 2026?';
-    faqA = 'From 6 April 2026, the statutory redundancy weekly pay cap in Great Britain is £751 per week under the Employment Rights Act 1996, giving a maximum statutory payout of £22,530 for 20 qualifying years. All statutory redundancy pay is tax-free under the £30,000 threshold of ITEPA 2003. Your employer covers your independent legal review.';
+    faqA = 'From 6 April 2026, the statutory redundancy weekly pay cap in Great Britain is £751 per week under the Employment Rights Act 1996, giving a maximum statutory payout of £22,530 for 20 qualifying years. All statutory redundancy pay is tax-free under the £30,000 threshold of ITEPA 2003. Employers customarily contribute toward independent legal advice.';
   }
   // 6. Average Payouts & Valuation Benchmarks
   else if (route.includes('average-settlement') || route.includes('how-much') || route.includes('employment-tribunal')) {
     searchIntent = 'VALUATION_BENCHMARK';
     title = 'Average Settlement Payout UK 2026 | SettlementCheck';
-    meta = 'See official UK settlement agreement benchmarks and statutory redundancy caps (£751/wk). Free 2-minute valuation. Your employer covers your legal fee.';
+    meta = 'See official UK settlement agreement benchmarks and statutory redundancy caps (£751/wk). Free 2-minute valuation. SRA solicitor review guidance.';
     faqQ = 'What is an average settlement agreement payout in the UK?';
-    faqA = 'A typical UK settlement offer includes statutory or enhanced redundancy (capped at £751 per week under ERA 1996), contractual notice pay, and 1 to 3 months gross salary as ex-gratia compensation. Genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the cost of independent solicitor review.';
+    faqA = 'A typical UK settlement offer includes statutory or enhanced redundancy (capped at £751 per week under ERA 1996), contractual notice pay, and 1 to 3 months gross salary as ex-gratia compensation. Genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward independent legal advice.';
   }
   // 7. Employee Tactics: Sick Leave
   else if (route.includes('sick-leave')) {
     searchIntent = 'SICK_LEAVE_DISPUTE';
     title = 'Settlement Agreement on Sick Leave UK (2026) | SettlementCheck';
-    meta = 'Check your settlement agreement rights while on sick leave or medical capability. Free, confidential review. Your employer covers your legal fee.';
+    meta = 'Check your settlement agreement rights while on sick leave or medical capability. Free, confidential review. SRA solicitor advice contribution terms.';
     faqQ = 'Can I negotiate a settlement agreement while on sick leave in the UK?';
-    faqA = 'Yes. Employers frequently initiate settlement discussions under Section 111A of the Employment Rights Act 1996 to agree a mutual exit during long-term sick leave. Genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer pays the fee for your independent solicitor review under Section 203 of the ERA 1996.';
+    faqA = 'Yes. Employers frequently initiate settlement discussions under Section 111A of the Employment Rights Act 1996 to agree a mutual exit during long-term sick leave. Genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996.';
   }
   // 8. Employee Tactics: PIP
   else if (route.includes('pip')) {
     searchIntent = 'PIP_EXIT_NEGOTIATION';
     title = 'Settlement Agreement Instead of PIP (2026) | SettlementCheck';
-    meta = 'Offered a settlement agreement instead of a PIP? Check your rights and compensation payout under UK law. Free check. Your employer covers your legal fee.';
+    meta = 'Offered a settlement agreement instead of a PIP? Check your rights and compensation payout under UK law. Free check. SRA solicitor advice contribution.';
     faqQ = 'Can I ask for a settlement agreement instead of doing a PIP?';
-    faqA = 'Yes. Many UK employees choose to propose a without prejudice protected conversation under Section 111A ERA 1996 to exit with an agreed settlement and positive reference rather than undergoing a stressful Performance Improvement Plan. Your employer pays the fee for your independent solicitor review under Section 203 ERA 1996.';
+    faqA = 'Yes. Many UK employees choose to propose a without prejudice protected conversation under Section 111A ERA 1996 to exit with an agreed settlement and positive reference rather than undergoing a stressful Performance Improvement Plan. Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996.';
   }
   // 9. Legacy Compromise Agreement
   else if (route.includes('compromise')) {
     searchIntent = 'COMPROMISE_AGREEMENT_LEGACY';
     title = 'Compromise Agreement Calculator UK (2026) | SettlementCheck';
-    meta = 'Calculate your compromise agreement payout under 2026 UK statutory rates (£751/wk cap). Free, confidential check. Your employer covers your legal fee.';
+    meta = 'Calculate your compromise agreement payout under 2026 UK statutory rates (£751/wk cap). Free check. Customary employer legal contribution applies.';
     faqQ = 'What is a compromise agreement under UK employment law?';
-    faqA = 'A compromise agreement (now officially termed a settlement agreement) is a legally binding waiver of employment tribunal claims in exchange for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free. Your employer covers your legal review fee.';
+    faqA = 'A compromise agreement (now officially termed a settlement agreement) is a legally binding waiver of employment tribunal claims in exchange for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free. Employers customarily contribute toward independent legal advice.';
   }
   // 10. Core Calculator Default
   else {
@@ -540,9 +540,9 @@ function buildCalibratedCopy(opp) {
     if (title.length > 60) title = `${cleanQ} | SettlementCheck`;
     if (title.length > 60) title = `${cleanQ.slice(0, 38)} | SettlementCheck`;
 
-    meta = 'Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. Your employer covers your legal fee.';
+    meta = 'Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.';
     faqQ = 'How is a settlement agreement payout calculated under UK employment law?';
-    faqA = 'Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.';
+    faqA = 'Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996.';
   }
 
   return { title, meta, faqQ, faqA, searchIntent };
@@ -564,7 +564,7 @@ function buildStatutoryWorkedExample(opp) {
       statutoryCitations: ['TULRCA 1992 s.188', 'TULRCA 1992 s.189', 'ERA 1996 s.203(3)'],
       formulaBreakdown: 'Up to 90 days gross pay ordered by an Employment Tribunal where collective redundancy consultation duties were breached. Paid on top of statutory redundancy and notice pay.',
       taxTreatment: 'Taxable as remuneration under normal PAYE rules.',
-      employerContribution: 'Employer covers independent legal review fee under ERA 1996 s.203(3).'
+      employerContribution: 'Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996.'
     };
   }
 
@@ -581,7 +581,7 @@ function buildStatutoryWorkedExample(opp) {
       taxableSum: '£11,250 (PILON taxed as earnings under s.402D PENP)',
       statutoryCitations: ['ITEPA 2003 s.403', 'ITEPA 2003 s.402D (PENP)', 'Section 203(3) ERA 1996'],
       formulaBreakdown: 'Statutory redundancy (£6,759) + ex-gratia (£23,241) = £30,000 tax-free. Contractual PILON (£11,250) is taxed as normal earnings.',
-      employerContribution: 'Employer pays independent legal advice fee directly to solicitor (not counted toward tax allowance).'
+      employerContribution: 'Employers customarily contribute £350–£750 + VAT toward independent legal advice under Section 203(3) ERA 1996 (paid direct to solicitor).'
     };
   }
 
@@ -596,7 +596,7 @@ function buildStatutoryWorkedExample(opp) {
       statutoryCitations: ['Employment Rights Act 1996 s.162', 'The Employment Rights (Increase of Limits) Order 2026', 'ITEPA 2003 s.403'],
       formulaBreakdown: '10 years × 1.5 = 15 weeks. Capped at £751/week: 15 × £751 = £11,265 statutory redundancy floor.',
       taxTreatment: '100% tax-free under Section 403 ITEPA 2003 £30,000 threshold.',
-      employerContribution: 'Employer covers Section 203 independent legal advice fee.'
+      employerContribution: 'Employers customarily contribute toward Section 203(3) independent legal advice.'
     };
   }
 
@@ -612,7 +612,63 @@ function buildStatutoryWorkedExample(opp) {
     taxablePortion: '£12,000 (Notice pay taxed under s.402D PENP)',
     statutoryCitations: ['ERA 1996 s.162', 'ITEPA 2003 s.403', 'ERA 1996 s.203(3)'],
     formulaBreakdown: 'Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.',
-    employerContribution: 'Employer pays independent SRA-regulated solicitor review fee directly.'
+    employerContribution: 'Employers customarily contribute £350–£750 + VAT toward independent legal advice under Section 203(3) ERA 1996.'
+  };
+}
+
+/**
+ * Builds a structured statutory comparison matrix contrasting statutory redundancy,
+ * unfair dismissal awards, contractual PILON notice, and ex-gratia compensation.
+ */
+function buildStatutoryComparisonTable(opp) {
+  const weeklyCap = 751;
+  const unfairDismissalCap = 123543;
+
+  return {
+    tableTitle: 'UK Statutory Settlement Components & Tax Comparison (2026 Rates)',
+    caption: 'Official comparison of statutory termination entitlements under UK employment legislation.',
+    headers: [
+      'Settlement Component',
+      'Governing Statute',
+      '2026 Cap (GB)',
+      'Tax Treatment',
+      'Key Prerequisite',
+    ],
+    rows: [
+      {
+        element: 'Statutory Redundancy Pay',
+        statutoryBasis: 'ERA 1996 s.162',
+        standardCapGB: `£${weeklyCap}/week (max £${(weeklyCap * 30).toLocaleString('en-GB')})`,
+        standardCapNI: '£783/week',
+        taxTreatment: 'Tax-free (within £30,000 exemption)',
+        eligibilityRule: '2+ years continuous service',
+      },
+      {
+        element: 'Unfair Dismissal Award',
+        statutoryBasis: 'ERA 1996 s.124',
+        standardCapGB: `£${unfairDismissalCap.toLocaleString('en-GB')} (or 52 wks pay)`,
+        standardCapNI: `£${unfairDismissalCap.toLocaleString('en-GB')}`,
+        taxTreatment: 'Tax-free up to £30k (s.403 ITEPA)',
+        eligibilityRule: 'Qualifying unfair dismissal / tribunal claim',
+      },
+      {
+        element: 'Notice Pay (PILON)',
+        statutoryBasis: 'ITEPA 2003 s.402D / Contract',
+        standardCapGB: 'Contractual salary',
+        standardCapNI: 'Contractual salary',
+        taxTreatment: 'Fully taxable (Income Tax & NICs)',
+        eligibilityRule: 'Contractual or statutory notice entitlement',
+      },
+      {
+        element: 'Ex-Gratia Termination Sum',
+        statutoryBasis: 'ERA 1996 s.203 / Common Law',
+        standardCapGB: 'No statutory ceiling (negotiated)',
+        standardCapNI: 'No statutory ceiling (negotiated)',
+        taxTreatment: 'Tax-free up to £30k under s.403 ITEPA 2003',
+        eligibilityRule: 'Mutual agreement & independent legal sign-off',
+      },
+    ],
+    footnoteCitation: 'Statutory authority: Employment Rights Act 1996 s.124 & s.162; ITEPA 2003 s.402D & s.403.',
   };
 }
 
@@ -630,7 +686,7 @@ function buildInProsePlacement(opp) {
       sourceRoute: '/guides/protective-award/',
       anchorText: q,
       matchedExcerpt: 'If your employer made 20 or more staff redundant at one establishment without carrying out collective consultation, you may be entitled to a protective award.',
-      replacementExcerpt: 'If your employer made 20 or more staff redundant without consultation, you may be entitled to a protective award of up to 90 days gross pay under Section 189 of TULRCA 1992. You can check your entitlement in under two minutes using our [protective award claim calculator](/protective-award-calculator/), with independent legal advice fees covered by your employer.'
+      replacementExcerpt: 'If your employer made 20 or more staff redundant without consultation, you may be entitled to a protective award of up to 90 days gross pay under Section 189 of TULRCA 1992. You can check your entitlement in under two minutes using our [protective award claim calculator](/protective-award-calculator/), with independent legal advice contributions under Section 203(3) ERA 1996.'
     };
   }
 
@@ -659,7 +715,7 @@ function buildInProsePlacement(opp) {
     sourceRoute: '/guides/how-to-negotiate-a-settlement-agreement/',
     anchorText: q,
     matchedExcerpt: 'Before accepting an initial exit offer, employees should research typical settlement figures for their industry.',
-    replacementExcerpt: `Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [${q}](${dest}). Your employer covers the cost of your independent solicitor review under Section 203(3) ERA 1996.`
+    replacementExcerpt: `Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [${q}](${dest}). Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996.`
   };
 }
 
@@ -692,15 +748,30 @@ async function runActuator() {
     const dest = opp.resolvedRoute;
     const { title, meta, faqQ, faqA, searchIntent } = buildCalibratedCopy(opp);
     const workedExample = buildStatutoryWorkedExample(opp);
+    const comparisonTable = buildStatutoryComparisonTable(opp);
     const inProsePlacement = buildInProsePlacement(opp);
 
-    const linkSnippet = `If you have received an offer, you can check where you stand using our [${opp.query}](${dest}). Your employer pays for your independent solicitor review under Section 203 of the Employment Rights Act 1996.`;
+    const isCalc = dest.includes('calculator') || searchIntent === 'TRANSACTIONAL_CALCULATOR';
+    const isTax = dest.includes('tax') || searchIntent === 'TAX_STATUTORY_EXEMPTION';
+
+    let actionType = 'IN_PROSE_INTERNAL_LINK';
+    if (isCalc && opp.position > 8.5) {
+      actionType = 'STATUTORY_CASE_STUDY';
+    } else if (isTax) {
+      actionType = 'STATUTORY_COMPARISON_TABLE';
+    } else if (opp.position <= 8.5) {
+      actionType = 'META_RECALIBRATION';
+    }
+
+    const schemaType = isCalc ? 'WebApplication' : isTax ? 'HowTo' : 'FinancialProduct';
+
+    const linkSnippet = `If you have received an offer, you can check where you stand using our [${opp.query}](${dest}). Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996.`;
 
     return {
       id: `pkg_actuator_${Date.now()}_${idx + 1}`,
       query: opp.query,
       priority: opp.impressions >= 100 ? 'CRITICAL' : 'HIGH',
-      actionType: opp.position <= 8.5 ? 'META_RECALIBRATION' : 'INTERNAL_LINK_BOOST',
+      actionType,
       seoTechnicalBrief: {
         query: opp.query,
         currentMetrics: { impressions: opp.impressions, clicks: opp.clicks, position: opp.position, ctr: opp.ctr },
@@ -708,7 +779,7 @@ async function runActuator() {
         targetCanonicalUrl: `https://settlementcheck.co.uk${dest}`,
         characterBudgets: { titleMin: 45, titleMax: 60, metaMin: 140, metaMax: 155 },
         statutoryInvariants: { weeklyCapGB: 751, weeklyCapNI: 783, taxFreeThreshold: 30000, unfairDismissalCap: 123543, protectiveAwardDays: 90 },
-        schemaSpecification: { type: 'FAQPage', primarySubject: opp.query, targetFaqQuestion: faqQ },
+        schemaSpecification: { type: schemaType, primarySubject: opp.query, targetFaqQuestion: faqQ },
         internalLinkGraph: { sourceRoutes: [inProsePlacement.sourceRoute], destinationRoute: dest, exactAnchorText: opp.query },
       },
       copyPackage: {
@@ -720,6 +791,7 @@ async function runActuator() {
         brandComplianceReport: { zeroEmDashes: true, zeroBannedUsTerms: true, ukSpellingVerified: true, employerFeesMentioned: true, statutoryAccuracyVerified: true },
       },
       workedExample,
+      comparisonTable,
       inProsePlacement,
       statutoryAudit: {
         isCompliant: true,

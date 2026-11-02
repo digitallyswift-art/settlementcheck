@@ -217,10 +217,10 @@ export function evaluateSeoBlastRadius(
 
   // Check for unqualified legal fee claims (SRA & CAP Code 3.1)
   const combinedFeeText = `${input.calibratedMetaDescription || ''} ${input.faqAnswer || ''} ${input.contextualLinkSnippet || ''}`;
-  if (/\bemployer covers 100% of\b|\bemployer is legally required to pay all\b/i.test(combinedFeeText)) {
+  if (/\b(?:employer covers 100% of|employer is legally required to pay all|your employer pays (?:all |your )?fees|pays towards your case|zero fees to you)\b/i.test(combinedFeeText)) {
     deploymentRisk = 'HIGH_RISK';
     riskReasons.push(
-      'Contains absolute legal fee coverage assertion ("employer covers 100%"). Must cite Section 203(3) ERA 1996 statutory contribution standard.'
+      'Contains misleading legal fee claim. Must state that employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996, rather than asserting full fee coverage or paying for the employee\'s case.'
     );
   }
 

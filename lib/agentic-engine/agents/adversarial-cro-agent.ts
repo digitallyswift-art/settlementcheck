@@ -69,7 +69,7 @@ export class AdversarialCroAgent {
       proposedReplacement = `Were you given fewer than 10 calendar days to consider your agreement? Check your legal leverage and statutory floor now →`;
       placement = 'in_article_callout';
     } else if (target.category === 'PRIVACY_FRICTION_REDUCTION') {
-      proposedReplacement = `SRA-Regulated Panel Solicitors · Zero fees to you (your employer pays the Section 203 legal advice contribution)`;
+      proposedReplacement = `SRA-Regulated Panel Solicitors · Customary employer legal fee contribution applies under Section 203(3) ERA 1996`;
       placement = 'cta_subtext';
     }
 

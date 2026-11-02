@@ -133,8 +133,8 @@ const testQuery = 'compromise agreement calculator';
 const cleanQ = testQuery.replace(/\buk\b/gi, '').trim().split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
 const brand = ' | SettlementCheck';
 const testTitle = `${cleanQ} UK (2026)${brand}`;
-const testMeta = `Check your ${testQuery.toLowerCase()} payout under 2026 UK statutory rates (£751/wk cap). Free check. Your employer covers your legal fee.`;
-const testFaq = `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Your employer covers the legal fees for your independent solicitor review.`;
+const testMeta = `Check your ${testQuery.toLowerCase()} payout under 2026 UK statutory rates (£751/wk cap). Free check. SRA solicitor review advice contribution.`;
+const testFaq = `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996.`;
 const testDestRoute = '/guides/compromise-agreement-calculator-uk/';
 
 // Test 5A: Trailing slash invariant
@@ -160,8 +160,8 @@ for (const term of BANNED_US_TERMS) {
 }
 assert(!bannedFound, 'Generated copy contains 0 banned US legal terms');
 
-// Test 5F: Reassurance of employer legal fee coverage
-assert(combinedCopy.includes('employer covers') || combinedCopy.includes('employer pays'), 'Copy highlights that employer covers legal fees');
+// Test 5F: Reassurance of customary employer legal fee contribution
+assert(combinedCopy.includes('contribute') || combinedCopy.includes('contribution'), 'Copy highlights customary employer legal fee contribution');
 
 // Test 5G: Accurate April 2026 statutory rates citation (£751 / £30,000)
 assert(combinedCopy.includes('£751') && combinedCopy.includes('£30,000'), 'Copy strictly cites verified April 2026 statutory rates (£751/wk and £30k exemption)');

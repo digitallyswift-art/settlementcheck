@@ -35,6 +35,9 @@ export default function CockpitClient() {
   const [isLoadingSeo, setIsLoadingSeo] = useState<boolean>(false);
   const [packageFilter, setPackageFilter] = useState<'ALL' | 'PENDING' | 'APPLIED' | 'REJECTED'>('PENDING');
   const [riskFilter, setRiskFilter] = useState<'ALL_RISK' | 'LOW_RISK' | 'MEDIUM_RISK' | 'HIGH_CRITICAL_RISK'>('ALL_RISK');
+  const [strategyFilter, setStrategyFilter] = useState<
+    'ALL' | 'STATUTORY_CASE_STUDY' | 'STATUTORY_COMPARISON_TABLE' | 'IN_PROSE_INTERNAL_LINK' | 'META_RECALIBRATION'
+  >('ALL');
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
   const [adversarialLoadingId, setAdversarialLoadingId] = useState<string | null>(null);
   const [watchdogReport, setWatchdogReport] = useState<any | null>(null);
@@ -317,6 +320,11 @@ export default function CockpitClient() {
             actuationScope: counter.actuationScope,
             deployAsCanary,
             promotePolicyRule: savePolicyRule ? pkg.adversarialReview?.candidatePolicyRule : undefined,
+            actionType: counter.actionType,
+            workedExample: counter.workedExample,
+            comparisonTable: counter.comparisonTable,
+            inProsePlacement: counter.inProsePlacement,
+            contentGapBrief: counter.contentGapBrief,
           },
         }),
       });
@@ -549,10 +557,20 @@ export default function CockpitClient() {
 
   const filteredPackages = statusFilteredPackages.filter((pkg) => {
     const risk = pkg.deploymentRisk || 'MEDIUM_RISK';
-    if (riskFilter === 'ALL_RISK') return true;
-    if (riskFilter === 'LOW_RISK') return risk === 'LOW_RISK';
-    if (riskFilter === 'MEDIUM_RISK') return risk === 'MEDIUM_RISK';
-    if (riskFilter === 'HIGH_CRITICAL_RISK') return risk === 'HIGH_RISK' || risk === 'CRITICAL_RISK';
+    const matchesRisk =
+      riskFilter === 'ALL_RISK' ||
+      (riskFilter === 'LOW_RISK' && risk === 'LOW_RISK') ||
+      (riskFilter === 'MEDIUM_RISK' && risk === 'MEDIUM_RISK') ||
+      (riskFilter === 'HIGH_CRITICAL_RISK' && (risk === 'HIGH_RISK' || risk === 'CRITICAL_RISK'));
+
+    if (!matchesRisk) return false;
+
+    if (strategyFilter === 'ALL') return true;
+    if (strategyFilter === 'STATUTORY_CASE_STUDY') return pkg.actionType === 'STATUTORY_CASE_STUDY' || Boolean(pkg.workedExample);
+    if (strategyFilter === 'STATUTORY_COMPARISON_TABLE') return pkg.actionType === 'STATUTORY_COMPARISON_TABLE' || Boolean(pkg.comparisonTable);
+    if (strategyFilter === 'IN_PROSE_INTERNAL_LINK') return pkg.actionType === 'IN_PROSE_INTERNAL_LINK' || Boolean(pkg.inProsePlacement);
+    if (strategyFilter === 'META_RECALIBRATION') return pkg.actionType === 'META_RECALIBRATION';
+
     return true;
   });
 
@@ -1031,6 +1049,32 @@ export default function CockpitClient() {
               </div>
             </div>
 
+            {/* Multi-Vector Strategy Filter Bar */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-2 px-3.5 bg-white rounded-2xl border border-[#0B1F3A]/10">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#0B1F3A]/50 mr-1 font-bold shrink-0">
+                Optimization Vector:
+              </span>
+              {[
+                { id: 'ALL', label: `All Vectors (${statusFilteredPackages.length})` },
+                { id: 'STATUTORY_CASE_STUDY', label: '📊 Worked Calculations' },
+                { id: 'STATUTORY_COMPARISON_TABLE', label: '📑 Comparison Tables' },
+                { id: 'IN_PROSE_INTERNAL_LINK', label: '🔗 In-Prose Links' },
+                { id: 'META_RECALIBRATION', label: '🔍 SERP Headlines & Meta' },
+              ].map((sf) => (
+                <button
+                  key={sf.id}
+                  onClick={() => setStrategyFilter(sf.id as any)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap shrink-0 ${
+                    strategyFilter === sf.id
+                      ? 'bg-[#0B1F3A] text-white shadow-sm'
+                      : 'bg-[#F7F4EE]/60 hover:bg-[#0B1F3A]/5 text-[#0B1F3A]/70 border border-[#0B1F3A]/10'
+                  }`}
+                >
+                  {sf.label}
+                </button>
+              ))}
+            </div>
+
             {/* Package Cards List */}
             {isLoadingSeo && seoPackages.length === 0 ? (
               <div className="bg-white rounded-3xl p-12 text-center border border-[#0B1F3A]/10">
@@ -1164,16 +1208,37 @@ export default function CockpitClient() {
                               </span>
                             </div>
                             <h3 className="text-sm sm:text-base font-serif font-bold text-white flex flex-wrap items-center gap-2">
-                              {isAdditive ? (
+                              {pkg.actionType === 'STATUTORY_CASE_STUDY' || pkg.workedExample ? (
                                 <>
-                                  <span>Add 1 Statutory FAQ Block &amp; Contextual Internal Link</span>
+                                  <span>📊 Embed Worked Statutory Calculation Case Study (ERA 1996 s.162 &amp; ITEPA s.403)</span>
+                                  <span className="text-[10px] font-sans font-medium text-amber-300 bg-amber-950/80 border border-amber-400/40 px-2 py-0.5 rounded-full">
+                                    High Information Gain
+                                  </span>
+                                </>
+                              ) : pkg.actionType === 'STATUTORY_COMPARISON_TABLE' || pkg.comparisonTable ? (
+                                <>
+                                  <span>📑 Inject Statutory Comparison Table (PILON vs Redundancy vs Ex-Gratia)</span>
+                                  <span className="text-[10px] font-sans font-medium text-indigo-300 bg-indigo-950/80 border border-indigo-400/40 px-2 py-0.5 rounded-full">
+                                    Structured Matrix
+                                  </span>
+                                </>
+                              ) : pkg.actionType === 'IN_PROSE_INTERNAL_LINK' || pkg.inProsePlacement ? (
+                                <>
+                                  <span>🔗 In-Prose Contextual Link Insertion (PageRank Consolidation)</span>
+                                  <span className="text-[10px] font-sans font-medium text-emerald-300 bg-emerald-950/80 border border-emerald-400/40 px-2 py-0.5 rounded-full">
+                                    Non-Cyclical Link
+                                  </span>
+                                </>
+                              ) : isAdditive ? (
+                                <>
+                                  <span>Add 1 Statutory Q&amp;A Block &amp; Contextual Internal Link</span>
                                   <span className="text-[10px] font-sans font-medium text-emerald-300 bg-emerald-950/80 border border-emerald-400/40 px-2 py-0.5 rounded-full">
                                     ✓ Live Headline Kept 100% Intact
                                   </span>
                                 </>
                               ) : (
                                 <>
-                                  <span>Update Live Google Headline (&lt;title&gt;) &amp; Add FAQ</span>
+                                  <span>Update Live Google Headline (&lt;title&gt;) &amp; Meta Description</span>
                                   <span className="text-[10px] font-sans font-medium text-amber-300 bg-amber-950/80 border border-amber-400/40 px-2 py-0.5 rounded-full">
                                     ⚠️ Modifies Live &lt;title&gt;
                                   </span>
@@ -1572,6 +1637,39 @@ export default function CockpitClient() {
                                   </p>
                                 </div>
                               </div>
+
+                              {/* Multi-Vector Assets Preview in Counter-Plan */}
+                              {advReview.counterProposal.workedExample && (
+                                <div className="p-3 bg-amber-50/70 border border-amber-200 rounded-xl text-xs space-y-2">
+                                  <div className="flex items-center justify-between">
+                                    <span className="font-bold text-[#0B1F3A] text-[11px] flex items-center gap-1.5">
+                                      <span>📊</span> Upgraded Worked Calculation Case Study
+                                    </span>
+                                    <span className="font-mono text-[10px] text-amber-900 bg-amber-100 px-2 py-0.5 rounded">
+                                      ERA 1996 s.162 &amp; ITEPA s.403
+                                    </span>
+                                  </div>
+                                  <p className="text-[11px] text-[#0B1F3A]/85 italic leading-relaxed">
+                                    &ldquo;{advReview.counterProposal.workedExample.narrativeBreakdown}&rdquo;
+                                  </p>
+                                </div>
+                              )}
+
+                              {advReview.counterProposal.comparisonTable && (
+                                <div className="p-3 bg-indigo-50/70 border border-indigo-200 rounded-xl text-xs space-y-2">
+                                  <div className="flex items-center justify-between">
+                                    <span className="font-bold text-indigo-950 text-[11px] flex items-center gap-1.5">
+                                      <span>📑</span> Upgraded Statutory Comparison Matrix
+                                    </span>
+                                    <span className="font-mono text-[10px] text-indigo-800 bg-indigo-100 px-2 py-0.5 rounded">
+                                      {advReview.counterProposal.comparisonTable.rows.length} Tiers
+                                    </span>
+                                  </div>
+                                  <p className="text-[11px] text-indigo-900/80">
+                                    Injects a 4-component comparison distinguishing taxable notice pay from £30,000 tax-free ex-gratia compensation.
+                                  </p>
+                                </div>
+                              )}
 
                               {advReview.candidatePolicyRule && (
                                 <div className="p-2.5 rounded-lg bg-[#D9603B]/10 border border-[#D9603B]/25 text-[11px] flex items-start gap-2">

@@ -18,7 +18,13 @@ import { SeoPolicyRegistry } from '../services/seo-policy-registry';
 import {
   AdversarialSeoReviewResult,
   SeoActuationScope,
+  SeoDeploymentRiskTier,
   SeoGuardrailPolicyRule,
+  SeoActionType,
+  StatutoryWorkedCaseStudy,
+  StatutoryComparisonTableData,
+  InProseLinkPlacement,
+  ContentGapBrief,
 } from '../types';
 import { ConversionCopywriterAgent } from './conversion-copywriter-agent';
 import { SeoArchitectAgent } from './seo-architect-agent';
@@ -27,7 +33,7 @@ export interface AdversarialReviewInput {
   id?: string;
   query: string;
   targetCanonicalUrl: string;
-  actionType?: string;
+  actionType?: SeoActionType | string;
   actuationScope?: SeoActuationScope;
   position?: number;
   impressions?: number;
@@ -39,6 +45,10 @@ export interface AdversarialReviewInput {
   faqQuestion?: string;
   faqAnswer?: string;
   contextualLinkSnippet?: string;
+  workedExample?: StatutoryWorkedCaseStudy;
+  comparisonTable?: StatutoryComparisonTableData;
+  inProsePlacement?: InProseLinkPlacement;
+  contentGapBrief?: ContentGapBrief;
 }
 
 export class AdversarialSeoHeadAgent {
@@ -57,20 +67,20 @@ export class AdversarialSeoHeadAgent {
     if (q.includes('tax') || q.includes('30,000') || q.includes('30000') || q.includes('pilon')) {
       return {
         question: `How are UK settlement agreement payments taxed under ITEPA 2003?`,
-        answer: `Under Section 403 of ITEPA 2003, up to £${taxFree.toLocaleString('en-GB')} of genuine ex-gratia compensation (including statutory redundancy pay) can be paid free of income tax and National Insurance. However, contractual notice pay (PILON), unworked notice under the Post-Employment Notice Pay (PENP s.402D) formula, and accrued holiday pay are taxed as normal earnings. Under Section 203(3) ERA 1996, your employer typically covers the legal fee for your independent solicitor review.`,
+        answer: `Under Section 403 of ITEPA 2003, up to £${taxFree.toLocaleString('en-GB')} of genuine ex-gratia compensation (including statutory redundancy pay) can be paid free of income tax and National Insurance. However, contractual notice pay (PILON), unworked notice under the Post-Employment Notice Pay (PENP s.402D) formula, and accrued holiday pay are taxed as normal earnings. Under Section 203(3) ERA 1996, employers customarily contribute toward your independent solicitor review fee.`,
       };
     }
 
     if (q.includes('redundancy') || normPath.includes('redundancy')) {
       return {
         question: `How is statutory redundancy vs settlement agreement pay calculated in 2026?`,
-        answer: `Under Section 162 of the Employment Rights Act 1996, statutory redundancy pay is calculated using your age, length of service (capped at 20 years), and weekly gross pay capped at £${capGB} in Great Britain (£${STATUTORY_RATES_2026_27.weeklyCapNI} in Northern Ireland). Combined statutory and ex-gratia termination payments up to £${taxFree.toLocaleString('en-GB')} are tax-free under s.403 ITEPA 2003, while notice pay (PILON) remains taxable. Your employer typically covers your independent solicitor fee.`,
+        answer: `Under Section 162 of the Employment Rights Act 1996, statutory redundancy pay is calculated using your age, length of service (capped at 20 years), and weekly gross pay capped at £${capGB} in Great Britain (£${STATUTORY_RATES_2026_27.weeklyCapNI} in Northern Ireland). Combined statutory and ex-gratia termination payments up to £${taxFree.toLocaleString('en-GB')} are tax-free under s.403 ITEPA 2003, while notice pay (PILON) remains taxable. Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996.`,
       };
     }
 
     return {
       question: `How do you calculate a fair UK settlement agreement payout in 2026?`,
-      answer: `A UK settlement agreement payout combines three parts: (1) contractual notice pay (PILON) and accrued holiday (taxable under ITEPA 2003 s.402D), (2) statutory redundancy pay based on age and up to 20 years' service (capped at £${capGB}/week under ERA 1996 s.162), and (3) a negotiated ex-gratia compensation sum. Genuine termination compensation up to £${taxFree.toLocaleString('en-GB')} is tax-free under s.403 ITEPA 2003, and your employer typically covers your independent solicitor's fee.`,
+      answer: `A UK settlement agreement payout combines three parts: (1) contractual notice pay (PILON) and accrued holiday (taxable under ITEPA 2003 s.402D), (2) statutory redundancy pay based on age and up to 20 years' service (capped at £${capGB}/week under ERA 1996 s.162), and (3) a negotiated ex-gratia compensation sum. Genuine termination compensation up to £${taxFree.toLocaleString('en-GB')} is tax-free under s.403 ITEPA 2003, and employers customarily contribute toward your independent solicitor review fee under Section 203(3) ERA 1996.`,
     };
   }
 
@@ -215,9 +225,9 @@ export class AdversarialSeoHeadAgent {
         `FCA Regulated Claims Activity Breach: Copy uses aggressive CMC marketing promises ("recover what you are owed", "guaranteed payout"). SettlementCheck is an independent calculation and triage platform, not an FCA-regulated claims management company.`
       );
     }
-    if (/\b(?:employer (?:is legally required to|must) pay 100%|employer covers all costs in all cases)\b/i.test(allPackageCopy)) {
+    if (/\b(?:employer (?:is legally required to|must) pay|employer covers all costs|your employer pays (?:all |your )?fees|pays towards your case|zero fees to you)\b/i.test(allPackageCopy)) {
       critiquePoints.push(
-        `CMA Fee Misstatement (DMCC Act 2024 / CPUTR 2008): Promising 100% employer fee coverage without qualification is misleading. Employers customarily contribute £350 to £750 + VAT toward independent legal advice, and excess fees may apply for extensive negotiations.`
+        `CMA Fee Misstatement (DMCC Act 2024 / CPUTR 2008 & ERA 1996 s.203(3)): Stating that an employer pays your fees or pays for your case is misleading. Section 203 does not mandate employer payment; employers customarily contribute £350 to £750 + VAT toward independent legal advice.`
       );
     }
 
@@ -257,6 +267,19 @@ export class AdversarialSeoHeadAgent {
     if (isInteractiveCalculatorRoute && input.actionType === 'SCHEMA_FAQ_SNIPPET') {
       critiquePoints.push(
         `Structured Data Entity Warning: Standalone commercial FAQPage schema is deprecated by Google (Aug 2023 update). On ${normPath}, structured data must declare the primary entity as WebApplication with applicationCategory: FinanceApplication.`
+      );
+    }
+
+    // 11. FAQ Monoculture & Multi-Vector Information Gain Audit
+    const isTaxOrPilonIntent = /tax|30000|30k|pilon|notice pay|deduction|gross to net/i.test(input.query);
+    if (isPayoutOrCalcIntent && !input.workedExample) {
+      critiquePoints.push(
+        `FAQ Monoculture Detected: Adding another generic FAQ block for "${input.query}" provides minimal Information Gain. Google AI Overviews and Helpful Content systems favor worked statutory calculation models. Upgrading strategy to STATUTORY_CASE_STUDY.`
+      );
+    }
+    if (isTaxOrPilonIntent && !input.comparisonTable) {
+      critiquePoints.push(
+        `FAQ Monoculture on Tax Query: A simple text accordion cannot adequately explain the multi-tier taxation rules (taxable notice pay vs £30k ex-gratia exemption). Upgrading strategy to STATUTORY_COMPARISON_TABLE.`
       );
     }
 
@@ -310,7 +333,7 @@ export class AdversarialSeoHeadAgent {
       counterLinkTarget = '/calculator/';
     }
 
-    const counterContextualLink = `Before signing, use our [${input.primaryAnchorQuery || input.query}](${counterLinkTarget}) to check your statutory redundancy floor (£${STATUTORY_RATES_2026_27.weeklyCapGB}/week cap) and £30,000 tax-free threshold under Section 403 ITEPA 2003. Under Section 203 ERA 1996, your employer typically covers your independent solicitor fee.`;
+    const counterContextualLink = `Before signing, use our [${input.primaryAnchorQuery || input.query}](${counterLinkTarget}) to check your statutory redundancy floor (£${STATUTORY_RATES_2026_27.weeklyCapGB}/week cap) and £30,000 tax-free threshold under Section 403 ITEPA 2003. Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996.`;
 
     let executiveSummary = needsCounterPlan
       ? isDestructiveVeto
@@ -378,6 +401,65 @@ Return JSON: { "plainEnglishVerdict": string }
         }
       : undefined;
 
+    // Multi-Vector Strategy Synthesis for Counter-Proposal
+    let recommendedActionType: SeoActionType = 'IN_PROSE_INTERNAL_LINK';
+    let counterWorkedExample: StatutoryWorkedCaseStudy | undefined = input.workedExample;
+    let counterComparisonTable: StatutoryComparisonTableData | undefined = input.comparisonTable;
+
+    if (isPayoutOrCalcIntent) {
+      recommendedActionType = 'STATUTORY_CASE_STUDY';
+      if (!counterWorkedExample) {
+        counterWorkedExample = ConversionCopywriterAgent.generateWorkedStatutoryExample({
+          query: input.query,
+          targetCanonicalUrl: input.targetCanonicalUrl,
+          searchIntent: 'TRANSACTIONAL_CALCULATOR',
+          currentMetrics: { impressions: input.impressions ?? 0, clicks: 0, position: pos, ctr: input.ctr ?? 0 },
+          statutoryInvariants: {
+            weeklyCapGB: STATUTORY_RATES_2026_27.weeklyCapGB,
+            weeklyCapNI: STATUTORY_RATES_2026_27.weeklyCapNI,
+            taxFreeThreshold: STATUTORY_RATES_2026_27.taxFreeLimit,
+            unfairDismissalCap: STATUTORY_RATES_2026_27.compensatoryAwardLimitGB,
+            protectiveAwardDays: 90,
+          },
+          characterBudgets: { titleMin: 50, titleMax: 60, metaMin: 140, metaMax: 155 },
+          schemaSpecification: { type: 'WebApplication', primarySubject: input.query, targetFaqQuestion: highAuthFaq.question },
+          internalLinkGraph: {
+            sourceRoutes: [sourceGuide],
+            destinationRoute: normPath,
+            exactAnchorText: input.primaryAnchorQuery || input.query,
+          },
+        });
+      }
+    } else if (isTaxOrPilonIntent) {
+      recommendedActionType = 'STATUTORY_COMPARISON_TABLE';
+      if (!counterComparisonTable) {
+        counterComparisonTable = ConversionCopywriterAgent.generateStatutoryComparisonTable({
+          query: input.query,
+          targetCanonicalUrl: input.targetCanonicalUrl,
+          searchIntent: 'TAX_STATUTORY_EXEMPTION',
+          currentMetrics: { impressions: input.impressions ?? 0, clicks: 0, position: pos, ctr: input.ctr ?? 0 },
+          statutoryInvariants: {
+            weeklyCapGB: STATUTORY_RATES_2026_27.weeklyCapGB,
+            weeklyCapNI: STATUTORY_RATES_2026_27.weeklyCapNI,
+            taxFreeThreshold: STATUTORY_RATES_2026_27.taxFreeLimit,
+            unfairDismissalCap: STATUTORY_RATES_2026_27.compensatoryAwardLimitGB,
+            protectiveAwardDays: 90,
+          },
+          characterBudgets: { titleMin: 50, titleMax: 60, metaMin: 140, metaMax: 155 },
+          schemaSpecification: { type: 'HowTo', primarySubject: input.query, targetFaqQuestion: highAuthFaq.question },
+          internalLinkGraph: {
+            sourceRoutes: [sourceGuide],
+            destinationRoute: normPath,
+            exactAnchorText: input.primaryAnchorQuery || input.query,
+          },
+        });
+      }
+    } else if (pos <= 8.5) {
+      recommendedActionType = 'META_RECALIBRATION';
+    } else {
+      recommendedActionType = 'IN_PROSE_INTERNAL_LINK';
+    }
+
     return {
       verdict: isDestructiveVeto
         ? 'VETO_DESTRUCTIVE'
@@ -396,6 +478,11 @@ Return JSON: { "plainEnglishVerdict": string }
             contextualLinkSnippet: counterContextualLink,
             actuationScope: recommendedScope,
             targetCanonicalUrl: input.targetCanonicalUrl,
+            actionType: recommendedActionType,
+            workedExample: counterWorkedExample,
+            comparisonTable: counterComparisonTable,
+            inProsePlacement: input.inProsePlacement,
+            contentGapBrief: input.contentGapBrief,
           }
         : undefined,
       candidatePolicyRule,

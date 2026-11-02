@@ -51,6 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Tier 4: Guides (hub + spokes)
     { url: `${base}/guides/`,                                         lastModified: getLastMod(`${base}/guides/`), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/settlement-agreement-time-limits/`,        lastModified: getLastMod(`${base}/guides/settlement-agreement-time-limits/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/how-long-does-a-settlement-agreement-take/`, lastModified: getLastMod(`${base}/guides/how-long-does-a-settlement-agreement-take/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-reference/`,          lastModified: getLastMod(`${base}/guides/settlement-agreement-reference/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-restrictive-covenants/`, lastModified: getLastMod(`${base}/guides/settlement-agreement-restrictive-covenants/`), changeFrequency: 'monthly', priority: 0.7 },
