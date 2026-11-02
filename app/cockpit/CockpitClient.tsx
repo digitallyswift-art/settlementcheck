@@ -12,6 +12,7 @@ import InlineEditModal from './components/InlineEditModal';
 import RejectModal from './components/RejectModal';
 import CockpitDateFilter, { DateRangeMeta } from './components/CockpitDateFilter';
 import CockpitPerformanceChart from './components/CockpitPerformanceChart';
+import CockpitGa4RealtimeCard from './components/CockpitGa4RealtimeCard';
 
 export default function CockpitClient() {
   const { user, getIdToken, signOut } = useAuth();
@@ -1874,6 +1875,9 @@ export default function CockpitClient() {
                 />
               </div>
             </div>
+
+            {/* Google Analytics 4 Realtime Telemetry */}
+            <CockpitGa4RealtimeCard />
 
             {/* Top 4 KPI Metrics */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
