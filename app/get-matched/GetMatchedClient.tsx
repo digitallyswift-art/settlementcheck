@@ -411,7 +411,7 @@ export default function GetMatchedClient() {
 
       // Dispatch experiment lead submission telemetry
       const assignedVariant = params.get('variant') || (typeof window !== 'undefined' ? sessionStorage.getItem('sc_calc_assigned_variant') : null) || 'sequential'
-      fetch('/api/telemetry/experiment-event', {
+      fetch('/api/telemetry/experiment-event/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -38,7 +38,7 @@ function CalculatorInner() {
 
       // 2. Fetch remote experiment configuration
       try {
-        const res = await fetch('/api/experiments/config?id=calc_ux_v2')
+        const res = await fetch('/api/experiments/config/?id=calc_ux_v2')
         if (res.ok) {
           const data = await res.json()
           if (data?.config?.mode === 'winner_selected' && data?.config?.winner) {
@@ -63,7 +63,7 @@ function CalculatorInner() {
 
           // Emit enrollment telemetry for sequential variant (thematic emits inside its own component)
           if (assigned === 'sequential') {
-            fetch('/api/telemetry/experiment-event', {
+            fetch('/api/telemetry/experiment-event/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -88,7 +88,7 @@ function CalculatorInner() {
   function handleCalculate(payload: CalcPayload) {
     // Record completion event for sequential variant
     if (variant === 'sequential') {
-      fetch('/api/telemetry/experiment-event', {
+      fetch('/api/telemetry/experiment-event/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

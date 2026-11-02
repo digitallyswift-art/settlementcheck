@@ -280,7 +280,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
 
   // Track enrollment & stage view telemetry
   useEffect(() => {
-    fetch('/api/telemetry/experiment-event', {
+    fetch('/api/telemetry/experiment-event/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -293,7 +293,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
   }, [])
 
   function trackStage(stageNum: number) {
-    fetch('/api/telemetry/experiment-event', {
+    fetch('/api/telemetry/experiment-event/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -402,7 +402,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     setPhase('loading')
 
     // Track completion telemetry
-    fetch('/api/telemetry/experiment-event', {
+    fetch('/api/telemetry/experiment-event/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
