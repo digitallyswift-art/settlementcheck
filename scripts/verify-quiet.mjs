@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 
 const checks = [
-  { name: 'tsc', cmd: 'npx tsc --noEmit' },
+  { name: 'tsc', cmd: 'node node_modules/typescript/lib/tsc.js --noEmit' },
   { name: 'evals', cmd: 'npm run test:evals' },
   { name: 'legal', cmd: 'npm run audit:legal' },
   { name: 'brand', cmd: 'npm run audit:copy' },
