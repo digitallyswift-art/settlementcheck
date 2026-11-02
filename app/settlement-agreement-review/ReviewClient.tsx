@@ -217,6 +217,7 @@ export default function ReviewClient() {
   const [report, setReport] = useState<AuditReport | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'audit' | 'watchdog' | 'clarification' | 'covenants'>('audit')
+  const [gdprConsent, setGdprConsent] = useState(false)
 
   useEffect(() => {
     if (!searchParams) return
@@ -243,6 +244,7 @@ export default function ReviewClient() {
     setYearsOfService('5')
     setAge('43')
     setDisputeReason('unfair_dismissal')
+    setGdprConsent(true)
     setError(null)
   }
 
@@ -250,6 +252,11 @@ export default function ReviewClient() {
     e.preventDefault()
     if (!agreementText || agreementText.trim().length < 20) {
       setError('Please paste at least 20 characters of your draft agreement or offer letter.')
+      return
+    }
+
+    if (!gdprConsent) {
+      setError('You must give explicit consent to UK GDPR Article 9 data processing before submitting your draft agreement for automated analysis.')
       return
     }
 
@@ -418,6 +425,21 @@ export default function ReviewClient() {
             <p className="text-xs text-muted-2 mt-1.5">
               Strictly confidential. No names or personal data are stored. Your employer covers your solicitor fees.
             </p>
+
+            {/* Client-Side Redaction & PII Scrubbing Safeguard */}
+            <div className="mt-3 p-3.5 bg-paper-2 border border-rule rounded-lg text-xs leading-relaxed text-muted">
+              <div className="flex items-start gap-2.5">
+                <span className="text-base leading-none select-none">🛡️</span>
+                <div>
+                  <strong className="text-ink font-semibold block mb-0.5">
+                    Client-Side Redaction &amp; PII Scrubbing Safeguard (UK GDPR Article 9):
+                  </strong>
+                  <span>
+                    Before pasting draft clauses or agreement text, please remove or redact direct personal identifiers such as your full name, home address, National Insurance number, and bank account details. SettlementCheck automatically scrubs sensitive identifiers and processes draft text ephemerally for statutory analysis. No raw agreement text is permanently stored on public databases.
+                  </span>
+                </div>
+              </div>
+            </div>
             <InfoPill label="Statutory conditions for binding settlement agreements (ERA 1996 s.203(3))">
               Under Section 203(3) Employment Rights Act 1996, an agreement waiving employment claims is only valid if: in writing, relating to the particular proceedings or complaint (*Bathgate v Technip [2023]*), certified by a relevant independent adviser with professional indemnity insurance, and stating that the statutory conditions are satisfied. Employers customarily contribute £350 to £750 + VAT directly toward your solicitor&apos;s advice.
             </InfoPill>
@@ -487,6 +509,22 @@ export default function ReviewClient() {
                 </select>
               </div>
             </div>
+          </div>
+
+          {/* Explicit Affirmative UK GDPR Article 9 Consent */}
+          <div className="pt-2">
+            <label className="flex items-start gap-3 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                id="gdpr-article-9-consent"
+                checked={gdprConsent}
+                onChange={(e) => setGdprConsent(e.target.checked)}
+                className="mt-0.5 w-4 h-4 accent-coral flex-shrink-0 cursor-pointer"
+              />
+              <span className="text-xs sm:text-sm text-muted leading-relaxed">
+                I explicitly consent to SettlementCheck temporarily processing the text of my draft agreement for automated extraction and analysis. I understand my data is processed ephemerally and shared only with my instructed SRA panel solicitor under strict professional confidentiality.
+              </span>
+            </label>
           </div>
 
           {error && (

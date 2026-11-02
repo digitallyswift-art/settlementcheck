@@ -14,7 +14,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [contact, setContact] = useState('morning')
-  const [form, setForm] = useState({ firstName: '', email: '', phone: '', consent: false })
+  const [form, setForm] = useState({ firstName: '', email: '', phone: '', consent: false, gdprArticle9Consent: false })
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
     if (!form.firstName.trim()) e.firstName = 'Please enter your first name'
     if (!form.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Please enter a valid email address'
     if (!form.consent) e.consent = 'You must agree to be matched before continuing'
+    if (!form.gdprArticle9Consent) e.gdprArticle9Consent = 'You must give explicit consent to data processing before continuing'
     return e
   }
 
@@ -49,6 +50,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
           salary,
           months_service: Number(years) * 12,
           consent:        form.consent,
+          gdpr_consent:   form.gdprArticle9Consent,
         }),
       })
       if (!res.ok) throw new Error('submit_failed')
@@ -143,7 +145,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
         </div>
       </div>
 
-      {/* Consent */}
+      {/* Consent: Independent Solicitor Introduction */}
       <div>
         <label className="flex items-start gap-3 cursor-pointer">
           <input
@@ -153,11 +155,32 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
             onChange={(e) => setForm({ ...form, consent: e.target.checked })}
           />
           <span className="text-sm text-muted leading-relaxed">
-            I agree to be introduced to an independent SRA-regulated employment solicitor regarding my settlement agreement. I understand SettlementCheck is an independent platform (receiving an administrative fee from panel firms), panel solicitors act with complete professional independence in my sole interest, and employer fee contributions (£350–£500+ +VAT) are conditional upon agreement completion.
-
+            I agree to be introduced to an independent SRA-regulated employment solicitor regarding my settlement agreement. I understand SettlementCheck is an independent platform (receiving an administrative fee from panel firms), panel solicitors act with complete professional independence in my sole interest, and employer fee contributions (£350 to £500+ +VAT) are conditional upon agreement completion.
           </span>
         </label>
         {errors.consent && <p className="text-xs text-crimson mt-1">{errors.consent}</p>}
+      </div>
+
+      {/* Consent: UK GDPR Article 9 Explicit Affirmative Processing */}
+      <div>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            className="mt-0.5 w-4 h-4 accent-coral flex-shrink-0"
+            checked={form.gdprArticle9Consent}
+            onChange={(e) => setForm({ ...form, gdprArticle9Consent: e.target.checked })}
+          />
+          <span className="text-sm text-muted leading-relaxed">
+            I explicitly consent to SettlementCheck temporarily processing the text of my draft agreement for automated extraction and analysis. I understand my data is processed ephemerally and shared only with my instructed SRA panel solicitor under strict professional confidentiality.
+          </span>
+        </label>
+        {errors.gdprArticle9Consent && <p className="text-xs text-crimson mt-1">{errors.gdprArticle9Consent}</p>}
+      </div>
+
+      {/* Privacy & Client-Side PII Scrubbing Safeguard */}
+      <div className="rounded-lg bg-paper-2 border border-rule p-3 text-[11px] text-muted leading-relaxed">
+        <strong className="text-ink font-semibold block mb-0.5">Privacy &amp; PII Scrubbing Safeguard (UK GDPR Article 9):</strong>
+        All dispute parameters and settlement figures submitted are processed ephemerally under strict UK GDPR Article 9 safeguards. Please ensure you do not submit unredacted personal identifiers (such as bank details or National Insurance numbers). Data is processed ephemerally and shared only with your instructed SRA panel solicitor under strict professional confidentiality.
       </div>
 
       {/* SRA Rule 5.1 Introducer Disclosure */}
