@@ -220,7 +220,7 @@ export function evaluateSeoBlastRadius(
   if (/\b(?:employer covers 100% of|employer is legally required to pay all|your employer pays (?:all |your )?fees|pays towards your case|zero fees to you)\b/i.test(combinedFeeText)) {
     deploymentRisk = 'HIGH_RISK';
     riskReasons.push(
-      'Contains misleading legal fee claim. Must state that employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996, rather than asserting full fee coverage or paying for the employee\'s case.'
+      'Contains misleading legal fee claim. Must state that employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) upon completion, rather than asserting full fee coverage or paying for the employee\'s case.'
     );
   }
 

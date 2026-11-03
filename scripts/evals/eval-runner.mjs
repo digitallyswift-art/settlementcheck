@@ -134,7 +134,7 @@ const cleanQ = testQuery.replace(/\buk\b/gi, '').trim().split(/\s+/).map(w => w.
 const brand = ' | SettlementCheck';
 const testTitle = `${cleanQ} UK (2026)${brand}`;
 const testMeta = `Check your ${testQuery.toLowerCase()} payout under 2026 UK statutory rates (£751/wk cap). Free check. SRA solicitor review advice contribution.`;
-const testFaq = `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996.`;
+const testFaq = `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.`;
 const testDestRoute = '/guides/compromise-agreement-calculator-uk/';
 
 // Test 5A: Trailing slash invariant

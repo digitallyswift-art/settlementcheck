@@ -105,10 +105,13 @@ export class LegalComplianceAuditorAgent {
     }
 
     // 6. Audit Employer Legal Fee Contribution (Trap 5 & CMA Fee Transparency)
-    const hasEmployerFees = lower.includes('employer') && 
-      (lower.includes('fee') || lower.includes('cost') || lower.includes('contribut'));
-    if (!hasEmployerFees) {
-      issues.push('Missing statutory employee protection note: Must indicate employers customarily contribute toward independent legal advice fees.');
+    // Enforce fee transparency only when legal advice, solicitor fees, or statutory waiver conditions are discussed
+    const touchesLegalAdvice = lower.includes('solicitor') || lower.includes('legal advice') || lower.includes('legal fee') || lower.includes('s.203') || lower.includes('section 203');
+    if (touchesLegalAdvice) {
+      const hasUnqualifiedFeeClaim = /\b(?:free legal advice|employer pays (?:all|your) fees|zero legal costs?|employer covers all costs)\b/i.test(lower);
+      if (hasUnqualifiedFeeClaim) {
+        issues.push('CMA Fee Transparency warning: Legal advice cannot be described as unconditionally free. Clarify that employers standardly provide a capped commercial contribution (£350 to £500+ plus VAT) upon completion.');
+      }
     }
 
     // 7. Audit SRA, FCA, CMA & 5 Adversarial Legal Traps

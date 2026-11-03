@@ -4,7 +4,7 @@
  * Strictly adheres to .agents/rules/brand-standards.md rules:
  * - Tone: Calm, clear, on their side
  * - UK English: "solicitor", "redundancy", "employment tribunal", "settlement"
- * - Key reassurance: "employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996"
+ * - Key reassurance: "independent legal advice is required under Section 203(3) ERA 1996, with employers standardly offering a capped contribution"
  * - Non-negotiables: Zero em dashes (—), short sentences (< 20 words), active voice
  */
 
@@ -211,62 +211,62 @@ export class ConversionCopywriterAgent {
     if (isPilon) {
       return {
         question: 'How is PILON and notice pay taxed in a UK settlement agreement?',
-        answer: `Under Section 402D of ITEPA 2003 (Post-Employment Notice Pay rules), all payment in lieu of notice (PILON) is treated as general earnings and is fully subject to income tax and National Insurance. Only genuine non-contractual compensation payments qualify for the £${taxFreeThreshold.toLocaleString('en-GB')} tax exemption under Section 403. Under Section 203(3) ERA 1996, employers customarily contribute toward the cost of your independent legal advice.`,
+        answer: `Under Section 402D of ITEPA 2003 (Post-Employment Notice Pay rules), all payment in lieu of notice (PILON) is treated as general earnings and is fully subject to income tax and National Insurance. Only genuine non-contractual compensation payments qualify for the £${taxFreeThreshold.toLocaleString('en-GB')} tax exemption under Section 403.`,
       };
     }
 
     if (isTax) {
       return {
         question: 'How is a settlement agreement taxed under UK employment law?',
-        answer: `Under Section 403 of ITEPA 2003, genuine compensation payments up to £${taxFreeThreshold.toLocaleString('en-GB')} are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON) remain subject to normal income tax and National Insurance. Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996.`,
+        answer: `Under Section 403 of ITEPA 2003, genuine compensation payments up to £${taxFreeThreshold.toLocaleString('en-GB')} are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON) remain subject to normal income tax and National Insurance.`,
       };
     }
 
     if (isBenchmark) {
       return {
         question: 'How much compensation can I get in a UK settlement agreement?',
-        answer: `Settlement agreement payouts depend on your continuous service, salary, and statutory claims, with genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} being tax-free under Section 403 of ITEPA 2003. Employers calculate offers starting from your statutory redundancy floor (£${weeklyCap} per week cap under ERA 1996) plus notice pay. Under Section 203(3) ERA 1996, employers customarily contribute toward your independent solicitor fee.`,
+        answer: `Settlement agreement payouts depend on your continuous service, salary, and potential statutory claims, with genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} being tax-free under Section 403 of ITEPA 2003. Employers calculate offers starting from your statutory redundancy floor (£${weeklyCap} per week cap under ERA 1996) plus contractual notice pay.`,
       };
     }
 
     if (isRedundancy) {
       return {
         question: 'What is the statutory redundancy pay cap in a 2026 settlement agreement?',
-        answer: `Under the Employment Rights Act 1996, the statutory redundancy weekly pay cap is £${weeklyCap} per week in Great Britain (£783 in Northern Ireland), capped at 20 years service. Any fair settlement agreement offer should exceed this statutory floor, and employers customarily contribute toward the independent solicitor fee required to make the waiver legally binding under Section 203(3).`,
+        answer: `Under the Employment Rights Act 1996, the statutory redundancy weekly pay cap is £${weeklyCap} per week in Great Britain (£783 in Northern Ireland), capped at 20 years service. Any fair settlement agreement offer should exceed this statutory floor, which forms the mandatory statutory baseline.`,
       };
     }
 
     if (isNegotiation) {
       return {
         question: 'Can you negotiate a higher settlement agreement payout in the UK?',
-        answer: `Yes, settlement agreements are voluntary proposals and can be negotiated before signing. Under ACAS Code of Practice 4, you should receive at least 10 calendar days to consider terms and consult an independent SRA-regulated solicitor. Employers customarily contribute toward the cost of this independent legal review under Section 203(3) of the Employment Rights Act 1996.`,
+        answer: `Yes, settlement agreements are voluntary proposals and can be negotiated before signing. Under ACAS Code of Practice 4, employers recommend at least 10 calendar days to consider terms and consult an independent SRA-regulated solicitor before executing a binding waiver.`,
       };
     }
 
     if (isEmotionalDispute) {
       return {
         question: 'What are my legal rights when offered a UK settlement agreement?',
-        answer: `Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally binding after you receive independent advice from an SRA-regulated solicitor. Under ACAS Code of Practice 4, you should be given at least 10 calendar days to consider the offer, and employers customarily contribute toward your independent legal advice.`,
+        answer: `Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally binding after you receive advice from an independent, insured solicitor. Employers standardly provide a capped commercial contribution (£350 to £500+ plus VAT) paid directly to your solicitor upon completion.`,
       };
     }
 
     if (isCompromise) {
       return {
         question: 'What is a compromise agreement under UK employment law?',
-        answer: `A compromise agreement (now officially called a settlement agreement) is a legally binding contract waiving employment tribunal claims in return for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, with genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} being tax-free. Employers customarily contribute toward your independent solicitor fee under Section 203(3).`,
+        answer: `A compromise agreement (now officially called a settlement agreement) is a legally binding contract waiving employment tribunal claims in return for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, with genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} being tax-free.`,
       };
     }
 
     if (isGov) {
       return {
         question: 'Does the UK government offer an official settlement agreement calculator?',
-        answer: `The UK government does not provide a settlement agreement calculator, only basic statutory redundancy tools. SettlementCheck calculates your complete payout against official 2026 statutory rates (£${weeklyCap} per week cap under ERA 1996), while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free. Employers customarily contribute toward independent legal advice.`,
+        answer: `The UK government does not provide a settlement agreement calculator, only basic statutory redundancy tools. SettlementCheck calculates your complete payout against official 2026 statutory rates (£${weeklyCap} per week cap under ERA 1996), while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free.`,
       };
     }
 
     return {
       question: 'How is a settlement agreement payout calculated under UK employment law?',
-      answer: `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free under Section 403 of ITEPA 2003. Under Section 203(3) ERA 1996, employers customarily contribute toward independent solicitor advice.`,
+      answer: `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £${weeklyCap} per week, while genuine compensation up to £${taxFreeThreshold.toLocaleString('en-GB')} is tax-free under Section 403 of ITEPA 2003.`,
     };
   }
 
@@ -296,7 +296,7 @@ export class ConversionCopywriterAgent {
     const estimatedNetTakeHome = Math.round(taxFreePortion + (taxablePortion * 0.68)); // ~32% basic tax + NIC
 
     const narrative = this.sanitizeCopy(
-      `For an employee earning £${grossSalary.toLocaleString('en-GB')} with ${yearsOfService} years continuous service aged ${age}, the statutory redundancy floor under Section 162 of the Employment Rights Act 1996 is £${redundancyFloor.toLocaleString('en-GB')} (calculated as 9 weeks at the 2026 cap of £${weeklyCap} per week). Notice pay of £${noticePayPilon.toLocaleString('en-GB')} is treated as general earnings under Section 402D ITEPA 2003 and taxed normally. An ex-gratia compensation payment of £${exGratia.toLocaleString('en-GB')} brings the total offer to £${totalOffer.toLocaleString('en-GB')}, of which £${taxFreePortion.toLocaleString('en-GB')} is completely tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward the independent solicitor review fee required under Section 203(3) ERA 1996.`
+      `For an employee earning £${grossSalary.toLocaleString('en-GB')} with ${yearsOfService} years continuous service aged ${age}, the statutory redundancy floor under Section 162 of the Employment Rights Act 1996 is £${redundancyFloor.toLocaleString('en-GB')} (calculated as 9 weeks at the 2026 cap of £${weeklyCap} per week). Notice pay of £${noticePayPilon.toLocaleString('en-GB')} is treated as general earnings under Section 402D ITEPA 2003 and taxed normally. An ex-gratia compensation payment of £${exGratia.toLocaleString('en-GB')} brings the total offer to £${totalOffer.toLocaleString('en-GB')}, of which £${taxFreePortion.toLocaleString('en-GB')} is completely tax-free under Section 403 of ITEPA 2003. Under Section 203(3) ERA 1996, independent legal advice is required for a binding waiver, with employers standardly offering a capped contribution (£350 to £500+ plus VAT) upon completion.`
     );
 
     return {
@@ -435,7 +435,7 @@ export class ConversionCopywriterAgent {
 
     // Ensure the contextual link target NEVER points to the host destination page itself (prevent self-referential links)
     const linkTarget = dest === '/' ? '/calculator/' : dest;
-    let contextualSnippet = `If you have received an offer, you can check where you stand using our [${q}](${linkTarget}). Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996.`;
+    let contextualSnippet = `If you have received an exit proposal, verify where you stand against official statutory baselines using our [${q}](${linkTarget}) before negotiating.`;
 
     // Attempt AI synthesis for tailored high-converting copy
     try {
