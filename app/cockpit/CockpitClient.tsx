@@ -67,6 +67,13 @@ export default function CockpitClient() {
     setTimeout(() => setToastMessage(null), 5000);
   };
 
+  const formatCurrencyValue = (val: any): string => {
+    if (val === undefined || val === null || val === '') return '—';
+    if (typeof val === 'number') return `£${val.toLocaleString('en-GB')}`;
+    const str = String(val).trim();
+    return str.startsWith('£') ? str : `£${str}`;
+  };
+
   const getAuthHeaders = async (): Promise<Record<string, string>> => {
     const token = await getIdToken();
     const headers: Record<string, string> = {
@@ -1335,24 +1342,34 @@ export default function CockpitClient() {
                                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs p-2.5 rounded-xl bg-[#F7F4EE]/60 border border-[#0B1F3A]/5">
                                     <div>
                                       <span className="block text-[10px] text-[#0B1F3A]/60">Salary</span>
-                                      <strong className="text-[#0B1F3A]">£{pkg.workedExample.grossSalary?.toLocaleString('en-GB')}</strong>
+                                      <strong className="text-[#0B1F3A]">
+                                        {formatCurrencyValue(pkg.workedExample.grossSalary ?? (pkg.workedExample as any).salaryBasis)}
+                                      </strong>
                                     </div>
                                     <div>
                                       <span className="block text-[10px] text-[#0B1F3A]/60">Statutory Floor</span>
-                                      <strong className="text-[#D9603B]">£{pkg.workedExample.statutoryRedundancyFloor?.toLocaleString('en-GB')}</strong>
+                                      <strong className="text-[#D9603B]">
+                                        {formatCurrencyValue(pkg.workedExample.statutoryRedundancyFloor ?? (pkg.workedExample as any).statutoryFloor ?? (pkg.workedExample as any).redundancyFloor)}
+                                      </strong>
                                     </div>
                                     <div>
                                       <span className="block text-[10px] text-[#0B1F3A]/60">Ex-Gratia</span>
-                                      <strong className="text-[#0B1F3A]">£{pkg.workedExample.exGratiaCompensation?.toLocaleString('en-GB')}</strong>
+                                      <strong className="text-[#0B1F3A]">
+                                        {formatCurrencyValue(pkg.workedExample.exGratiaCompensation ?? (pkg.workedExample as any).exGratiaSum)}
+                                      </strong>
                                     </div>
                                     <div>
                                       <span className="block text-[10px] text-[#0B1F3A]/60">Total Package</span>
-                                      <strong className="text-emerald-700">£{pkg.workedExample.totalSettlementOffer?.toLocaleString('en-GB')}</strong>
+                                      <strong className="text-emerald-700">
+                                        {formatCurrencyValue(pkg.workedExample.totalSettlementOffer ?? (pkg.workedExample as any).totalPackage ?? (pkg.workedExample as any).totalCompensation)}
+                                      </strong>
                                     </div>
                                   </div>
-                                  <p className="text-[11px] text-[#0B1F3A]/80 leading-relaxed italic">
-                                    &ldquo;{pkg.workedExample.narrativeBreakdown}&rdquo;
-                                  </p>
+                                  {(pkg.workedExample.narrativeBreakdown || (pkg.workedExample as any).formulaBreakdown) && (
+                                    <p className="text-[11px] text-[#0B1F3A]/80 leading-relaxed italic">
+                                      &ldquo;{pkg.workedExample.narrativeBreakdown || (pkg.workedExample as any).formulaBreakdown}&rdquo;
+                                    </p>
+                                  )}
                                 </div>
                               )}
 

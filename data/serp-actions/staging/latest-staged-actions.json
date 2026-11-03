@@ -1,6 +1,6 @@
 [
   {
-    "id": "pkg_actuator_1793665770022_1",
+    "id": "pkg_actuator_1793666289329_1",
     "query": "settlement agreement calculator",
     "priority": "CRITICAL",
     "actionType": "STATUTORY_CASE_STUDY",
@@ -66,19 +66,24 @@
     "workedExample": {
       "type": "STATUTORY_FORMULA_ILLUSTRATION",
       "caseTitle": "3-Tier Statutory Settlement Structure (ERA 1996 & ITEPA 2003)",
-      "salaryBasis": "£48,000 (£4,000/month)",
-      "statutoryRedundancyFloor": "£6,759 (6 qualifying years at 41+)",
-      "noticePayContractual": "£12,000 (3 months contractual notice)",
-      "exGratiaCompensation": "£23,241 (Loss of office compensation)",
-      "totalPackage": "£42,000",
-      "taxFreePortion": "£30,000 (s.403 ITEPA 2003 limit)",
-      "taxablePortion": "£12,000 (Notice pay taxed under s.402D PENP)",
+      "jobTitle": "Senior Operations Lead",
+      "grossSalary": 48000,
+      "yearsOfService": 6,
+      "age": 44,
+      "statutoryRedundancyFloor": 6759,
+      "noticePayPilon": 12000,
+      "exGratiaCompensation": 23241,
+      "totalSettlementOffer": 42000,
+      "taxFreePortion": 30000,
+      "taxablePortion": 12000,
+      "estimatedNetTakeHome": 38160,
       "statutoryCitations": [
         "ERA 1996 s.162",
         "ITEPA 2003 s.403",
         "ERA 1996 s.203(3)"
       ],
       "formulaBreakdown": "Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.",
+      "narrativeBreakdown": "For an employee earning £48,000 with 6 qualifying service years aged 44, the statutory settlement package combines £6,759 statutory redundancy (Tier 1), £12,000 contractual notice pay (Tier 2), and £23,241 ex-gratia compensation (Tier 3), delivering £30,000 tax-free under Section 403 ITEPA 2003.",
       "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
@@ -161,10 +166,10 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for settlement agreement calculator on /calculator/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-03T00:29:30.022Z"
+    "timestamp": "2026-11-03T00:38:09.329Z"
   },
   {
-    "id": "pkg_actuator_1793665770022_2",
+    "id": "pkg_actuator_1793666289329_2",
     "query": "protective award claim calculator",
     "priority": "HIGH",
     "actionType": "META_RECALIBRATION",
@@ -230,6 +235,17 @@
     "workedExample": {
       "type": "STATUTORY_FORMULA_ILLUSTRATION",
       "caseTitle": "Protective Award Statutory Formula (TULRCA 1992 s.189)",
+      "jobTitle": "Manufacturing Operations Lead",
+      "grossSalary": 36000,
+      "yearsOfService": 5,
+      "age": 42,
+      "statutoryRedundancyFloor": 8900,
+      "noticePayPilon": 0,
+      "exGratiaCompensation": 0,
+      "totalSettlementOffer": 8900,
+      "taxFreePortion": 0,
+      "taxablePortion": 8900,
+      "estimatedNetTakeHome": 6052,
       "salaryBasis": "£36,000 (£692.31/week)",
       "statutoryFloor": "Up to £8,900 (90 days gross pay)",
       "statutoryCitations": [
@@ -238,6 +254,7 @@
         "ERA 1996 s.203(3)"
       ],
       "formulaBreakdown": "Up to 90 days gross pay ordered by an Employment Tribunal where collective redundancy consultation duties were breached. Paid on top of statutory redundancy and notice pay.",
+      "narrativeBreakdown": "For an employee earning £36,000 (£692.31/week), a protective award under Section 189 of TULRCA 1992 provides up to 90 days gross pay (£8,900) where collective consultation rules were breached.",
       "taxTreatment": "Taxable as remuneration under normal PAYE rules.",
       "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
@@ -321,10 +338,10 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for protective award claim calculator on /guides/protective-award/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-03T00:29:30.022Z"
+    "timestamp": "2026-11-03T00:38:09.329Z"
   },
   {
-    "id": "pkg_actuator_1793665770022_3",
+    "id": "pkg_actuator_1793666289329_3",
     "query": "calculate my redundancy pay",
     "priority": "HIGH",
     "actionType": "STATUTORY_CASE_STUDY",
@@ -390,16 +407,24 @@
     "workedExample": {
       "type": "STATUTORY_FORMULA_ILLUSTRATION",
       "caseTitle": "April 2026 Redundancy Cap (£751/week) Formula (ERA 1996 s.162)",
-      "salaryBasis": "£52,000 (£1,000/week)",
-      "yearsOfService": "10 qualifying years (Age 41+ multiplier 1.5x)",
-      "weeklyCap": "£751/week (Great Britain 2026 limit)",
-      "redundancyFloor": "£11,265 (15 statutory weeks × £751 cap)",
+      "jobTitle": "Operations Director",
+      "grossSalary": 52000,
+      "yearsOfService": 10,
+      "age": 46,
+      "statutoryRedundancyFloor": 11265,
+      "noticePayPilon": 4000,
+      "exGratiaCompensation": 15000,
+      "totalSettlementOffer": 30265,
+      "taxFreePortion": 26265,
+      "taxablePortion": 4000,
+      "estimatedNetTakeHome": 28985,
       "statutoryCitations": [
         "Employment Rights Act 1996 s.162",
         "The Employment Rights (Increase of Limits) Order 2026",
         "ITEPA 2003 s.403"
       ],
       "formulaBreakdown": "10 years × 1.5 = 15 weeks. Capped at £751/week: 15 × £751 = £11,265 statutory redundancy floor.",
+      "narrativeBreakdown": "For an employee earning £52,000 with 10 qualifying service years aged 46, the statutory redundancy baseline under Section 162 ERA 1996 is £11,265 (15 weeks at the 2026 cap of £751/week). Combined with £15,000 ex-gratia compensation, £26,265 is 100% tax-free under Section 403 ITEPA 2003.",
       "taxTreatment": "100% tax-free under Section 403 ITEPA 2003 £30,000 threshold.",
       "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
@@ -483,10 +508,10 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for calculate my redundancy pay on /redundancy-calculator/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-03T00:29:30.022Z"
+    "timestamp": "2026-11-03T00:38:09.329Z"
   },
   {
-    "id": "pkg_actuator_1793665770022_4",
+    "id": "pkg_actuator_1793666289329_4",
     "query": "settlement calculator",
     "priority": "HIGH",
     "actionType": "STATUTORY_CASE_STUDY",
@@ -552,19 +577,24 @@
     "workedExample": {
       "type": "STATUTORY_FORMULA_ILLUSTRATION",
       "caseTitle": "£30,000 Tax Exemption vs PILON Notice Pay (ITEPA 2003 s.403 & s.402D)",
-      "salaryBasis": "£45,000 (£3,750/month)",
-      "redundancyFloor": "£6,759 (9 weeks × £751 cap)",
-      "noticePayPilon": "£11,250 (3 months contractual notice)",
-      "exGratiaSum": "£23,241 (Loss of office compensation)",
-      "totalCompensation": "£41,250",
-      "taxFreeSum": "£30,000 (Maximum s.403 statutory limit)",
-      "taxableSum": "£11,250 (PILON taxed as earnings under s.402D PENP)",
+      "jobTitle": "Senior Finance Manager",
+      "grossSalary": 45000,
+      "yearsOfService": 6,
+      "age": 43,
+      "statutoryRedundancyFloor": 6759,
+      "noticePayPilon": 11250,
+      "exGratiaCompensation": 23241,
+      "totalSettlementOffer": 41250,
+      "taxFreePortion": 30000,
+      "taxablePortion": 11250,
+      "estimatedNetTakeHome": 37650,
       "statutoryCitations": [
         "ITEPA 2003 s.403",
         "ITEPA 2003 s.402D (PENP)",
         "Section 203(3) ERA 1996"
       ],
       "formulaBreakdown": "Statutory redundancy (£6,759) + ex-gratia (£23,241) = £30,000 tax-free. Contractual PILON (£11,250) is taxed as normal earnings.",
+      "narrativeBreakdown": "For an employee earning £45,000 with 6 years continuous service, statutory redundancy (£6,759) and ex-gratia compensation (£23,241) combine to £30,000 completely tax-free under Section 403 ITEPA 2003. Notice pay of £11,250 remains taxable general earnings under Section 402D.",
       "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
@@ -647,10 +677,10 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for settlement calculator on /settlement-agreement-tax-calculator/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-03T00:29:30.022Z"
+    "timestamp": "2026-11-03T00:38:09.329Z"
   },
   {
-    "id": "pkg_actuator_1793665770022_5",
+    "id": "pkg_actuator_1793666289329_5",
     "query": "average settlement agreement amount uk",
     "priority": "HIGH",
     "actionType": "IN_PROSE_INTERNAL_LINK",
@@ -716,19 +746,24 @@
     "workedExample": {
       "type": "STATUTORY_FORMULA_ILLUSTRATION",
       "caseTitle": "3-Tier Statutory Settlement Structure (ERA 1996 & ITEPA 2003)",
-      "salaryBasis": "£48,000 (£4,000/month)",
-      "statutoryRedundancyFloor": "£6,759 (6 qualifying years at 41+)",
-      "noticePayContractual": "£12,000 (3 months contractual notice)",
-      "exGratiaCompensation": "£23,241 (Loss of office compensation)",
-      "totalPackage": "£42,000",
-      "taxFreePortion": "£30,000 (s.403 ITEPA 2003 limit)",
-      "taxablePortion": "£12,000 (Notice pay taxed under s.402D PENP)",
+      "jobTitle": "Senior Operations Lead",
+      "grossSalary": 48000,
+      "yearsOfService": 6,
+      "age": 44,
+      "statutoryRedundancyFloor": 6759,
+      "noticePayPilon": 12000,
+      "exGratiaCompensation": 23241,
+      "totalSettlementOffer": 42000,
+      "taxFreePortion": 30000,
+      "taxablePortion": 12000,
+      "estimatedNetTakeHome": 38160,
       "statutoryCitations": [
         "ERA 1996 s.162",
         "ITEPA 2003 s.403",
         "ERA 1996 s.203(3)"
       ],
       "formulaBreakdown": "Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.",
+      "narrativeBreakdown": "For an employee earning £48,000 with 6 qualifying service years aged 44, the statutory settlement package combines £6,759 statutory redundancy (Tier 1), £12,000 contractual notice pay (Tier 2), and £23,241 ex-gratia compensation (Tier 3), delivering £30,000 tax-free under Section 403 ITEPA 2003.",
       "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
@@ -811,10 +846,10 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for average settlement agreement amount uk on /guides/average-settlement-agreement-payout-uk/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-03T00:29:30.023Z"
+    "timestamp": "2026-11-03T00:38:09.329Z"
   },
   {
-    "id": "pkg_actuator_1793665770024_6",
+    "id": "pkg_actuator_1793666289330_6",
     "query": "compromise agreement calculator",
     "priority": "CRITICAL",
     "actionType": "STATUTORY_CASE_STUDY",
@@ -880,19 +915,24 @@
     "workedExample": {
       "type": "STATUTORY_FORMULA_ILLUSTRATION",
       "caseTitle": "3-Tier Statutory Settlement Structure (ERA 1996 & ITEPA 2003)",
-      "salaryBasis": "£48,000 (£4,000/month)",
-      "statutoryRedundancyFloor": "£6,759 (6 qualifying years at 41+)",
-      "noticePayContractual": "£12,000 (3 months contractual notice)",
-      "exGratiaCompensation": "£23,241 (Loss of office compensation)",
-      "totalPackage": "£42,000",
-      "taxFreePortion": "£30,000 (s.403 ITEPA 2003 limit)",
-      "taxablePortion": "£12,000 (Notice pay taxed under s.402D PENP)",
+      "jobTitle": "Senior Operations Lead",
+      "grossSalary": 48000,
+      "yearsOfService": 6,
+      "age": 44,
+      "statutoryRedundancyFloor": 6759,
+      "noticePayPilon": 12000,
+      "exGratiaCompensation": 23241,
+      "totalSettlementOffer": 42000,
+      "taxFreePortion": 30000,
+      "taxablePortion": 12000,
+      "estimatedNetTakeHome": 38160,
       "statutoryCitations": [
         "ERA 1996 s.162",
         "ITEPA 2003 s.403",
         "ERA 1996 s.203(3)"
       ],
       "formulaBreakdown": "Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.",
+      "narrativeBreakdown": "For an employee earning £48,000 with 6 qualifying service years aged 44, the statutory settlement package combines £6,759 statutory redundancy (Tier 1), £12,000 contractual notice pay (Tier 2), and £23,241 ex-gratia compensation (Tier 3), delivering £30,000 tax-free under Section 403 ITEPA 2003.",
       "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
@@ -975,6 +1015,6 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for compromise agreement calculator on /guides/compromise-agreement-calculator-uk/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-03T00:29:30.024Z"
+    "timestamp": "2026-11-03T00:38:09.330Z"
   }
 ]
