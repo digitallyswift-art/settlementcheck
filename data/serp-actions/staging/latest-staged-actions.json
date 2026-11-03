@@ -1,16 +1,16 @@
 [
   {
-    "id": "pkg_actuator_1793654459103_1",
+    "id": "pkg_actuator_1793665770022_1",
     "query": "settlement agreement calculator",
     "priority": "CRITICAL",
     "actionType": "STATUTORY_CASE_STUDY",
     "seoTechnicalBrief": {
       "query": "settlement agreement calculator",
       "currentMetrics": {
-        "impressions": 181,
+        "impressions": 176,
         "clicks": 2,
-        "position": 17.2,
-        "ctr": 1.1
+        "position": 17.1,
+        "ctr": 1.14
       },
       "searchIntent": "TRANSACTIONAL_CALCULATOR",
       "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
@@ -45,14 +45,14 @@
       "calibratedMetaDescription": "Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.",
       "answerFirstFaq": {
         "question": "How is a settlement agreement payout calculated under UK employment law?",
-        "answer": "Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996.",
-        "characterCount": 294
+        "answer": "Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.",
+        "characterCount": 194
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
         "targetRoute": "/calculator/",
         "anchorText": "settlement agreement calculator",
-        "surroundingText": "If you have received an offer, you can check where you stand using our [settlement agreement calculator](/calculator/). Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [settlement agreement calculator](/calculator/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -79,7 +79,7 @@
         "ERA 1996 s.203(3)"
       ],
       "formulaBreakdown": "Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.",
-      "employerContribution": "Employers customarily contribute £350–£750 + VAT toward independent legal advice under Section 203(3) ERA 1996."
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
       "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
@@ -132,7 +132,7 @@
       "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
       "anchorText": "settlement agreement calculator",
       "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator](/calculator/). Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996."
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator](/calculator/)."
     },
     "statutoryAudit": {
       "isCompliant": true,
@@ -161,10 +161,10 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for settlement agreement calculator on /calculator/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-02T21:20:59.103Z"
+    "timestamp": "2026-11-03T00:29:30.022Z"
   },
   {
-    "id": "pkg_actuator_1793654459103_2",
+    "id": "pkg_actuator_1793665770022_2",
     "query": "protective award claim calculator",
     "priority": "HIGH",
     "actionType": "META_RECALIBRATION",
@@ -209,14 +209,14 @@
       "calibratedMetaDescription": "Calculate your protective award payout (up to 90 days gross pay under TULRCA 1992 s.189). Free 2-minute check. SRA solicitor review contribution applies.",
       "answerFirstFaq": {
         "question": "What is a protective award under UK employment law?",
-        "answer": "A protective award is compensation of up to 90 days gross pay ordered by an Employment Tribunal under Section 189 of TULRCA 1992 when an employer fails to follow collective redundancy consultation rules. It is paid in addition to statutory redundancy and notice pay. Employers customarily contribute toward independent solicitor advice.",
-        "characterCount": 336
+        "answer": "A protective award is compensation of up to 90 days gross pay ordered by an Employment Tribunal under Section 189 of TULRCA 1992 when an employer fails to follow collective redundancy consultation rules. It is paid in addition to statutory redundancy and notice pay.",
+        "characterCount": 266
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/protective-award/",
         "targetRoute": "/guides/protective-award/",
         "anchorText": "protective award claim calculator",
-        "surroundingText": "If you have received an offer, you can check where you stand using our [protective award claim calculator](/guides/protective-award/). Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [protective award claim calculator](/guides/protective-award/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -239,7 +239,7 @@
       ],
       "formulaBreakdown": "Up to 90 days gross pay ordered by an Employment Tribunal where collective redundancy consultation duties were breached. Paid on top of statutory redundancy and notice pay.",
       "taxTreatment": "Taxable as remuneration under normal PAYE rules.",
-      "employerContribution": "Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996."
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
       "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
@@ -321,10 +321,10 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for protective award claim calculator on /guides/protective-award/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-02T21:20:59.103Z"
+    "timestamp": "2026-11-03T00:29:30.022Z"
   },
   {
-    "id": "pkg_actuator_1793654459103_3",
+    "id": "pkg_actuator_1793665770022_3",
     "query": "calculate my redundancy pay",
     "priority": "HIGH",
     "actionType": "STATUTORY_CASE_STUDY",
@@ -369,14 +369,14 @@
       "calibratedMetaDescription": "Check the UK statutory redundancy pay cap for 2026 (£751/week limit). See maximum statutory entitlement (£22,530) and tax-free rules. Free check.",
       "answerFirstFaq": {
         "question": "What is the UK statutory redundancy pay cap in 2026?",
-        "answer": "From 6 April 2026, the statutory redundancy weekly pay cap in Great Britain is £751 per week under the Employment Rights Act 1996, giving a maximum statutory payout of £22,530 for 20 qualifying years. All statutory redundancy pay is tax-free under the £30,000 threshold of ITEPA 2003. Employers customarily contribute toward independent legal advice.",
-        "characterCount": 350
+        "answer": "From 6 April 2026, the statutory redundancy weekly pay cap in Great Britain is £751 per week under the Employment Rights Act 1996, giving a maximum statutory payout of £22,530 for 20 qualifying years. All statutory redundancy pay is tax-free under the £30,000 threshold of ITEPA 2003.",
+        "characterCount": 284
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/redundancy-pay-cap-2026/",
         "targetRoute": "/redundancy-calculator/",
         "anchorText": "calculate my redundancy pay",
-        "surroundingText": "If you have received an offer, you can check where you stand using our [calculate my redundancy pay](/redundancy-calculator/). Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [calculate my redundancy pay](/redundancy-calculator/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -401,7 +401,7 @@
       ],
       "formulaBreakdown": "10 years × 1.5 = 15 weeks. Capped at £751/week: 15 × £751 = £11,265 statutory redundancy floor.",
       "taxTreatment": "100% tax-free under Section 403 ITEPA 2003 £30,000 threshold.",
-      "employerContribution": "Employers customarily contribute toward Section 203(3) independent legal advice."
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
       "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
@@ -483,10 +483,10 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for calculate my redundancy pay on /redundancy-calculator/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-02T21:20:59.103Z"
+    "timestamp": "2026-11-03T00:29:30.022Z"
   },
   {
-    "id": "pkg_actuator_1793654459103_4",
+    "id": "pkg_actuator_1793665770022_4",
     "query": "settlement calculator",
     "priority": "HIGH",
     "actionType": "STATUTORY_CASE_STUDY",
@@ -531,14 +531,14 @@
       "calibratedMetaDescription": "Calculate tax on your UK settlement agreement. See your £30,000 statutory tax exemption (ITEPA 2003). Free check. SRA solicitor advice contribution.",
       "answerFirstFaq": {
         "question": "How is a settlement agreement taxed under UK employment law?",
-        "answer": "Under Section 403 of ITEPA 2003, genuine compensation payments up to £30,000 are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON under PENP rules) remain subject to normal income tax and National Insurance. Employers customarily contribute toward independent legal advice.",
-        "characterCount": 328
+        "answer": "Under Section 403 of ITEPA 2003, genuine compensation payments up to £30,000 are completely tax-free. Any contractual earnings, accrued holiday pay, or payment in lieu of notice (PILON under PENP rules) remain subject to normal income tax and National Insurance.",
+        "characterCount": 262
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/tax-free-settlement-30000/",
         "targetRoute": "/settlement-agreement-tax-calculator/",
         "anchorText": "settlement calculator",
-        "surroundingText": "If you have received an offer, you can check where you stand using our [settlement calculator](/settlement-agreement-tax-calculator/). Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [settlement calculator](/settlement-agreement-tax-calculator/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -565,7 +565,7 @@
         "Section 203(3) ERA 1996"
       ],
       "formulaBreakdown": "Statutory redundancy (£6,759) + ex-gratia (£23,241) = £30,000 tax-free. Contractual PILON (£11,250) is taxed as normal earnings.",
-      "employerContribution": "Employers customarily contribute £350–£750 + VAT toward independent legal advice under Section 203(3) ERA 1996 (paid direct to solicitor)."
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
       "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
@@ -647,10 +647,10 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for settlement calculator on /settlement-agreement-tax-calculator/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-02T21:20:59.103Z"
+    "timestamp": "2026-11-03T00:29:30.022Z"
   },
   {
-    "id": "pkg_actuator_1793654459104_5",
+    "id": "pkg_actuator_1793665770022_5",
     "query": "average settlement agreement amount uk",
     "priority": "HIGH",
     "actionType": "IN_PROSE_INTERNAL_LINK",
@@ -695,14 +695,14 @@
       "calibratedMetaDescription": "See official UK settlement agreement benchmarks and statutory redundancy caps (£751/wk). Free 2-minute valuation. SRA solicitor review guidance.",
       "answerFirstFaq": {
         "question": "What is an average settlement agreement payout in the UK?",
-        "answer": "A typical UK settlement offer includes statutory or enhanced redundancy (capped at £751 per week under ERA 1996), contractual notice pay, and 1 to 3 months gross salary as ex-gratia compensation. Genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Employers customarily contribute toward independent legal advice.",
-        "characterCount": 341
+        "answer": "A typical UK settlement offer includes statutory or enhanced redundancy (capped at £751 per week under ERA 1996), contractual notice pay, and 1 to 3 months gross salary as ex-gratia compensation. Genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.",
+        "characterCount": 275
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
         "targetRoute": "/guides/average-settlement-agreement-payout-uk/",
         "anchorText": "average settlement agreement amount uk",
-        "surroundingText": "If you have received an offer, you can check where you stand using our [average settlement agreement amount uk](/guides/average-settlement-agreement-payout-uk/). Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [average settlement agreement amount uk](/guides/average-settlement-agreement-payout-uk/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -729,7 +729,7 @@
         "ERA 1996 s.203(3)"
       ],
       "formulaBreakdown": "Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.",
-      "employerContribution": "Employers customarily contribute £350–£750 + VAT toward independent legal advice under Section 203(3) ERA 1996."
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
       "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
@@ -782,7 +782,7 @@
       "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
       "anchorText": "average settlement agreement amount uk",
       "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [average settlement agreement amount uk](/guides/average-settlement-agreement-payout-uk/). Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996."
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [average settlement agreement amount uk](/guides/average-settlement-agreement-payout-uk/)."
     },
     "statutoryAudit": {
       "isCompliant": true,
@@ -811,19 +811,19 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for average settlement agreement amount uk on /guides/average-settlement-agreement-payout-uk/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-02T21:20:59.104Z"
+    "timestamp": "2026-11-03T00:29:30.023Z"
   },
   {
-    "id": "pkg_actuator_1793654459104_6",
+    "id": "pkg_actuator_1793665770024_6",
     "query": "compromise agreement calculator",
     "priority": "CRITICAL",
     "actionType": "STATUTORY_CASE_STUDY",
     "seoTechnicalBrief": {
       "query": "compromise agreement calculator",
       "currentMetrics": {
-        "impressions": 118,
+        "impressions": 114,
         "clicks": 0,
-        "position": 9.7,
+        "position": 9.6,
         "ctr": 0
       },
       "searchIntent": "COMPROMISE_AGREEMENT_LEGACY",
@@ -859,14 +859,14 @@
       "calibratedMetaDescription": "Calculate your compromise agreement payout under 2026 UK statutory rates (£751/wk cap). Free check. Customary employer legal contribution applies.",
       "answerFirstFaq": {
         "question": "What is a compromise agreement under UK employment law?",
-        "answer": "A compromise agreement (now officially termed a settlement agreement) is a legally binding waiver of employment tribunal claims in exchange for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free. Employers customarily contribute toward independent legal advice.",
-        "characterCount": 364
+        "answer": "A compromise agreement (now officially termed a settlement agreement) is a legally binding waiver of employment tribunal claims in exchange for compensation. Under the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free.",
+        "characterCount": 298
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
         "targetRoute": "/guides/compromise-agreement-calculator-uk/",
         "anchorText": "compromise agreement calculator",
-        "surroundingText": "If you have received an offer, you can check where you stand using our [compromise agreement calculator](/guides/compromise-agreement-calculator-uk/). Employers customarily contribute toward independent legal advice under Section 203(3) ERA 1996."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [compromise agreement calculator](/guides/compromise-agreement-calculator-uk/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -893,7 +893,7 @@
         "ERA 1996 s.203(3)"
       ],
       "formulaBreakdown": "Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.",
-      "employerContribution": "Employers customarily contribute £350–£750 + VAT toward independent legal advice under Section 203(3) ERA 1996."
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
       "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
@@ -946,7 +946,7 @@
       "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
       "anchorText": "compromise agreement calculator",
       "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [compromise agreement calculator](/guides/compromise-agreement-calculator-uk/). Employers customarily contribute toward independent solicitor advice under Section 203(3) ERA 1996."
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [compromise agreement calculator](/guides/compromise-agreement-calculator-uk/)."
     },
     "statutoryAudit": {
       "isCompliant": true,
@@ -975,6 +975,6 @@
     },
     "stagedDiffSummary": "Staged multi-layer optimization for compromise agreement calculator on /guides/compromise-agreement-calculator-uk/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-02T21:20:59.104Z"
+    "timestamp": "2026-11-03T00:29:30.024Z"
   }
 ]

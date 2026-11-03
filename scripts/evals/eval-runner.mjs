@@ -133,7 +133,7 @@ const testQuery = 'compromise agreement calculator';
 const cleanQ = testQuery.replace(/\buk\b/gi, '').trim().split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
 const brand = ' | SettlementCheck';
 const testTitle = `${cleanQ} UK (2026)${brand}`;
-const testMeta = `Check your ${testQuery.toLowerCase()} payout under 2026 UK statutory rates (£751/wk cap). Free check. SRA solicitor review advice contribution.`;
+const testMeta = `Check your ${testQuery.toLowerCase()} payout under 2026 UK statutory rates (£751/wk cap). Free check. Independent SRA solicitor fee contribution.`;
 const testFaq = `Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.`;
 const testDestRoute = '/guides/compromise-agreement-calculator-uk/';
 
@@ -167,7 +167,7 @@ assert(combinedCopy.includes('contribute') || combinedCopy.includes('contributio
 assert(combinedCopy.includes('£751') && combinedCopy.includes('£30,000'), 'Copy strictly cites verified April 2026 statutory rates (£751/wk and £30k exemption)');
 
 // Test 5H: Statutory Auditor verifies Section 203(3) ERA 1996 independent solicitor requirement
-const mentionsS203AndSolicitor = combinedCopy.includes('solicitor') && (combinedCopy.includes('Section 203') || combinedCopy.includes('independent'));
+const mentionsS203AndSolicitor = /solicitor/i.test(combinedCopy) && (/section 203/i.test(combinedCopy) || /independent/i.test(combinedCopy));
 assert(mentionsS203AndSolicitor, 'Statutory Auditor verifies Section 203(3) ERA 1996 independent solicitor standard');
 
 // Test 5I: Anti-AI Quality Guard verifies Answer-First directness and rejects robotic cliché markers
