@@ -276,7 +276,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 </div>
                 <div className="flex flex-col gap-0.5 p-3 rounded-lg bg-paper border border-rule/60">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Contribution</span>
-                  <span className="font-bold text-ink text-base">£350 - £750 + VAT</span>
+                  <span className="font-bold text-ink text-base">£350 - £500+ + VAT</span>
                   <span className="text-muted text-[11px]">Capped fee contribution upon completion</span>
                 </div>
               </div>
