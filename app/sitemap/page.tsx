@@ -91,6 +91,18 @@ const sitemapData: SitemapCategory[] = [
         description: 'Statutory calculation of Post-Employment Notice Pay under ITEPA 2003 s.402D and partitioning of £30,000 tax-free termination compensation.',
         badge: 'New Tool',
       },
+      {
+        title: 'Statutory Rates & Compensation Caps History (2000-2026)',
+        href: '/statutory-rates-history/',
+        description: 'Archive of UK statutory redundancy weekly caps, unfair dismissal limits, Vento bands, and £30,000 threshold inflation analysis.',
+        badge: 'Data Asset',
+      },
+      {
+        title: 'Tribunal Backlog & Wait-Time Tracker',
+        href: '/tribunal-backlog-tracker/',
+        description: 'Interactive tracker of 50,000+ open UK Employment Tribunal claims, regional listing delays, and employer defence cost exposure.',
+        badge: 'Data Asset',
+      },
     ],
   },
   {

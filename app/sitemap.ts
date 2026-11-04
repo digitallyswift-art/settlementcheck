@@ -45,6 +45,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/protective-award-calculator/`,                    lastModified: getLastMod(`${base}/protective-award-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/pip-settlement-calculator/`,                      lastModified: getLastMod(`${base}/pip-settlement-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/penp-calculator/`,                                lastModified: getLastMod(`${base}/penp-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/statutory-rates-history/`,                        lastModified: getLastMod(`${base}/statutory-rates-history/`), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/tribunal-backlog-tracker/`,                       lastModified: getLastMod(`${base}/tribunal-backlog-tracker/`), changeFrequency: 'monthly', priority: 0.9 },
 
     // Tier 3: Explainer + how-it-works
     { url: `${base}/how-it-works/`,                                   lastModified: getLastMod(`${base}/how-it-works/`), changeFrequency: 'monthly', priority: 0.8 },
@@ -86,6 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/guides/what-is-a-fair-settlement-agreement/`,     lastModified: getLastMod(`${base}/guides/what-is-a-fair-settlement-agreement/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/protective-award/`,                        lastModified: getLastMod(`${base}/guides/protective-award/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/employment-tribunal-average-awards-uk/`,  lastModified: getLastMod(`${base}/guides/employment-tribunal-average-awards-uk/`), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/reports/uk-settlement-index-2026/`,               lastModified: getLastMod(`${base}/reports/uk-settlement-index-2026/`), changeFrequency: 'monthly', priority: 0.8 },
 
     // Tier 5: Supplier & B2B facing
     { url: `${base}/for-solicitors/`,                                 lastModified: getLastMod(`${base}/for-solicitors/`), changeFrequency: 'monthly', priority: 0.6 },
