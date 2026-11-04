@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
@@ -204,6 +205,27 @@ export default function PipSettlementGuide() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Interactive Statutory Micro-Tool */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="PIP Settlement Exit Engine"
+              title="Calculate Your PIP Settlement Negotiation Baseline"
+              subtitle="Model contractual notice pay plus 2 to 3 months tax-free ex-gratia compensation before responding to an agreed exit offer."
+              disputeType="disciplinary_pip"
+              statutoryPills={[
+                { label: 'Protected Status', value: 's.111A ERA 1996', statute: 'Pre-Termination Talks' },
+                { label: 'ACAS Review Window', value: '10 Calendar Days', statute: 'ACAS Code 4' },
+                { label: 'Legal Fee Standard', value: '£350–£750+ VAT', statute: 'Employer Pays' },
+              ]}
+              initialSalary={55000}
+              initialYears={3}
+              initialAge={39}
+              ctaText="Check My PIP Exit Entitlement →"
+            />
           </div>
         </section>
 

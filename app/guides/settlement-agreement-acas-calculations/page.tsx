@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import InlineEstimator from '@/components/InlineEstimator'
 import InteractiveToolHook from '@/components/InteractiveToolHook'
 
@@ -151,25 +152,20 @@ export default function AcasCalculationsGuide() {
         {/* Interactive Tool Hook & Live Calculation Engine (AEO Zero-Click Defense) */}
         <section className="py-6 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <InteractiveToolHook
-              badge="Interactive Calculation Engine"
-              title="AI summaries cannot calculate your ACAS-based statutory entitlement"
-              description="Generic AI summaries only provide statutory caps. To compute your exact age-tier redundancy formula (0.5x, 1.0x, 1.5x) and £30,000 tax exemption, use our verified calculation tool."
-              ctaText="Calculate my estimate →"
-              ctaHref="/calculator/"
+            <EmbeddedCalculatorCard
+              badge="ACAS-Based Settlement Engine"
+              title="Calculate Your ACAS Statutory Baseline & Negotiation Settlement Range"
+              subtitle="Calculate statutory redundancy under ERA s.162, contractual notice, and realistic negotiated compensation."
+              disputeType="acas"
               statutoryPills={[
-                { label: 'Weekly Cap', value: '£751/week', citation: 'SI 2026/310' },
-                { label: 'Tax-Free Cap', value: 'First £30,000', citation: 'ITEPA 2003 s.403' },
-                { label: 'Max Redundancy', value: '£22,530', citation: 'ERA 1996 s.162' },
+                { label: 'Weekly Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Tax-Free Cap', value: 'First £30,000', statute: 'ITEPA 2003 s.403' },
+                { label: 'Max Redundancy', value: '£22,530', statute: 'ERA 1996 s.162' },
               ]}
-            />
-
-            <InlineEstimator
-              title="ACAS-Based Settlement Payout Estimator"
-              subtitle="Calculate your statutory minimum floor and realistic negotiation settlement range under 2026 statutory rates."
               initialSalary={45000}
               initialYears={5}
-              reason="redundancy"
+              initialAge={38}
+              ctaText="Check My ACAS Calculation →"
             />
           </div>
         </section>

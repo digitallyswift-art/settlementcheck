@@ -8,26 +8,26 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: {
-    absolute: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
+    absolute: 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck',
   },
   description:
-    'Calculate your UK settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Free.',
+    'Free UK settlement agreement calculator updated for April 2026 (£751/wk cap). Calculate net severance, statutory redundancy, and PILON tax in 60s. No email required.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/calculator/',
   },
   openGraph: {
-    title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
+    title: 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck',
     description:
-      'Calculate your UK settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Free.',
+      'Free UK settlement agreement calculator updated for April 2026 (£751/wk cap). Calculate net severance, statutory redundancy, and PILON tax in 60s. No email required.',
     url: 'https://settlementcheck.co.uk/calculator/',
     type: 'website',
     locale: 'en_GB',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
+    title: 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck',
     description:
-      'Calculate your UK settlement payout in 60s. Evaluates your offer against April 2026 statutory rates (£751/wk cap) and the £30,000 tax-free exemption. Free.',
+      'Free UK settlement agreement calculator updated for April 2026 (£751/wk cap). Calculate net severance, statutory redundancy, and PILON tax in 60s. No email required.',
   },
 }
 
@@ -40,7 +40,7 @@ const JSON_LD = {
   '@graph': [
     {
       '@type': ['WebApplication', 'SoftwareApplication'],
-      name: 'Free Employee Settlement Agreement Calculator UK (2026 Rates)',
+      name: 'Settlement Agreement Calculator UK (2026/27 Rates)',
       url: 'https://settlementcheck.co.uk/calculator/',
       applicationCategory: ['BusinessApplication', 'FinanceApplication'],
       operatingSystem: 'All modern web browsers',
@@ -113,6 +113,38 @@ const JSON_LD = {
       ],
     },
     {
+      '@type': 'HowTo',
+      name: 'How to Calculate an Employment Settlement Agreement Payout in the UK',
+      description: 'Step-by-step statutory calculation process for UK employee settlement agreements under April 2026 rates.',
+      totalTime: 'PT1M',
+      step: [
+        {
+          '@type': 'HowToStep',
+          position: 1,
+          name: 'Calculate Statutory Redundancy or Basic Award Baseline',
+          text: 'Apply the statutory age multiplier (0.5, 1.0, or 1.5 weeks per complete year of service, capped at 20 years) subject to the April 2026 statutory weekly pay cap of £751 under ERA 1996 s.162.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 2,
+          name: 'Calculate Post-Employment Notice Pay (PENP)',
+          text: 'Determine contractual and statutory notice. Any unworked notice is calculated under the statutory PENP formula under ITEPA 2003 s.402D and subject to PAYE and Class 1 National Insurance.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 3,
+          name: 'Apply the £30,000 Tax-Free Termination Exemption',
+          text: 'Separate genuine non-earnings termination compensation from notice pay. The first £30,000 is completely exempt from income tax and employee NICs under Section 403 of ITEPA 2003.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 4,
+          name: 'Verify Independent Legal Advice Contribution',
+          text: 'Under Section 203(3) of the Employment Rights Act 1996, independent legal advice from an SRA-regulated solicitor is required to make the waiver binding. Employers standardly contribute £350 to £500+ VAT directly.',
+        },
+      ],
+    },
+    {
       '@type': 'FAQPage',
       mainEntity: [
         {
@@ -156,7 +188,7 @@ const JSON_LD = {
         {
           '@type': 'ListItem',
           position: 2,
-          name: 'Calculate Settlement Agreement UK',
+          name: 'Settlement Agreement Calculator',
           item: 'https://settlementcheck.co.uk/calculator/',
         },
       ],
@@ -167,7 +199,7 @@ const JSON_LD = {
 export default function CalculatorPage() {
   return (
     <>
-      <h1 className="sr-only">Free Employee Settlement Agreement Calculator UK (2026 Rates)</h1>
+      <h1 className="sr-only">Settlement Agreement Calculator UK (2026/27 Statutory Rates)</h1>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(JSON_LD) }}

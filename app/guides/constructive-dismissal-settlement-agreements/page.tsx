@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -162,6 +163,27 @@ export default function ConstructiveDismissalGuide() {
             <p className="sc-lead">
               If you resign because of your employer's conduct, you may have a constructive dismissal case. Rather than going through a private employment tribunal, many employees resolve these disputes through a settlement agreement. This guide explains how constructive dismissal settlement agreements work in the UK. It covers the legal requirements, the 2026 statutory compensation caps, and how the tax rules apply to your payment.
             </p>
+          </div>
+        </section>
+
+        {/* Interactive Statutory Micro-Tool */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="Constructive Dismissal Exit Engine"
+              title="Calculate Your Constructive Dismissal Settlement Baseline"
+              subtitle="Compare your exit terms against the statutory basic award (£751/wk cap) and unfair dismissal compensatory cap (£123,543)."
+              disputeType="constructive_dismissal"
+              statutoryPills={[
+                { label: 'Weekly Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Compensatory Cap', value: '£123,543', statute: 'ERA 1996 s.124' },
+                { label: 'Tax-Free Shield', value: 'First £30,000', statute: 'ITEPA 2003 s.403' },
+              ]}
+              initialSalary={52000}
+              initialYears={5}
+              initialAge={42}
+              ctaText="Check Constructive Dismissal Entitlement →"
+            />
           </div>
         </section>
 

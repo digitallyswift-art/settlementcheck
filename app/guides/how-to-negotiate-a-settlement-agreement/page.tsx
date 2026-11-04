@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
@@ -138,7 +139,26 @@ export default function HowToNegotiateGuide() {
               </ul>
             </div>
 
-            {/* Section 1 */}
+            {/* Interactive Negotiation Micro-Tool */}
+        <section className="my-8">
+          <EmbeddedCalculatorCard
+            badge="Settlement Negotiation Engine"
+            title="Calculate Your Settlement Negotiation Position & Counter-Offer Baseline"
+            subtitle="Compare your employer's opening offer against the statutory redundancy floor and 1 to 3 months gross salary benchmarks."
+            disputeType="negotiation"
+            statutoryPills={[
+              { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+              { label: 'Negotiation Window', value: '1–3 Months Gross', statute: 'UK Market Standard' },
+              { label: 'Legal Fees', value: '£350–£500+ VAT', statute: 'Employer Pays' },
+            ]}
+            initialSalary={50000}
+            initialYears={4}
+            initialAge={38}
+            ctaText="Calculate My Negotiation Baseline →"
+          />
+        </section>
+
+        {/* Section 1 */}
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">1. The Employer's Motivation</h2>
               <p className="guide-body">

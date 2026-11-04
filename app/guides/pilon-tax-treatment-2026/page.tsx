@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -220,6 +221,27 @@ export default function PilonTaxTreatmentGuide() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Interactive Statutory Micro-Tool */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="PILON & Take-Home Tax Engine"
+              title="Calculate Your Net Take-Home After PILON Tax & £30k Exemption"
+              subtitle="See how much of your package is taxed as earnings (PENP) versus shielded under the £30,000 threshold."
+              disputeType="pilon_tax"
+              statutoryPills={[
+                { label: 'Notice Tax Rule', value: '100% Taxable', statute: 'ITEPA 2003 s.402D' },
+                { label: 'Ex-Gratia Shield', value: 'First £30,000 Free', statute: 'ITEPA 2003 s.403' },
+                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+              ]}
+              initialSalary={50000}
+              initialYears={4}
+              initialAge={36}
+              ctaText="Calculate My Net Settlement Payout →"
+            />
           </div>
         </section>
 

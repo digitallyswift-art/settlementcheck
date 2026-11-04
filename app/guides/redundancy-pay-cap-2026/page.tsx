@@ -6,6 +6,7 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import InlineEstimator from '@/components/InlineEstimator'
 import InteractiveToolHook from '@/components/InteractiveToolHook'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
@@ -233,25 +234,20 @@ export default function RedundancyPayCapGuide() {
         {/* Interactive Tool Hook & Live Calculation Engine (AEO Zero-Click Defense) */}
         <section className="py-6 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <InteractiveToolHook
-              badge="Interactive Redundancy Engine"
-              title="Static AI Overviews cannot calculate your individual service breakdown"
-              description="Generic AI summaries only quote the £751 weekly cap. To calculate your actual age-weighted entitlement (0.5x, 1.0x, 1.5x) and see your statutory minimum floor, use our live tool."
-              ctaText="Calculate my estimate →"
-              ctaHref="/redundancy-calculator/"
+            <EmbeddedCalculatorCard
+              badge="Redundancy Statutory Calculation Engine"
+              title="Calculate Your Statutory Redundancy Baseline & Negotiation Range"
+              subtitle="Apply the official April 2026 weekly cap (£751) and age multipliers to evaluate your statutory floor and typical settlement payout."
+              disputeType="redundancy"
               statutoryPills={[
-                { label: 'Weekly Cap', value: '£751/week', citation: 'SI 2026/310' },
-                { label: 'Max Redundancy', value: '£22,530', citation: 'ERA 1996 s.162' },
-                { label: 'Max Service', value: '20 Years', citation: 'ERA 1996 s.162(2)' },
+                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Max Redundancy', value: '£22,530', statute: 'ERA 1996 s.162' },
+                { label: 'Tax-Free Shield', value: 'First £30,000', statute: 'ITEPA 2003 s.403' },
               ]}
-            />
-
-            <InlineEstimator
-              title="Redundancy Statutory Floor Estimator"
-              subtitle="Calculate your exact statutory redundancy entitlement based on your age, service, and salary under April 2026 caps."
               initialSalary={48000}
               initialYears={6}
-              reason="redundancy"
+              initialAge={42}
+              ctaText="Check My Full Redundancy Settlement →"
             />
           </div>
         </section>

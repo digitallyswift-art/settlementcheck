@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
@@ -151,6 +152,27 @@ export default function ProtectedConversationsGuide() {
             <p className="sc-lead">
               A protected conversation under Section 111A of the Employment Rights Act 1996 allows an employer to propose a confidential exit package even when no legal dispute exists. This statutory confidentiality shields discussions strictly from ordinary unfair dismissal claims. It does not apply to discrimination, whistleblowing, or breach of contract, and fails entirely if the employer engages in improper behaviour.
             </p>
+          </div>
+        </section>
+
+        {/* Interactive Statutory Micro-Tool */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="Protected Conversation Exit Engine"
+              title="Calculate Your Exit Settlement Baseline Following Section 111A Talks"
+              subtitle="Determine your statutory entitlements and negotiation settlement range before concluding confidential pre-termination discussions."
+              disputeType="protected_conversation"
+              statutoryPills={[
+                { label: 'Protected Talks', value: 's.111A ERA 1996', statute: 'Ordinary Unfair Dismissal' },
+                { label: 'ACAS Review Window', value: '10 Calendar Days', statute: 'ACAS Code 4' },
+                { label: 'Statutory Weekly Cap', value: '£751/week', statute: 'SI 2026/310' },
+              ]}
+              initialSalary={52000}
+              initialYears={4}
+              initialAge={41}
+              ctaText="Check My Settlement Offer Baseline →"
+            />
           </div>
         </section>
 

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 
 export const metadata: Metadata = {
@@ -160,6 +161,27 @@ export default function UnfairDismissalSettlementAgreementGuide() {
             <p className="sc-body">
               A fair settlement offer reflects these caps. It also factors in notice pay, realistic time to secure a new job, and the legal costs both sides avoid by not going to a hearing.
             </p>
+          </div>
+        </section>
+
+        {/* Interactive Statutory Micro-Tool */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="Unfair Dismissal Settlement Engine"
+              title="Calculate Your Unfair Dismissal Settlement Compensation Baseline"
+              subtitle="Evaluate the statutory basic award (£751/wk cap) and compensatory award limit (£123,543 or 52 weeks salary)."
+              disputeType="unfair_dismissal"
+              statutoryPills={[
+                { label: 'Basic Award Cap', value: '£22,530', statute: 'ERA 1996 s.119' },
+                { label: 'Compensatory Cap', value: '£123,543', statute: 'ERA 1996 s.124' },
+                { label: 'Tax-Free Shield', value: 'First £30,000', statute: 'ITEPA 2003 s.403' },
+              ]}
+              initialSalary={48000}
+              initialYears={4}
+              initialAge={41}
+              ctaText="Check My Unfair Dismissal Baseline →"
+            />
           </div>
         </section>
 

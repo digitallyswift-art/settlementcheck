@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import InlineEstimator from '@/components/InlineEstimator'
 import InteractiveToolHook from '@/components/InteractiveToolHook'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
@@ -234,25 +235,20 @@ export default function TaxFreeSettlementGuide() {
         {/* Interactive Tool Hook & Live Calculation Engine (AEO Zero-Click Defense) */}
         <section className="py-6 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <InteractiveToolHook
-              badge="Interactive Tax Calculation Engine"
-              title="Static AI Overviews cannot calculate your exact Post-Employment Notice Pay"
-              description="Generic AI summaries only quote the £30,000 headline figure. They cannot compute your individual Post-Employment Notice Pay (PENP s.402D) or progressive tax bands. Calculate your net payout instantly."
-              ctaText="Calculate my tax breakdown →"
-              ctaHref="/settlement-agreement-tax-calculator/"
+            <EmbeddedCalculatorCard
+              badge="£30,000 Tax-Free Settlement Engine"
+              title="Calculate Your £30,000 Tax Exemption Split & Net Take-Home"
+              subtitle="Accurately separate tax-free compensation from taxable notice pay (PILON) under Section 403 of ITEPA 2003."
+              disputeType="tax_30000"
               statutoryPills={[
-                { label: 'Ex-Gratia Cap', value: 'First £30,000', citation: 'ITEPA 2003 s.403' },
-                { label: 'Notice Pay (PENP)', value: '100% Taxable', citation: 'ITEPA 2003 s.402D' },
-                { label: 'Employee NI', value: '0% Exemption', citation: 'Social Security Act 1992' },
+                { label: 'Ex-Gratia Shield', value: 'First £30,000 Free', statute: 'ITEPA 2003 s.403' },
+                { label: 'Notice Pay (PENP)', value: '100% Taxable', statute: 'ITEPA 2003 s.402D' },
+                { label: 'Employee NICs', value: '0% Exemption', statute: 'SSCBA 1992' },
               ]}
-            />
-
-            <InlineEstimator
-              title="Settlement Agreement Tax Split Estimator"
-              subtitle="Calculate your tax-free ex-gratia amount, taxable notice pay, and estimated net take-home figure."
               initialSalary={55000}
               initialYears={5}
-              reason="redundancy"
+              initialAge={40}
+              ctaText="Check My Tax-Free Settlement Split →"
             />
           </div>
         </section>

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import InlineEstimator from '@/components/InlineEstimator'
 
 export const metadata: Metadata = {
@@ -232,13 +233,21 @@ export default function AveragePayoutGuide() {
               Settlement payouts depend heavily on the reason for your departure and the strength of any potential legal claims. For unfair dismissal scenarios, the legal maximum compensation is capped at £123,543 <sup>5</sup> or one year&apos;s gross salary. Use our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link> to check your offer, or estimate with the interactive tool below.
             </p>
 
-            {/* Interactive Inline Estimator */}
-            <InlineEstimator
+            {/* Interactive Statutory Micro-Tool */}
+            <EmbeddedCalculatorCard
+              badge="UK Settlement Payout Benchmark Engine"
+              title="Calculate Your Settlement Payout Against UK Commercial Benchmarks"
+              subtitle="Compare your exit offer against observed UK settlement ranges (£5,000 to £25,000) and statutory redundancy baselines."
+              disputeType="average_payout"
+              statutoryPills={[
+                { label: 'Commercial Benchmark', value: '£5k to £25k Typical', statute: 'Observed UK Range' },
+                { label: 'Weekly Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Tax-Free Exemption', value: 'First £30,000', statute: 'ITEPA 2003 s.403' },
+              ]}
               initialSalary={50000}
               initialYears={4}
-              reason="redundancy"
-              title="Calculate Your Estimated Payout Range"
-              subtitle="Enter your gross salary and continuous service to see your statutory floor and typical UK negotiated package."
+              initialAge={38}
+              ctaText="Check My Benchmark Payout →"
             />
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
