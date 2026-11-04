@@ -276,7 +276,30 @@ const sitemapData: SitemapCategory[] = [
       {
         title: 'Fair Work Agency & Workers Rights Overview',
         href: '/guides/fair-work-agency/',
-        description: 'New enforcement bodies and statutory employee protections under UK labour law.',
+      },
+      {
+        title: 'Executive Settlement Agreements UK (Senior Director Exits)',
+        href: '/guides/executive-settlement-agreements/',
+        description: 'Director loss of office rules (Companies Act s.217), equity vesting, restrictive covenants, and D&O run-off cover.',
+        badge: 'New Guide',
+      },
+      {
+        title: 'How to Declare a Settlement Agreement on Your UK Tax Return',
+        href: '/guides/hmrc-tax-return-declaration/',
+        description: 'Box-by-box Self Assessment SA100 and SA102 declaration guide for payments over £30,000 and employer tax indemnities.',
+        badge: 'New Guide',
+      },
+      {
+        title: 'Redundancy vs Settlement Agreement UK',
+        href: '/guides/redundancy-vs-settlement-agreement/',
+        description: 'Statutory redundancy pay vs settlement agreement packages, severance premiums, and waiving tribunal rights.',
+        badge: 'New Guide',
+      },
+      {
+        title: 'ACAS Early Conciliation & Settlement Agreement Timeline',
+        href: '/guides/acas-early-conciliation-timeline/',
+        description: 'How Section 18A ETA 1996 freezes the 3-month tribunal limitation clock during settlement negotiations.',
+        badge: 'New Guide',
       },
     ],
   },
