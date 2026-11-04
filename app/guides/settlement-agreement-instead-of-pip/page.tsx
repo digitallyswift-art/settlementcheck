@@ -525,7 +525,7 @@ export default function PipSettlementGuide() {
                 },
                 {
                   title: '2. Ex-Gratia Compensation',
-                  desc: 'As an informal negotiation starting point, one to three months of gross pay to reflect capability procedure savings. Paid tax-free up to £30,000 under ITEPA 2003 s.403.',
+                  desc: 'As an illustrative commercial negotiation starting point (not a statutory entitlement), one to three months of gross pay to reflect capability procedure savings. Paid tax-free up to £30,000 under ITEPA 2003 s.403.',
                 },
                 {
                   title: '3. Accrued Holiday Pay',

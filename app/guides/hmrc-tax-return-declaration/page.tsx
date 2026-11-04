@@ -56,7 +56,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: 'Does an employer contribution to my legal fees count towards the £30,000 exemption limit?',
-    a: 'No. Under HMRC Extra-Statutory Concession A81 and Section 413A of ITEPA 2003, payments made directly by an employer to your solicitor for independent legal advice under Section 203(3) ERA 1996 are completely tax-exempt and do not consume any part of your £30,000 threshold.',
+    a: 'No. Under HMRC Extra-Statutory Concession A81 and Section 413A of ITEPA 2003, payments made directly by an employer to your solicitor for independent legal advice under Section 203(3) ERA 1996 upon agreement completion are completely tax-exempt and do not consume any part of your £30,000 threshold.',
   },
 ]
 
@@ -357,7 +357,7 @@ export default function HmrctaxReturnDeclarationGuide() {
         <section className="py-8 bg-paper border-b border-rule">
           <div className="max-w-2xl mx-auto px-5 text-xs text-muted leading-relaxed">
             <p className="mb-2">
-              <strong>HMRC &amp; Regulatory Notice:</strong> SettlementCheck provides general guidance based on HMRC Employment Income Manual (EIM13750) and ITEPA 2003 statutory rules. We are an independent technology platform, not chartered tax advisers or a law firm. Under Section 203(3) ERA 1996, independent legal advice from an SRA-regulated solicitor is required to execute a valid settlement.
+              <strong>HMRC &amp; Regulatory Notice:</strong> SettlementCheck provides general guidance based on HMRC Employment Income Manual (EIM13750) and ITEPA 2003 statutory rules. We are an independent technology platform and introducer, not chartered tax advisers or a law firm. Under Section 203(3) ERA 1996, independent legal advice from an SRA-regulated solicitor is required to execute a valid settlement. Legal fee contributions are a commercial custom paid upon completion; abortive costs or work exceeding the agreed cap remain subject to your solicitor&apos;s engagement terms.
             </p>
           </div>
         </section>

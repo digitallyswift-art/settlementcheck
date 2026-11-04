@@ -144,12 +144,12 @@ export default function HowToNegotiateGuide() {
           <EmbeddedCalculatorCard
             badge="Settlement Negotiation Engine"
             title="Calculate Your Settlement Negotiation Position & Counter-Offer Baseline"
-            subtitle="Compare your employer's opening offer against the statutory redundancy floor and 1 to 3 months gross salary benchmarks."
+            subtitle="Compare your employer's opening offer against the statutory redundancy floor and observed 1 to 3 months commercial negotiation benchmarks."
             disputeType="negotiation"
             statutoryPills={[
               { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
-              { label: 'Negotiation Window', value: '1–3 Months Gross', statute: 'UK Market Standard' },
-              { label: 'Legal Fees', value: '£350–£500+ VAT', statute: 'Employer Pays' },
+              { label: 'Negotiation Range', value: '1–3 Months Gross', statute: 'Commercial Benchmark' },
+              { label: 'Legal Fees', value: '£350–£500+ VAT', statute: 'ERA 1996 s.203 Customary' },
             ]}
             initialSalary={50000}
             initialYears={4}

@@ -317,7 +317,7 @@ export default function HowMuchGuidePage() {
           <div className="max-w-3xl mx-auto px-5">
             <h2 className="sc-h2 mb-4">Settlement Payout Benchmarks by Scenario</h2>
             <p className="sc-body mb-6">
-              How much you receive depends heavily on the reason for your departure and your legal standing. Below are typical market benchmarks observed across UK employment settlements:
+              How much you receive depends heavily on the reason for your departure and your legal standing. Below are illustrative commercial benchmarks observed across UK employment settlement discussions (these serve as negotiation starting points, not statutory guarantees):
             </p>
 
             <div className="overflow-x-auto">

@@ -22,7 +22,7 @@ const DEFAULT_FAQS: FaqItem[] = [
   },
   {
     q: 'How much should an employee settlement agreement be?',
-    a: 'In standard commercial redundancy or capability exits, employers often propose an ex-gratia starting point of 1 to 3 months of gross salary on top of notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with qualifying termination payments up to £30,000 paid tax-free.',
+    a: 'In standard commercial redundancy or capability exits, employers often propose an illustrative ex-gratia starting point of 1 to 3 months of gross salary (an observed commercial negotiation range, not a statutory entitlement) on top of notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with qualifying termination payments up to £30,000 paid tax-free.',
   },
   {
     q: 'Does GOV.UK or ACAS offer an official settlement calculator?',

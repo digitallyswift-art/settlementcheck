@@ -435,7 +435,7 @@ export default function StatutoryRatesHistoryClient() {
                 <span className="text-xs font-semibold uppercase tracking-wider text-amber">Economic Analysis & Fiscal Drag</span>
                 <h3 className="text-2xl font-serif font-semibold text-ink">The Frozen £30,000 Exemption (ITEPA 2003 s.403)</h3>
                 <p className="text-sm text-muted leading-relaxed">
-                  The statutory £30,000 tax-free exemption threshold for termination payments was introduced in the Finance Act 1988 under Chancellor Nigel Lawson. Unlike redundancy weekly pay caps which are uprated annually by statutory instrument, the £30,000 threshold has remained frozen for nearly 40 years.
+                  The statutory £30,000 tax-free exemption threshold for termination payments was introduced in the Finance Act 1988 (s.74, amending ICTA 1970 s.188 / ICTA 1988 s.588, now codified in ITEPA 2003 s.403) under Chancellor Nigel Lawson. Unlike redundancy weekly pay caps which are uprated annually by statutory instrument, the £30,000 threshold has remained frozen for nearly 40 years.
                 </p>
               </div>
 
@@ -545,12 +545,12 @@ export default function StatutoryRatesHistoryClient() {
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-xl font-serif font-semibold text-ink">Section 203(3) Legal Advice Guarantee</h2>
+          <h2 className="text-xl font-serif font-semibold text-ink">Section 203(3) Independent Legal Advice Requirement</h2>
           <p className="text-sm text-muted leading-relaxed">
             Under Section 203(3) of the Employment Rights Act 1996, an employee cannot waive statutory employment rights unless they have received independent legal advice from a qualified, insured relevant adviser (such as an SRA-regulated solicitor).
           </p>
           <p className="text-sm text-muted leading-relaxed">
-            To ensure the agreement is legally binding, employers standardly pay a contribution toward the employee&apos;s legal fees (typically £350 to £500+ VAT for a standard sign-off, or higher for complex negotiations).
+            To ensure the agreement is legally binding, employers standardly pay a capped contribution toward the employee&apos;s legal fees (typically £350 to £500+ VAT for a standard sign-off, or higher for complex negotiations) directly to the solicitor upon completion of the agreement. Abortive fees or advice exceeding the cap remain subject to the instructed solicitor&apos;s engagement terms.
           </p>
           <div className="pt-2">
             <Link

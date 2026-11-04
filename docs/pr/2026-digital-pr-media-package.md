@@ -72,7 +72,7 @@ The **Annual UK Employment Settlement Index 2026** examines how this acute proce
 
 - **Litigation Economics Shift:** Defending an unfair dismissal or discrimination claim through a 3-day tribunal hearing now costs respondents between **£18,000 and £45,000** in unrecoverable solicitor and counsel fees, excluding internal management time.
 - **Multiples Expansion:** To avoid tying up management and capital for 18 months, employers in highly regulated sectors are paying settlement multiples averaging **2.8x to 3.5x statutory redundancy**, effectively capitalizing forecast legal defense budgets into ex-gratia exit sums.
-- **Independent Legal Fee Contributions:** Standard employer contributions under Section 203(3) ERA 1996 have risen to £500 - £750 + VAT for professional roles and up to £1,500 - £3,500 + VAT for executive director departures, reflecting increased covenant scrutiny and PENP audit complexity.
+- **Independent Legal Fee Contributions:** Standard employer commercial contributions to facilitate Section 203(3) ERA 1996 independent legal advice have risen to £500 - £750 + VAT for professional roles and up to £1,500 - £3,500 + VAT for executive director departures, reflecting increased covenant scrutiny and PENP audit complexity.
 
 **Spokesperson Quote (Available for interview):**
 
@@ -162,7 +162,7 @@ All figures cited from the *Annual UK Employment Settlement Index 2026* are deri
 | ACAS Early Conciliation Consideration Guideline | ACAS Code of Practice 4 | **10 calendar days** | Recommended cooling-off period (not a statutory guarantee) |
 | Employment Tribunal Limitation Deadline | ERA 1996 s.111(2) | **3 months less 1 day** | Paused during active ACAS Early Conciliation |
 | Median London Central Tribunal Wait Time | MoJ Tribunal Statistics | **540 days** | Interval from ET1 claim to final merits hearing |
-| Standard Employer Legal Fee Contribution | Commercial practice / s.203 ERA | **£350 to £500+ VAT** | Entry/mid-tier; rises to £1,500+ for senior executives |
+| Standard Employer Legal Fee Contribution | Commercial convention upon completion | **£350 to £500+ VAT** | Entry/mid-tier; rises to £1,500+ for senior executives (paid upon completion) |
 
 ---
 

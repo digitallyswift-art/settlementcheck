@@ -44,7 +44,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: 'What is the ACAS 10 calendar day rule for settlement agreements?',
-    a: 'Under the ACAS Code of Practice 4 on Settlement Agreements, employees should be given a minimum of 10 calendar days to consider the proposed written terms and obtain independent legal advice, unless a shorter period is mutually agreed. Pressuring an employee with an immediate ultimatum may constitute improper behaviour, removing statutory confidentiality under Section 111A(4) ERA 1996.',
+    a: 'Under ACAS Code of Practice 4, employers are advised as statutory guidance to allow a minimum of 10 calendar days for employees to consider written terms and seek independent legal advice. However, under English contract law (Routledge v Grant, Hyde v Wrench), an employer can technically withdraw an unaccepted offer before acceptance, and a counter-proposal can extinguish the original offer. If an employer applies undue pressure, an employment tribunal may determine this constitutes improper behaviour under Section 111A(4) ERA 1996, removing confidentiality protection.',
   },
   {
     q: 'How does ACAS Early Conciliation pause the tribunal limitation clock?',
@@ -197,7 +197,7 @@ export default function AcasEarlyConciliationTimelineGuide() {
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">ACAS Consideration Window</span>
                   <span className="font-bold text-ink text-sm">10 Calendar Days</span>
-                  <span className="text-muted text-[11px]">Minimum under ACAS Code 4</span>
+                  <span className="text-muted text-[11px]">Guidance under ACAS Code 4</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Clock Freeze Period</span>
@@ -220,12 +220,12 @@ export default function AcasEarlyConciliationTimelineGuide() {
             <EmbeddedCalculatorCard
               badge="ACAS Timeline Engine"
               title="Calculate Your Statutory Entitlement While The Clock Is Paused"
-              subtitle="Calculate your statutory redundancy floor (£751/wk cap) and notice pay to protect your financial position while ACAS conciliation proceeds."
+              subtitle="Calculate your calculated statutory redundancy baseline (£751/wk cap) and notice pay to protect your financial position while ACAS conciliation proceeds."
               disputeType="acas_timeline"
               statutoryPills={[
                 { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
                 { label: 'Consideration Period', value: '10 Days Min', statute: 'ACAS Code 4' },
-                { label: 'Independent Advice', value: 'Employer Pays', statute: 'ERA 1996 s.203' },
+                { label: 'Independent Advice', value: 'Capped Contribution', statute: 'Commercial Standard' },
               ]}
               initialSalary={46000}
               initialYears={4}

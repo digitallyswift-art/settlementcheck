@@ -82,7 +82,7 @@ const serviceSchema = {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
-    description: 'Free settlement agreement evaluation for UK employees with employer-funded independent legal advice contributions under Section 203(3) ERA 1996.',
+    description: 'Free settlement agreement evaluation for UK employees, connecting you to independent SRA-regulated solicitors with standard employer legal fee contributions upon completion.',
   },
 }
 

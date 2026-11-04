@@ -551,7 +551,7 @@ export default function UkSettlementIndex2026Page() {
               Employer Legal Fee Contributions by Seniority Band
             </h2>
             <p className="text-muted text-sm sm:text-base mt-2 max-w-3xl">
-              Under Section 203(3) of the Employment Rights Act 1996, an employee settlement agreement is legally void unless the employee receives advice from an independent relevant adviser (an SRA-regulated solicitor or authorized trade union officer). Employers standardly cover or contribute toward this cost upon execution.
+              Under Section 203(3) of the Employment Rights Act 1996, an employee settlement agreement is legally void unless the employee receives advice from an independent relevant adviser (an SRA-regulated solicitor or authorized trade union officer). Employers standardly provide a capped commercial contribution toward this cost paid directly to the solicitor upon agreement completion.
             </p>
           </div>
 

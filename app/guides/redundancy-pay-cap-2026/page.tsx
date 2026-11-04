@@ -237,7 +237,7 @@ export default function RedundancyPayCapGuide() {
             <EmbeddedCalculatorCard
               badge="Redundancy Statutory Calculation Engine"
               title="Calculate Your Statutory Redundancy Baseline & Negotiation Range"
-              subtitle="Apply the official April 2026 weekly cap (£751) and age multipliers to evaluate your statutory floor and typical settlement payout."
+              subtitle="Apply the official April 2026 weekly cap (£751) and age multipliers to evaluate your statutory redundancy floor and illustrative commercial settlement range."
               disputeType="redundancy"
               statutoryPills={[
                 { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },

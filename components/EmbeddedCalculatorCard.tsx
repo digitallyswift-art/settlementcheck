@@ -25,7 +25,7 @@ export interface EmbeddedCalculatorCardProps {
 const DEFAULT_PILLS: StatutoryPill[] = [
   { label: 'Weekly Cap', value: '£751/week', statute: 'SI 2026/310' },
   { label: 'Tax-Free Shield', value: '£30,000', statute: 'ITEPA 2003 s.403' },
-  { label: 'Independent Legal Advice', value: 'Employer Pays', statute: 'ERA 1996 s.203' },
+  { label: 'Independent Legal Advice', value: 'Capped Fee Contribution', statute: 'Commercial Standard' },
 ]
 
 export default function EmbeddedCalculatorCard({
@@ -175,7 +175,7 @@ export default function EmbeddedCalculatorCard({
           <div className="mt-4 pt-4 border-t border-rule/80 grid grid-cols-2 sm:grid-cols-3 gap-3 items-center">
             <div>
               <span className="block text-[11px] text-muted font-medium">
-                Statutory Redundancy Floor
+                Statutory Redundancy Baseline
               </span>
               <span className="text-[15px] sm:text-[17px] font-bold text-ink">
                 {formatCurrency(srp)}
@@ -185,12 +185,12 @@ export default function EmbeddedCalculatorCard({
 
             <div>
               <span className="block text-[11px] text-muted font-medium">
-                Typical Exit Range
+                Commercial Benchmark Range
               </span>
               <span className="text-[15px] sm:text-[17px] font-bold text-coral">
                 {formatCurrency(typicalLow)} – {formatCurrency(typicalHigh)}
               </span>
-              <span className="block text-[10px] text-muted">Statutory + 1-3 mo gross</span>
+              <span className="block text-[10px] text-muted">Statutory + 1–3 mo commercial range</span>
             </div>
 
             <div className="col-span-2 sm:col-span-1">
@@ -208,7 +208,7 @@ export default function EmbeddedCalculatorCard({
         {/* CTA and Legal Fee Reminder */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
           <p className="text-[12px] text-muted m-0 leading-normal max-w-[42ch]">
-            Under Section 203(3) ERA 1996, you must receive independent legal advice. Employers standardly provide a capped fee contribution (£350–£500+ VAT) directly to your solicitor.
+            Under Section 203(3) ERA 1996, independent legal advice is required for a binding waiver. Employers standardly provide a capped fee contribution (£350–£500+ VAT) directly to your solicitor upon completion.
           </p>
 
           <Link

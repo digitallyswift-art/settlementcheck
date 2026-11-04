@@ -48,7 +48,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: 'How much higher should a settlement offer be than statutory redundancy pay?',
-    a: 'A fair settlement offer must never be less than your statutory redundancy pay plus your full contractual notice pay. Because signing a settlement agreement waives your right to claim unfair dismissal or challenge selection scoring, a customary settlement package includes an ex-gratia compensation premium of 1 to 3 months gross salary on top of statutory minimums.',
+    a: 'A standard commercial settlement offer typically exceeds calculated statutory redundancy pay plus contractual notice pay (subject to eligibility). Because signing a settlement agreement waives your right to claim unfair dismissal or challenge selection scoring, a customary settlement package includes an ex-gratia compensation premium (observed commercially at 1 to 3 months gross salary as an illustrative negotiation starting point, though not a statutory entitlement) on top of calculated statutory baselines.',
   },
   {
     q: 'How is statutory redundancy pay calculated in 2026?',
@@ -177,14 +177,14 @@ export default function RedundancyVsSettlementGuide() {
                   The Golden Rule
                 </span>
                 <span className="text-[11px] font-semibold text-muted">
-                  Statutory Redundancy Floor
+                  Calculated Statutory Baseline
                 </span>
               </div>
               <h2 className="text-base font-bold text-ink mb-2">
                 What is the minimum amount a redundancy settlement agreement should pay?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                A settlement agreement should always pay more than statutory redundancy. At minimum, the offer must cover your <strong>Statutory Redundancy Pay (capped at £751/week)</strong> plus <strong>contractual notice pay</strong>, plus an <strong>ex-gratia premium</strong> (typically 1 to 3 months salary) to compensate you for waiving your legal rights under Section 203 ERA 1996.
+                A settlement agreement should always pay more than statutory redundancy. At minimum, the offer must cover your <strong>Statutory Redundancy Pay (capped at £751/week, subject to eligibility under ERA 1996 s.141)</strong> plus <strong>contractual notice pay</strong>, plus an <strong>ex-gratia premium</strong> (customarily negotiated around 1 to 3 months salary as an illustrative commercial starting point, though not a statutory entitlement) to compensate you for waiving your legal rights under Section 203 ERA 1996.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -205,9 +205,9 @@ export default function RedundancyVsSettlementGuide() {
                   <span className="text-muted text-[11px]">100% Taxable under PENP rules</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Customary Premium</span>
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Commercial Starting Range</span>
                   <span className="font-bold text-ink text-sm">1 to 3 Months Salary</span>
-                  <span className="text-muted text-[11px]">Tax-free ex-gratia compensation</span>
+                  <span className="text-muted text-[11px]">Illustrative ex-gratia benchmark (tax-free under s.403)</span>
                 </div>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function RedundancyVsSettlementGuide() {
               statutoryPills={[
                 { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
                 { label: 'Tax-Free Limit', value: 'First £30,000', statute: 'ITEPA 2003 s.403' },
-                { label: 'Independent Advice', value: 'Employer Pays', statute: 'ERA 1996 s.203' },
+                { label: 'Independent Advice', value: 'Capped Fee Contribution', statute: 'Commercial Standard' },
               ]}
               initialSalary={48000}
               initialYears={6}
@@ -253,12 +253,12 @@ export default function RedundancyVsSettlementGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">2. The Settlement Premium Equation</h2>
             <p className="sc-body mb-4">
-              An employee should never sign a settlement agreement that merely pays statutory redundancy and contractual notice. You are legally entitled to those payments anyway under Section 135 of the Employment Rights Act 1996.
+              An employee will want to carefully examine any proposal that merely matches calculated statutory redundancy and contractual notice pay. Where statutory qualifying criteria are met under Section 135 ERA 1996 (and no forfeiture applies under Section 141 for unreasonably refusing suitable alternative employment), statutory redundancy is already a baseline entitlement.
             </p>
             <div className="rounded-xl border border-rule bg-paper p-5 my-6">
               <p className="text-sm font-bold text-coral uppercase tracking-wider mb-2">The Minimum Commercial Settlement Benchmark:</p>
               <p className="text-base font-semibold text-ink leading-snug">
-                Settlement Target = Statutory Redundancy Pay + Full Notice Pay + Ex-Gratia Premium (1 to 3 Months Salary)
+                Settlement Target = Statutory Redundancy Pay + Full Notice Pay + Ex-Gratia Premium (Illustrative 1 to 3 Months Commercial Benchmark)
               </p>
               <p className="text-xs text-muted mt-2 leading-relaxed">
                 If the employer does not offer an ex-gratia premium, you are waiving your right to challenge unfair selection scoring for zero financial benefit.
@@ -281,7 +281,7 @@ export default function RedundancyVsSettlementGuide() {
                   <tr className="bg-ink text-white">
                     <th className="text-left px-4 py-3 font-medium">Element</th>
                     <th className="text-left px-4 py-3 font-medium">Standard Statutory Redundancy</th>
-                    <th className="text-left px-4 py-3 font-medium">Fair Settlement Offer (Target)</th>
+                    <th className="text-left px-4 py-3 font-medium">Illustrative Settlement Offer (Target)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-rule bg-white">
@@ -308,7 +308,7 @@ export default function RedundancyVsSettlementGuide() {
                   <tr>
                     <td className="px-4 py-3 font-medium text-ink">Legal Fees Contribution</td>
                     <td className="px-4 py-3 text-muted">£0.00</td>
-                    <td className="px-4 py-3 font-semibold text-ink">£500.00 + VAT (Paid by employer)</td>
+                    <td className="px-4 py-3 font-semibold text-ink">£500.00 + VAT (Capped employer contribution upon completion)</td>
                   </tr>
                   <tr className="bg-paper font-bold">
                     <td className="px-4 py-3 text-ink">TOTAL GROSS PACKAGE</td>
@@ -325,7 +325,7 @@ export default function RedundancyVsSettlementGuide() {
         <section className="py-8 bg-paper border-b border-rule">
           <div className="max-w-2xl mx-auto px-5 text-xs text-muted leading-relaxed">
             <p className="mb-2">
-              <strong>Statutory Rates &amp; Legal Advice Notice:</strong> Statutory redundancy limits reflect the official Employment Rights (Increase of Limits) Order 2026 (SI 2026/310). SettlementCheck is an independent technology platform and introducer, not a law firm. Independent legal advice under Section 203(3) ERA 1996 is mandatory to validate a settlement agreement, with legal fees covered by standard employer contributions.
+              <strong>Statutory Rates &amp; Legal Advice Notice:</strong> Statutory redundancy limits reflect the official Employment Rights (Increase of Limits) Order 2026 (SI 2026/310). SettlementCheck is an independent technology platform and introducer, not a law firm. Independent legal advice under Section 203(3) ERA 1996 is mandatory to validate a settlement agreement, with legal fees typically supported by a capped employer contribution paid directly to your chosen solicitor upon completion.
             </p>
           </div>
         </section>

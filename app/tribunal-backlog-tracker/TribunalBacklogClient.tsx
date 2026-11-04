@@ -575,7 +575,7 @@ export default function TribunalBacklogClient() {
           <div className="p-4 bg-card rounded-lg border border-rule space-y-2">
             <span className="font-semibold text-ink block">Section 203(3) Legal Fee Contribution</span>
             <p className="text-xs text-muted leading-relaxed">
-              A settlement agreement is only legally binding if the employee has taken independent advice from an SRA-regulated solicitor. Employers standardly contribute between £350 and £500+ VAT directly to your solicitor upon completion, ensuring you receive specialist advice without out-of-pocket costs for a standard review.
+              A settlement agreement is only legally binding if the employee has taken independent advice from an SRA-regulated solicitor. Employers standardly contribute between £350 and £500+ VAT directly to your solicitor upon completion, typically covering specialist advice for a standard review without out-of-pocket costs. Advice beyond the agreed cap or abortive fees if you choose not to complete remain subject to your solicitor&apos;s terms.
             </p>
             <div className="pt-1">
               <Link
@@ -612,8 +612,8 @@ export default function TribunalBacklogClient() {
       <section className="pt-4">
         <EmbeddedCalculatorCard
           badge="Live Settlement Valuation"
-          title="Turn Backlog Delays Into a Guaranteed Settlement"
-          subtitle="Calculate what your settlement agreement package should look like, factoring in statutory redundancy, notice entitlements, and exit compensation."
+          title="Compare Backlog Delays Against Settlement Baselines"
+          subtitle="Calculate what your settlement agreement package could look like, factoring in calculated statutory redundancy baselines, notice entitlements, and exit compensation."
           initialSalary={52000}
           initialYears={4}
           initialAge={40}

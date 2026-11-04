@@ -192,7 +192,7 @@ export default function ExecutiveSettlementAgreementsGuide() {
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Legal Fee Benchmark</span>
                   <span className="font-bold text-ink text-sm">£750 to £2,500+ VAT</span>
-                  <span className="text-muted text-[11px]">Employer pays direct under s.203 ERA</span>
+                  <span className="text-muted text-[11px]">Commercial contribution upon completion</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Tax-Free Exemption</span>
@@ -201,7 +201,7 @@ export default function ExecutiveSettlementAgreementsGuide() {
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">D&amp;O Run-Off Cover</span>
-                  <span className="font-bold text-ink text-sm">6 Years Mandatory</span>
+                  <span className="font-bold text-ink text-sm">6 Years Standard</span>
                   <span className="text-muted text-[11px]">Limitation Act 1980 director protection</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
@@ -225,7 +225,7 @@ export default function ExecutiveSettlementAgreementsGuide() {
               statutoryPills={[
                 { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
                 { label: 'Tax-Free Shield', value: 'First £30,000', statute: 'ITEPA 2003 s.403' },
-                { label: 'Legal Fee Standard', value: '£750–£2,500+ VAT', statute: 'Employer Pays' },
+                { label: 'Legal Fee Standard', value: '£750–£2,500+ VAT', statute: 'Commercial Custom' },
               ]}
               initialSalary={125000}
               initialYears={6}
@@ -309,7 +309,7 @@ export default function ExecutiveSettlementAgreementsGuide() {
                 </thead>
                 <tbody className="divide-y divide-rule bg-white">
                   <tr>
-                    <td className="px-4 py-3 font-medium text-ink">Statutory Redundancy Floor</td>
+                    <td className="px-4 py-3 font-medium text-ink">Statutory Redundancy Baseline</td>
                     <td className="px-4 py-3 text-muted">ERA 1996 s.162 (7 yrs &times; 1.5 &times; £751)</td>
                     <td className="px-4 py-3 font-semibold text-ink">£7,885.50</td>
                     <td className="px-4 py-3 text-ink">0% (s.403 exempt)</td>
@@ -331,7 +331,7 @@ export default function ExecutiveSettlementAgreementsGuide() {
                   </tr>
                   <tr>
                     <td className="px-4 py-3 font-medium text-ink">Employer Legal Contribution</td>
-                    <td className="px-4 py-3 text-muted">Section 203(3) ERA / ESC A81</td>
+                    <td className="px-4 py-3 text-muted">Commercial Contribution (ESC A81 / s.203(3))</td>
                     <td className="px-4 py-3 font-semibold text-ink">£1,500.00 + VAT</td>
                     <td className="px-4 py-3 text-ink">0% (Exempt benefit)</td>
                     <td className="px-4 py-3 font-semibold text-ink">Paid to Solicitor</td>
