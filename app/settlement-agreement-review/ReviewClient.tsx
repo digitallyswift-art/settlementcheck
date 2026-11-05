@@ -83,7 +83,7 @@ function ReviewBenchmarkCard({
           className="text-xs text-ink hover:text-coral underline underline-offset-2 font-mono flex items-center gap-1 self-start sm:self-auto transition-colors"
         >
           <span>Source: {benchmark.sourceName}</span>
-          <span aria-hidden="true">&nearr;</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </div>
 
@@ -197,7 +197,7 @@ function ReviewBenchmarkCard({
           }
           className="text-ink hover:text-coral underline underline-offset-2 font-mono whitespace-nowrap text-xs transition-colors"
         >
-          ERA 1996 s.203(3) &nearr;
+          ERA 1996 s.203(3) ↗
         </a>
       </div>
     </div>

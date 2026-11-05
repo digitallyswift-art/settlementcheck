@@ -1132,7 +1132,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   boxSizing: 'border-box',
                 }}
               >
-                Read constructive dismissal advice guide &nearr;
+                Read constructive dismissal advice guide ↗
               </a>
 
               <button

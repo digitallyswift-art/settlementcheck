@@ -103,7 +103,7 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
           className="text-xs text-[#0B1F3A] hover:text-[#D9603B] underline underline-offset-2 font-mono flex items-center gap-1 self-start sm:self-auto transition-colors"
         >
           <span>ERA 1996 s.111A &amp; Acas Code 4</span>
-          <span aria-hidden="true">&nearr;</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </div>
 

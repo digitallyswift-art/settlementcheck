@@ -201,7 +201,7 @@ function OfficialBenchmarkCard({
           className="text-[11px] text-[#0B1F3A] hover:text-[#D9603B] underline underline-offset-2 font-mono flex items-center gap-1 self-start sm:self-auto transition-colors"
         >
           <span>Source: {benchmark.sourceName}</span>
-          <span aria-hidden="true">&nearr;</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </div>
 
@@ -310,7 +310,7 @@ function OfficialBenchmarkCard({
           onClick={() => trackOutboundCitation('https://www.legislation.gov.uk/ukpga/1996/18/section/203', 'ERA 1996 s.203(3)', { component: 'official_benchmark_card' })}
           className="text-[#0B1F3A] hover:text-[#D9603B] underline underline-offset-2 font-mono whitespace-nowrap text-[11px]"
         >
-          ERA 1996 s.203(3) &nearr;
+          ERA 1996 s.203(3) ↗
         </a>
       </div>
     </div>
@@ -2125,7 +2125,7 @@ function TribunalLimitationClock() {
           className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-[#0B1F3A] text-[#0B1F3A] hover:bg-[#0B1F3A] hover:text-white transition-colors text-[13px] font-medium flex-shrink-0 text-center"
         >
           <span>Notify ACAS (acas.org.uk)</span>
-          <span aria-hidden="true">&nearr;</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </div>
     </div>
