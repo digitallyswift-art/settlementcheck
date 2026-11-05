@@ -114,10 +114,8 @@ function Tick() {
 
 function cleanCurrencyInput(val: string): string {
   const noCurrency = val.replace(/[^0-9.]/g, '')
-  if (noCurrency.includes('.')) {
-    return noCurrency.split('.')[0]
-  }
-  return noCurrency
+  const intPart = noCurrency.includes('.') ? noCurrency.split('.')[0] : noCurrency
+  return intPart.replace(/^0+(?=\d)/, '')
 }
 
 export default function SteppedCalculator({ onCalculate, initialValues }: Props) {
@@ -737,7 +735,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   autoCorrect="off"
                   autoCapitalize="none"
                   spellCheck={false}
-                  onChange={e => { setAge(e.target.value.replace(/[^0-9]/g, '')); setAgeError('') }}
+                  onChange={e => { setAge(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')); setAgeError('') }}
                   onKeyDown={e => e.key === 'Enter' && advance()}
                   style={{ ...numInputSt, paddingLeft: 16 }}
                 />
@@ -769,7 +767,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                     autoCorrect="off"
                     autoCapitalize="none"
                     spellCheck={false}
-                    onChange={e => setYearsNum(e.target.value.replace(/[^0-9]/g, ''))}
+                    onChange={e => setYearsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                     onKeyDown={e => {
                       if (e.key === 'Enter') { e.preventDefault(); monthsRef.current?.focus() }
                     }}
@@ -791,7 +789,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                     autoCorrect="off"
                     autoCapitalize="none"
                     spellCheck={false}
-                    onChange={e => setMonthsNum(e.target.value.replace(/[^0-9]/g, ''))}
+                    onChange={e => setMonthsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                     onKeyDown={e => e.key === 'Enter' && advance()}
                     style={{ ...numInputSt, paddingLeft: 16 }}
                   />

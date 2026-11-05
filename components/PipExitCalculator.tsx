@@ -30,23 +30,25 @@ function InfoPill({ label, children }: { label: string; children: React.ReactNod
 
 export function PipExitCalculator() {
   const [salary, setSalary] = useState<string>('55000')
-  const [years, setYears] = useState<number>(3)
-  const [noticeWeeks, setNoticeWeeks] = useState<number>(4)
+  const [years, setYears] = useState<string>('3')
+  const [noticeWeeks, setNoticeWeeks] = useState<string>('4')
   const [pipStage, setPipStage] = useState<'pre_pip' | 'formal_pip' | 'final_warning'>('formal_pip')
   const [currentOffer, setCurrentOffer] = useState<string>('12000')
 
-  const parsedSalary = Math.max(0, parseFloat(salary.replace(/[^0-9.]/g, '')) || 0)
+  const parsedSalary = Math.max(0, parseInt(salary.replace(/[^0-9]/g, ''), 10) || 0)
+  const parsedYears = Math.max(0, parseInt(years.replace(/[^0-9]/g, ''), 10) || 0)
+  const parsedNotice = Math.max(0, parseInt(noticeWeeks.replace(/[^0-9]/g, ''), 10) || 0)
   const parsedOffer = Math.max(0, parseFloat(currentOffer.replace(/[^0-9.]/g, '')) || 0)
 
   const result: PipExitResult = useMemo(() => {
     return calcPipExit({
       salary: parsedSalary,
-      yearsOfService: years,
-      noticeWeeks,
+      yearsOfService: parsedYears,
+      noticeWeeks: parsedNotice,
       pipStage,
       currentOffer: parsedOffer,
     })
-  }, [parsedSalary, years, noticeWeeks, pipStage, parsedOffer])
+  }, [parsedSalary, parsedYears, parsedNotice, pipStage, parsedOffer])
 
   const offerVsTarget = parsedOffer > 0 ? parsedOffer - result.recommendedSettlementTarget : 0
 
@@ -85,7 +87,7 @@ export function PipExitCalculator() {
                 id="pip-salary"
                 type="text"
                 value={salary}
-                onChange={(e) => setSalary(e.target.value)}
+                onChange={(e) => setSalary(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 className="w-full pl-8 pr-3.5 py-2.5 border border-[#E2DCCE] rounded-lg text-sm font-semibold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
               />
             </div>
@@ -114,11 +116,14 @@ export function PipExitCalculator() {
               </label>
               <input
                 id="pip-years"
-                type="number"
-                min={0}
-                max={30}
+                type="text"
+                inputMode="numeric"
+                maxLength={2}
                 value={years}
-                onChange={(e) => setYears(Math.max(0, parseInt(e.target.value) || 0))}
+                onChange={(e) => {
+                  const clean = e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')
+                  if (clean.length <= 2) setYears(clean)
+                }}
                 className="w-full p-2.5 border border-[#E2DCCE] rounded-lg text-sm font-semibold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
               />
             </div>
@@ -128,11 +133,14 @@ export function PipExitCalculator() {
               </label>
               <input
                 id="pip-notice"
-                type="number"
-                min={1}
-                max={26}
+                type="text"
+                inputMode="numeric"
+                maxLength={2}
                 value={noticeWeeks}
-                onChange={(e) => setNoticeWeeks(Math.max(1, parseInt(e.target.value) || 1))}
+                onChange={(e) => {
+                  const clean = e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')
+                  if (clean.length <= 2) setNoticeWeeks(clean)
+                }}
                 className="w-full p-2.5 border border-[#E2DCCE] rounded-lg text-sm font-semibold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
               />
             </div>
@@ -205,9 +213,10 @@ export function PipExitCalculator() {
               <input
                 id="pip-offer"
                 type="text"
+                inputMode="numeric"
                 placeholder="e.g. 10000"
                 value={currentOffer}
-                onChange={(e) => setCurrentOffer(e.target.value)}
+                onChange={(e) => setCurrentOffer(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 className="w-full pl-8 pr-3.5 py-2 border border-[#E2DCCE] rounded-lg text-xs font-semibold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
               />
             </div>
@@ -229,13 +238,13 @@ export function PipExitCalculator() {
         <div className="text-xs leading-relaxed">
           {result.hasUnfairDismissalRights ? (
             <>
-              <strong>Full Statutory Unfair Dismissal Protection (2+ Years Service):</strong> You have completed {years}{' '}
+              <strong>Full Statutory Unfair Dismissal Protection (2+ Years Service):</strong> You have completed {parsedYears}{' '}
               years continuous service, qualifying under Section 108 Employment Rights Act 1996 for ordinary unfair dismissal protection.
               Your employer faces significant tribunal risk (£123,543 cap) if they engineer a sham capability dismissal.
             </>
           ) : (
             <>
-              <strong>Under 2 Years Service (Tactical Negotiation Stance):</strong> You have {years} year(s) service and
+              <strong>Under 2 Years Service (Tactical Negotiation Stance):</strong> You have {parsedYears} year(s) service and
               have not yet reached the 2-year ordinary unfair dismissal threshold. Your negotiation position relies on PIP
               process cost avoidance ({formatGBP(result.processCostAvoidanceMin)} - {formatGBP(result.processCostAvoidanceMax)}),
               contractual notice pay ({formatGBP(result.contractualNoticePay)}), and potential discrimination or whistleblowing claims.
@@ -316,7 +325,7 @@ export function PipExitCalculator() {
         </div>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto">
           <Link
-            href={`/calculator/?salary=${parsedSalary}&years=${years}&notice=${noticeWeeks}&reason=performance`}
+            href={`/calculator/?salary=${parsedSalary}&years=${parsedYears}&notice=${parsedNotice}&reason=performance`}
             className="px-4 py-3 bg-white/10 hover:bg-white/15 text-white font-medium text-xs rounded-lg transition-colors whitespace-nowrap text-center border border-white/20"
           >
             Model full breakdown →

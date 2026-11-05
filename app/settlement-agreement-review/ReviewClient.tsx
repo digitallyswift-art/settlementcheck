@@ -458,10 +458,11 @@ export default function ReviewClient() {
                 </label>
                 <input
                   id="salary-input"
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   placeholder="e.g. 55000"
                   value={salary}
-                  onChange={(e) => setSalary(e.target.value)}
+                  onChange={(e) => setSalary(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                   className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
                 />
               </div>
@@ -471,10 +472,11 @@ export default function ReviewClient() {
                 </label>
                 <input
                   id="service-input"
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   placeholder="e.g. 4"
                   value={yearsOfService}
-                  onChange={(e) => setYearsOfService(e.target.value)}
+                  onChange={(e) => setYearsOfService(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                   className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
                 />
               </div>
@@ -484,10 +486,11 @@ export default function ReviewClient() {
                 </label>
                 <input
                   id="age-input"
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   placeholder="e.g. 38"
                   value={age}
-                  onChange={(e) => setAge(e.target.value)}
+                  onChange={(e) => setAge(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                   className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
                 />
               </div>

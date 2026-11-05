@@ -1785,7 +1785,7 @@ function InputsSummaryPanel({
                             type="number"
                             className="flex-1 border-0 bg-transparent outline-none py-2 px-3 text-[15px] text-ink"
                             value={draft[f.key]}
-                            onChange={e => set(f.key, e.target.value)}
+                            onChange={e => set(f.key, e.target.value.replace(/^0+(?=\d)/, ''))}
                             autoFocus
                           />
                         </div>

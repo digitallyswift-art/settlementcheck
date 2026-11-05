@@ -137,8 +137,11 @@ export default function Calculator({ onCalculate }: Props) {
   const [errors, setErrors] = useState<Errors>({})
   const [focused, setFocused] = useState<string | null>(null)
 
+  const NUMERIC_KEYS = new Set(['salary', 'yearsNum', 'monthsNum', 'age', 'offer'])
+
   const update = (k: keyof typeof form, v: string) => {
-    setForm(f => ({ ...f, [k]: v }))
+    const val = NUMERIC_KEYS.has(k) ? v.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '') : v
+    setForm(f => ({ ...f, [k]: val }))
     // Clear service error when either years or months changes
     const serviceKey = (k === 'yearsNum' || k === 'monthsNum') ? 'service' : k
     if (errors[serviceKey as keyof Errors]) setErrors(e => ({ ...e, [serviceKey]: undefined }))
@@ -254,7 +257,7 @@ export default function Calculator({ onCalculate }: Props) {
                 style={inputStyle}
                 placeholder="42,000"
                 value={form.salary}
-                onChange={e => update('salary', e.target.value)}
+                onChange={e => update('salary', e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 onFocus={() => setFocused('salary')}
                 onBlur={() => setFocused(null)}
               />
@@ -272,7 +275,7 @@ export default function Calculator({ onCalculate }: Props) {
                 style={{ ...inputStyle, paddingLeft: 14 }}
                 placeholder="38"
                 value={form.age}
-                onChange={e => update('age', e.target.value)}
+                onChange={e => update('age', e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 onFocus={() => setFocused('age')}
                 onBlur={() => setFocused(null)}
               />
@@ -292,7 +295,7 @@ export default function Calculator({ onCalculate }: Props) {
                 style={{ ...inputStyle, paddingLeft: 14 }}
                 placeholder="6"
                 value={form.yearsNum}
-                onChange={e => update('yearsNum', e.target.value)}
+                onChange={e => update('yearsNum', e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 onFocus={() => setFocused('yearsNum')}
                 onBlur={() => setFocused(null)}
               />
@@ -305,7 +308,7 @@ export default function Calculator({ onCalculate }: Props) {
                 style={{ ...inputStyle, paddingLeft: 14 }}
                 placeholder="4"
                 value={form.monthsNum}
-                onChange={e => update('monthsNum', e.target.value)}
+                onChange={e => update('monthsNum', e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 onFocus={() => setFocused('monthsNum')}
                 onBlur={() => setFocused(null)}
               />
@@ -329,7 +332,7 @@ export default function Calculator({ onCalculate }: Props) {
                 style={inputStyle}
                 placeholder="18,000"
                 value={form.offer}
-                onChange={e => update('offer', e.target.value)}
+                onChange={e => update('offer', e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 onFocus={() => setFocused('offer')}
                 onBlur={() => setFocused(null)}
               />

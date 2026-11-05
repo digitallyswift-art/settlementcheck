@@ -131,7 +131,7 @@ export default function ProtectiveAwardClient() {
                       type="text"
                       inputMode="numeric"
                       value={salaryInput}
-                      onChange={(e) => setSalaryInput(e.target.value)}
+                      onChange={(e) => setSalaryInput(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                       placeholder="e.g. 39000"
                       className="w-full pl-9 pr-4 py-3 rounded-xl border border-rule bg-white text-ink text-base font-semibold focus:outline-none focus:border-coral transition-colors"
                     />

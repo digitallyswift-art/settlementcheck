@@ -125,7 +125,7 @@ export default function InlineEstimator({
               type="text"
               inputMode="numeric"
               value={salaryInput ? Number(salaryInput.replace(/[^0-9]/g, '')).toLocaleString('en-GB') : ''}
-              onChange={(e) => setSalaryInput(e.target.value.replace(/[^0-9]/g, ''))}
+              onChange={(e) => setSalaryInput(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
               placeholder="e.g. 50,000"
               className="w-full pl-8 pr-3 py-2.5 bg-white border border-[#C8D3DF] rounded-lg text-[15px] font-bold text-[#0B1F3A] focus:outline-none focus:border-[#0B1F3A] focus:ring-1 focus:ring-[#0B1F3A]"
             />
@@ -158,11 +158,11 @@ export default function InlineEstimator({
           <div className="relative flex items-center">
             <input
               id="estimator-years"
-              type="number"
-              min="0"
-              max="40"
+              type="text"
+              inputMode="numeric"
+              maxLength={2}
               value={yearsInput}
-              onChange={(e) => setYearsInput(e.target.value.replace(/[^0-9]/g, ''))}
+              onChange={(e) => setYearsInput(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
               placeholder="e.g. 4"
               className="w-full px-3 py-2.5 bg-white border border-[#C8D3DF] rounded-lg text-[15px] font-bold text-[#0B1F3A] focus:outline-none focus:border-[#0B1F3A] focus:ring-1 focus:ring-[#0B1F3A]"
             />

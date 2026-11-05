@@ -20,21 +20,22 @@ export function AcasWatchdog({
   const employerNameId = useId()
 
   const [receivedDate, setReceivedDate] = useState<string>(initialReceivedDate || todayStr)
-  const [deadlineDays, setDeadlineDays] = useState<number>(initialDeadlineDays)
+  const [deadlineDays, setDeadlineDays] = useState<string>(String(initialDeadlineDays))
   const [employerName, setEmployerName] = useState<string>('HR Manager')
   const [copied, setCopied] = useState<boolean>(false)
 
   // Calculations
+  const parsedDeadlineDays = Math.max(1, parseInt(deadlineDays.replace(/[^0-9]/g, ''), 10) || 1)
   const received = new Date(receivedDate)
   const isValidReceived = !isNaN(received.getTime())
 
   // ACAS Code 4 Paragraph 12 recommends a minimum of 10 calendar days
   const acasMinimumDays = 10
-  const isUltimatum = deadlineDays < acasMinimumDays
+  const isUltimatum = parsedDeadlineDays < acasMinimumDays
 
   // Calculate actual deadline date and ACAS compliant deadline date
   const actualDeadline = new Date(received)
-  actualDeadline.setDate(actualDeadline.getDate() + deadlineDays)
+  actualDeadline.setDate(actualDeadline.getDate() + parsedDeadlineDays)
 
   const acasDeadline = new Date(received)
   acasDeadline.setDate(acasDeadline.getDate() + acasMinimumDays)
@@ -45,7 +46,7 @@ export function AcasWatchdog({
     ? Math.max(0, Math.floor((now.getTime() - received.getTime()) / (1000 * 60 * 60 * 24)))
     : 0
 
-  const daysRemainingActual = Math.max(0, deadlineDays - daysElapsed)
+  const daysRemainingActual = Math.max(0, parsedDeadlineDays - daysElapsed)
   const daysRemainingAcas = Math.max(0, acasMinimumDays - daysElapsed)
 
   const formatDateDisplay = (d: Date) => {
@@ -61,7 +62,7 @@ export function AcasWatchdog({
 
 Employer / HR Contact Recorded: ${employerName.trim() || 'HR Manager'}
 Date Draft Settlement Agreement Received: ${isValidReceived ? formatDateDisplay(received) : receivedDate}
-Employer Requested Response Deadline: ${isValidReceived ? formatDateDisplay(actualDeadline) : `within ${deadlineDays} days`} (${deadlineDays} calendar days)
+Employer Requested Response Deadline: ${isValidReceived ? formatDateDisplay(actualDeadline) : `within ${parsedDeadlineDays} days`} (${parsedDeadlineDays} calendar days)
 ACAS Code of Practice 4 (Para 12) Benchmark Date: ${isValidReceived ? formatDateDisplay(acasDeadline) : '10 calendar days'}
 
 Key Points to Discuss with Your Independent Solicitor (s.203(3) ERA 1996):
@@ -126,11 +127,15 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
           </label>
           <input
             id={deadlineDaysId}
-            type="number"
-            min={1}
-            max={30}
+            type="text"
+            inputMode="numeric"
+            maxLength={2}
             value={deadlineDays}
-            onChange={(e) => setDeadlineDays(Math.max(1, parseInt(e.target.value) || 1))}
+            placeholder="5"
+            onChange={(e) => {
+              const clean = e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')
+              if (clean.length <= 2) setDeadlineDays(clean)
+            }}
             className="w-full p-2 border border-[#E2DCCE] rounded text-xs font-mono bg-white text-[#0B1F3A] focus:outline-none focus:ring-1 focus:ring-[#0B1F3A]"
           />
         </div>
@@ -159,15 +164,15 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
             <div className="flex-1">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
                 <span className="font-bold text-sm sm:text-base text-[#D9603B]">
-                  Artificial Ultimatum Detected ({deadlineDays} Days Given)
+                  Artificial Ultimatum Detected ({parsedDeadlineDays} Days Given)
                 </span>
                 <span className="text-xs font-mono bg-[#D9603B]/10 text-[#D9603B] px-2 py-0.5 rounded font-semibold">
                   ACAS Standard: Minimum 10 Days
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-[#0B1F3A]/90 leading-relaxed mb-3">
-                Your employer has specified a <strong>{deadlineDays}-day</strong> response window (deadline:{' '}
-                {isValidReceived ? formatDateDisplay(actualDeadline) : `${deadlineDays} days`}).{' '}
+                Your employer has specified a <strong>{parsedDeadlineDays}-day</strong> response window (deadline:{' '}
+                {isValidReceived ? formatDateDisplay(actualDeadline) : `${parsedDeadlineDays} days`}).{' '}
                 <strong>ACAS Code of Practice 4 Paragraph 12</strong> recommends a minimum of{' '}
                 <strong>10 calendar days</strong> as general guidance to consider written terms and obtain independent legal advice. However, under English contract law (<em>Routledge v Grant</em>), an employer may set binding deadlines or revoke an unaccepted offer at any point before acceptance. Never allow an employer&apos;s deadline to pass without taking independent legal advice.
               </p>
@@ -188,12 +193,12 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
             </div>
             <div className="flex-1">
               <span className="font-bold text-sm sm:text-base text-[#0B1F3A] block mb-1">
-                ACAS Code 4 Compliant Window ({deadlineDays} Days Allowed)
+                ACAS Code 4 Compliant Window ({parsedDeadlineDays} Days Allowed)
               </span>
               <p className="text-xs sm:text-sm text-[#0B1F3A]/90 leading-relaxed m-0">
-                The {deadlineDays}-day window satisfies the ACAS minimum 10-day guideline. You have approximately{' '}
+                The {parsedDeadlineDays}-day window satisfies the ACAS minimum 10-day guideline. You have approximately{' '}
                 <strong>{daysRemainingActual} days remaining</strong> before the deadline of{' '}
-                {isValidReceived ? formatDateDisplay(actualDeadline) : `${deadlineDays} days`}.
+                {isValidReceived ? formatDateDisplay(actualDeadline) : `${parsedDeadlineDays} days`}.
               </p>
             </div>
           </div>
@@ -209,7 +214,7 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
         <div className="bg-[#F7F4EE] p-3 rounded-lg border border-[#E2DCCE]">
           <span className="text-[11px] text-[#0B1F3A]/70 block mb-0.5">Employer Deadline</span>
           <span className="text-lg font-bold text-[#D9603B] font-mono">
-            {isValidReceived ? formatDateDisplay(actualDeadline) : `${deadlineDays} days`}
+            {isValidReceived ? formatDateDisplay(actualDeadline) : `${parsedDeadlineDays} days`}
           </span>
         </div>
         <div className="bg-[#F7F4EE] p-3 rounded-lg border border-[#E2DCCE]">

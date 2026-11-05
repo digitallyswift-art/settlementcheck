@@ -213,9 +213,11 @@ Privilege Notice: Transmitting financial proposals directly to HR without legal 
           </label>
           <input
             id={amountId}
-            type="number"
+            type="text"
+            inputMode="numeric"
             value={offerAmount}
-            onChange={(e) => setOfferAmount(e.target.value)}
+            placeholder="15000"
+            onChange={(e) => setOfferAmount(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
             className="w-full p-2 border border-[#E2DCCE] rounded text-xs font-mono bg-white text-[#0B1F3A] focus:outline-none focus:ring-1 focus:ring-[#0B1F3A]"
           />
         </div>

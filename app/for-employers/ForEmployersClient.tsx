@@ -12,14 +12,14 @@ export default function ForEmployersClient() {
 
   // Redundancy & Exit Modeller State
   const [headcount, setHeadcount] = useState<number>(5)
-  const [avgSalary, setAvgSalary] = useState<number>(42000)
-  const [avgTenure, setAvgTenure] = useState<number>(4)
+  const [avgSalary, setAvgSalary] = useState<string>('42000')
+  const [avgTenure, setAvgTenure] = useState<string>('4')
   const [ageBand, setAgeBand] = useState<'under22' | '22to40' | '41plus'>('22to40')
   const [packageType, setPackageType] = useState<'statutory' | '1.5x' | '2.0x' | 'custom'>('1.5x')
-  const [customLumpSum, setCustomLumpSum] = useState<number>(5000)
-  const [noticeWeeks, setNoticeWeeks] = useState<number>(4)
+  const [customLumpSum, setCustomLumpSum] = useState<string>('5000')
+  const [noticeWeeks, setNoticeWeeks] = useState<string>('4')
   const [pilonIncluded, setPilonIncluded] = useState<boolean>(true)
-  const [legalFeeContribution, setLegalFeeContribution] = useState<number>(500)
+  const [legalFeeContribution, setLegalFeeContribution] = useState<string>('500')
 
   // s.111A Template State
   const [companyName, setCompanyName] = useState<string>('Acme Enterprises Ltd')
@@ -38,10 +38,16 @@ export default function ForEmployersClient() {
   const [dispatchSubmitted, setDispatchSubmitted] = useState<boolean>(false)
 
   // Deterministic Mathematical Modelling
+  const salaryNum = parseInt(avgSalary || '0', 10) || 0
+  const tenureNum = parseInt(avgTenure || '0', 10) || 0
+  const customLumpSumNum = parseInt(customLumpSum || '0', 10) || 0
+  const noticeWeeksNum = parseInt(noticeWeeks || '0', 10) || 0
+  const legalFeeContributionNum = parseInt(legalFeeContribution || '0', 10) || 0
+
   const ageMultiplier = ageBand === 'under22' ? 0.5 : ageBand === '41plus' ? 1.5 : 1.0
-  const weeklyPay = avgSalary / 52
+  const weeklyPay = salaryNum / 52
   const cappedWeeklyPay = Math.min(weeklyPay, STATUTORY_RATES_2026_27.weeklyCapGB)
-  const cappedTenure = Math.min(avgTenure, STATUTORY_RATES_2026_27.maxServiceYears)
+  const cappedTenure = Math.min(tenureNum, STATUTORY_RATES_2026_27.maxServiceYears)
   const statRedundancyPerHead = Math.round(cappedWeeklyPay * cappedTenure * ageMultiplier)
 
   let exGratiaPerHead = 0
@@ -50,7 +56,7 @@ export default function ForEmployersClient() {
   } else if (packageType === '2.0x') {
     exGratiaPerHead = Math.round(statRedundancyPerHead * 1.0)
   } else if (packageType === 'custom') {
-    exGratiaPerHead = customLumpSum
+    exGratiaPerHead = customLumpSumNum
   }
 
   const totalSeverancePerHead = statRedundancyPerHead + exGratiaPerHead
@@ -62,13 +68,13 @@ export default function ForEmployersClient() {
   const totalClass1aNic = class1aNicPerHead * headcount
 
   // Notice pay (PILON)
-  const pilonPerHead = pilonIncluded ? Math.round(weeklyPay * noticeWeeks) : 0
+  const pilonPerHead = pilonIncluded ? Math.round(weeklyPay * noticeWeeksNum) : 0
   const totalPilon = pilonPerHead * headcount
 
   // Aggregated pools
   const totalStatutoryPool = statRedundancyPerHead * headcount
   const totalExGratiaPool = exGratiaPerHead * headcount
-  const totalLegalFeePool = legalFeeContribution * headcount
+  const totalLegalFeePool = legalFeeContributionNum * headcount
   const grandTotalCost = totalStatutoryPool + totalExGratiaPool + totalPilon + totalClass1aNic + totalLegalFeePool
 
   // Collective Redundancy Consultation Timetable (TULRCA 1992 s.188)
@@ -97,11 +103,11 @@ Subject to entering into a formal Section 203 Settlement Agreement:
 - Termination Date: By mutual agreement.
 - Statutory Redundancy Payment: £${statRedundancyPerHead.toLocaleString()} (tax-free under ITEPA 2003 s.403).
 - Ex-Gratia Compensatory Payment: £${exGratiaPerHead.toLocaleString()} (tax-exempt up to the £30,000 threshold).
-${pilonIncluded ? `- Payment in Lieu of Notice (PILON): £${pilonPerHead.toLocaleString()} (${noticeWeeks} weeks gross, subject to PAYE and Class 1 NICs under s.402D).` : '- Notice: To be worked as contractual notice.'}
+${pilonIncluded ? `- Payment in Lieu of Notice (PILON): £${pilonPerHead.toLocaleString()} (${noticeWeeksNum} weeks gross, subject to PAYE and Class 1 NICs under s.402D).` : '- Notice: To be worked as contractual notice.'}
 - Standard Agreed Reference: Factual dates and job title provided upon request.
 
 2. EMPLOYER LEGAL FEE CONTRIBUTION
-In accordance with standard UK employment practice and Section 203(3) of the Employment Rights Act 1996, ${companyName} will pay up to £${legalFeeContribution.toLocaleString()} + VAT directly to your chosen independent SRA-regulated solicitor for reviewing and signing the agreement.
+In accordance with standard UK employment practice and Section 203(3) of the Employment Rights Act 1996, ${companyName} will pay up to £${legalFeeContributionNum.toLocaleString()} + VAT directly to your chosen independent SRA-regulated solicitor for reviewing and signing the agreement.
 
 3. ACAS CODE 4 CONSIDERATION PERIOD
 In strict accordance with ACAS Code of Practice 4 Paragraph 18, you are afforded a minimum of 10 calendar days from receipt of this proposal to consider these terms and obtain independent legal advice. There is no obligation to accept this offer, and your existing contractual rights remain unaffected during this period.
@@ -263,12 +269,11 @@ ${companyName}`
                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted font-medium">£</span>
                         <input
                           id="input-avg-salary"
-                          type="number"
-                          step="1000"
-                          min="15000"
-                          max="250000"
+                          type="text"
+                          inputMode="numeric"
                           value={avgSalary}
-                          onChange={(e) => setAvgSalary(Number(e.target.value))}
+                          onChange={(e) => setAvgSalary(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                          placeholder="42000"
                           className="w-full pl-8 pr-4 py-2 border border-rule rounded-lg text-sm text-ink focus:outline-none focus:border-coral"
                         />
                       </div>
@@ -285,11 +290,11 @@ ${companyName}`
                         </label>
                         <input
                           id="input-avg-tenure"
-                          type="number"
-                          min="0"
-                          max="20"
+                          type="text"
+                          inputMode="numeric"
                           value={avgTenure}
-                          onChange={(e) => setAvgTenure(Number(e.target.value))}
+                          onChange={(e) => setAvgTenure(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                          placeholder="4"
                           className="w-full px-3 py-2 border border-rule rounded-lg text-sm text-ink focus:outline-none focus:border-coral"
                         />
                         <p className="text-[11px] text-muted mt-1">
@@ -345,11 +350,11 @@ ${companyName}`
                           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted font-medium">£</span>
                           <input
                             id="input-custom-lump-sum"
-                            type="number"
-                            step="500"
-                            min="0"
+                            type="text"
+                            inputMode="numeric"
                             value={customLumpSum}
-                            onChange={(e) => setCustomLumpSum(Number(e.target.value))}
+                            onChange={(e) => setCustomLumpSum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                            placeholder="5000"
                             className="w-full pl-8 pr-4 py-2 border border-rule rounded-lg text-sm text-ink focus:outline-none focus:border-coral"
                           />
                         </div>
@@ -364,11 +369,11 @@ ${companyName}`
                         </label>
                         <input
                           id="input-notice-weeks"
-                          type="number"
-                          min="0"
-                          max="12"
+                          type="text"
+                          inputMode="numeric"
                           value={noticeWeeks}
-                          onChange={(e) => setNoticeWeeks(Number(e.target.value))}
+                          onChange={(e) => setNoticeWeeks(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                          placeholder="4"
                           className="w-full px-3 py-2 border border-rule rounded-lg text-sm text-ink focus:outline-none focus:border-coral"
                         />
                         <div className="flex items-center gap-2 mt-2">
@@ -393,12 +398,11 @@ ${companyName}`
                           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted font-medium">£</span>
                           <input
                             id="input-legal-fee"
-                            type="number"
-                            step="50"
-                            min="350"
-                            max="1500"
+                            type="text"
+                            inputMode="numeric"
                             value={legalFeeContribution}
-                            onChange={(e) => setLegalFeeContribution(Number(e.target.value))}
+                            onChange={(e) => setLegalFeeContribution(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                            placeholder="500"
                             className="w-full pl-8 pr-4 py-2 border border-rule rounded-lg text-sm text-ink focus:outline-none focus:border-coral"
                           />
                         </div>
@@ -650,11 +654,11 @@ Subject to entering into a formal Section 203 Settlement Agreement:
 - Termination Date: By mutual agreement.
 - Statutory Redundancy Payment: £${statRedundancyPerHead.toLocaleString()} (tax-free under ITEPA 2003 s.403).
 - Ex-Gratia Compensatory Payment: £${exGratiaPerHead.toLocaleString()} (tax-exempt up to the £30,000 threshold).
-${pilonIncluded ? `- Payment in Lieu of Notice (PILON): £${pilonPerHead.toLocaleString()} (${noticeWeeks} weeks gross, subject to PAYE and Class 1 NICs under s.402D).` : '- Notice: To be worked as contractual notice.'}
+${pilonIncluded ? `- Payment in Lieu of Notice (PILON): £${pilonPerHead.toLocaleString()} (${noticeWeeksNum} weeks gross, subject to PAYE and Class 1 NICs under s.402D).` : '- Notice: To be worked as contractual notice.'}
 - Standard Agreed Reference: Factual dates and job title provided upon request.
 
 2. EMPLOYER LEGAL FEE CONTRIBUTION
-In accordance with standard UK employment practice and Section 203(3) of the Employment Rights Act 1996, ${companyName} will pay up to £${legalFeeContribution.toLocaleString()} + VAT directly to your chosen independent SRA-regulated solicitor for reviewing and signing the agreement.
+In accordance with standard UK employment practice and Section 203(3) of the Employment Rights Act 1996, ${companyName} will pay up to £${legalFeeContributionNum.toLocaleString()} + VAT directly to your chosen independent SRA-regulated solicitor for reviewing and signing the agreement.
 
 3. ACAS CODE 4 CONSIDERATION PERIOD
 In strict accordance with ACAS Code of Practice 4 Paragraph 18, you are afforded a minimum of 10 calendar days from receipt of this proposal to consider these terms and obtain independent legal advice. There is no obligation to accept this offer, and your existing contractual rights remain unaffected during this period.

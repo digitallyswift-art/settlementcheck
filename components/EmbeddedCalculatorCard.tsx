@@ -39,34 +39,39 @@ export default function EmbeddedCalculatorCard({
   initialAge = 38,
   ctaText = 'Calculate My Complete Settlement Package →',
 }: EmbeddedCalculatorCardProps) {
-  const [salary, setSalary] = useState<number>(initialSalary)
-  const [years, setYears] = useState<number>(initialYears)
-  const [age, setAge] = useState<number>(initialAge)
+  const [salary, setSalary] = useState<string>(String(initialSalary))
+  const [years, setYears] = useState<string>(String(initialYears))
+  const [age, setAge] = useState<string>(String(initialAge))
+
+  const numSalary = parseInt(salary.replace(/[^0-9]/g, ''), 10) || 0
+  const numYears = Math.min(40, parseInt(years.replace(/[^0-9]/g, ''), 10) || 0)
+  const parsedAge = parseInt(age.replace(/[^0-9]/g, ''), 10)
+  const numAge = isNaN(parsedAge) || parsedAge === 0 ? 38 : Math.min(75, Math.max(18, parsedAge))
 
   const srp = useMemo(() => {
-    return calcRedundancy(salary, years * 12, age, WEEKLY_CAP_GB)
-  }, [salary, years, age])
+    return calcRedundancy(numSalary, numYears * 12, numAge, WEEKLY_CAP_GB)
+  }, [numSalary, numYears, numAge])
 
   const typicalLow = useMemo(() => {
     // 1 month gross + SRP
-    const monthlyGross = Math.round(salary / 12)
+    const monthlyGross = Math.round(numSalary / 12)
     return Math.max(srp, monthlyGross + srp)
-  }, [salary, srp])
+  }, [numSalary, srp])
 
   const typicalHigh = useMemo(() => {
     // 3 months gross + SRP
-    const threeMonthsGross = Math.round((salary / 12) * 3)
+    const threeMonthsGross = Math.round((numSalary / 12) * 3)
     return Math.max(typicalLow, threeMonthsGross + srp)
-  }, [salary, srp, typicalLow])
+  }, [numSalary, srp, typicalLow])
 
   const calculatorQuery = useMemo(() => {
     const params = new URLSearchParams()
-    if (salary > 0) params.set('salary', String(salary))
-    if (years > 0) params.set('tenure', String(years))
-    if (age > 0) params.set('age', String(age))
+    if (numSalary > 0) params.set('salary', String(numSalary))
+    if (numYears > 0) params.set('tenure', String(numYears))
+    if (numAge > 0) params.set('age', String(numAge))
     if (disputeType) params.set('dispute', disputeType)
     return `/calculator/?${params.toString()}`
-  }, [salary, years, age, disputeType])
+  }, [numSalary, numYears, numAge, disputeType])
 
   return (
     <aside
@@ -130,11 +135,11 @@ export default function EmbeddedCalculatorCard({
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted text-sm font-medium">£</span>
                 <input
                   id="card-salary"
-                  type="number"
-                  step="1000"
-                  min="0"
+                  type="text"
+                  inputMode="numeric"
                   value={salary}
-                  onChange={(e) => setSalary(Math.max(0, parseInt(e.target.value, 10) || 0))}
+                  onChange={(e) => setSalary(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                  placeholder="e.g. 45000"
                   className="w-full pl-7 pr-3 py-2 text-sm font-semibold text-ink bg-white border border-rule rounded-lg focus:outline-none focus:border-coral transition-colors"
                 />
               </div>
@@ -146,11 +151,14 @@ export default function EmbeddedCalculatorCard({
               </label>
               <input
                 id="card-years"
-                type="number"
-                min="0"
-                max="40"
+                type="text"
+                inputMode="numeric"
                 value={years}
-                onChange={(e) => setYears(Math.min(40, Math.max(0, parseInt(e.target.value, 10) || 0)))}
+                onChange={(e) => {
+                  const clean = e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')
+                  if (clean.length <= 2) setYears(clean)
+                }}
+                placeholder="e.g. 4"
                 className="w-full px-3 py-2 text-sm font-semibold text-ink bg-white border border-rule rounded-lg focus:outline-none focus:border-coral transition-colors"
               />
             </div>
@@ -161,11 +169,14 @@ export default function EmbeddedCalculatorCard({
               </label>
               <input
                 id="card-age"
-                type="number"
-                min="18"
-                max="75"
+                type="text"
+                inputMode="numeric"
                 value={age}
-                onChange={(e) => setAge(Math.min(75, Math.max(18, parseInt(e.target.value, 10) || 18)))}
+                onChange={(e) => {
+                  const clean = e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')
+                  if (clean.length <= 2) setAge(clean)
+                }}
+                placeholder="e.g. 38"
                 className="w-full px-3 py-2 text-sm font-semibold text-ink bg-white border border-rule rounded-lg focus:outline-none focus:border-coral transition-colors"
               />
             </div>

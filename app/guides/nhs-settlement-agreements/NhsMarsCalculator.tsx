@@ -59,7 +59,7 @@ export default function NhsMarsCalculator() {
                 type="text"
                 inputMode="numeric"
                 value={salaryInput}
-                onChange={(e) => setSalaryInput(e.target.value)}
+                onChange={(e) => setSalaryInput(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 placeholder="e.g. 37000"
                 className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-rule bg-white text-ink text-sm font-semibold focus:outline-none focus:border-coral transition-colors"
               />

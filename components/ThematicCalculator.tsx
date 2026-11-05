@@ -157,10 +157,8 @@ function InfoPill({ label, children }: { label: string; children: React.ReactNod
 
 function cleanCurrencyInput(val: string): string {
   const noCurrency = val.replace(/[^0-9.]/g, '')
-  if (noCurrency.includes('.')) {
-    return noCurrency.split('.')[0]
-  }
-  return noCurrency
+  const intPart = noCurrency.includes('.') ? noCurrency.split('.')[0] : noCurrency
+  return intPart.replace(/^0+(?=\d)/, '')
 }
 
 export default function ThematicCalculator({ onCalculate, initialValues }: Props) {
@@ -689,7 +687,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                     inputMode="numeric"
                     placeholder="5"
                     value={yearsNum}
-                    onChange={e => setYearsNum(e.target.value.replace(/[^0-9]/g, ''))}
+                    onChange={e => setYearsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                     onKeyDown={e => e.key === 'Enter' && advance()}
                     style={{ ...numInputSt, paddingLeft: 14 }}
                   />
@@ -706,7 +704,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                         inputMode="numeric"
                         placeholder="8"
                         value={monthsNum}
-                        onChange={e => setMonthsNum(e.target.value.replace(/[^0-9]/g, ''))}
+                        onChange={e => setMonthsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                         onKeyDown={e => e.key === 'Enter' && advance()}
                         style={{ ...numInputSt, fontSize: 15, padding: '8px 12px' }}
                       />
@@ -740,7 +738,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                     inputMode="numeric"
                     placeholder="38"
                     value={age}
-                    onChange={e => { setAge(e.target.value.replace(/[^0-9]/g, '')); setAgeError('') }}
+                    onChange={e => { setAge(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')); setAgeError('') }}
                     onKeyDown={e => e.key === 'Enter' && advance()}
                     style={{ ...numInputSt, paddingLeft: 14 }}
                   />

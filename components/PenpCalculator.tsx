@@ -30,26 +30,28 @@ function InfoPill({ label, children }: { label: string; children: React.ReactNod
 
 export function PenpCalculator() {
   const [salary, setSalary] = useState<string>('60000')
-  const [noticeValue, setNoticeValue] = useState<number>(3)
+  const [noticeValue, setNoticeValue] = useState<string>('3')
   const [noticeUnit, setNoticeUnit] = useState<'months' | 'weeks'>('months')
-  const [unworkedValue, setUnworkedValue] = useState<number>(3)
+  const [unworkedValue, setUnworkedValue] = useState<string>('3')
   const [contractualPilonTaxed, setContractualPilonTaxed] = useState<string>('0')
   const [totalOffer, setTotalOffer] = useState<string>('25000')
 
   const parsedSalary = Math.max(0, parseFloat(salary.replace(/[^0-9.]/g, '')) || 0)
+  const parsedNoticeValue = Math.max(0, parseInt(noticeValue.replace(/[^0-9]/g, ''), 10) || 0)
+  const parsedUnworkedValue = Math.max(0, parseInt(unworkedValue.replace(/[^0-9]/g, ''), 10) || 0)
   const parsedPilonTaxed = Math.max(0, parseFloat(contractualPilonTaxed.replace(/[^0-9.]/g, '')) || 0)
   const parsedTotalOffer = Math.max(0, parseFloat(totalOffer.replace(/[^0-9.]/g, '')) || 0)
 
   const result: PenpCalculationResult = useMemo(() => {
     return calculatePenp({
       salaryAnnual: parsedSalary,
-      noticeMonthsOrWeeks: noticeValue,
+      noticeMonthsOrWeeks: parsedNoticeValue,
       noticeUnit,
-      unworkedNoticeMonthsOrWeeks: unworkedValue,
+      unworkedNoticeMonthsOrWeeks: parsedUnworkedValue,
       taxableNoticeAlreadyPaid: parsedPilonTaxed,
       totalSettlementOffer: parsedTotalOffer,
     })
-  }, [parsedSalary, noticeValue, noticeUnit, unworkedValue, parsedPilonTaxed, parsedTotalOffer])
+  }, [parsedSalary, parsedNoticeValue, noticeUnit, parsedUnworkedValue, parsedPilonTaxed, parsedTotalOffer])
 
   return (
     <div className="bg-white border border-[#E2DCCE] rounded-2xl p-6 sm:p-8 shadow-sm">
@@ -86,8 +88,9 @@ export function PenpCalculator() {
               <input
                 id="penp-salary"
                 type="text"
+                inputMode="numeric"
                 value={salary}
-                onChange={(e) => setSalary(e.target.value)}
+                onChange={(e) => setSalary(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 className="w-full pl-8 pr-3.5 py-2.5 border border-[#E2DCCE] rounded-lg text-sm font-semibold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
               />
             </div>
@@ -116,14 +119,20 @@ export function PenpCalculator() {
               </label>
               <input
                 id="penp-notice"
-                type="number"
-                min={1}
-                max={52}
+                type="text"
+                inputMode="numeric"
+                maxLength={2}
                 value={noticeValue}
                 onChange={(e) => {
-                  const val = Math.max(1, parseInt(e.target.value) || 1)
-                  setNoticeValue(val)
-                  if (unworkedValue > val) setUnworkedValue(val)
+                  const clean = e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')
+                  if (clean.length <= 2) {
+                    setNoticeValue(clean)
+                    const numN = parseInt(clean, 10) || 0
+                    const numU = parseInt(unworkedValue, 10) || 0
+                    if (numN > 0 && numU > numN) setUnworkedValue(clean)
+                  }
+
+
                 }}
                 className="w-full p-2.5 border border-[#E2DCCE] rounded-lg text-sm font-semibold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
               />
@@ -150,15 +159,18 @@ export function PenpCalculator() {
             </label>
             <input
               id="penp-unworked"
-              type="number"
-              min={0}
-              max={noticeValue}
+              type="text"
+              inputMode="numeric"
+              maxLength={2}
               value={unworkedValue}
-              onChange={(e) => setUnworkedValue(Math.min(noticeValue, Math.max(0, parseInt(e.target.value) || 0)))}
+              onChange={(e) => {
+                const clean = e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')
+                if (clean.length <= 2) setUnworkedValue(clean)
+              }}
               className="w-full p-2.5 border border-[#E2DCCE] rounded-lg text-sm font-semibold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
             />
             <span className="text-[11px] text-[#0B1F3A]/60 mt-1 block">
-              {unworkedValue === noticeValue ? 'Full notice unworked (standard PILON / immediate exit)' : `${noticeValue - unworkedValue} ${noticeUnit} worked; ${unworkedValue} unworked`}
+              {parsedUnworkedValue >= parsedNoticeValue ? 'Full notice unworked (standard PILON / immediate exit)' : `${Math.max(0, parsedNoticeValue - parsedUnworkedValue)} ${noticeUnit} worked; ${parsedUnworkedValue} unworked`}
             </span>
           </div>
         </div>
@@ -173,8 +185,9 @@ export function PenpCalculator() {
               <input
                 id="penp-offer"
                 type="text"
+                inputMode="numeric"
                 value={totalOffer}
-                onChange={(e) => setTotalOffer(e.target.value)}
+                onChange={(e) => setTotalOffer(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 className="w-full pl-8 pr-3.5 py-2.5 border border-[#E2DCCE] rounded-lg text-sm font-semibold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
               />
             </div>
@@ -192,9 +205,10 @@ export function PenpCalculator() {
               <input
                 id="penp-taxed"
                 type="text"
+                inputMode="numeric"
                 placeholder="0"
                 value={contractualPilonTaxed}
-                onChange={(e) => setContractualPilonTaxed(e.target.value)}
+                onChange={(e) => setContractualPilonTaxed(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                 className="w-full pl-8 pr-3.5 py-2.5 border border-[#E2DCCE] rounded-lg text-sm font-semibold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
               />
             </div>
