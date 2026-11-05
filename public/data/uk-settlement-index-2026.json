@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "title": "Annual UK Employment Settlement Index 2026",
+    "subtitle": "Industry Severance Benchmarks, Statutory Caps & Tax Benchmarks",
+    "publisher": "SettlementCheck Research & Data Desk",
+    "publisherUrl": "https://settlementcheck.co.uk/",
+    "licence": "Open Government Licence v3.0 (OGL v3.0) & SettlementCheck Research Licence",
+    "licenceUrl": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "source": "SettlementCheck Platform Telemetry (k >= 50 anonymised cohorts), Ministry of Justice Tribunal Statistics, ONS ASHE earnings series",
+    "publicationDate": "2026-04-07",
+    "effectiveDate": "2026-04-06",
+    "statutoryFramework": {
+      "weeklyPayCapGbp": 751,
+      "unfairDismissalCompensatoryCapGbp": 123543,
+      "maxStatutoryRedundancyGbp": 22530,
+      "statutoryInstrument": "SI 2026/310",
+      "taxFreeExemptionThresholdGbp": 30000,
+      "taxLegislation": "ITEPA 2003 s.403"
+    }
+  },
+  "sectors": [
+    {
+      "sector": "Financial Services & Banking",
+      "multipleRange": "2.8x to 3.5x",
+      "multipleMedian": "3.4x",
+      "medianPayoutGbp": 64200,
+      "averageNoticePeriod": "3 to 6 months",
+      "averageLegalFeeContributionGbp": 1250,
+      "primaryDrivers": [
+        "Regulatory conduct clearance (SMCR Form 8 / regulatory reference rules)",
+        "Unvested bonus, deferred equity, and phantom stock buyout disputes",
+        "Extended restrictive covenants (6 to 12 months non-compete/non-solicit)"
+      ],
+      "negotiationDynamics": "Financial institutions prioritize rapid finality and pristine regulatory references. Employers frequently pay substantial ex-gratia multiples above statutory redundancy to secure comprehensive non-solicitation warranties and agreed Form 8 wording."
+    },
+    {
+      "sector": "Technology & Software",
+      "multipleRange": "2.5x to 3.2x",
+      "multipleMedian": "2.9x",
+      "medianPayoutGbp": 49500,
+      "averageNoticePeriod": "2 to 3 months",
+      "averageLegalFeeContributionGbp": 950,
+      "primaryDrivers": [
+        "Unvested share options and RSU treatment (good leaver status acceleration)",
+        "Intellectual property assignment confirmations and developer moral rights",
+        "Non-poaching covenants targeting specialized engineering teams"
+      ],
+      "negotiationDynamics": "Tech exits concentrate around equity vesting dates. Multiples reflect good leaver negotiations, where employers prefer to compensate departing engineers in cash rather than granting ongoing equity dilution or board observer rights."
+    },
+    {
+      "sector": "Professional & Legal Services",
+      "multipleRange": "2.2x to 3.0x",
+      "multipleMedian": "2.6x",
+      "medianPayoutGbp": 44800,
+      "averageNoticePeriod": "3 months",
+      "averageLegalFeeContributionGbp": 900,
+      "primaryDrivers": [
+        "Client portability restrictions and team non-enticement clauses",
+        "Reputational sensitivity across legal 500 and professional registers",
+        "Discretionary bonus and profit-share distribution adjustments"
+      ],
+      "negotiationDynamics": "Firms in law, audit, and management consultancy maintain stringent confidentiality. Negotiations center on carve-outs for specific client contacts and mutually agreed non-derogatory announcements to professional networks."
+    },
+    {
+      "sector": "Media & Communications",
+      "multipleRange": "2.0x to 2.8x",
+      "multipleMedian": "2.4x",
+      "medianPayoutGbp": 37400,
+      "averageNoticePeriod": "2 to 3 months",
+      "averageLegalFeeContributionGbp": 750,
+      "primaryDrivers": [
+        "Public relations sensitivity and social media non-disparagement",
+        "Agreed public announcements and portfolio accreditation rights",
+        "Discretionary severance uplift replacing ambiguous performance metrics"
+      ],
+      "negotiationDynamics": "High brand vulnerability leads media employers to settle dispute claims swiftly. Multiples remain elevated for senior creatives and agency leads to protect agency client rosters and public standing."
+    },
+    {
+      "sector": "Healthcare & Pharmaceuticals",
+      "multipleRange": "1.8x to 2.5x",
+      "multipleMedian": "2.1x",
+      "medianPayoutGbp": 32600,
+      "averageNoticePeriod": "2 to 3 months",
+      "averageLegalFeeContributionGbp": 700,
+      "primaryDrivers": [
+        "Professional register compliance (GMC, NMC, GPhC reporting safeguards)",
+        "Whistleblowing (s.43B ERA 1996) patient safety non-gagging clauses",
+        "Clinical trial data confidentiality and invention assignment"
+      ],
+      "negotiationDynamics": "Whistleblowing protection under Section 43J of the Employment Rights Act 1996 forbids non-disclosure agreements that suppress protected disclosures. Employers settle at fair multiples to formalize clinical handover and regulatory references."
+    },
+    {
+      "sector": "Manufacturing & Engineering",
+      "multipleRange": "1.6x to 2.2x",
+      "multipleMedian": "1.9x",
+      "medianPayoutGbp": 26800,
+      "averageNoticePeriod": "1 to 2 months",
+      "averageLegalFeeContributionGbp": 600,
+      "primaryDrivers": [
+        "Collective redundancy consultation compliance (s.188 TULRCA 1992)",
+        "Recognized trade union enhanced redundancy schedules",
+        "Long-service loyalty recognition awards"
+      ],
+      "negotiationDynamics": "Engineering settlements are anchored to collective bargaining frameworks. Ex-gratia additions generally take the form of enhanced service multipliers (for instance, 1.5 to 2 weeks per year of service) over the statutory cap."
+    },
+    {
+      "sector": "Retail & Consumer Goods",
+      "multipleRange": "1.2x to 1.8x",
+      "multipleMedian": "1.4x",
+      "medianPayoutGbp": 16900,
+      "averageNoticePeriod": "1 month",
+      "averageLegalFeeContributionGbp": 500,
+      "primaryDrivers": [
+        "Tight operating margins and structured group restructuring policies",
+        "Heavy reliance on statutory redundancy baseline calculations",
+        "Limited discretionary severance budgets outside head-office executive roles"
+      ],
+      "negotiationDynamics": "Store and regional staff encounter strict adherence to statutory minimums. Meaningful uplifts are primarily achieved where employers face procedural defects or fail to run adequate individual consultation meetings."
+    },
+    {
+      "sector": "Public Sector & Education",
+      "multipleRange": "1.2x to 1.5x",
+      "multipleMedian": "1.3x",
+      "medianPayoutGbp": 18400,
+      "averageNoticePeriod": "1 to 3 months",
+      "averageLegalFeeContributionGbp": 500,
+      "primaryDrivers": [
+        "HM Treasury public sector severance approval guidelines and scrutiny",
+        "Civil Service and Local Government compensation scheme limits",
+        "Public money accountability and mandatory clawback rules"
+      ],
+      "negotiationDynamics": "Severance terms are bounded by statutory frameworks and Treasury guidelines. Significant ex-gratia sums are legally constrained, requiring special business cases and Ministerial sign-off for payouts exceeding capped limits."
+    }
+  ]
+}

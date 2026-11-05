@@ -3,6 +3,8 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
+import DataExportBox from '@/components/DataExportBox'
+import PressCitationBox from '@/components/PressCitationBox'
 
 export interface HistoricalRateRow {
   year: string
@@ -561,6 +563,41 @@ export default function StatutoryRatesHistoryClient() {
             </Link>
           </div>
         </div>
+      </section>
+
+      {/* Official Dataset Export & Press Citation Section */}
+      <section className="space-y-6">
+        <DataExportBox
+          title="Download Complete Statutory Rates Archive (2000 – 2026)"
+          description="Download the full 27-year historical time series of UK statutory redundancy pay weekly caps, maximum basic awards, unfair dismissal compensatory limits, and Vento injury to feelings guidelines in CSV or JSON format."
+          datasetName="statutory-rates-history-2000-2026"
+          csvUrl="/data/statutory-rates-history-2000-2026.csv"
+          jsonUrl="/data/statutory-rates-history-2000-2026.json"
+          recordCount="27 Tax Years (2000/01 – 2026/27)"
+          fileSizeEstimate={{ csv: '1.8 KB', json: '10.4 KB' }}
+          lastUpdated="April 2026"
+          licence="Open Government Licence v3.0 (legislation.gov.uk)"
+          licenceUrl="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          sourceAttribution="Department for Business and Trade (DBT), legislation.gov.uk statutory instruments, and Employment Tribunals Presidential Guidance"
+          previewHeaders={['Tax Year', 'Effective Date', 'Weekly Cap', 'Max Basic Award (30 wks)', 'Compensatory Cap', 'Statutory Instrument']}
+          previewRows={[
+            ['2026/27', '6 April 2026', '£751', '£22,530', '£123,543', 'SI 2026/310'],
+            ['2025/26', '6 April 2025', '£719', '£21,570', '£118,223', 'SI 2025/209'],
+            ['2024/25', '6 April 2024', '£700', '£21,000', '£115,115', 'SI 2024/252'],
+            ['2023/24', '6 April 2023', '£643', '£19,290', '£105,707', 'SI 2023/317'],
+            ['2022/23', '6 April 2022', '£571', '£17,130', '£93,878', 'SI 2022/182'],
+          ]}
+        />
+
+        <PressCitationBox
+          title="UK Statutory Employment Rates & Compensation Caps History (2000-2026)"
+          url="https://settlementcheck.co.uk/statutory-rates-history/"
+          datasetName="statutoryrateshistory"
+          author="SettlementCheck Legal Research Desk"
+          sourceAgency="Department for Business and Trade & legislation.gov.uk"
+          license="Open Government Licence v3.0"
+          year="2026"
+        />
       </section>
 
       {/* Embedded Calculator Card */}

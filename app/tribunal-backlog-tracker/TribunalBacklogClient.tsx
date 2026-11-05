@@ -3,6 +3,8 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
+import DataExportBox from '@/components/DataExportBox'
+import PressCitationBox from '@/components/PressCitationBox'
 
 export interface RegionalBacklogData {
   regionId: string
@@ -606,6 +608,41 @@ export default function TribunalBacklogClient() {
             .
           </div>
         </div>
+      </section>
+
+      {/* Official Dataset Export & Press Citation Section */}
+      <section className="space-y-6">
+        <DataExportBox
+          title="Download Official MoJ Tribunal Backlog Dataset"
+          description="Download regional wait times, single claim backlog counts, and estimated employer legal defence costs across all 10 GB employment tribunal hearing centres in spreadsheet (CSV) or machine-readable (JSON) format."
+          datasetName="moj-tribunal-backlog-2026"
+          csvUrl="/data/moj-tribunal-backlog-2026.csv"
+          jsonUrl="/data/moj-tribunal-backlog-2026.json"
+          recordCount="10 GB Hearing Centres (46,520+ Claims)"
+          fileSizeEstimate={{ csv: '2.7 KB', json: '6.2 KB' }}
+          lastUpdated="April 2026"
+          licence="Open Government Licence v3.0 (Crown Copyright)"
+          licenceUrl="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          sourceAttribution="Ministry of Justice (MoJ) Tribunal Statistics Quarterly and HMCTS Management Information"
+          previewHeaders={['Hearing Centre', 'Open Single Claims', 'Wait to Preliminary', 'Wait to Merits', 'Typical Defence Cost', 'Strategic Pressure']}
+          previewRows={[
+            ['London Central (Victory House)', '8,420', '210 days (~6.9 mo)', '540 days (~17.8 mo)', '£28k – £55k', 'Critical'],
+            ['London South (Croydon)', '6,150', '195 days (~6.4 mo)', '510 days (~16.8 mo)', '£25k – £50k', 'Critical'],
+            ['South East (Watford)', '5,730', '185 days (~6.1 mo)', '490 days (~16.1 mo)', '£24k – £48k', 'Very High'],
+            ['Midlands West (Birmingham)', '4,940', '160 days (~5.3 mo)', '420 days (~13.8 mo)', '£20k – £42k', 'High'],
+            ['North West (Manchester)', '5,210', '145 days (~4.8 mo)', '380 days (~12.5 mo)', '£18k – £38k', 'High'],
+          ]}
+        />
+
+        <PressCitationBox
+          title="UK Employment Tribunal Backlog Tracker & Regional Wait Times (2026)"
+          url="https://settlementcheck.co.uk/tribunal-backlog-tracker/"
+          datasetName="mojtribunalbacklog2026"
+          author="SettlementCheck Research Desk"
+          sourceAgency="Ministry of Justice Tribunal Statistics & HMCTS"
+          license="Open Government Licence v3.0"
+          year="2026"
+        />
       </section>
 
       {/* Embedded Calculator Card */}

@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
+import DataExportBox from '@/components/DataExportBox'
+import PressCitationBox from '@/components/PressCitationBox'
 
 export const metadata: Metadata = {
   title: 'Annual UK Employment Settlement Index 2026 | Industry Severance Benchmarks',
@@ -719,6 +721,41 @@ export default function UkSettlementIndex2026Page() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Official Data Export & Press Citation Section */}
+        <section className="sc-container py-8 space-y-6" id="dataset-download">
+          <DataExportBox
+            title="Download UK Settlement Index 2026 Benchmark Data"
+            description="Download cross-sector severance multiples, median payouts, notice periods, and employer legal fee contributions across 8 major UK industries in spreadsheet (CSV) or machine-readable (JSON) format."
+            datasetName="uk-settlement-index-2026"
+            csvUrl="/data/uk-settlement-index-2026.csv"
+            jsonUrl="/data/uk-settlement-index-2026.json"
+            recordCount="8 UK Industry Sectors"
+            fileSizeEstimate={{ csv: '4.2 KB', json: '7.2 KB' }}
+            lastUpdated="April 2026"
+            licence="Open Government Licence v3.0 & SettlementCheck Research Licence"
+            licenceUrl="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+            sourceAttribution="SettlementCheck Platform Telemetry (k >= 50 cohorts), MoJ Tribunal Statistics, ONS ASHE series"
+            previewHeaders={['Industry Sector', 'Multiple Range', 'Median Multiple', 'Median Payout', 'Avg Notice', 'Avg Legal Fee']}
+            previewRows={[
+              ['Financial Services & Banking', '2.8x to 3.5x', '3.4x', '£64,200', '3 to 6 months', '£1,250 + VAT'],
+              ['Technology & Software', '2.5x to 3.2x', '2.9x', '£49,500', '2 to 3 months', '£950 + VAT'],
+              ['Professional & Legal Services', '2.2x to 3.0x', '2.6x', '£44,800', '3 months', '£900 + VAT'],
+              ['Media & Communications', '2.0x to 2.8x', '2.4x', '£37,400', '2 to 3 months', '£750 + VAT'],
+              ['Healthcare & Pharmaceuticals', '1.8x to 2.5x', '2.1x', '£32,600', '2 to 3 months', '£700 + VAT'],
+            ]}
+          />
+
+          <PressCitationBox
+            title="Annual UK Employment Settlement Index 2026"
+            url="https://settlementcheck.co.uk/reports/uk-settlement-index-2026/"
+            datasetName="uksettlementindex2026"
+            author="SettlementCheck Research Desk"
+            sourceAgency="SettlementCheck Research, MoJ & ONS"
+            license="Open Government Licence v3.0"
+            year="2026"
+          />
         </section>
 
         {/* Call to Action Footer Banner */}
