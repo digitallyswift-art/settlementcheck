@@ -6,6 +6,8 @@ import { SeoActuatorService } from '@/lib/agentic-engine/services/seo-actuator-s
 import { SeoArchitectAgent } from '@/lib/agentic-engine/agents/seo-architect-agent';
 import { SeoPolicyRegistry } from '@/lib/agentic-engine/services/seo-policy-registry';
 import { GoogleIndexingClient } from '@/lib/agentic-engine/services/google-indexing-client';
+import { SeoOutcomesLedger } from '@/lib/agentic-engine/services/seo-outcomes-ledger';
+import { SeoStrategyLearner } from '@/lib/agentic-engine/services/seo-strategy-learner';
 import { SafeFs } from '@/lib/agentic-engine/services/safe-fs';
 
 export const dynamic = 'force-dynamic';
@@ -29,8 +31,24 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const limit = Math.min(50, Number(searchParams.get('limit') || 20));
 
+    // Support direct outcomes ledger query
+    if (searchParams.get('action') === 'GET_OUTCOMES_LEDGER') {
+      const ledger = await SeoOutcomesLedger.getLedger();
+      const summary = await SeoOutcomesLedger.getLedgerSummary();
+      const learnedProfile = await SeoStrategyLearner.getLearnedProfile();
+      return NextResponse.json({
+        success: true,
+        ledger,
+        summary,
+        learnedProfile,
+      });
+    }
+
     const allPackages = await SeoActuatorService.getAllPackages();
     const policies = SeoPolicyRegistry.getAllPolicies();
+    const outcomesSummary = await SeoOutcomesLedger.getLedgerSummary();
+    const learnedProfile = await SeoStrategyLearner.getLearnedProfile();
+    const outcomesLedger = await SeoOutcomesLedger.getLedger();
 
     let liveLogs: any[] = [];
     if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -71,6 +89,7 @@ export async function GET(req: NextRequest) {
         regressionCount,
         latestRunCount: liveLogs.length,
         activePoliciesCount: policies.length,
+        outcomes: outcomesSummary,
       },
       packages: allPackages.slice(0, limit).map(pkg => {
         const risk = SeoArchitectAgent.detectCannibalizationRisk(pkg.query, pkg.targetCanonicalUrl || '');
@@ -80,6 +99,10 @@ export async function GET(req: NextRequest) {
         };
       }),
       policies,
+      outcomesSummary,
+      outcomesLedger,
+      learnedWeights: learnedProfile.strategyWeights,
+      learnedProfile,
       recentRuns: liveLogs,
       changeLogPreview,
     });
@@ -151,6 +174,16 @@ export async function POST(req: NextRequest) {
             revalidateSeoRouteAndTag(urlOrPath);
           },
         });
+
+        // Record immutable Day 0 baseline snapshot in outcomes ledger
+        if (result.success && result.package) {
+          try {
+            await SeoOutcomesLedger.recordActionApplied(result.package);
+          } catch (ledgerErr) {
+            console.warn('[SeoOutcomesLedger] Failed to record application:', ledgerErr);
+          }
+        }
+
         const status = result.success ? 200 : result.error?.includes('OCC Conflict') ? 409 : 400;
         return NextResponse.json(result, { status });
       }
@@ -179,6 +212,15 @@ export async function POST(req: NextRequest) {
             revalidateSeoRouteAndTag(urlOrPath);
           },
         });
+
+        if (result.success && (result as any).appliedPackages) {
+          for (const applied of (result as any).appliedPackages) {
+            try {
+              await SeoOutcomesLedger.recordActionApplied(applied);
+            } catch {}
+          }
+        }
+
         return NextResponse.json(result);
       }
 
@@ -227,6 +269,13 @@ export async function POST(req: NextRequest) {
             revalidateSeoRouteAndTag(urlOrPath);
           },
         });
+
+        if (result.success && result.package) {
+          try {
+            await SeoOutcomesLedger.recordActionApplied(result.package);
+          } catch {}
+        }
+
         const status = result.success ? 200 : result.error?.includes('OCC Conflict') ? 409 : 400;
         return NextResponse.json(result, { status });
       }
@@ -250,6 +299,66 @@ export async function POST(req: NextRequest) {
         } catch (err: any) {
           return NextResponse.json(
             { success: false, error: `Fleet scan execution failed: ${err.message}` },
+            { status: 500 }
+          );
+        }
+      }
+
+      case 'GET_OUTCOMES_LEDGER': {
+        const ledger = await SeoOutcomesLedger.getLedger();
+        const summary = await SeoOutcomesLedger.getLedgerSummary();
+        const learnedProfile = await SeoStrategyLearner.getLearnedProfile();
+        return NextResponse.json({
+          success: true,
+          ledger,
+          summary,
+          learnedProfile,
+        });
+      }
+
+      case 'AUDIT_OUTCOMES': {
+        try {
+          let latestRows: any[] | undefined;
+          try {
+            const { GoogleSearchConsoleClient } = await import(
+              '@/lib/agentic-engine/services/gsc-client'
+            );
+            const gscData = await GoogleSearchConsoleClient.pullLatestSearchData();
+            if (gscData && gscData.rows) latestRows = gscData.rows;
+          } catch {}
+
+          const auditResult = await SeoOutcomesLedger.auditOutcomes(latestRows);
+          const updatedLearnedProfile = SeoStrategyLearner.computeStrategyWeights(auditResult.ledger);
+
+          const { seoDegradationWatchdogWorker } = await import(
+            '@/lib/agentic-engine/workers/seo-degradation-watchdog-worker'
+          );
+          let watchdogReport = null;
+          try {
+            watchdogReport = await seoDegradationWatchdogWorker.execute({
+              autoRollbackEnabled: body.autoRollbackEnabled !== false,
+            });
+          } catch {}
+
+          const allPackages = await SeoActuatorService.getAllPackages();
+
+          return NextResponse.json({
+            success: true,
+            message: 'Live GSC outcomes audited successfully',
+            timestamp: new Date().toISOString(),
+            auditedCount: auditResult.auditedCount,
+            uplifts: auditResult.uplifts,
+            regressions: auditResult.regressions,
+            steady: auditResult.steady,
+            ledger: auditResult.ledger,
+            summary: auditResult.summary,
+            learnedProfile: updatedLearnedProfile,
+            report: watchdogReport,
+            packages: allPackages,
+          });
+        } catch (err: any) {
+          return NextResponse.json(
+            { success: false, error: `Audit outcomes failed: ${err.message}` },
             { status: 500 }
           );
         }

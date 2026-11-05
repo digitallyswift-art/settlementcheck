@@ -642,3 +642,96 @@ export interface ConversionImprovementPackage {
   appliedAt?: string;
   canaryExpiresAt?: string;
 }
+
+// ── SEO Outcomes Ledger & Longitudinal Tracking ──────────────────────────────
+
+export type OutcomeClassification =
+  | 'CONFIRMED_UPLIFT'
+  | 'STEADY_TRACKING'
+  | 'NEUTRAL'
+  | 'REGRESSION_ALERT'
+  | 'ROLLED_BACK';
+
+export interface SeoMetricSnapshot {
+  position: number;
+  impressions: number;
+  clicks: number;
+  ctr: number;
+}
+
+export interface CheckpointRecord {
+  checkpointDay: 7 | 14 | 28;
+  checkpointDate: string;
+  metrics: SeoMetricSnapshot;
+  rankImprovementPct: number;
+  positionDelta: number;
+  clickDelta: number;
+  impressionsDelta: number;
+  ctrDelta: number;
+  classification: OutcomeClassification;
+}
+
+export interface OutcomesLedgerEntry {
+  packageId: string;
+  query: string;
+  targetUrl: string;
+  strategy: SeoActionType | string;
+  appliedAt: string;
+  lastAuditedAt?: string;
+  status: 'APPLIED' | 'CANARY' | 'PERMANENT' | 'ROLLED_BACK';
+  baseline: SeoMetricSnapshot;
+  latestMetrics?: SeoMetricSnapshot;
+  rankImprovementPct?: number;
+  clickDelta?: number;
+  overallOutcome: OutcomeClassification;
+  checkpoints: {
+    day7?: CheckpointRecord;
+    day14?: CheckpointRecord;
+    day28?: CheckpointRecord;
+  };
+  notes?: string;
+}
+
+export interface OutcomesLedgerSummary {
+  totalTracked: number;
+  confirmedUplifts: number;
+  steadyTracking: number;
+  neutral: number;
+  regressionAlerts: number;
+  rolledBack: number;
+  avgRankImprovementPct: number;
+  totalClicksGained: number;
+  winRatePct: number;
+}
+
+// ── Learned Strategy Weights & Statistical Optimisation ──────────────────────
+
+export interface StrategyPerformanceStats {
+  strategy: SeoActionType | string;
+  sampleCount: number;
+  wins: number;
+  steady: number;
+  neutrals: number;
+  regressions: number;
+  rollbacks: number;
+  winRatePct: number;
+  avgRankImprovementPct: number;
+  avgClickDelta: number;
+  weight: number;
+  confidence: 'HIGH' | 'MEDIUM' | 'LOW' | 'EMERGING';
+  recommendation: string;
+}
+
+export interface LearnedStrategyProfile {
+  generatedAt: string;
+  totalOutcomesAnalysed: number;
+  topPerformingStrategy: SeoActionType | string;
+  lowestPerformingStrategy: SeoActionType | string;
+  strategyWeights: Record<string, number>;
+  strategies: Record<string, StrategyPerformanceStats>;
+  orchestratorDirectives: {
+    preferredStrategies: string[];
+    deprioritizedStrategies: string[];
+    guidance: string[];
+  };
+}

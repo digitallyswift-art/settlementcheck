@@ -1,16 +1,27 @@
 [
   {
-    "id": "pkg_actuator_1793704313732_1",
+    "id": "pkg_actuator_1793840469450_1",
     "query": "settlement agreement calculator",
     "priority": "CRITICAL",
     "actionType": "CONTENT_DEPTH_UPGRADE",
+    "actuationScope": "ADDITIVE_CONTENT_AND_LINKS",
+    "deploymentRisk": "LOW_RISK",
+    "adversarialReview": {
+      "verdict": "COUNTER_PLAN_RECOMMENDED",
+      "deploymentRisk": "LOW_RISK",
+      "executiveSummary": "Pre-audited with 1 automatic counter-plan adjustment(s) applied to protect route contracts and statutory precision.",
+      "critiquePoints": [
+        "Calculator core route preserved. Headline locked to prevent Google Title-Link rewrite drift."
+      ],
+      "evaluatedAt": "2026-11-05T01:01:09.450Z"
+    },
     "seoTechnicalBrief": {
       "query": "settlement agreement calculator",
       "currentMetrics": {
-        "impressions": 788,
-        "clicks": 12,
-        "position": 20.7,
-        "ctr": 1.52
+        "impressions": 198,
+        "clicks": 5,
+        "position": 12.6,
+        "ctr": 2.53
       },
       "searchIntent": "TRANSACTIONAL_CALCULATOR",
       "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
@@ -63,12 +74,725 @@
         "statutoryAccuracyVerified": true
       }
     },
-    "contentDepthUpgrade": {
-      "recommendedModule": "INTERACTIVE_CALCULATOR_CARD",
-      "targetSectionH2": "Interactive Settlement & Statutory Baseline Calculator (April 2026 Rates)",
-      "interactiveToolToEmbed": "/calculator/",
-      "proposedTableSummary": "Official 3-tier statutory matrix: ERA 1996 s.162 redundancy (£751/wk cap) + contractual notice pay (PILON) + Section 403 ITEPA £30,000 tax-free ex-gratia compensation",
-      "expectedUserValueBenefit": "Enables employees to self-calculate their exact statutory minimum floor and tax split in under 2 minutes, dramatically reducing exit bounce rate and improving dwell time."
+    "workedExample": {
+      "type": "STATUTORY_FORMULA_ILLUSTRATION",
+      "caseTitle": "3-Tier Statutory Settlement Structure (ERA 1996 & ITEPA 2003)",
+      "jobTitle": "Senior Operations Lead",
+      "grossSalary": 48000,
+      "yearsOfService": 6,
+      "age": 44,
+      "statutoryRedundancyFloor": 6759,
+      "noticePayPilon": 12000,
+      "exGratiaCompensation": 23241,
+      "totalSettlementOffer": 42000,
+      "taxFreePortion": 30000,
+      "taxablePortion": 12000,
+      "estimatedNetTakeHome": 38160,
+      "statutoryCitations": [
+        "ERA 1996 s.162",
+        "ITEPA 2003 s.403",
+        "ERA 1996 s.203(3)"
+      ],
+      "formulaBreakdown": "Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.",
+      "narrativeBreakdown": "For an employee earning £48,000 with 6 qualifying service years aged 44, the statutory settlement package combines £6,759 statutory redundancy (Tier 1), £12,000 contractual notice pay (Tier 2), and £23,241 ex-gratia compensation (Tier 3), delivering £30,000 tax-free under Section 403 ITEPA 2003.",
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
+    },
+    "comparisonTable": {
+      "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
+      "caption": "Official comparison of statutory termination entitlements under UK employment legislation.",
+      "headers": [
+        "Settlement Component",
+        "Governing Statute",
+        "2026 Cap (GB)",
+        "Tax Treatment",
+        "Key Prerequisite"
+      ],
+      "rows": [
+        {
+          "element": "Statutory Redundancy Pay",
+          "statutoryBasis": "ERA 1996 s.162",
+          "standardCapGB": "£751/week (max £22,530)",
+          "standardCapNI": "£783/week",
+          "taxTreatment": "Tax-free (within £30,000 exemption)",
+          "eligibilityRule": "2+ years continuous service"
+        },
+        {
+          "element": "Unfair Dismissal Award",
+          "statutoryBasis": "ERA 1996 s.124",
+          "standardCapGB": "£123,543 (or 52 wks pay)",
+          "standardCapNI": "£123,543",
+          "taxTreatment": "Tax-free up to £30k (s.403 ITEPA)",
+          "eligibilityRule": "Qualifying unfair dismissal / tribunal claim"
+        },
+        {
+          "element": "Notice Pay (PILON)",
+          "statutoryBasis": "ITEPA 2003 s.402D / Contract",
+          "standardCapGB": "Contractual salary",
+          "standardCapNI": "Contractual salary",
+          "taxTreatment": "Fully taxable (Income Tax & NICs)",
+          "eligibilityRule": "Contractual or statutory notice entitlement"
+        },
+        {
+          "element": "Ex-Gratia Termination Sum",
+          "statutoryBasis": "ERA 1996 s.203 / Common Law",
+          "standardCapGB": "No statutory ceiling (negotiated)",
+          "standardCapNI": "No statutory ceiling (negotiated)",
+          "taxTreatment": "Tax-free up to £30k under s.403 ITEPA 2003",
+          "eligibilityRule": "Mutual agreement & independent legal sign-off"
+        }
+      ],
+      "footnoteCitation": "Statutory authority: Employment Rights Act 1996 s.124 & s.162; ITEPA 2003 s.402D & s.403."
+    },
+    "inProsePlacement": {
+      "targetFilePath": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
+      "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
+      "anchorText": "settlement agreement calculator",
+      "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator](/calculator/)."
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 96,
+      "isLowEffort": false,
+      "burstinessScore": 84,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for settlement agreement calculator on /calculator/",
+    "status": "VALIDATED",
+    "timestamp": "2026-11-05T01:01:09.451Z"
+  },
+  {
+    "id": "pkg_actuator_1793840469451_2",
+    "query": "protective award claim calculator",
+    "priority": "HIGH",
+    "actionType": "META_RECALIBRATION",
+    "actuationScope": "FULL_META_AND_FAQ",
+    "deploymentRisk": "LOW_RISK",
+    "adversarialReview": {
+      "verdict": "COUNTER_PLAN_RECOMMENDED",
+      "deploymentRisk": "LOW_RISK",
+      "executiveSummary": "Pre-audited with 1 automatic counter-plan adjustment(s) applied to protect route contracts and statutory precision.",
+      "critiquePoints": [
+        "Substituted high-authority statutory citation answer for Google AI Overviews."
+      ],
+      "evaluatedAt": "2026-11-05T01:01:09.451Z"
+    },
+    "seoTechnicalBrief": {
+      "query": "protective award claim calculator",
+      "currentMetrics": {
+        "impressions": 55,
+        "clicks": 0,
+        "position": 4.7,
+        "ctr": 0
+      },
+      "searchIntent": "PROTECTIVE_AWARD_CLAIM",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/protective-award/",
+      "characterBudgets": {
+        "titleMin": 45,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "FinancialProduct",
+        "primarySubject": "protective award claim calculator",
+        "targetFaqQuestion": "How is a UK settlement agreement calculated under 2026 statutory rates?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/protective-award/"
+        ],
+        "destinationRoute": "/calculator/",
+        "exactAnchorText": "protective award claim calculator"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Protective Award Calculator UK (90 Days) | SettlementCheck",
+      "calibratedMetaDescription": "Calculate your protective award payout (up to 90 days gross pay under TULRCA 1992 s.189). Free 2-minute check. SRA solicitor review contribution applies.",
+      "answerFirstFaq": {
+        "question": "How is a UK settlement agreement calculated under 2026 statutory rates?",
+        "answer": "Under Section 162 of the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Notice pay (PILON) remains taxable under s.402D.",
+        "characterCount": 236
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/protective-award/",
+        "targetRoute": "/calculator/",
+        "anchorText": "protective award claim calculator",
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [protective award claim calculator](/calculator/) before negotiating."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
+    },
+    "workedExample": {
+      "type": "STATUTORY_FORMULA_ILLUSTRATION",
+      "caseTitle": "Protective Award Statutory Formula (TULRCA 1992 s.189)",
+      "jobTitle": "Manufacturing Operations Lead",
+      "grossSalary": 36000,
+      "yearsOfService": 5,
+      "age": 42,
+      "statutoryRedundancyFloor": 8900,
+      "noticePayPilon": 0,
+      "exGratiaCompensation": 0,
+      "totalSettlementOffer": 8900,
+      "taxFreePortion": 0,
+      "taxablePortion": 8900,
+      "estimatedNetTakeHome": 6052,
+      "salaryBasis": "£36,000 (£692.31/week)",
+      "statutoryFloor": "Up to £8,900 (90 days gross pay)",
+      "statutoryCitations": [
+        "TULRCA 1992 s.188",
+        "TULRCA 1992 s.189",
+        "ERA 1996 s.203(3)"
+      ],
+      "formulaBreakdown": "Up to 90 days gross pay ordered by an Employment Tribunal where collective redundancy consultation duties were breached. Paid on top of statutory redundancy and notice pay.",
+      "narrativeBreakdown": "For an employee earning £36,000 (£692.31/week), a protective award under Section 189 of TULRCA 1992 provides up to 90 days gross pay (£8,900) where collective consultation rules were breached.",
+      "taxTreatment": "Taxable as remuneration under normal PAYE rules.",
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
+    },
+    "comparisonTable": {
+      "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
+      "caption": "Official comparison of statutory termination entitlements under UK employment legislation.",
+      "headers": [
+        "Settlement Component",
+        "Governing Statute",
+        "2026 Cap (GB)",
+        "Tax Treatment",
+        "Key Prerequisite"
+      ],
+      "rows": [
+        {
+          "element": "Statutory Redundancy Pay",
+          "statutoryBasis": "ERA 1996 s.162",
+          "standardCapGB": "£751/week (max £22,530)",
+          "standardCapNI": "£783/week",
+          "taxTreatment": "Tax-free (within £30,000 exemption)",
+          "eligibilityRule": "2+ years continuous service"
+        },
+        {
+          "element": "Unfair Dismissal Award",
+          "statutoryBasis": "ERA 1996 s.124",
+          "standardCapGB": "£123,543 (or 52 wks pay)",
+          "standardCapNI": "£123,543",
+          "taxTreatment": "Tax-free up to £30k (s.403 ITEPA)",
+          "eligibilityRule": "Qualifying unfair dismissal / tribunal claim"
+        },
+        {
+          "element": "Notice Pay (PILON)",
+          "statutoryBasis": "ITEPA 2003 s.402D / Contract",
+          "standardCapGB": "Contractual salary",
+          "standardCapNI": "Contractual salary",
+          "taxTreatment": "Fully taxable (Income Tax & NICs)",
+          "eligibilityRule": "Contractual or statutory notice entitlement"
+        },
+        {
+          "element": "Ex-Gratia Termination Sum",
+          "statutoryBasis": "ERA 1996 s.203 / Common Law",
+          "standardCapGB": "No statutory ceiling (negotiated)",
+          "standardCapNI": "No statutory ceiling (negotiated)",
+          "taxTreatment": "Tax-free up to £30k under s.403 ITEPA 2003",
+          "eligibilityRule": "Mutual agreement & independent legal sign-off"
+        }
+      ],
+      "footnoteCitation": "Statutory authority: Employment Rights Act 1996 s.124 & s.162; ITEPA 2003 s.402D & s.403."
+    },
+    "inProsePlacement": {
+      "targetFilePath": "app/guides/protective-award/page.tsx",
+      "sourceRoute": "/guides/protective-award/",
+      "anchorText": "protective award claim calculator",
+      "matchedExcerpt": "If your employer made 20 or more staff redundant at one establishment without carrying out collective consultation, you may be entitled to a protective award.",
+      "replacementExcerpt": "If your employer made 20 or more staff redundant without consultation, you may be entitled to a protective award of up to 90 days gross pay under Section 189 of TULRCA 1992. You can check your entitlement in under two minutes using our [protective award claim calculator](/protective-award-calculator/), with independent legal advice contributions under Section 203(3) ERA 1996."
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 96,
+      "isLowEffort": false,
+      "burstinessScore": 84,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for protective award claim calculator on /guides/protective-award/",
+    "status": "VALIDATED",
+    "timestamp": "2026-11-05T01:01:09.451Z"
+  },
+  {
+    "id": "pkg_actuator_1793840469451_3",
+    "query": "calculate my redundancy pay",
+    "priority": "HIGH",
+    "actionType": "CONTENT_DEPTH_UPGRADE",
+    "actuationScope": "FULL_META_AND_FAQ",
+    "deploymentRisk": "LOW_RISK",
+    "adversarialReview": {
+      "verdict": "APPROVED_AS_IS",
+      "deploymentRisk": "LOW_RISK",
+      "executiveSummary": "Approved. Preserves canonical route contracts and complies with April 2026 statutory rates (£751/wk cap).",
+      "critiquePoints": [],
+      "evaluatedAt": "2026-11-05T01:01:09.451Z"
+    },
+    "seoTechnicalBrief": {
+      "query": "calculate my redundancy pay",
+      "currentMetrics": {
+        "impressions": 58,
+        "clicks": 0,
+        "position": 10.9,
+        "ctr": 0
+      },
+      "searchIntent": "REDUNDANCY_STATUTORY_CAP",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/redundancy-calculator/",
+      "characterBudgets": {
+        "titleMin": 45,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "WebApplication",
+        "primarySubject": "calculate my redundancy pay",
+        "targetFaqQuestion": "What is the UK statutory redundancy pay cap in 2026?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/redundancy-pay-cap-2026/"
+        ],
+        "destinationRoute": "/redundancy-calculator/",
+        "exactAnchorText": "calculate my redundancy pay"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Redundancy Pay Cap 2026 (£751/wk) | SettlementCheck",
+      "calibratedMetaDescription": "Check the UK statutory redundancy pay cap for 2026 (£751/week limit). See maximum statutory entitlement (£22,530) and tax-free rules. Free check.",
+      "answerFirstFaq": {
+        "question": "What is the UK statutory redundancy pay cap in 2026?",
+        "answer": "From 6 April 2026, the statutory redundancy weekly pay cap in Great Britain is £751 per week under the Employment Rights Act 1996, giving a maximum statutory payout of £22,530 for 20 qualifying years. All statutory redundancy pay is tax-free under the £30,000 threshold of ITEPA 2003.",
+        "characterCount": 284
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/redundancy-pay-cap-2026/",
+        "targetRoute": "/redundancy-calculator/",
+        "anchorText": "calculate my redundancy pay",
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [calculate my redundancy pay](/redundancy-calculator/) before negotiating."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
+    },
+    "workedExample": {
+      "type": "STATUTORY_FORMULA_ILLUSTRATION",
+      "caseTitle": "April 2026 Redundancy Cap (£751/week) Formula (ERA 1996 s.162)",
+      "jobTitle": "Operations Director",
+      "grossSalary": 52000,
+      "yearsOfService": 10,
+      "age": 46,
+      "statutoryRedundancyFloor": 11265,
+      "noticePayPilon": 4000,
+      "exGratiaCompensation": 15000,
+      "totalSettlementOffer": 30265,
+      "taxFreePortion": 26265,
+      "taxablePortion": 4000,
+      "estimatedNetTakeHome": 28985,
+      "statutoryCitations": [
+        "Employment Rights Act 1996 s.162",
+        "The Employment Rights (Increase of Limits) Order 2026",
+        "ITEPA 2003 s.403"
+      ],
+      "formulaBreakdown": "10 years × 1.5 = 15 weeks. Capped at £751/week: 15 × £751 = £11,265 statutory redundancy floor.",
+      "narrativeBreakdown": "For an employee earning £52,000 with 10 qualifying service years aged 46, the statutory redundancy baseline under Section 162 ERA 1996 is £11,265 (15 weeks at the 2026 cap of £751/week). Combined with £15,000 ex-gratia compensation, £26,265 is 100% tax-free under Section 403 ITEPA 2003.",
+      "taxTreatment": "100% tax-free under Section 403 ITEPA 2003 £30,000 threshold.",
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
+    },
+    "comparisonTable": {
+      "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
+      "caption": "Official comparison of statutory termination entitlements under UK employment legislation.",
+      "headers": [
+        "Settlement Component",
+        "Governing Statute",
+        "2026 Cap (GB)",
+        "Tax Treatment",
+        "Key Prerequisite"
+      ],
+      "rows": [
+        {
+          "element": "Statutory Redundancy Pay",
+          "statutoryBasis": "ERA 1996 s.162",
+          "standardCapGB": "£751/week (max £22,530)",
+          "standardCapNI": "£783/week",
+          "taxTreatment": "Tax-free (within £30,000 exemption)",
+          "eligibilityRule": "2+ years continuous service"
+        },
+        {
+          "element": "Unfair Dismissal Award",
+          "statutoryBasis": "ERA 1996 s.124",
+          "standardCapGB": "£123,543 (or 52 wks pay)",
+          "standardCapNI": "£123,543",
+          "taxTreatment": "Tax-free up to £30k (s.403 ITEPA)",
+          "eligibilityRule": "Qualifying unfair dismissal / tribunal claim"
+        },
+        {
+          "element": "Notice Pay (PILON)",
+          "statutoryBasis": "ITEPA 2003 s.402D / Contract",
+          "standardCapGB": "Contractual salary",
+          "standardCapNI": "Contractual salary",
+          "taxTreatment": "Fully taxable (Income Tax & NICs)",
+          "eligibilityRule": "Contractual or statutory notice entitlement"
+        },
+        {
+          "element": "Ex-Gratia Termination Sum",
+          "statutoryBasis": "ERA 1996 s.203 / Common Law",
+          "standardCapGB": "No statutory ceiling (negotiated)",
+          "standardCapNI": "No statutory ceiling (negotiated)",
+          "taxTreatment": "Tax-free up to £30k under s.403 ITEPA 2003",
+          "eligibilityRule": "Mutual agreement & independent legal sign-off"
+        }
+      ],
+      "footnoteCitation": "Statutory authority: Employment Rights Act 1996 s.124 & s.162; ITEPA 2003 s.402D & s.403."
+    },
+    "inProsePlacement": {
+      "targetFilePath": "app/guides/redundancy-pay-cap-2026/page.tsx",
+      "sourceRoute": "/guides/redundancy-pay-cap-2026/",
+      "anchorText": "calculate my redundancy pay",
+      "matchedExcerpt": "Statutory redundancy pay is subject to a statutory weekly cap under the Employment Rights Act 1996.",
+      "replacementExcerpt": "Statutory redundancy pay is capped at £751 per week from 6 April 2026 under Section 162 of the Employment Rights Act 1996. You can calculate your exact statutory redundancy floor using our [statutory redundancy calculator](/redundancy-calculator/) to verify whether your settlement offer exceeds the legal baseline."
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 96,
+      "isLowEffort": false,
+      "burstinessScore": 84,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for calculate my redundancy pay on /redundancy-calculator/",
+    "status": "VALIDATED",
+    "timestamp": "2026-11-05T01:01:09.451Z"
+  },
+  {
+    "id": "pkg_actuator_1793840469452_4",
+    "query": "settlement calculator",
+    "priority": "HIGH",
+    "actionType": "STATUTORY_COMPARISON_TABLE",
+    "actuationScope": "FULL_META_AND_FAQ",
+    "deploymentRisk": "LOW_RISK",
+    "adversarialReview": {
+      "verdict": "COUNTER_PLAN_RECOMMENDED",
+      "deploymentRisk": "LOW_RISK",
+      "executiveSummary": "Pre-audited with 1 automatic counter-plan adjustment(s) applied to protect route contracts and statutory precision.",
+      "critiquePoints": [
+        "Substituted high-authority statutory citation answer for Google AI Overviews."
+      ],
+      "evaluatedAt": "2026-11-05T01:01:09.452Z"
+    },
+    "seoTechnicalBrief": {
+      "query": "settlement calculator",
+      "currentMetrics": {
+        "impressions": 36,
+        "clicks": 7,
+        "position": 10.4,
+        "ctr": 19.44
+      },
+      "searchIntent": "TAX_STATUTORY_EXEMPTION",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/settlement-agreement-tax-calculator/",
+      "characterBudgets": {
+        "titleMin": 45,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "WebApplication",
+        "primarySubject": "settlement calculator",
+        "targetFaqQuestion": "How is a UK settlement agreement calculated under 2026 statutory rates?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/tax-free-settlement-30000/"
+        ],
+        "destinationRoute": "/settlement-agreement-tax-calculator/",
+        "exactAnchorText": "settlement calculator"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Settlement Agreement Tax Calculator 2026 | SettlementCheck",
+      "calibratedMetaDescription": "Calculate tax on your UK settlement agreement. See your £30,000 statutory tax exemption (ITEPA 2003). Free check. SRA solicitor advice contribution.",
+      "answerFirstFaq": {
+        "question": "How is a UK settlement agreement calculated under 2026 statutory rates?",
+        "answer": "Under Section 162 of the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Notice pay (PILON) remains taxable under s.402D.",
+        "characterCount": 236
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/tax-free-settlement-30000/",
+        "targetRoute": "/settlement-agreement-tax-calculator/",
+        "anchorText": "settlement calculator",
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [settlement calculator](/settlement-agreement-tax-calculator/) before negotiating."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
+    },
+    "workedExample": {
+      "type": "STATUTORY_FORMULA_ILLUSTRATION",
+      "caseTitle": "£30,000 Tax Exemption vs PILON Notice Pay (ITEPA 2003 s.403 & s.402D)",
+      "jobTitle": "Senior Finance Manager",
+      "grossSalary": 45000,
+      "yearsOfService": 6,
+      "age": 43,
+      "statutoryRedundancyFloor": 6759,
+      "noticePayPilon": 11250,
+      "exGratiaCompensation": 23241,
+      "totalSettlementOffer": 41250,
+      "taxFreePortion": 30000,
+      "taxablePortion": 11250,
+      "estimatedNetTakeHome": 37650,
+      "statutoryCitations": [
+        "ITEPA 2003 s.403",
+        "ITEPA 2003 s.402D (PENP)",
+        "Section 203(3) ERA 1996"
+      ],
+      "formulaBreakdown": "Statutory redundancy (£6,759) + ex-gratia (£23,241) = £30,000 tax-free. Contractual PILON (£11,250) is taxed as normal earnings.",
+      "narrativeBreakdown": "For an employee earning £45,000 with 6 years continuous service, statutory redundancy (£6,759) and ex-gratia compensation (£23,241) combine to £30,000 completely tax-free under Section 403 ITEPA 2003. Notice pay of £11,250 remains taxable general earnings under Section 402D.",
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
+    },
+    "comparisonTable": {
+      "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
+      "caption": "Official comparison of statutory termination entitlements under UK employment legislation.",
+      "headers": [
+        "Settlement Component",
+        "Governing Statute",
+        "2026 Cap (GB)",
+        "Tax Treatment",
+        "Key Prerequisite"
+      ],
+      "rows": [
+        {
+          "element": "Statutory Redundancy Pay",
+          "statutoryBasis": "ERA 1996 s.162",
+          "standardCapGB": "£751/week (max £22,530)",
+          "standardCapNI": "£783/week",
+          "taxTreatment": "Tax-free (within £30,000 exemption)",
+          "eligibilityRule": "2+ years continuous service"
+        },
+        {
+          "element": "Unfair Dismissal Award",
+          "statutoryBasis": "ERA 1996 s.124",
+          "standardCapGB": "£123,543 (or 52 wks pay)",
+          "standardCapNI": "£123,543",
+          "taxTreatment": "Tax-free up to £30k (s.403 ITEPA)",
+          "eligibilityRule": "Qualifying unfair dismissal / tribunal claim"
+        },
+        {
+          "element": "Notice Pay (PILON)",
+          "statutoryBasis": "ITEPA 2003 s.402D / Contract",
+          "standardCapGB": "Contractual salary",
+          "standardCapNI": "Contractual salary",
+          "taxTreatment": "Fully taxable (Income Tax & NICs)",
+          "eligibilityRule": "Contractual or statutory notice entitlement"
+        },
+        {
+          "element": "Ex-Gratia Termination Sum",
+          "statutoryBasis": "ERA 1996 s.203 / Common Law",
+          "standardCapGB": "No statutory ceiling (negotiated)",
+          "standardCapNI": "No statutory ceiling (negotiated)",
+          "taxTreatment": "Tax-free up to £30k under s.403 ITEPA 2003",
+          "eligibilityRule": "Mutual agreement & independent legal sign-off"
+        }
+      ],
+      "footnoteCitation": "Statutory authority: Employment Rights Act 1996 s.124 & s.162; ITEPA 2003 s.402D & s.403."
+    },
+    "inProsePlacement": {
+      "targetFilePath": "app/guides/tax-free-settlement-30000/page.tsx",
+      "sourceRoute": "/guides/tax-free-settlement-30000/",
+      "anchorText": "settlement calculator",
+      "matchedExcerpt": "Under UK tax rules, the first £30,000 of compensation for loss of office is exempt from income tax and National Insurance.",
+      "replacementExcerpt": "Under UK tax law, the first £30,000 of compensation for loss of office is exempt from income tax and National Insurance under Section 403 of ITEPA 2003. To see how your contractual notice pay and ex-gratia compensation split, use our [settlement agreement tax calculator](/settlement-agreement-tax-calculator/) before signing."
+    },
+    "statutoryAudit": {
+      "isCompliant": true,
+      "governingLegislation": [
+        "Employment Rights Act 1996 s.162",
+        "Section 203(3) ERA 1996",
+        "ITEPA 2003 s.403"
+      ],
+      "statutoryCapsVerified": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "sraBoundaryPassed": true,
+      "issues": []
+    },
+    "antiAiQuality": {
+      "authenticityScore": 96,
+      "isLowEffort": false,
+      "burstinessScore": 84,
+      "answerFirstVerified": true,
+      "roboticMarkersFound": [],
+      "humanTouchImprovements": []
+    },
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for settlement calculator on /settlement-agreement-tax-calculator/",
+    "status": "VALIDATED",
+    "timestamp": "2026-11-05T01:01:09.452Z"
+  },
+  {
+    "id": "pkg_actuator_1793840469452_5",
+    "query": "average settlement agreement amount uk",
+    "priority": "HIGH",
+    "actionType": "DIGITAL_PR_PITCH",
+    "actuationScope": "FULL_META_AND_FAQ",
+    "deploymentRisk": "LOW_RISK",
+    "adversarialReview": {
+      "verdict": "APPROVED_AS_IS",
+      "deploymentRisk": "LOW_RISK",
+      "executiveSummary": "Approved. Preserves canonical route contracts and complies with April 2026 statutory rates (£751/wk cap).",
+      "critiquePoints": [],
+      "evaluatedAt": "2026-11-05T01:01:09.452Z"
+    },
+    "seoTechnicalBrief": {
+      "query": "average settlement agreement amount uk",
+      "currentMetrics": {
+        "impressions": 47,
+        "clicks": 0,
+        "position": 19.5,
+        "ctr": 0
+      },
+      "searchIntent": "VALUATION_BENCHMARK",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/",
+      "characterBudgets": {
+        "titleMin": 45,
+        "titleMax": 60,
+        "metaMin": 140,
+        "metaMax": 155
+      },
+      "statutoryInvariants": {
+        "weeklyCapGB": 751,
+        "weeklyCapNI": 783,
+        "taxFreeThreshold": 30000,
+        "unfairDismissalCap": 123543,
+        "protectiveAwardDays": 90
+      },
+      "schemaSpecification": {
+        "type": "FinancialProduct",
+        "primarySubject": "average settlement agreement amount uk",
+        "targetFaqQuestion": "What is an average settlement agreement payout in the UK?"
+      },
+      "internalLinkGraph": {
+        "sourceRoutes": [
+          "/guides/how-to-negotiate-a-settlement-agreement/"
+        ],
+        "destinationRoute": "/guides/average-settlement-agreement-payout-uk/",
+        "exactAnchorText": "average settlement agreement amount uk"
+      }
+    },
+    "copyPackage": {
+      "calibratedTitle": "Average Settlement Payout UK 2026 | SettlementCheck",
+      "calibratedMetaDescription": "See official UK settlement agreement benchmarks and statutory redundancy caps (£751/wk). Free 2-minute valuation. SRA solicitor review guidance.",
+      "answerFirstFaq": {
+        "question": "What is an average settlement agreement payout in the UK?",
+        "answer": "A typical UK settlement offer includes statutory or enhanced redundancy (capped at £751 per week under ERA 1996), contractual notice pay, and 1 to 3 months gross salary as ex-gratia compensation. Genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.",
+        "characterCount": 275
+      },
+      "contextualInternalLinkBlock": {
+        "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
+        "targetRoute": "/guides/average-settlement-agreement-payout-uk/",
+        "anchorText": "average settlement agreement amount uk",
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [average settlement agreement amount uk](/guides/average-settlement-agreement-payout-uk/) before negotiating."
+      },
+      "ctaText": "Calculate my estimate →",
+      "brandComplianceReport": {
+        "zeroEmDashes": true,
+        "zeroBannedUsTerms": true,
+        "ukSpellingVerified": true,
+        "employerFeesMentioned": true,
+        "statutoryAccuracyVerified": true
+      }
     },
     "workedExample": {
       "type": "STATUTORY_FORMULA_ILLUSTRATION",
@@ -107,46 +831,44 @@
         {
           "element": "Statutory Redundancy Pay",
           "statutoryBasis": "ERA 1996 s.162",
-          "standardCapGB": "£751/week (£22,530 max)",
-          "standardCapNI": "£783/week (£23,490 max)",
-          "taxTreatment": "100% Tax-Free (counts toward £30k exemption)",
-          "eligibilityRule": "Minimum 2 full years continuous service"
+          "standardCapGB": "£751/week (max £22,530)",
+          "standardCapNI": "£783/week",
+          "taxTreatment": "Tax-free (within £30,000 exemption)",
+          "eligibilityRule": "2+ years continuous service"
+        },
+        {
+          "element": "Unfair Dismissal Award",
+          "statutoryBasis": "ERA 1996 s.124",
+          "standardCapGB": "£123,543 (or 52 wks pay)",
+          "standardCapNI": "£123,543",
+          "taxTreatment": "Tax-free up to £30k (s.403 ITEPA)",
+          "eligibilityRule": "Qualifying unfair dismissal / tribunal claim"
         },
         {
           "element": "Notice Pay (PILON)",
-          "statutoryBasis": "ITEPA 2003 s.402D",
+          "statutoryBasis": "ITEPA 2003 s.402D / Contract",
           "standardCapGB": "Contractual salary",
           "standardCapNI": "Contractual salary",
-          "taxTreatment": "Fully taxable (Income Tax & Employee NICs)",
-          "eligibilityRule": "Contractual or statutory notice period"
+          "taxTreatment": "Fully taxable (Income Tax & NICs)",
+          "eligibilityRule": "Contractual or statutory notice entitlement"
         },
         {
-          "element": "Ex-Gratia Compensation",
-          "statutoryBasis": "ERA 1996 s.203",
-          "standardCapGB": "£123,543 unfair dismissal limit",
-          "standardCapNI": "£123,543 statutory limit",
-          "taxTreatment": "Tax-free up to £30,000 (s.403 ITEPA)",
-          "eligibilityRule": "Waives tribunal claims with independent legal advice"
-        },
-        {
-          "element": "Legal Fee Contribution",
-          "statutoryBasis": "Section 203(3) ERA 1996 practice",
-          "standardCapGB": "£350 - £750+ plus VAT",
-          "standardCapNI": "£350 - £750+ plus VAT",
-          "taxTreatment": "Exempt benefit (paid directly to solicitor)",
-          "eligibilityRule": "Instructed SRA-regulated independent solicitor"
+          "element": "Ex-Gratia Termination Sum",
+          "statutoryBasis": "ERA 1996 s.203 / Common Law",
+          "standardCapGB": "No statutory ceiling (negotiated)",
+          "standardCapNI": "No statutory ceiling (negotiated)",
+          "taxTreatment": "Tax-free up to £30k under s.403 ITEPA 2003",
+          "eligibilityRule": "Mutual agreement & independent legal sign-off"
         }
       ],
-      "footnoteCitation": "Employment Rights Act 1996; ITEPA 2003 Part 6 Chapter 3; April 2026 statutory rates."
+      "footnoteCitation": "Statutory authority: Employment Rights Act 1996 s.124 & s.162; ITEPA 2003 s.402D & s.403."
     },
     "inProsePlacement": {
       "targetFilePath": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
       "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-      "destinationRoute": "/calculator/",
+      "anchorText": "average settlement agreement amount uk",
       "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator](/calculator/).",
-      "anchorText": "settlement agreement calculator",
-      "relevanceRationale": "Provides direct funnel transition from informational negotiation guide to transactional statutory evaluation tool."
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [average settlement agreement amount uk](/guides/average-settlement-agreement-payout-uk/)."
     },
     "statutoryAudit": {
       "isCompliant": true,
@@ -173,192 +895,33 @@
       "roboticMarkersFound": [],
       "humanTouchImprovements": []
     },
-    "stagedDiffSummary": "Staged Content Depth Upgrade: Embed Interactive Calculator Card & 3-Tier Statutory Matrix for settlement agreement calculator on /calculator/",
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for average settlement agreement amount uk on /guides/average-settlement-agreement-payout-uk/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-05T00:11:34.000Z"
+    "timestamp": "2026-11-05T01:01:09.452Z"
   },
   {
-    "id": "pkg_actuator_1793704313733_2",
-    "query": "settlement agreement tax calculator uk",
-    "priority": "HIGH",
-    "actionType": "CONTENT_DEPTH_UPGRADE",
-    "seoTechnicalBrief": {
-      "query": "settlement agreement tax calculator uk",
-      "currentMetrics": {
-        "impressions": 450,
-        "clicks": 8,
-        "position": 18.5,
-        "ctr": 1.78
-      },
-      "searchIntent": "TAX_STATUTORY_EXEMPTION",
-      "targetCanonicalUrl": "https://settlementcheck.co.uk/settlement-agreement-tax-calculator/",
-      "characterBudgets": {
-        "titleMin": 45,
-        "titleMax": 60,
-        "metaMin": 140,
-        "metaMax": 155
-      },
-      "statutoryInvariants": {
-        "weeklyCapGB": 751,
-        "weeklyCapNI": 783,
-        "taxFreeThreshold": 30000,
-        "unfairDismissalCap": 123543,
-        "protectiveAwardDays": 90
-      },
-      "schemaSpecification": {
-        "type": "HowTo",
-        "primarySubject": "settlement agreement tax calculator uk",
-        "targetFaqQuestion": "Is a settlement agreement payout tax-free in the UK?"
-      },
-      "internalLinkGraph": {
-        "sourceRoutes": [
-          "/guides/tax-free-settlement-30000/"
-        ],
-        "destinationRoute": "/settlement-agreement-tax-calculator/",
-        "exactAnchorText": "settlement agreement tax calculator uk"
-      }
-    },
-    "copyPackage": {
-      "calibratedTitle": "Settlement Agreement Tax Calculator UK | SettlementCheck",
-      "calibratedMetaDescription": "Calculate tax on your UK settlement agreement. See your £30,000 statutory tax exemption (ITEPA 2003). Free check. SRA solicitor advice contribution.",
-      "answerFirstFaq": {
-        "question": "Is a settlement agreement payout tax-free in the UK?",
-        "answer": "Under Section 403 of ITEPA 2003, genuine termination compensation up to £30,000 is exempt from income tax and National Insurance, whereas notice pay (PILON) is fully taxable under Section 402D.",
-        "characterCount": 198
-      },
-      "contextualInternalLinkBlock": {
-        "sourceRoute": "/guides/tax-free-settlement-30000/",
-        "targetRoute": "/settlement-agreement-tax-calculator/",
-        "anchorText": "settlement agreement tax calculator uk",
-        "surroundingText": "Under UK tax law, compensation up to £30,000 is exempt from income tax under Section 403 of ITEPA 2003. To see how your contractual notice pay and ex-gratia compensation split, use our [settlement agreement tax calculator uk](/settlement-agreement-tax-calculator/) before signing."
-      },
-      "ctaText": "Calculate my estimate →",
-      "brandComplianceReport": {
-        "zeroEmDashes": true,
-        "zeroBannedUsTerms": true,
-        "ukSpellingVerified": true,
-        "employerFeesMentioned": true,
-        "statutoryAccuracyVerified": true
-      }
-    },
-    "contentDepthUpgrade": {
-      "recommendedModule": "STATUTORY_WORKED_TABLE",
-      "targetSectionH2": "Tax Treatment Breakdown: s.403 ITEPA Exemption vs Post-Employment Notice Pay (PENP)",
-      "interactiveToolToEmbed": "/settlement-agreement-tax-calculator/",
-      "proposedTableSummary": "Statutory comparison matrix distinguishing contractual PILON (fully taxable under ITEPA s.402D) from genuine termination payments (exempt up to £30,000 under s.403)",
-      "expectedUserValueBenefit": "Resolves employee confusion around taxable notice pay versus tax-free compensation, qualifying the page for Google rich snippet carousels."
-    },
-    "workedExample": {
-      "type": "STATUTORY_FORMULA_ILLUSTRATION",
-      "caseTitle": "Tax Exemption Split Analysis (ITEPA 2003 s.403 vs s.402D)",
-      "jobTitle": "Technology Consultant",
-      "grossSalary": 60000,
-      "yearsOfService": 4,
-      "age": 38,
-      "statutoryRedundancyFloor": 3004,
-      "noticePayPilon": 15000,
-      "exGratiaCompensation": 32000,
-      "totalSettlementOffer": 50000,
-      "taxFreePortion": 30000,
-      "taxablePortion": 20000,
-      "estimatedNetTakeHome": 42200,
-      "statutoryCitations": [
-        "ITEPA 2003 s.403",
-        "ITEPA 2003 s.402D",
-        "ERA 1996 s.162"
-      ],
-      "formulaBreakdown": "Notice Pay PILON (£15,000, taxable) + Statutory Redundancy (£3,004, tax-free) + Ex-Gratia (£32,000, of which £26,996 tax-free up to £30k threshold).",
-      "narrativeBreakdown": "Under Section 403 ITEPA 2003, genuine termination compensation up to £30,000 is tax-free. Post-Employment Notice Pay of £15,000 is subject to statutory PAYE and employee NIC deductions under Section 402D.",
-      "employerContribution": "Employers standardly contribute toward independent solicitor fees (£350 to £500+ plus VAT) directly to ensure statutory advice under Section 203(3) ERA 1996."
-    },
-    "comparisonTable": {
-      "tableTitle": "Settlement Agreement Tax Treatment Comparison (2026)",
-      "caption": "HMRC treatment of settlement agreement sums under ITEPA 2003.",
-      "headers": [
-        "Settlement Component",
-        "Governing Statute",
-        "2026 Cap (GB)",
-        "Tax Treatment",
-        "Key Prerequisite"
-      ],
-      "rows": [
-        {
-          "element": "Notice Pay (PILON)",
-          "statutoryBasis": "ITEPA 2003 s.402D",
-          "standardCapGB": "Contractual salary",
-          "standardCapNI": "Contractual salary",
-          "taxTreatment": "Fully taxable (Income Tax & Employee NICs)",
-          "eligibilityRule": "Contractual or statutory notice entitlement"
-        },
-        {
-          "element": "Ex-Gratia Termination Sum",
-          "statutoryBasis": "ITEPA 2003 s.403",
-          "standardCapGB": "£30,000 tax-free allowance",
-          "standardCapNI": "£30,000 tax-free allowance",
-          "taxTreatment": "100% Tax-Free up to £30,000 threshold",
-          "eligibilityRule": "Genuine non-contractual compensation for loss of office"
-        },
-        {
-          "element": "Statutory Redundancy Floor",
-          "statutoryBasis": "ERA 1996 s.162",
-          "standardCapGB": "£751/week (£22,530 max)",
-          "standardCapNI": "£783/week (£23,490 max)",
-          "taxTreatment": "Tax-Free under £30k cap",
-          "eligibilityRule": "Minimum 2 full qualifying service years"
-        }
-      ],
-      "footnoteCitation": "Income Tax (Earnings and Pensions) Act 2003; April 2026 statutory rates."
-    },
-    "inProsePlacement": {
-      "targetFilePath": "app/guides/tax-free-settlement-30000/page.tsx",
-      "sourceRoute": "/guides/tax-free-settlement-30000/",
-      "destinationRoute": "/settlement-agreement-tax-calculator/",
-      "matchedExcerpt": "Under UK tax rules, the first £30,000 of compensation for loss of office is exempt from income tax and National Insurance.",
-      "replacementExcerpt": "Under UK tax law, the first £30,000 of compensation for loss of office is exempt from income tax and National Insurance under Section 403 of ITEPA 2003. To see how your contractual notice pay and ex-gratia compensation split, use our [settlement agreement tax calculator uk](/settlement-agreement-tax-calculator/) before signing.",
-      "anchorText": "settlement agreement tax calculator uk",
-      "relevanceRationale": "Enhances thematic relevance and links thin guide to interactive computational tool."
-    },
-    "statutoryAudit": {
-      "isCompliant": true,
-      "governingLegislation": [
-        "ITEPA 2003 s.403",
-        "ITEPA 2003 s.402D",
-        "Section 203(3) ERA 1996"
-      ],
-      "statutoryCapsVerified": {
-        "weeklyCapGB": 751,
-        "weeklyCapNI": 783,
-        "taxFreeThreshold": 30000,
-        "unfairDismissalCap": 123543,
-        "protectiveAwardDays": 90
-      },
-      "sraBoundaryPassed": true,
-      "issues": []
-    },
-    "antiAiQuality": {
-      "authenticityScore": 95,
-      "isLowEffort": false,
-      "burstinessScore": 82,
-      "answerFirstVerified": true,
-      "roboticMarkersFound": [],
-      "humanTouchImprovements": []
-    },
-    "stagedDiffSummary": "Staged Content Depth Upgrade: Inject Statutory Comparison Table & PENP Matrix on /settlement-agreement-tax-calculator/",
-    "status": "VALIDATED",
-    "timestamp": "2026-11-05T00:11:34.000Z"
-  },
-  {
-    "id": "pkg_actuator_1793704313733_3",
+    "id": "pkg_actuator_1793840469452_6",
     "query": "compromise agreement calculator",
-    "priority": "HIGH",
-    "actionType": "CONTENT_DEPTH_UPGRADE",
+    "priority": "CRITICAL",
+    "actionType": "META_RECALIBRATION",
+    "actuationScope": "FULL_META_AND_FAQ",
+    "deploymentRisk": "LOW_RISK",
+    "adversarialReview": {
+      "verdict": "COUNTER_PLAN_RECOMMENDED",
+      "deploymentRisk": "LOW_RISK",
+      "executiveSummary": "Pre-audited with 1 automatic counter-plan adjustment(s) applied to protect route contracts and statutory precision.",
+      "critiquePoints": [
+        "Substituted high-authority statutory citation answer for Google AI Overviews."
+      ],
+      "evaluatedAt": "2026-11-05T01:01:09.452Z"
+    },
     "seoTechnicalBrief": {
       "query": "compromise agreement calculator",
       "currentMetrics": {
-        "impressions": 390,
-        "clicks": 6,
-        "position": 14.2,
-        "ctr": 1.54
+        "impressions": 106,
+        "clicks": 0,
+        "position": 8.5,
+        "ctr": 0
       },
       "searchIntent": "COMPROMISE_AGREEMENT_LEGACY",
       "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/compromise-agreement-calculator-uk/",
@@ -378,7 +941,7 @@
       "schemaSpecification": {
         "type": "WebApplication",
         "primarySubject": "compromise agreement calculator",
-        "targetFaqQuestion": "What is a compromise agreement under UK employment law?"
+        "targetFaqQuestion": "How is a UK settlement agreement calculated under 2026 statutory rates?"
       },
       "internalLinkGraph": {
         "sourceRoutes": [
@@ -392,15 +955,15 @@
       "calibratedTitle": "Compromise Agreement Calculator UK (2026) | SettlementCheck",
       "calibratedMetaDescription": "Calculate your compromise agreement payout under 2026 UK statutory rates (£751/wk cap). Free check. Customary employer legal contribution applies.",
       "answerFirstFaq": {
-        "question": "What is a compromise agreement under UK employment law?",
-        "answer": "A compromise agreement (now officially termed a settlement agreement) is a legally binding waiver of employment claims in exchange for compensation, with statutory redundancy capped at £751 per week under the ERA 1996.",
-        "characterCount": 226
+        "question": "How is a UK settlement agreement calculated under 2026 statutory rates?",
+        "answer": "Under Section 162 of the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Notice pay (PILON) remains taxable under s.402D.",
+        "characterCount": 236
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
         "targetRoute": "/guides/compromise-agreement-calculator-uk/",
         "anchorText": "compromise agreement calculator",
-        "surroundingText": "If your employer still refers to the document as a compromise agreement, check the 2026 statutory rates using our [compromise agreement calculator](/guides/compromise-agreement-calculator-uk/) before negotiating."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [compromise agreement calculator](/guides/compromise-agreement-calculator-uk/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -411,39 +974,32 @@
         "statutoryAccuracyVerified": true
       }
     },
-    "contentDepthUpgrade": {
-      "recommendedModule": "INTERACTIVE_CALCULATOR_CARD",
-      "targetSectionH2": "Calculate Your Compromise Agreement Settlement Value (2026 Statutory Rates)",
-      "interactiveToolToEmbed": "/calculator/",
-      "proposedTableSummary": "Legacy compromise agreement vs modern settlement agreement statutory rights comparator (Section 203 ERA 1996 waiver requirements)",
-      "expectedUserValueBenefit": "Captures high-intent users searching for legacy terms by embedding modern calculation tools and SRA advice contribution information directly into the guide."
-    },
     "workedExample": {
       "type": "STATUTORY_FORMULA_ILLUSTRATION",
-      "caseTitle": "Compromise Agreement Modern Formula Illustration",
-      "jobTitle": "Senior Commercial Manager",
-      "grossSalary": 54000,
-      "yearsOfService": 8,
-      "age": 46,
-      "statutoryRedundancyFloor": 9012,
-      "noticePayPilon": 13500,
-      "exGratiaCompensation": 25488,
-      "totalSettlementOffer": 48000,
+      "caseTitle": "3-Tier Statutory Settlement Structure (ERA 1996 & ITEPA 2003)",
+      "jobTitle": "Senior Operations Lead",
+      "grossSalary": 48000,
+      "yearsOfService": 6,
+      "age": 44,
+      "statutoryRedundancyFloor": 6759,
+      "noticePayPilon": 12000,
+      "exGratiaCompensation": 23241,
+      "totalSettlementOffer": 42000,
       "taxFreePortion": 30000,
-      "taxablePortion": 18000,
-      "estimatedNetTakeHome": 41340,
+      "taxablePortion": 12000,
+      "estimatedNetTakeHome": 38160,
       "statutoryCitations": [
         "ERA 1996 s.162",
         "ITEPA 2003 s.403",
         "ERA 1996 s.203(3)"
       ],
-      "formulaBreakdown": "Statutory Redundancy Floor (£9,012) + Notice Pay (£13,500) + Ex-Gratia Termination Sum (£25,488). Up to £30,000 is tax-free.",
-      "narrativeBreakdown": "Under Section 162 ERA 1996, the statutory redundancy floor for an employee aged 46 with 8 service years is £9,012 (£751 x 12 weeks). Combined with notice and ex-gratia compensation, £30,000 is tax-exempt under s.403 ITEPA 2003.",
-      "employerContribution": "Employers customarily contribute toward independent legal advice (£350 to £500+ plus VAT) directly to ensure Section 203(3) validity."
+      "formulaBreakdown": "Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.",
+      "narrativeBreakdown": "For an employee earning £48,000 with 6 qualifying service years aged 44, the statutory settlement package combines £6,759 statutory redundancy (Tier 1), £12,000 contractual notice pay (Tier 2), and £23,241 ex-gratia compensation (Tier 3), delivering £30,000 tax-free under Section 403 ITEPA 2003.",
+      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your instructed solicitor upon completion."
     },
     "comparisonTable": {
-      "tableTitle": "Compromise Agreement vs Settlement Agreement Legal Standards",
-      "caption": "Evolution of statutory termination agreements under Section 203 ERA 1996.",
+      "tableTitle": "UK Statutory Settlement Components & Tax Comparison (2026 Rates)",
+      "caption": "Official comparison of statutory termination entitlements under UK employment legislation.",
       "headers": [
         "Settlement Component",
         "Governing Statute",
@@ -453,382 +1009,46 @@
       ],
       "rows": [
         {
-          "element": "Statutory Redundancy Minimum",
+          "element": "Statutory Redundancy Pay",
           "statutoryBasis": "ERA 1996 s.162",
-          "standardCapGB": "£751/week (£22,530 max)",
-          "standardCapNI": "£783/week (£23,490 max)",
-          "taxTreatment": "100% Tax-Free under £30k exemption",
-          "eligibilityRule": "2+ years continuous qualifying service"
+          "standardCapGB": "£751/week (max £22,530)",
+          "standardCapNI": "£783/week",
+          "taxTreatment": "Tax-free (within £30,000 exemption)",
+          "eligibilityRule": "2+ years continuous service"
+        },
+        {
+          "element": "Unfair Dismissal Award",
+          "statutoryBasis": "ERA 1996 s.124",
+          "standardCapGB": "£123,543 (or 52 wks pay)",
+          "standardCapNI": "£123,543",
+          "taxTreatment": "Tax-free up to £30k (s.403 ITEPA)",
+          "eligibilityRule": "Qualifying unfair dismissal / tribunal claim"
         },
         {
           "element": "Notice Pay (PILON)",
-          "statutoryBasis": "ITEPA 2003 s.402D",
+          "statutoryBasis": "ITEPA 2003 s.402D / Contract",
           "standardCapGB": "Contractual salary",
           "standardCapNI": "Contractual salary",
           "taxTreatment": "Fully taxable (Income Tax & NICs)",
-          "eligibilityRule": "Contractual or statutory notice period"
+          "eligibilityRule": "Contractual or statutory notice entitlement"
         },
         {
-          "element": "Ex-Gratia Sum",
-          "statutoryBasis": "ERA 1996 s.203",
-          "standardCapGB": "£123,543 statutory limit",
-          "standardCapNI": "£123,543 statutory limit",
-          "taxTreatment": "Tax-free up to £30,000 (s.403 ITEPA)",
-          "eligibilityRule": "Independent solicitor legal sign-off"
+          "element": "Ex-Gratia Termination Sum",
+          "statutoryBasis": "ERA 1996 s.203 / Common Law",
+          "standardCapGB": "No statutory ceiling (negotiated)",
+          "standardCapNI": "No statutory ceiling (negotiated)",
+          "taxTreatment": "Tax-free up to £30k under s.403 ITEPA 2003",
+          "eligibilityRule": "Mutual agreement & independent legal sign-off"
         }
       ],
-      "footnoteCitation": "Employment Rights Act 1996; Enterprise and Regulatory Reform Act 2013; April 2026 rates."
+      "footnoteCitation": "Statutory authority: Employment Rights Act 1996 s.124 & s.162; ITEPA 2003 s.402D & s.403."
     },
     "inProsePlacement": {
       "targetFilePath": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
       "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-      "destinationRoute": "/guides/compromise-agreement-calculator-uk/",
-      "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement baselines using our [compromise agreement calculator](/guides/compromise-agreement-calculator-uk/) to evaluate the statutory redundancy floor.",
       "anchorText": "compromise agreement calculator",
-      "relevanceRationale": "Reroutes legacy compromise queries to verified statutory rate calculator."
-    },
-    "statutoryAudit": {
-      "isCompliant": true,
-      "governingLegislation": [
-        "Employment Rights Act 1996 s.162",
-        "Enterprise and Regulatory Reform Act 2013",
-        "ITEPA 2003 s.403"
-      ],
-      "statutoryCapsVerified": {
-        "weeklyCapGB": 751,
-        "weeklyCapNI": 783,
-        "taxFreeThreshold": 30000,
-        "unfairDismissalCap": 123543,
-        "protectiveAwardDays": 90
-      },
-      "sraBoundaryPassed": true,
-      "issues": []
-    },
-    "antiAiQuality": {
-      "authenticityScore": 94,
-      "isLowEffort": false,
-      "burstinessScore": 80,
-      "answerFirstVerified": true,
-      "roboticMarkersFound": [],
-      "humanTouchImprovements": []
-    },
-    "stagedDiffSummary": "Staged Content Depth Upgrade: Embed 2026 Compromise Agreement Bridge Tool Card on /guides/compromise-agreement-calculator-uk/",
-    "status": "VALIDATED",
-    "timestamp": "2026-11-05T00:11:34.000Z"
-  },
-  {
-    "id": "pkg_actuator_1793704313733_4",
-    "query": "calculate settlement agreement",
-    "priority": "HIGH",
-    "actionType": "DIGITAL_PR_PITCH",
-    "seoTechnicalBrief": {
-      "query": "calculate settlement agreement",
-      "currentMetrics": {
-        "impressions": 320,
-        "clicks": 5,
-        "position": 16.8,
-        "ctr": 1.56
-      },
-      "searchIntent": "TRANSACTIONAL_CALCULATOR",
-      "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
-      "characterBudgets": {
-        "titleMin": 45,
-        "titleMax": 60,
-        "metaMin": 140,
-        "metaMax": 155
-      },
-      "statutoryInvariants": {
-        "weeklyCapGB": 751,
-        "weeklyCapNI": 783,
-        "taxFreeThreshold": 30000,
-        "unfairDismissalCap": 123543,
-        "protectiveAwardDays": 90
-      },
-      "schemaSpecification": {
-        "type": "WebApplication",
-        "primarySubject": "calculate settlement agreement",
-        "targetFaqQuestion": "How do you calculate a settlement agreement payout in the UK?"
-      },
-      "internalLinkGraph": {
-        "sourceRoutes": [
-          "/guides/how-to-negotiate-a-settlement-agreement/"
-        ],
-        "destinationRoute": "/calculator/",
-        "exactAnchorText": "calculate settlement agreement"
-      }
-    },
-    "copyPackage": {
-      "calibratedTitle": "Calculate Settlement Agreement UK (2026) | SettlementCheck",
-      "calibratedMetaDescription": "Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.",
-      "answerFirstFaq": {
-        "question": "How do you calculate a settlement agreement payout in the UK?",
-        "answer": "A UK settlement calculation combines statutory redundancy (capped at £751 per week under ERA 1996), contractual notice pay, and negotiated ex-gratia compensation tax-free up to £30,000 under ITEPA 2003.",
-        "characterCount": 213
-      },
-      "contextualInternalLinkBlock": {
-        "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-        "targetRoute": "/calculator/",
-        "anchorText": "calculate settlement agreement",
-        "surroundingText": "When assessing your employer exit offer, you can [calculate settlement agreement](/calculator/) entitlements under 2026 statutory caps before entering without prejudice discussions."
-      },
-      "ctaText": "Calculate my estimate →",
-      "brandComplianceReport": {
-        "zeroEmDashes": true,
-        "zeroBannedUsTerms": true,
-        "ukSpellingVerified": true,
-        "employerFeesMentioned": true,
-        "statutoryAccuracyVerified": true
-      }
-    },
-    "digitalPrPitch": {
-      "pitchAngle": "Real-time MoJ Tribunal Backlog Tracker data reveals 48+ week average delays, establishing pre-tribunal settlement agreements as the dominant UK employment exit mechanism in 2026",
-      "targetJournalists": "Legal & Employment Correspondents at Personnel Today, People Management, Law Society Gazette, Employment Law Journal",
-      "hookHeadline": "MoJ Tribunal Wait Times Exceed 500 Days as April 2026 Statutory Redundancy Cap Climbs to £751/wk",
-      "keyStatSummary": "Ministry of Justice tribunal data tracked by SettlementCheck reveals average hearing wait times now exceed 48 weeks, while the statutory weekly pay cap rises to £751 and unfair dismissal compensation caps at £123,543 from 6 April 2026.",
-      "sourceDataAsset": "/tribunal-backlog-tracker/",
-      "recommendedOutreachCopy": "Pitch our live MoJ Tribunal Backlog Tracker dataset to legal journalists, showcasing how court delays are compelling both employers and employees to negotiate settlement packages earlier."
-    },
-    "workedExample": {
-      "type": "STATUTORY_FORMULA_ILLUSTRATION",
-      "caseTitle": "Statutory Calculation Mechanics (ERA 1996 & ITEPA 2003)",
-      "jobTitle": "Procurement Specialist",
-      "grossSalary": 42000,
-      "yearsOfService": 5,
-      "age": 41,
-      "statutoryRedundancyFloor": 4130,
-      "noticePayPilon": 10500,
-      "exGratiaCompensation": 20370,
-      "totalSettlementOffer": 35000,
-      "taxFreePortion": 24500,
-      "taxablePortion": 10500,
-      "estimatedNetTakeHome": 31850,
-      "statutoryCitations": [
-        "ERA 1996 s.162",
-        "ITEPA 2003 s.403",
-        "ERA 1996 s.203(3)"
-      ],
-      "formulaBreakdown": "Statutory Redundancy Floor (£4,130) + Contractual Notice Pay (£10,500) + Ex-Gratia Sum (£20,370). £24,500 is completely tax-free.",
-      "narrativeBreakdown": "For a 41-year-old employee earning £42,000 with 5 qualifying service years, statutory redundancy provides £4,130 (£751 x 5.5 weeks). Contractual PILON of £10,500 is taxable, while ex-gratia compensation sits within the £30,000 statutory tax exemption.",
-      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to an independent solicitor for agreement certification."
-    },
-    "comparisonTable": {
-      "tableTitle": "Official UK Settlement Component Thresholds (2026)",
-      "caption": "Primary statutory limits governing settlement calculations in Great Britain.",
-      "headers": [
-        "Settlement Component",
-        "Governing Statute",
-        "2026 Cap (GB)",
-        "Tax Treatment",
-        "Key Prerequisite"
-      ],
-      "rows": [
-        {
-          "element": "Statutory Redundancy Pay",
-          "statutoryBasis": "ERA 1996 s.162",
-          "standardCapGB": "£751/week (£22,530 max)",
-          "standardCapNI": "£783/week (£23,490 max)",
-          "taxTreatment": "100% Tax-Free under £30k exemption",
-          "eligibilityRule": "Minimum 2 full years qualifying service"
-        },
-        {
-          "element": "Notice Pay (PILON)",
-          "statutoryBasis": "ITEPA 2003 s.402D",
-          "standardCapGB": "Contractual salary",
-          "standardCapNI": "Contractual salary",
-          "taxTreatment": "Fully taxable (PAYE & NICs)",
-          "eligibilityRule": "Contractual or statutory notice period"
-        },
-        {
-          "element": "Ex-Gratia Sum",
-          "statutoryBasis": "ERA 1996 s.203",
-          "standardCapGB": "£123,543 statutory limit",
-          "standardCapNI": "£123,543 statutory limit",
-          "taxTreatment": "Tax-free up to £30,000 (s.403 ITEPA)",
-          "eligibilityRule": "Independent solicitor legal sign-off"
-        }
-      ],
-      "footnoteCitation": "Employment Rights Act 1996; ITEPA 2003 Part 6 Chapter 3; April 2026 statutory rates."
-    },
-    "inProsePlacement": {
-      "targetFilePath": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
-      "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-      "destinationRoute": "/calculator/",
       "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, employees can [calculate settlement agreement](/calculator/) baselines under 2026 statutory caps to negotiate with confidence.",
-      "anchorText": "calculate settlement agreement",
-      "relevanceRationale": "Connects negotiation strategy to transactional statutory calculation tool."
-    },
-    "statutoryAudit": {
-      "isCompliant": true,
-      "governingLegislation": [
-        "Employment Rights Act 1996 s.162",
-        "Section 203(3) ERA 1996",
-        "ITEPA 2003 s.403"
-      ],
-      "statutoryCapsVerified": {
-        "weeklyCapGB": 751,
-        "weeklyCapNI": 783,
-        "taxFreeThreshold": 30000,
-        "unfairDismissalCap": 123543,
-        "protectiveAwardDays": 90
-      },
-      "sraBoundaryPassed": true,
-      "issues": []
-    },
-    "antiAiQuality": {
-      "authenticityScore": 95,
-      "isLowEffort": false,
-      "burstinessScore": 81,
-      "answerFirstVerified": true,
-      "roboticMarkersFound": [],
-      "humanTouchImprovements": []
-    },
-    "stagedDiffSummary": "Staged Digital PR Pitch: Pitch MoJ Tribunal Backlog Tracker Data to Legal/HR Press on /calculator/",
-    "status": "VALIDATED",
-    "timestamp": "2026-11-05T00:11:34.000Z"
-  },
-  {
-    "id": "pkg_actuator_1793704313733_5",
-    "query": "settlement agreement calculator uk",
-    "priority": "CRITICAL",
-    "actionType": "DIGITAL_PR_PITCH",
-    "seoTechnicalBrief": {
-      "query": "settlement agreement calculator uk",
-      "currentMetrics": {
-        "impressions": 520,
-        "clicks": 9,
-        "position": 19.3,
-        "ctr": 1.73
-      },
-      "searchIntent": "TRANSACTIONAL_CALCULATOR",
-      "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
-      "characterBudgets": {
-        "titleMin": 45,
-        "titleMax": 60,
-        "metaMin": 140,
-        "metaMax": 155
-      },
-      "statutoryInvariants": {
-        "weeklyCapGB": 751,
-        "weeklyCapNI": 783,
-        "taxFreeThreshold": 30000,
-        "unfairDismissalCap": 123543,
-        "protectiveAwardDays": 90
-      },
-      "schemaSpecification": {
-        "type": "WebApplication",
-        "primarySubject": "settlement agreement calculator uk",
-        "targetFaqQuestion": "How do you calculate a settlement agreement in the UK?"
-      },
-      "internalLinkGraph": {
-        "sourceRoutes": [
-          "/guides/how-to-negotiate-a-settlement-agreement/"
-        ],
-        "destinationRoute": "/calculator/",
-        "exactAnchorText": "settlement agreement calculator uk"
-      }
-    },
-    "copyPackage": {
-      "calibratedTitle": "Settlement Agreement Calculator UK (2026) | SettlementCheck",
-      "calibratedMetaDescription": "Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.",
-      "answerFirstFaq": {
-        "question": "How do you calculate a settlement agreement in the UK?",
-        "answer": "A UK settlement calculation combines statutory redundancy (capped at £751 per week under ERA 1996), contractual notice pay, and negotiated ex-gratia compensation tax-free up to £30,000 under ITEPA 2003.",
-        "characterCount": 213
-      },
-      "contextualInternalLinkBlock": {
-        "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-        "targetRoute": "/calculator/",
-        "anchorText": "settlement agreement calculator uk",
-        "surroundingText": "Before signing any formal exit documents, verify your entitlement using our [settlement agreement calculator uk](/calculator/) to check statutory baselines."
-      },
-      "ctaText": "Calculate my estimate →",
-      "brandComplianceReport": {
-        "zeroEmDashes": true,
-        "zeroBannedUsTerms": true,
-        "ukSpellingVerified": true,
-        "employerFeesMentioned": true,
-        "statutoryAccuracyVerified": true
-      }
-    },
-    "digitalPrPitch": {
-      "pitchAngle": "Analysis of historic statutory redundancy rates from 2000 to April 2026 reveals unprecedented 22.5% four-year cap expansion under Section 162 ERA 1996",
-      "targetJournalists": "HR Strategy & Personal Finance Editors at CIPD People Management, HR Grapevine, The Times Enterprise Desk",
-      "hookHeadline": "Statutory Redundancy Cap Archive (2000-2026): Weekly Pay Ceiling Increases to £751 in Largest Multi-Year Adjustment on Record",
-      "keyStatSummary": "SettlementCheck Statutory Rates Archive documents the evolution of UK statutory employment caps over 26 years, showing the GB weekly rate increasing from £230 in 2000 to £751 in April 2026.",
-      "sourceDataAsset": "/statutory-rates-history/",
-      "recommendedOutreachCopy": "Pitch our complete Statutory Rates History archive and UK Settlement Index 2026 report to financial and HR editors, establishing SettlementCheck as the authoritative primary source for UK employment benchmarks."
-    },
-    "workedExample": {
-      "type": "STATUTORY_FORMULA_ILLUSTRATION",
-      "caseTitle": "Statutory Settlement Breakdown (ERA 1996 s.162 & ITEPA s.403)",
-      "jobTitle": "Operations Director",
-      "grossSalary": 65000,
-      "yearsOfService": 7,
-      "age": 47,
-      "statutoryRedundancyFloor": 7885,
-      "noticePayPilon": 16250,
-      "exGratiaCompensation": 30865,
-      "totalSettlementOffer": 55000,
-      "taxFreePortion": 30000,
-      "taxablePortion": 25000,
-      "estimatedNetTakeHome": 44250,
-      "statutoryCitations": [
-        "ERA 1996 s.162",
-        "ITEPA 2003 s.403",
-        "ERA 1996 s.203(3)"
-      ],
-      "formulaBreakdown": "Statutory Redundancy Floor (£7,885) + Contractual Notice PILON (£16,250) + Ex-Gratia Sum (£30,865). £30,000 is tax-free.",
-      "narrativeBreakdown": "With 7 service years aged 47, statutory redundancy yields £7,885 (£751 x 10.5 weeks). Combined with notice pay, the ex-gratia compensation brings the tax-free total to the maximum statutory threshold of £30,000 under Section 403 ITEPA 2003.",
-      "employerContribution": "Employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to an independent solicitor for Section 203(3) sign-off."
-    },
-    "comparisonTable": {
-      "tableTitle": "Settlement Component Comparison Under UK Employment Law",
-      "caption": "Summary of statutory compensation rules and caps in Great Britain (April 2026).",
-      "headers": [
-        "Settlement Component",
-        "Governing Statute",
-        "2026 Cap (GB)",
-        "Tax Treatment",
-        "Key Prerequisite"
-      ],
-      "rows": [
-        {
-          "element": "Statutory Redundancy Pay",
-          "statutoryBasis": "ERA 1996 s.162",
-          "standardCapGB": "£751/week (£22,530 max)",
-          "standardCapNI": "£783/week (£23,490 max)",
-          "taxTreatment": "100% Tax-Free under £30k exemption",
-          "eligibilityRule": "Minimum 2 full years qualifying service"
-        },
-        {
-          "element": "Notice Pay (PILON)",
-          "statutoryBasis": "ITEPA 2003 s.402D",
-          "standardCapGB": "Contractual salary",
-          "standardCapNI": "Contractual salary",
-          "taxTreatment": "Fully taxable (PAYE & NICs)",
-          "eligibilityRule": "Contractual or statutory notice period"
-        },
-        {
-          "element": "Ex-Gratia Sum",
-          "statutoryBasis": "ERA 1996 s.203",
-          "standardCapGB": "£123,543 statutory limit",
-          "standardCapNI": "£123,543 statutory limit",
-          "taxTreatment": "Tax-free up to £30,000 (s.403 ITEPA)",
-          "eligibilityRule": "Independent solicitor legal sign-off"
-        }
-      ],
-      "footnoteCitation": "Employment Rights Act 1996; ITEPA 2003 Part 6 Chapter 3; April 2026 statutory rates."
-    },
-    "inProsePlacement": {
-      "targetFilePath": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
-      "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-      "destinationRoute": "/calculator/",
-      "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, employees should verify their baseline entitlements using our [settlement agreement calculator uk](/calculator/) to confirm the legal redundancy floor.",
-      "anchorText": "settlement agreement calculator uk",
-      "relevanceRationale": "Strengthens canonical authority and PageRank flow from negotiation guide to main calculator."
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [compromise agreement calculator](/guides/compromise-agreement-calculator-uk/)."
     },
     "statutoryAudit": {
       "isCompliant": true,
@@ -855,178 +1075,8 @@
       "roboticMarkersFound": [],
       "humanTouchImprovements": []
     },
-    "stagedDiffSummary": "Staged Digital PR Pitch: Pitch Statutory Rates History Archive to National/HR Media on /calculator/",
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for compromise agreement calculator on /guides/compromise-agreement-calculator-uk/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-05T00:11:34.000Z"
-  },
-  {
-    "id": "pkg_actuator_1793704313733_6",
-    "query": "average settlement agreement amount uk",
-    "priority": "CRITICAL",
-    "actionType": "CONTENT_DEPTH_UPGRADE",
-    "seoTechnicalBrief": {
-      "query": "average settlement agreement amount uk",
-      "currentMetrics": {
-        "impressions": 610,
-        "clicks": 11,
-        "position": 13.5,
-        "ctr": 1.8
-      },
-      "searchIntent": "TRANSACTIONAL_CALCULATOR",
-      "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/",
-      "characterBudgets": {
-        "titleMin": 45,
-        "titleMax": 60,
-        "metaMin": 140,
-        "metaMax": 155
-      },
-      "statutoryInvariants": {
-        "weeklyCapGB": 751,
-        "weeklyCapNI": 783,
-        "taxFreeThreshold": 30000,
-        "unfairDismissalCap": 123543,
-        "protectiveAwardDays": 90
-      },
-      "schemaSpecification": {
-        "type": "Article",
-        "primarySubject": "average settlement agreement amount uk",
-        "targetFaqQuestion": "What is an average settlement agreement payout in the UK?"
-      },
-      "internalLinkGraph": {
-        "sourceRoutes": [
-          "/guides/settlement-agreement-how-much/"
-        ],
-        "destinationRoute": "/guides/average-settlement-agreement-payout-uk/",
-        "exactAnchorText": "average settlement agreement amount uk"
-      }
-    },
-    "copyPackage": {
-      "calibratedTitle": "Average Settlement Payout UK 2026 | SettlementCheck",
-      "calibratedMetaDescription": "See official UK settlement agreement benchmarks and statutory redundancy caps (£751/wk). Free 2-minute valuation. SRA solicitor review guidance.",
-      "answerFirstFaq": {
-        "question": "What is an average settlement agreement payout in the UK?",
-        "answer": "A typical UK settlement package combines statutory redundancy (capped at £751 per week under ERA 1996), contractual notice pay, and negotiated ex-gratia compensation tax-free up to £30,000 under ITEPA 2003.",
-        "characterCount": 226
-      },
-      "contextualInternalLinkBlock": {
-        "sourceRoute": "/guides/settlement-agreement-how-much/",
-        "targetRoute": "/guides/average-settlement-agreement-payout-uk/",
-        "anchorText": "average settlement agreement amount uk",
-        "surroundingText": "When evaluating whether an employer offer is fair, review the statutory benchmarks for an [average settlement agreement amount uk](/guides/average-settlement-agreement-payout-uk/) before instructing your independent solicitor."
-      },
-      "ctaText": "Calculate my estimate →",
-      "brandComplianceReport": {
-        "zeroEmDashes": true,
-        "zeroBannedUsTerms": true,
-        "ukSpellingVerified": true,
-        "employerFeesMentioned": true,
-        "statutoryAccuracyVerified": true
-      }
-    },
-    "contentDepthUpgrade": {
-      "recommendedModule": "STATUTORY_WORKED_TABLE",
-      "targetSectionH2": "Forensic Statutory Compensation Breakdown: Average Settlement Components (2026 Rates)",
-      "interactiveToolToEmbed": "/calculator/",
-      "proposedTableSummary": "Statutory 4-tier matrix: Statutory Redundancy (£751/wk cap, max £22,530) + Contractual PILON (taxable) + Ex-Gratia Compensation (s.403 ITEPA £30k exemption) + SRA Legal Contribution (£350-£500+ VAT)",
-      "expectedUserValueBenefit": "Replaces vague generalized averages with rigorous statutory formula breakdowns and links to the official UK Settlement Index 2026 report, satisfying Google E-E-A-T."
-    },
-    "workedExample": {
-      "type": "STATUTORY_FORMULA_ILLUSTRATION",
-      "caseTitle": "Benchmarked Statutory Settlement Structure (ERA 1996 s.162 & ITEPA s.403)",
-      "jobTitle": "Operations Management Specialist",
-      "grossSalary": 52000,
-      "yearsOfService": 6,
-      "age": 43,
-      "statutoryRedundancyFloor": 6759,
-      "noticePayPilon": 13000,
-      "exGratiaCompensation": 26241,
-      "totalSettlementOffer": 46000,
-      "taxFreePortion": 30000,
-      "taxablePortion": 16000,
-      "estimatedNetTakeHome": 40720,
-      "statutoryCitations": [
-        "ERA 1996 s.162",
-        "ITEPA 2003 s.403",
-        "ERA 1996 s.203(3)"
-      ],
-      "formulaBreakdown": "Statutory Redundancy Floor (£6,759) + Contractual Notice PILON (£13,000) + Ex-Gratia Compensation (£26,241). Up to £30,000 is tax-free.",
-      "narrativeBreakdown": "For a 43-year-old employee earning £52,000 with 6 qualifying service years, statutory redundancy provides £6,759 (£751 x 9 weeks). Contractual notice pay of £13,000 is taxable, while ex-gratia compensation sits within the £30,000 statutory tax exemption under Section 403 ITEPA 2003.",
-      "employerContribution": "Employers customarily contribute toward independent legal advice (£350 to £500+ plus VAT) directly to ensure Section 203(3) validity."
-    },
-    "comparisonTable": {
-      "tableTitle": "UK Settlement Package Components & Tax Treatment (2026)",
-      "caption": "Statutory and market components standardly included in UK settlement agreements.",
-      "headers": [
-        "Settlement Component",
-        "Governing Statute",
-        "2026 Cap (GB)",
-        "Tax Treatment",
-        "Key Prerequisite"
-      ],
-      "rows": [
-        {
-          "element": "Statutory Redundancy Pay",
-          "statutoryBasis": "ERA 1996 s.162",
-          "standardCapGB": "£751/week (£22,530 max)",
-          "standardCapNI": "£783/week (£23,490 max)",
-          "taxTreatment": "100% Tax-Free under £30k exemption",
-          "eligibilityRule": "Minimum 2 full years qualifying service"
-        },
-        {
-          "element": "Notice Pay (PILON)",
-          "statutoryBasis": "ITEPA 2003 s.402D",
-          "standardCapGB": "Contractual salary",
-          "standardCapNI": "Contractual salary",
-          "taxTreatment": "Fully taxable (PAYE & NICs)",
-          "eligibilityRule": "Contractual or statutory notice period"
-        },
-        {
-          "element": "Ex-Gratia Sum",
-          "statutoryBasis": "ERA 1996 s.203",
-          "standardCapGB": "£123,543 statutory limit",
-          "standardCapNI": "£123,543 statutory limit",
-          "taxTreatment": "Tax-free up to £30,000 (s.403 ITEPA)",
-          "eligibilityRule": "Independent solicitor legal sign-off"
-        }
-      ],
-      "footnoteCitation": "Employment Rights Act 1996; ITEPA 2003 Part 6 Chapter 3; April 2026 statutory rates."
-    },
-    "inProsePlacement": {
-      "targetFilePath": "app/guides/settlement-agreement-how-much/page.tsx",
-      "sourceRoute": "/guides/settlement-agreement-how-much/",
-      "destinationRoute": "/guides/average-settlement-agreement-payout-uk/",
-      "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, review official UK benchmarks for an [average settlement agreement amount uk](/guides/average-settlement-agreement-payout-uk/) to calculate where your package sits against 2026 statutory rates.",
-      "anchorText": "average settlement agreement amount uk",
-      "relevanceRationale": "Deepens contextual internal linking between valuation pillar guides."
-    },
-    "statutoryAudit": {
-      "isCompliant": true,
-      "governingLegislation": [
-        "Employment Rights Act 1996 s.162",
-        "Section 203(3) ERA 1996",
-        "ITEPA 2003 s.403"
-      ],
-      "statutoryCapsVerified": {
-        "weeklyCapGB": 751,
-        "weeklyCapNI": 783,
-        "taxFreeThreshold": 30000,
-        "unfairDismissalCap": 123543,
-        "protectiveAwardDays": 90
-      },
-      "sraBoundaryPassed": true,
-      "issues": []
-    },
-    "antiAiQuality": {
-      "authenticityScore": 97,
-      "isLowEffort": false,
-      "burstinessScore": 85,
-      "answerFirstVerified": true,
-      "roboticMarkersFound": [],
-      "humanTouchImprovements": []
-    },
-    "stagedDiffSummary": "Staged Content Depth Upgrade: Inject Forensic Statutory Compensation Breakdown & UK Settlement Index Link on /guides/average-settlement-agreement-payout-uk/",
-    "status": "VALIDATED",
-    "timestamp": "2026-11-05T00:11:34.000Z"
+    "timestamp": "2026-11-05T01:01:09.452Z"
   }
 ]

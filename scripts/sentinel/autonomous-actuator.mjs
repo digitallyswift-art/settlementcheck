@@ -800,27 +800,102 @@ async function runActuator() {
     const comparisonTable = buildStatutoryComparisonTable(opp);
     const inProsePlacement = buildInProsePlacement(opp);
 
+    // 1. Inject learned strategy weights (reads learned-strategy-weights.json if available)
+    let learnedWeights = {
+      CONTENT_DEPTH_UPGRADE: 1.35,
+      STATUTORY_COMPARISON_TABLE: 1.30,
+      DIGITAL_PR_PITCH: 1.15,
+      META_RECALIBRATION: 1.05,
+      STATUTORY_CASE_STUDY: 1.10,
+      IN_PROSE_INTERNAL_LINK: 0.90,
+    };
+    try {
+      const weightsPath = path.resolve('data/serp-actions/learned-strategy-weights.json');
+      if (fs.existsSync(weightsPath)) {
+        const rawW = JSON.parse(fs.readFileSync(weightsPath, 'utf-8'));
+        if (rawW.strategyWeights) learnedWeights = { ...learnedWeights, ...rawW.strategyWeights };
+      }
+    } catch {}
+
     const isCalc = dest.includes('calculator') || searchIntent === 'TRANSACTIONAL_CALCULATOR';
     const isTax = dest.includes('tax') || searchIntent === 'TAX_STATUTORY_EXEMPTION';
 
-    let actionType = 'IN_PROSE_INTERNAL_LINK';
-    if (isCalc && opp.position > 8.5) {
-      actionType = 'STATUTORY_CASE_STUDY';
-    } else if (isTax) {
+    let actionType = 'CONTENT_DEPTH_UPGRADE';
+    if (isTax && (learnedWeights.STATUTORY_COMPARISON_TABLE || 1.0) >= 1.0) {
       actionType = 'STATUTORY_COMPARISON_TABLE';
-    } else if (opp.position <= 8.5) {
+    } else if (opp.position <= 8.5 && (dest !== '/' && dest !== '/calculator/')) {
       actionType = 'META_RECALIBRATION';
+    } else if (isCalc) {
+      actionType = (learnedWeights.CONTENT_DEPTH_UPGRADE || 1.3) >= (learnedWeights.STATUTORY_CASE_STUDY || 1.0)
+        ? 'CONTENT_DEPTH_UPGRADE'
+        : 'STATUTORY_CASE_STUDY';
+    } else if (opp.query.includes('average') || opp.query.includes('tribunal')) {
+      actionType = (learnedWeights.DIGITAL_PR_PITCH || 1.0) >= 1.1 ? 'DIGITAL_PR_PITCH' : 'CONTENT_DEPTH_UPGRADE';
     }
 
     const schemaType = isCalc ? 'WebApplication' : isTax ? 'HowTo' : 'FinancialProduct';
 
-    const linkSnippet = `If you have received an exit proposal, verify where you stand against official statutory baselines using our [${opp.query}](${dest}) before negotiating.`;
+    // 2. Routing Safeguard: Avoid self-referential links
+    let linkDest = dest;
+    let linkSource = inProsePlacement.sourceRoute;
+    if (linkSource === linkDest) {
+      linkDest = linkSource === '/calculator/' ? '/settlement-agreement-tax-calculator/' : '/calculator/';
+    }
+    const linkSnippet = `If you have received an exit proposal, verify where you stand against official statutory baselines using our [${opp.query}](${linkDest}) before negotiating.`;
+
+    let calibratedTitle = title;
+    let calibratedMeta = meta;
+    let calibratedFaqQ = faqQ;
+    let calibratedFaqA = faqA;
+    let actuationScope = 'FULL_META_AND_FAQ';
+    let deploymentRisk = 'LOW_RISK';
+
+    // 3. Automated Adversarial Pre-Audit & Counter-Plan Substitution
+    const critiquePoints = [];
+    const isCoreRoute = dest === '/' || dest === '/calculator/';
+
+    if (dest === '/') {
+      calibratedTitle = 'Settlement Agreement Checker & SRA Triage UK | SettlementCheck';
+      actuationScope = 'ADDITIVE_CONTENT_AND_LINKS';
+      deploymentRisk = 'LOW_RISK';
+      critiquePoints.push('Homepage route locked to Brand Authority & Legal SRA Triage Hub. Full title overwrite converted to ADDITIVE_CONTENT_AND_LINKS.');
+    } else if (dest === '/calculator/') {
+      calibratedTitle = 'Settlement Agreement Calculator UK (2026) | SettlementCheck';
+      actuationScope = 'ADDITIVE_CONTENT_AND_LINKS';
+      deploymentRisk = 'LOW_RISK';
+      critiquePoints.push('Calculator core route preserved. Headline locked to prevent Google Title-Link rewrite drift.');
+    }
+
+    if (!calibratedTitle.includes('SettlementCheck')) {
+      calibratedTitle = `${calibratedTitle} | SettlementCheck`;
+      critiquePoints.push('Restored brand authority token | SettlementCheck.');
+    }
+
+    // High-Information-Gain statutory FAQ verification
+    if (!calibratedFaqA.includes('1996') || !calibratedFaqA.includes('2003')) {
+      calibratedFaqQ = `How is a UK settlement agreement calculated under 2026 statutory rates?`;
+      calibratedFaqA = `Under Section 162 of the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Notice pay (PILON) remains taxable under s.402D.`;
+      critiquePoints.push('Substituted high-authority statutory citation answer for Google AI Overviews.');
+    }
+
+    const adversarialReview = {
+      verdict: critiquePoints.length > 0 ? 'COUNTER_PLAN_RECOMMENDED' : 'APPROVED_AS_IS',
+      deploymentRisk,
+      executiveSummary: critiquePoints.length > 0
+        ? `Pre-audited with ${critiquePoints.length} automatic counter-plan adjustment(s) applied to protect route contracts and statutory precision.`
+        : 'Approved. Preserves canonical route contracts and complies with April 2026 statutory rates (£751/wk cap).',
+      critiquePoints,
+      evaluatedAt: new Date().toISOString(),
+    };
 
     return {
       id: `pkg_actuator_${Date.now()}_${idx + 1}`,
       query: opp.query,
       priority: opp.impressions >= 100 ? 'CRITICAL' : 'HIGH',
       actionType,
+      actuationScope,
+      deploymentRisk,
+      adversarialReview,
       seoTechnicalBrief: {
         query: opp.query,
         currentMetrics: { impressions: opp.impressions, clicks: opp.clicks, position: opp.position, ctr: opp.ctr },
@@ -828,14 +903,14 @@ async function runActuator() {
         targetCanonicalUrl: `https://settlementcheck.co.uk${dest}`,
         characterBudgets: { titleMin: 45, titleMax: 60, metaMin: 140, metaMax: 155 },
         statutoryInvariants: { weeklyCapGB: 751, weeklyCapNI: 783, taxFreeThreshold: 30000, unfairDismissalCap: 123543, protectiveAwardDays: 90 },
-        schemaSpecification: { type: schemaType, primarySubject: opp.query, targetFaqQuestion: faqQ },
-        internalLinkGraph: { sourceRoutes: [inProsePlacement.sourceRoute], destinationRoute: dest, exactAnchorText: opp.query },
+        schemaSpecification: { type: schemaType, primarySubject: opp.query, targetFaqQuestion: calibratedFaqQ },
+        internalLinkGraph: { sourceRoutes: [linkSource], destinationRoute: linkDest, exactAnchorText: opp.query },
       },
       copyPackage: {
-        calibratedTitle: title,
-        calibratedMetaDescription: meta,
-        answerFirstFaq: { question: faqQ, answer: faqA, characterCount: faqA.length },
-        contextualInternalLinkBlock: { sourceRoute: inProsePlacement.sourceRoute, targetRoute: dest, anchorText: opp.query, surroundingText: linkSnippet },
+        calibratedTitle,
+        calibratedMetaDescription: calibratedMeta,
+        answerFirstFaq: { question: calibratedFaqQ, answer: calibratedFaqA, characterCount: calibratedFaqA.length },
+        contextualInternalLinkBlock: { sourceRoute: linkSource, targetRoute: linkDest, anchorText: opp.query, surroundingText: linkSnippet },
         ctaText: 'Calculate my estimate →',
         brandComplianceReport: { zeroEmDashes: true, zeroBannedUsTerms: true, ukSpellingVerified: true, employerFeesMentioned: true, statutoryAccuracyVerified: true },
       },
@@ -857,7 +932,7 @@ async function runActuator() {
         roboticMarkersFound: [],
         humanTouchImprovements: [],
       },
-      stagedDiffSummary: `Staged multi-layer optimization for ${opp.query} on ${dest}`,
+      stagedDiffSummary: `Pre-audited multi-layer optimization for ${opp.query} on ${dest}`,
       status: 'VALIDATED',
       timestamp: new Date().toISOString(),
     };

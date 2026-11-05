@@ -726,6 +726,14 @@ export class SeoActuatorService {
     this.memoryStore.set(enriched.id, enriched);
     this.saveAppliedToLocalRepoIfWritable(enriched);
 
+    // 3b. Record immutable Day 0 baseline snapshot in outcomes ledger
+    try {
+      const { SeoOutcomesLedger } = await import('./seo-outcomes-ledger');
+      await SeoOutcomesLedger.recordActionApplied(enriched);
+    } catch (ledgerErr) {
+      console.warn('[SeoActuatorService] Outcomes ledger recording warning:', ledgerErr);
+    }
+
     // 4. Invalidate / Purge Next.js tagged cache BEFORE notifying Googlebot
     if (options?.revalidate) {
       try {

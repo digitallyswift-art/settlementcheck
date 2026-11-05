@@ -1,0 +1,154 @@
+{
+  "generatedAt": "2026-11-05T01:00:52.602Z",
+  "totalOutcomesAnalysed": 8,
+  "topPerformingStrategy": "CONTENT_DEPTH_UPGRADE",
+  "lowestPerformingStrategy": "IN_PROSE_INTERNAL_LINK",
+  "strategyWeights": {
+    "CONTENT_DEPTH_UPGRADE": 1.98,
+    "STATUTORY_COMPARISON_TABLE": 1.99,
+    "DIGITAL_PR_PITCH": 1.8,
+    "INTERNAL_LINK_BOOST": 1.94,
+    "META_RECALIBRATION": 1.05,
+    "STATUTORY_CASE_STUDY": 0.9,
+    "IN_PROSE_INTERNAL_LINK": 0.4,
+    "CONTENT_GAP_BRIEF": 0.9
+  },
+  "strategies": {
+    "CONTENT_DEPTH_UPGRADE": {
+      "strategy": "CONTENT_DEPTH_UPGRADE",
+      "sampleCount": 3,
+      "wins": 3,
+      "steady": 0,
+      "neutrals": 0,
+      "regressions": 0,
+      "rollbacks": 0,
+      "winRatePct": 100,
+      "avgRankImprovementPct": 35.43,
+      "avgClickDelta": 21.3,
+      "weight": 1.98,
+      "confidence": "MEDIUM",
+      "recommendation": "High statistical win rate (100%) with +35.43% average rank improvement. Prioritise as primary intervention for striking-distance commercial queries."
+    },
+    "STATUTORY_COMPARISON_TABLE": {
+      "strategy": "STATUTORY_COMPARISON_TABLE",
+      "sampleCount": 1,
+      "wins": 1,
+      "steady": 0,
+      "neutrals": 0,
+      "regressions": 0,
+      "rollbacks": 0,
+      "winRatePct": 100,
+      "avgRankImprovementPct": 35.68,
+      "avgClickDelta": 17,
+      "weight": 1.99,
+      "confidence": "LOW",
+      "recommendation": "High statistical win rate (100%) with +35.68% average rank improvement. Prioritise as primary intervention for striking-distance commercial queries."
+    },
+    "DIGITAL_PR_PITCH": {
+      "strategy": "DIGITAL_PR_PITCH",
+      "sampleCount": 1,
+      "wins": 1,
+      "steady": 0,
+      "neutrals": 0,
+      "regressions": 0,
+      "rollbacks": 0,
+      "winRatePct": 100,
+      "avgRankImprovementPct": 13.1,
+      "avgClickDelta": 6,
+      "weight": 1.8,
+      "confidence": "LOW",
+      "recommendation": "Consistent solid performer (100% win rate, +13.1% rank improvement). Reliable secondary strategy."
+    },
+    "INTERNAL_LINK_BOOST": {
+      "strategy": "INTERNAL_LINK_BOOST",
+      "sampleCount": 1,
+      "wins": 1,
+      "steady": 0,
+      "neutrals": 0,
+      "regressions": 0,
+      "rollbacks": 0,
+      "winRatePct": 100,
+      "avgRankImprovementPct": 29.54,
+      "avgClickDelta": 16,
+      "weight": 1.94,
+      "confidence": "LOW",
+      "recommendation": "High statistical win rate (100%) with +29.54% average rank improvement. Prioritise as primary intervention for striking-distance commercial queries."
+    },
+    "META_RECALIBRATION": {
+      "strategy": "META_RECALIBRATION",
+      "sampleCount": 1,
+      "wins": 0,
+      "steady": 1,
+      "neutrals": 0,
+      "regressions": 0,
+      "rollbacks": 0,
+      "winRatePct": 50,
+      "avgRankImprovementPct": 6.1,
+      "avgClickDelta": 4,
+      "weight": 1.05,
+      "confidence": "LOW",
+      "recommendation": "Neutral tracking (50% win rate). Requires pairing with interactive tools or statutory comparison data to achieve breakout uplift."
+    },
+    "STATUTORY_CASE_STUDY": {
+      "strategy": "STATUTORY_CASE_STUDY",
+      "sampleCount": 0,
+      "wins": 0,
+      "steady": 0,
+      "neutrals": 0,
+      "regressions": 0,
+      "rollbacks": 0,
+      "winRatePct": 50,
+      "avgRankImprovementPct": 0,
+      "avgClickDelta": 0,
+      "weight": 0.9,
+      "confidence": "EMERGING",
+      "recommendation": "Emerging strategy with zero longitudinal samples. Maintain baseline canary observation."
+    },
+    "IN_PROSE_INTERNAL_LINK": {
+      "strategy": "IN_PROSE_INTERNAL_LINK",
+      "sampleCount": 1,
+      "wins": 0,
+      "steady": 0,
+      "neutrals": 1,
+      "regressions": 0,
+      "rollbacks": 0,
+      "winRatePct": 0,
+      "avgRankImprovementPct": -4,
+      "avgClickDelta": -1,
+      "weight": 0.4,
+      "confidence": "LOW",
+      "recommendation": "Underperforming or regression risk (0 regression alerts, 0% win rate). Deprioritise in favour of deeper content upgrades."
+    },
+    "CONTENT_GAP_BRIEF": {
+      "strategy": "CONTENT_GAP_BRIEF",
+      "sampleCount": 0,
+      "wins": 0,
+      "steady": 0,
+      "neutrals": 0,
+      "regressions": 0,
+      "rollbacks": 0,
+      "winRatePct": 50,
+      "avgRankImprovementPct": 0,
+      "avgClickDelta": 0,
+      "weight": 0.9,
+      "confidence": "EMERGING",
+      "recommendation": "Emerging strategy with zero longitudinal samples. Maintain baseline canary observation."
+    }
+  },
+  "orchestratorDirectives": {
+    "preferredStrategies": [
+      "STATUTORY_COMPARISON_TABLE",
+      "CONTENT_DEPTH_UPGRADE",
+      "INTERNAL_LINK_BOOST",
+      "DIGITAL_PR_PITCH"
+    ],
+    "deprioritizedStrategies": [
+      "IN_PROSE_INTERNAL_LINK"
+    ],
+    "guidance": [
+      "Prioritise CONTENT_DEPTH_UPGRADE (weight: 1.98x): Delivers highest confirmed rank uplift across live clusters.",
+      "Use STATUTORY_COMPARISON_TABLE for all tax and PILON queries (Section 403 ITEPA 2003 vs Section 402D PENP clarity).",
+      "Deprioritise isolated IN_PROSE_INTERNAL_LINK changes unless accompanied by interactive calculator cards or worked statutory examples."
+    ]
+  }
+}
