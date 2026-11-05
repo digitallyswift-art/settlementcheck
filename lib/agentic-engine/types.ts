@@ -333,6 +333,25 @@ export interface ConversionCopyPackage {
   comparisonTable?: StatutoryComparisonTableData;
   inProsePlacement?: InProseLinkPlacement;
   contentGapBrief?: ContentGapBrief;
+  digitalPrPitch?: DigitalPrPitchBrief;
+  contentDepthUpgrade?: ContentDepthUpgradeBrief;
+}
+
+export interface DigitalPrPitchBrief {
+  pitchAngle: string;
+  targetJournalists: string;
+  hookHeadline: string;
+  keyStatSummary: string;
+  sourceDataAsset: string; // e.g. '/tribunal-backlog-tracker/' | '/statutory-rates-history/' | '/reports/uk-settlement-index-2026/'
+  recommendedOutreachCopy: string;
+}
+
+export interface ContentDepthUpgradeBrief {
+  recommendedModule: 'INTERACTIVE_CALCULATOR_CARD' | 'STATUTORY_WORKED_TABLE' | 'HISTORIC_RATE_COMPARATOR';
+  targetSectionH2: string;
+  interactiveToolToEmbed: string;
+  proposedTableSummary?: string;
+  expectedUserValueBenefit: string;
 }
 
 export interface StatutoryWorkedCaseStudy {
@@ -484,7 +503,9 @@ export type SeoActionType =
   | 'CONTENT_GAP_BRIEF'
   | 'STATUTORY_CASE_STUDY'
   | 'STATUTORY_COMPARISON_TABLE'
-  | 'INTERACTIVE_TOOL_EMBED';
+  | 'INTERACTIVE_TOOL_EMBED'
+  | 'DIGITAL_PR_PITCH'
+  | 'CONTENT_DEPTH_UPGRADE';
 
 export interface AutonomousSeoActionPackage {
   id: string;
@@ -506,6 +527,8 @@ export interface AutonomousSeoActionPackage {
   comparisonTable?: StatutoryComparisonTableData;
   inProsePlacement?: InProseLinkPlacement;
   contentGapBrief?: ContentGapBrief;
+  digitalPrPitch?: DigitalPrPitchBrief;
+  contentDepthUpgrade?: ContentDepthUpgradeBrief;
 }
 
 export interface SeoAutonomousActionRecord {

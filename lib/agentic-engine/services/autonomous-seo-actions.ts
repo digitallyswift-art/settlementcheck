@@ -1,10 +1,11 @@
 /**
  * Autonomous SEO Action & Dispatch Service
- * Translates raw GSC search signals into concrete autonomous optimization actions:
- * 1. Low-CTR Meta Recalibration
- * 2. Striking-Distance Internal Link Rebalancing
+ * Translates raw GSC search signals into concrete autonomous strategic actions:
+ * 1. Content Depth Upgrades (Interactive Calculators & Statutory Comparison Tables)
+ * 2. Digital PR Pitches (MoJ Tribunal Backlog Tracker, Statutory Rates Archive, UK Settlement Index)
  * 3. Schema FAQ Snippet Deployment for AI Overviews
  * 4. Executive Stakeholder Email Briefing via Resend
+ * 5. Strict canonical route enforcement (completely decoupling / from /calculator/)
  */
 
 import fs from 'fs';
@@ -13,18 +14,29 @@ import { GscFetchResult, GscQueryRow } from './gsc-client';
 import { resend } from '@/lib/resend';
 import { GoogleIndexingClient } from './google-indexing-client';
 import { SeoWorkflowOrchestrator } from '../orchestrator/seo-workflow-orchestrator';
-import { AutonomousSeoActionPackage } from '../types';
+import {
+  AutonomousSeoActionPackage,
+  SeoActionType,
+  DigitalPrPitchBrief,
+  ContentDepthUpgradeBrief,
+} from '../types';
 import { SafeFs } from './safe-fs';
+import { SeoArchitectAgent } from '../agents/seo-architect-agent';
+import { SeoPolicyRegistry } from './seo-policy-registry';
+import { SeoActuatorService } from './seo-actuator-service';
+import { ConversionCopywriterAgent } from '../agents/conversion-copywriter-agent';
 
 export interface AutonomousSeoAction {
   id: string;
-  type: 'META_RECALIBRATION' | 'INTERNAL_LINK_BOOST' | 'SCHEMA_FAQ_SNIPPET' | 'CONTENT_GAP_FLAG';
+  type: SeoActionType;
   targetQuery: string;
-  targetUrl?: string;
-  priority: 'HIGH' | 'MEDIUM' | 'LOW';
+  targetUrl: string;
+  priority: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
   rationale: string;
   proposedChanges: Record<string, any>;
   status: 'PENDING_APPROVAL' | 'AUTO_APPLIED' | 'DISPATCHED';
+  digitalPrPitch?: DigitalPrPitchBrief;
+  contentDepthUpgrade?: ContentDepthUpgradeBrief;
 }
 
 export interface AutonomousRunDigest {
@@ -49,7 +61,110 @@ export interface AutonomousRunDigest {
 
 export class AutonomousSeoActionService {
   /**
-   * Evaluates GSC rows and generates concrete actions
+   * Resolves target canonical URL ensuring commercial calculator queries strictly map to
+   * /calculator/ (or dedicated calculator routes) and never cannibalize the root homepage (/).
+   */
+  public static resolveSafeTargetUrl(query: string, rawPage?: string): string {
+    const q = query.toLowerCase().trim();
+
+    // Commercial calculator queries strictly map to /calculator/ and NEVER /
+    const isCommercialCalc =
+      q === 'settlement agreement calculator' ||
+      q === 'calculate settlement agreement' ||
+      q === 'settlement calculator' ||
+      q === 'settlement agreement calculator uk' ||
+      q === 'settlement agreement calculators' ||
+      q === 'calculate my settlement agreement' ||
+      (q.includes('settlement') && (q.includes('calculator') || q.includes('calculate')));
+
+    if (
+      isCommercialCalc &&
+      !q.includes('tax') &&
+      !q.includes('redundancy') &&
+      !q.includes('compromise') &&
+      !q.includes('pip') &&
+      !q.includes('unfair') &&
+      !q.includes('protective')
+    ) {
+      return 'https://settlementcheck.co.uk/calculator/';
+    }
+
+    if (q.includes('tax') && (q.includes('calculator') || q.includes('calc'))) {
+      return 'https://settlementcheck.co.uk/settlement-agreement-tax-calculator/';
+    }
+    if (q.includes('redundancy') && (q.includes('calculator') || q.includes('calc') || q.includes('redundancy pay'))) {
+      return 'https://settlementcheck.co.uk/redundancy-calculator/';
+    }
+    if (q.includes('compromise') && (q.includes('calculator') || q.includes('calc'))) {
+      return 'https://settlementcheck.co.uk/guides/compromise-agreement-calculator-uk/';
+    }
+    if (q.includes('pip') && (q.includes('calculator') || q.includes('calc'))) {
+      return 'https://settlementcheck.co.uk/pip-settlement-calculator/';
+    }
+    if (q.includes('unfair dismissal') && (q.includes('calculator') || q.includes('calc'))) {
+      return 'https://settlementcheck.co.uk/unfair-dismissal-calculator/';
+    }
+    if (q.includes('protective award')) {
+      return 'https://settlementcheck.co.uk/protective-award-calculator/';
+    }
+
+    // Check if rawPage provided in GSC is root '/' or missing, prevent root cannibalization
+    if (rawPage && rawPage.startsWith('http')) {
+      try {
+        const parsed = new URL(rawPage);
+        let p = parsed.pathname;
+        if (!p.endsWith('/')) p = `${p}/`;
+        if (p !== '/' && p !== '') {
+          return `https://settlementcheck.co.uk${p}`;
+        }
+      } catch {}
+    }
+
+    // Fall back to canonical route classification
+    const intent = SeoArchitectAgent.classifyIntent(query);
+    const route = SeoArchitectAgent.resolveCanonicalRoute(query, intent, rawPage);
+    if (route === '/') {
+      return 'https://settlementcheck.co.uk/calculator/';
+    }
+    return `https://settlementcheck.co.uk${route}`;
+  }
+
+  /**
+   * Checks whether a page has its <title> calibrated or locked by policy,
+   * in order to filter out repetitive, cosmetic title tweaks.
+   */
+  public static isTitleCalibrated(url: string, query: string): boolean {
+    const norm = SeoActuatorService.normalizePath(url);
+    if (SeoPolicyRegistry.isRouteTitleLocked(url, query, query)) {
+      return true;
+    }
+    const calibratedRoutes = new Set([
+      '/',
+      '/calculator/',
+      '/settlement-agreement-tax-calculator/',
+      '/redundancy-calculator/',
+      '/protective-award-calculator/',
+      '/pip-settlement-calculator/',
+      '/unfair-dismissal-calculator/',
+      '/constructive-dismissal-calculator/',
+      '/guides/how-to-negotiate-a-settlement-agreement/',
+      '/guides/tax-free-settlement-30000/',
+      '/guides/settlement-agreement-how-much/',
+      '/guides/average-settlement-agreement-payout-uk/',
+      '/guides/redundancy-pay-cap-2026/',
+      '/guides/compromise-agreement-calculator-uk/',
+      '/tribunal-backlog-tracker/',
+      '/statutory-rates-history/',
+      '/reports/uk-settlement-index-2026/',
+    ]);
+    return calibratedRoutes.has(norm);
+  }
+
+  /**
+   * Evaluates GSC rows and generates concrete macro strategic actions:
+   * - CONTENT_DEPTH_UPGRADE (interactive tools & comparison tables)
+   * - DIGITAL_PR_PITCH (data assets pitched to legal/HR journalists)
+   * - Filters out cosmetic title rewrites on calibrated pages
    */
   public static async executeActionPipeline(
     gscData: GscFetchResult,
@@ -63,78 +178,153 @@ export class AutonomousSeoActionService {
     const strikingDistance: { query: string; position: number; impressions: number; opportunity: string }[] = [];
     const topClimbers: { query: string; position: number; impressions: number; clicks: number }[] = [];
 
-    // 1. Analyze queries
     for (const row of rows) {
       const q = row.query;
       const pos = row.position;
       const impr = row.impressions;
       const clicks = row.clicks;
       const ctr = row.ctr;
+      const targetUrl = this.resolveSafeTargetUrl(q, row.page);
+      const isCalibrated = this.isTitleCalibrated(targetUrl, q);
 
       // Top climbers / converters
       if (clicks >= 2 && pos <= 20) {
         topClimbers.push({ query: q, position: pos, impressions: impr, clicks });
       }
 
-      // Action A: Low-CTR Anomaly on Top 8 Rank
-      if (pos <= 8 && pos >= 1 && impr >= 40 && ctr < 4.0) {
-        actions.push({
-          id: `act_meta_${actions.length + 1}`,
-          type: 'META_RECALIBRATION',
-          targetQuery: q,
-          targetUrl: row.page || 'https://settlementcheck.co.uk/calculator/',
-          priority: 'HIGH',
-          rationale: `Ranking in top 8 (Pos ${pos}) with ${impr} impressions, but CTR is only ${ctr}%. Meta title copy is missing statutory carrot.`,
-          proposedChanges: {
-            recommendedTitle: `${q.replace(/\b\w/g, l => l.toUpperCase())} | April 2026 Statutory Rates`,
-            recommendedMetaDescription: `Calculate your legal entitlement in under 2 minutes. Free, confidential, SRA-standard settlement agreement check. SRA solicitor contribution applies.`,
-          },
-          status: 'PENDING_APPROVAL',
-        });
-      }
-
-      // Action B: Striking Distance Queries (Pos 11-20 with high search intent)
-      if (pos >= 10.5 && pos <= 20 && impr >= 50) {
+      // Track striking distance queries (Pos 9.5 to 20 with significant search demand)
+      if (pos >= 9.5 && pos <= 20 && impr >= 35) {
         strikingDistance.push({
           query: q,
           position: pos,
           impressions: impr,
-          opportunity: 'Page 2 → Page 1 shift could yield 3x click volume',
+          opportunity: 'Page 2 -> Page 1 move could multiply click volume 3x',
         });
 
-        actions.push({
-          id: `act_link_${actions.length + 1}`,
-          type: 'INTERNAL_LINK_BOOST',
-          targetQuery: q,
-          targetUrl: row.page || 'https://settlementcheck.co.uk/guides/',
-          priority: 'HIGH',
-          rationale: `Striking distance query at Pos ${pos} with ${impr} monthly impressions. Needs 2-3 inbound contextual internal links with exact anchor text.`,
-          proposedChanges: {
-            targetAnchorText: q,
-            recommendedSourcePages: ['/guides/how-to-negotiate-a-settlement-agreement/', '/calculator/'],
-          },
-          status: 'AUTO_APPLIED',
-        });
+        const lowerQ = q.toLowerCase();
+        const isDisputeOrPr =
+          lowerQ.includes('tribunal') ||
+          lowerQ.includes('backlog') ||
+          lowerQ.includes('rights') ||
+          lowerQ.includes('unfair') ||
+          lowerQ.includes('discrimination') ||
+          lowerQ.includes('average') ||
+          lowerQ.includes('delay') ||
+          actions.length % 2 === 1;
+
+        if (isDisputeOrPr) {
+          // Macro Action: DIGITAL_PR_PITCH
+          const asset =
+            lowerQ.includes('rate') || lowerQ.includes('history')
+              ? '/statutory-rates-history/'
+              : lowerQ.includes('index') || lowerQ.includes('average') || lowerQ.includes('payout')
+              ? '/reports/uk-settlement-index-2026/'
+              : '/tribunal-backlog-tracker/';
+
+          const prBrief: DigitalPrPitchBrief = {
+            pitchAngle:
+              'MoJ Employment Tribunal backlog delays (averaging 48+ weeks) making pre-tribunal settlement agreements the commercial standard in 2026',
+            targetJournalists:
+              'Legal & HR Correspondents at Personnel Today, People Management, Law Society Gazette, Employment Law Journal',
+            hookHeadline:
+              'UK Employment Tribunal Backlog Reaches 500+ Day Delays as April 2026 Statutory Rates Rise to £751/wk',
+            keyStatSummary:
+              'MoJ data reveals multi-year delays across regional tribunals; statutory weekly redundancy cap reaches £751 and compensatory cap £123,543 from 6 April 2026.',
+            sourceDataAsset: asset,
+            recommendedOutreachCopy:
+              'Pitch exclusive data from SettlementCheck tracking MoJ backlog delays to legal journalists, demonstrating why employers and employees are actively settling prior to tribunal claims.',
+          };
+
+          actions.push({
+            id: `act_pr_${actions.length + 1}`,
+            type: 'DIGITAL_PR_PITCH',
+            targetQuery: q,
+            targetUrl,
+            priority: impr >= 100 ? 'CRITICAL' : 'HIGH',
+            rationale: `Striking distance query at Pos ${pos.toFixed(1)} with ${impr} monthly impressions. Securing editorial press citations to our authoritative data asset (${asset}) will pass high-trust topical PageRank and move this term onto Page 1.`,
+            proposedChanges: {
+              ...prBrief,
+              targetDataAsset: asset,
+            },
+            digitalPrPitch: prBrief,
+            status: 'PENDING_APPROVAL',
+          });
+        } else {
+          // Macro Action: CONTENT_DEPTH_UPGRADE
+          const toolToEmbed =
+            lowerQ.includes('tax') || lowerQ.includes('30000')
+              ? '/settlement-agreement-tax-calculator/'
+              : lowerQ.includes('redundancy')
+              ? '/redundancy-calculator/'
+              : '/calculator/';
+
+          const upgradeBrief: ContentDepthUpgradeBrief = {
+            recommendedModule:
+              lowerQ.includes('tax') || lowerQ.includes('how much')
+                ? 'STATUTORY_WORKED_TABLE'
+                : 'INTERACTIVE_CALCULATOR_CARD',
+            targetSectionH2: 'Calculate Your Statutory Baseline Under April 2026 Rates',
+            interactiveToolToEmbed: toolToEmbed,
+            proposedTableSummary:
+              'Official 3-tier comparison matrix: Tier 1 Statutory Redundancy (ERA 1996 s.162, £751/wk cap) vs Tier 2 Notice Pay PILON (taxable under s.402D) vs Tier 3 Genuine Compensation (tax-free up to £30k under s.403 ITEPA 2003)',
+            expectedUserValueBenefit:
+              'Delivers immediate self-service mathematical clarity to stressed employees, drastically reducing bounce rate and proving experiential depth to search engines.',
+          };
+
+          actions.push({
+            id: `act_depth_${actions.length + 1}`,
+            type: 'CONTENT_DEPTH_UPGRADE',
+            targetQuery: q,
+            targetUrl,
+            priority: impr >= 80 ? 'CRITICAL' : 'HIGH',
+            rationale: `Striking distance query at Pos ${pos.toFixed(1)} with ${impr} monthly impressions. Google SERP rewards high-information-gain experiential tools over passive text. Embedding an interactive calculator card and statutory comparison table will capture Page 1 rankings.`,
+            proposedChanges: {
+              ...upgradeBrief,
+            },
+            contentDepthUpgrade: upgradeBrief,
+            status: 'PENDING_APPROVAL',
+          });
+        }
       }
 
-      // Action C: AI Overview Vulnerability
-      if ((q.includes('tax free') || q.includes('how much') || q.includes('acas')) && pos > 8 && impr >= 30) {
+      // Action C: AI Overview & Featured Snippet Capture
+      if ((q.includes('tax free') || q.includes('how much') || q.includes('acas') || q.includes('statutory')) && pos > 7 && impr >= 30) {
         actions.push({
           id: `act_schema_${actions.length + 1}`,
           type: 'SCHEMA_FAQ_SNIPPET',
           targetQuery: q,
+          targetUrl,
           priority: 'MEDIUM',
-          rationale: `High AI Overview probability term. Adding direct answer FAQ accordion will capture AI Overview citations.`,
+          rationale: `High probability AI Overview search term. Adding an Answer-First FAQ accordion captures Google AI Overview citations and featured snippets.`,
           proposedChanges: {
             faqQuestion: `How does ${q} work in the UK?`,
-            faqAnswer: `Under UK employment law (ERA 1996 and ITEPA 2003 s.403), statutory redundancy and ex-gratia compensation up to £30,000 can be paid tax-free.`,
+            faqAnswer: `Under UK employment law (Employment Rights Act 1996 and ITEPA 2003 s.403), statutory redundancy is capped at £751 per week from April 2026, while genuine ex-gratia compensation up to £30,000 can be paid tax-free. Contractual notice pay (PILON) remains subject to tax and National Insurance under Section 402D.`,
           },
           status: 'AUTO_APPLIED',
         });
       }
+
+      // Trivial cosmetic title rewrites are explicitly filtered out for calibrated pages
+      if (pos <= 8 && pos >= 1 && impr >= 40 && ctr < 4.0 && !isCalibrated) {
+        const calibratedTitle = ConversionCopywriterAgent.craftCalibratedTitle(q);
+        const calibratedMeta = ConversionCopywriterAgent.craftCalibratedMetaDescription(q);
+        actions.push({
+          id: `act_meta_${actions.length + 1}`,
+          type: 'META_RECALIBRATION',
+          targetQuery: q,
+          targetUrl,
+          priority: 'HIGH',
+          rationale: `Ranking in top 8 (Pos ${pos.toFixed(1)}) with ${impr} impressions, but CTR is only ${ctr}%. Route title is uncalibrated. Recalibrating with verified statutory rate envelope.`,
+          proposedChanges: {
+            recommendedTitle: calibratedTitle,
+            recommendedMetaDescription: calibratedMeta,
+          },
+          status: 'PENDING_APPROVAL',
+        });
+      }
     }
 
-    // Sort top climbers
+    // Sort top lists
     topClimbers.sort((a, b) => b.clicks - a.clicks);
     strikingDistance.sort((a, b) => b.impressions - a.impressions);
 
@@ -206,7 +396,7 @@ export class AutonomousSeoActionService {
           .join('');
 
         const actionsHtml = actions
-          .slice(0, 4)
+          .slice(0, 6)
           .map(
             a =>
               `<li><span style="color:#D9603B;font-weight:bold;">[${a.type}]</span> <strong>${a.targetQuery}</strong>: ${a.rationale}</li>`
@@ -240,13 +430,13 @@ export class AutonomousSeoActionService {
             <h3 style="color: #0B1F3A; margin-top: 24px;">📈 Top Click Drivers</h3>
             <ul style="font-size: 13px;">${topClimbersHtml || '<li>No click data recorded</li>'}</ul>
 
-            <h3 style="color: #0B1F3A; margin-top: 24px;">🎯 Striking Distance Opportunities (Page 2 Quick Wins)</h3>
+            <h3 style="color: #0B1F3A; margin-top: 24px;">🎯 Striking Distance Opportunities (Page 2 Macro Actions)</h3>
             <ul style="font-size: 13px;">${strikingHtml || '<li>None currently in range</li>'}</ul>
 
             <h3 style="color: #0B1F3A; margin-top: 24px;">🤖 Specialist Dual-Agent Staged Actions (SEO Architect + Copywriter)</h3>
             <ul style="font-size: 13px;">${dualAgentHtml || '<li>No dual-agent packages generated</li>'}</ul>
 
-            <h3 style="color: #0B1F3A; margin-top: 24px;">⚡ Raw Actions Dispatched</h3>
+            <h3 style="color: #0B1F3A; margin-top: 24px;">⚡ Macro Strategic Actions Dispatched</h3>
             <ul style="font-size: 13px;">${actionsHtml || '<li>All rankings optimal</li>'}</ul>
 
             <hr style="margin-top: 30px; border: 0; border-top: 1px solid #eee;" />

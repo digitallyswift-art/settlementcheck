@@ -28,7 +28,7 @@ export class SeoArchitectAgent {
    * Canonical baseline H1 headings per route to enforce Title-to-H1 DOM alignment
    */
   public static readonly CANONICAL_ROUTE_H1_MAP: Record<string, string> = {
-    '/': 'Settlement Agreement Calculator UK (2026 Rates)',
+    '/': 'Settlement Agreement Checker & Legal SRA Triage Hub UK',
     '/calculator/': 'Free Employee Settlement Agreement Calculator UK (2026 Rates)',
     '/calculators/': 'UK Employment & Settlement Agreement Calculators (2026)',
     '/redundancy-calculator/': 'Statutory Redundancy Pay Calculator UK (2026 Rates)',

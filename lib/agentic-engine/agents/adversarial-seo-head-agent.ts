@@ -15,6 +15,7 @@ import {
 } from '../guardrails/seo-blast-radius-guard';
 import { auditRegulatoryAndAdversarialTraps } from '../guardrails/sra-boundary-guard';
 import { SeoPolicyRegistry } from '../services/seo-policy-registry';
+import { auditSerpPixelBudgets } from '../tools/serp-pixel-calculator';
 import {
   AdversarialSeoReviewResult,
   SeoActuationScope,
@@ -94,10 +95,10 @@ export class AdversarialSeoHeadAgent {
     primaryAnchor?: string
   ): string {
     if (normPath === '/') {
-      return 'Settlement Agreement Calculator UK (2026) | SettlementCheck'; // 59 chars
+      return 'Settlement Agreement Checker & SRA Triage UK | SettlementCheck';
     }
     if (normPath === '/calculator/') {
-      return 'UK Settlement Agreement Calculator (2026) | SettlementCheck'; // 59 chars
+      return 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck';
     }
 
     const baseAnchor = primaryAnchor || query;
@@ -122,6 +123,66 @@ export class AdversarialSeoHeadAgent {
 
     const isCoreRoute = normPath === '/' || normPath === '/calculator/';
     const overwritesTitle = (input.actuationScope || 'FULL_META_AND_FAQ') === 'FULL_META_AND_FAQ';
+
+    // 0A. Strict Route Contract for / (Brand Authority & Legal SRA Triage Hub)
+    if (normPath === '/') {
+      const proposedTitleLower = (input.calibratedTitle || '').toLowerCase();
+      const queryLower = (input.query || '').toLowerCase();
+      if (
+        proposedTitleLower.includes('settlement agreement calculator') ||
+        (proposedTitleLower.includes('calculator') && !proposedTitleLower.includes('checker')) ||
+        queryLower.includes('settlement agreement calculator')
+      ) {
+        critiquePoints.push(
+          `Route Contract Violation: Homepage (/) is strictly locked as Brand Authority & Legal SRA Triage Hub. Prohibited keyword "calculator" detected in proposed title ("${input.calibratedTitle}") or query ("${input.query}"). The commercial calculator intent belongs exclusively to /calculator/.`
+        );
+      }
+      if (overwritesTitle) {
+        critiquePoints.push(
+          `Core Route Contract Lock: Homepage (/) headline is strictly locked to Brand Authority & Legal SRA Triage Hub ('Settlement Agreement Checker & SRA Triage UK | SettlementCheck'). Full meta title overwrites on / are prohibited; actuation scope must remain ADDITIVE_CONTENT_AND_LINKS.`
+        );
+      }
+    }
+
+    // 0B. Strict Route Contract for /calculator/ (Sole Commercial Transactional Tool)
+    if (normPath === '/calculator/') {
+      if (overwritesTitle) {
+        critiquePoints.push(
+          `Core Route Contract Lock: /calculator/ is strictly locked as the Sole Commercial Transactional Tool ('Settlement Agreement Calculator UK (2026/27) | SettlementCheck'). Full meta title overwrites on /calculator/ are prohibited; actuation scope must remain ADDITIVE_CONTENT_AND_LINKS.`
+        );
+      }
+    }
+
+    // 0C. Anti-Churn Title Freeze (policy_anti_churn_title_freeze)
+    // If an existing page title is already within 50-60 characters and CTR calibrated / satisfies SERP pixel budgets,
+    // reject cosmetic title rewrites and downgrade actuationScope to ADDITIVE_CONTENT_AND_LINKS.
+    if (overwritesTitle && !isCoreRoute) {
+      const existingTitleCandidate = input.targetPageExistingH1
+        ? (input.targetPageExistingH1.includes('SettlementCheck')
+            ? input.targetPageExistingH1
+            : `${input.targetPageExistingH1} | SettlementCheck`)
+        : (SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[normPath]
+            ? (SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[normPath].includes('SettlementCheck')
+                ? SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[normPath]
+                : `${SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[normPath]} | SettlementCheck`)
+            : undefined);
+
+      if (existingTitleCandidate) {
+        const proposedTitle = (input.calibratedTitle || '').trim();
+        const isDifferent = proposedTitle.toLowerCase() !== existingTitleCandidate.trim().toLowerCase();
+        const existingLen = existingTitleCandidate.length;
+        const pixelAudit = auditSerpPixelBudgets(existingTitleCandidate, '');
+
+        const isCalibratedAndWithinBudget =
+          (existingLen >= 50 && existingLen <= 60) || pixelAudit.isTitleWithinPixelBudget;
+
+        if (isDifferent && isCalibratedAndWithinBudget) {
+          critiquePoints.push(
+            `Anti-Churn Title Freeze (policy_anti_churn_title_freeze): Existing page title ("${existingTitleCandidate}", ${existingLen} chars, ${pixelAudit.titlePixels}px) already satisfies SERP pixel budgets and CTR calibration. Rejecting cosmetic title rewrite ("${proposedTitle}"). Actuation scope must be downgraded to ADDITIVE_CONTENT_AND_LINKS.`
+          );
+        }
+      }
+    }
 
     // 1. Check Title Overwrite on Page 2 / Secondary Queries
     if (overwritesTitle && pos > 10.0) {
@@ -284,22 +345,43 @@ export class AdversarialSeoHeadAgent {
     }
 
     // Determine Verdict & Counter-Proposal
-    const isCriticalRisk = blast.deploymentRisk === 'CRITICAL_RISK';
+    const hasCoreRouteOrFreezeViolation = critiquePoints.some(c =>
+      c.includes('Route Contract Violation') ||
+      c.includes('Core Route Contract Lock') ||
+      c.includes('Anti-Churn Title Freeze')
+    );
+
+    const isCriticalRisk = blast.deploymentRisk === 'CRITICAL_RISK' || hasCoreRouteOrFreezeViolation;
     const hasFatalDefect =
       isCriticalRisk ||
-      critiquePoints.some(c => c.includes('Self-Referential') || c.includes('Cannibalization') || c.includes('Page 2 Title-Churn'));
+      critiquePoints.some(c =>
+        c.includes('Self-Referential') ||
+        c.includes('Cannibalization') ||
+        c.includes('Page 2 Title-Churn') ||
+        c.includes('Route Contract Violation') ||
+        c.includes('Core Route Contract Lock') ||
+        c.includes('Anti-Churn Title Freeze')
+      );
 
     const needsCounterPlan = critiquePoints.length > 0 || isCriticalRisk;
-    const isDestructiveVeto = isCriticalRisk && (overwritesTitle || hasFatalDefect);
+    const isDestructiveVeto = overwritesTitle && (isCoreRoute || hasFatalDefect);
 
     const recommendedScope: SeoActuationScope =
-      pos > 10.0 || (isCoreRoute && (input.query || '').toLowerCase() !== (input.primaryAnchorQuery || '').toLowerCase())
+      hasCoreRouteOrFreezeViolation ||
+      pos > 10.0 ||
+      (isCoreRoute && (input.query || '').toLowerCase() !== (input.primaryAnchorQuery || '').toLowerCase())
         ? 'ADDITIVE_CONTENT_AND_LINKS'
         : 'FULL_META_AND_FAQ';
 
     const safeTitle =
-      recommendedScope === 'ADDITIVE_CONTENT_AND_LINKS'
-        ? `${baselineH1.replace(/\s*\|\s*SettlementCheck$/i, '').slice(0, 38).trim()} | SettlementCheck`
+      normPath === '/'
+        ? 'Settlement Agreement Checker & SRA Triage UK | SettlementCheck'
+        : normPath === '/calculator/'
+        ? 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck'
+        : recommendedScope === 'ADDITIVE_CONTENT_AND_LINKS' && input.targetPageExistingH1
+        ? (input.targetPageExistingH1.includes('SettlementCheck')
+            ? input.targetPageExistingH1
+            : `${input.targetPageExistingH1} | SettlementCheck`)
         : this.craftAnchorSafeTitle(input.query, normPath, input.primaryAnchorQuery);
 
     const safeMeta = ConversionCopywriterAgent.craftCalibratedMetaDescription(
@@ -388,14 +470,18 @@ Return JSON: { "plainEnglishVerdict": string }
           scopeType: isCoreRoute ? 'ROUTE' : 'GLOBAL',
           scopeValue: isCoreRoute ? normPath : '*',
           ruleTitle: isCoreRoute
-            ? `Lock ${normPath} Headline Against Page 2 Query Overwrites`
+            ? (normPath === '/'
+                ? 'Protect Homepage Brand Authority & Legal SRA Triage Hub'
+                : 'Protect /calculator/ Sole Commercial Transactional Tool')
             : `Enforce Additive Scope & ITEPA s.403 Precision on Pos > 10 Queries`,
           constraintDescription: isCoreRoute
-            ? `On ${normPath}, never overwrite <title> or <h1> for secondary queries (like "${input.query}"). Enforce ADDITIVE_CONTENT_AND_LINKS scope and keep primary anchor "${input.primaryAnchorQuery || 'settlement agreement calculator'}" intact.`
+            ? (normPath === '/'
+                ? "The Homepage (/) is strictly locked as the Brand Authority & Legal SRA Triage Hub. Prohibit assigning 'Settlement Agreement Calculator' to /; the commercial calculator intent belongs exclusively to /calculator/."
+                : "Preserve /calculator/ as the Sole Commercial Transactional Tool ('Settlement Agreement Calculator UK (2026/27) | SettlementCheck'). Never replace the <title> with informational phrasing.")
             : `For striking-distance queries (Pos > 10), use ADDITIVE_CONTENT_AND_LINKS scope and qualify £30,000 tax-free compensation (ITEPA 2003 s.403) vs taxable PILON (s.402D) from ${sourceGuide}.`,
           lockTitleOverwrite: isCoreRoute,
-          requiredTokens: isCoreRoute ? ['settlement', 'calculator'] : [],
-          prohibitedPhrases: ['you can expect up to', 'how to calculate your settlement'],
+          requiredTokens: normPath === '/' ? ['settlement', 'checker'] : isCoreRoute ? ['settlement', 'calculator', 'uk'] : [],
+          prohibitedPhrases: normPath === '/' ? ['settlement agreement calculator', 'how to calculate your settlement'] : ['you can expect up to', 'how to calculate your settlement'],
           source: 'ADVERSARIAL_HEAD_PROMOTED',
           createdAt: new Date().toISOString(),
         }

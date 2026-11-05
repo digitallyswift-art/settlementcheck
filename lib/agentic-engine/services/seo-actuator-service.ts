@@ -27,6 +27,8 @@ import {
   StatutoryComparisonTableData,
   InProseLinkPlacement,
   ContentGapBrief,
+  DigitalPrPitchBrief,
+  ContentDepthUpgradeBrief,
 } from '../types';
 import { SafeFs } from './safe-fs';
 
@@ -70,6 +72,8 @@ export interface AppliedSeoRecord {
   comparisonTable?: StatutoryComparisonTableData;
   inProsePlacement?: InProseLinkPlacement;
   contentGapBrief?: ContentGapBrief;
+  digitalPrPitch?: DigitalPrPitchBrief;
+  contentDepthUpgrade?: ContentDepthUpgradeBrief;
 }
 
 export class SeoActuatorService {
@@ -117,7 +121,11 @@ export class SeoActuatorService {
       'Settlement Agreement Calculator & Free Solicitor Check UK';
     const primaryAnchor =
       rec.primaryAnchorQuery ||
-      (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : rec.query);
+      (norm === '/'
+        ? 'settlement agreement checker'
+        : norm === '/calculator/'
+        ? 'settlement agreement calculator'
+        : rec.query);
 
     // Legacy deployed/canary records without explicit actuationScope were deployed as FULL_META_AND_FAQ
     const isAlreadyLiveLegacy =
@@ -273,7 +281,11 @@ export class SeoActuatorService {
         undefined,
       primaryAnchorQuery:
         d.seo_brief?.queryClusterProfile?.primaryAnchorQuery ||
-        (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : d.query),
+        (norm === '/'
+          ? 'settlement agreement checker'
+          : norm === '/calculator/'
+          ? 'settlement agreement calculator'
+          : d.query),
       targetCanonicalUrl: d.target_canonical_url,
       calibratedTitle: d.calibrated_title,
       calibratedMetaDescription: d.calibrated_meta_description,
@@ -294,6 +306,8 @@ export class SeoActuatorService {
       comparisonTable: d.seo_brief?.comparisonTable || d.copy_package?.comparisonTable,
       inProsePlacement: d.seo_brief?.inProsePlacement || d.copy_package?.inProsePlacement,
       contentGapBrief: d.seo_brief?.contentGapBrief || d.copy_package?.contentGapBrief,
+      digitalPrPitch: d.seo_brief?.digitalPrPitch || d.copy_package?.digitalPrPitch,
+      contentDepthUpgrade: d.seo_brief?.contentDepthUpgrade || d.copy_package?.contentDepthUpgrade,
     };
 
     return this.enrichRecordWithBlastRadius(base);
@@ -322,7 +336,11 @@ export class SeoActuatorService {
           SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm],
         primaryAnchorQuery:
           pkg.seoTechnicalBrief?.queryClusterProfile?.primaryAnchorQuery ||
-          (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : pkg.query),
+          (norm === '/'
+            ? 'settlement agreement checker'
+            : norm === '/calculator/'
+            ? 'settlement agreement calculator'
+            : pkg.query),
         targetCanonicalUrl: pkg.seoTechnicalBrief?.targetCanonicalUrl,
         calibratedTitle: pkg.copyPackage?.calibratedTitle,
         calibratedMetaDescription: pkg.copyPackage?.calibratedMetaDescription,
@@ -336,6 +354,8 @@ export class SeoActuatorService {
         comparisonTable: pkg.comparisonTable || pkg.copyPackage?.comparisonTable,
         inProsePlacement: pkg.inProsePlacement || pkg.copyPackage?.inProsePlacement,
         contentGapBrief: pkg.contentGapBrief || pkg.copyPackage?.contentGapBrief,
+        digitalPrPitch: pkg.digitalPrPitch || pkg.copyPackage?.digitalPrPitch,
+        contentDepthUpgrade: pkg.contentDepthUpgrade || pkg.copyPackage?.contentDepthUpgrade,
       };
       this.memoryStore.set(pkg.id, this.enrichRecordWithBlastRadius(base));
     }
@@ -417,7 +437,11 @@ export class SeoActuatorService {
                 SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm],
               primaryAnchorQuery:
                 pkg.seoTechnicalBrief?.queryClusterProfile?.primaryAnchorQuery ||
-                (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : pkg.query),
+                (norm === '/'
+                  ? 'settlement agreement checker'
+                  : norm === '/calculator/'
+                  ? 'settlement agreement calculator'
+                  : pkg.query),
               targetCanonicalUrl: pkg.seoTechnicalBrief?.targetCanonicalUrl,
               calibratedTitle: pkg.copyPackage?.calibratedTitle,
               calibratedMetaDescription: pkg.copyPackage?.calibratedMetaDescription,
@@ -430,6 +454,8 @@ export class SeoActuatorService {
               comparisonTable: pkg.comparisonTable || pkg.copyPackage?.comparisonTable,
               inProsePlacement: pkg.inProsePlacement || pkg.copyPackage?.inProsePlacement,
               contentGapBrief: pkg.contentGapBrief || pkg.copyPackage?.contentGapBrief,
+              digitalPrPitch: pkg.digitalPrPitch || pkg.copyPackage?.digitalPrPitch,
+              contentDepthUpgrade: pkg.contentDepthUpgrade || pkg.copyPackage?.contentDepthUpgrade,
             };
             list.push(this.enrichRecordWithBlastRadius(base));
           }
@@ -456,7 +482,7 @@ export class SeoActuatorService {
       const norm = this.normalizePath(fallback.targetCanonicalUrl);
       const hydrated = this.enrichRecordWithBlastRadius({
         id: packageId,
-        query: fallback.query || 'settlement agreement calculator',
+        query: fallback.query || (norm === '/' ? 'settlement agreement checker' : 'settlement agreement calculator'),
         targetCanonicalUrl: fallback.targetCanonicalUrl,
         calibratedTitle: fallback.calibratedTitle || '',
         calibratedMetaDescription: fallback.calibratedMetaDescription || '',
@@ -476,7 +502,11 @@ export class SeoActuatorService {
           fallback.targetPageExistingH1 || SeoArchitectAgent.CANONICAL_ROUTE_H1_MAP[norm],
         primaryAnchorQuery:
           fallback.primaryAnchorQuery ||
-          (norm === '/' || norm === '/calculator/' ? 'settlement agreement calculator' : fallback.query),
+          (norm === '/'
+            ? 'settlement agreement checker'
+            : norm === '/calculator/'
+            ? 'settlement agreement calculator'
+            : fallback.query),
         version: fallback.version ?? 1,
       });
       this.memoryStore.set(packageId, hydrated);

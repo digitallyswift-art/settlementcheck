@@ -128,7 +128,10 @@ export function evaluateSeoBlastRadius(
   const preservesLiveTitle = resolvedScope === 'ADDITIVE_CONTENT_AND_LINKS';
 
   // Check dropped tokens from primary anchor
-  const anchorSource = input.primaryAnchorQuery || input.query || 'settlement agreement calculator';
+  const anchorSource =
+    input.primaryAnchorQuery ||
+    input.query ||
+    (normPath === '/' ? 'settlement agreement checker' : 'settlement agreement calculator');
   const anchorTokens = anchorSource
     .toLowerCase()
     .split(/\s+/)

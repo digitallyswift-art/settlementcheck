@@ -14,12 +14,12 @@ const BASELINE_POLICIES: SeoGuardrailPolicyRule[] = [
     id: 'policy_route_home_title_lock',
     scopeType: 'ROUTE',
     scopeValue: '/',
-    ruleTitle: 'Protect Homepage Headline & Primary Cluster Anchor',
+    ruleTitle: 'Protect Homepage Brand Authority & Legal SRA Triage Hub',
     constraintDescription:
-      "Never overwrite the Homepage (/) <title> or <h1> for secondary or Page 2 queries. Keep actuationScope as ADDITIVE_CONTENT_AND_LINKS unless explicitly recalibrating the primary anchor 'settlement agreement calculator'.",
+      "The Homepage (/) is strictly locked as the Brand Authority & Legal SRA Triage Hub (Title: 'Settlement Agreement Checker & SRA Triage UK | SettlementCheck', H1: 'Settlement Agreement Checker & Legal SRA Triage Hub UK'). Strictly prohibit assigning 'Settlement Agreement Calculator' to /; the commercial calculator intent belongs exclusively to /calculator/.",
     lockTitleOverwrite: true,
-    requiredTokens: ['settlement', 'agreement', 'calculator'],
-    prohibitedPhrases: ['how to calculate your settlement'],
+    requiredTokens: ['settlement', 'agreement', 'checker'],
+    prohibitedPhrases: ['settlement agreement calculator', 'how to calculate your settlement'],
     source: 'BASELINE_INVARIANT',
     createdAt: '2026-10-23T19:50:00.000Z',
   },
@@ -27,14 +27,27 @@ const BASELINE_POLICIES: SeoGuardrailPolicyRule[] = [
     id: 'policy_route_calculator_title_lock',
     scopeType: 'ROUTE',
     scopeValue: '/calculator/',
-    ruleTitle: 'Protect Main Calculator Transactional Intent',
+    ruleTitle: 'Protect Main Calculator Sole Commercial Transactional Tool',
     constraintDescription:
-      "Preserve transactional tool intent on /calculator/. Never replace the <title> with informational 'How to...' phrasing.",
+      "Preserve /calculator/ as the Sole Commercial Transactional Tool (Title: 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck', H1: 'Free Employee Settlement Agreement Calculator UK (2026 Rates)'). Never replace the <title> with informational 'How to...' phrasing.",
     lockTitleOverwrite: true,
     requiredTokens: ['settlement', 'calculator', 'uk'],
     prohibitedPhrases: ['how to calculate'],
     source: 'BASELINE_INVARIANT',
     createdAt: '2026-10-23T19:50:00.000Z',
+  },
+  {
+    id: 'policy_anti_churn_title_freeze',
+    scopeType: 'GLOBAL',
+    scopeValue: '*',
+    ruleTitle: 'Anti-Churn Title Freeze (SERP Pixel & CTR Calibrated Protection)',
+    constraintDescription:
+      'Forbid cosmetic title rewrites when an existing page title is already CTR-calibrated and within 50-60 characters / SERP pixel budgets. Reject cosmetic title rewrites and downgrade actuationScope to ADDITIVE_CONTENT_AND_LINKS.',
+    lockTitleOverwrite: false,
+    requiredTokens: [],
+    prohibitedPhrases: [],
+    source: 'BASELINE_INVARIANT',
+    createdAt: '2026-11-05T00:00:00.000Z',
   },
   {
     id: 'policy_global_itepa_tax_precision',
@@ -119,8 +132,16 @@ export class SeoPolicyRegistry {
     const hasLock = policies.some(p => Boolean(p.lockTitleOverwrite));
     if (!hasLock) return false;
 
+    const queryLower = (query || '').toLowerCase().trim();
+
+    // If the query contains any prohibited phrase for this route (e.g. 'calculator' on '/'), strictly locked
+    const hasProhibited = policies.some(p =>
+      (p.prohibitedPhrases || []).some(ph => queryLower.includes(ph.toLowerCase()))
+    );
+    if (hasProhibited) return true;
+
     // Allow primary anchor recalibration only if query is the exact primary anchor
-    if (query && primaryAnchor && query.toLowerCase().trim() === primaryAnchor.toLowerCase().trim()) {
+    if (query && primaryAnchor && queryLower === primaryAnchor.toLowerCase().trim()) {
       return false;
     }
     return true;

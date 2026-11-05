@@ -28,6 +28,9 @@ import {
   SeoTechnicalBrief,
   ConversionCopyPackage,
   QueryClusterProfile,
+  SeoActionType,
+  DigitalPrPitchBrief,
+  ContentDepthUpgradeBrief,
 } from '../types';
 import { GscFetchResult, GscQueryRow } from '../services/gsc-client';
 import { SafeFs } from '../services/safe-fs';
@@ -293,17 +296,71 @@ export class SeoWorkflowOrchestrator {
       // 4. Specialist Anti-AI Quality & E-E-A-T Guard in the loop
       const antiAiQuality = AntiAiQualityGuard.evaluateQuality(copyPackage);
 
-      // Determine priority, action type, non-destructive actuationScope, and Blast-Radius Risk
-      const isTopRankLowCtr = opp.position <= 8.5;
-      const actionType = isTopRankLowCtr ? 'META_RECALIBRATION' : 'INTERNAL_LINK_BOOST';
-      const priority = opp.impressions >= 100 ? 'CRITICAL' : opp.impressions >= 50 ? 'HIGH' : 'MEDIUM';
-
       const primaryAnchor = seoBrief.queryClusterProfile?.primaryAnchorQuery || opp.query;
       const lockTitleByPolicy = SeoPolicyRegistry.isRouteTitleLocked(
         seoBrief.targetCanonicalUrl,
         opp.query,
         primaryAnchor
       );
+
+      // Determine priority, action type, non-destructive actuationScope, and Blast-Radius Risk
+      const isTopRankLowCtr = opp.position <= 8.5;
+      let actionType: SeoActionType;
+      const lowerQ = opp.query.toLowerCase();
+      const isDisputeOrPr =
+        lowerQ.includes('tribunal') ||
+        lowerQ.includes('backlog') ||
+        lowerQ.includes('rights') ||
+        lowerQ.includes('unfair') ||
+        lowerQ.includes('discrimination') ||
+        lowerQ.includes('average');
+
+      if (opp.position > 8.5) {
+        actionType = isDisputeOrPr ? 'DIGITAL_PR_PITCH' : 'CONTENT_DEPTH_UPGRADE';
+      } else {
+        actionType = lockTitleByPolicy ? 'CONTENT_DEPTH_UPGRADE' : 'META_RECALIBRATION';
+      }
+
+      const priority = opp.impressions >= 100 ? 'CRITICAL' : opp.impressions >= 50 ? 'HIGH' : 'MEDIUM';
+
+      let digitalPrPitch: DigitalPrPitchBrief | undefined;
+      let contentDepthUpgrade: ContentDepthUpgradeBrief | undefined;
+
+      if (actionType === 'DIGITAL_PR_PITCH') {
+        const asset =
+          lowerQ.includes('rate') || lowerQ.includes('history')
+            ? '/statutory-rates-history/'
+            : lowerQ.includes('index') || lowerQ.includes('average') || lowerQ.includes('payout')
+            ? '/reports/uk-settlement-index-2026/'
+            : '/tribunal-backlog-tracker/';
+
+        digitalPrPitch = {
+          pitchAngle: 'MoJ Employment Tribunal wait times (48+ weeks) making pre-tribunal settlement agreements the commercial standard in 2026',
+          targetJournalists: 'Legal & HR Correspondents at Personnel Today, People Management, Law Society Gazette, Employment Law Journal',
+          hookHeadline: 'UK Employment Tribunal Backlog Reaches 500+ Day Delays as April 2026 Statutory Rates Rise to £751/wk',
+          keyStatSummary: 'MoJ data reveals multi-year delays across regional tribunals; statutory weekly redundancy cap reaches £751 and compensatory cap £123,543 from 6 April 2026.',
+          sourceDataAsset: asset,
+          recommendedOutreachCopy: 'Pitch exclusive data from SettlementCheck tracking MoJ backlog delays to legal journalists, demonstrating why employers and employees are actively settling prior to tribunal claims.',
+        };
+      } else if (actionType === 'CONTENT_DEPTH_UPGRADE') {
+        const toolToEmbed =
+          lowerQ.includes('tax') || lowerQ.includes('30000')
+            ? '/settlement-agreement-tax-calculator/'
+            : lowerQ.includes('redundancy')
+            ? '/redundancy-calculator/'
+            : '/calculator/';
+
+        contentDepthUpgrade = {
+          recommendedModule:
+            lowerQ.includes('tax') || lowerQ.includes('how much')
+              ? 'STATUTORY_WORKED_TABLE'
+              : 'INTERACTIVE_CALCULATOR_CARD',
+          targetSectionH2: 'Calculate Your Statutory Baseline Under April 2026 Rates',
+          interactiveToolToEmbed: toolToEmbed,
+          proposedTableSummary: 'Official 3-tier comparison matrix: Tier 1 Statutory Redundancy (ERA 1996 s.162, £751/wk cap) vs Tier 2 Notice Pay PILON (taxable under s.402D) vs Tier 3 Genuine Compensation (tax-free up to £30k under s.403 ITEPA 2003)',
+          expectedUserValueBenefit: 'Delivers immediate self-service mathematical clarity to stressed employees, drastically reducing bounce rate and proving experiential depth to search engines.',
+        };
+      }
       const safeScope = resolveSafeActuationScope({
         query: opp.query,
         targetCanonicalUrl: seoBrief.targetCanonicalUrl,
@@ -365,6 +422,12 @@ export class SeoWorkflowOrchestrator {
         stagedDiffSummary: stagedDiff.trim(),
         status: 'STAGED',
         timestamp,
+        workedExample: copyPackage.workedExample,
+        comparisonTable: copyPackage.comparisonTable,
+        inProsePlacement: copyPackage.inProsePlacement,
+        contentGapBrief: copyPackage.contentGapBrief,
+        digitalPrPitch,
+        contentDepthUpgrade,
       };
 
       // 5. Validation Gate

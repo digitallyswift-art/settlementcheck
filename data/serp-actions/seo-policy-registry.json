@@ -3,11 +3,11 @@
     "id": "policy_route_home_title_lock",
     "scopeType": "ROUTE",
     "scopeValue": "/",
-    "ruleTitle": "Protect Homepage Headline & Primary Cluster Anchor",
-    "constraintDescription": "Never overwrite the Homepage (/) <title> or <h1> for secondary or Page 2 queries. Keep actuationScope as ADDITIVE_CONTENT_AND_LINKS unless explicitly recalibrating the primary anchor 'settlement agreement calculator'.",
+    "ruleTitle": "Protect Homepage Brand Authority & Legal SRA Triage Hub",
+    "constraintDescription": "The Homepage (/) is strictly locked as the Brand Authority & Legal SRA Triage Hub (Title: 'Settlement Agreement Checker & SRA Triage UK | SettlementCheck', H1: 'Settlement Agreement Checker & Legal SRA Triage Hub UK'). Strictly prohibit assigning 'Settlement Agreement Calculator' to /; the commercial calculator intent belongs exclusively to /calculator/.",
     "lockTitleOverwrite": true,
-    "requiredTokens": ["settlement", "agreement", "calculator"],
-    "prohibitedPhrases": ["how to calculate your settlement"],
+    "requiredTokens": ["settlement", "agreement", "checker"],
+    "prohibitedPhrases": ["settlement agreement calculator", "how to calculate your settlement"],
     "source": "BASELINE_INVARIANT",
     "createdAt": "2026-10-23T19:50:00.000Z"
   },
@@ -15,13 +15,25 @@
     "id": "policy_route_calculator_title_lock",
     "scopeType": "ROUTE",
     "scopeValue": "/calculator/",
-    "ruleTitle": "Protect Main Calculator Transactional Intent",
-    "constraintDescription": "Preserve transactional tool intent on /calculator/. Never replace the <title> with informational 'How to...' phrasing.",
+    "ruleTitle": "Protect Main Calculator Sole Commercial Transactional Tool",
+    "constraintDescription": "Preserve /calculator/ as the Sole Commercial Transactional Tool (Title: 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck', H1: 'Free Employee Settlement Agreement Calculator UK (2026 Rates)'). Never replace the <title> with informational 'How to...' phrasing.",
     "lockTitleOverwrite": true,
     "requiredTokens": ["settlement", "calculator", "uk"],
     "prohibitedPhrases": ["how to calculate"],
     "source": "BASELINE_INVARIANT",
     "createdAt": "2026-10-23T19:50:00.000Z"
+  },
+  {
+    "id": "policy_anti_churn_title_freeze",
+    "scopeType": "GLOBAL",
+    "scopeValue": "*",
+    "ruleTitle": "Anti-Churn Title Freeze (SERP Pixel & CTR Calibrated Protection)",
+    "constraintDescription": "Forbid cosmetic title rewrites when an existing page title is already CTR-calibrated and within 50-60 characters / SERP pixel budgets. Reject cosmetic title rewrites and downgrade actuationScope to ADDITIVE_CONTENT_AND_LINKS.",
+    "lockTitleOverwrite": false,
+    "requiredTokens": [],
+    "prohibitedPhrases": [],
+    "source": "BASELINE_INVARIANT",
+    "createdAt": "2026-11-05T00:00:00.000Z"
   },
   {
     "id": "policy_global_itepa_tax_precision",
@@ -34,5 +46,24 @@
     "prohibitedPhrases": ["you can expect up to", "guaranteed £30,000"],
     "source": "BASELINE_INVARIANT",
     "createdAt": "2026-10-23T19:50:00.000Z"
+  },
+  {
+    "id": "policy_global_sra_fca_cma_adversarial_invariants",
+    "scopeType": "GLOBAL",
+    "scopeValue": "*",
+    "ruleTitle": "SRA, FCA, CMA & 5 Adversarial Legal Traps Compliance",
+    "constraintDescription": "Use strictly descriptive phrasing (never prescriptive imperatives like 'Do not sign', 'Do not accept', 'You should ask for', or 'What to say to your employer'). Clarify that ACAS Code 4 (10 calendar days) is statutory guidance rather than an irrevocable right (Routledge v Grant), that s.111A applies only to ordinary unfair dismissal, and that employers standardly provide a capped contribution (typically £350 to £500+ +VAT) upon agreement completion as a commercial practice rather than a statutory obligation under Section 203.",
+    "lockTitleOverwrite": false,
+    "requiredTokens": [],
+    "prohibitedPhrases": [
+      "do not sign",
+      "do not accept this offer",
+      "what to say to your employer",
+      "legal right to 10 days",
+      "legally required to pay your legal fees",
+      "without prejudice proposal"
+    ],
+    "source": "BASELINE_INVARIANT",
+    "createdAt": "2026-10-31T23:00:00.000Z"
   }
 ]

@@ -36,7 +36,13 @@ export default function CockpitClient() {
   const [packageFilter, setPackageFilter] = useState<'ALL' | 'PENDING' | 'APPLIED' | 'REJECTED'>('PENDING');
   const [riskFilter, setRiskFilter] = useState<'ALL_RISK' | 'LOW_RISK' | 'MEDIUM_RISK' | 'HIGH_CRITICAL_RISK'>('ALL_RISK');
   const [strategyFilter, setStrategyFilter] = useState<
-    'ALL' | 'STATUTORY_CASE_STUDY' | 'STATUTORY_COMPARISON_TABLE' | 'IN_PROSE_INTERNAL_LINK' | 'META_RECALIBRATION'
+    | 'ALL'
+    | 'CONTENT_DEPTH_UPGRADE'
+    | 'DIGITAL_PR_PITCH'
+    | 'STATUTORY_CASE_STUDY'
+    | 'STATUTORY_COMPARISON_TABLE'
+    | 'IN_PROSE_INTERNAL_LINK'
+    | 'META_RECALIBRATION'
   >('ALL');
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
   const [adversarialLoadingId, setAdversarialLoadingId] = useState<string | null>(null);
@@ -573,6 +579,8 @@ export default function CockpitClient() {
     if (!matchesRisk) return false;
 
     if (strategyFilter === 'ALL') return true;
+    if (strategyFilter === 'CONTENT_DEPTH_UPGRADE') return pkg.actionType === 'CONTENT_DEPTH_UPGRADE' || Boolean(pkg.contentDepthUpgrade);
+    if (strategyFilter === 'DIGITAL_PR_PITCH') return pkg.actionType === 'DIGITAL_PR_PITCH' || Boolean(pkg.digitalPrPitch);
     if (strategyFilter === 'STATUTORY_CASE_STUDY') return pkg.actionType === 'STATUTORY_CASE_STUDY' || Boolean(pkg.workedExample);
     if (strategyFilter === 'STATUTORY_COMPARISON_TABLE') return pkg.actionType === 'STATUTORY_COMPARISON_TABLE' || Boolean(pkg.comparisonTable);
     if (strategyFilter === 'IN_PROSE_INTERNAL_LINK') return pkg.actionType === 'IN_PROSE_INTERNAL_LINK' || Boolean(pkg.inProsePlacement);
@@ -1073,6 +1081,8 @@ export default function CockpitClient() {
               </span>
               {[
                 { id: 'ALL', label: `All Vectors (${statusFilteredPackages.length})` },
+                { id: 'CONTENT_DEPTH_UPGRADE', label: '⚡ Content Depth Upgrades' },
+                { id: 'DIGITAL_PR_PITCH', label: '📢 Digital PR Pitches' },
                 { id: 'STATUTORY_CASE_STUDY', label: '📊 Worked Calculations' },
                 { id: 'STATUTORY_COMPARISON_TABLE', label: '📑 Comparison Tables' },
                 { id: 'IN_PROSE_INTERNAL_LINK', label: '🔗 In-Prose Links' },
@@ -1154,6 +1164,16 @@ export default function CockpitClient() {
                               TABLE_INJECTION
                             </span>
                           )}
+                          {pkg.contentDepthUpgrade && (
+                            <span className="font-mono text-[10px] font-bold text-cyan-800 px-2 py-0.5 bg-cyan-50 rounded border border-cyan-200">
+                              CONTENT_DEPTH
+                            </span>
+                          )}
+                          {pkg.digitalPrPitch && (
+                            <span className="font-mono text-[10px] font-bold text-fuchsia-800 px-2 py-0.5 bg-fuchsia-50 rounded border border-fuchsia-200">
+                              DIGITAL_PR
+                            </span>
+                          )}
                           {pkg.inProsePlacement && (
                             <span className="font-mono text-[10px] font-bold text-indigo-700 px-2 py-0.5 bg-indigo-50 rounded border border-indigo-200">
                               IN_PROSE_LINK
@@ -1225,7 +1245,21 @@ export default function CockpitClient() {
                               </span>
                             </div>
                             <h3 className="text-sm sm:text-base font-serif font-bold text-white flex flex-wrap items-center gap-2">
-                              {pkg.actionType === 'STATUTORY_CASE_STUDY' || pkg.workedExample ? (
+                              {pkg.actionType === 'CONTENT_DEPTH_UPGRADE' || pkg.contentDepthUpgrade ? (
+                                <>
+                                  <span>⚡ Embed Interactive Calculator Card &amp; Statutory Comparison Table</span>
+                                  <span className="text-[10px] font-sans font-medium text-cyan-300 bg-cyan-950/80 border border-cyan-400/40 px-2 py-0.5 rounded-full">
+                                    Content Depth Upgrade
+                                  </span>
+                                </>
+                              ) : pkg.actionType === 'DIGITAL_PR_PITCH' || pkg.digitalPrPitch ? (
+                                <>
+                                  <span>📢 Pitch MoJ Tribunal Backlog Tracker &amp; Rates Archive to Legal Press</span>
+                                  <span className="text-[10px] font-sans font-medium text-fuchsia-300 bg-fuchsia-950/80 border border-fuchsia-400/40 px-2 py-0.5 rounded-full">
+                                    Digital PR Outreach
+                                  </span>
+                                </>
+                              ) : pkg.actionType === 'STATUTORY_CASE_STUDY' || pkg.workedExample ? (
                                 <>
                                   <span>📊 Embed Worked Statutory Calculation Case Study (ERA 1996 s.162 &amp; ITEPA s.403)</span>
                                   <span className="text-[10px] font-sans font-medium text-amber-300 bg-amber-950/80 border border-amber-400/40 px-2 py-0.5 rounded-full">
@@ -1422,6 +1456,54 @@ export default function CockpitClient() {
                                   </div>
                                   <div className="text-[11px] text-white/70 italic">
                                     Rationale: {pkg.inProsePlacement.relevanceRationale}
+                                  </div>
+                                </div>
+                              )}
+
+                              {pkg.contentDepthUpgrade && (
+                                <div className="p-4 rounded-2xl bg-white border border-[#0B1F3A]/15 space-y-2.5 shadow-xs">
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A] flex items-center gap-1.5">
+                                      <span>⚡</span> Content Depth Upgrade Recommendation
+                                    </span>
+                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-100 text-cyan-900 font-bold">
+                                      {pkg.contentDepthUpgrade.recommendedModule}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs text-[#0B1F3A]/90 font-medium">
+                                    Section: <strong>{pkg.contentDepthUpgrade.targetSectionH2}</strong>
+                                  </p>
+                                  <p className="text-[11px] text-[#0B1F3A]/80 leading-relaxed">
+                                    Embed interactive tool: <code className="bg-[#0B1F3A]/5 px-1.5 py-0.5 rounded font-mono text-[#0B1F3A]">{pkg.contentDepthUpgrade.interactiveToolToEmbed}</code>
+                                  </p>
+                                  {pkg.contentDepthUpgrade.proposedTableSummary && (
+                                    <p className="text-[11px] text-[#0B1F3A]/80 italic">
+                                      {pkg.contentDepthUpgrade.proposedTableSummary}
+                                    </p>
+                                  )}
+                                  <p className="text-[11px] text-emerald-800 bg-emerald-50 border border-emerald-200/60 p-2 rounded-xl">
+                                    💡 <strong>User &amp; SERP Value</strong>: {pkg.contentDepthUpgrade.expectedUserValueBenefit}
+                                  </p>
+                                </div>
+                              )}
+
+                              {pkg.digitalPrPitch && (
+                                <div className="p-4 rounded-2xl bg-[#0B1F3A] text-white space-y-2.5 shadow-sm">
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-fuchsia-300 flex items-center gap-1.5">
+                                      <span>📢</span> Digital PR Editorial Outreach Pitch
+                                    </span>
+                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-fuchsia-950 border border-fuchsia-400/40 text-fuchsia-300 font-bold">
+                                      Asset: {pkg.digitalPrPitch.sourceDataAsset}
+                                    </span>
+                                  </div>
+                                  <div className="space-y-1.5 text-xs text-white/90">
+                                    <p><strong className="text-amber-300">Hook Headline</strong>: &ldquo;{pkg.digitalPrPitch.hookHeadline}&rdquo;</p>
+                                    <p className="text-[11px] text-white/80"><strong className="text-white">Target Publications</strong>: {pkg.digitalPrPitch.targetJournalists}</p>
+                                    <p className="text-[11px] text-white/80"><strong className="text-white">Key Fact</strong>: {pkg.digitalPrPitch.keyStatSummary}</p>
+                                    <div className="p-2.5 rounded-xl bg-black/40 border border-white/10 font-mono text-[10px] text-white/80">
+                                      {pkg.digitalPrPitch.recommendedOutreachCopy}
+                                    </div>
                                   </div>
                                 </div>
                               )}
