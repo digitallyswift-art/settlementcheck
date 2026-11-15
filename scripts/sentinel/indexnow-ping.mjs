@@ -1,5 +1,8 @@
+import dns from 'dns';
 import fs from 'fs';
 import path from 'path';
+
+dns.setDefaultResultOrder('ipv4first');
 
 // 1. Load .env.local if present
 const envPath = path.resolve('.env.local');
