@@ -211,7 +211,7 @@ export default function TaxFreeSettlementGuide() {
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Contribution</span>
                   <span className="font-bold text-ink text-sm">100% Tax-Exempt</span>
-                  <span className="text-muted text-[11px]">Your employer pays your solicitor fees</span>
+                  <span className="text-muted text-[11px]">Capped commercial contribution upon completion</span>
                 </div>
               </div>
 
@@ -511,7 +511,7 @@ export default function TaxFreeSettlementGuide() {
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3 mt-8">
               <InfoIcon />
               <p className="sc-body text-sm">
-                Your employer covers your solicitor fees for reviewing and signing the settlement agreement. This legal requirement protects you from making costly tax errors.
+                Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards your solicitor fees upon completion of the agreement. Independent legal advice protects you from costly tax calculation errors.
               </p>
             </div>
           </div>

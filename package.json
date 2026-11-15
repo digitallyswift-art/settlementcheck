@@ -15,6 +15,7 @@
     "sentinel:digest": "node scripts/sentinel/autonomous-actuator.mjs --email",
     "sentinel:email": "node scripts/sentinel/send-digest-email.mjs",
     "sentinel:index": "node scripts/sentinel/test-indexing-api.mjs",
+    "sentinel:indexnow": "node scripts/sentinel/indexnow-ping.mjs",
     "watchdog:sla": "node scripts/watchdog/sla-watchdog.mjs",
     "watchdog:seo": "npx tsx scripts/watchdog/seo-degradation-watchdog.ts",
     "seo:sync-git": "npx tsx scripts/sentinel/sync-seo-to-git.ts",

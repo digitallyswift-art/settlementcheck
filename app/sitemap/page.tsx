@@ -320,6 +320,12 @@ const sitemapData: SitemapCategory[] = [
     description: 'Regulatory disclosures, terms of service, and search engine directives.',
     items: [
       {
+        title: 'Regulatory Framework',
+        href: '/regulatory-framework/',
+        description: 'SRA Rule 5.1 disclosure, FSMA 2000 non-claims-management declaration, and LASPO 2012 compliance.',
+        badge: 'Regulatory',
+      },
+      {
         title: 'Privacy Policy',
         href: '/privacy/',
         description: 'UK GDPR data compliance, collection standards, and data retention policies.',
@@ -415,7 +421,7 @@ export default function SitemapPage() {
           <div className="max-w-3xl mx-auto px-4 text-center">
             <h2 className="text-2xl font-serif font-medium mb-3">Received a Settlement Agreement?</h2>
             <p className="text-white/70 text-sm mb-6 max-w-xl mx-auto">
-              Check your offer in under 60 seconds with our free statutory calculator and get matched with an independent SRA-regulated solicitor. Your employer pays the legal fees.
+              Check your offer in under 60 seconds with our free statutory calculator and get matched with an independent SRA-regulated solicitor. Standard employer fee contributions apply upon completion.
             </p>
             <Link href="/calculator/" className="btn-accent inline-block">
               Calculate my estimate →

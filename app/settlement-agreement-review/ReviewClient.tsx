@@ -9,6 +9,7 @@ import { trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry
 import { AcasWatchdog } from '@/components/AcasWatchdog'
 import { WithoutPrejudiceClarification } from '@/components/WithoutPrejudiceClarification'
 import { RestrictiveCovenantScanner } from '@/components/RestrictiveCovenantScanner'
+import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers'
 
 const SAMPLE_AGREEMENT = `1. The Employment will terminate on 30 April 2026 by mutual agreement.
 2. Subject to the Employee complying with this Agreement, the Employer shall pay an Ex-Gratia termination payment of £38,000.
@@ -159,47 +160,14 @@ function ReviewBenchmarkCard({
           {isAboveMedian && (
             <p className="m-0">
               <strong>Above Official MoJ Median:</strong> Your employer&apos;s recorded ex-gratia figure of{' '}
-              <strong>{formatGBP(offer)}</strong> exceeds the MoJ median tribunal award ({formatGBP(benchmark.medianTribunalAward)}) for this category. Points commonly discussed with an instructed solicitor include confirming the customary legal fee contribution (£350 to £750 + VAT) and attaching an agreed factual reference schedule.
-
-
-          {/* Critical Contract Law Advisory (Offer Revocation Risk) */}
-          <div className="mt-3 pt-3 border-t border-black/10 text-[11px] leading-relaxed">
-            <span className="font-semibold block mb-0.5 text-ink">
-              ⚠️ Contract Law Advisory (Risk of Offer Revocation):
-            </span>
-            <span>
-              Under English contract law (<em>Hyde v Wrench [1840]</em>), submitting a counter-proposal or formal rejection legally extinguishes your employer&apos;s existing offer. Furthermore, an employer is legally entitled to withdraw an unaccepted offer at any time prior to signed completion (<em>Routledge v Grant [1828]</em>). Do not reject an offer, issue counter-demands, or let deadlines expire without consulting your instructed SRA solicitor.
-            </span>
-          </div>
+              <strong>{formatGBP(offer)}</strong> exceeds the MoJ median tribunal award ({formatGBP(benchmark.medianTribunalAward)}) for this category. Points commonly discussed with an instructed solicitor include confirming the customary legal fee contribution (£350 to £500+ + VAT) and attaching an agreed factual reference schedule.
             </p>
           )}
         </div>
       )}
 
-      {/* Section 203(3) ERA 1996 Fee Notice */}
-      <div className="bg-paper-2 border border-[#E2DCCE] rounded-lg p-3 text-xs text-muted flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="flex items-start gap-2">
-          <span className="text-ink font-bold text-sm leading-none mt-0.5">§</span>
-          <span className="leading-snug">
-            <strong className="text-ink">Statutory Validity Requirement:</strong> Under Section 203(3) Employment Rights Act 1996, a settlement agreement is only binding once certified by an independent adviser. Employers customarily provide a capped commercial contribution (typically <strong>£350 to £500+ +VAT</strong>) upon agreement completion. If negotiations break down or legal advice exceeds the agreed cap, liability remains subject to your solicitor&apos;s retainer.
-          </span>
-        </div>
-        <a
-          href="https://www.legislation.gov.uk/ukpga/1996/18/section/203"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() =>
-            trackOutboundCitation(
-              'https://www.legislation.gov.uk/ukpga/1996/18/section/203',
-              'ERA 1996 s.203(3)',
-              { component: 'review_client_benchmark_card' }
-            )
-          }
-          className="text-ink hover:text-coral underline underline-offset-2 font-mono whitespace-nowrap text-xs transition-colors"
-        >
-          ERA 1996 s.203(3) ↗
-        </a>
-      </div>
+      {/* Mandatory Regulatory Disclaimers (CMA/DMCC Fee Notice & Hyde v Wrench Contract Notice) */}
+      <MandatoryLegalDisclaimers className="mt-4" />
     </div>
   )
 }
@@ -270,7 +238,7 @@ export default function ReviewClient() {
     }, 1100)
 
     try {
-      const res = await fetch('/api/review-agreement', {
+      const res = await fetch('/api/review-agreement/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

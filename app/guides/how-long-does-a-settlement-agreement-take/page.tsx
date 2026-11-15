@@ -340,7 +340,7 @@ export default function SettlementAgreementTimelineGuide() {
                     Independent solicitor advice and adviser certificate
                   </h3>
                   <p className="text-[14px] text-muted leading-relaxed">
-                    Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is void unless you receive advice from a qualified, independent solicitor. Your employer covers the legal fees (typically £500 to £1,500 + VAT under Section 203 ERA 1996). Your solicitor explains the claims you are waiving, requests necessary clause amendments, and signs the adviser certificate.
+                    Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is void unless you receive advice from a qualified, independent solicitor. Employers standardly provide a capped commercial contribution (typically £350 to £500+ + VAT) towards this advice upon agreement completion. Your solicitor explains the claims you are waiving, requests necessary clause amendments, and signs the adviser certificate.
                   </p>
                 </div>
 

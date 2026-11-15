@@ -105,9 +105,17 @@ export default function Nav() {
             className="relative"
             onMouseEnter={() => setCalculatorsOpen(true)}
             onMouseLeave={() => setCalculatorsOpen(false)}
+            onFocus={() => setCalculatorsOpen(true)}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                setCalculatorsOpen(false)
+              }
+            }}
           >
             <Link
               href="/calculators/"
+              aria-haspopup="true"
+              aria-expanded={calculatorsOpen}
               className="flex items-center gap-1 text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
             >
               Calculators
@@ -168,9 +176,17 @@ export default function Nav() {
             className="relative"
             onMouseEnter={() => setGuidesOpen(true)}
             onMouseLeave={() => setGuidesOpen(false)}
+            onFocus={() => setGuidesOpen(true)}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                setGuidesOpen(false)
+              }
+            }}
           >
             <Link
               href="/guides/"
+              aria-haspopup="true"
+              aria-expanded={guidesOpen}
               className="flex items-center gap-1 text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
             >
               Guides
@@ -247,6 +263,7 @@ export default function Nav() {
           <button
             className="flex flex-col justify-center items-center gap-[5px] w-9 h-9 p-1 rounded-md hover:bg-black/5 transition-colors"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             <span className={`block h-[1.5px] w-5 bg-ink transition-all duration-200 origin-center ${mobileOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
@@ -263,6 +280,7 @@ export default function Nav() {
           <div>
             <button
               className="w-full flex items-center justify-between text-[15px] font-medium text-ink py-2 bg-transparent border-0 p-0 cursor-pointer"
+              aria-expanded={mobileCalculatorsOpen}
               onClick={() => setMobileCalculatorsOpen(!mobileCalculatorsOpen)}
             >
               <span>Calculators</span>
@@ -311,6 +329,7 @@ export default function Nav() {
           <div>
             <button
               className="w-full flex items-center justify-between text-[15px] font-medium text-ink py-2 bg-transparent border-0 p-0 cursor-pointer"
+              aria-expanded={mobileGuidesOpen}
               onClick={() => setMobileGuidesOpen(!mobileGuidesOpen)}
             >
               <span>Guides</span>

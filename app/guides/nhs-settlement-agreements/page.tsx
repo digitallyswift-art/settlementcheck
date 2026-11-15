@@ -270,7 +270,7 @@ export default function NhsSettlementAgreements() {
           <div className="max-w-2xl mx-auto px-5 space-y-12">
 
             {/* Interactive NHS / MARS Calculator */}
-            <div className="my-2">
+            <div id="mars-calculator" className="my-2 scroll-mt-24">
               <NhsMarsCalculator />
             </div>
 
@@ -283,7 +283,7 @@ export default function NhsSettlementAgreements() {
                 Leaving the NHS after years of dedicated public service is emotionally demanding. When trust management presents a draft settlement agreement or MARS proposal, you might feel pressured to agree quickly.
               </p>
               <p className="sc-body text-[14px] text-muted leading-relaxed">
-                You hold strong contractual rights under Agenda for Change. You are entitled to take the time you need, verify every calculation, and instruct an independent solicitor of your choice. Your trust is legally required to fund your independent legal review.
+                You hold strong contractual rights under Agenda for Change. You are entitled to take the time you need, verify every calculation, and instruct an independent solicitor of your choice. Under Section 203(3) ERA 1996, independent legal advice is required to validate an employment waiver; NHS employers standardly provide a capped commercial contribution (typically £350 to £500+ +VAT) towards this legal review upon agreement completion.
               </p>
             </div>
 
@@ -455,7 +455,7 @@ export default function NhsSettlementAgreements() {
                   {
                     step: '4',
                     title: 'Independent legal review',
-                    desc: 'You instruct an independent SRA-regulated solicitor. Your NHS employer pays the legal fee contribution (£350 to £750 + VAT) directly.',
+                    desc: 'You instruct an independent SRA-regulated solicitor. NHS employers standardly provide a capped commercial fee contribution (typically £350 to £500+ +VAT) upon agreement completion.',
                   },
                   {
                     step: '5',
@@ -496,7 +496,7 @@ export default function NhsSettlementAgreements() {
                 Find out where your NHS settlement offer stands
               </h2>
               <p className="text-white/70 text-sm leading-relaxed mb-6">
-                Free calculator. SRA-regulated solicitor matched within 24 hours. Your NHS employer covers the legal fees.
+                Free statutory calculation. SRA-regulated solicitor matched within 24 hours. NHS employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link href="/settlement-agreement-review/" className="btn-accent w-full sm:w-auto">

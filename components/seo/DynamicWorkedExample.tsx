@@ -107,7 +107,7 @@ export default async function DynamicWorkedExample({
             ))}
           </div>
           <div className="font-medium text-[#0B1F3A]">
-            Independent legal fees typically covered by employer (Section 203(3) ERA 1996)
+            Capped employer fee contribution typically provided upon completion (Section 203(3) ERA 1996)
           </div>
         </div>
       </div>

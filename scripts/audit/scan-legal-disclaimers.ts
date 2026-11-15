@@ -119,7 +119,7 @@ const FORBIDDEN_LEGAL_PHRASES: Array<{
   {
     phrase: 'Trap 5 / CMA (False statutory fee obligation or unqualified free claim)',
     regulator: 'CMA',
-    regex: /\b(employer is (?:legally )?required to (?:pay|cover)|employers must (?:pay|cover) (?:the cost of )?your legal (?:advice|fee)|required to pay for your legal advice|employer must cover the cost|100% free legal advice|free to you|costs you nothing|advice is free to you)\b/i,
+    regex: /\b(employer is (?:legally )?required to (?:pay|cover|fund)|employers must (?:pay|cover|fund) (?:the cost of )?your legal (?:advice|fee)|required to (?:pay for|fund) your legal advice|employer must cover the cost|100% free legal advice|free to you|costs you nothing|advice is free to you)\b/i,
     severity: 'P1',
     issue: 'Trap 5 & CMA DMCC Act 2024: Employers customarily contribute £350 to £750 + VAT toward legal fees as a commercial convention, not a statutory obligation.',
   },
@@ -187,7 +187,7 @@ interface LegalFinding {
   issue: string;
 }
 
-const DIRS_TO_SCAN = ['app', 'components'];
+const DIRS_TO_SCAN = ['app', 'components', 'data'];
 const EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx'];
 
 function getAllFiles(dir: string, fileList: string[] = []): string[] {

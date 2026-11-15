@@ -3,12 +3,14 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  publisher: SETTLEMENT_CHECK_PUBLISHER,
   mainEntity: [
-    { '@type': 'Question', name: 'Does it cost me anything?', acceptedAnswer: { '@type': 'Answer', text: 'No. For a settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). To secure this, employers cover your legal fees as standard practice, typically contributing £350 to £750 + VAT. You pay nothing for a standard review.' } },
+    { '@type': 'Question', name: 'Does it cost me anything?', acceptedAnswer: { '@type': 'Answer', text: 'For a settlement agreement to be legally binding, you must receive independent legal advice under Section 203(3) ERA 1996. To secure this binding waiver, employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. For a standard review within this cap, the employer contribution covers the solicitor\'s fee, and your solicitor will confirm all engagement terms before starting work.' } },
     { '@type': 'Question', name: 'Do I legally need a solicitor?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Under Section 203 of the Employment Rights Act 1996, a settlement agreement is only legally binding if you have received independent legal advice from a qualified, insured solicitor.' } },
     { '@type': 'Question', name: 'How quickly will a solicitor contact me?', acceptedAnswer: { '@type': 'Answer', text: 'All panel solicitors commit to responding within 24 hours of an introduction, often the same business day.' } },
     { '@type': 'Question', name: 'What if I want to negotiate a higher amount?', acceptedAnswer: { '@type': 'Answer', text: 'Many employees do successfully negotiate more once a solicitor reviews their circumstances. A specialist will assess whether factors like length of service, discrimination, whistleblowing, or contract breaches justify a higher offer.' } },
@@ -20,12 +22,12 @@ const faqSchema = {
 export const metadata: Metadata = {
   title: 'How SettlementCheck Works: Step-by-Step | SettlementCheck',
   description:
-    'Check your offer in 60s, get matched with a vetted SRA employment solicitor within 24 hours, and sign with confidence. Your employer covers the fees.',
+    'Check your offer in 60s, get matched with a vetted SRA employment solicitor within 24 hours, and sign with confidence. Standard employer fee contributions apply upon completion.',
   alternates: { canonical: 'https://settlementcheck.co.uk/how-it-works/' },
   openGraph: {
     title: 'How SettlementCheck Works: Step-by-Step | SettlementCheck',
     description:
-      'Check your offer in 60s, get matched with a vetted SRA employment solicitor within 24 hours, and sign with confidence. Your employer covers the fees.',
+      'Check your offer in 60s, get matched with a vetted SRA employment solicitor within 24 hours, and sign with confidence. Standard employer fee contributions apply upon completion.',
     url: 'https://settlementcheck.co.uk/how-it-works/',
     type: 'website',
   },
@@ -118,7 +120,7 @@ export default function HowItWorks() {
               },
               {
                 step: '03',
-                title: 'Get advice, free',
+                title: 'Employer fee contribution',
                 icon: (
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9603B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -126,8 +128,8 @@ export default function HowItWorks() {
                     </svg>
                   ),
                 body: [
-                  'For a settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). To secure this binding waiver, employers cover your legal fees as standard UK employment practice, typically contributing £350 to £750 + VAT.',
-                  'This means for a standard agreement review and sign-off, you pay nothing. The solicitor invoices your employer directly.',
+                  'For a settlement agreement to be legally binding, you must receive independent legal advice under Section 203(3) of the Employment Rights Act 1996. To secure this binding waiver, employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.',
+                  'For a standard agreement review within this agreed cap, the employer contribution covers the solicitor\'s fees upon completion. If negotiations require extensive additional work or abort before completion, your solicitor will agree any terms in advance.',
                   'The solicitor will review your agreement, advise you on your rights, and (if you choose) help you negotiate a better offer.',
                 ],
               },

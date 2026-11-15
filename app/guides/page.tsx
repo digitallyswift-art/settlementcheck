@@ -29,6 +29,13 @@ export const metadata: Metadata = {
 
 const GUIDES = [
   {
+    href: '/guides/settlement-agreement-after-grievance/',
+    eyebrow: 'Grievance & ACAS Code 1',
+    title: 'Settlement Agreement After Raising a Grievance UK (2026)',
+    description: 'Offered a settlement after raising a grievance? Learn your Section 111A rights, victimisation protection under Equality Act 2010 s.27, and payout calculations.',
+    readTime: '9 min read',
+  },
+  {
     href: '/guides/settlement-agreement-time-limits/',
     eyebrow: 'Time Limits & Tribunal Rules',
     title: 'Settlement Agreement Time Limits: 3-Month Tribunal Rule (2026)',
@@ -410,7 +417,7 @@ export default function GuidesPage() {
                   Ready to find out where your offer stands?
                 </h2>
                 <p className="sc-lead mt-3" style={{ color: 'rgba(247,244,238,0.78)', maxWidth: '46ch' }}>
-                  Free estimate in under two minutes. Your employer covers the legal fees.
+                  Free estimate in under two minutes. Standard employer fee contributions apply upon completion.
                 </p>
               </div>
               <Link href="/calculator/" className="btn-accent whitespace-nowrap self-start md:self-auto">

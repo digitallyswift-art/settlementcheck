@@ -132,7 +132,9 @@
     background: #0B1F3A;
     color: #fff;
     transition: background 180ms ease, border-color 180ms ease;
-    white-space: nowrap;
+    text-align: center;
+    line-height: 1.35;
+    max-width: 100%;
     cursor: pointer;
   }
   .btn-primary:hover { background: #1A2F4E; border-color: #1A2F4E; }
@@ -150,7 +152,9 @@
     background: #D9603B;
     color: #fff;
     transition: background 180ms ease, border-color 180ms ease;
-    white-space: nowrap;
+    text-align: center;
+    line-height: 1.35;
+    max-width: 100%;
     cursor: pointer;
   }
   .btn-accent:hover { background: #B14A28; border-color: #B14A28; }
@@ -168,7 +172,9 @@
     background: transparent;
     color: #0B1F3A;
     transition: background 180ms ease, border-color 180ms ease;
-    white-space: nowrap;
+    text-align: center;
+    line-height: 1.35;
+    max-width: 100%;
     cursor: pointer;
   }
   .btn-ghost:hover { background: #EFEAE0; border-color: #0B1F3A; }

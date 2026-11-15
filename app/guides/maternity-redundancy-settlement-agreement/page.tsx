@@ -60,7 +60,7 @@ const FAQS = [
   },
   {
     q: 'Who pays the solicitor fees for reviewing my maternity settlement agreement?',
-    a: 'Your employer covers the legal fees. Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally valid if you receive advice from an independent, insured solicitor. Employers typically contribute between £500 and £1,500 plus VAT, and your solicitor bills your employer directly.',
+    a: 'Employers standardly provide a capped commercial contribution (typically £500 to £1,500 plus VAT for complex maternity matters) paid directly to your solicitor upon agreement completion. Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally valid if you receive advice from an independent qualified solicitor.',
   },
 ]
 
@@ -437,7 +437,7 @@ export default function MaternityRedundancySettlementGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">How maternity settlement payouts are calculated in 2026</h2>
             <p className="sc-body mb-4">
-              A comprehensive maternity redundancy settlement agreement is made up of four distinct financial components. Understanding each part ensures you do not accept an offer below the typical range.
+              A comprehensive maternity redundancy settlement agreement is made up of four distinct financial components. Understanding each part ensures you can verify whether an offer sits below statutory baselines and typical benchmark ranges.
             </p>
             <p className="sc-body mb-6">
               Your instructed solicitor will ensure every element is calculated separately in the written agreement:
@@ -694,12 +694,12 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section 8: Independent legal advice and fee coverage */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Independent legal advice: Your employer covers the fees</h2>
+            <h2 className="sc-section-h2 mb-4">Independent legal advice: Employer fee contribution</h2>
             <p className="sc-body mb-4">
               Under Section 203(3) ERA 1996, waiving statutory rights requires independent legal advice. You must receive advice from an independent, insured solicitor.
             </p>
             <p className="sc-body mb-4">
-              Your employer covers the legal fees. Employers typically contribute between £500 and £1,500 plus VAT towards your legal advice.
+              Employers standardly provide a capped contribution (typically £500 to £1,500 plus VAT) towards your independent legal advice upon completion.
             </p>
             <p className="sc-body mb-6">
               Your solicitor invoices your employer directly. They can request higher fee contributions if negotiations are required to resolve Regulation 10 breaches or SMP disputes.
@@ -783,7 +783,7 @@ export default function MaternityRedundancySettlementGuide() {
           <div className="max-w-2xl mx-auto px-5 text-center">
             <h2 className="sc-section-h2 text-white mb-4">Check your maternity settlement offer today</h2>
             <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              Calculate your statutory redundancy baseline, check your ring-fenced SMP, and connect with an SRA-regulated solicitor. Your employer covers the legal fees.
+              Calculate your statutory redundancy baseline, check your ring-fenced SMP, and connect with an SRA-regulated solicitor. Employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/calculator/?maternity=yes" className="btn-accent w-full sm:w-auto">

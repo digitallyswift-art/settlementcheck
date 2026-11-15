@@ -96,7 +96,7 @@ const REGULATORY_AUDIT_RULES: Array<{
   {
     rule: 'TRAP_5_CMA_FEE_CONTRIBUTION_MISSTATEMENT',
     regulator: 'CMA',
-    regex: /\b(employer is (?:legally )?required to (?:pay|cover)|employers must (?:pay|cover) (?:the cost of )?your legal (?:advice|fee)|statutory duty to pay your solicitor|employer covers legal fees under (?:section|s\.?)\s*203|free legal advice under section 203)\b/i,
+    regex: /\b(employer is (?:legally )?required to (?:pay|cover|fund)|employers must (?:pay|cover|fund) (?:the cost of )?your legal (?:advice|fee)|statutory duty to pay your solicitor|employer covers legal fees under (?:section|s\.?)\s*203|free legal advice under section 203)\b/i,
     detail: 'Trap 5 (ERA 1996 s.203(3) & CMA DMCC Act 2024): Advice is a statutory validity condition, but employer fee contributions (typically £350 to £500+ +VAT) are a commercial convention contingent upon agreement completion, not a statutory obligation.',
   },
 ];

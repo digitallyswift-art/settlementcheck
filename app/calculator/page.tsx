@@ -4,6 +4,7 @@ import CalculatorClient from './CalculatorClient'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -63,6 +64,7 @@ const JSON_LD = {
         'Optional matching with independent SRA-regulated employment solicitors',
       ],
       screenshot: 'https://settlementcheck.co.uk/og-image.png',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       creator: {
         '@type': 'Organization',
         name: 'SettlementCheck',
@@ -117,6 +119,7 @@ const JSON_LD = {
       name: 'How to Calculate an Employment Settlement Agreement Payout in the UK',
       description: 'Step-by-step statutory calculation process for UK employee settlement agreements under April 2026 rates.',
       totalTime: 'PT1M',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       step: [
         {
           '@type': 'HowToStep',
@@ -146,6 +149,7 @@ const JSON_LD = {
     },
     {
       '@type': 'FAQPage',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       mainEntity: [
         {
           '@type': 'Question',

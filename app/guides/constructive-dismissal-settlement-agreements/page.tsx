@@ -40,8 +40,8 @@ const FAQS = [
     a: 'The cap is the lower of £123,543 or 52 weeks of your gross pay. If your gross annual salary is £150,000, your compensatory award is capped at £123,543. If your salary is £50,000, your compensatory award is capped at £50,000.',
   },
   {
-    q: 'Does my employer have to pay for my solicitor?',
-    a: 'Yes. To make the agreement legally binding, you must receive independent legal advice. Your employer covers the fees for this advice as part of the agreement.',
+    q: 'Does my employer contribute to my legal fees?',
+    a: 'To make the agreement legally binding under Section 203(3) ERA 1996, you must receive independent legal advice. Employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.',
   },
   {
     q: 'What happens if I reject the settlement offer?',
@@ -366,7 +366,7 @@ export default function ConstructiveDismissalGuide() {
             </p>
             <h3 className="text-sm font-semibold text-ink mt-6 mb-3">Legal Fees Contribution</h3>
             <p className="sc-body mb-4">
-              Your employer covers your legal fees for receiving advice on the agreement. This payment is made directly to your solicitor and is completely tax-free. It does not count towards your £30,000 tax-free exemption.
+              Employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. This contribution is paid directly to your solicitor and does not count towards your £30,000 tax-free exemption.
             </p>
           </div>
         </section>
@@ -427,10 +427,10 @@ export default function ConstructiveDismissalGuide() {
               The advice must come from a qualified solicitor or a certified adviser. They must be independent of your employer. They explain the terms of the agreement and their effect on your ability to bring future tribunal cases.
             </p>
             <p className="sc-body mb-4">
-              Your employer covers the cost of this legal advice. The standard contribution is £350 to £750.
+              Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards this legal advice upon completion of the agreement.
             </p>
             <p className="sc-body mb-6">
-              Your solicitor will invoice your employer directly. You should not have to pay anything out of your own pocket.
+              For standard advice within the employer&apos;s contribution cap, your solicitor invoices your employer directly upon signed completion.
             </p>
             <div className="rounded-xl border border-rule bg-paper p-4 flex gap-3">
               <InfoIcon />

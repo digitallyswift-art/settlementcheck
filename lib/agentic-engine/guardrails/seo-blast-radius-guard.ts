@@ -37,6 +37,7 @@ export interface BlastRadiusEvaluationResult {
 
 const CORE_MONEY_ROUTES = new Set(['/', '/calculator/']);
 const STOP_WORDS = new Set(['uk', 'in', 'the', 'of', 'for', 'and', 'to', 'a', 'an', 'how', 'my', 'your', 'is', 'on']);
+const BANNED_SERP_JARGON = /\b(triage|platform|intake|dossier|workflow)\b/i;
 
 export function normalizeCanonicalPath(urlOrPath: string): string {
   try {
@@ -194,6 +195,30 @@ export function evaluateSeoBlastRadius(
     riskReasons.push(
       `Safe additive update: Keeps your live page headline ("${baselineH1}") untouched and only adds a statutory Q&A block and internal link.`
     );
+  }
+
+  // Invariant: Title length hard budget (50 - 60 chars)
+  if (input.calibratedTitle && input.calibratedTitle.length > 60) {
+    deploymentRisk = 'CRITICAL_RISK';
+    riskReasons.push(`Proposed title exceeds 60 characters (${input.calibratedTitle.length} chars) and will suffer SERP pixel truncation on Google.`);
+  }
+
+  // Invariant: Banned corporate / administrative jargon
+  if (input.calibratedTitle && BANNED_SERP_JARGON.test(input.calibratedTitle)) {
+    deploymentRisk = 'CRITICAL_RISK';
+    riskReasons.push('Proposed title contains banned administrative jargon ("triage", "platform", "intake", etc.) that repels UK employees.');
+  }
+
+  // Invariant: Root domain intent decoupling prohibition
+  if (normPath === '/' && !/calculator|check/i.test(input.calibratedTitle || '')) {
+    deploymentRisk = 'CRITICAL_RISK';
+    riskReasons.push('Root domain intent decoupling prohibited: Root domain (/) carries >95% PageRank and must retain primary calculator / check intent.');
+  }
+
+  // Invariant: Interactive calculator title consistency
+  if (normPath.includes('calculator') && !/calculator|calc/i.test(input.calibratedTitle || '')) {
+    deploymentRisk = 'CRITICAL_RISK';
+    riskReasons.push('Interactive tool headline must explicitly include "Calculator" to prevent zero-click informational abandonment.');
   }
 
   if (hasPromissoryTaxLanguage) {

@@ -37,7 +37,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
     if (Object.keys(errs).length > 0) return
     setLoading(true)
     try {
-      const res = await fetch('/api/lead', {
+      const res = await fetch('/api/lead/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -194,9 +194,9 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
       <button
         type="submit"
         disabled={loading}
-        className="btn-accent w-full py-4 px-6 text-base disabled:opacity-60"
+        className="btn-accent w-full py-4 px-4 sm:px-6 text-base disabled:opacity-60 whitespace-normal leading-snug text-center"
       >
-        {loading ? 'Submitting...' : 'Connect with an independent solicitor →'}
+        <span>{loading ? 'Submitting...' : 'Connect with an independent solicitor →'}</span>
       </button>
     </form>
   )

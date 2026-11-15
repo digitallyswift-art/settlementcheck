@@ -6,6 +6,7 @@ import type { FaqItem } from '@/components/FaqAccordion'
 import { getRedundancyStatutoryRows } from '@/lib/statutory-rates'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -132,6 +133,7 @@ const JSON_LD = {
         'Instant result with zero email requirement',
       ],
       screenshot: 'https://settlementcheck.co.uk/og-image.png',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       creator: {
         '@type': 'Organization',
         name: 'SettlementCheck',
@@ -167,6 +169,7 @@ const JSON_LD = {
     },
     {
       '@type': 'FAQPage',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       mainEntity: FAQ_SCHEMA_ITEMS.map((item) => ({
         '@type': 'Question',
         name: item.question,
@@ -181,6 +184,7 @@ const JSON_LD = {
       name: 'How to calculate statutory redundancy pay in 2026',
       description:
         'Step-by-step calculation of UK statutory redundancy pay using April 2026 rates: £751 weekly cap in Great Britain, age multipliers, and tax treatment.',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       step: HOWTOCALCULATE_STEPS.map((text, i) => ({
         '@type': 'HowToStep',
         position: i + 1,

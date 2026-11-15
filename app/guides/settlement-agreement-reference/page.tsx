@@ -55,7 +55,7 @@ const FAQS = [
   },
   {
     q: 'Who pays the legal fees to negotiate my agreed reference clause?',
-    a: 'Your employer covers the legal fees for your independent solicitor advice under Section 203 of the Employment Rights Act 1996. Standard employer legal fee contributions typically range between £500 and £1,500 plus VAT. Your solicitor will review and negotiate your reference terms and non-disparagement covenants directly with your employer.',
+    a: 'Employers standardly provide a capped commercial contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion. Under Section 203 of the Employment Rights Act 1996, independent legal advice is mandatory to validate a settlement waiver. Your solicitor will review and negotiate your reference terms and non-disparagement covenants directly with your employer.',
   },
 ]
 
@@ -239,7 +239,7 @@ export default function SettlementAgreementReferenceGuide() {
                   'A standard factual reference is normal practice across 90% of UK employers and carries zero stigma.',
                   'Your agreement must explicitly ban negative oral or telephone comments to prospective employers.',
                   'Reciprocal non-disparagement clauses stop former managers from making derogatory remarks behind your back.',
-                  'Your employer covers the legal fees for your independent solicitor advice under Section 203.',
+                  'Employers standardly provide a capped commercial contribution toward independent solicitor advice under Section 203 upon agreement completion.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
@@ -273,12 +273,12 @@ export default function SettlementAgreementReferenceGuide() {
             <InteractiveToolHook
               badge="Draft Agreement Auditor"
               title="Is your reference clause legally watertight?"
-              description="Most employer-drafted agreements contain weak reference clauses that permit negative oral remarks. Check your written terms with an SRA-regulated solicitor before signing. Your employer covers the legal fees."
+              description="Most employer-drafted agreements contain weak reference clauses that permit negative oral remarks. Check your written terms with an SRA-regulated solicitor before signing. Employers standardly provide a capped fee contribution upon completion."
               ctaText="Check my draft clauses →"
               ctaHref="/settlement-agreement-review/"
               statutoryPills={[
                 { label: 'ERA 1996', value: 'Section 203(3)', citation: 'Mandatory independent legal advice' },
-                { label: 'Legal Fees', value: '£500 to £1,500', citation: 'Employer covers advice costs' },
+                { label: 'Legal Fees', value: '£350 to £500+', citation: 'Customary employer contribution' },
                 { label: 'Contract Law', value: 'Binding Schedule', citation: 'Remedies for breach of contract' },
               ]}
             />
@@ -511,7 +511,7 @@ export default function SettlementAgreementReferenceGuide() {
                 Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is legally invalid unless you receive advice from an independent, qualified legal adviser. That adviser must be an SRA-regulated solicitor, a qualified barrister, or an authorised trade union representative.
               </p>
               <p className="sc-body">
-                The most reassuring aspect for employees is the financial arrangement: <strong>your employer covers the legal fees</strong>. Employers typically contribute between £500 and £1,500 plus VAT towards your legal costs. For a standard review and sign-off, this contribution covers the full expense, meaning you pay zero out of pocket.
+                The standard commercial convention is straightforward: <strong>employers standardly provide a capped contribution toward legal fees</strong>. Employers typically contribute between £350 and £500+ plus VAT towards your legal costs upon completion of the agreement. For a standard review and sign-off within the contribution cap, you will not face personal fee liability upon signed completion.
               </p>
               <p className="sc-body">
                 Your solicitor will not just verify your severance calculation and tax-free allowances under Section 403 of ITEPA 2003. They will also inspect the reference schedule, tighten oral inquiry covenants, and ensure robust non-disparagement protections are in place before you sign.
@@ -577,7 +577,7 @@ export default function SettlementAgreementReferenceGuide() {
               Check where your settlement agreement clauses stand
             </h2>
             <p className="sc-lead text-white/80 max-w-xl mx-auto mb-6 text-sm">
-              Calculate your statutory baseline, check your agreed reference terms, and get matched with an SRA-regulated solicitor. Your employer covers the cost of independent legal advice.
+              Calculate your statutory baseline, check your agreed reference terms, and get matched with an SRA-regulated solicitor. Employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/calculator/" className="btn-accent text-sm inline-block">

@@ -202,7 +202,7 @@ export default function WhistleblowingSettlementAgreementsGuide() {
                   'Gagging clauses are strictly void under Section 43J ERA 1996. No settlement agreement or NDA can stop you reporting wrongdoing to regulators or police.',
                   'Pre-dismissal detriment entitles you to injury to feelings awards under the Ninth Addendum Vento bands, ranging from £1,300 to over £62,900.',
                   'Section 111A protected conversation secrecy does not apply. Employers cannot keep whistleblowing exit negotiations confidential.',
-                  'Your employer covers your independent legal advice fees, contributing typically £500 to £1,500 plus VAT directly to your solicitor under Section 203(3).',
+                  'Employers standardly provide a capped commercial contribution (typically £500 to £1,500 plus VAT for complex whistleblowing matters) directly to your solicitor upon completion under Section 203(3).',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
@@ -665,7 +665,7 @@ export default function WhistleblowingSettlementAgreementsGuide() {
                 },
                 {
                   step: 'Step 6: Instruct an Independent Qualified Solicitor',
-                  text: 'Under Section 203(3) ERA 1996, a settlement agreement is not legally binding without advice from an independent solicitor. Your employer covers this fee, so instruct a specialist employment solicitor to negotiate your package.',
+                  text: 'Under Section 203(3) ERA 1996, a settlement agreement is not legally binding without advice from an independent solicitor. Employers standardly provide a capped fee contribution upon completion, so instruct an independent specialist employment solicitor to review your terms.',
                 },
               ].map(({ step, text }) => (
                 <div key={step} className="p-5 rounded-xl border border-rule bg-paper">

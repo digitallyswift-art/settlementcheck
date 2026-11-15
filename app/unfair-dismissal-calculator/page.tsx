@@ -6,6 +6,7 @@ import type { FaqItem } from '@/components/FaqAccordion'
 import { getUnfairDismissalStatutoryRows } from '@/lib/statutory-rates'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -132,6 +133,7 @@ const JSON_LD = {
         'Free tool with instant calculation and no email required',
       ],
       screenshot: 'https://settlementcheck.co.uk/og-image.png',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       creator: {
         '@type': 'Organization',
         name: 'SettlementCheck',
@@ -172,6 +174,7 @@ const JSON_LD = {
     },
     {
       '@type': 'FAQPage',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       mainEntity: FAQ_SCHEMA_ITEMS.map((item) => ({
         '@type': 'Question',
         name: item.question,
@@ -186,6 +189,7 @@ const JSON_LD = {
       name: 'How to calculate an unfair dismissal award in 2026',
       description:
         'Step-by-step guide to estimating a UK unfair dismissal basic and compensatory award using April 2026 statutory rates.',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       step: HOWTOCALCULATE_STEPS.map((text, i) => ({
         '@type': 'HowToStep',
         position: i + 1,

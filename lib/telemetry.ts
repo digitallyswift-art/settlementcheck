@@ -13,7 +13,7 @@ export interface SettlementBenchmark {
 
 export async function fetchSettlementBenchmarks(): Promise<SettlementBenchmark[]> {
   try {
-    const res = await fetch('/api/telemetry/settlement-outcome', {
+    const res = await fetch('/api/telemetry/settlement-outcome/', {
       method: 'GET',
       next: { revalidate: 3600 }, // cached for 1 hour
     });

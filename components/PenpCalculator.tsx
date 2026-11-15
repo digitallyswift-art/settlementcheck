@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { calculatePenp, type PenpCalculationResult } from '@/lib/penp-calculator'
+import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers'
 
 function formatGBP(val: number): string {
   return `£${Math.round(val).toLocaleString('en-GB')}`
@@ -292,6 +293,9 @@ export function PenpCalculator() {
         <strong className="text-[#0B1F3A] block mb-1">National Insurance &amp; Tax Boundary Analysis:</strong>
         Under Section 402D ITEPA 2003, Post-Employment Notice Pay of <strong>{formatGBP(result.statutoryPenp)}</strong> is treated as general earnings. It attracts employee Class 1 National Insurance and employer Class 1 NICs (15.0% for 2026/27). In contrast, the ex-gratia compensation of <strong>{formatGBP(result.taxFreeExGratia)}</strong> is exempt under Section 403. Any ex-gratia sums exceeding £30,000 attract employer Class 1A NICs and employee income tax, but are exempt from employee Class 1 NICs.
       </div>
+
+      {/* Mandatory Regulatory Disclaimers */}
+      <MandatoryLegalDisclaimers className="mb-6" />
 
       {/* CTA Strip */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0B1F3A] text-white p-5 rounded-xl">

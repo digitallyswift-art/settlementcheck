@@ -30,7 +30,7 @@ export default function EmployeeWaitlistCapture() {
     setSending(true)
     setEmailError('')
     try {
-      const res = await fetch('/api/otp/send', {
+      const res = await fetch('/api/otp/send/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: addr, form_type: 'employee' }),
@@ -68,7 +68,7 @@ export default function EmployeeWaitlistCapture() {
       setOtpError('')
       try {
         // Verify OTP
-        const verifyRes = await fetch('/api/otp/verify', {
+        const verifyRes = await fetch('/api/otp/verify/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email.trim(), code, form_type: 'employee' }),
@@ -82,7 +82,7 @@ export default function EmployeeWaitlistCapture() {
         }
 
         // Save to waitlist
-        await fetch('/api/waitlist', {
+        await fetch('/api/waitlist/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email.trim() }),
@@ -191,8 +191,8 @@ export default function EmployeeWaitlistCapture() {
                   width: 36,
                   height: 36,
                   borderRadius: '50%',
-                  background: '#fff7ed',
-                  border: '1px solid #fed7aa',
+                  background: '#FDF0EB',
+                  border: '1px solid #E2DCCE',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -205,7 +205,7 @@ export default function EmployeeWaitlistCapture() {
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#f97316"
+                  stroke="#D9603B"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -267,7 +267,7 @@ export default function EmployeeWaitlistCapture() {
                     transition: 'border-color 0.15s ease',
                   }}
                   onFocus={(e) => {
-                    if (!emailError) e.currentTarget.style.borderColor = '#f97316'
+                    if (!emailError) e.currentTarget.style.borderColor = '#D9603B'
                   }}
                   onBlur={(e) => {
                     if (!emailError) e.currentTarget.style.borderColor = '#e5e7eb'
@@ -347,11 +347,11 @@ export default function EmployeeWaitlistCapture() {
                     fontSize: 22,
                     fontWeight: 700,
                     color: '#111827',
-                    background: digit ? '#fff7ed' : '#fff',
-                    border: `1.5px solid ${digit ? '#f97316' : '#e5e7eb'}`,
+                    background: digit ? '#FDF0EB' : '#fff',
+                    border: `1.5px solid ${digit ? '#D9603B' : '#e5e7eb'}`,
                     borderRadius: 8,
                     outline: 'none',
-                    caretColor: '#f97316',
+                    caretColor: '#D9603B',
                     transition: 'all 0.12s ease',
                     fontVariantNumeric: 'tabular-nums',
                   }}
@@ -428,8 +428,8 @@ export default function EmployeeWaitlistCapture() {
                 width: 40,
                 height: 40,
                 borderRadius: '50%',
-                background: '#f0fdf4',
-                border: '1px solid #bbf7d0',
+                background: '#F7F4EE',
+                border: '1px solid #E2DCCE',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

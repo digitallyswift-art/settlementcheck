@@ -358,7 +358,7 @@ export default function TribunalAverageAwardsGuide() {
                       <td className="p-3.5 sm:p-4 font-medium">Employee Legal Costs</td>
                       <td className="p-3.5 sm:p-4 text-crimson">£5,000 – £15,000+ (rarely recoverable)</td>
                       <td className="p-3.5 sm:p-4 font-semibold text-coral font-mono">
-                        £0 (Employer pays £500–£1,000+ VAT under ERA s.203)
+                        £0 for standard advice (Capped employer contribution typically £350–£750+ VAT upon completion)
                       </td>
                     </tr>
                     <tr className="hover:bg-paper/50">

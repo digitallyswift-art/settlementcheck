@@ -50,7 +50,7 @@ const FAQS = [
   },
   {
     q: 'Who pays the solicitor legal fees for reviewing my agreement?',
-    a: 'Your employer covers the legal fees for an independent solicitor to review your settlement agreement. This legal contribution usually ranges between £350 and £750 plus VAT. Your solicitor invoices your employer directly, so you pay nothing.',
+    a: 'Under Section 203(3) ERA 1996, independent legal advice is a statutory validity condition. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. For a standard review within this cap, the contribution covers your legal fees.',
   },
 ]
 
@@ -447,7 +447,7 @@ export default function HowMuchGuidePage() {
         {/* Section 4: Legal Advice & Employer Fee Contribution */}
         <section className="py-12 border-b border-rule bg-paper">
           <div className="max-w-3xl mx-auto px-5">
-            <h2 className="sc-h2 mb-4">Independent Legal Advice: Your Employer Covers the Fees</h2>
+            <h2 className="sc-h2 mb-4">Independent Legal Advice: Employer Fee Contribution</h2>
             <p className="sc-body mb-4">
               Under{' '}
               <a

@@ -9,6 +9,7 @@ import CalculatorsClient from './CalculatorsClient'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import DynamicFaqJsonLd from '@/components/seo/DynamicFaqJsonLd'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -78,6 +79,7 @@ const JSON_LD = {
       '@id': 'https://settlementcheck.co.uk/calculators/#webpage',
       url: 'https://settlementcheck.co.uk/calculators/',
       name: 'UK Employment Calculators & Settlement Tools Hub (2026)',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       description:
         'Comprehensive directory of free UK employment calculators: settlement agreements, statutory redundancy, unfair dismissal, tax exemptions, and protective awards.',
       isPartOf: {
@@ -163,6 +165,7 @@ const JSON_LD = {
     {
       '@type': 'FAQPage',
       '@id': 'https://settlementcheck.co.uk/calculators/#faq',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       mainEntity: CALCULATORS_FAQS.map((faq) => ({
         '@type': 'Question',
         name: faq.q,

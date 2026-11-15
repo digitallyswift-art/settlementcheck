@@ -163,7 +163,7 @@ export default function RedundancyVsSettlementGuide() {
               <span>Statutory Reference: ERA 1996 s.162</span>
             </div>
             <p className="sc-lead">
-              When a company restructures, employers often offer a settlement agreement instead of going through a formal redundancy process. Understanding the difference between your statutory redundancy rights and a negotiated settlement offer is critical to ensuring you do not accept an undervalued package.
+              When a company restructures, employers often offer a settlement agreement instead of going through a formal redundancy process. Understanding the difference between your statutory redundancy rights and a negotiated settlement offer is critical to ensuring your exit terms reflect your calculated statutory baselines.
             </p>
           </div>
         </section>

@@ -4,16 +4,16 @@ import { getGeneralStatutoryRows } from '@/lib/statutory-rates'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'SettlementCheck™ | UK Settlement Agreement Review & Independent Solicitor Triage',
+  title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
   description:
-    'Independent UK employment settlement agreement review platform. Evaluate your severance against April 2026 statutory rates (£751/wk cap) and connect with SRA-regulated solicitors.',
+    'Free UK settlement agreement calculator based on April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/',
   },
   openGraph: {
-    title: 'SettlementCheck™ | UK Settlement Agreement Review & Independent Solicitor Triage',
+    title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
     description:
-      'Independent UK employment settlement agreement review platform. Evaluate your severance against April 2026 statutory rates (£751/wk cap) and connect with SRA-regulated solicitors.',
+      'Free UK settlement agreement calculator based on April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.',
     url: 'https://settlementcheck.co.uk/',
     type: 'website',
     locale: 'en_GB',
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SettlementCheck™ | UK Settlement Agreement Review & Independent Solicitor Triage',
+    title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
     description:
-      'Independent UK employment settlement agreement review platform. Evaluate your severance against April 2026 statutory rates (£751/wk cap) and connect with SRA-regulated solicitors.',
+      'Free UK settlement agreement calculator based on April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.',
   },
 }
 
@@ -59,6 +59,62 @@ const webSiteSchema = {
   '@type': 'WebSite',
   name: 'SettlementCheck',
   url: 'https://settlementcheck.co.uk',
+}
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['WebApplication', 'SoftwareApplication'],
+  name: 'Employment Settlement Agreement Calculator UK',
+  url: 'https://settlementcheck.co.uk/',
+  applicationCategory: ['BusinessApplication', 'FinanceApplication'],
+  operatingSystem: 'All modern web browsers',
+  browserRequirements: 'Requires JavaScript. Requires HTML5.',
+  softwareVersion: '2026.1 (SI 2026/310)',
+  isAccessibleForFree: true,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'GBP',
+    availability: 'https://schema.org/InStock',
+  },
+  description:
+    'Free UK employment settlement agreement calculator. Calculates estimated net take-home pay after tax, splitting PILON from the £30,000 exemption under ITEPA 2003. No email required. Based on April 2026 statutory rates (£751 weekly cap).',
+  featureList: [
+    'Instant settlement agreement fairness verdict using April 2026 statutory rates',
+    'Calculation of statutory redundancy and basic awards capped at £751 per week',
+    'Automatic separation of taxable PILON and tax-free termination payments up to £30,000',
+    'Unfair dismissal and constructive dismissal compensatory award estimates',
+    'Free independent solicitor matching with employer fee contributions',
+  ],
+  screenshot: 'https://settlementcheck.co.uk/og-image.png',
+  creator: {
+    '@type': 'Organization',
+    name: 'SettlementCheck',
+    url: 'https://settlementcheck.co.uk',
+  },
+  about: [
+    { '@type': 'Thing', name: 'Employment Law' },
+    { '@type': 'Thing', name: 'Settlement Agreements' },
+    { '@type': 'Thing', name: 'Redundancy Pay' },
+    { '@type': 'Thing', name: 'Unfair Dismissal' },
+  ],
+  isBasedOn: [
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 203',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/203',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Employment Rights Act 1996, Section 162',
+      url: 'https://www.legislation.gov.uk/ukpga/1996/18/section/162',
+    },
+    {
+      '@type': 'Legislation',
+      name: 'Income Tax (Earnings and Pensions) Act 2003, Section 403',
+      url: 'https://www.legislation.gov.uk/ukpga/2003/1/section/403',
+    },
+  ],
 }
 
 const serviceSchema = {
@@ -180,16 +236,17 @@ export default function HomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <HomeClient
         title={
           <>
-            Independent UK Employment<br />
-            <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Settlement Agreement Review</em> &amp; Guidance
+            Settlement Agreement<br />
+            <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Calculator UK</em> (2026 Rates)
           </>
         }
-        lead="Evaluate your employment settlement offer against April 2026 statutory rates (£751/wk cap), verify tax exemptions under ITEPA 2003, and connect with independent SRA-regulated employment solicitors."
+        lead="Calculate whether your employment settlement offer is fair in 60 seconds. Our free UK calculator checks statutory redundancy, notice pay, and tax-free compensation under April 2026 rates (£751 cap). Whether your paperwork says settlement agreement or compromise agreement, find out where you stand for free."
         statutoryRows={statutoryRows}
         pageLinks={[
           { href: '/calculator/', label: 'Settlement Agreement Calculator' },

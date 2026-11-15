@@ -148,7 +148,7 @@ export default function SettlementAgreementSickLeaveGuide() {
               <span>Last reviewed: October 2026</span>
             </div>
             <p className="sc-lead">
-              Under UK employment law, your employer can legally offer you a settlement agreement while you are on sick leave. You are under no obligation to accept the offer or leave your job. In 2026, a fair settlement should include full normal pay for your notice period under Sections 87 to 91 of the Employment Rights Act 1996. This applies even if you currently receive Statutory Sick Pay or nil pay. Genuine termination compensation is tax-free up to £30,000 under Section 403 of ITEPA 2003. Your employer covers the cost of your independent legal advice. You can check what your exit package should look like using our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link>.
+              Under UK employment law, your employer can legally offer you a settlement agreement while you are on sick leave. You are under no obligation to accept the offer or leave your job. In 2026, a fair settlement should include full normal pay for your notice period under Sections 87 to 91 of the Employment Rights Act 1996. This applies even if you currently receive Statutory Sick Pay or nil pay. Genuine termination compensation is tax-free up to £30,000 under Section 403 of ITEPA 2003. Employers standardly provide a capped commercial contribution toward independent legal advice upon completion. You can check what your exit package should look like using our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link>.
             </p>
           </div>
         </section>
@@ -166,7 +166,7 @@ export default function SettlementAgreementSickLeaveGuide() {
                   'Ex-gratia termination payments are tax-free up to £30,000 under Section 403 of ITEPA 2003.',
                   'Notice pay (PILON) is fully taxable as earnings under Section 402D of ITEPA 2003.',
                   'You continue to accrue statutory holiday entitlement while on sick leave, which must be paid out in full upon exit.',
-                  'Your employer covers the legal fees for your independent solicitor, typically contributing £350 to £750 plus VAT.',
+                  'Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards independent solicitor advice upon completion.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
@@ -458,7 +458,7 @@ export default function SettlementAgreementSickLeaveGuide() {
                     ['Financial package', 'Enhanced ex-gratia compensation + full notice pay', 'Contractual or statutory notice pay only'],
                     ['Tax advantages', 'Up to £30,000 tax-free under ITEPA s.403', 'No tax-free compensation package'],
                     ['Future reference', 'Agreed, binding written reference clause', 'Standard factual reference noting dismissal'],
-                    ['Legal fees', 'Your employer covers the legal fees (£350 to £750+ VAT)', 'You pay own legal costs if appealing'],
+                    ['Legal fees', 'Capped employer contribution (typically £350–£500+ VAT upon completion)', 'You pay own legal costs if appealing'],
                     ['Stress level', 'Immediate closure, focus on health recovery', 'Prolonged meetings, warnings, and uncertainty'],
                     ['Tribunal claims', 'All legal claims waived upon signing', 'You can lodge tribunal claims within 3 months less 1 day'],
                   ].map(([feature, settlement, capability], i) => (
@@ -554,7 +554,7 @@ export default function SettlementAgreementSickLeaveGuide() {
                 {
                   step: '1',
                   title: 'Request the proposal in writing',
-                  desc: 'Do not accept or reject anything verbally during an unexpected phone call or meeting. Ask your employer to email the draft agreement and financial breakdown.',
+                  desc: 'Avoid committing to terms verbally during an unexpected phone call or meeting. Request that your employer emails the complete written draft agreement and financial breakdown.',
                 },
                 {
                   step: '2',
@@ -576,7 +576,7 @@ export default function SettlementAgreementSickLeaveGuide() {
                   title: 'Appoint an independent employment solicitor',
                   desc: (
                     <>
-                      Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is mandatory. Your employer covers the legal fees, paying your solicitor directly. Remember that you <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-ink">do not have to use your employer's recommended solicitor</Link>. You can <Link href="/get-matched/" className="underline hover:text-ink">get matched with a specialist employment solicitor</Link> through our panel.
+                      Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is mandatory. Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) paid directly to your solicitor upon completion. Remember that you <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-ink">do not have to use your employer's recommended solicitor</Link>. You can <Link href="/get-matched/" className="underline hover:text-ink">get matched with an independent SRA-regulated solicitor</Link> through our panel.
                     </>
                   ),
                 },

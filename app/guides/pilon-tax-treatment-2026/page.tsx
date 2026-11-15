@@ -459,10 +459,10 @@ export default function PilonTaxTreatmentGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Who Pays the Legal Fees for Your Settlement Agreement?</h2>
             <p className="sc-body mb-4">
-              Your employer covers the fees for your solicitor. Under UK law, a settlement agreement is only legally binding if an independent solicitor advises you.
+              Employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. Under UK law, a settlement agreement is only legally binding if an independent solicitor advises you.
             </p>
             <p className="sc-body">
-              Your employer pays these fees directly to your solicitor. This ensures you receive independent advice without being out of pocket.
+              Your employer pays this contribution directly to your solicitor upon completion of the agreement.
             </p>
           </div>
         </section>
@@ -505,7 +505,7 @@ export default function PilonTaxTreatmentGuide() {
               Disclaimer: The information on this page is for general guidance only and does not constitute formal legal or tax advice. Legal and tax rules can vary depending on your contract and individual circumstances.
             </p>
             <p className="sc-body mt-6">
-              Remember, your employer covers the fees for your solicitor.
+              Remember, employers standardly provide a capped contribution towards your solicitor&apos;s legal fees upon completion.
             </p>
           </div>
         </section>

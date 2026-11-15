@@ -7,6 +7,7 @@ import ReviewClient from './ReviewClient'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 const STATIC_METADATA: Metadata = {
   title: 'Settlement Agreement Checker UK (2026) | SettlementCheck',
@@ -39,6 +40,7 @@ const reviewSchema = {
     priceCurrency: 'GBP',
   },
   description: 'Confidential review tool for UK employment settlement agreements. Verifies statutory compliance, tax exemptions (s.403), and negotiation standing.',
+  publisher: SETTLEMENT_CHECK_PUBLISHER,
   about: {
     '@type': 'Thing',
     name: 'Employment Settlement Agreement UK',
@@ -51,6 +53,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Check and Review a UK Settlement Agreement',
   description: 'Step-by-step confidential check of draft employment settlement agreement clauses, statutory redundancy caps, and employer legal fee contributions.',
+  publisher: SETTLEMENT_CHECK_PUBLISHER,
   step: [
     {
       '@type': 'HowToStep',
@@ -73,6 +76,7 @@ const howToSchema = {
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  publisher: SETTLEMENT_CHECK_PUBLISHER,
   mainEntity: [
     {
       '@type': 'Question',

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import ProtectiveAwardClient from './ProtectiveAwardClient'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
@@ -87,6 +88,7 @@ const webAppSchema = {
     'ACAS 3-month limitation window advisory and solicitor matching pathways',
   ],
   screenshot: 'https://settlementcheck.co.uk/og-image.png',
+  publisher: SETTLEMENT_CHECK_PUBLISHER,
   creator: {
     '@type': 'Organization',
     name: 'SettlementCheck',
@@ -119,6 +121,7 @@ const webAppSchema = {
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  publisher: SETTLEMENT_CHECK_PUBLISHER,
   mainEntity: FAQS.map(({ q, a }) => ({
     '@type': 'Question',
     name: q,

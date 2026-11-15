@@ -267,7 +267,7 @@ export default function EmployeeLeadTypeform({
     Ga4TelemetryClient.trackLeadOtpRequested()
     setOtpSending(true)
     try {
-      const res = await fetch('/api/otp/send', {
+      const res = await fetch('/api/otp/send/', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: emailAddr, form_type: 'employee' }),
       })
@@ -288,7 +288,7 @@ export default function EmployeeLeadTypeform({
     if (code.length < 6) { setOtpError('Please enter all 6 digits'); return }
     setOtpVerifying(true); setOtpError('')
     try {
-      const res = await fetch('/api/otp/verify', {
+      const res = await fetch('/api/otp/verify/', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: form.email, code, form_type: 'employee' }),
       })
@@ -371,7 +371,7 @@ export default function EmployeeLeadTypeform({
     if (!form.firstName.trim() || !form.email.trim() || !form.postcode || !form.phone || !form.contactTime) return
     setSubmitting(true); setFieldError('')
     try {
-      const res = await fetch('/api/lead', {
+      const res = await fetch('/api/lead/', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           first_name:      form.firstName.trim(),

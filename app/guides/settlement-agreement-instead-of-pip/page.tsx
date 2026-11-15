@@ -45,8 +45,8 @@ const FAQS = [
     a: 'A realistic counter-offer typically requests full contractual notice pay plus two to three months of gross salary as tax-free ex-gratia compensation. This figure mirrors the time and expense your employer saves by avoiding a formal capability process. If disability or discrimination is involved, counter-offers can be significantly higher.',
   },
   {
-    q: 'Do I have to pay my solicitor anything out of my own pocket?',
-    a: 'No. Your employer covers the fees for independent legal advice on the settlement agreement. The standard contribution is £350 to £750 plus VAT. If your solicitor requires a higher fee to negotiate improvements, they will ask your employer to increase the contribution.',
+    q: 'How are solicitor fees funded for a PIP settlement agreement?',
+    a: 'Employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion to satisfy Section 203(3) ERA 1996. For a standard review within this cap, the contribution covers your legal fees. If complex negotiations are required, your solicitor can request an increased contribution from your employer.',
   },
   {
     q: 'What happens to my job reference if I sign a settlement agreement?',
@@ -731,7 +731,7 @@ export default function PipSettlementGuide() {
               Find out where your settlement offer stands
             </h2>
             <p className="sc-lead text-white/80 max-w-xl mx-auto mb-6 text-sm">
-              Use our free calculator to see if your offer meets statutory standards. Your employer covers the cost of independent legal advice.
+              Use our free calculator to see if your offer meets statutory baselines. Employers standardly provide a capped commercial contribution toward independent legal advice upon agreement completion.
             </p>
             <Link href="/calculator/?reason=performance" className="btn-accent text-sm inline-block">
               Calculate my estimate →

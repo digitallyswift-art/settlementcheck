@@ -438,5 +438,48 @@
       }
     },
     "notes": "In-prose contextual link without accompanying interactive tool or statutory depth yielded neutral movement."
+  },
+  {
+    "packageId": "arch_decouple_root_20261104",
+    "query": "settlement agreement calculator uk",
+    "targetUrl": "https://settlementcheck.co.uk/",
+    "strategy": "ROOT_DOMAIN_DECOUPLING",
+    "appliedAt": "2026-11-04T23:19:09.000Z",
+    "lastAuditedAt": "2026-11-12T23:59:59.000Z",
+    "status": "ROLLED_BACK",
+    "baseline": {
+      "position": 8,
+      "impressions": 886,
+      "clicks": 94,
+      "ctr": 10.61
+    },
+    "latestMetrics": {
+      "position": 7.4,
+      "impressions": 872,
+      "clicks": 24,
+      "ctr": 2.75
+    },
+    "rankImprovementPct": 7.5,
+    "clickDelta": -70,
+    "overallOutcome": "CONFIRMED_REGRESSION",
+    "checkpoints": {
+      "day7": {
+        "checkpointDay": 7,
+        "checkpointDate": "2026-11-11T23:19:09.000Z",
+        "metrics": {
+          "position": 7.4,
+          "impressions": 872,
+          "clicks": 24,
+          "ctr": 2.75
+        },
+        "rankImprovementPct": 7.5,
+        "positionDelta": 0.6,
+        "clickDelta": -70,
+        "impressionsDelta": -14,
+        "ctrDelta": -7.86,
+        "classification": "CONFIRMED_REGRESSION"
+      }
+    },
+    "notes": "CRITICAL FAILURE: Attempted to decouple / from calculator intent by changing title to \"SettlementCheck™ | UK Settlement Agreement Review & Independent Solicitor Triage\" (87 chars) and removing WebApplication schema. Resulted in 74.5% click wipeout and CTR collapse from 10.61% to 2.75%. Permanently prohibited."
   }
 ]

@@ -7,6 +7,7 @@ import { LegalFeeInlineCard } from '@/components/LegalFeeShieldBadge'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 const STATIC_METADATA: Metadata = {
   title: {
@@ -50,6 +51,7 @@ const penpSchema = {
       },
       description:
         'Free UK Post-Employment Notice Pay calculator. Executes the statutory formula ((BP x D) / P) - T under ITEPA 2003 s.402D to partition taxable notice earnings from the £30,000 termination exemption.',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       creator: {
         '@type': 'Organization',
         name: 'SettlementCheck',
@@ -58,6 +60,7 @@ const penpSchema = {
     },
     {
       '@type': 'FAQPage',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       mainEntity: [
         {
           '@type': 'Question',
@@ -97,6 +100,7 @@ const penpSchema = {
       '@type': 'HowTo',
       name: 'How to calculate Post-Employment Notice Pay (PENP) under ITEPA 2003 s.402D',
       description: 'Step-by-step statutory calculation of Post-Employment Notice Pay for UK employment settlement agreements.',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       step: [
         {
           '@type': 'HowToStep',

@@ -68,7 +68,7 @@ const REASON_MAP: Record<string, string> = {
   other: 'other',
 }
 
-// ERA 1996 s.227 (GB) / ERO(NI) 1996 — April 2025 rates
+// ERA 1996 s.227 (GB) / ERO(NI) 1996 - April 2026 rates
 const WEEKLY_CAP = { GB: 751, NI: 783 }
 
 type Phase = 'steps' | 'loading'

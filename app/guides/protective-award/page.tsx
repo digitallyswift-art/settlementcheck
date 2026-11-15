@@ -447,7 +447,7 @@ export default function ProtectiveAwardGuide() {
               Before you sign, you should verify whether the settlement payment accounts for the fact that your employer failed to consult collectively. A fair settlement should compensate you for this failure.
             </p>
             <p className="sc-body mb-6">
-              You can choose your own independent solicitor to review your settlement agreement. Your employer covers the fees for this review, and they pay these fees directly to your solicitor. You can <Link href="/get-matched/" className="text-coral underline hover:text-ink transition-colors font-semibold">get matched with an SRA-regulated solicitor</Link> with zero upfront cost.
+              You can choose your own independent solicitor to review your settlement agreement. Employers standardly provide a capped fee contribution directly to your solicitor upon completion. You can <Link href="/get-matched/" className="text-coral underline hover:text-ink transition-colors font-semibold">get matched with an SRA-regulated solicitor</Link> without upfront fees.
             </p>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />

@@ -49,7 +49,7 @@ const FAQS = [
   },
   {
     q: 'How much will a solicitor cost me?',
-    a: "Your employer covers the solicitor's fees for reviewing a settlement agreement. The standard contribution is £350 to £750. You should not have to pay anything out of your own pocket for the initial advice.",
+    a: "Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. For standard advice within the employer's contribution cap, you should not face personal fee liabilities unless work exceeds the agreed cap or the agreement aborts.",
   },
 ]
 
@@ -240,7 +240,7 @@ export default function EmployerRecommendedSolicitor() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
-                  <span className="text-[15px] text-ink"><strong>You should not pay anything out of pocket</strong> for the initial advice and review of the agreement.</span>
+                  <span className="text-[15px] text-ink"><strong>For standard reviews within the employer&apos;s cap</strong>, you should not face personal fee liability upon signed completion.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
@@ -368,7 +368,7 @@ export default function EmployerRecommendedSolicitor() {
                 Find out where your offer stands
               </h2>
               <p className="text-white/70 text-sm leading-relaxed mb-6">
-                Free calculator. Vetted solicitor matched within 24 hours. Your employer pays the fees.
+                Free calculator. Vetted solicitor matched within 24 hours. Standard employer fee contributions apply upon completion.
               </p>
               <Link href="/calculator/" className="btn-accent">
                 Check my offer →

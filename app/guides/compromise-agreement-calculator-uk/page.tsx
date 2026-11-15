@@ -57,7 +57,7 @@ const FAQS = [
   },
   {
     q: 'Who pays the legal fees for a compromise agreement?',
-    a: 'Your employer covers the legal fees for your independent legal advice. Under Section 203(3) of the Employment Rights Act 1996, you must receive advice from a qualified solicitor before signing. Employers typically contribute between £350 and £750 plus VAT directly to your solicitor.',
+    a: 'Employers standardly provide a capped commercial contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon agreement completion. Under Section 203(3) of the Employment Rights Act 1996, you must receive advice from an independent qualified solicitor before signing for the statutory waiver to become legally binding.',
   },
   {
     q: 'Can I reject a compromise agreement offer?',
@@ -295,7 +295,7 @@ export default function CompromiseAgreementCalculatorPage() {
                 <li className="flex items-start gap-3">
                   <CheckIcon />
                   <span className="sc-body text-sm">
-                    <strong>Employer covers legal fees:</strong> Independent legal advice is mandatory. Your employer covers the legal fees, typically contributing £350 to £750 plus VAT directly to your solicitor.
+                    <strong>Employer fee contribution:</strong> Independent legal advice is mandatory under Section 203(3). Employers standardly provide a capped commercial contribution, typically £350 to £500+ plus VAT, paid directly to your solicitor upon completion.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -540,7 +540,7 @@ export default function CompromiseAgreementCalculatorPage() {
                     <td className="px-4 py-3 font-medium text-ink">Legal fee contribution</td>
                     <td className="px-4 py-3 text-muted">Paid direct to solicitor</td>
                     <td className="px-4 py-3 font-semibold text-ink">£500.00 + VAT</td>
-                    <td className="px-4 py-3 text-ink">Employer pays directly</td>
+                    <td className="px-4 py-3 text-ink">Employer contribution paid directly</td>
                   </tr>
                 </tbody>
               </table>
@@ -639,7 +639,7 @@ export default function CompromiseAgreementCalculatorPage() {
                 <div>
                   <p className="text-sm font-semibold text-ink mb-1">Instruct an independent solicitor</p>
                   <p className="sc-body text-sm">
-                    Choose a specialist employment solicitor. Your employer covers the legal fees for this advice under the agreement terms.
+                    Choose a specialist employment solicitor. Employers standardly provide a capped commercial contribution (typically £350 to £500+ +VAT) toward this legal advice upon completion.
                   </p>
                 </div>
               </li>

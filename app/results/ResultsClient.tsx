@@ -16,6 +16,7 @@ import {
 import { getOfficialBenchmark } from '@/lib/statutory-rates'
 import { trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
 import { LegalFeeShieldBadge, LegalFeeInlineCard } from '@/components/LegalFeeShieldBadge'
+import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers'
 
 /* ── Shared tiny components ─────────────────────────────────────── */
 
@@ -279,40 +280,13 @@ function OfficialBenchmarkCard({
           {isWithinOrAboveRef && (
             <p className="m-0">
               <strong>Offer Comparison:</strong> Your recorded offer of <strong>{formatCurrency(comparedOffer)}</strong> sits within or above the illustrative negotiation benchmark range ({formatCurrency(refLow)} to {formatCurrency(refHigh)}).
-
-
-          {/* Critical Contract Law Advisory (Offer Revocation Risk) */}
-          <div className="mt-3 pt-3 border-t border-black/10 text-[11px] leading-relaxed">
-            <span className="font-semibold block mb-0.5 text-ink">
-              ⚠️ Contract Law Advisory (Risk of Offer Revocation):
-            </span>
-            <span>
-              Under English contract law (<em>Hyde v Wrench [1840]</em>), submitting a counter-proposal or formal rejection legally extinguishes your employer&apos;s existing offer. Furthermore, an employer is legally entitled to withdraw an unaccepted offer at any time prior to signed completion (<em>Routledge v Grant [1828]</em>). Do not reject an offer, issue counter-demands, or let deadlines expire without consulting your instructed SRA solicitor.
-            </span>
-          </div>
             </p>
           )}
         </div>
       )}
 
-      {/* Statutory Legal Advice Fee Protection Notice */}
-      <div className="bg-paper-2 border border-[#E2DCCE] rounded-lg p-3 text-[12px] text-[#5B6577] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="flex items-start gap-2">
-          <span className="text-[#0B1F3A] font-bold text-[14px] leading-none mt-0.5">§</span>
-          <span className="leading-snug">
-            <strong className="text-ink">Independent Legal Advice:</strong> Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement waiving statutory claims is only valid if you receive advice from an independent solicitor or qualified adviser. Employers standardly provide a capped commercial contribution toward this fee upon agreement completion (commonly <strong>£350 to £500+ +VAT</strong>). If negotiations abort or legal work exceeds the employer&apos;s agreed cap, personal liability remains subject to your instructed solicitor&apos;s retainer.
-          </span>
-        </div>
-        <a
-          href="https://www.legislation.gov.uk/ukpga/1996/18/section/203"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackOutboundCitation('https://www.legislation.gov.uk/ukpga/1996/18/section/203', 'ERA 1996 s.203(3)', { component: 'official_benchmark_card' })}
-          className="text-[#0B1F3A] hover:text-[#D9603B] underline underline-offset-2 font-mono whitespace-nowrap text-[11px]"
-        >
-          ERA 1996 s.203(3) ↗
-        </a>
-      </div>
+      {/* Mandatory Regulatory Disclaimers (CMA/DMCC Fee Notice & Hyde v Wrench Contract Notice) */}
+      <MandatoryLegalDisclaimers className="mt-4" />
     </div>
   )
 }
@@ -1583,7 +1557,7 @@ function SaveCard({ resultRef, result, offer, onEmailCapture, params }: {
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return
     setStatus('sending')
     try {
-      const res = await fetch('/api/save-results', {
+      const res = await fetch('/api/save-results/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1849,8 +1823,8 @@ function InputsSummaryPanel({
 
 const LEAD_FAQS = [
   {
-    q: 'Is this genuinely free for me?',
-    a: 'In UK practice, your employer customarily contributes to your independent legal advice (commonly £350 to £750+ VAT, paid directly to the solicitor) so the settlement agreement satisfies Section 203(3) of the Employment Rights Act 1996. Where the advice is covered by the employer\'s contribution, you pay nothing out of pocket.',
+    q: 'How does legal fee coverage work?',
+    a: 'In UK practice, employers standardly provide a capped fee contribution (commonly £350 to £500+ VAT, paid directly to your solicitor upon completion) so the settlement agreement satisfies Section 203(3) of the Employment Rights Act 1996. For standard reviews completed within this cap, the employer contribution covers the solicitor\'s fees, and your solicitor will confirm all engagement terms before starting work.',
   },
   {
     q: 'Will I be contacted by multiple firms?',
@@ -1981,8 +1955,8 @@ function GetMatchedCTA({
             'Your data is sent to a single matched firm only.',
             'Zero obligation following your introductory call.',
           ].map(t => (
-            <div key={t} className="flex items-center gap-2.5">
-              <span className="flex-shrink-0 w-4.5 h-4.5 rounded-full bg-[#0B1F3A] flex items-center justify-center">
+            <div key={t} className="flex items-start gap-2.5">
+              <span className="flex-shrink-0 w-4.5 h-4.5 rounded-full bg-[#0B1F3A] flex items-center justify-center mt-0.5">
                 <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
@@ -1995,10 +1969,10 @@ function GetMatchedCTA({
         {/* Primary CTA */}
         <button
           onClick={onGetMatched}
-          className="btn-accent text-[15px] font-semibold px-6 py-3.5 w-full cursor-pointer"
-          style={{ borderRadius: 8, boxShadow: '0 4px 16px rgba(217,96,59,0.22)', letterSpacing: '-0.01em' }}
+          className="btn-accent text-[14px] sm:text-[15px] font-semibold px-4 py-3.5 w-full cursor-pointer whitespace-normal text-center leading-snug"
+          style={{ borderRadius: 8, boxShadow: '0 4px 16px rgba(217,96,59,0.22)', letterSpacing: '-0.01em', boxSizing: 'border-box' }}
         >
-          Connect with an SRA-regulated solicitor →
+          <span>Connect with an SRA-regulated solicitor &rarr;</span>
         </button>
 
         <p className="text-[11px] text-[#8A93A3] mt-3.5 leading-relaxed m-0 text-center">

@@ -37,7 +37,7 @@ export default function Disclaimer() {
           {[
             {
               title: '1. Regulatory Status & Non-Solicitor Platform Boundaries',
-              body: 'SettlementCheck.co.uk is an independent commercial technology platform and introducer; it is not a law firm, claims management company, or tax advisory practice. SettlementCheck is not authorised or regulated by the Solicitors Regulation Authority (SRA), the Law Society of Scotland, the Law Society of Northern Ireland, or the Financial Conduct Authority (FCA). Nothing on this platform, including statutory redundancy calculators, verdict indicators, compensation benchmarks, tax breakdowns, or automated checklists,constitutes legal, financial, or tax advice, nor does it create a solicitor-client, fiduciary, or advisory relationship.',
+              body: 'SettlementCheck.co.uk is an independent commercial technology platform and introducer; it is not a law firm, claims management company, or tax advisory practice. SettlementCheck is not authorised or regulated by the Solicitors Regulation Authority (SRA), the Law Society of Scotland, the Law Society of Northern Ireland, or the Financial Conduct Authority (FCA). Nothing on this platform, including statutory redundancy calculators, verdict indicators, compensation benchmarks, tax breakdowns, or automated checklists, constitutes legal, financial, or tax advice, nor does it create a solicitor-client, fiduciary, or advisory relationship.',
             },
             {
               title: '2. Legal Fee Contributions, Caps & Personal Liability Warning',

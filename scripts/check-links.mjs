@@ -30,6 +30,17 @@ const validRoutes = new Set(getRoutes(APP_DIR));
 validRoutes.add('/sitemap.xml');
 validRoutes.add('/robots.txt');
 
+// Add static public files to valid routes
+const PUBLIC_DIR = path.resolve('public');
+if (fs.existsSync(PUBLIC_DIR)) {
+  const publicEntries = fs.readdirSync(PUBLIC_DIR, { withFileTypes: true });
+  for (const entry of publicEntries) {
+    if (entry.isFile()) {
+      validRoutes.add(`/${entry.name}`);
+    }
+  }
+}
+
 function scanFiles(dir) {
   let files = [];
   if (!fs.existsSync(dir)) return files;

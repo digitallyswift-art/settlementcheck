@@ -1,4 +1,4 @@
-﻿import { ImageResponse } from 'next/og'
+import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 export const alt = 'SettlementCheck: Is your settlement offer fair?'
@@ -90,7 +90,7 @@ export default function OGImage() {
             }}
           >
             Independent calculator. Vetted solicitor within 24 hours.
-            Your employer pays the fees.
+            Standard employer fee contributions apply upon completion.
           </div>
         </div>
 

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { SolicitorPreFlightDossier } from '@/lib/agentic-engine/types';
+import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers';
 
 interface ReviewDossierClientProps {
   dossierId: string;
@@ -258,6 +259,9 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
             </div>
           </div>
         </div>
+
+        {/* ── Mandatory Regulatory & Common Law Disclaimers ─────────────────── */}
+        <MandatoryLegalDisclaimers className="mb-6" />
 
         {/* ── Navigation Tabs ──────────────────────────────────────────────── */}
         <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 border-b border-[#0B1F3A]/10 text-xs sm:text-sm font-medium">

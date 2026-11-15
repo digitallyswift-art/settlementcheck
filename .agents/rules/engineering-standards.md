@@ -27,3 +27,15 @@ Strict operational rules for all AI coding and architecting in SettlementCheck:
 - **Forbidden**: Never use "ACAS Calculator" or imply SettlementCheck is an official tool of or affiliated with ACAS (the Advisory, Conciliation and Arbitration Service).
 - **Disclaimers**: Maintain prominent disclaimers confirming independent educational status on calculator and guidance pages.
 
+## 6. Root Domain Authority & Intent Invariant (Anti-Decoupling Law)
+- **Principle**: The root domain (`/`) carries >95% of domain PageRank, backlink equity, and historical trust.
+- **Strictly Forbidden**: NEVER decouple the root domain (`/`) from core transactional calculator keywords (e.g. "Settlement Agreement Calculator UK") under the guise of "de-cannibalization" or pivoting `/` to an abstract "institutional triage hub".
+- **Rule**: De-cannibalization must be achieved via internal anchor text discipline, contextual comparison modules, and canonical hierarchy, NEVER by castrating or diluting the root domain's primary search intent.
+- **Schema**: The root domain MUST retain `WebApplication` / `SoftwareApplication` structured data. Never downgrade to generic `Service` schema without keeping `WebApplication`.
+
+## 7. SERP Pixel Budget & Jargon Guard
+- **Title Budget**: 50 to 60 characters maximum (including ` | SettlementCheck`). Titles >60 characters will be truncated by Google desktop/mobile SERPs and are strictly prohibited.
+- **Banned Consumer-Facing Jargon**: Never use administrative/corporate terms in SERP titles or meta descriptions: "Triage", "Platform", "Intake", "Dossier", "Workflow", "Audit".
+- **Interactive Tool Standard**: Any interactive calculation tool (e.g., `/redundancy-calculator/`, `/settlement-agreement-tax-calculator/`) MUST explicitly include "Calculator" or "Calculate" in its `<title>` and `<h1>` to avoid zero-click informational abandonment. Never reduce a tool title to a static statutory descriptor (e.g., NEVER use "Redundancy Pay Cap 2026 (£751/wk)").
+
+

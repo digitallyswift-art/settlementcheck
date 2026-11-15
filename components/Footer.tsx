@@ -87,6 +87,7 @@ export default function Footer() {
             <h4 className="text-white text-[12px] font-sans font-medium tracking-[0.14em] uppercase mb-4">Legal</h4>
             <ul className="flex flex-col gap-2.5 text-[14px]">
               {[
+                { href: '/regulatory-framework/', label: 'Regulatory Framework' },
                 { href: '/privacy/', label: 'Privacy policy' },
                 { href: '/terms/', label: 'Terms of use' },
                 { href: '/disclaimer/', label: 'Disclaimer' },

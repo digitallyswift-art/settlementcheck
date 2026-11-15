@@ -42,7 +42,7 @@ const FAQS = [
   },
   {
     q: 'Who pays for my legal advice on the settlement agreement?',
-    a: 'Your employer pays or makes a contribution towards your legal fees. Under ERA 1996 s.203(3), you must receive advice from an independent solicitor or certified adviser for the agreement to become binding. Employers typically contribute between £350 and £750 plus VAT directly to your solicitor.',
+    a: 'Employers standardly provide a capped commercial contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion. Under ERA 1996 s.203(3), independent legal advice from a qualified solicitor is mandatory for the settlement waiver to become legally binding.',
   },
   {
     q: 'Is my unfair dismissal settlement payment taxable?',
@@ -218,7 +218,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 <li className="flex items-start gap-3">
                   <CheckIcon />
                   <span className="sc-body text-sm">
-                    <strong>Employer covers legal costs:</strong> Independent legal advice is mandatory under ERA 1996 s.203(3). Employers pay a legal fee contribution, typically £350 to £750 plus VAT.
+                    <strong>Employer legal fee contribution:</strong> Independent legal advice is mandatory under ERA 1996 s.203(3). Employers standardly provide a capped commercial contribution, typically £350 to £500+ plus VAT upon completion.
                   </span>
                 </li>
               </ul>

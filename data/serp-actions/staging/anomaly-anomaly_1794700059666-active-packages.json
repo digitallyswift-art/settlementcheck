@@ -1,0 +1,70 @@
+[
+  {
+    "id": "auto_anomaly_1794700059666_1",
+    "anomalyId": "anomaly_1794700059666",
+    "query": "redundancy & settlement agreements",
+    "targetUrl": "https://settlementcheck.co.uk/redundancy-calculator/",
+    "calibratedTitle": "Redundancy Pay Calculator UK 2026 | SettlementCheck",
+    "calibratedMetaDescription": "Calculate your statutory redundancy entitlement under April 2026 rates (£751/wk cap). Instant check based on ERA 1996 s.162. Free, no email required.",
+    "titleLength": 51,
+    "metaLength": 149,
+    "statutoryCitations": [
+      "Employment Rights Act 1996 Section 203(3) (Independent Legal Advice)",
+      "Employment Rights Act 1996 Section 162 (April 2026 £751/wk cap)",
+      "ITEPA 2003 Section 403 (£30,000 tax-free exemption)"
+    ],
+    "complianceVerified": true,
+    "stagedAt": "2026-11-14T23:47:42.697Z"
+  },
+  {
+    "id": "auto_anomaly_1794700059666_2",
+    "anomalyId": "anomaly_1794700059666",
+    "query": "settlement agreement calculator uk",
+    "targetUrl": "https://settlementcheck.co.uk/",
+    "calibratedTitle": "Settlement Agreement Calculator UK (2026) | SettlementCheck",
+    "calibratedMetaDescription": "Free UK settlement agreement calculator based on April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.",
+    "titleLength": 59,
+    "metaLength": 156,
+    "statutoryCitations": [
+      "Employment Rights Act 1996 Section 203(3) (Independent Legal Advice)",
+      "Employment Rights Act 1996 Section 162 (April 2026 £751/wk cap)",
+      "ITEPA 2003 Section 403 (£30,000 tax-free exemption)"
+    ],
+    "complianceVerified": true,
+    "stagedAt": "2026-11-14T23:47:42.697Z"
+  },
+  {
+    "id": "auto_anomaly_1794700059666_3",
+    "anomalyId": "anomaly_1794700059666",
+    "query": "settlement agreement calculator gov",
+    "targetUrl": "https://settlementcheck.co.uk/",
+    "calibratedTitle": "Settlement Agreement Calculator UK (2026) | SettlementCheck",
+    "calibratedMetaDescription": "Free UK settlement agreement calculator based on April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.",
+    "titleLength": 59,
+    "metaLength": 156,
+    "statutoryCitations": [
+      "Employment Rights Act 1996 Section 203(3) (Independent Legal Advice)",
+      "Employment Rights Act 1996 Section 162 (April 2026 £751/wk cap)",
+      "ITEPA 2003 Section 403 (£30,000 tax-free exemption)"
+    ],
+    "complianceVerified": true,
+    "stagedAt": "2026-11-14T23:47:42.697Z"
+  },
+  {
+    "id": "auto_anomaly_1794700059666_4",
+    "anomalyId": "anomaly_1794700059666",
+    "query": "calculate settlement agreement",
+    "targetUrl": "https://settlementcheck.co.uk/",
+    "calibratedTitle": "Settlement Agreement Calculator UK (2026) | SettlementCheck",
+    "calibratedMetaDescription": "Free UK settlement agreement calculator based on April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.",
+    "titleLength": 59,
+    "metaLength": 156,
+    "statutoryCitations": [
+      "Employment Rights Act 1996 Section 203(3) (Independent Legal Advice)",
+      "Employment Rights Act 1996 Section 162 (April 2026 £751/wk cap)",
+      "ITEPA 2003 Section 403 (£30,000 tax-free exemption)"
+    ],
+    "complianceVerified": true,
+    "stagedAt": "2026-11-14T23:47:42.697Z"
+  }
+]

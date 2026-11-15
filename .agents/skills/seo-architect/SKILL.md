@@ -58,3 +58,7 @@ npm run test:evals
 2. **Deterministic Canonical Resolution**: Map intent to canonical routes via `lib/agentic-engine/agents/seo-architect-agent.ts`.
 3. **Sitemap Synchronization**: Confirm that any newly published guide exists in `app/sitemap.ts` and `app/sitemap/page.tsx`.
 4. **Zero Em Dashes**: Never use em dashes in generated copy; restructure using hyphens or clean punctuation.
+5. **Root Domain Intent Protection (Anti-Decoupling Law)**: Never strip primary calculator keywords (`"Settlement Agreement Calculator UK"`) from the root domain (`/`) or pivot `/` to an abstract institutional hub. The homepage holds >95% PageRank; removing transactional intent destroys ranking and CTR instantly.
+6. **No Corporate SERP Jargon**: Never use administrative jargon in titles or meta descriptions (`Triage`, `Platform`, `Intake`, `Dossier`, `Audit`).
+7. **Interactive Tool Titling Invariant**: Interactive tools must always include `Calculator` or `Calculate` in the title. Never reduce an interactive tool snippet to a static statutory cap descriptor (e.g. avoid `Redundancy Pay Cap 2026 (£751/wk)` on `/redundancy-calculator/`).
+8. **Closed Learning Loop**: All algorithmic changes to core money pages must pass the 72-Hour GSC Degradation Watchdog. If a change causes >15% CTR degradation over 3 days, it must trigger an automatic rollback.

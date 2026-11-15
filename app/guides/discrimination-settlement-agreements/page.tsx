@@ -54,7 +54,7 @@ const FAQS = [
   },
   {
     q: 'Does my employer pay for my independent legal advice?',
-    a: 'Yes. For a settlement agreement to be legally valid under Section 203 of the Employment Rights Act 1996 and Section 144 of the Equality Act 2010, you must receive independent legal advice. Your employer covers this fee, which typically ranges from £350 to £750 plus VAT.',
+    a: 'Employers standardly provide a capped commercial contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion. Under Section 203 of the Employment Rights Act 1996 and Section 144 of the Equality Act 2010, you must receive independent legal advice for any statutory waiver to be legally valid.',
   },
   {
     q: 'Can a settlement agreement waive unknown future discrimination claims?',
@@ -164,7 +164,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
                   'Injury to feelings compensation follows the Ninth Addendum Vento bands, ranging from £1,300 to more than £62,900.',
                   'Section 111A protected conversation rules do not apply to discrimination. Employers cannot keep discriminatory discussions confidential.',
                   'Pre-termination injury to feelings awards are 100% tax-free under ITEPA 2003 s.406, outside the standard £30,000 limit.',
-                  'Your employer covers the cost of your independent legal advice, typically contributing £350 to £750 plus VAT.',
+                  'Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards independent legal advice upon completion.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
@@ -437,12 +437,12 @@ export default function DiscriminationSettlementAgreementsGuide() {
             </p>
 
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-2">Employer Covers Your Legal Fees</p>
+              <p className="text-sm font-semibold text-ink mb-2">Employer Legal Fee Contribution</p>
               <p className="sc-body text-sm mb-2">
-                Your employer covers the cost of your independent legal advice. The typical employer contribution is between £350 and £750 plus VAT.
+                Under Section 203(3) ERA 1996, independent legal advice is a statutory validity condition. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.
               </p>
               <p className="sc-body text-sm">
-                Your solicitor invoices your employer directly. You do not pay this out of your own pocket. If negotiations require extended redrafting, your solicitor can request an increased contribution from your employer.
+                For a standard review within this cap, the contribution covers the solicitor&apos;s fee upon completion. If negotiations require extended work, your solicitor will agree any scope adjustments in advance.
               </p>
             </div>
           </div>
@@ -476,7 +476,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
                 {
                   step: '04',
                   title: 'Finalise terms with your independent solicitor',
-                  desc: 'Your solicitor checks the agreement, negotiates an agreed job reference, confidentiality wording, and tax indemnities. Your employer pays the solicitor\'s invoice directly.',
+                  desc: 'Your solicitor checks the agreement, negotiates an agreed job reference, confidentiality wording, and tax indemnities. Employers standardly provide a capped commercial contribution paid directly to your solicitor upon completion.',
                 },
               ].map(({ step, title, desc }) => (
                 <div key={step} className="relative">

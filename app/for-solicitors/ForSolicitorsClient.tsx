@@ -280,7 +280,7 @@ export default function ForSolicitorsClient() {
   const sendOtp = useCallback(async (emailAddr: string) => {
     setOtpSending(true)
     try {
-      const res = await fetch('/api/otp/send', {
+      const res = await fetch('/api/otp/send/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: emailAddr, form_type: 'solicitor' }),
@@ -307,7 +307,7 @@ export default function ForSolicitorsClient() {
       setOtpVerifying(true)
       setOtpError('')
       try {
-        const res = await fetch('/api/otp/verify', {
+        const res = await fetch('/api/otp/verify/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: form.email, code, form_type: 'solicitor' }),
@@ -411,7 +411,7 @@ export default function ForSolicitorsClient() {
     setSubmitting(true)
     setFieldError('')
     try {
-      const res = await fetch('/api/solicitor-application', {
+      const res = await fetch('/api/solicitor-application/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -943,7 +943,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
     <div style={{ maxWidth: 1160, margin: '0 auto', padding: '40px 24px 100px' }}>
 
       {/* ── 1. ATTENTION HOOK HERO SECTION ───────────────────────────────── */}
-      <section style={{ textAlign: 'center', padding: '36px 0 56px', borderBottom: `1px solid ${C.border}` }}>
+      <section id="contact" style={{ textAlign: 'center', padding: '36px 0 56px', borderBottom: `1px solid ${C.border}` }}>
         {/* Eyebrow */}
         <div
           style={{
@@ -1195,8 +1195,8 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               desc: 'Never auctioned or sold to competing law firms. One instruction belongs to one firm.',
             },
             {
-              title: 'Employer Pays Your Fee',
-              desc: 'Section 203 ERA 1996 legal fee contributions (£500–£1,500+ VAT) paid direct to you.',
+              title: 'Employer Fee Contributions',
+              desc: 'Section 203 ERA 1996 legal fee contributions (£500–£1,500+ VAT) paid direct to you upon completion.',
             },
             {
               title: 'Complete Statutory Dossier',
@@ -1759,7 +1759,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
       </section>
 
       {/* ── 5. SPEED-TO-LEAD SLA & EXCLUSIVITY PROTOCOL ─────────────────── */}
-      <section style={{ padding: '64px 0', borderBottom: `1px solid ${C.border}` }}>
+      <section id="how-it-works" style={{ padding: '64px 0', borderBottom: `1px solid ${C.border}` }}>
         <div
           style={{
             display: 'grid',

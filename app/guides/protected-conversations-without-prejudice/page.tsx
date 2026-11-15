@@ -542,7 +542,7 @@ export default function ProtectedConversationsGuide() {
               </div>
 
               <div className="rounded-xl border border-rule bg-card p-5">
-                <h3 className="font-serif text-[17px] font-[460] text-ink mb-1.5">Your Employer Covers Legal Fees (HMRC Concession)</h3>
+                <h3 className="font-serif text-[17px] font-[460] text-ink mb-1.5">Employer Legal Fee Contribution (HMRC Concession)</h3>
                 <p className="sc-body text-sm mb-2">
                   Under{' '}
                   <a
@@ -556,7 +556,7 @@ export default function ProtectedConversationsGuide() {
                   , you must receive independent legal advice for a settlement agreement to be binding.
                 </p>
                 <p className="sc-body text-sm">
-                  Your employer will pay your solicitor directly, typically contributing £350 to £750 plus VAT. Under HMRC guidance{' '}
+                  Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) paid directly to your solicitor upon completion. Under HMRC guidance{' '}
                   <a
                     href="https://www.gov.uk/hmrc-internal-manuals/employment-income-manual/eim13750"
                     target="_blank"
@@ -576,7 +576,7 @@ export default function ProtectedConversationsGuide() {
           </div>
         </section>
 
-        {/* ── SECTION 7: WHAT TO SAY SCRIPT ────────────────────── */}
+        {/* ── SECTION 7: QUESTIONS TO CONSIDER WITH A SOLICITOR ────────────────────── */}
         <section className="py-12 border-b border-rule bg-paper-2">
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Communicating your choice of solicitor and requesting written terms</h2>
@@ -630,7 +630,7 @@ export default function ProtectedConversationsGuide() {
                   <span className="text-xs font-semibold uppercase tracking-wider text-coral block mb-1">Option 1</span>
                   <h3 className="font-serif text-[16px] font-[460] text-ink mb-2">Accept the Offer</h3>
                   <p className="text-xs text-muted leading-relaxed">
-                    If the financial sum is fair, notice is honoured, and an agreed reference is included, accepting provides a clean exit. Your employer covers the legal fees.
+                    If the financial sum is fair, notice is honoured, and an agreed reference is included, accepting provides a clean exit. Employers standardly provide a capped commercial contribution toward your legal fees upon agreement completion.
                   </p>
                 </div>
               </div>
@@ -717,7 +717,7 @@ export default function ProtectedConversationsGuide() {
               Find out where your settlement offer stands
             </h2>
             <p className="sc-lead text-white/80 max-w-xl mx-auto mb-6 text-sm">
-              Use our free calculator to see if your offer meets statutory standards. Your employer covers the cost of independent legal advice.
+              Use our free calculator to see if your offer meets statutory baselines. Employers standardly provide a capped commercial contribution toward independent legal advice upon agreement completion.
             </p>
             <Link href="/calculator/" className="btn-accent text-sm inline-block">
               Calculate my estimate →

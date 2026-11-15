@@ -124,7 +124,7 @@ export default function InlineEstimator({
               id="estimator-salary"
               type="text"
               inputMode="numeric"
-              value={salaryInput ? Number(salaryInput.replace(/[^0-9]/g, '')).toLocaleString('en-GB') : ''}
+              value={salaryInput}
               onChange={(e) => setSalaryInput(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
               placeholder="e.g. 50,000"
               className="w-full pl-8 pr-3 py-2.5 bg-white border border-[#C8D3DF] rounded-lg text-[15px] font-bold text-[#0B1F3A] focus:outline-none focus:border-[#0B1F3A] focus:ring-1 focus:ring-[#0B1F3A]"

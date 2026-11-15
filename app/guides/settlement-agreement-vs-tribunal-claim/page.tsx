@@ -157,7 +157,7 @@ export default function SettlementAgreementVsTribunalGuide() {
                 {[
                   'A settlement agreement provides a legally binding, tax-efficient payment completed in weeks.',
                   'An employment tribunal claim is a public dispute that takes over a year to resolve.',
-                  'Your employer covers the fees for your solicitor to advise you on a settlement agreement.',
+                  'Employers standardly provide a capped fee contribution directly to your solicitor upon settlement agreement completion.',
                   'Tribunals have no filing fees, but hiring a solicitor to represent you can cost £5,000 to £15,000.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
@@ -267,7 +267,7 @@ export default function SettlementAgreementVsTribunalGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">Hired Solicitors: Who Pays the Legal Fees?</h2>
             <p className="sc-body mb-4">
-              In a settlement agreement, the arrangement is straightforward. Your employer covers the fees for your solicitor to advise you on the terms. This contribution typically ranges from £350 to £750, and the employer pays your solicitor directly.
+              In a settlement agreement, the arrangement is straightforward. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion to satisfy Section 203(3) ERA 1996 advice requirements.
             </p>
             <p className="sc-body mb-4">
               For an employment tribunal, there are no court fees to submit a claim. However, you must cover your own legal representation. Hiring a solicitor to draft your claim, prepare evidence, and represent you at a hearing typically costs between £5,000 and £15,000.

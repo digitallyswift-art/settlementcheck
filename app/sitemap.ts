@@ -53,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Tier 4: Guides (hub + spokes)
     { url: `${base}/guides/`,                                         lastModified: getLastMod(`${base}/guides/`), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/settlement-agreement-after-grievance/`,    lastModified: getLastMod(`${base}/guides/settlement-agreement-after-grievance/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-time-limits/`,        lastModified: getLastMod(`${base}/guides/settlement-agreement-time-limits/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/how-long-does-a-settlement-agreement-take/`, lastModified: getLastMod(`${base}/guides/how-long-does-a-settlement-agreement-take/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-reference/`,          lastModified: getLastMod(`${base}/guides/settlement-agreement-reference/`), changeFrequency: 'monthly', priority: 0.7 },
@@ -95,6 +96,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/for-employers/`,                                  lastModified: getLastMod(`${base}/for-employers/`), changeFrequency: 'monthly', priority: 0.6 },
 
     // Tier 6: Legal / footer pages
+    { url: `${base}/regulatory-framework/`,                           lastModified: baselineDate, changeFrequency: 'yearly',  priority: 0.3 },
     { url: `${base}/privacy/`,                                        lastModified: getLastMod(`${base}/privacy/`), changeFrequency: 'yearly',  priority: 0.2 },
     { url: `${base}/terms/`,                                          lastModified: getLastMod(`${base}/terms/`), changeFrequency: 'yearly',  priority: 0.2 },
     { url: `${base}/disclaimer/`,                                     lastModified: getLastMod(`${base}/disclaimer/`), changeFrequency: 'yearly',  priority: 0.2 },

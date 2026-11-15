@@ -492,7 +492,7 @@ export default function HomeClient({
                 <span className="sc-eyebrow">Why SettlementCheck</span>
                 <h2 className="sc-section-h2">Built for the employee. Not the employer.</h2>
                 <p className="sc-lead">
-                  Most settlement calculators online are built by law firms trying to capture your case. Ours is independent. Solicitors on our panel pay a small introduction fee per qualified lead. We have no single firm to push you towards, and we curate the panel for quality, not volume.
+                  Most settlement calculators online are built by law firms trying to capture your case. Ours is independent. Participating law firms pay a fixed subscription or introducer fee to access pre-flight intake dossiers in compliance with SRA Rule 5.1. We have no single firm to push you towards, and all panel solicitors exercise complete professional independence.
                 </p>
               </div>
 

@@ -50,10 +50,42 @@ export class GoogleSearchConsoleClient {
     return process.env.GSC_SITE_URL || 'sc-domain:settlementcheck.co.uk';
   }
 
+  private static ensureCredentials(): void {
+    if (!process.env.GSC_CLIENT_EMAIL || !process.env.GSC_PRIVATE_KEY) {
+      const envPath = path.resolve('.env.local');
+      if (fs.existsSync(envPath)) {
+        try {
+          const content = fs.readFileSync(envPath, 'utf-8');
+          const regex = /^\s*([\w.-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^#\r\n]+))/gm;
+          let match;
+          while ((match = regex.exec(content)) !== null) {
+            const k = match[1];
+            const v = match[2] !== undefined ? match[2] : match[3] !== undefined ? match[3] : match[4].trim();
+            if (!process.env[k]) process.env[k] = v;
+          }
+        } catch {}
+      }
+
+      if (!process.env.GSC_CLIENT_EMAIL || !process.env.GSC_PRIVATE_KEY) {
+        const credPath = path.resolve('gsc-credentials.json');
+        if (fs.existsSync(credPath)) {
+          try {
+            const parsed = JSON.parse(fs.readFileSync(credPath, 'utf-8'));
+            if (parsed.client_email && parsed.private_key) {
+              process.env.GSC_CLIENT_EMAIL = parsed.client_email;
+              process.env.GSC_PRIVATE_KEY = parsed.private_key;
+            }
+          } catch {}
+        }
+      }
+    }
+  }
+
   /**
    * Checks if GSC Service Account credentials exist in the environment
    */
   public static isConfigured(): boolean {
+    this.ensureCredentials();
     const email = process.env.GSC_CLIENT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL;
     const key = process.env.GSC_PRIVATE_KEY || process.env.GOOGLE_PRIVATE_KEY;
     return Boolean(email && key);
@@ -63,6 +95,7 @@ export class GoogleSearchConsoleClient {
    * Generates a signed OAuth2 JWT assertion for Google APIs
    */
   private static async getAccessToken(): Promise<string> {
+    this.ensureCredentials();
     const clientEmail = process.env.GSC_CLIENT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL;
     let privateKey = process.env.GSC_PRIVATE_KEY || process.env.GOOGLE_PRIVATE_KEY;
 

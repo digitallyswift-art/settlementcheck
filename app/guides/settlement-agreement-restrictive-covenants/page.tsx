@@ -50,7 +50,7 @@ const FAQS = [
   },
   {
     q: 'Who pays the solicitor fee to review and negotiate my restrictive covenants?',
-    a: 'Your employer covers the legal fees for your independent solicitor advice under Section 203 of the Employment Rights Act 1996. Standard employer legal fee contributions typically range between £500 and £1,500 plus VAT. Your solicitor will review every restrictive covenant, ensure tax compliance under Section 225, and negotiate amendments directly with your employer.',
+    a: 'Employers standardly provide a capped commercial contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion. Under Section 203 of the Employment Rights Act 1996, independent legal advice is mandatory. Your solicitor will review every restrictive covenant, ensure tax compliance under Section 225, and negotiate amendments directly with your employer.',
   },
   {
     q: 'Can my solicitor negotiate to remove or reduce restrictive covenants from my settlement agreement?',
@@ -210,7 +210,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                   'Payments for agreeing to restrictive covenants are taxable under Section 225 of ITEPA 2003 and do not qualify for the £30,000 tax-free exemption.',
                   'Non-disclosure clauses cannot lawfully gag you from reporting wrongdoing or whistleblowing under Section 43J of the Employment Rights Act 1996.',
                   'An SRA-regulated solicitor can often negotiate to delete, shorten, or narrow aggressive restrictions during settlement discussions.',
-                  'Your employer covers the legal fees for your independent solicitor advice (typically £500 to £1,500 plus VAT) under Section 203.',
+                  'Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards independent solicitor advice under Section 203 upon agreement completion.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
@@ -508,7 +508,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                     <td className="p-3 font-medium text-ink">Independent Advice</td>
                     <td className="p-3">Not legally mandatory</td>
                     <td className="p-3">Mandatory under Section 203 ERA 1996</td>
-                    <td className="p-3">Employer covers the legal fee (£500+ VAT)</td>
+                    <td className="p-3">Capped employer contribution (typically £350–£500+ VAT) upon completion</td>
                   </tr>
                 </tbody>
               </table>
@@ -558,7 +558,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
             </div>
 
             <p className="sc-body mb-4">
-              Remember that your employer covers the legal fees for your independent solicitor advice. Standard employer contributions range between £500 and £1,500 plus VAT, meaning you will not be out of pocket for standard advice.
+              Remember that employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards your independent solicitor advice upon agreement completion.
             </p>
           </div>
         </section>
@@ -576,7 +576,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                 'Compare the original restrictions against the clauses in the draft settlement agreement to identify any new or expanded terms.',
                 'Check whether the settlement allocates a separate, nominal taxable payment for restrictive undertakings under Section 225 of ITEPA 2003.',
                 'Ensure the confidentiality clause contains standard statutory exceptions for family, professional advisers, and whistleblowing under Section 43J.',
-                'Instruct an SRA-regulated employment solicitor to review the agreement. Your employer covers the cost of independent legal advice.',
+                'Instruct an SRA-regulated employment solicitor to review the agreement. Employers standardly provide a capped commercial contribution upon agreement completion.',
                 'Use our free calculator to check that the overall settlement compensation adequately compensates you for any commercial restraints.',
               ].map((step, idx) => (
                 <li key={step} className="flex items-start gap-3 text-sm text-ink">
@@ -658,7 +658,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
               Check where your settlement agreement clauses stand
             </h2>
             <p className="sc-lead text-white/80 max-w-xl mx-auto mb-6 text-sm">
-              Calculate your statutory baseline, check your restrictive covenants, and get matched with an SRA-regulated solicitor. Your employer covers the cost of independent legal advice.
+              Calculate your statutory baseline, check your restrictive covenants, and get matched with an SRA-regulated solicitor. Employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/calculator/" className="btn-accent text-sm inline-block">

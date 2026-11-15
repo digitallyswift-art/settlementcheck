@@ -6,6 +6,8 @@ import { PipExitCalculator } from '@/components/PipExitCalculator'
 import { LegalFeeInlineCard } from '@/components/LegalFeeShieldBadge'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 const STATIC_METADATA: Metadata = {
   title: {
@@ -22,9 +24,113 @@ export async function generateMetadata(): Promise<Metadata> {
   return resolveDynamicSeoMetadata('/pip-settlement-calculator/', STATIC_METADATA)
 }
 
+const pipSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['WebApplication', 'SoftwareApplication'],
+      name: 'UK PIP Settlement Agreement Calculator (2026)',
+      url: 'https://settlementcheck.co.uk/pip-settlement-calculator/',
+      applicationCategory: ['BusinessApplication', 'FinanceApplication'],
+      operatingSystem: 'All modern web browsers',
+      browserRequirements: 'Requires JavaScript. Requires HTML5.',
+      softwareVersion: '2026.1 (ERA 1996 s.111A)',
+      isAccessibleForFree: true,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+      },
+      description:
+        'Free UK PIP settlement agreement calculator. Valuing exit packages during Performance Improvement Plans and Section 111A protected conversations, comparing employer capability process costs, statutory notice, and £30,000 tax-free exit terms under April 2026 statutory rates.',
+      featureList: [
+        'Assessment of employer capability process costs under Acas Code of Practice 1',
+        'Confidential Section 111A ERA 1996 protected conversation valuation',
+        'Statutory notice pay (PILON) taxation calculation under ITEPA 2003 s.402D',
+        'Tax-free termination allowance modelling up to £30,000 under ITEPA 2003 s.403',
+        'April 2026 statutory weekly pay cap (£751) and £123,543 unfair dismissal limit alignment',
+      ],
+      screenshot: 'https://settlementcheck.co.uk/og-image.png',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
+      creator: {
+        '@type': 'Organization',
+        name: 'SettlementCheck',
+        url: 'https://settlementcheck.co.uk',
+      },
+    },
+    {
+      '@type': 'HowTo',
+      name: 'How to value and negotiate a PIP settlement agreement exit',
+      description: 'Step-by-step statutory valuation of settlement packages when facing a Performance Improvement Plan in the UK.',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
+      step: [
+        {
+          '@type': 'HowToStep',
+          position: 1,
+          name: 'Calculate employer capability process savings',
+          text: 'Assess the salary, management hours, and procedural costs saved by the employer avoiding a 60 to 90-day capability process under Acas Code 1.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 2,
+          name: 'Calculate contractual notice pay (PILON)',
+          text: 'Notice pay is legally payable in full under ERA 1996 s.86 and subject to PAYE tax and National Insurance under Section 402D ITEPA 2003.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 3,
+          name: 'Apply the £30,000 tax-free ex-gratia compensation exemption',
+          text: 'Under Section 403 of ITEPA 2003, genuine termination compensation for loss of office up to £30,000 is 100% free of income tax and employee NICs.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 4,
+          name: 'Ensure independent legal advice contribution',
+          text: 'Under Section 203(3) ERA 1996, the settlement waiver is void without independent solicitor certification. Employers standardly contribute £500 to £1,000+ VAT directly to your solicitor upon completion.',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Can an employer offer a settlement agreement while I am on a PIP?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Under Section 111A of the Employment Rights Act 1996, employers can initiate confidential pre-termination negotiations (a protected conversation) during a PIP to discuss an agreed exit with ex-gratia compensation and full notice pay.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is a PIP settlement payout tax-free?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Ex-gratia compensation for loss of office up to £30,000 is exempt from income tax and employee National Insurance under Section 403 of ITEPA 2003. Contractual notice pay (PILON) and accrued holiday pay are always taxed as ordinary employment earnings.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does my employer pay for my solicitor to advise on a PIP settlement agreement?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Under Section 203(3) of the Employment Rights Act 1996, independent legal advice from an SRA-regulated solicitor is required to make the settlement waiver legally binding. Employers standardly provide a capped fee contribution (typically £500 to £1,000 plus VAT) paid directly to your chosen solicitor upon completion.',
+          },
+        },
+      ],
+    },
+  ],
+}
+
 export default function PipSettlementCalculatorPage() {
   return (
     <div className="min-h-screen bg-[#F7F4EE] flex flex-col font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(pipSchema) }}
+      />
       <Nav />
       <main className="flex-1 max-w-4xl mx-auto px-4 py-8 sm:py-12 w-full">
         <div className="text-center mb-8">

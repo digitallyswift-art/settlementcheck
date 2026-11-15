@@ -175,8 +175,8 @@ export default function CanEmployerWithdrawSettlementGuide() {
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Independent Legal Advice</span>
-                  <span className="font-bold text-ink text-sm">Employer Pays (£500+ VAT)</span>
-                  <span className="text-muted text-[11px]">Mandatory condition under s.203(3)</span>
+                  <span className="font-bold text-ink text-sm">Employer Contribution (£350–£500+ VAT)</span>
+                  <span className="text-muted text-[11px]">Commercial standard upon s.203 completion</span>
                 </div>
               </div>
 
@@ -209,7 +209,7 @@ export default function CanEmployerWithdrawSettlementGuide() {
                   'Employers should allow at least 10 calendar days to consider written terms under paragraph 12 of ACAS Code 4.',
                   'Threatening to dismiss you if you do not sign within 24 to 48 hours constitutes improper behaviour under Section 111A(4) ERA 1996.',
                   'In commercial practice, employers rarely withdraw an offer completely because resolving a dispute privately is faster and cheaper than an employment tribunal.',
-                  'Your employer covers the legal fees for your independent solicitor advice (typically £500 to £1,500 plus VAT).',
+                  'Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards independent legal advice upon agreement completion.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
@@ -338,7 +338,7 @@ export default function CanEmployerWithdrawSettlementGuide() {
             </div>
 
             <p className="sc-body mb-4">
-              Remember that your employer covers your independent legal advice fees under Section 203. Standard employer contributions range between £500 and £1,500 plus VAT.
+              Remember that employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards independent legal advice under Section 203 upon agreement completion.
             </p>
 
             {/* In-content tool CTA */}
@@ -408,7 +408,7 @@ export default function CanEmployerWithdrawSettlementGuide() {
             <ul className="space-y-2 mb-4 pl-1">
               {[
                 'Putting undue pressure on an employee, such as setting unrealistic deadlines of 24 or 48 hours.',
-                'Stating that you will be dismissed if you do not accept the settlement agreement.',
+                'Stating that you will be dismissed if you decline or reject the settlement agreement.',
                 'Subjecting you to bullying, harassment, or intimidation.',
                 'Refusing to let you seek independent legal advice.',
               ].map((text) => (
@@ -493,7 +493,7 @@ export default function CanEmployerWithdrawSettlementGuide() {
                     <td className="p-3 font-medium text-ink">Written draft received</td>
                     <td className="p-3 text-[#A8341F] font-semibold">Yes</td>
                     <td className="p-3">Subject to Contract (Common law contract rules)</td>
-                    <td className="p-3">Instruct an SRA-regulated solicitor. Your employer pays the fee.</td>
+                    <td className="p-3">Instruct an SRA-regulated solicitor; employers standardly provide a capped fee contribution upon completion.</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-medium text-ink">Counter-offer submitted</td>
@@ -537,7 +537,7 @@ export default function CanEmployerWithdrawSettlementGuide() {
                 'Avoid signing immediately under pressure before taking independent legal advice. Signing waives your right to bring tribunal claims for unfair dismissal or discrimination.',
                 'Remind your employer in writing of paragraph 12 of the ACAS Code of Practice 4, which recommends at least 10 calendar days to consider terms.',
                 'Clarify in writing that you are actively seeking independent legal advice, which is a mandatory requirement under Section 203 of the Employment Rights Act 1996.',
-                'Instruct an SRA-regulated employment solicitor immediately. Your employer pays the legal fee contribution, so you will not be out of pocket for standard advice.',
+                'Instruct an SRA-regulated employment solicitor immediately. Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) paid directly to your solicitor upon completion.',
                 'Keep contemporaneous records of all meetings, emails, and conversations, noting any aggressive ultimatums or threats of immediate dismissal.',
                 'Check your statutory baseline entitlements using our free calculator, including notice pay, statutory redundancy (£751/week cap), and accrued holiday pay.',
               ].map((step, idx) => (
@@ -614,7 +614,7 @@ export default function CanEmployerWithdrawSettlementGuide() {
               Check where your settlement agreement offer stands
             </h2>
             <p className="sc-lead text-white/80 max-w-xl mx-auto mb-6 text-sm">
-              Calculate your statutory baseline, check your notice entitlements, and get matched with an SRA-regulated solicitor. Your employer covers the cost of independent legal advice.
+              Calculate your statutory baseline, check your notice entitlements, and get matched with an SRA-regulated solicitor. Employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/calculator/" className="btn-accent text-sm inline-block">

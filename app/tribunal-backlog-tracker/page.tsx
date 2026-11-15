@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import TribunalBacklogClient from './TribunalBacklogClient'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -39,6 +40,7 @@ export default function TribunalBacklogTrackerPage() {
         '@id': 'https://settlementcheck.co.uk/tribunal-backlog-tracker/#webpage',
         url: 'https://settlementcheck.co.uk/tribunal-backlog-tracker/',
         name: 'UK Employment Tribunal Backlog Tracker & Regional Wait Times',
+        publisher: SETTLEMENT_CHECK_PUBLISHER,
         description:
           'Interactive intelligence tracker analyzing Ministry of Justice Employment Tribunal backlogs, regional wait times to preliminary and merits hearings, and employer legal cost exposure.',
         breadcrumb: {

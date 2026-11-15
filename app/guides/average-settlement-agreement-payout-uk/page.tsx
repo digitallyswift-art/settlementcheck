@@ -42,7 +42,7 @@ const FAQS = [
   },
   {
     q: 'Who pays my solicitor\'s legal fees for a settlement agreement?',
-    a: 'Your employer covers the fees for your solicitor to advise you on the agreement terms. This contribution usually ranges from £350 to £750, and your employer pays your solicitor directly under HMRC rules.',
+    a: 'Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion to satisfy Section 203(3) ERA 1996 advice requirements. For a standard review within this cap, the contribution covers your solicitor\'s fee upon completion.',
   },
   {
     q: 'Can I negotiate for a higher settlement payout?',

@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import StatutoryRatesHistoryClient from './StatutoryRatesHistoryClient'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
+import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -39,6 +40,7 @@ export default function StatutoryRatesHistoryPage() {
         '@id': 'https://settlementcheck.co.uk/statutory-rates-history/#webpage',
         url: 'https://settlementcheck.co.uk/statutory-rates-history/',
         name: 'UK Statutory Employment Rates & Compensation Caps History (2000-2026)',
+        publisher: SETTLEMENT_CHECK_PUBLISHER,
         description:
           'Authoritative historical archive of statutory redundancy weekly pay caps, unfair dismissal compensatory awards, Vento injury to feelings bands, and the frozen £30,000 tax exemption.',
         breadcrumb: {

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-05T01:00:52.602Z",
-  "totalOutcomesAnalysed": 8,
+  "generatedAt": "2026-11-14T23:10:30.766Z",
+  "totalOutcomesAnalysed": 9,
   "topPerformingStrategy": "CONTENT_DEPTH_UPGRADE",
   "lowestPerformingStrategy": "IN_PROSE_INTERNAL_LINK",
   "strategyWeights": {
@@ -11,7 +11,8 @@
     "META_RECALIBRATION": 1.05,
     "STATUTORY_CASE_STUDY": 0.9,
     "IN_PROSE_INTERNAL_LINK": 0.4,
-    "CONTENT_GAP_BRIEF": 0.9
+    "CONTENT_GAP_BRIEF": 0.9,
+    "ROOT_DOMAIN_DECOUPLING": 0.4
   },
   "strategies": {
     "CONTENT_DEPTH_UPGRADE": {
@@ -133,6 +134,21 @@
       "weight": 0.9,
       "confidence": "EMERGING",
       "recommendation": "Emerging strategy with zero longitudinal samples. Maintain baseline canary observation."
+    },
+    "ROOT_DOMAIN_DECOUPLING": {
+      "strategy": "ROOT_DOMAIN_DECOUPLING",
+      "sampleCount": 1,
+      "wins": 0,
+      "steady": 0,
+      "neutrals": 1,
+      "regressions": 0,
+      "rollbacks": 0,
+      "winRatePct": 0,
+      "avgRankImprovementPct": 7.5,
+      "avgClickDelta": -70,
+      "weight": 0.4,
+      "confidence": "LOW",
+      "recommendation": "Underperforming or regression risk (0 regression alerts, 0% win rate). Deprioritise in favour of deeper content upgrades."
     }
   },
   "orchestratorDirectives": {
@@ -143,7 +159,8 @@
       "DIGITAL_PR_PITCH"
     ],
     "deprioritizedStrategies": [
-      "IN_PROSE_INTERNAL_LINK"
+      "IN_PROSE_INTERNAL_LINK",
+      "ROOT_DOMAIN_DECOUPLING"
     ],
     "guidance": [
       "Prioritise CONTENT_DEPTH_UPGRADE (weight: 1.98x): Delivers highest confirmed rank uplift across live clusters.",

@@ -7,6 +7,7 @@
 
 import type { Metadata } from 'next';
 import { SeoActuatorService } from '../agentic-engine/services/seo-actuator-service';
+import { SETTLEMENT_CHECK_PUBLISHER } from './schema-constants';
 
 export async function resolveDynamicSeoMetadata(
   pathname: string,
@@ -98,6 +99,7 @@ export async function resolveDynamicStructuredSchema(pathname: string): Promise<
         applicationCategory: 'FinanceApplication',
         operatingSystem: 'All',
         isAccessibleForFree: true,
+        publisher: SETTLEMENT_CHECK_PUBLISHER,
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -132,6 +134,7 @@ export async function resolveDynamicStructuredSchema(pathname: string): Promise<
         name: 'SettlementCheck Legal Research Desk',
         url: 'https://settlementcheck.co.uk',
       },
+      publisher: SETTLEMENT_CHECK_PUBLISHER,
       ...(active.appliedAt ? { dateModified: active.appliedAt } : {}),
       ...(active.faqQuestion && active.faqAnswer
         ? {
