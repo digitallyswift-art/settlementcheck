@@ -13,6 +13,7 @@ import path from 'path';
 import { GscFetchResult, GscQueryRow } from './gsc-client';
 import { resend } from '@/lib/resend';
 import { GoogleIndexingClient } from './google-indexing-client';
+import { IndexNowClient } from './indexnow-client';
 import { SeoWorkflowOrchestrator } from '../orchestrator/seo-workflow-orchestrator';
 import {
   AutonomousSeoActionPackage,
@@ -465,6 +466,9 @@ export class AutonomousSeoActionService {
         const targetUrls = dualAgentPackages.map(p => p.seoTechnicalBrief.targetCanonicalUrl);
         GoogleIndexingClient.notifyBatch(targetUrls).catch(err => {
           console.warn('Background Google Indexing batch notification notice:', err?.message || err);
+        });
+        IndexNowClient.notifyBatch(targetUrls).catch(err => {
+          console.warn('Background IndexNow batch notification notice:', err?.message || err);
         });
       } catch (indexErr) {
         console.warn('Google Indexing API notice:', indexErr);

@@ -11,6 +11,7 @@ import path from 'path';
 import { unstable_cache } from 'next/cache';
 import { supabase } from '@/lib/supabase';
 import { GoogleIndexingClient } from './google-indexing-client';
+import { IndexNowClient } from './indexnow-client';
 import { SeoArchitectAgent } from '../agents/seo-architect-agent';
 import { AdversarialSeoHeadAgent } from '../agents/adversarial-seo-head-agent';
 import { evaluateSeoBlastRadius } from '../guardrails/seo-blast-radius-guard';
@@ -748,6 +749,8 @@ export class SeoActuatorService {
     if (options?.triggerIndexing !== false) {
       try {
         indexingResult = await GoogleIndexingClient.notifyUrlUpdated(enriched.targetCanonicalUrl);
+        // Real-time IndexNow push for Bing, Microsoft Copilot & Perplexity
+        IndexNowClient.notifyUrlUpdated(enriched.targetCanonicalUrl).catch(() => {});
         if (indexingResult.success) {
           enriched.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
           enriched.indexingStatus = 'SITEMAP_LASTMOD_SYNCED';
@@ -1010,6 +1013,8 @@ export class SeoActuatorService {
     let indexingResult: any = null;
     try {
       indexingResult = await GoogleIndexingClient.notifyUrlUpdated(enriched.targetCanonicalUrl);
+      // Real-time IndexNow push for Bing, Microsoft Copilot & Perplexity
+      IndexNowClient.notifyUrlUpdated(enriched.targetCanonicalUrl).catch(() => {});
       if (indexingResult.success) {
         enriched.googleIndexedAt = indexingResult.notifyTime || new Date().toISOString();
         enriched.indexingStatus = 'SITEMAP_LASTMOD_SYNCED';
