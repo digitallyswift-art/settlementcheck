@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   title: 'What Is a Fair Settlement Agreement? | SettlementCheck',
@@ -88,8 +89,8 @@ function WarningIcon() {
 export default function WhatIsAFairSettlementAgreementGuide() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(articleSchema) }} />
       <Nav />
       <main>
         {/* Hero */}

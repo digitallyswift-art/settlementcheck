@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -38,7 +39,7 @@ export default function HowItWorks() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }}
       />
       <Nav />
       <main>

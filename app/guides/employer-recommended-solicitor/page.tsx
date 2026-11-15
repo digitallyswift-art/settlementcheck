@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   title: 'Can I Choose My Own Settlement Solicitor? | SettlementCheck',
@@ -96,7 +97,7 @@ export default function EmployerRecommendedSolicitor() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }}
       />
       <Nav />
       <main>

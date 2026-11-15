@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SlaWatchdogWorker } from '@/lib/agentic-engine/workers/sla-watchdog-worker';
+import { constantTimeEqual } from '@/lib/security/otp-tokens';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,10 +17,10 @@ async function handleWatchdog(req: NextRequest) {
     const authHeader = req.headers.get('authorization');
     const cronSecret = process.env.CRON_SECRET;
 
-    // Validate cron authorization if secret is configured
-    if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    // Fail-closed constant-time cron authorization
+    if (!cronSecret || !authHeader || !constantTimeEqual(authHeader, `Bearer ${cronSecret}`)) {
       return NextResponse.json(
-        { success: false, error: 'Unauthorized: Invalid cron authentication token' },
+        { success: false, error: 'Unauthorized: Valid cron authorization required.' },
         { status: 401 }
       );
     }

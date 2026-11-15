@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -135,8 +136,8 @@ function InfoIcon() {
 export default function ConstructiveDismissalGuide() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(articleSchema) }} />
       <Nav />
       <main>
         {/* Hero */}

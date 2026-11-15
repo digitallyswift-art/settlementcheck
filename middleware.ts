@@ -25,7 +25,10 @@ function verifyDevOrWorkerToken(token: string): boolean {
   if (cronSecret && constantTimeEqual(token, cronSecret)) {
     return true;
   }
-  return VALID_DEV_PASSKEYS.some(pass => constantTimeEqual(token, pass));
+  if (process.env.NODE_ENV === 'development') {
+    return VALID_DEV_PASSKEYS.some(pass => constantTimeEqual(token, pass));
+  }
+  return false;
 }
 
 function decodeBase64UrlJson(segment: string): any | null {

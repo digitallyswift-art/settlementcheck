@@ -9,6 +9,7 @@ import ReviewCallout from '@/components/ReviewCallout'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   title: 'Negotiate a Settlement With Your Employer | SettlementCheck',
@@ -93,7 +94,7 @@ export default function HowToNegotiateGuide() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }}
       />
       <Nav />
       <main>

@@ -41,7 +41,7 @@ export async function GET(
     }
 
     // Reject unauthorized requests where no matching claim exists
-    if (!claimRecord && !(isDemoMatter && isDemoToken)) {
+    if (!claimRecord && !(process.env.NODE_ENV === 'development' && isDemoMatter && isDemoToken)) {
       return NextResponse.json(
         {
           success: false,

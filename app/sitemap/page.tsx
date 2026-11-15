@@ -53,6 +53,12 @@ const sitemapData: SitemapCategory[] = [
         badge: 'Free Tool',
       },
       {
+        title: 'Sector Redundancy & Restructuring Hub',
+        href: '/redundancy/',
+        description: 'Comprehensive directory comparing NHS Agenda for Change, Civil Service CSCS, City financial services, and statutory redundancy baselines.',
+        badge: 'New Hub',
+      },
+      {
         title: 'Redundancy Pay Calculator',
         href: '/redundancy-calculator/',
         description: 'Calculate statutory redundancy pay and enhanced settlement compensation entitlements for 2026.',
@@ -145,6 +151,18 @@ const sitemapData: SitemapCategory[] = [
         title: 'All Legal Guides',
         href: '/guides/',
         description: 'Browse all in-depth employment law and settlement agreement articles.',
+      },
+      {
+        title: 'ACAS Statutory Timeline & Limitation Calculator',
+        href: '/guides/acas-statutory-timeline/',
+        description: 'Calculate the ACAS Code 4 10-day consideration benchmark and the strict 3-month-less-one-day tribunal limitation date under s.111(2) ERA 1996.',
+        badge: 'Interactive Tool',
+      },
+      {
+        title: 'Home Insurance Legal Expenses Cover & Settlement Agreements',
+        href: '/guides/home-insurance-legal-cover-settlement-agreement/',
+        description: 'Why home insurance legal cover excludes voluntary settlement agreements and how the employer customary contribution covers independent legal advice.',
+        badge: 'New Guide',
       },
       {
         title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',

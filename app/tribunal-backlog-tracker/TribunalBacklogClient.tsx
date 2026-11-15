@@ -508,7 +508,7 @@ export default function TribunalBacklogClient() {
       </section>
 
       {/* Strategic Implications for Settlement Negotiations */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-card p-6 rounded-xl border border-rule space-y-3">
           <div className="w-8 h-8 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-sm">
             01
@@ -539,12 +539,25 @@ export default function TribunalBacklogClient() {
           <div className="w-8 h-8 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-sm">
             03
           </div>
-          <h3 className="text-lg font-serif font-semibold text-ink">Why Settlement Agreements Win</h3>
+          <h3 className="text-lg font-serif font-semibold text-ink">The Economic Value of Settlement</h3>
           <p className="text-xs text-muted leading-relaxed">
-            A negotiated settlement agreement under Section 203(3) ERA 1996 delivers total finality. The employer avoids the public tribunal judgment register (all tribunal decisions are published online permanently) and caps their legal spend immediately.
+            A negotiated Section 203 agreement secures immediate guaranteed capital rather than waiting 12 to 18 months for a speculative tribunal award. Settlement preserves the statutory £30,000 tax-free exemption under Section 403 ITEPA 2003, whereas tribunal compensation for past loss of earnings is fully taxable.
           </p>
           <p className="text-xs text-muted leading-relaxed">
-            For the employee, settlement preserves the statutory £30,000 tax-free exemption (ITEPA 2003 s.403), secures an agreed reference clause, and eliminates 14 to 18 months of stressful, unhedged litigation.
+            Furthermore, settlement eliminates litigation risks, such as statutory compensatory award caps (£123,543 in April 2026) or Polkey percentage reductions, while the employer customarily contributes £350 to £500+ VAT directly to your independent legal fees.
+          </p>
+        </div>
+
+        <div className="bg-card p-6 rounded-xl border border-rule space-y-3">
+          <div className="w-8 h-8 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-sm">
+            04
+          </div>
+          <h3 className="text-lg font-serif font-semibold text-ink">The Psychological Value of Closure</h3>
+          <p className="text-xs text-muted leading-relaxed">
+            Prolonged litigation creates immense emotional strain and career limbo. Waiting 540 days in London Central or 420 days in the Midlands keeps you trapped in past workplace grievances, attending stressful preliminary hearings and enduring intense cross-examination.
+          </p>
+          <p className="text-xs text-muted leading-relaxed">
+            Critically, all tribunal judgments are published permanently on the public GOV.UK register and indexed by search engines under your name. A settlement agreement guarantees absolute confidentiality, an agreed reference, and clean closure, allowing you to move forward immediately.
           </p>
         </div>
       </section>

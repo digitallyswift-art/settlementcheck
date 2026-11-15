@@ -21,17 +21,13 @@ export class AgenticOrchestrator {
   ): Promise<SolicitorPreFlightDossier> {
     const dossierId = context.matterId || `dossier_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
 
-    // 1. Triage & Statutory Floor Worker (ERA 1996 s.162)
-    const statutoryReport = await triageWorker.execute(context, context);
-
-    // 2. Captive Threat Worker (SRA Independence & Fee Parity)
-    const threatReport = await captiveThreatWorker.execute(context, context);
-
-    // 3. Clause Risk & S.203 Forensic Worker
-    const clauseReport = await clauseRiskWorker.execute(context, context);
-
-    // 4. Benchmark & Telemetry Worker
-    const benchmarkReport = await benchmarkWorker.execute(context, context);
+    // Execute Workers 1-4 concurrently via Promise.all (eliminate sequential waterfall)
+    const [statutoryReport, threatReport, clauseReport, benchmarkReport] = await Promise.all([
+      triageWorker.execute(context, context),
+      captiveThreatWorker.execute(context, context),
+      clauseRiskWorker.execute(context, context),
+      benchmarkWorker.execute(context, context),
+    ]);
 
     // 5. CRM Dispatch & Dossier Compiler
     const rawDossier = await crmDispatchWorker.execute(

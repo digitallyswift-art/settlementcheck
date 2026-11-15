@@ -3,6 +3,7 @@ import { runSerpSentinelAnalysis } from '@/lib/agentic-engine/tools/serp-tools';
 import { GoogleSearchConsoleClient } from '@/lib/agentic-engine/services/gsc-client';
 import { AutonomousSeoActionService } from '@/lib/agentic-engine/services/autonomous-seo-actions';
 import { SeoAnomalySentinel } from '@/lib/agentic-engine/services/seo-anomaly-sentinel';
+import { constantTimeEqual } from '@/lib/security/otp-tokens';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -20,10 +21,10 @@ async function handleSentinel(req: NextRequest) {
     const authHeader = req.headers.get('authorization');
     const cronSecret = process.env.CRON_SECRET;
 
-    // Validate cron authorization if secret is configured
-    if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    // Fail-closed constant-time cron authorization
+    if (!cronSecret || !authHeader || !constantTimeEqual(authHeader, `Bearer ${cronSecret}`)) {
       return NextResponse.json(
-        { success: false, error: 'Unauthorized: Invalid cron authentication token' },
+        { success: false, error: 'Unauthorized: Valid cron authorization required.' },
         { status: 401 }
       );
     }

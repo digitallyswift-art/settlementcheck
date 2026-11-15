@@ -1,9 +1,34 @@
 ﻿import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { rateLimitRequest, getRateLimitHeaders } from '@/lib/security/rate-limiter'
 
 export async function POST(req: NextRequest) {
   try {
-    const { email } = await req.json()
+    // ── 1. Sliding-window IP Rate Limiter (10 signups / hr / IP) ────────────
+    const rateCheck = rateLimitRequest(req, {
+      endpoint: 'waitlist',
+      limit: 10,
+      windowMs: 60 * 60 * 1000,
+    })
+
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded. Please wait before joining the waitlist again.' },
+        {
+          status: 429,
+          headers: getRateLimitHeaders(10, rateCheck.remaining, rateCheck.resetMs),
+        }
+      )
+    }
+
+    const body = await req.json()
+
+    // ── 2. Honeypot Bot Trap ────────────────────────────────────────────────
+    if (body.website_hp || body.hp_field || body.company_url_hp) {
+      return NextResponse.json({ success: true, message: 'Joined waitlist' }, { status: 200 })
+    }
+
+    const { email } = body
 
     if (!email) {
       return NextResponse.json({ error: 'Missing email' }, { status: 400 })

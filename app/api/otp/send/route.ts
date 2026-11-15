@@ -1,14 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { randomInt } from 'crypto'
 import { supabase } from '@/lib/supabase'
 import { resend } from '@/lib/resend'
 
 function generateCode(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString()
+  return randomInt(100000, 1000000).toString()
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, form_type } = await req.json()
+    const body = await req.json()
+    const { email, form_type, website_hp } = body
+
+    // ── Honeypot Bot Filtering ──────────────────────────────────────────────
+    // Silently drop automated bot submissions without writing to database or calling Resend
+    if (website_hp) {
+      return NextResponse.json({ success: true })
+    }
 
     if (!email || !form_type) {
       return NextResponse.json({ error: 'Missing email or form_type' }, { status: 400 })
@@ -23,6 +31,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })
     }
 
+    const normalizedEmail = email.trim().toLowerCase()
+
+    // ── Rate Limiting (Max 5 OTP requests per email per 15 minutes) ──────────
+    const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString()
+    const { count, error: countError } = await supabase
+      .from('otp_codes')
+      .select('id', { count: 'exact', head: true })
+      .eq('email', normalizedEmail)
+      .gte('created_at', fifteenMinutesAgo)
+
+    if (!countError && typeof count === 'number' && count >= 5) {
+      return NextResponse.json(
+        { error: 'Too many verification requests. Please wait a few minutes before trying again.' },
+        { status: 429 }
+      )
+    }
+
     const code = generateCode()
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
 
@@ -30,17 +55,29 @@ export async function POST(req: NextRequest) {
     await supabase
       .from('otp_codes')
       .update({ used: true })
-      .eq('email', email)
+      .eq('email', normalizedEmail)
       .eq('form_type', form_type)
       .eq('used', false)
 
-    // Insert new code
-    const { error: insertError } = await supabase.from('otp_codes').insert({
-      email,
+    // Insert new code with attempts initialized to 0
+    let { error: insertError } = await supabase.from('otp_codes').insert({
+      email: normalizedEmail,
       code,
       form_type,
       expires_at: expiresAt.toISOString(),
+      attempts: 0,
     })
+
+    // Graceful fallback if attempts column has not been migrated yet
+    if (insertError && insertError.message?.includes('attempts')) {
+      const fallback = await supabase.from('otp_codes').insert({
+        email: normalizedEmail,
+        code,
+        form_type,
+        expires_at: expiresAt.toISOString(),
+      })
+      insertError = fallback.error
+    }
 
     if (insertError) {
       console.error('OTP insert error:', insertError)
@@ -53,7 +90,7 @@ export async function POST(req: NextRequest) {
         ? 'Your SettlementCheck verification code'
         : 'Your SettlementCheck verification code'
 
-    const body =
+    const bodyHtml =
       form_type === 'solicitor'
         ? `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 40px 24px;">
@@ -90,10 +127,10 @@ export async function POST(req: NextRequest) {
     const { error: emailError } = await resend.emails.send({
       from: 'SettlementCheck <team@settlementcheck.co.uk>',
       replyTo: 'team@settlementcheck.co.uk',
-      to: email,
+      to: normalizedEmail,
       subject,
       text: textBody,
-      html: body,
+      html: bodyHtml,
     })
 
     if (emailError) {

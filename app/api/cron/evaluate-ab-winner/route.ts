@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getExperimentConfig, getExperimentStats, promoteExperimentWinner } from '@/lib/experiments/experiment-service'
 import { resend } from '@/lib/resend'
+import { constantTimeEqual } from '@/lib/security/otp-tokens'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -17,19 +18,16 @@ async function handleEvaluation(req: NextRequest) {
   try {
     const authHeader = req.headers.get('authorization')
     const cronSecret = process.env.CRON_SECRET
-    const adminToken = process.env.EXPERIMENT_ADMIN_TOKEN || 'secure_sc_experiment_admin_token_2026'
-    const tokenParam = req.nextUrl.searchParams.get('token')
 
-    const isCronAuthed = cronSecret && authHeader === `Bearer ${cronSecret}`
-    const isAdminAuthed = authHeader === `Bearer ${adminToken}` || tokenParam === adminToken
-    const isVercelCron = req.headers.get('x-vercel-cron') === '1'
-
-    if (!isCronAuthed && !isAdminAuthed && !isVercelCron && process.env.NODE_ENV === 'production') {
+    // Fail-closed constant-time cron authorization
+    if (!cronSecret || !authHeader || !constantTimeEqual(authHeader, `Bearer ${cronSecret}`)) {
       return NextResponse.json(
-        { success: false, error: 'Unauthorized: Invalid cron authentication token' },
+        { success: false, error: 'Unauthorized: Valid cron authorization required.' },
         { status: 401 }
       )
     }
+
+    const adminToken = process.env.EXPERIMENT_ADMIN_TOKEN || 'secure_sc_experiment_admin_token_2026'
 
     const experimentId = 'calc_ux_v2'
     const baseUrl = 'https://settlementcheck.co.uk'

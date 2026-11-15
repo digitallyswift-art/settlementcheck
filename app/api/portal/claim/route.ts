@@ -6,26 +6,51 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { dossierId, claimToken, solicitorEmail, firmId } = body;
 
-    if (!dossierId) {
+    if (!dossierId || typeof dossierId !== 'string') {
       return NextResponse.json(
         { success: false, error: 'Missing required dossierId' },
         { status: 400 }
       );
     }
 
+    const token = typeof claimToken === 'string' ? claimToken.trim() : '';
+    if (!token) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized: A valid claim token is required.' },
+        { status: 401 }
+      );
+    }
+
+    const isDemoMatter = dossierId.startsWith('dossier_live_') || dossierId.startsWith('demo_');
+    const isDemoToken = token === 'demo_partner_token' || token.startsWith('demo_') || token.startsWith('claim_demo_');
+    const isDevDemo = process.env.NODE_ENV === 'development' && isDemoMatter && isDemoToken;
+
     // 1. Verify claim from database if table exists
     let existingClaim = null;
     try {
-      let query = supabase.from('lead_claims').select('*').eq('dossier_id', dossierId);
-      if (claimToken) {
-        query = query.eq('claim_token', claimToken);
-      }
-      const { data, error } = await query.limit(1).maybeSingle();
+      const { data, error } = await supabase
+        .from('lead_claims')
+        .select('*')
+        .eq('dossier_id', dossierId)
+        .eq('claim_token', token)
+        .limit(1)
+        .maybeSingle();
       if (!error && data) {
         existingClaim = data;
       }
     } catch (dbErr) {
       console.warn('Database lead_claims query non-fatal fallback:', dbErr);
+    }
+
+    // Reject unauthorized requests where no matching claim exists and not in dev demo mode
+    if (!existingClaim && !isDevDemo) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Forbidden: Invalid or expired claim token. This matter cannot be claimed.',
+        },
+        { status: 403 }
+      );
     }
 
     const now = new Date();

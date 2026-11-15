@@ -6,6 +6,7 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import InteractiveToolHook from '@/components/InteractiveToolHook'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -133,9 +134,9 @@ function CheckIcon() {
 export default function SettlementAgreementReferenceGuide() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(breadcrumbSchema) }} />
       <Nav />
       <main>
         {/* HERO SECTION */}

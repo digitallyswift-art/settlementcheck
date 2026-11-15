@@ -7,6 +7,7 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   title: 'Pressured to Sign? The 10-Day ACAS Rule | SettlementCheck',
@@ -88,7 +89,7 @@ export default function PressuredToSignGuide() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }}
       />
       <Nav />
       <main>

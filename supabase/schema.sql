@@ -12,6 +12,7 @@ create table if not exists otp_codes (
   code         text not null,
   form_type    text not null check (form_type in ('solicitor', 'employee')),
   expires_at   timestamptz not null,
+  attempts     integer not null default 0,
   used         boolean not null default false,
   created_at   timestamptz not null default now()
 );

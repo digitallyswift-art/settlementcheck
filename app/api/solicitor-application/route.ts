@@ -1,9 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { resend } from '@/lib/resend'
+import { rateLimitRequest, getRateLimitHeaders } from '@/lib/security/rate-limiter'
 
 export async function POST(req: NextRequest) {
   try {
+    // ── 1. Sliding-window IP Rate Limiter (10 applications / hr / IP) ───────
+    const rateCheck = rateLimitRequest(req, {
+      endpoint: 'solicitor-application',
+      limit: 10,
+      windowMs: 60 * 60 * 1000,
+    })
+
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded. Please wait before submitting another application.' },
+        {
+          status: 429,
+          headers: getRateLimitHeaders(10, rateCheck.remaining, rateCheck.resetMs),
+        }
+      )
+    }
+
+    const body = await req.json()
+
+    // ── 2. Honeypot Bot Trap ────────────────────────────────────────────────
+    if (body.website_hp || body.hp_field || body.company_url_hp) {
+      return NextResponse.json({ success: true, message: 'Application submitted' }, { status: 200 })
+    }
+
     const {
       firm_name,
       contact_name,
@@ -15,7 +40,7 @@ export async function POST(req: NextRequest) {
       office_region,
       coverage_radius_miles,
       sra_confirmed,
-    } = await req.json()
+    } = body
 
     if (!firm_name || !contact_name || !email || !sra_confirmed) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -40,7 +65,7 @@ export async function POST(req: NextRequest) {
     if (insertError) {
       console.error('Application insert error:', JSON.stringify(insertError))
       return NextResponse.json(
-        { error: 'Failed to save application', detail: insertError.message },
+        { error: 'Failed to save application. Please try again or contact team@settlementcheck.co.uk.' },
         { status: 500 }
       )
     }

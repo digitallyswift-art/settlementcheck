@@ -206,6 +206,7 @@ export default function EmployeeLeadTypeform({
   const [postcodeValid, setPostcodeValid] = useState(false)
   const [fieldError, setFieldError]       = useState('')
   const [otpDigits, setOtpDigits]         = useState(['', '', '', '', '', ''])
+  const [verificationToken, setVerificationToken] = useState('')
   const [otpError, setOtpError]           = useState('')
   const [otpSending, setOtpSending]       = useState(false)
   const [otpVerifying, setOtpVerifying]   = useState(false)
@@ -294,6 +295,9 @@ export default function EmployeeLeadTypeform({
       })
       const data = await res.json()
       if (data.success) {
+        if (data.verificationToken) {
+          setVerificationToken(data.verificationToken)
+        }
         advance()
       } else {
         setOtpError(data.message || 'Incorrect code. Please try again.')
@@ -381,6 +385,7 @@ export default function EmployeeLeadTypeform({
           verdict, offer_amount: offer, salary, months_service: totalMonths,
           consent:         true,
           gdpr_consent:    true,
+          verification_token: verificationToken || undefined,
           postcode:        form.postcode,
           postcode_region: form.postcode_region,
           postcode_lat:    form.postcode_lat,

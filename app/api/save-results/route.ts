@@ -1,9 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { resend } from '@/lib/resend'
+import { rateLimitRequest, getRateLimitHeaders } from '@/lib/security/rate-limiter'
 
 export async function POST(req: NextRequest) {
   try {
+    // ── 1. Sliding-window IP Rate Limiter (15 saves / hr / IP) ──────────────
+    const rateCheck = rateLimitRequest(req, {
+      endpoint: 'save-results',
+      limit: 15,
+      windowMs: 60 * 60 * 1000,
+    })
+
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded. Please wait before saving results again.' },
+        {
+          status: 429,
+          headers: getRateLimitHeaders(15, rateCheck.remaining, rateCheck.resetMs),
+        }
+      )
+    }
+
+    const body = await req.json()
+
+    // ── 2. Honeypot Bot Trap ────────────────────────────────────────────────
+    if (body.website_hp || body.hp_field || body.company_url_hp) {
+      return NextResponse.json({ success: true, message: 'Results emailed' }, { status: 200 })
+    }
+
     const {
       email,
       salary,
@@ -21,7 +46,7 @@ export async function POST(req: NextRequest) {
       typicalHighUncapped,
       estimatedNet,
       jurisdiction,
-    } = await req.json()
+    } = body
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })

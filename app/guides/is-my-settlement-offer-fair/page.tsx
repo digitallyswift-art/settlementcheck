@@ -7,6 +7,7 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import InlineEstimator from '@/components/InlineEstimator'
 import InteractiveToolHook from '@/components/InteractiveToolHook'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   title: "Is My Employer's Settlement Offer Fair? | SettlementCheck",
@@ -121,8 +122,8 @@ function WarningIcon() {
 export default function IsMyOfferFairGuide() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(articleSchema) }} />
       <Nav />
       <main>
         {/* Hero */}

@@ -8,6 +8,7 @@ import InlineEstimator from '@/components/InlineEstimator'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   title: 'How Much Settlement From Your Employer? | SettlementCheck',
@@ -140,9 +141,9 @@ function CheckIcon() {
 export default function HowMuchGuidePage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(breadcrumbSchema) }} />
       <Nav />
       <main>
         {/* Hero Section */}

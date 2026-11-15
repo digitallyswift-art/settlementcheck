@@ -11,6 +11,10 @@
     {
       "path": "/api/cron/evaluate-ab-winner/",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/sla-watchdog",
+      "schedule": "*/15 * * * *"
     }
   ]
 }

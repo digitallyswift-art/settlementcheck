@@ -54,12 +54,18 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
   // 2. Countdown timer for 15-minute SLA watchdog
   useEffect(() => {
-    if (isClaimed || secondsRemaining <= 0) return;
+    if (isClaimed) return;
     const interval = setInterval(() => {
-      setSecondsRemaining(prev => Math.max(0, prev - 1));
+      setSecondsRemaining(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
     return () => clearInterval(interval);
-  }, [isClaimed, secondsRemaining]);
+  }, [isClaimed]);
 
   // 3. Handle Matter Claim
   const handleClaim = async () => {

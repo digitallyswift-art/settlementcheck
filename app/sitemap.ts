@@ -38,6 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/settlement-agreement-review/`,                    lastModified: getLastMod(`${base}/settlement-agreement-review/`), changeFrequency: 'weekly',  priority: 1.0 },
 
     // Tier 2: Programmatic SEO landing pages
+    { url: `${base}/redundancy/`,                                     lastModified: getLastMod(`${base}/redundancy/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/redundancy-calculator/`,                          lastModified: getLastMod(`${base}/redundancy-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/unfair-dismissal-calculator/`,                    lastModified: getLastMod(`${base}/unfair-dismissal-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/constructive-dismissal-calculator/`,              lastModified: getLastMod(`${base}/constructive-dismissal-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
@@ -53,6 +54,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Tier 4: Guides (hub + spokes)
     { url: `${base}/guides/`,                                         lastModified: getLastMod(`${base}/guides/`), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/acas-statutory-timeline/`,                 lastModified: getLastMod(`${base}/guides/acas-statutory-timeline/`), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/home-insurance-legal-cover-settlement-agreement/`, lastModified: getLastMod(`${base}/guides/home-insurance-legal-cover-settlement-agreement/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-after-grievance/`,    lastModified: getLastMod(`${base}/guides/settlement-agreement-after-grievance/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-time-limits/`,        lastModified: getLastMod(`${base}/guides/settlement-agreement-time-limits/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/how-long-does-a-settlement-agreement-take/`, lastModified: getLastMod(`${base}/guides/how-long-does-a-settlement-agreement-take/`), changeFrequency: 'monthly', priority: 0.7 },
@@ -64,7 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/guides/settlement-agreement-sick-leave/`,          lastModified: getLastMod(`${base}/guides/settlement-agreement-sick-leave/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/settlement-agreement-instead-of-pip/`,     lastModified: getLastMod(`${base}/guides/settlement-agreement-instead-of-pip/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/unfair-dismissal-settlement-agreements/`,   lastModified: getLastMod(`${base}/guides/unfair-dismissal-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },
-        { url: `${base}/guides/whistleblowing-settlement-agreements/`,    lastModified: getLastMod(`${base}/guides/whistleblowing-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/guides/whistleblowing-settlement-agreements/`,    lastModified: getLastMod(`${base}/guides/whistleblowing-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/maternity-redundancy-settlement-agreement/`, lastModified: getLastMod(`${base}/guides/maternity-redundancy-settlement-agreement/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/discrimination-settlement-agreements/`,    lastModified: getLastMod(`${base}/guides/discrimination-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/guides/constructive-dismissal-settlement-agreements/`, lastModified: getLastMod(`${base}/guides/constructive-dismissal-settlement-agreements/`), changeFrequency: 'monthly', priority: 0.7 },

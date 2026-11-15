@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import DataExportBox from '@/components/DataExportBox'
 import PressCitationBox from '@/components/PressCitationBox'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   title: 'Annual UK Employment Settlement Index 2026 | Industry Severance Benchmarks',
@@ -253,15 +254,15 @@ export default function UkSettlementIndex2026Page() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(reportSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(reportSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(datasetSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(breadcrumbSchema) }}
       />
 
       <Nav />

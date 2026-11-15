@@ -10,6 +10,7 @@ import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import DynamicFaqJsonLd from '@/components/seo/DynamicFaqJsonLd'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -184,7 +185,7 @@ export default function CalculatorsHubPage() {
       <Script
         id="schema-calculators-hub"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(JSON_LD) }}
       />
       <DynamicFaqJsonLd pathname="/calculators/" />
 

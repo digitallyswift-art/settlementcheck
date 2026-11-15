@@ -348,6 +348,112 @@ for (const f of prodFiles) {
 }
 assert(!foundUsSpelling, `Zero US English spellings across production components [found: ${usSpellingLocation}]`);
 
+// 7. Cryptographic OTP & Lockout Security Invariants (Phase 3)
+console.log('\n--- 7. Cryptographic OTP & Lockout Security Invariants (Phase 3) ---');
+
+const { generateOtpSessionToken, verifyOtpSessionToken, timingSafeEqualStrings } = await import('../../lib/security/otp-tokens.ts');
+
+// Test 7A: Session token generation & structure
+const testOtpEmail = 'user@example.co.uk';
+const testFormType = 'employee';
+const token = generateOtpSessionToken(testOtpEmail, testFormType);
+const tokenParts = token.split('.');
+assert(tokenParts.length === 2 && tokenParts[0].length > 0 && tokenParts[1].length > 0, 'OTP session token generates 2-part signed HMAC-SHA256 structure');
+
+// Test 7B: Successful verification
+const isValidToken = verifyOtpSessionToken(token, testOtpEmail, testFormType);
+assert(isValidToken, 'OTP session token successfully verifies authentic email and form_type');
+
+// Test 7C: Rejection of mismatched email
+const isWrongEmailRejected = !verifyOtpSessionToken(token, 'attacker@example.co.uk', testFormType);
+assert(isWrongEmailRejected, 'OTP session token strictly rejects mismatched email address');
+
+// Test 7D: Rejection of mismatched form_type
+const isWrongFormRejected = !verifyOtpSessionToken(token, testOtpEmail, 'solicitor');
+assert(isWrongFormRejected, 'OTP session token strictly rejects mismatched form_type');
+
+// Test 7E: Rejection of tampered signature
+const tamperedToken = `${tokenParts[0]}.invalidsignature123`;
+const isTamperedRejected = !verifyOtpSessionToken(tamperedToken, testOtpEmail, testFormType);
+assert(isTamperedRejected, 'OTP session token strictly rejects tampered cryptographic signature');
+
+// Test 7F: Constant-time comparison helper
+const eqMatch = timingSafeEqualStrings('secret-otp-code-123456', 'secret-otp-code-123456');
+const eqMismatch = !timingSafeEqualStrings('secret-otp-code-123456', 'secret-otp-code-654321');
+const eqDiffLength = !timingSafeEqualStrings('short', 'much-longer-string');
+assert(eqMatch && eqMismatch && eqDiffLength, 'Timing-safe string comparison verifies equality without length leakage');
+
+// Test 7G: Codebase static check: crypto.randomInt in app/api/otp/send/route.ts (SC-E-SEC-001)
+const sendRouteContent = fs.readFileSync(path.resolve('app/api/otp/send/route.ts'), 'utf8');
+const usesRandomInt = sendRouteContent.includes('randomInt(100000, 1000000)');
+const noMathRandom = !sendRouteContent.includes('Math.random()');
+assert(usesRandomInt && noMathRandom, 'app/api/otp/send/route.ts uses crypto.randomInt and eliminates Math.random (SC-E-SEC-001)');
+
+// Test 7H: Codebase static check: Honeypot bot detection in app/api/otp/send/route.ts
+const hasHoneypot = sendRouteContent.includes('website_hp');
+assert(hasHoneypot, 'app/api/otp/send/route.ts enforces website_hp honeypot bot filtering');
+
+// Test 7I: Codebase static check: 5-attempt brute-force lockout in app/api/otp/verify/route.ts (SC-E-SEC-003)
+const verifyRouteContent = fs.readFileSync(path.resolve('app/api/otp/verify/route.ts'), 'utf8');
+const hasAttemptTracking = verifyRouteContent.includes('attempts') && verifyRouteContent.includes('5');
+const hasTimingSafeEqual = verifyRouteContent.includes('timingSafeEqual');
+assert(hasAttemptTracking && hasTimingSafeEqual, 'app/api/otp/verify/route.ts enforces 5-attempt brute-force lockout & constant-time check (SC-E-SEC-003)');
+
+// Test 7J: Codebase static check: Verification token returned on success (SC-E-SEC-005)
+const returnsVerificationToken = verifyRouteContent.includes('verificationToken');
+assert(returnsVerificationToken, 'app/api/otp/verify/route.ts issues signed session verificationToken upon success (SC-E-SEC-005)');
+
+// 8. Unified Anti-Spam Pipeline, AI Gateway & Route Consolidation Invariants (Phase 5)
+console.log('\n--- 8. Anti-Spam, Rate Limiting & AI Gateway Invariants (Phase 5) ---');
+
+const { checkRateLimit, _resetRateLimiterStore } = await import('../../lib/security/rate-limiter.ts');
+
+// Test 8A: Sliding-window rate limiter algorithm
+_resetRateLimiterStore();
+const r1 = checkRateLimit('test-ip-1', 3, 1000);
+const r2 = checkRateLimit('test-ip-1', 3, 1000);
+const r3 = checkRateLimit('test-ip-1', 3, 1000);
+const r4 = checkRateLimit('test-ip-1', 3, 1000);
+assert(r1.allowed && r2.allowed && r3.allowed && !r4.allowed && r4.remaining === 0, 'Sliding-window rate limiter allows up to limit and blocks overflows');
+
+// Test 8B: Lead Ingestion Service exports
+const leadServiceContent = fs.readFileSync(path.resolve('lib/leads/lead-ingestion-service.ts'), 'utf8');
+const hasIngestExport = leadServiceContent.includes('export async function ingestLead');
+const hasPartnerVerifyExport = leadServiceContent.includes('export async function verifyPartnerId');
+assert(hasIngestExport && hasPartnerVerifyExport, 'lib/leads/lead-ingestion-service.ts exports ingestLead and verifyPartnerId');
+
+// Test 8C: app/api/lead/route.ts wires rate limiting, honeypot, and signed OTP verification
+const leadRouteContent = fs.readFileSync(path.resolve('app/api/lead/route.ts'), 'utf8');
+const leadHasRateLimit = leadRouteContent.includes('rateLimitRequest') && leadRouteContent.includes('lead-submit');
+const leadHasHoneypot = leadRouteContent.includes('website_hp');
+const leadHasSignedOtp = leadRouteContent.includes('verifyOtpSessionToken');
+assert(leadHasRateLimit && leadHasHoneypot && leadHasSignedOtp, 'app/api/lead/route.ts enforces signed OTP tokens, honeypot protection, and IP rate limiting');
+
+// Test 8D: app/api/leads/route.ts consolidation & partner validation
+const leadsRouteContent = fs.readFileSync(path.resolve('app/api/leads/route.ts'), 'utf8');
+const leadsHasIngest = leadsRouteContent.includes('ingestLead');
+const leadsHasPartnerVerify = leadsRouteContent.includes('verifyPartnerId');
+const leadsHasRateLimit = leadsRouteContent.includes('rateLimitRequest');
+assert(leadsHasIngest && leadsHasPartnerVerify && leadsHasRateLimit, 'app/api/leads/route.ts consolidates via ingestLead with partner validation and rate limiting');
+
+// Test 8E: app/api/review-agreement/route.ts 25k cap, 15s timeout, and rate limiting
+const reviewRouteContent = fs.readFileSync(path.resolve('app/api/review-agreement/route.ts'), 'utf8');
+const reviewHasCharCap = reviewRouteContent.includes('25000') && reviewRouteContent.includes('MAX_AGREEMENT_CHARS');
+const reviewHasTimeout = reviewRouteContent.includes('15000') || reviewRouteContent.includes('REVIEW_TIMEOUT_MS');
+const reviewHasRateLimit = reviewRouteContent.includes('rateLimitRequest') && reviewRouteContent.includes('review-agreement');
+assert(reviewHasCharCap && reviewHasTimeout && reviewHasRateLimit, 'app/api/review-agreement/route.ts enforces 25,000 char cap, 15s execution timeout, and rate limiting');
+
+// Test 8F: Mutation routes hardened with honeypot and rate limiting
+const saveRouteContent = fs.readFileSync(path.resolve('app/api/save-results/route.ts'), 'utf8');
+const solRouteContent = fs.readFileSync(path.resolve('app/api/solicitor-application/route.ts'), 'utf8');
+const waitlistRouteContent = fs.readFileSync(path.resolve('app/api/waitlist/route.ts'), 'utf8');
+
+const saveHardened = saveRouteContent.includes('rateLimitRequest') && saveRouteContent.includes('website_hp');
+const solHardened = solRouteContent.includes('rateLimitRequest') && solRouteContent.includes('website_hp');
+const waitlistHardened = waitlistRouteContent.includes('rateLimitRequest') && waitlistRouteContent.includes('website_hp');
+
+assert(saveHardened && solHardened && waitlistHardened, 'All mutation routes (save-results, solicitor-application, waitlist) enforce honeypot and rate limiting');
+
 // Summary Report
 console.log('\n====================================================');
 console.log(` Eval Results: ${passedTests}/${totalTests} Passed (${Math.round((passedTests / totalTests) * 100)}%)`);
@@ -357,5 +463,5 @@ if (failedTests > 0) {
 } else {
   console.log(' ✅ All statutory invariants and legal guardrails PASSED!');
   console.log('====================================================\n');
-  process.exit(0);
+  process.exitCode = 0;
 }

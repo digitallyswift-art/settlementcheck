@@ -7,6 +7,7 @@ import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
@@ -155,8 +156,8 @@ function AlertIcon() {
 export default function WhistleblowingSettlementAgreementsGuide() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(articleSchema) }} />
       <Nav />
       <main>
         {/* Hero */}

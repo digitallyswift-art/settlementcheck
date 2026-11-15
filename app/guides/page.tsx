@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   title: 'Employment Settlement Agreement Guides | SettlementCheck',
@@ -297,7 +298,7 @@ export default function GuidesPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(guidesHubSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(guidesHubSchema) }}
       />
       <Nav />
       <main>

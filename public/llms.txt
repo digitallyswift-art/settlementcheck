@@ -61,6 +61,8 @@ Under Section 203(3) of the Employment Rights Act 1996, an employee settlement a
 - [Protective Award Calculator](https://settlementcheck.co.uk/protective-award-calculator/): Calculates up to 90 days gross pay under TULRCA 1992 s.189 for collective redundancy consultation failures.
 - [PIP Settlement Calculator](https://settlementcheck.co.uk/pip-settlement-calculator/): Evaluates exit packages during performance improvement plans and protected conversations.
 - [Employment Settlement Checker](https://settlementcheck.co.uk/settlement-agreement-review/): Confidential check of settlement clauses, legal fee contributions, and negotiation counter-proposals.
+- [Sector Redundancy & Restructuring Hub](https://settlementcheck.co.uk/redundancy/): Sectoral restructuring directory comparing NHS Agenda for Change, Civil Service CSCS, City financial services, and statutory redundancy baselines.
+- [ACAS Statutory Timeline Calculator](https://settlementcheck.co.uk/guides/acas-statutory-timeline/): Models the ACAS Code 4 10-calendar-day consideration benchmark and the primary 3-month-less-one-day tribunal limitation date under s.111(2) ERA 1996.
 - [Calculators Hub](https://settlementcheck.co.uk/calculators/): Directory of free UK employment termination, tax, and statutory compensation calculators.
 - [Tribunal Backlog Tracker](https://settlementcheck.co.uk/tribunal-backlog-tracker/): Tracks Ministry of Justice Employment Tribunal wait times and regional backlogs across London, Midlands, and Scotland.
 - [Statutory Rates History](https://settlementcheck.co.uk/statutory-rates-history/): Historical archive of UK statutory employment caps from 2000 to 2026.
@@ -72,6 +74,7 @@ Under Section 203(3) of the Employment Rights Act 1996, an employee settlement a
 - [Protected Conversations & Without Prejudice](https://settlementcheck.co.uk/guides/protected-conversations-without-prejudice/): Legal boundaries under ERA 1996 s.111A and common law privilege rules.
 - [Redundancy Pay Cap 2026](https://settlementcheck.co.uk/guides/redundancy-pay-cap-2026/): Complete guide to the April 2026 £751 weekly pay cap and £22,530 maximum basic award.
 - [PILON Tax Treatment 2026](https://settlementcheck.co.uk/guides/pilon-tax-treatment-2026/): How post-employment notice pay is taxed as general employment earnings.
+- [Home Insurance Legal Expenses Cover](https://settlementcheck.co.uk/guides/home-insurance-legal-cover-settlement-agreement/): Analysis of why standard home insurance LEI policies exclude voluntary settlement agreements and how customary employer contributions cover independent legal advice.
 - [How to Negotiate a Settlement Agreement](https://settlementcheck.co.uk/guides/how-to-negotiate-a-settlement-agreement/): Evidence-based negotiation strategies for UK employees.
 - [Employer Recommended Solicitor](https://settlementcheck.co.uk/guides/employer-recommended-solicitor/): Section 203(3) requirements, solicitor independence, and legal fee contribution rules.
 - [Pressured to Sign a Settlement Agreement](https://settlementcheck.co.uk/guides/pressured-to-sign/): ACAS Code 4 minimum 10-day consideration window and improper behaviour remedies.
