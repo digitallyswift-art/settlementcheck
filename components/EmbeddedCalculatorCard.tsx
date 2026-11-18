@@ -191,17 +191,17 @@ export default function EmbeddedCalculatorCard({
               <span className="text-[15px] sm:text-[17px] font-bold text-ink">
                 {formatCurrency(srp)}
               </span>
-              <span className="block text-[10px] text-muted">ERA 1996 s.162 (capped)</span>
+              <span className="block text-[10px] text-muted">ERA 1996 s.162 (subject to eligibility)</span>
             </div>
 
             <div>
               <span className="block text-[11px] text-muted font-medium">
-                Commercial Benchmark Range
+                Illustrative Commercial Range
               </span>
               <span className="text-[15px] sm:text-[17px] font-bold text-coral">
-                {formatCurrency(typicalLow)} – {formatCurrency(typicalHigh)}
+                {formatCurrency(typicalLow)} to {formatCurrency(typicalHigh)}
               </span>
-              <span className="block text-[10px] text-muted">Statutory + 1–3 mo commercial range</span>
+              <span className="block text-[10px] text-muted">Statutory + 1 to 3 months illustrative range</span>
             </div>
 
             <div className="col-span-2 sm:col-span-1">
@@ -218,8 +218,8 @@ export default function EmbeddedCalculatorCard({
 
         {/* CTA and Legal Fee Reminder */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
-          <p className="text-[12px] text-muted m-0 leading-normal max-w-[42ch]">
-            Under Section 203(3) ERA 1996, independent legal advice is required for a binding waiver. Employers standardly provide a capped fee contribution (£350–£500+ VAT) directly to your solicitor upon completion.
+          <p className="text-[12px] text-muted m-0 leading-normal max-w-[52ch]">
+            Statutory baselines are subject to qualifying service, absence of gross misconduct, and ERA 1996 s.141 rules. Under Section 203(3) ERA 1996, independent advice is required for a binding waiver. Employers standardly offer a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. Fees above the cap or abortive work remain subject to your solicitor&apos;s terms.
           </p>
 
           <Link

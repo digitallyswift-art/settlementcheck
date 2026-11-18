@@ -10,14 +10,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'UK Employment Tribunal Backlog Tracker | SettlementCheck',
   description:
-    'Track UK Employment Tribunal backlogs and regional hearing delays using MoJ data on 50,000+ open claims, employer defence costs, and settlement timing.',
+    'Track UK Employment Tribunal backlogs and regional hearing wait times across 10 Great Britain centres (46,510 open single claims), plus illustrative employer defence cost estimates.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/tribunal-backlog-tracker/',
   },
   openGraph: {
     title: 'UK Employment Tribunal Backlog Tracker | SettlementCheck',
     description:
-      'Interactive tracker of 50,000+ open UK Employment Tribunal single claims. See regional listing wait times (up to 540 days in London) and employer legal cost exposure.',
+      'Interactive tracker of 46,510 open UK Employment Tribunal single claims across 10 Great Britain hearing centres. View regional wait times and illustrative employer defence costs.',
     url: 'https://settlementcheck.co.uk/tribunal-backlog-tracker/',
     type: 'article',
     locale: 'en_GB',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'UK Employment Tribunal Backlog Tracker & Regional Wait Times (2026)',
     description:
-      'Official MoJ tribunal wait times: London 540 days, Watford 490 days, Midlands 420 days. Discover why delays increase employer settlement incentives.',
+      'MoJ and HMCTS regional tribunal wait times: London Central 540 days, Watford 490 days, Midlands West 420 days. See what regional delays mean for settlement timelines.',
   },
 }
 
@@ -42,7 +42,7 @@ export default function TribunalBacklogTrackerPage() {
         name: 'UK Employment Tribunal Backlog Tracker & Regional Wait Times',
         publisher: SETTLEMENT_CHECK_PUBLISHER,
         description:
-          'Interactive intelligence tracker analyzing Ministry of Justice Employment Tribunal backlogs, regional wait times to preliminary and merits hearings, and employer legal cost exposure.',
+          'Interactive tracker analysing Ministry of Justice and HMCTS Employment Tribunal backlogs, regional wait times to preliminary and final hearings, and illustrative employer legal cost estimates.',
         breadcrumb: {
           '@id': 'https://settlementcheck.co.uk/tribunal-backlog-tracker/#breadcrumb',
         },
@@ -75,9 +75,9 @@ export default function TribunalBacklogTrackerPage() {
       {
         '@type': 'Dataset',
         '@id': 'https://settlementcheck.co.uk/tribunal-backlog-tracker/#dataset',
-        name: 'UK Employment Tribunal Regional Hearing Delays and Case Backlog Statistics',
+        name: 'UK Employment Tribunal Regional Wait Times & Illustrative Defence Cost Dataset',
         description:
-          'Quarterly dataset monitoring open single claims, listing wait times to preliminary and merits hearings across Great Britain hearing centres (London Central, London South, Watford, Midlands West, Manchester, Leeds, Bristol, Newcastle, Wales, and Scotland), including estimated employer defence cost exposures.',
+          'Quarterly dataset combining Ministry of Justice and HMCTS open single claim counts and regional listing wait times across 10 Great Britain hearing centres with SettlementCheck illustrative employer defence cost estimates.',
         url: 'https://settlementcheck.co.uk/tribunal-backlog-tracker/',
         license: 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/',
         creator: {
@@ -91,11 +91,11 @@ export default function TribunalBacklogTrackerPage() {
           name: 'Great Britain (England, Wales, Scotland)',
         },
         variableMeasured: [
-          'Active Open Single Employment Tribunal Claims',
-          'Average Days to Preliminary Hearing by Tribunal Hearing Centre',
-          'Average Days to Final Merits Hearing by Tribunal Hearing Centre',
-          'Estimated Employer Legal Defence Costs to Final Merits Hearing',
-          'Settlement Negotiation Strategic Pressure Rating',
+          'Active Open Single Employment Tribunal Claims (MoJ / HMCTS)',
+          'Average Days to Preliminary Hearing by Tribunal Hearing Centre (MoJ / HMCTS)',
+          'Average Days to Final Merits Hearing by Tribunal Hearing Centre (MoJ / HMCTS)',
+          'Illustrative Employer Legal Defence Cost Estimates (SettlementCheck)',
+          'Regional Hearing Centre Pressure Rating (SettlementCheck)',
         ],
       },
     ],
