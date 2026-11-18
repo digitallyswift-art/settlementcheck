@@ -24,6 +24,7 @@ const STATIC_METADATA: Metadata = {
       'Calculate Post-Employment Notice Pay under ITEPA 2003 s.402D. Partition taxable notice pay from £30,000 tax-free termination compensation.',
     url: 'https://settlementcheck.co.uk/penp-calculator/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 

@@ -13,14 +13,14 @@ const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Maternity Redundancy Settlement UK | SettlementCheck',
   description:
-    'UK maternity redundancy settlement guide 2026. 18-month protection window, Regulation 10 priority, ring-fenced SMP, uncapped discrimination awards, and tax rules.',
+    'UK maternity redundancy settlement guide (2026): 18-month protection, Reg 10 priority, ring-fenced SMP, uncapped discrimination awards, and tax rules.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/maternity-redundancy-settlement-agreement/',
   },
   openGraph: {
     title: 'Maternity Redundancy Settlement UK | SettlementCheck',
     description:
-      'UK maternity redundancy settlement guide 2026. 18-month protection window, Regulation 10 priority, ring-fenced SMP, uncapped discrimination awards, and tax rules.',
+      'UK maternity redundancy settlement guide (2026): 18-month protection, Reg 10 priority, ring-fenced SMP, uncapped discrimination awards, and tax rules.',
     url: 'https://settlementcheck.co.uk/guides/maternity-redundancy-settlement-agreement/',
     type: 'article',
     locale: 'en_GB',
@@ -30,7 +30,7 @@ const STATIC_METADATA: Metadata = {
     card: 'summary_large_image',
     title: 'Maternity Redundancy Settlement UK | SettlementCheck',
     description:
-      'UK maternity redundancy settlement guide 2026. 18-month protection window, Regulation 10 priority, ring-fenced SMP, uncapped discrimination awards, and tax rules.',
+      'UK maternity redundancy settlement guide (2026): 18-month protection, Reg 10 priority, ring-fenced SMP, uncapped discrimination awards, and tax rules.',
   },
 }
 

@@ -10,14 +10,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 export const metadata: Metadata = {
   title: 'UK Employment Settlement Index 2026 | SettlementCheck',
   description:
-    'Authoritative 2026 UK settlement agreement benchmark report. Analysing sector severance multiples (1.2x to 3.5x statutory minimum), £751 weekly cap, and PENP tax compliance.',
+    '2026 UK settlement agreement benchmark report analysing sector severance multiples, the April 2026 £751 weekly cap, and HMRC PENP tax compliance.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/reports/uk-settlement-index-2026/',
   },
   openGraph: {
     title: 'Annual UK Employment Settlement Index 2026 | SettlementCheck',
     description:
-      'Authoritative 2026 UK settlement agreement benchmark report. Analysing sector severance multiples (1.2x to 3.5x statutory minimum), £751 weekly cap, and PENP tax compliance.',
+      '2026 UK settlement agreement benchmark report analysing sector severance multiples, the April 2026 £751 weekly cap, and HMRC PENP tax compliance.',
     url: 'https://settlementcheck.co.uk/reports/uk-settlement-index-2026/',
     type: 'article',
     locale: 'en_GB',

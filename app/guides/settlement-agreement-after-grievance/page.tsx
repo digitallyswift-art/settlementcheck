@@ -11,14 +11,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Settlement Agreement After a Grievance (2026 Rules)',
   description:
-    'Offered a settlement agreement after raising a grievance? Understand Section 111A vs Without Prejudice, s.27 victimisation rules, 2026 payout calculations, and legal fee rules.',
+    'Offered a settlement agreement after a grievance? Learn s.111A vs Without Prejudice rules, s.27 victimisation rights, and 2026 payout calculations.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-after-grievance/',
   },
   openGraph: {
     title: 'Settlement Agreement After a Grievance (2026 Rules)',
     description:
-      'Offered a settlement agreement after raising a grievance? Understand Section 111A vs Without Prejudice, s.27 victimisation rules, 2026 payout calculations, and legal fee rules.',
+      'Offered a settlement agreement after a grievance? Learn s.111A vs Without Prejudice rules, s.27 victimisation rights, and 2026 payout calculations.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-after-grievance/',
     type: 'article',
     locale: 'en_GB',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Settlement Agreement After a Grievance (2026 Rules)',
     description:
-      'Offered a settlement agreement after raising a grievance? Understand Section 111A vs Without Prejudice, s.27 victimisation rules, 2026 payout calculations, and legal fee rules.',
+      'Offered a settlement agreement after a grievance? Learn s.111A vs Without Prejudice rules, s.27 victimisation rights, and 2026 payout calculations.',
   },
 }
 

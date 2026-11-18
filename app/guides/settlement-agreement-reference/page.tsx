@@ -12,14 +12,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',
   description:
-    'Offered a settlement agreement? Learn your agreed reference rights, standard clause wording, bad reference remedies, and how solicitors protect your career.',
+    'Learn your agreed reference rights in a UK settlement agreement, standard clause wording, bad reference remedies, and how solicitors protect your role.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-reference/',
   },
   openGraph: {
     title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',
     description:
-      'Offered a settlement agreement? Learn your agreed reference rights, standard clause wording, bad reference remedies, and how solicitors protect your career.',
+      'Learn your agreed reference rights in a UK settlement agreement, standard clause wording, bad reference remedies, and how solicitors protect your role.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-reference/',
     type: 'article',
     locale: 'en_GB',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',
     description:
-      'Offered a settlement agreement? Learn your agreed reference rights, standard clause wording, bad reference remedies, and how solicitors protect your career.',
+      'Learn your agreed reference rights in a UK settlement agreement, standard clause wording, bad reference remedies, and how solicitors protect your role.',
   },
 }
 

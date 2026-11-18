@@ -12,14 +12,15 @@ import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 const STATIC_METADATA: Metadata = {
   title: 'Settlement Agreement Checker UK (2026) | SettlementCheck',
   description:
-    'Check your UK settlement agreement clauses and offer value. Confidential audit of statutory caps (£751/wk), tax exemptions, and employer legal fee contributions.',
+    'Check your UK settlement agreement clauses and offer value. Review April 2026 statutory caps (£751/wk), £30,000 tax rules, and employer legal fee cover.',
   alternates: { canonical: 'https://settlementcheck.co.uk/settlement-agreement-review/' },
   openGraph: {
     title: 'Settlement Agreement Checker UK (2026) | SettlementCheck',
     description:
-      'Check your UK settlement agreement clauses and offer value. Confidential audit of statutory caps (£751/wk), tax exemptions, and employer legal fee contributions.',
+      'Check your UK settlement agreement clauses and offer value. Review April 2026 statutory caps (£751/wk), £30,000 tax rules, and employer legal fee cover.',
     url: 'https://settlementcheck.co.uk/settlement-agreement-review/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 
@@ -122,6 +123,19 @@ export default function SettlementAgreementReviewPage() {
       />
       <Nav />
       <main className="bg-paper min-h-screen py-10">
+        {/* Server-rendered Intro Header for immediate SSR H1 and crawlability */}
+        <div className="max-w-4xl mx-auto px-4 pt-8 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-paper-2 border border-rule text-xs font-mono text-ink mb-4">
+            <span className="w-2 h-2 rounded-full bg-coral inline-block animate-pulse" />
+            Confidential UK Employment Settlement Check • Free Online Review
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-serif text-ink font-bold mb-3">
+            Check your employment settlement agreement
+          </h1>
+          <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto">
+            Confidential evaluation of draft clauses, protected conversation proposals, and employer fee contributions against UK statutory rates, Ministry of Justice tribunal tables, and Section 403 tax rules.
+          </p>
+        </div>
         <Suspense fallback={
           <div className="max-w-4xl mx-auto px-4 py-16 text-center text-muted">
             Loading settlement agreement review tool...

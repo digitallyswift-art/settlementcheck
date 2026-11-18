@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'UK Employment Rates & Caps History | SettlementCheck',
   description:
-    'Complete historical archive of UK statutory redundancy pay caps, unfair dismissal compensation limits, Vento bands, and the £30,000 tax exemption from 2000 to 2026.',
+    'Historical archive of UK statutory redundancy pay caps (£230 to £751/wk), unfair dismissal limits (£123,543), and Vento bands from 2000 to 2026.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/statutory-rates-history/',
   },

@@ -12,14 +12,14 @@ const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Declare Settlement on UK Tax Return | SettlementCheck',
   description:
-    'Self Assessment tax return guide for UK settlement agreements. Box-by-box SA100 & SA102 breakdown for payments over £30,000 and employer tax indemnity clauses.',
+    'Self Assessment guide for UK settlement agreements: box-by-box SA100 & SA102 breakdown for payouts over £30,000 and employer tax indemnity clauses.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/hmrc-tax-return-declaration/',
   },
   openGraph: {
     title: 'Declare Settlement on UK Tax Return | SettlementCheck',
     description:
-      'Self Assessment tax return guide for UK settlement agreements. Box-by-box SA100 & SA102 breakdown for payments over £30,000 and employer tax indemnity clauses.',
+      'Self Assessment guide for UK settlement agreements: box-by-box SA100 & SA102 breakdown for payouts over £30,000 and employer tax indemnity clauses.',
     url: 'https://settlementcheck.co.uk/guides/hmrc-tax-return-declaration/',
     type: 'article',
     locale: 'en_GB',
@@ -29,7 +29,7 @@ const STATIC_METADATA: Metadata = {
     card: 'summary_large_image',
     title: 'Declare Settlement on UK Tax Return | SettlementCheck',
     description:
-      'Self Assessment tax return guide for UK settlement agreements. Box-by-box SA100 & SA102 breakdown for payments over £30,000 and employer tax indemnity clauses.',
+      'Self Assessment guide for UK settlement agreements: box-by-box SA100 & SA102 breakdown for payouts over £30,000 and employer tax indemnity clauses.',
   },
 }
 

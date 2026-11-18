@@ -138,7 +138,7 @@ export default function IsMyOfferFairGuide() {
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Settlement Agreement Guide</p>
             <h1 className="sc-h1 mb-5">
-              Most settlement offers fall between 1.5x and 4x the statutory minimum. Here is how to spot if yours is genuinely fair.
+              Is My Settlement Agreement Offer Fair? (UK 2026 Guide)
             </h1>
             <p className="sc-lead">
               When you receive a settlement offer, your employer is paying to end your employment cleanly. The legal floor in 2026 is statutory redundancy and notice pay, calculated against a weekly pay cap of £751 (SI 2026/310). A fair offer goes beyond that floor and reflects the strength of your position. Use our free <Link href="/calculator/" className="text-coral font-semibold underline underline-offset-2 hover:text-ink transition-colors">Settlement Agreement Calculator UK</Link> to compare your offer against the statutory baseline instantly.

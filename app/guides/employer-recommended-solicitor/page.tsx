@@ -10,7 +10,7 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 export const metadata: Metadata = {
   title: 'Can I Choose My Own Settlement Solicitor? | SettlementCheck',
   description:
-    'You have the legal right to choose your own independent settlement solicitor. Employers customarily contribute toward the legal advice fee. Here is what the law says.',
+    'You have the legal right to choose your own independent settlement solicitor. Employers standardly contribute towards legal advice fees under s.203.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/employer-recommended-solicitor/',
   },

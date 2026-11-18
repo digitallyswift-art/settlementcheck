@@ -283,20 +283,6 @@ export default function ReviewClient() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Intro Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-paper-2 border border-rule text-xs font-mono text-ink mb-4">
-          <span className="w-2 h-2 rounded-full bg-coral inline-block animate-pulse" />
-          Confidential UK Employment Settlement Check • Free Online Review
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-serif text-ink font-bold mb-3">
-          Check your employment settlement agreement
-        </h1>
-        <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto">
-          Confidential evaluation of draft clauses, protected conversation proposals, and employer fee contributions against UK statutory rates, Ministry of Justice tribunal tables, and Section 403 tax rules.
-        </p>
-      </div>
-
       {/* Interactive Tool Suite Tabs */}
       <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
         <button

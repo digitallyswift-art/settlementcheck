@@ -72,11 +72,17 @@ export default function Footer() {
                 { href: '/for-solicitors/', label: 'For solicitors' },
                 { href: '/for-employers/', label: 'For employers' },
                 { href: '/for-solicitors/#how-it-works', label: 'How it works for firms' },
-                { href: '/portal/', label: 'Partner portal' },
+                { href: '/portal/', label: 'Partner portal', nofollow: true },
                 { href: '/for-solicitors/#contact', label: 'Contact us' },
               ].map(l => (
                 <li key={l.href}>
-                  <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>
+                  <Link
+                    href={l.href}
+                    rel={'nofollow' in l && l.nofollow ? 'nofollow' : undefined}
+                    className="hover:text-white transition-colors duration-[160ms]"
+                  >
+                    {l.label}
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -35,9 +35,11 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: 'SettlementCheck',
     locale: 'en_GB',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'SettlementCheck: UK Settlement Agreement Calculator' }],
   },
   twitter: {
     card: 'summary_large_image',
+    images: ['/og-image.png'],
   },
   icons: {
     icon: [
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
       { url: '/favicon.ico', sizes: '32x32' },
     ],
     apple: [
-      { url: '/apple-icon', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-icon/', sizes: '180x180', type: 'image/png' },
     ],
   },
   verification: {

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'UK Redundancy & Restructuring Guide | SettlementCheck',
   description:
-    'Authoritative guide to UK workplace restructuring. Compare NHS Agenda for Change, Civil Service CSCS, City financial services SM&CR, and private sector statutory redundancy terms.',
+    'Compare UK workplace restructuring and redundancy terms across NHS, Civil Service, City financial services, and private sector April 2026 caps (£751/wk).',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/redundancy/',
   },

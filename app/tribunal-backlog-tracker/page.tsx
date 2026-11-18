@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'UK Employment Tribunal Backlog Tracker | SettlementCheck',
   description:
-    'Track UK Employment Tribunal backlogs and hearing delays by region. Explore MoJ statistics on 50,000+ open single claims, employer defence costs, and settlement negotiation dynamics.',
+    'Track UK Employment Tribunal backlogs and regional hearing delays using MoJ data on 50,000+ open claims, employer defence costs, and settlement timing.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/tribunal-backlog-tracker/',
   },

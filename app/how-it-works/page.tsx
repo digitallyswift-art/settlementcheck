@@ -23,14 +23,15 @@ const faqSchema = {
 export const metadata: Metadata = {
   title: 'How It Works: Step-by-Step Guide | SettlementCheck',
   description:
-    'Check your offer in 60s, get matched with a vetted SRA employment solicitor within 24 hours, and sign with confidence. Standard employer fee contributions apply upon completion.',
+    'Check your settlement offer in 60 seconds, match with an SRA employment solicitor within 24 hours, and sign with confidence. Employer fee cover applies.',
   alternates: { canonical: 'https://settlementcheck.co.uk/how-it-works/' },
   openGraph: {
     title: 'How SettlementCheck Works: Step-by-Step | SettlementCheck',
     description:
-      'Check your offer in 60s, get matched with a vetted SRA employment solicitor within 24 hours, and sign with confidence. Standard employer fee contributions apply upon completion.',
+      'Check your settlement offer in 60 seconds, match with an SRA employment solicitor within 24 hours, and sign with confidence. Employer fee cover applies.',
     url: 'https://settlementcheck.co.uk/how-it-works/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 

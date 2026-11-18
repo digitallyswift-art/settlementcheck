@@ -12,14 +12,14 @@ const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Executive Settlement Agreements UK | SettlementCheck',
   description:
-    'UK senior executive settlement agreement guide. Equity vesting, bad leaver clauses, restrictive covenant buyouts, D&O run-off cover, and 2026 exit standards.',
+    'UK senior executive settlement guide covering equity vesting, bad leaver clauses, restrictive covenant buyouts, D&O cover, and 2026 exit standards.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/executive-settlement-agreements/',
   },
   openGraph: {
     title: 'Executive Settlement Agreements UK | SettlementCheck',
     description:
-      'UK senior executive settlement agreement guide. Equity vesting, bad leaver clauses, restrictive covenant buyouts, D&O run-off cover, and 2026 exit standards.',
+      'UK senior executive settlement guide covering equity vesting, bad leaver clauses, restrictive covenant buyouts, D&O cover, and 2026 exit standards.',
     url: 'https://settlementcheck.co.uk/guides/executive-settlement-agreements/',
     type: 'article',
     locale: 'en_GB',
@@ -29,7 +29,7 @@ const STATIC_METADATA: Metadata = {
     card: 'summary_large_image',
     title: 'Executive Settlement Agreements UK | SettlementCheck',
     description:
-      'UK senior executive settlement agreement guide. Equity vesting, bad leaver clauses, restrictive covenant buyouts, D&O run-off cover, and 2026 exit standards.',
+      'UK senior executive settlement guide covering equity vesting, bad leaver clauses, restrictive covenant buyouts, D&O cover, and 2026 exit standards.',
   },
 }
 

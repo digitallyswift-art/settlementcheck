@@ -7,14 +7,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 export const metadata: Metadata = {
   title: 'Employment Settlement Agreement Guides | SettlementCheck',
   description:
-    'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Standard employer fee contributions apply upon completion.',
+    'Independent UK settlement agreement guides covering April 2026 redundancy caps (£751/wk), £30,000 tax exemptions, and Section 203 solicitor rights.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/',
   },
   openGraph: {
     title: 'Employment Settlement Agreement Guides | SettlementCheck',
     description:
-      'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Standard employer fee contributions apply upon completion.',
+      'Independent UK settlement agreement guides covering April 2026 redundancy caps (£751/wk), £30,000 tax exemptions, and Section 203 solicitor rights.',
     url: 'https://settlementcheck.co.uk/guides/',
     type: 'website',
     locale: 'en_GB',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Employment Settlement Agreement Guides | SettlementCheck',
     description:
-      'Independent UK settlement agreement guides on statutory redundancy caps, tax exemptions, and Section 203 rights. Standard employer fee contributions apply upon completion.',
+      'Independent UK settlement agreement guides covering April 2026 redundancy caps (£751/wk), £30,000 tax exemptions, and Section 203 solicitor rights.',
   },
 }
 

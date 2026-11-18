@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Regulatory & Fee Disclaimer | SettlementCheck',
   description:
-    'SettlementCheck provides independent statutory estimates and solicitor introductions. We do not provide legal or tax advice. Read our full regulatory, fee contribution, and liability notice.',
+    'SettlementCheck provides independent statutory estimates and SRA solicitor introductions, not legal or tax advice. Read our full regulatory disclaimer.',
   alternates: { canonical: 'https://settlementcheck.co.uk/disclaimer/' },
   robots: { index: true, follow: true },
 }

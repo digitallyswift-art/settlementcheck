@@ -14,6 +14,7 @@ export const metadata: Metadata = {
       'Receive exclusive, pre-calculated settlement agreement instructions from UK employees. Vetted pre-flight dossiers and employer legal fees. SRA firms only.',
     url: 'https://settlementcheck.co.uk/for-solicitors/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   robots: { index: true, follow: true },
 }

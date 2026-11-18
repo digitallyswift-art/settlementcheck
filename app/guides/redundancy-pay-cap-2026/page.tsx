@@ -157,7 +157,7 @@ export default function RedundancyPayCapGuide() {
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Statutory Redundancy Guide</p>
             <h1 className="sc-h1 mb-5">
-              The redundancy weekly pay cap is £751 in 2026. Here is exactly how it limits your statutory entitlement and what to do if your employer gets it wrong.
+              UK Statutory Redundancy Pay Cap 2026 (£751/Week)
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
               <span>Written by SettlementCheck Editorial Team</span>

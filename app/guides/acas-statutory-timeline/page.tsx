@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'ACAS Timeline & Limitation Calculator | SettlementCheck',
   description:
-    'Calculate ACAS Code 4 10-day consideration windows and statutory 3-month-less-one-day tribunal limitation dates under s.111(2) ERA 1996. Free interactive timeline tool.',
+    'Calculate ACAS Code 4 10-day consideration windows and 3-month-less-one-day tribunal limits under s.111(2) ERA 1996 with our free timeline tool.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/acas-statutory-timeline/',
   },

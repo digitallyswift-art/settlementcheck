@@ -15,6 +15,7 @@ export const metadata: Metadata = {
       'Complete directory of UK settlement agreement calculators, legal advice guides, redundancy tools, and employee resources on SettlementCheck.co.uk.',
     url: 'https://settlementcheck.co.uk/sitemap/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 

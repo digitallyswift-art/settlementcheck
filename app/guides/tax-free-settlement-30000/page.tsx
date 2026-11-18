@@ -158,7 +158,7 @@ export default function TaxFreeSettlementGuide() {
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Tax Guide</p>
             <h1 className="sc-h1 mb-5">
-              The first £30,000 of your settlement agreement is tax-free in 2026. Here is how the exemption works and what is taxable.
+              £30,000 Tax-Free Settlement Agreement Exemption (2026)
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
               <span>Written by SettlementCheck Editorial Team</span>

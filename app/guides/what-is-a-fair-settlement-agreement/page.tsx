@@ -105,7 +105,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Settlement Agreement Guide</p>
             <h1 className="sc-h1 mb-5">
-              A fair settlement agreement in 2026 pays more than your statutory minimum. Here is how your statutory rights protect you and how to spot when your employer is offering less.
+              What Is a Fair Settlement Agreement in the UK? (2026)
             </h1>
             <p className="sc-lead">
               When your employer offers a settlement agreement, they are paying you to end your employment cleanly and waive your right to bring a tribunal claim. The legal floor is calculated against a weekly pay cap of £751 (SI 2026/310, ERA 1996 s.227). A fair offer goes beyond that floor. This guide shows you how to calculate your minimum statutory entitlements and how to judge whether the number on the table is genuinely fair.
