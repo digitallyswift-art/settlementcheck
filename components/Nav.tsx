@@ -40,6 +40,21 @@ const CALCULATOR_LINKS = [
     label: 'Protective Award Calculator',
     sub: 'Up to 90 days gross pay for failure to consult',
   },
+  {
+    href: '/pip-settlement-calculator/',
+    label: 'PIP Settlement Calculator',
+    sub: 'Value exit packages during performance plans',
+  },
+  {
+    href: '/penp-calculator/',
+    label: 'PENP Tax Calculator',
+    sub: 'HMRC s.402D Post-Employment Notice Pay split',
+  },
+  {
+    href: '/tribunal-backlog-tracker/',
+    label: 'Tribunal Backlog Tracker',
+    sub: 'MoJ regional hearing delays & employer defence costs',
+  },
 ]
 
 const GUIDES_LINKS = [
@@ -127,40 +142,48 @@ export default function Nav() {
               </svg>
             </Link>
 
-            {calculatorsOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-50" style={{ width: 340 }}>
-                <div
-                  className="bg-card border border-rule rounded-xl overflow-hidden"
-                  style={{ boxShadow: '0 12px 40px -8px rgba(11,31,58,0.18)' }}
-                >
-                  <div className="absolute top-[3px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
-                  <div className="p-2 relative z-10 bg-card">
-                    {CALCULATOR_LINKS.map((c) => (
-                      <Link
-                        key={c.href}
-                        href={c.href}
-                        className="flex flex-col gap-0.5 px-4 py-2.5 rounded-lg hover:bg-paper transition-colors duration-[120ms] group"
-                        onClick={() => setCalculatorsOpen(false)}
-                      >
-                        <span className="text-[14px] font-medium text-ink leading-snug group-hover:text-coral transition-colors duration-[120ms]">
-                          {c.label}
-                        </span>
-                        <span className="text-[12px] text-muted leading-snug">{c.sub}</span>
-                      </Link>
-                    ))}
-                    <div className="border-t border-rule mt-1 pt-1">
-                      <Link
-                        href="/calculators/"
-                        className="flex items-center gap-1 px-4 py-2 text-[13px] text-coral font-medium hover:underline underline-offset-2"
-                        onClick={() => setCalculatorsOpen(false)}
-                      >
-                        View all calculators hub →
-                      </Link>
-                    </div>
+            <div
+              className={`absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-50 transition-all duration-150 ${
+                calculatorsOpen
+                  ? 'opacity-100 visible translate-y-0 pointer-events-auto'
+                  : 'opacity-0 invisible -translate-y-1 pointer-events-none'
+              }`}
+              style={{ width: 340 }}
+              aria-hidden={!calculatorsOpen}
+            >
+              <div
+                className="bg-card border border-rule rounded-xl overflow-hidden"
+                style={{ boxShadow: '0 12px 40px -8px rgba(11,31,58,0.18)' }}
+              >
+                <div className="absolute top-[3px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
+                <div className="p-2 relative z-10 bg-card max-h-[75vh] overflow-y-auto">
+                  {CALCULATOR_LINKS.map((c) => (
+                    <Link
+                      key={c.href}
+                      href={c.href}
+                      tabIndex={calculatorsOpen ? 0 : -1}
+                      className="flex flex-col gap-0.5 px-4 py-2.5 rounded-lg hover:bg-paper transition-colors duration-[120ms] group"
+                      onClick={() => setCalculatorsOpen(false)}
+                    >
+                      <span className="text-[14px] font-medium text-ink leading-snug group-hover:text-coral transition-colors duration-[120ms]">
+                        {c.label}
+                      </span>
+                      <span className="text-[12px] text-muted leading-snug">{c.sub}</span>
+                    </Link>
+                  ))}
+                  <div className="border-t border-rule mt-1 pt-1">
+                    <Link
+                      href="/calculators/"
+                      tabIndex={calculatorsOpen ? 0 : -1}
+                      className="flex items-center gap-1 px-4 py-2 text-[13px] text-coral font-medium hover:underline underline-offset-2"
+                      onClick={() => setCalculatorsOpen(false)}
+                    >
+                      View all calculators hub →
+                    </Link>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
 
           {/* Settlement Agreement & Contract Review Tool */}
@@ -198,40 +221,48 @@ export default function Nav() {
               </svg>
             </Link>
 
-            {guidesOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-50" style={{ width: 340 }}>
-                <div
-                  className="bg-card border border-rule rounded-xl overflow-hidden"
-                  style={{ boxShadow: '0 12px 40px -8px rgba(11,31,58,0.18)' }}
-                >
-                  <div className="absolute top-[3px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
-                  <div className="p-2 relative z-10 bg-card">
-                    {GUIDES_LINKS.map((g) => (
-                      <Link
-                        key={g.href}
-                        href={g.href}
-                        className="flex flex-col gap-0.5 px-4 py-2.5 rounded-lg hover:bg-paper transition-colors duration-[120ms] group"
-                        onClick={() => setGuidesOpen(false)}
-                      >
-                        <span className="text-[14px] font-medium text-ink leading-snug group-hover:text-coral transition-colors duration-[120ms]">
-                          {g.label}
-                        </span>
-                        <span className="text-[12px] text-muted leading-snug">{g.sub}</span>
-                      </Link>
-                    ))}
-                    <div className="border-t border-rule mt-1 pt-1">
-                      <Link
-                        href="/guides/"
-                        className="flex items-center gap-1 px-4 py-2 text-[13px] text-coral font-medium hover:underline underline-offset-2"
-                        onClick={() => setGuidesOpen(false)}
-                      >
-                        View all guides →
-                      </Link>
-                    </div>
+            <div
+              className={`absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-50 transition-all duration-150 ${
+                guidesOpen
+                  ? 'opacity-100 visible translate-y-0 pointer-events-auto'
+                  : 'opacity-0 invisible -translate-y-1 pointer-events-none'
+              }`}
+              style={{ width: 340 }}
+              aria-hidden={!guidesOpen}
+            >
+              <div
+                className="bg-card border border-rule rounded-xl overflow-hidden"
+                style={{ boxShadow: '0 12px 40px -8px rgba(11,31,58,0.18)' }}
+              >
+                <div className="absolute top-[3px] left-1/2 -translate-x-1/2 w-3 h-3 bg-card border-l border-t border-rule rotate-45" />
+                <div className="p-2 relative z-10 bg-card">
+                  {GUIDES_LINKS.map((g) => (
+                    <Link
+                      key={g.href}
+                      href={g.href}
+                      tabIndex={guidesOpen ? 0 : -1}
+                      className="flex flex-col gap-0.5 px-4 py-2.5 rounded-lg hover:bg-paper transition-colors duration-[120ms] group"
+                      onClick={() => setGuidesOpen(false)}
+                    >
+                      <span className="text-[14px] font-medium text-ink leading-snug group-hover:text-coral transition-colors duration-[120ms]">
+                        {g.label}
+                      </span>
+                      <span className="text-[12px] text-muted leading-snug">{g.sub}</span>
+                    </Link>
+                  ))}
+                  <div className="border-t border-rule mt-1 pt-1">
+                    <Link
+                      href="/guides/"
+                      tabIndex={guidesOpen ? 0 : -1}
+                      className="flex items-center gap-1 px-4 py-2 text-[13px] text-coral font-medium hover:underline underline-offset-2"
+                      onClick={() => setGuidesOpen(false)}
+                    >
+                      View all guides →
+                    </Link>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
 
           <Link

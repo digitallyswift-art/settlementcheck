@@ -373,7 +373,7 @@ export default function HowMuchGuidePage() {
                 Employers offer ex-gratia money to buy certainty and finality. Defending an ordinary claim at an employment tribunal costs an employer between £8,500 and £15,000 in legal fees alone, regardless of the outcome.
               </p>
               <p className="sc-body text-sm">
-                Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering an ex-gratia payment of one to three months of gross pay is often cheaper and faster for the company than a protracted workplace dispute.
+                Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering an ex-gratia payment of one to three months of gross pay is often cheaper and faster for the company than a protracted workplace dispute. Explore live regional delays in our <Link href="/tribunal-backlog-tracker/" className="text-coral underline hover:text-ink">UK Employment Tribunal backlog tracker</Link>, compare <Link href="/guides/average-settlement-agreement-payout-uk/" className="text-coral underline hover:text-ink">average UK settlement agreement payout amounts</Link>, or inspect sector multiples in the <Link href="/reports/uk-settlement-index-2026/" className="text-coral underline hover:text-ink">2026 UK Employment Settlement Index</Link>.
               </p>
             </div>
           </div>
@@ -402,7 +402,7 @@ export default function HowMuchGuidePage() {
                     >
                       SI 2026/310
                     </a>
-                    , the statutory weekly cap increased to £751 on 6 April 2026.
+                    , the statutory weekly cap increased to £751 on 6 April 2026. See how weekly caps have changed since 2000 in our <Link href="/statutory-rates-history/" className="underline hover:text-coral">statutory rates history archive</Link>.
                   </p>
                 </div>
               </li>

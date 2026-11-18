@@ -418,6 +418,18 @@ export default function EmployerRecommendedSolicitor() {
                   description: 'Are you an SRA-regulated employment solicitor? Learn how our independent panel works.',
                   tag: 'Panel',
                 },
+                {
+                  href: '/guides/home-insurance-legal-cover-settlement-agreement/',
+                  title: 'Home Insurance Legal Cover & Settlement Agreements',
+                  description: 'Why Legal Expenses Insurance (LEI) excludes voluntary settlement reviews and how employer contributions fund your solicitor.',
+                  tag: 'Legal Fees',
+                },
+                {
+                  href: '/guides/executive-settlement-agreements/',
+                  title: 'Executive Settlement Agreements UK (2026)',
+                  description: 'Senior director exits, Companies Act s.217 rules, equity vesting, and higher employer legal fee contributions.',
+                  tag: 'Executive Guide',
+                },
               ]}
             />
           </div>

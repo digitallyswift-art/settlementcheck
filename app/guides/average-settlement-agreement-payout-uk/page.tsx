@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import RelatedArticles from '@/components/RelatedArticles'
 import FaqAccordion from '@/components/FaqAccordion'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import InlineEstimator from '@/components/InlineEstimator'
@@ -390,7 +391,34 @@ export default function AveragePayoutGuide() {
         </section>
 
         {/* References */}
-        <section className="py-12 bg-paper">
+                <section className="py-10 border-b border-rule bg-white">
+          <div className="max-w-2xl mx-auto px-5">
+            <RelatedArticles
+              title="Related Settlement Benchmarks & Tools"
+              items={[
+              {
+                href: '/guides/employment-tribunal-average-awards-uk/',
+                title: 'Average Employment Tribunal Awards UK (2026)',
+                description: 'Compare settlement payouts against official Ministry of Justice unfair dismissal and discrimination tribunal awards.',
+                tag: 'MoJ Statistics',
+              },
+              {
+                href: '/reports/uk-settlement-index-2026/',
+                title: 'UK Employment Settlement Index 2026',
+                description: '2026 sector severance multiples across finance, tech, healthcare, and corporate services.',
+                tag: '2026 Report',
+              },
+              {
+                href: '/statutory-rates-history/',
+                title: 'Statutory Rates & Compensation Caps History (2000-2026)',
+                description: '27-year archive of UK statutory weekly pay caps (£751 in April 2026) and £30,000 threshold inflation erosion.',
+                tag: 'Data Archive',
+              },
+              ]}
+            />
+          </div>
+        </section>
+<section className="py-12 bg-paper">
           <div className="max-w-2xl mx-auto px-5">
             <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">References and Legislation</h3>
             <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">

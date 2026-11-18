@@ -391,6 +391,24 @@ export default function IsMyOfferFairGuide() {
                   description: 'What to do if your employer gives you an unreasonable deadline or threatens dismissal.',
                   tag: 'Rights',
                 },
+                {
+                  href: '/guides/average-settlement-agreement-payout-uk/',
+                  title: 'Average Settlement Agreement Payouts UK (2026)',
+                  description: 'Compare your offer against typical UK payout ranges and statutory redundancy baselines.',
+                  tag: 'Benchmarks',
+                },
+                {
+                  href: '/reports/uk-settlement-index-2026/',
+                  title: 'UK Employment Settlement Index 2026',
+                  description: '2026 sector severance multiples across 8 major UK employment sectors.',
+                  tag: '2026 Report',
+                },
+                {
+                  href: '/guides/employment-tribunal-average-awards-uk/',
+                  title: 'Average Employment Tribunal Awards UK (MoJ Tables)',
+                  description: 'Official Ministry of Justice median tribunal awards for unfair dismissal and discrimination.',
+                  tag: 'MoJ Statistics',
+                },
               ]}
             />
           </div>

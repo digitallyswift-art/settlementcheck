@@ -36,6 +36,9 @@ export default function Footer() {
                 { href: '/settlement-agreement-tax-calculator/', label: 'Settlement Tax Calculator' },
                 { href: '/settlement-agreement-review/', label: 'Settlement Agreement Review' },
                 { href: '/protective-award-calculator/', label: 'Protective Award Calculator' },
+                { href: '/pip-settlement-calculator/', label: 'PIP Settlement Calculator' },
+                { href: '/penp-calculator/', label: 'PENP Tax Calculator' },
+                { href: '/tribunal-backlog-tracker/', label: 'Tribunal Backlog Tracker' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>
@@ -54,6 +57,9 @@ export default function Footer() {
                 { href: '/guides/compromise-agreement-calculator-uk/', label: 'Compromise Agreement Calculator' },
                 { href: '/guides/employer-recommended-solicitor/', label: "Do I have to use my employer's solicitor?" },
                 { href: '/guides/pressured-to-sign/', label: 'Pressured to sign quickly?' },
+                { href: '/redundancy/', label: 'Sector Redundancy Hub' },
+                { href: '/statutory-rates-history/', label: 'Statutory Rates History (2000-2026)' },
+                { href: '/reports/uk-settlement-index-2026/', label: 'UK Settlement Index 2026' },
                 { href: '/how-it-works/', label: 'How it works' },
               ].map(l => (
                 <li key={l.href}>

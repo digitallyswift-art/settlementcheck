@@ -253,11 +253,15 @@ export default function HomePage() {
         statutoryRows={statutoryRows}
         pageLinks={[
           { href: '/calculator/', label: 'Settlement Agreement Calculator' },
-          { href: '/guides/compromise-agreement-calculator-uk/', label: 'Compromise Agreement Calculator UK' },
-          { href: '/guides/settlement-agreement-how-much/', label: 'How Much Should a Settlement Agreement Be?' },
-          { href: '/redundancy-calculator/', label: 'Redundancy Pay Calculator' },
+          { href: '/calculators/', label: 'All UK Settlement & Redundancy Calculators' },
+          { href: '/redundancy-calculator/', label: 'Redundancy Pay Calculator (April 2026 Rates)' },
           { href: '/unfair-dismissal-calculator/', label: 'Unfair Dismissal Calculator' },
           { href: '/constructive-dismissal-calculator/', label: 'Constructive Dismissal Calculator' },
+          { href: '/pip-settlement-calculator/', label: 'PIP Settlement Agreement Calculator' },
+          { href: '/tribunal-backlog-tracker/', label: 'UK Employment Tribunal Backlog Tracker' },
+          { href: '/guides/average-settlement-agreement-payout-uk/', label: 'Average Settlement Agreement Payouts UK' },
+          { href: '/guides/compromise-agreement-calculator-uk/', label: 'Compromise Agreement Calculator UK' },
+          { href: '/guides/settlement-agreement-how-much/', label: 'How Much Should a Settlement Agreement Be?' },
           { href: '/guides/what-is-a-fair-settlement-agreement/', label: 'What Is a Fair Settlement Agreement?' },
           { href: '/guides/how-to-negotiate-a-settlement-agreement/', label: 'How to Negotiate a Settlement Agreement' },
           { href: '/guides/settlement-agreement-acas-calculations/', label: 'ACAS-Based Settlement Calculations' },

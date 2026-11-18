@@ -594,6 +594,24 @@ export default function RedundancyPayCapGuide() {
                     description: 'Learn how settlement packages are structured and benchmarked across UK sectors.',
                     tag: 'Guide',
                   },
+                  {
+                    href: '/statutory-rates-history/',
+                    title: '27-Year History of UK Statutory Redundancy Caps (2000-2026)',
+                    description: 'Track how the statutory weekly cap rose from £230 to £751 and compare historical maximum payouts.',
+                    tag: 'Data Archive',
+                  },
+                  {
+                    href: '/redundancy/',
+                    title: 'UK Redundancy & Sector Restructuring Hub',
+                    description: 'Compare NHS Agenda for Change, Civil Service CSCS, financial services, and private sector redundancy terms.',
+                    tag: 'Sector Hub',
+                  },
+                  {
+                    href: '/guides/redundancy-vs-settlement-agreement/',
+                    title: 'Redundancy vs Settlement Agreement UK',
+                    description: 'Understand when an employer offers an enhanced settlement package above the statutory redundancy floor.',
+                    tag: 'Comparison',
+                  },
                 ]}
               />
             </div>

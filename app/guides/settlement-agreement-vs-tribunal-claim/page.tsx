@@ -340,7 +340,10 @@ export default function SettlementAgreementVsTribunalGuide() {
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3 mt-8">
               <InfoIcon />
               <p className="sc-body text-sm">
-                You can <Link href="/calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> to find out where you stand.
+                You can <Link href="/calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link>, inspect live regional hearing delays in our{' '}
+                <Link href="/tribunal-backlog-tracker/" className="text-coral underline hover:text-ink transition-colors font-semibold">UK Employment Tribunal backlog tracker</Link>, compare{' '}
+                <Link href="/guides/employment-tribunal-average-awards-uk/" className="text-coral underline hover:text-ink transition-colors font-semibold">average Employment Tribunal awards (MoJ tables)</Link>, or review how{' '}
+                <Link href="/guides/acas-early-conciliation-timeline/" className="text-coral underline hover:text-ink transition-colors font-semibold">ACAS Early Conciliation pauses the 3-month limitation clock</Link>.
               </p>
             </div>
           </div>

@@ -464,6 +464,80 @@ export default function CalculatorsClient() {
           )
         })}
       </div>
+
+      {/* Data Trackers, Benchmarks & Sector Hubs */}
+      <section aria-labelledby="data-trackers-heading" className="pt-8 border-t border-rule">
+        <div className="mb-6">
+          <span className="text-[12px] font-sans font-semibold tracking-wider text-coral uppercase">
+            Statutory Data &amp; Sector Intelligence
+          </span>
+          <h2
+            id="data-trackers-heading"
+            className="text-[22px] md:text-[26px] font-serif font-460 text-ink tracking-tight mt-1"
+          >
+            Data Trackers &amp; Sector Benchmarks
+          </h2>
+          <p className="text-[14px] md:text-[15px] text-muted leading-relaxed mt-2 max-w-[70ch]">
+            Use our live statutory datasets alongside the calculators to benchmark hearing delays, historical cap inflation, and sector restructuring terms.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {[
+            {
+              href: '/tribunal-backlog-tracker/',
+              badge: 'MoJ Open Data Tracker',
+              title: 'UK Employment Tribunal Backlog Tracker',
+              description:
+                'Track 50,000+ open UK Employment Tribunal single claims, regional listing wait times (up to 540 days in London), and employer defence cost exposure.',
+              cta: 'Open tribunal tracker →',
+            },
+            {
+              href: '/statutory-rates-history/',
+              badge: '27-Year Archive (2000-2026)',
+              title: 'Statutory Rates & Compensation Caps History',
+              description:
+                'Explore 27 years of UK statutory redundancy weekly pay caps (up to £751/wk in April 2026), unfair dismissal limits, Vento bands, and £30,000 threshold erosion.',
+              cta: 'View statutory rates history →',
+            },
+            {
+              href: '/reports/uk-settlement-index-2026/',
+              badge: '2026 Benchmark Report',
+              title: 'UK Employment Settlement Index 2026',
+              description:
+                'Sector-by-sector UK severance multiples, April 2026 statutory baseline analysis, and HMRC Post-Employment Notice Pay (PENP) compliance findings.',
+              cta: 'Read 2026 Settlement Index →',
+            },
+            {
+              href: '/redundancy/',
+              badge: 'Sector Restructuring Hub',
+              title: 'UK Redundancy & Sector Restructuring Guide',
+              description:
+                'Compare NHS Agenda for Change Section 16, Civil Service CSCS schemes, City financial services exits, and private sector statutory redundancy baselines.',
+              cta: 'Explore sector redundancy hub →',
+            },
+          ].map((asset) => (
+            <Link
+              key={asset.href}
+              href={asset.href}
+              className="group rounded-2xl bg-card border border-rule p-6 flex flex-col justify-between gap-4 hover:border-coral/50 hover:shadow-md transition-all duration-150 no-underline"
+            >
+              <div>
+                <span className="inline-block text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-md bg-paper text-muted border border-rule mb-3">
+                  {asset.badge}
+                </span>
+                <h3 className="text-[19px] md:text-[21px] font-serif font-460 text-ink group-hover:text-coral transition-colors mb-2">
+                  {asset.title}
+                </h3>
+                <p className="text-[14px] text-muted leading-relaxed">{asset.description}</p>
+              </div>
+              <span className="text-[13px] font-medium text-coral group-hover:underline underline-offset-2 mt-auto">
+                {asset.cta}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

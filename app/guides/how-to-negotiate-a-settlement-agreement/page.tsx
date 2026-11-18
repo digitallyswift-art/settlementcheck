@@ -449,6 +449,36 @@ export default function HowToNegotiateGuide() {
                   tag: 'Calculator Guide',
                 },
                 {
+                  href: '/tribunal-backlog-tracker/',
+                  title: 'UK Employment Tribunal Backlog Tracker',
+                  description: 'Regional MoJ hearing delays (up to 540 days) and employer legal defence cost exposure.',
+                  tag: 'Data Tracker',
+                },
+                {
+                  href: '/pip-settlement-calculator/',
+                  title: 'PIP Settlement Agreement Calculator',
+                  description: 'Value a fair exit package during a Performance Improvement Plan or protected conversation.',
+                  tag: 'Calculator',
+                },
+                {
+                  href: '/guides/executive-settlement-agreements/',
+                  title: 'Executive Settlement Agreements UK (2026)',
+                  description: 'Senior director exits, Companies Act s.217 approval, equity vesting, and D&O run-off cover.',
+                  tag: 'Executive Guide',
+                },
+                {
+                  href: '/guides/home-insurance-legal-cover-settlement-agreement/',
+                  title: 'Home Insurance Legal Cover & Settlements',
+                  description: 'Why LEI policies exclude voluntary settlements and how employer fee contributions work.',
+                  tag: 'Legal Fees',
+                },
+                {
+                  href: '/guides/acas-statutory-timeline/',
+                  title: 'ACAS Statutory Timeline & 10-Day Rule',
+                  description: 'Check ACAS Code 4 10-calendar-day windows and 3-month tribunal limitation deadlines.',
+                  tag: 'Deadlines',
+                },
+                {
                   href: '/guides/what-is-a-fair-settlement-agreement/',
                   title: 'What Is a Fair Settlement Agreement?',
                   description: 'Benchmark your settlement offer against industry standards and legal minimums.',

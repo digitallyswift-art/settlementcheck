@@ -253,6 +253,48 @@ const GUIDES = [
     description: 'Official Ministry of Justice median tribunal awards (£7,564 unfair dismissal), discrimination precedents, £123,543 cap, and settlement comparison.',
     readTime: '8 min read',
   },
+  {
+    href: '/guides/redundancy-vs-settlement-agreement/',
+    eyebrow: 'Redundancy & Exits',
+    title: 'Redundancy vs Settlement Agreement UK (2026)',
+    description: 'Compare statutory redundancy pay against an enhanced settlement agreement package, severance premiums, and waiving tribunal rights.',
+    readTime: '8 min read',
+  },
+  {
+    href: '/guides/acas-statutory-timeline/',
+    eyebrow: 'ACAS Code 4 & Deadlines',
+    title: 'ACAS Statutory Timeline & 10-Day Limitation Calculator',
+    description: 'Calculate ACAS Code 4 10-calendar-day consideration windows and 3-month-less-one-day tribunal deadlines under s.111(2) ERA 1996.',
+    readTime: '7 min read',
+  },
+  {
+    href: '/guides/acas-early-conciliation-timeline/',
+    eyebrow: 'Section 18A ETA 1996',
+    title: 'ACAS Early Conciliation & Settlement Agreement Timeline',
+    description: 'Understand how Section 18A Employment Tribunals Act 1996 pauses the 3-month tribunal limitation clock during settlement negotiations.',
+    readTime: '8 min read',
+  },
+  {
+    href: '/guides/hmrc-tax-return-declaration/',
+    eyebrow: 'HMRC Self Assessment',
+    title: 'How to Declare a Settlement Agreement on Your UK Tax Return',
+    description: 'Box-by-box SA100 and SA102 Self Assessment declaration guide for termination payments over £30,000, PENP, and employer tax indemnities.',
+    readTime: '8 min read',
+  },
+  {
+    href: '/guides/executive-settlement-agreements/',
+    eyebrow: 'Senior & Director Exits',
+    title: 'Executive Settlement Agreements UK (2026)',
+    description: 'Director loss of office rules under Companies Act 2006 s.217, equity vesting, post-termination restrictive covenants, and D&O run-off cover.',
+    readTime: '9 min read',
+  },
+  {
+    href: '/guides/home-insurance-legal-cover-settlement-agreement/',
+    eyebrow: 'Legal Fees & Cover',
+    title: 'Home Insurance Legal Expenses Cover & Settlement Agreements',
+    description: 'Why home insurance legal cover excludes voluntary settlement reviews and how customary employer contributions fund independent SRA solicitor advice.',
+    readTime: '7 min read',
+  },
 ]
 
 

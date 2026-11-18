@@ -355,7 +355,7 @@ export default function RedundancySectorHubPage() {
             <h3 className="text-base font-serif font-bold text-ink">
               Related Redundancy Calculators &amp; Exit Tools
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
               <Link
                 href="/redundancy-calculator/"
                 className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
@@ -376,6 +376,20 @@ export default function RedundancySectorHubPage() {
               >
                 <span className="font-semibold block">Protective Award Calculator</span>
                 <span className="text-muted text-[11px]">Up to 90 days pay for consultation breach</span>
+              </Link>
+              <Link
+                href="/guides/protective-award/"
+                className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
+              >
+                <span className="font-semibold block">Protective Award Redundancy Guide</span>
+                <span className="text-muted text-[11px]">TULRCA 1992 s.188 collective consultation rules</span>
+              </Link>
+              <Link
+                href="/guides/redundancy-vs-settlement-agreement/"
+                className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
+              >
+                <span className="font-semibold block">Redundancy vs Settlement Agreement</span>
+                <span className="text-muted text-[11px]">Statutory floor vs enhanced ex-gratia terms</span>
               </Link>
               <Link
                 href="/settlement-agreement-review/"

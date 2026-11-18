@@ -607,6 +607,18 @@ export default function GrievanceSettlementGuide() {
                   description: 'Why settlement negotiations do not pause your strict employment tribunal deadlines.',
                   tag: 'Time Limits',
                 },
+                {
+                  href: '/pip-settlement-calculator/',
+                  title: 'PIP & Performance Exit Settlement Calculator',
+                  description: 'Calculate a benchmark exit package where capability procedures or grievances overlap with a Section 111A offer.',
+                  tag: 'Calculator',
+                },
+                {
+                  href: '/tribunal-backlog-tracker/',
+                  title: 'UK Employment Tribunal Backlog Tracker',
+                  description: 'See how regional tribunal delays and defence costs increase employer settlement incentives.',
+                  tag: 'Data Tracker',
+                },
               ]}
             />
           </div>

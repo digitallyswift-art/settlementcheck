@@ -110,6 +110,12 @@ const sitemapData: SitemapCategory[] = [
         description: 'Interactive tracker of 50,000+ open UK Employment Tribunal claims, regional listing delays, and employer defence cost exposure.',
         badge: 'Data Asset',
       },
+      {
+        title: 'UK Employment Settlement Index 2026',
+        href: '/reports/uk-settlement-index-2026/',
+        description: 'Annual 2026 UK settlement agreement benchmark report analysing 8-sector severance multiples, £751 weekly cap, and HMRC PENP compliance.',
+        badge: 'Report',
+      },
     ],
   },
   {
@@ -331,6 +337,27 @@ const sitemapData: SitemapCategory[] = [
         href: '/guides/acas-early-conciliation-timeline/',
         description: 'How Section 18A ETA 1996 freezes the 3-month tribunal limitation clock during settlement negotiations.',
         badge: 'New Guide',
+      },
+      {
+        title: 'Settlement Agreement After Raising a Grievance UK',
+        href: '/guides/settlement-agreement-after-grievance/',
+        description: 'Section 111A rights, victimisation protection under Equality Act 2010 s.27, and settlement calculations after a workplace grievance.',
+        badge: 'New Guide',
+      },
+      {
+        title: 'Settlement Agreement Time Limits (3-Month Tribunal Rule)',
+        href: '/guides/settlement-agreement-time-limits/',
+        description: 'Understand the ACAS 10-day consideration period and why settlement discussions do not pause the 3-month tribunal deadline.',
+      },
+      {
+        title: 'How Long Does a Settlement Agreement Take? UK Timeline',
+        href: '/guides/how-long-does-a-settlement-agreement-take/',
+        description: 'Full UK settlement agreement timeline covering negotiation, solicitor certification, and bank payout dates.',
+      },
+      {
+        title: 'Whistleblowing Settlement Agreements UK (Part IVA ERA 1996)',
+        href: '/guides/whistleblowing-settlement-agreements/',
+        description: 'Uncapped compensation, day-one rights, void gagging clauses under s.43J ERA 1996, and 2026 Vento bands.',
       },
     ],
   },

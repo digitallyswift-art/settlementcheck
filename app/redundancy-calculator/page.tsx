@@ -286,6 +286,18 @@ export default function RedundancyCalculatorPage() {
             href: '/guides/how-to-negotiate-a-settlement-agreement/',
             label: 'How to Negotiate Your Settlement',
           },
+          {
+            href: '/redundancy/',
+            label: 'Sector Redundancy & Restructuring Guide (NHS, Civil Service, Finance)',
+          },
+          {
+            href: '/guides/redundancy-vs-settlement-agreement/',
+            label: 'Redundancy Pay vs Settlement Agreement Comparison',
+          },
+          {
+            href: '/statutory-rates-history/',
+            label: 'Statutory Redundancy Weekly Cap History (2000-2026)',
+          },
         ]}
       />
       <DynamicFaqSection pathname="/redundancy-calculator/" />

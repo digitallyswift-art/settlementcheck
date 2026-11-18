@@ -265,6 +265,18 @@ export default function SettlementTaxCalculatorPage() {
             href: '/guides/how-to-negotiate-a-settlement-agreement/',
             label: 'How to Negotiate Your Settlement Offer',
           },
+          {
+            href: '/penp-calculator/',
+            label: 'Post-Employment Notice Pay (PENP) Calculator',
+          },
+          {
+            href: '/guides/hmrc-tax-return-declaration/',
+            label: 'Declaring a Settlement Agreement on Your HMRC Tax Return',
+          },
+          {
+            href: '/reports/uk-settlement-index-2026/',
+            label: 'UK Employment Settlement Index 2026 Benchmarks',
+          },
         ]}
       />
       <DynamicFaqSection pathname="/settlement-agreement-tax-calculator/" />

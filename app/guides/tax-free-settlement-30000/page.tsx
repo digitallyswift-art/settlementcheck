@@ -565,6 +565,18 @@ export default function TaxFreeSettlementGuide() {
                     description: 'Calculate your statutory redundancy pay floor under the 2026 weekly cap of £751.',
                     tag: 'Calculator',
                   },
+                  {
+                    href: '/penp-calculator/',
+                    title: 'Post-Employment Notice Pay (PENP) Calculator',
+                    description: 'Run the statutory ITEPA 2003 s.402D formula ((BP x D) / P) - T to separate taxable notice pay from your £30,000 allowance.',
+                    tag: 'Tax Calculator',
+                  },
+                  {
+                    href: '/guides/hmrc-tax-return-declaration/',
+                    title: 'How to Declare a Settlement Agreement on Your UK Tax Return',
+                    description: 'Step-by-step SA100 and SA102 Self Assessment guide for termination payments above £30,000.',
+                    tag: 'HMRC Guide',
+                  },
                 ]}
               />
             </div>

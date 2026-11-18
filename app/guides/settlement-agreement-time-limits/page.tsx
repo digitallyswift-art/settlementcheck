@@ -998,6 +998,24 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   description: 'Understand which exit payments qualify for tax-free treatment under Section 403 ITEPA 2003.',
                   tag: 'Tax Guide',
                 },
+                {
+                  href: '/guides/acas-early-conciliation-timeline/',
+                  title: 'ACAS Early Conciliation & Limitation Pause (s.18A)',
+                  description: 'How Section 18A Employment Tribunals Act 1996 pauses the 3-month tribunal limitation clock during settlement talks.',
+                  tag: 'ACAS Rules',
+                },
+                {
+                  href: '/guides/acas-statutory-timeline/',
+                  title: 'ACAS Statutory Timeline & 10-Day Rule Calculator',
+                  description: 'Calculate your ACAS Code 4 10-calendar-day consideration window and primary limitation dates.',
+                  tag: 'Interactive Tool',
+                },
+                {
+                  href: '/tribunal-backlog-tracker/',
+                  title: 'UK Employment Tribunal Backlog Tracker',
+                  description: 'Check live regional MoJ waiting times to preliminary and final hearings.',
+                  tag: 'Data Tracker',
+                },
               ]}
             />
           </div>

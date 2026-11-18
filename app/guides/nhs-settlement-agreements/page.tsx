@@ -585,6 +585,18 @@ export default function NhsSettlementAgreements() {
                     description: 'Understand your statutory right to choose your own independent employment solicitor.',
                     tag: 'Guide',
                   },
+                  {
+                    href: '/redundancy/',
+                    title: 'UK Redundancy & Sector Restructuring Hub',
+                    description: 'Compare NHS Agenda for Change Section 16 redundancy rules alongside Civil Service CSCS and private sector baselines.',
+                    tag: 'Sector Hub',
+                  },
+                  {
+                    href: '/guides/redundancy-vs-settlement-agreement/',
+                    title: 'Redundancy Pay vs Settlement Agreement UK',
+                    description: 'Key differences between statutory redundancy entitlements and negotiated Section 203 exit packages.',
+                    tag: 'Comparison',
+                  },
                 ]}
               />
             </div>

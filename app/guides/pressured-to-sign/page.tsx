@@ -303,6 +303,18 @@ export default function PressuredToSignGuide() {
                   description: 'Spot lowball offers and compare your package against typical UK benchmarks.',
                   tag: 'Fairness Benchmarks',
                 },
+                {
+                  href: '/guides/settlement-agreement-instead-of-pip/',
+                  title: 'Settlement Agreement Instead of a PIP UK',
+                  description: 'How to respond when pressured to accept a quick exit instead of completing a capability process.',
+                  tag: 'PIP Exit',
+                },
+                {
+                  href: '/guides/acas-statutory-timeline/',
+                  title: 'ACAS 10-Day Consideration Rule & Timeline Tool',
+                  description: 'Check whether an employer deadline breaches the ACAS Code 4 10-calendar-day guidance.',
+                  tag: 'ACAS Code 4',
+                },
               ]}
             />
 

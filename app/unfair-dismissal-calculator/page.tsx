@@ -285,6 +285,18 @@ export default function UnfairDismissalCalculatorPage() {
             href: '/guides/pressured-to-sign/',
             label: 'Being Pressured to Sign? Know Your Rights',
           },
+          {
+            href: '/tribunal-backlog-tracker/',
+            label: 'UK Employment Tribunal Backlog & Wait-Time Tracker',
+          },
+          {
+            href: '/guides/employment-tribunal-average-awards-uk/',
+            label: 'Average UK Employment Tribunal Awards (MoJ Tables)',
+          },
+          {
+            href: '/pip-settlement-calculator/',
+            label: 'PIP Settlement Agreement Calculator',
+          },
         ]}
       />
       <DynamicFaqSection pathname="/unfair-dismissal-calculator/" />

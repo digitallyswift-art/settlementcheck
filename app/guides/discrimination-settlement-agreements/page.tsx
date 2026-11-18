@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import RelatedArticles from '@/components/RelatedArticles'
 import FaqAccordion from '@/components/FaqAccordion'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
@@ -559,7 +560,34 @@ export default function DiscriminationSettlementAgreementsGuide() {
         </section>
 
         {/* Section: FAQs */}
-        <section className="py-12 border-b border-rule">
+                <section className="py-10 border-b border-rule bg-white">
+          <div className="max-w-2xl mx-auto px-5">
+            <RelatedArticles
+              title="Related Tribunal Data & Guides"
+              items={[
+              {
+                href: '/guides/employment-tribunal-average-awards-uk/',
+                title: 'Average Employment Tribunal Awards UK (MoJ Tables)',
+                description: 'Official Ministry of Justice median and mean discrimination, sex, race, and disability tribunal awards alongside 2026 Vento bands.',
+                tag: 'MoJ Statistics',
+              },
+              {
+                href: '/tribunal-backlog-tracker/',
+                title: 'UK Employment Tribunal Backlog Tracker',
+                description: 'Compare regional hearing delays (up to 540 days in London) and employer defence cost exposure when negotiating a discrimination exit.',
+                tag: 'Data Tracker',
+              },
+              {
+                href: '/reports/uk-settlement-index-2026/',
+                title: 'UK Employment Settlement Index 2026',
+                description: 'Sector-by-sector UK settlement multiples and statutory cap benchmarks for 2026.',
+                tag: '2026 Report',
+              },
+              ]}
+            />
+          </div>
+        </section>
+<section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />

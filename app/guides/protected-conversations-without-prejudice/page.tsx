@@ -706,6 +706,18 @@ export default function ProtectedConversationsGuide() {
                   description: 'Learn which elements of your settlement qualify for tax-free status.',
                   tag: 'Tax Rules',
                 },
+                {
+                  href: '/guides/settlement-agreement-instead-of-pip/',
+                  title: 'Settlement Agreement Instead of a PIP UK',
+                  description: 'Offered a protected conversation exit during a Performance Improvement Plan? Check your negotiation options and tax rules.',
+                  tag: 'PIP Exit',
+                },
+                {
+                  href: '/pip-settlement-calculator/',
+                  title: 'PIP Settlement Agreement Calculator',
+                  description: 'Estimate a fair exit package based on employer capability process cost avoidance and statutory notice.',
+                  tag: 'Calculator',
+                },
               ]}
             />
           </div>

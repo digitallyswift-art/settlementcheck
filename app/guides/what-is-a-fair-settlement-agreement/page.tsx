@@ -549,6 +549,18 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                   description: 'Benchmark your NHS exit package under Agenda for Change terms and Treasury approval rules.',
                   tag: 'Public Sector',
                 },
+                {
+                  href: '/guides/average-settlement-agreement-payout-uk/',
+                  title: 'Average Settlement Agreement Payouts UK (2026)',
+                  description: 'Typical UK settlement payout ranges and how enhanced redundancy multiples are calculated.',
+                  tag: 'Benchmarks',
+                },
+                {
+                  href: '/reports/uk-settlement-index-2026/',
+                  title: 'UK Employment Settlement Index 2026',
+                  description: 'Sector-by-sector UK settlement multiples and statutory cap compliance benchmarks.',
+                  tag: '2026 Report',
+                },
               ]}
             />
           </div>
