@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { getVerdict, VerdictResult } from '@/lib/calculations'
 import { LegalFeeShieldBadge } from '@/components/LegalFeeShieldBadge'
+import { hasAnalyticsConsent } from '@/lib/consent'
 
 export interface CalcPayload {
   inputs: {
@@ -286,8 +287,9 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     if (initialValues.jurisdiction && (initialValues.jurisdiction === 'GB' || initialValues.jurisdiction === 'NI')) setJurisdiction(initialValues.jurisdiction)
   }, [initialValues])
 
-  // Track enrollment & stage view telemetry
+  // Track enrollment & stage view telemetry (gated by UK PECR analytics consent)
   useEffect(() => {
+    if (!hasAnalyticsConsent()) return
     fetch('/api/telemetry/experiment-event/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -301,6 +303,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
   }, [])
 
   function trackStage(stageNum: number) {
+    if (!hasAnalyticsConsent()) return
     fetch('/api/telemetry/experiment-event/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -410,17 +413,19 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
 
     setPhase('loading')
 
-    // Track completion telemetry
-    fetch('/api/telemetry/experiment-event/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        experiment_id: 'calc_ux_v2',
-        variant: 'thematic',
-        event_type: 'completed',
-        stage_number: 4,
-      }),
-    }).catch(() => {})
+    // Track completion telemetry (gated by UK PECR analytics consent)
+    if (hasAnalyticsConsent()) {
+      fetch('/api/telemetry/experiment-event/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          experiment_id: 'calc_ux_v2',
+          variant: 'thematic',
+          event_type: 'completed',
+          stage_number: 4,
+        }),
+      }).catch(() => {})
+    }
 
     loadingTimers.current.forEach(clearTimeout)
     loadingTimers.current = [

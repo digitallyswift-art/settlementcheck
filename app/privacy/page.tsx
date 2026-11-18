@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import CookieSettingsButton from '@/components/CookieSettingsButton'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy & UK GDPR Compliance | SettlementCheck',
@@ -17,7 +18,7 @@ export default function Privacy() {
       <main className="bg-white py-16">
         <div className="max-w-3xl mx-auto px-4 prose prose-sm prose-gray">
           <h1 className="text-3xl font-black text-gray-900 mb-2 tracking-tight">Privacy Policy</h1>
-          <p className="text-sm text-gray-400 mb-8">Last updated: April 2026</p>
+          <p className="text-sm text-gray-400 mb-8">Last updated: November 2026</p>
 
           <Section title="1. Who we are">
             SettlementCheck.co.uk (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is operated by{' '}
@@ -65,12 +66,12 @@ export default function Privacy() {
             You may withdraw consent at any time by contacting us at privacy@settlementcheck.co.uk.
           </Section>
 
-          <Section title="5. Data retention">
-            We retain your data for up to 24 months from the date of your enquiry, unless you request earlier
-            deletion.
+          <Section title="6. Data retention">
+            We retain your enquiry data for up to 24 months from the date of your enquiry, unless you request earlier
+            deletion. Anonymous cookie consent audit logs (containing no personal identifiers) are retained for up to 24 months to demonstrate compliance under UK GDPR Article 7(1).
           </Section>
 
-          <Section title="6. Your rights">
+          <Section title="7. Your rights">
             <p>Under UK GDPR, you have the right to:</p>
             <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
               <li>Access your personal data</li>
@@ -82,12 +83,74 @@ export default function Privacy() {
             </ul>
           </Section>
 
-          <Section title="7. Cookies" id="cookies">
-            We use essential cookies to operate the site and analytics cookies (Google Analytics) to understand
-            how visitors use the site. You can disable analytics cookies in your browser settings.
+          <Section title="8. Cookies, browser storage &amp; consent" id="cookies">
+            <p className="mb-3">
+              We comply with the UK Privacy and Electronic Communications Regulations (PECR) and UK GDPR. Non-essential analytics and experience-testing cookies are disabled by default until you give explicit opt-in consent via our cookie banner.
+            </p>
+            <div className="mb-4">
+              <CookieSettingsButton
+                label="Manage cookie preferences"
+                className="inline-flex items-center px-4 py-2 rounded-sm border border-ink bg-paper text-ink text-xs font-semibold hover:bg-paper-2 transition-colors"
+              />
+            </div>
+            <div className="overflow-x-auto mb-4">
+              <table className="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr className="border-b border-gray-200 text-gray-900">
+                    <th className="py-2 pr-3 font-semibold">Name</th>
+                    <th className="py-2 pr-3 font-semibold">Provider</th>
+                    <th className="py-2 pr-3 font-semibold">Category</th>
+                    <th className="py-2 pr-3 font-semibold">Purpose</th>
+                    <th className="py-2 font-semibold">Duration</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-gray-600">
+                  <tr>
+                    <td className="py-2 pr-3 font-mono">sc_cookie_consent</td>
+                    <td className="py-2 pr-3">SettlementCheck</td>
+                    <td className="py-2 pr-3">Strictly necessary</td>
+                    <td className="py-2 pr-3">Stores your cookie choices and anonymous consent receipt ID.</td>
+                    <td className="py-2">180 days</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-3 font-mono">sc_saved_calc_*</td>
+                    <td className="py-2 pr-3">SettlementCheck (sessionStorage)</td>
+                    <td className="py-2 pr-3">Strictly necessary</td>
+                    <td className="py-2 pr-3">Preserves your calculator inputs during your active browser session.</td>
+                    <td className="py-2">Session</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-3 font-mono">_ga, _ga_*</td>
+                    <td className="py-2 pr-3">Google Analytics 4</td>
+                    <td className="py-2 pr-3">Analytics (opt-in)</td>
+                    <td className="py-2 pr-3">Measures anonymised page traffic and tool usage via Google Consent Mode v2. Sensitive salary and dispute parameters are stripped before transmission.</td>
+                    <td className="py-2">Up to 13 months</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-3 font-mono">sc_calc_assigned_variant</td>
+                    <td className="py-2 pr-3">SettlementCheck (sessionStorage)</td>
+                    <td className="py-2 pr-3">Analytics (opt-in)</td>
+                    <td className="py-2 pr-3">Assigns a consistent calculator layout during anonymised usability testing.</td>
+                    <td className="py-2">Session</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-gray-500">
+              <strong>Consent audit log (UK GDPR Article 7(1)):</strong> When you accept, reject, or update your cookie settings, we record an anonymous consent receipt (random receipt ID, granted categories, policy version, timestamp, and a one-way salted hash of your IP address) in our secure database. We never store raw IP addresses or personal identifiers in this log.
+            </p>
           </Section>
 
-          <Section title="8. Contact">
+          <Section title="9. Sub-processors &amp; international data transfers">
+            <p className="mb-2">
+              To operate the platform securely, we use vetted infrastructure sub-processors including Vercel (hosting), Supabase (database), Resend (transactional OTP and enquiry emails), Postcodes.io (UK postcode lookup), Google Analytics 4 (only where you opt in), and enterprise AI APIs under zero-data-retention terms for voluntary clause reviews.
+            </p>
+            <p>
+              Where any sub-processor processes data outside the UK, transfers are safeguarded under the UK Extension to the EU-US Data Privacy Framework (UK-US Data Bridge) or the UK International Data Transfer Agreement (IDTA).
+            </p>
+          </Section>
+
+          <Section title="10. Contact">
             For data protection enquiries: privacy@settlementcheck.co.uk
           </Section>
         </div>

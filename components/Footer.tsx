@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import CookieSettingsButton from '@/components/CookieSettingsButton'
 
 export default function Footer() {
   return (
@@ -110,6 +111,9 @@ export default function Footer() {
                   <Link href={l.href} className="hover:text-white transition-colors duration-[160ms]">{l.label}</Link>
                 </li>
               ))}
+              <li>
+                <CookieSettingsButton />
+              </li>
             </ul>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { Suspense, useMemo, useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import SteppedCalculator, { CalcPayload, InitialCalcValues } from '@/components/SteppedCalculator'
 import ThematicCalculator from '@/components/ThematicCalculator'
+import { hasAnalyticsConsent } from '@/lib/consent'
 
 function CalculatorInner() {
   const router = useRouter()
@@ -52,7 +53,13 @@ function CalculatorInner() {
         // Fall back to local session logic
       }
 
-      // 3. Client session persistence (50/50 split)
+      // 3. Client session persistence (50/50 split) — gated by UK PECR analytics consent
+      if (!hasAnalyticsConsent()) {
+        setVariant('sequential')
+        setResolved(true)
+        return
+      }
+
       try {
         const stored = sessionStorage.getItem('sc_calc_assigned_variant')
         if (stored === 'thematic' || stored === 'sequential') {
@@ -87,8 +94,8 @@ function CalculatorInner() {
   }, [searchParams])
 
   function handleCalculate(payload: CalcPayload) {
-    // Record completion event for sequential variant
-    if (variant === 'sequential') {
+    // Record completion event for sequential variant (only when analytics consent is granted)
+    if (variant === 'sequential' && hasAnalyticsConsent()) {
       fetch('/api/telemetry/experiment-event/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

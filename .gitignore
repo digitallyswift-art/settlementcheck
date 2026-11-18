@@ -44,3 +44,6 @@ next-env.d.ts
 
 # Scratch directory
 /scratch/
+
+# Local workspace MCP configs containing personal access tokens
+.agents/plugins/settlementcheck-supabase/mcp_config.json

@@ -1,0 +1,4 @@
+{
+  "name": "settlementcheck-supabase",
+  "description": "Workspace-scoped Supabase MCP server pinned strictly to the SettlementCheck project."
+}

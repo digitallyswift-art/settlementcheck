@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Source_Serif_4, Inter, JetBrains_Mono } from 'next/font/google'
 import Script from 'next/script'
+import CookieConsentBanner from '@/components/CookieConsentBanner'
 import './globals.css'
 
 const sourceSerif4 = Source_Serif_4({
@@ -65,6 +66,45 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <Script
+          id="gcm-consent-default"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
+  var analytics = 'denied';
+  var marketing = 'denied';
+  try {
+    var m = document.cookie.split('; ').find(function(r){ return r.indexOf('sc_cookie_consent=') === 0; });
+    if (m) {
+      var parsed = JSON.parse(decodeURIComponent(m.slice(18)));
+      if (parsed && parsed.v === '2026-11') {
+        if (parsed.analytics === true) analytics = 'granted';
+        if (parsed.marketing === true) marketing = 'granted';
+      }
+    }
+  } catch (e) {}
+  gtag('consent', 'default', {
+    ad_storage: marketing,
+    ad_user_data: marketing,
+    ad_personalization: marketing,
+    analytics_storage: analytics,
+    functionality_storage: 'granted',
+    security_storage: 'granted',
+    wait_for_update: 500
+  });
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', false);
+  try {
+    var u = new URL(window.location.href);
+    ['salary','offer','age','reason','discrimination','yearsNum','monthsNum','years','contractualNotice','offerIncludesNotice'].forEach(function(k){ u.searchParams.delete(k); });
+    gtag('set', { page_location: u.toString() });
+  } catch (e) {}
+})();`,
+          }}
+        />
+        <Script
           id="gtm-script"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
@@ -86,6 +126,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         {children}
+        <CookieConsentBanner />
       </body>
     </html>
   )
