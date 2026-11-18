@@ -17,6 +17,9 @@ const gitHooksDir = path.resolve('.git/hooks');
 if (fs.existsSync(gitHooksDir)) {
   const prePushPath = path.join(gitHooksDir, 'pre-push');
   const hookScript = `#!/bin/sh
+if [ "$CI" = "true" ] || [ -n "$GITHUB_ACTIONS" ]; then
+  exit 0
+fi
 echo "Running SettlementCheck Legal, SRA, FCA, CMA & Brand Pre-Push Gate (npm run verify)..."
 npm run verify
 EXIT_CODE=$?

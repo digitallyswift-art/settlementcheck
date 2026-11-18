@@ -5,6 +5,7 @@
  */
 
 import { SeoArchitectAgent } from '../agents/seo-architect-agent';
+import { calculateSerpPixelWidth, SERP_PIXEL_BUDGETS } from '../tools/serp-pixel-calculator';
 import {
   SeoActuationScope,
   SeoDeploymentRiskTier,
@@ -198,21 +199,45 @@ export function evaluateSeoBlastRadius(
   }
 
   // Invariant: Title length hard budget (50 - 60 chars)
-  if (input.calibratedTitle && input.calibratedTitle.length > 60) {
-    deploymentRisk = 'CRITICAL_RISK';
-    riskReasons.push(`Proposed title exceeds 60 characters (${input.calibratedTitle.length} chars) and will suffer SERP pixel truncation on Google.`);
+  if (input.calibratedTitle) {
+    if (input.calibratedTitle.length < 50 || input.calibratedTitle.length > 60) {
+      deploymentRisk = 'CRITICAL_RISK';
+      riskReasons.push(`Proposed title is ${input.calibratedTitle.length} characters (must be strictly 50 to 60 characters including brand suffix).`);
+    }
+
+    // Invariant: Banned corporate / administrative jargon
+    if (BANNED_SERP_JARGON.test(input.calibratedTitle)) {
+      deploymentRisk = 'CRITICAL_RISK';
+      riskReasons.push('Proposed title contains banned administrative jargon ("triage", "platform", "intake", etc.) that repels UK employees.');
+    }
+
+    // Invariant: Double brand suffix detection
+    if (/SettlementCheck.*SettlementCheck/i.test(input.calibratedTitle)) {
+      deploymentRisk = 'CRITICAL_RISK';
+      riskReasons.push('Double brand suffix detected in title ("| SettlementCheck | SettlementCheck").');
+    }
+
+    // Invariant: SERP desktop pixel width bounding box (<= 580px)
+    const titlePx = calculateSerpPixelWidth(input.calibratedTitle, 'title');
+    if (titlePx > SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX) {
+      deploymentRisk = 'CRITICAL_RISK';
+      riskReasons.push(`Proposed title (${titlePx}px) exceeds desktop SERP pixel cutoff (${SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX}px) and will suffer Google snippet truncation.`);
+    }
+
+    // Invariant: Zero em dashes in title, description or FAQ
+    if (input.calibratedTitle.includes('—') || (input.calibratedMetaDescription && input.calibratedMetaDescription.includes('—')) || (input.faqAnswer && input.faqAnswer.includes('—'))) {
+      deploymentRisk = 'CRITICAL_RISK';
+      riskReasons.push('Banned em dash (—) detected in copy. Must use hyphens or clean punctuation per BRAND.md.');
+    }
   }
 
-  // Invariant: Banned corporate / administrative jargon
-  if (input.calibratedTitle && BANNED_SERP_JARGON.test(input.calibratedTitle)) {
-    deploymentRisk = 'CRITICAL_RISK';
-    riskReasons.push('Proposed title contains banned administrative jargon ("triage", "platform", "intake", etc.) that repels UK employees.');
-  }
-
-  // Invariant: Root domain intent decoupling prohibition
-  if (normPath === '/' && !/calculator|check/i.test(input.calibratedTitle || '')) {
-    deploymentRisk = 'CRITICAL_RISK';
-    riskReasons.push('Root domain intent decoupling prohibited: Root domain (/) carries >95% PageRank and must retain primary calculator / check intent.');
+  // Invariant: Root domain intent decoupling prohibition (Anti-Decoupling Law)
+  if (normPath === '/') {
+    const titleLower = (input.calibratedTitle || '').toLowerCase();
+    if (!titleLower.includes('settlement agreement') || (!titleLower.includes('calculator') && !titleLower.includes('check'))) {
+      deploymentRisk = 'CRITICAL_RISK';
+      riskReasons.push('Root domain intent decoupling prohibited: Root domain (/) carries >95% PageRank and must retain primary "Settlement Agreement Calculator" intent.');
+    }
   }
 
   // Invariant: Interactive calculator title consistency

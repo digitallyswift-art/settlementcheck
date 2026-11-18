@@ -10,14 +10,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'How to Declare a Settlement Agreement on Your UK Tax Return | SettlementCheck',
+  title: 'Declare Settlement on UK Tax Return | SettlementCheck',
   description:
     'Self Assessment tax return guide for UK settlement agreements. Box-by-box SA100 & SA102 breakdown for payments over £30,000 and employer tax indemnity clauses.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/hmrc-tax-return-declaration/',
   },
   openGraph: {
-    title: 'How to Declare a Settlement Agreement on Your UK Tax Return | SettlementCheck',
+    title: 'Declare Settlement on UK Tax Return | SettlementCheck',
     description:
       'Self Assessment tax return guide for UK settlement agreements. Box-by-box SA100 & SA102 breakdown for payments over £30,000 and employer tax indemnity clauses.',
     url: 'https://settlementcheck.co.uk/guides/hmrc-tax-return-declaration/',
@@ -27,7 +27,7 @@ const STATIC_METADATA: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'How to Declare a Settlement Agreement on Your UK Tax Return | SettlementCheck',
+    title: 'Declare Settlement on UK Tax Return | SettlementCheck',
     description:
       'Self Assessment tax return guide for UK settlement agreements. Box-by-box SA100 & SA102 breakdown for payments over £30,000 and employer tax indemnity clauses.',
   },

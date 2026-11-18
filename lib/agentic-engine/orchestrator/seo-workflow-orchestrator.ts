@@ -209,8 +209,18 @@ export class SeoWorkflowOrchestrator {
     const meta = pkg.copyPackage.calibratedMetaDescription;
     const pixelAudit = auditSerpPixelBudgets(title, meta);
 
-    if (title.length < 45 || title.length > 65) {
-      errors.push(`Title length (${title.length} chars) violates SERP character envelope: "${title}"`);
+    if (title.length < 50 || title.length > 60) {
+      errors.push(`Title length (${title.length} chars) violates strict 50-60 character envelope: "${title}"`);
+    }
+    if (/SettlementCheck.*SettlementCheck/i.test(title)) {
+      errors.push(`Double brand suffix detected in title: "${title}"`);
+    }
+    if (/\b(triage|platform|intake|dossier|workflow)\b/i.test(title)) {
+      errors.push(`Banned administrative SERP jargon detected in title: "${title}"`);
+    }
+    const normTarget = targetUrl.replace(/^https?:\/\/[^\/]+/, '') || '/';
+    if (normTarget === '/' && (!title.toLowerCase().includes('settlement agreement') || !title.toLowerCase().includes('calculator'))) {
+      errors.push(`Anti-Decoupling Law violated: Homepage title must contain "Settlement Agreement Calculator"`);
     }
     if (pixelAudit.titlePixels > SERP_PIXEL_BUDGETS.DESKTOP_TITLE_MAX_PX) {
       errors.push(
@@ -475,13 +485,17 @@ export class SeoWorkflowOrchestrator {
 
       // 7. Validation Gate
       const validation = this.validateActionPackage(pkg);
-      if (validation.isValid && statutoryAudit.isCompliant && !antiAiQuality.isLowEffort) {
+      if (
+        validation.isValid &&
+        statutoryAudit.isCompliant &&
+        !antiAiQuality.isLowEffort &&
+        pkg.deploymentRisk !== 'CRITICAL_RISK'
+      ) {
         pkg.status = 'VALIDATED';
         passedCount++;
       } else {
-        // Pre-verified via adversarial counter-plan substitution
-        pkg.status = 'VALIDATED';
-        passedCount++;
+        pkg.status = 'REJECTED';
+        failedCount++;
       }
 
       packages.push(pkg);

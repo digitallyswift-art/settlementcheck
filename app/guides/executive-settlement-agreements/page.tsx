@@ -10,14 +10,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Executive Settlement Agreements UK | Senior Severance Guide 2026',
+  title: 'Executive Settlement Agreements UK | SettlementCheck',
   description:
     'UK senior executive settlement agreement guide. Equity vesting, bad leaver clauses, restrictive covenant buyouts, D&O run-off cover, and 2026 exit standards.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/executive-settlement-agreements/',
   },
   openGraph: {
-    title: 'Executive Settlement Agreements UK | Senior Severance Guide 2026',
+    title: 'Executive Settlement Agreements UK | SettlementCheck',
     description:
       'UK senior executive settlement agreement guide. Equity vesting, bad leaver clauses, restrictive covenant buyouts, D&O run-off cover, and 2026 exit standards.',
     url: 'https://settlementcheck.co.uk/guides/executive-settlement-agreements/',
@@ -27,7 +27,7 @@ const STATIC_METADATA: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Executive Settlement Agreements UK | Senior Severance Guide 2026',
+    title: 'Executive Settlement Agreements UK | SettlementCheck',
     description:
       'UK senior executive settlement agreement guide. Equity vesting, bad leaver clauses, restrictive covenant buyouts, D&O run-off cover, and 2026 exit standards.',
   },

@@ -5,6 +5,7 @@ const checks = [
   { name: 'evals', cmd: 'npm run test:evals' },
   { name: 'legal', cmd: 'npm run audit:legal' },
   { name: 'brand', cmd: 'npm run audit:copy' },
+  { name: 'titles', cmd: 'npm run audit:titles' },
   { name: 'links', cmd: 'npm run check:links' },
   { name: 'audit-lint', cmd: 'npm run lint:audit' },
 ];

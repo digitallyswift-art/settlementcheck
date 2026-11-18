@@ -220,5 +220,11 @@ export class Ga4TelemetryClient {
     this.emit('lead_completed', {
       referral_assigned: referralAssigned ? 1 : 0,
     });
+    // Google Analytics 4 standard recommended event for lead generation
+    this.emit('generate_lead', {
+      referral_assigned: referralAssigned ? 1 : 0,
+      currency: 'GBP',
+      value: 150,
+    });
   }
 }

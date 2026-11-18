@@ -5,16 +5,18 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
+  title: {
+    absolute: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
+  },
   description:
-    'Free UK settlement agreement calculator based on April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.',
+    'Free UK settlement agreement calculator with April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/',
   },
   openGraph: {
     title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
     description:
-      'Free UK settlement agreement calculator based on April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.',
+      'Free UK settlement agreement calculator with April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.',
     url: 'https://settlementcheck.co.uk/',
     type: 'website',
     locale: 'en_GB',
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
     description:
-      'Free UK settlement agreement calculator based on April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.',
+      'Free UK settlement agreement calculator with April 2026 statutory rates (£751/wk cap) & £30k tax exemption. Calculate your payout in 60s. Instant check.',
   },
 }
 

@@ -17,6 +17,7 @@ import { getOfficialBenchmark } from '@/lib/statutory-rates'
 import { trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
 import { LegalFeeShieldBadge, LegalFeeInlineCard } from '@/components/LegalFeeShieldBadge'
 import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers'
+import InlineSolicitorIntakeCard from '@/components/InlineSolicitorIntakeCard'
 
 /* ── Shared tiny components ─────────────────────────────────────── */
 
@@ -2304,6 +2305,13 @@ function ResultsContent() {
       offer,
       salary,
     })
+    const cardEl = document.getElementById('solicitor-intake-card')
+    if (cardEl) {
+      cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      const nameInput = cardEl.querySelector('input')
+      if (nameInput) nameInput.focus()
+      return
+    }
     const variantParam = searchParams.get('variant') || (typeof window !== 'undefined' ? sessionStorage.getItem('sc_calc_assigned_variant') : null) || 'sequential'
     const p = new URLSearchParams({
       verdict: result.verdict,
@@ -2474,33 +2482,16 @@ function ResultsContent() {
                   )}
                 </div>
 
-                {/* Mobile Immediate Match CTA (Directly below verdict on mobile devices) */}
-                <div className="block lg:hidden no-print">
-                  <div className="bg-white border border-[#E2DCCE] rounded-xl p-4 shadow-sm flex flex-col gap-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-mono uppercase tracking-wider text-[#D9603B] font-bold">
-                        Next Statutory Step
-                      </span>
-                      <span className="text-[11px] text-[#5B6577] bg-[#F7F4EE] px-2 py-0.5 rounded font-medium">
-                        ERA 1996 s.203(3)
-                      </span>
-                    </div>
-                    <p className="text-[13px] text-[#0B1F3A] font-semibold m-0 leading-snug">
-                      Settlement agreements are only legally binding once certified by an independent solicitor. Employers standardly provide a capped contribution (typically £350 to £500+ +VAT) upon completion.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={handleSolicitorMatch}
-                      className="w-full bg-[#D9603B] hover:bg-[#B14A28] text-white font-semibold py-3 px-4 rounded-lg text-[14px] flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer"
-                    >
-                      <span>Connect with a specialist solicitor</span>
-                      <span>&rarr;</span>
-                    </button>
-                    <div className="flex items-center justify-between text-[11px] text-[#8A93A3] pt-1 border-t border-[#F0EBE0]">
-                      <span>✓ Free matching service</span>
-                      <span>✓ Capped employer fee contribution</span>
-                    </div>
-                  </div>
+                {/* Immediate Statutory Match Intake (Directly below verdict for instant lead capture) */}
+                <div className="no-print my-3">
+                  <InlineSolicitorIntakeCard
+                    verdict={result.verdict}
+                    offer={offer}
+                    salary={salary}
+                    years={yearsNum}
+                    disputeReason={reason}
+                    sourceUrl="/results/"
+                  />
                 </div>
 
                 {/* ── 3-TIER LEGAL & INFORMATION FRAMEWORK HEADER ── */}

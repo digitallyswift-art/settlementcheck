@@ -3,7 +3,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'SettlementCheck Terms of Use & Service | SettlementCheck',
+  title: 'Terms of Use & Service Agreement | SettlementCheck',
   description:
     'Terms of use for SettlementCheck.co.uk, the independent platform connecting UK employees with SRA-regulated employment solicitors. Updated for 2026.',
   alternates: { canonical: 'https://settlementcheck.co.uk/terms/' },

@@ -11,14 +11,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Whistleblowing Settlement Agreements UK 2026: Rights & Payouts',
+  title: 'Whistleblowing Settlement Agreements UK | 2026 Guide',
   description:
     'Offered a whistleblowing settlement? Learn your 2026 rights: uncapped tribunal compensation, void gagging clauses, day-one rights, and negotiation steps.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/whistleblowing-settlement-agreements/',
   },
   openGraph: {
-    title: 'Whistleblowing Settlement Agreements UK 2026: Rights & Payouts',
+    title: 'Whistleblowing Settlement Agreements UK | 2026 Guide',
     description:
       'Offered a whistleblowing settlement? Learn your 2026 rights: uncapped tribunal compensation, void gagging clauses, day-one rights, and negotiation steps.',
     url: 'https://settlementcheck.co.uk/guides/whistleblowing-settlement-agreements/',
@@ -28,7 +28,7 @@ const STATIC_METADATA: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Whistleblowing Settlement Agreements UK 2026: Rights & Payouts',
+    title: 'Whistleblowing Settlement Agreements UK | 2026 Guide',
     description:
       'Offered a whistleblowing settlement? Learn your 2026 rights: uncapped tribunal compensation, void gagging clauses, day-one rights, and negotiation steps.',
   },

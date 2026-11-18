@@ -3,25 +3,25 @@
     "id": "policy_route_home_title_lock",
     "scopeType": "ROUTE",
     "scopeValue": "/",
-    "ruleTitle": "Protect Homepage Brand Authority & Legal SRA Triage Hub",
-    "constraintDescription": "The Homepage (/) is strictly locked as the Brand Authority & Legal SRA Triage Hub (Title: 'Settlement Agreement Checker & SRA Triage UK | SettlementCheck', H1: 'Settlement Agreement Checker & Legal SRA Triage Hub UK'). Strictly prohibit assigning 'Settlement Agreement Calculator' to /; the commercial calculator intent belongs exclusively to /calculator/.",
+    "ruleTitle": "Root Domain Intent Protection & Anti-Decoupling Law",
+    "constraintDescription": "The Homepage (/) commands >95% of domain PageRank and is strictly protected under the Anti-Decoupling Law (Title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck', H1: 'Settlement Agreement Calculator UK (2026)'). Strictly prohibit stripping 'Settlement Agreement Calculator' or replacing it with corporate administrative jargon like 'Triage Hub', 'Intake Platform', or 'Checker Hub'.",
     "lockTitleOverwrite": true,
-    "requiredTokens": ["settlement", "agreement", "checker"],
-    "prohibitedPhrases": ["settlement agreement calculator", "how to calculate your settlement"],
+    "requiredTokens": ["settlement", "agreement", "calculator"],
+    "prohibitedPhrases": ["sra triage", "triage hub", "intake platform", "how to calculate your settlement"],
     "source": "BASELINE_INVARIANT",
-    "createdAt": "2026-10-23T19:50:00.000Z"
+    "createdAt": "2026-11-18T21:00:00.000Z"
   },
   {
     "id": "policy_route_calculator_title_lock",
     "scopeType": "ROUTE",
     "scopeValue": "/calculator/",
-    "ruleTitle": "Protect Main Calculator Sole Commercial Transactional Tool",
-    "constraintDescription": "Preserve /calculator/ as the Sole Commercial Transactional Tool (Title: 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck', H1: 'Free Employee Settlement Agreement Calculator UK (2026 Rates)'). Never replace the <title> with informational 'How to...' phrasing.",
+    "ruleTitle": "Protect Main Calculator Deep-Funnel Tool",
+    "constraintDescription": "Preserve /calculator/ as the Deep-Funnel Transactional Tool (Title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck', H1: 'Settlement Agreement Calculator UK (2026 Statutory Rates)'). Title must strictly comply with the 50-60 character budget (never exceeding 60 characters). Never replace the <title> with informational 'How to...' phrasing.",
     "lockTitleOverwrite": true,
     "requiredTokens": ["settlement", "calculator", "uk"],
     "prohibitedPhrases": ["how to calculate"],
     "source": "BASELINE_INVARIANT",
-    "createdAt": "2026-10-23T19:50:00.000Z"
+    "createdAt": "2026-11-18T21:00:00.000Z"
   },
   {
     "id": "policy_anti_churn_title_freeze",

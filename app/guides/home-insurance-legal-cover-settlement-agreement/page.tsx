@@ -12,7 +12,7 @@ import { SETTLEMENT_CHECK_PUBLISHER, SETTLEMENT_CHECK_LEGAL_DESK } from '@/lib/s
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Home Insurance Legal Expenses Cover & Settlement Agreements | SettlementCheck',
+  title: 'Home Insurance Legal Cover & Settlements | SettlementCheck',
   description:
     'Why home insurance legal cover excludes voluntary settlement agreements and how the employer customary contribution funds independent SRA solicitor advice.',
   alternates: {

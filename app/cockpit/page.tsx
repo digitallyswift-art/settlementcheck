@@ -4,7 +4,7 @@ import CockpitAuthGate from './components/CockpitAuthGate';
 import CockpitClient from './CockpitClient';
 
 export const metadata: Metadata = {
-  title: 'Website Cockpit & Autonomous Fleet Command | SettlementCheck',
+  title: 'Website Cockpit & Autonomous Fleet | SettlementCheck',
   description: 'Executive cockpit for autonomous SEO approvals, real-time website telemetry, and inbound lead monitoring.',
   robots: {
     index: false,

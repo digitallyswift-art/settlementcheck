@@ -9,14 +9,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Settlement Agreement After Raising a Grievance UK (2026 Rules)',
+  title: 'Settlement Agreement After a Grievance (2026 Rules)',
   description:
     'Offered a settlement agreement after raising a grievance? Understand Section 111A vs Without Prejudice, s.27 victimisation rules, 2026 payout calculations, and legal fee rules.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-after-grievance/',
   },
   openGraph: {
-    title: 'Settlement Agreement After Raising a Grievance UK (2026 Rules)',
+    title: 'Settlement Agreement After a Grievance (2026 Rules)',
     description:
       'Offered a settlement agreement after raising a grievance? Understand Section 111A vs Without Prejudice, s.27 victimisation rules, 2026 payout calculations, and legal fee rules.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-after-grievance/',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Settlement Agreement After Raising a Grievance UK (2026 Rules)',
+    title: 'Settlement Agreement After a Grievance (2026 Rules)',
     description:
       'Offered a settlement agreement after raising a grievance? Understand Section 111A vs Without Prejudice, s.27 victimisation rules, 2026 payout calculations, and legal fee rules.',
   },

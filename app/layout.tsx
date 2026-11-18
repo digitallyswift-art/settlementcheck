@@ -24,8 +24,8 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: {
-    default: 'Settlement Agreement Calculator UK 2026 | Is Your Offer Fair? | SettlementCheck',
-    template: '%s | SettlementCheck',
+    default: 'Settlement Agreement Calculator UK (2026) | SettlementCheck',
+    template: '%s',
   },
   description:
     'Free settlement agreement calculator. Find out if your offer is fair in 60 seconds. Get matched with a vetted employment solicitor. Standard employer fee contributions apply upon completion.',

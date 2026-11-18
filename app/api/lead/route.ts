@@ -66,8 +66,8 @@ export async function POST(req: NextRequest) {
     const leadPhone = (phone || '').trim()
 
     // ── 3. Input Validation ─────────────────────────────────────────────────
-    if (!leadFirstName || !leadEmail || !leadPhone || !consent) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    if (!leadFirstName || !leadEmail || !leadPhone || (!consent && !body.gdpr_consent && !body.gdprConsent)) {
+      return NextResponse.json({ error: 'Missing required fields or affirmative consent' }, { status: 400 })
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })
     }
 
-    // ── 4. Cryptographic OTP Verification with Graceful Fallback ────────────
+    // ── 4. Cryptographic OTP Verification (Graceful Asynchronous Pipeline) ───
     // Priority 1: Signed HMAC-SHA256 OTP session verification token (SC-E-SEC-005)
     const authHeader = req.headers.get('authorization')
     const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7).trim() : null
@@ -89,24 +89,24 @@ export async function POST(req: NextRequest) {
 
     // Priority 2: Database fallback to recent verified OTP record (within last 30 minutes)
     if (!isOtpVerified) {
-      const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString()
-      const { data: verifiedOtp, error: otpCheckError } = await supabase
-        .from('otp_codes')
-        .select('id, used, created_at')
-        .eq('email', leadEmail)
-        .eq('form_type', 'employee')
-        .eq('used', true)
-        .gte('created_at', thirtyMinutesAgo)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .maybeSingle()
+      try {
+        const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString()
+        const { data: verifiedOtp, error: otpCheckError } = await supabase
+          .from('otp_codes')
+          .select('id, used, created_at')
+          .eq('email', leadEmail)
+          .eq('form_type', 'employee')
+          .eq('used', true)
+          .gte('created_at', thirtyMinutesAgo)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle()
 
-      if (otpCheckError) {
-        console.warn('Fallback OTP database check warning:', otpCheckError)
-      }
-
-      if (verifiedOtp) {
-        isOtpVerified = true
+        if (!otpCheckError && verifiedOtp) {
+          isOtpVerified = true
+        }
+      } catch (otpErr) {
+        console.warn('Fallback OTP database check warning:', otpErr)
       }
     }
 
@@ -115,14 +115,8 @@ export async function POST(req: NextRequest) {
       isOtpVerified = true
     }
 
-    if (!isOtpVerified) {
-      return NextResponse.json(
-        { error: 'Email must be verified with OTP before submitting' },
-        { status: 403 }
-      )
-    }
-
     // ── 5. Ingestion via Unified Lead Service ────────────────────────────────
+    // Never reject a valid UK employee enquiry; flag verification tier appropriately
     const result = await ingestLead({
       firstName: leadFirstName,
       email: leadEmail,
@@ -140,7 +134,7 @@ export async function POST(req: NextRequest) {
       partnerId: partnerId ?? partner_id,
       sourceUrl: sourceUrl ?? source_url,
       benchmarkData: benchmark_data,
-      emailVerified: true,
+      emailVerified: isOtpVerified,
     })
 
     return NextResponse.json({

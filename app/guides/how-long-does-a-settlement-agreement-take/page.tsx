@@ -11,14 +11,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'How Long Does a Settlement Agreement Take? UK 2026 Timeline',
+  title: 'How Long Does a Settlement Agreement Take? | 2026 Guide',
   description:
     'UK settlement agreement timeline and payout dates 2026. Acas 10-day rule, solicitor certification speed, 14-28 day payout windows, and legal safeguards.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/how-long-does-a-settlement-agreement-take/',
   },
   openGraph: {
-    title: 'How Long Does a Settlement Agreement Take? UK 2026 Timeline',
+    title: 'How Long Does a Settlement Agreement Take? | 2026 Guide',
     description:
       'UK settlement agreement timeline and payout dates 2026. Acas 10-day rule, solicitor certification speed, 14-28 day payout windows, and legal safeguards.',
     url: 'https://settlementcheck.co.uk/guides/how-long-does-a-settlement-agreement-take/',
@@ -28,7 +28,7 @@ const STATIC_METADATA: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'How Long Does a Settlement Agreement Take? UK 2026 Timeline',
+    title: 'How Long Does a Settlement Agreement Take? | 2026 Guide',
     description:
       'UK settlement agreement timeline and payout dates 2026. Acas 10-day rule, solicitor review speed, and payout dates explained.',
   },

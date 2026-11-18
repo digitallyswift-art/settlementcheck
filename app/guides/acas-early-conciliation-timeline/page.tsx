@@ -10,14 +10,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'ACAS Early Conciliation & Settlement Timeline UK | 2026 Guide',
+  title: 'ACAS Early Conciliation & Timeline | SettlementCheck',
   description:
     'ACAS Early Conciliation and settlement agreement timeline UK. How Section 18A ETA 1996 pauses the 3-month tribunal limitation clock and ACAS Code 4 rules.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/acas-early-conciliation-timeline/',
   },
   openGraph: {
-    title: 'ACAS Early Conciliation & Settlement Timeline UK | 2026 Guide',
+    title: 'ACAS Early Conciliation & Timeline | SettlementCheck',
     description:
       'ACAS Early Conciliation and settlement agreement timeline UK. How Section 18A ETA 1996 pauses the 3-month tribunal limitation clock and ACAS Code 4 rules.',
     url: 'https://settlementcheck.co.uk/guides/acas-early-conciliation-timeline/',
@@ -27,7 +27,7 @@ const STATIC_METADATA: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ACAS Early Conciliation & Settlement Timeline UK | 2026 Guide',
+    title: 'ACAS Early Conciliation & Timeline | SettlementCheck',
     description:
       'ACAS Early Conciliation and settlement agreement timeline UK. How Section 18A ETA 1996 pauses the 3-month tribunal limitation clock and ACAS Code 4 rules.',
   },

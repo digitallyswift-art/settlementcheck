@@ -8,7 +8,7 @@ import PressCitationBox from '@/components/PressCitationBox'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
-  title: 'Annual UK Employment Settlement Index 2026 | Industry Severance Benchmarks',
+  title: 'UK Employment Settlement Index 2026 | SettlementCheck',
   description:
     'Authoritative 2026 UK settlement agreement benchmark report. Analysing sector severance multiples (1.2x to 3.5x statutory minimum), £751 weekly cap, and PENP tax compliance.',
   alternates: {

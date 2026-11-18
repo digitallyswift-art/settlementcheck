@@ -48,6 +48,7 @@ export interface AppliedSeoRecord {
   actuationScope?: SeoActuationScope;
   deploymentRisk?: SeoDeploymentRiskTier;
   tradeOffSummary?: SeoTradeOffSummary;
+  riskReasons?: string[];
   adversarialReview?: AdversarialSeoReviewResult;
   impressions?: number;
   clicks?: number;
@@ -161,6 +162,7 @@ export class SeoActuatorService {
       actuationScope: blast.actuationScope,
       deploymentRisk: blast.deploymentRisk,
       tradeOffSummary: blast.tradeOffSummary,
+      riskReasons: blast.riskReasons,
     };
   }
 
@@ -720,6 +722,17 @@ export class SeoActuatorService {
 
     const enriched = this.enrichRecordWithBlastRadius(target);
 
+    // Hard Stop Invariant: Refuse deployment if Blast-Radius evaluation flags CRITICAL_RISK
+    if (enriched.deploymentRisk === 'CRITICAL_RISK') {
+      const reasons = enriched.riskReasons?.length
+        ? enriched.riskReasons.join('; ')
+        : 'Violates core blast-radius or anti-decoupling constraints';
+      return {
+        success: false,
+        error: `Deployment Refused: Package exhibits CRITICAL_RISK (${reasons}). Correct violations before actuation.`,
+      };
+    }
+
     // 2. Persist to Supabase FIRST (single source of ACID truth)
     await this.persistRecordToSupabase(enriched);
 
@@ -997,6 +1010,17 @@ export class SeoActuatorService {
 
     const enriched = this.enrichRecordWithBlastRadius(target);
 
+    // Hard Stop Invariant: Refuse deployment if Blast-Radius evaluation flags CRITICAL_RISK
+    if (enriched.deploymentRisk === 'CRITICAL_RISK') {
+      const reasons = enriched.riskReasons?.length
+        ? enriched.riskReasons.join('; ')
+        : 'Violates core blast-radius or anti-decoupling constraints';
+      return {
+        success: false,
+        error: `Deployment Refused: Package exhibits CRITICAL_RISK (${reasons}). Correct violations before actuation.`,
+      };
+    }
+
     await this.persistRecordToSupabase(enriched);
 
     this.memoryStore.set(enriched.id, enriched);
@@ -1042,6 +1066,10 @@ export class SeoActuatorService {
     const toApply = packages.filter(p => {
       const isPending = p.status === 'VALIDATED' || p.status === 'STAGED';
       if (!isPending) return false;
+      // Invariant: Never auto-apply CRITICAL_RISK packages under any circumstances
+      if (p.deploymentRisk === 'CRITICAL_RISK') {
+        return false;
+      }
       if (options?.onlyLowRisk) {
         return p.deploymentRisk === 'LOW_RISK';
       }

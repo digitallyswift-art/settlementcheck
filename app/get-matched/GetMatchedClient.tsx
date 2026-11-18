@@ -411,10 +411,16 @@ export default function GetMatchedClient() {
         }),
       })
       if (!res.ok) throw new Error()
-      // Fire conversion event
+      // Fire conversion event (standard GA4 generate_lead + custom lead_submitted)
       const w = window as any
-      if (typeof w.gtag === 'function') w.gtag('event', 'lead_submitted', { event_category: 'employee_lead', verdict })
-      if (Array.isArray(w.dataLayer)) w.dataLayer.push({ event: 'lead_submitted', verdict })
+      if (typeof w.gtag === 'function') {
+        w.gtag('event', 'lead_submitted', { event_category: 'employee_lead', verdict })
+        w.gtag('event', 'generate_lead', { event_category: 'employee_lead', verdict, currency: 'GBP', value: 150 })
+      }
+      if (Array.isArray(w.dataLayer)) {
+        w.dataLayer.push({ event: 'lead_submitted', verdict })
+        w.dataLayer.push({ event: 'generate_lead', verdict, currency: 'GBP', value: 150 })
+      }
 
       // Dispatch experiment lead submission telemetry
       const assignedVariant = params.get('variant') || (typeof window !== 'undefined' ? sessionStorage.getItem('sc_calc_assigned_variant') : null) || 'sequential'

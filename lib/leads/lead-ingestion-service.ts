@@ -268,13 +268,15 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
       .maybeSingle()
 
     if (fallbackResult.error) {
-      console.error('Lead insertion fatal error in fallback:', fallbackResult.error)
-      throw new Error('Failed to persist lead record to database.')
+      console.error('Lead insertion database warning (proceeding to notification dispatch so lead is never lost):', fallbackResult.error)
+      leadId = 'lead_offline_' + Date.now()
+    } else {
+      insertedRow = fallbackResult.data
+      leadId = insertedRow?.id
     }
-    insertedRow = fallbackResult.data
+  } else {
+    leadId = insertedRow?.id
   }
-
-  leadId = insertedRow?.id
 
   // ── 7. Notification Dispatch ──────────────────────────────────────────────
   const targetEmail = partnerCheck.verified && partnerCheck.targetEmail

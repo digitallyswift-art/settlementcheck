@@ -12,7 +12,7 @@ import { SETTLEMENT_CHECK_PUBLISHER, SETTLEMENT_CHECK_LEGAL_DESK } from '@/lib/s
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'UK Redundancy & Sector Restructuring Directory (2026) | SettlementCheck',
+  title: 'UK Redundancy & Restructuring Guide | SettlementCheck',
   description:
     'Authoritative guide to UK workplace restructuring. Compare NHS Agenda for Change, Civil Service CSCS, City financial services SM&CR, and private sector statutory redundancy terms.',
   alternates: {

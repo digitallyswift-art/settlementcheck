@@ -21,7 +21,7 @@ const faqSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'How SettlementCheck Works: Step-by-Step | SettlementCheck',
+  title: 'How It Works: Step-by-Step Guide | SettlementCheck',
   description:
     'Check your offer in 60s, get matched with a vetted SRA employment solicitor within 24 hours, and sign with confidence. Standard employer fee contributions apply upon completion.',
   alternates: { canonical: 'https://settlementcheck.co.uk/how-it-works/' },

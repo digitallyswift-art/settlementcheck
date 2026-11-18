@@ -95,10 +95,10 @@ export class AdversarialSeoHeadAgent {
     primaryAnchor?: string
   ): string {
     if (normPath === '/') {
-      return 'Settlement Agreement Checker & SRA Triage UK | SettlementCheck';
+      return 'Settlement Agreement Calculator UK (2026) | SettlementCheck';
     }
     if (normPath === '/calculator/') {
-      return 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck';
+      return 'Settlement Agreement Calculator UK (2026) | SettlementCheck';
     }
 
     const baseAnchor = primaryAnchor || query;
@@ -124,31 +124,26 @@ export class AdversarialSeoHeadAgent {
     const isCoreRoute = normPath === '/' || normPath === '/calculator/';
     const overwritesTitle = (input.actuationScope || 'FULL_META_AND_FAQ') === 'FULL_META_AND_FAQ';
 
-    // 0A. Strict Route Contract for / (Brand Authority & Legal SRA Triage Hub)
+    // 0A. Strict Route Contract for / (Root Domain Intent Protection & Anti-Decoupling Law)
     if (normPath === '/') {
       const proposedTitleLower = (input.calibratedTitle || '').toLowerCase();
-      const queryLower = (input.query || '').toLowerCase();
+      // Enforce Core Directive 5: Homepage holds >95% PageRank; stripping calculator intent collapses rankings
       if (
-        proposedTitleLower.includes('settlement agreement calculator') ||
-        (proposedTitleLower.includes('calculator') && !proposedTitleLower.includes('checker')) ||
-        queryLower.includes('settlement agreement calculator')
+        proposedTitleLower.includes('triage') ||
+        proposedTitleLower.includes('dossier') ||
+        proposedTitleLower.includes('intake')
       ) {
         critiquePoints.push(
-          `Route Contract Violation: Homepage (/) is strictly locked as Brand Authority & Legal SRA Triage Hub. Prohibited keyword "calculator" detected in proposed title ("${input.calibratedTitle}") or query ("${input.query}"). The commercial calculator intent belongs exclusively to /calculator/.`
-        );
-      }
-      if (overwritesTitle) {
-        critiquePoints.push(
-          `Core Route Contract Lock: Homepage (/) headline is strictly locked to Brand Authority & Legal SRA Triage Hub ('Settlement Agreement Checker & SRA Triage UK | SettlementCheck'). Full meta title overwrites on / are prohibited; actuation scope must remain ADDITIVE_CONTENT_AND_LINKS.`
+          `Corporate SERP Jargon Violation: Administrative jargon ("${input.calibratedTitle}") detected on homepage (/). Homepage must maintain clear transactional/calculator intent ('Settlement Agreement Calculator UK (2026) | SettlementCheck') and avoid corporate terminology.`
         );
       }
     }
 
     // 0B. Strict Route Contract for /calculator/ (Sole Commercial Transactional Tool)
     if (normPath === '/calculator/') {
-      if (overwritesTitle) {
+      if (overwritesTitle && input.calibratedTitle && input.calibratedTitle.length > 60) {
         critiquePoints.push(
-          `Core Route Contract Lock: /calculator/ is strictly locked as the Sole Commercial Transactional Tool ('Settlement Agreement Calculator UK (2026/27) | SettlementCheck'). Full meta title overwrites on /calculator/ are prohibited; actuation scope must remain ADDITIVE_CONTENT_AND_LINKS.`
+          `Character Budget Exceeded: /calculator/ title ("${input.calibratedTitle}", ${input.calibratedTitle.length} chars) exceeds the strict 50-60 character budget.`
         );
       }
     }
@@ -375,9 +370,9 @@ export class AdversarialSeoHeadAgent {
 
     const safeTitle =
       normPath === '/'
-        ? 'Settlement Agreement Checker & SRA Triage UK | SettlementCheck'
+        ? 'Settlement Agreement Calculator UK (2026) | SettlementCheck'
         : normPath === '/calculator/'
-        ? 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck'
+        ? 'Settlement Agreement Calculator UK (2026) | SettlementCheck'
         : recommendedScope === 'ADDITIVE_CONTENT_AND_LINKS' && input.targetPageExistingH1
         ? (input.targetPageExistingH1.includes('SettlementCheck')
             ? input.targetPageExistingH1
@@ -471,17 +466,17 @@ Return JSON: { "plainEnglishVerdict": string }
           scopeValue: isCoreRoute ? normPath : '*',
           ruleTitle: isCoreRoute
             ? (normPath === '/'
-                ? 'Protect Homepage Brand Authority & Legal SRA Triage Hub'
-                : 'Protect /calculator/ Sole Commercial Transactional Tool')
+                ? 'Root Domain Intent Protection & Anti-Decoupling Law'
+                : 'Protect Main Calculator Deep-Funnel Tool')
             : `Enforce Additive Scope & ITEPA s.403 Precision on Pos > 10 Queries`,
           constraintDescription: isCoreRoute
             ? (normPath === '/'
-                ? "The Homepage (/) is strictly locked as the Brand Authority & Legal SRA Triage Hub. Prohibit assigning 'Settlement Agreement Calculator' to /; the commercial calculator intent belongs exclusively to /calculator/."
-                : "Preserve /calculator/ as the Sole Commercial Transactional Tool ('Settlement Agreement Calculator UK (2026/27) | SettlementCheck'). Never replace the <title> with informational phrasing.")
+                ? "The Homepage (/) commands >95% of domain PageRank and is strictly protected under the Anti-Decoupling Law (Title: 'Settlement Agreement Calculator UK (2026) | SettlementCheck', H1: 'Settlement Agreement Calculator UK (2026)'). Strictly prohibit stripping 'Settlement Agreement Calculator' or replacing it with corporate administrative jargon like 'Triage Hub', 'Intake Platform', or 'Checker Hub'."
+                : "Preserve /calculator/ as the Deep-Funnel Transactional Tool ('Settlement Agreement Calculator UK (2026) | SettlementCheck'). Title must strictly comply with the 50-60 character budget (never exceeding 60 characters). Never replace the <title> with informational phrasing.")
             : `For striking-distance queries (Pos > 10), use ADDITIVE_CONTENT_AND_LINKS scope and qualify £30,000 tax-free compensation (ITEPA 2003 s.403) vs taxable PILON (s.402D) from ${sourceGuide}.`,
           lockTitleOverwrite: isCoreRoute,
-          requiredTokens: normPath === '/' ? ['settlement', 'checker'] : isCoreRoute ? ['settlement', 'calculator', 'uk'] : [],
-          prohibitedPhrases: normPath === '/' ? ['settlement agreement calculator', 'how to calculate your settlement'] : ['you can expect up to', 'how to calculate your settlement'],
+          requiredTokens: normPath === '/' ? ['settlement', 'agreement', 'calculator'] : isCoreRoute ? ['settlement', 'calculator', 'uk'] : [],
+          prohibitedPhrases: normPath === '/' ? ['sra triage', 'triage hub', 'intake platform', 'how to calculate your settlement'] : ['you can expect up to', 'how to calculate your settlement'],
           source: 'ADVERSARIAL_HEAD_PROMOTED',
           createdAt: new Date().toISOString(),
         }

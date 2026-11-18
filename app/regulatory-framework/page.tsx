@@ -6,7 +6,7 @@ import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Regulatory Framework & SRA Rule 5.1 Disclosure | SettlementCheck',
+  title: 'Regulatory Framework & SRA Rules | SettlementCheck',
   description:
     'SettlementCheck regulatory architecture: SRA Standards and Regulations Rule 5.1 compliance, FSMA 2000 non-claims-management declaration, LASPO 2012 insulation, and CMA fee transparency.',
   alternates: { canonical: 'https://settlementcheck.co.uk/regulatory-framework/' },
