@@ -333,8 +333,9 @@ function resolveCanonicalRoute(query, existingPageUrl) {
     return '/guides/compromise-agreement-calculator-uk/';
   }
 
-  // Default core calculator
-  return '/calculator/';
+  // Default core calculator — Root Domain Intent Protection (Anti-Decoupling Law)
+  // Head settlement calculator terms (including ACAS/GOV calculator variants) consolidate on '/'
+  return '/';
 }
 
 /**
@@ -855,10 +856,10 @@ async function runActuator() {
     const isCoreRoute = dest === '/' || dest === '/calculator/';
 
     if (dest === '/') {
-      calibratedTitle = 'Settlement Agreement Checker & SRA Triage UK | SettlementCheck';
+      calibratedTitle = 'Settlement Agreement Calculator UK (2026) | SettlementCheck';
       actuationScope = 'ADDITIVE_CONTENT_AND_LINKS';
       deploymentRisk = 'LOW_RISK';
-      critiquePoints.push('Homepage route locked to Brand Authority & Legal SRA Triage Hub. Full title overwrite converted to ADDITIVE_CONTENT_AND_LINKS.');
+      critiquePoints.push('Homepage route protected under Anti-Decoupling Law. Full title overwrite converted to ADDITIVE_CONTENT_AND_LINKS.');
     } else if (dest === '/calculator/') {
       calibratedTitle = 'Settlement Agreement Calculator UK (2026) | SettlementCheck';
       actuationScope = 'ADDITIVE_CONTENT_AND_LINKS';

@@ -9,26 +9,26 @@ import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: {
-    absolute: 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck',
+    absolute: 'Calculate Your Settlement Offer in 60s | SettlementCheck',
   },
   description:
-    'Free UK settlement agreement calculator updated for April 2026 (£751/wk cap). Calculate net severance, statutory redundancy, and PILON tax in 60s. No email required.',
+    'Interactive 60-second UK settlement offer calculator (April 2026 £751/wk cap). Check statutory redundancy, PILON notice, and £30k tax-free sums. No email.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/calculator/',
   },
   openGraph: {
-    title: 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck',
+    title: 'Calculate Your Settlement Offer in 60s | SettlementCheck',
     description:
-      'Free UK settlement agreement calculator updated for April 2026 (£751/wk cap). Calculate net severance, statutory redundancy, and PILON tax in 60s. No email required.',
+      'Interactive 60-second UK settlement offer calculator (April 2026 £751/wk cap). Check statutory redundancy, PILON notice, and £30k tax-free sums. No email.',
     url: 'https://settlementcheck.co.uk/calculator/',
     type: 'website',
     locale: 'en_GB',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Settlement Agreement Calculator UK (2026/27) | SettlementCheck',
+    title: 'Calculate Your Settlement Offer in 60s | SettlementCheck',
     description:
-      'Free UK settlement agreement calculator updated for April 2026 (£751/wk cap). Calculate net severance, statutory redundancy, and PILON tax in 60s. No email required.',
+      'Interactive 60-second UK settlement offer calculator (April 2026 £751/wk cap). Check statutory redundancy, PILON notice, and £30k tax-free sums. No email.',
   },
 }
 
@@ -203,7 +203,7 @@ const JSON_LD = {
 export default function CalculatorPage() {
   return (
     <>
-      <h1 className="sr-only">Settlement Agreement Calculator UK (2026/27 Statutory Rates)</h1>
+      <h1 className="sr-only">Settlement Agreement Calculator UK (2026 Statutory Rates)</h1>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(JSON_LD) }}
@@ -211,7 +211,7 @@ export default function CalculatorPage() {
       <div className="sr-only" aria-hidden="false">
         <h2>Independent Settlement Agreement Calculations for UK Employees</h2>
         <p>
-          Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. SettlementCheck calculates your complete settlement package under April 2026 statutory rates, including the statutory weekly redundancy cap of £751 (SI 2026/310), statutory notice pay, and the £30,000 tax-free exemption under Section 403 of ITEPA 2003.
+          Neither GOV.UK nor ACAS provides an interactive settlement agreement calculator. SettlementCheck calculates your complete settlement package under April 2026 statutory rates, including the statutory weekly redundancy cap of £751 (SI 2026/310), statutory notice pay, the £123,543 unfair dismissal compensatory cap, and the £30,000 tax-free exemption under Section 403 of ITEPA 2003.
         </p>
         <h2>Related Settlement Agreement Calculators &amp; Legal Guides</h2>
         <ul>

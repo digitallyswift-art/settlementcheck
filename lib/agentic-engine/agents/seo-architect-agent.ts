@@ -28,7 +28,7 @@ export class SeoArchitectAgent {
    * Canonical baseline H1 headings per route to enforce Title-to-H1 DOM alignment
    */
   public static readonly CANONICAL_ROUTE_H1_MAP: Record<string, string> = {
-    '/': 'Settlement Agreement Checker & Legal SRA Triage Hub UK',
+    '/': 'Settlement Agreement Calculator UK (2026)',
     '/calculator/': 'Free Employee Settlement Agreement Calculator UK (2026 Rates)',
     '/calculators/': 'UK Employment & Settlement Agreement Calculators (2026)',
     '/redundancy-calculator/': 'Statutory Redundancy Pay Calculator UK (2026 Rates)',
@@ -227,8 +227,11 @@ export class SeoArchitectAgent {
         : '/get-matched/';
     }
 
-    // Priority 5: Pillar 1 — Transactional Calculators
+    // Priority 5: Pillar 1 — Transactional Calculators & Guides
     if (q.includes('redundancy')) {
+      if (q.includes('settlement') || q.includes('vs') || q.includes('agreement')) {
+        return '/guides/redundancy-vs-settlement-agreement/';
+      }
       if (q.includes('cap') || q.includes('2026')) {
         return '/guides/redundancy-pay-cap-2026/';
       }
@@ -243,7 +246,9 @@ export class SeoArchitectAgent {
       q.includes('calculate') ||
       q.includes('calc')
     ) {
-      return '/calculator/';
+      // Root Domain Intent Protection (Anti-Decoupling Law):
+      // Head transactional calculator terms (including ACAS/GOV calculator variants) belong to '/'
+      return '/';
     }
 
     // Fallback based on categorized intent (TAX_STATUTORY_EXEMPTION & TRANSACTIONAL_CALCULATOR already handled above)

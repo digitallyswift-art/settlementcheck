@@ -500,8 +500,11 @@ export default function NhsSettlementAgreements() {
                 Free statutory calculation. SRA-regulated solicitor matched within 24 hours. NHS employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link href="/settlement-agreement-review/" className="btn-accent w-full sm:w-auto">
-                  Review my agreement clauses →
+                <Link href="/redundancy-calculator/" className="btn-accent w-full sm:w-auto">
+                  Statutory redundancy pay calculator →
+                </Link>
+                <Link href="/" className="w-full sm:w-auto px-5 py-3 rounded-lg border border-white/20 text-white font-semibold text-sm hover:bg-white/10 transition-colors">
+                  Settlement agreement calculator →
                 </Link>
                 <Link href="/get-matched/" className="w-full sm:w-auto px-5 py-3 rounded-lg border border-white/20 text-white font-semibold text-sm hover:bg-white/10 transition-colors">
                   Match with NHS solicitor →

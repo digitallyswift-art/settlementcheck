@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "applied_critical_drop_redundancy_settlement",
+    "query": "redundancy & settlement agreements",
+    "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/redundancy-vs-settlement-agreement/",
+    "calibratedTitle": "Redundancy & Settlement Agreements UK | SettlementCheck",
+    "calibratedMetaDescription": "Compare redundancy vs settlement agreements under April 2026 rates (£751/wk cap, £30k tax exemption). Check your legal rights and severance payout now.",
+    "faqQuestion": "How do redundancy and settlement agreements differ under UK employment law?",
+    "faqAnswer": "Under Section 135 and 162 of the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Ordinary unfair dismissal claims are subject to a compensatory cap of £123,543.",
+    "contextualLinkSnippet": "If your employer is proposing an exit, check our [redundancy and settlement agreement guide](/guides/redundancy-vs-settlement-agreement/) before signing.",
+    "status": "APPLIED",
+    "priority": "CRITICAL",
+    "actionType": "SNIPPET_CALIBRATION",
+    "actuationScope": "FULL_META_AND_FAQ",
+    "deploymentRisk": "LOW_RISK",
+    "appliedAt": "2026-11-18T20:44:00.000Z",
+    "version": 1
+  }
+]

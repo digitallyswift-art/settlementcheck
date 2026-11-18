@@ -12,16 +12,18 @@ import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
+  title: {
+    absolute: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
+  },
   description:
-    'Calculate your statutory redundancy pay under April 2026 UK rates (£751 weekly cap). See your true net figure after tax. Free check, no email required.',
+    'Calculate statutory redundancy pay with April 2026 UK rates (£751/wk cap) plus enhanced settlement & tax-free net pay. Free instant check, no email.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/redundancy-calculator/',
   },
   openGraph: {
     title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your statutory redundancy pay under April 2026 UK rates (£751 weekly cap). See your true net figure after tax. Free check, no email required.',
+      'Calculate statutory redundancy pay with April 2026 UK rates (£751/wk cap) plus enhanced settlement & tax-free net pay. Free instant check, no email.',
     url: 'https://settlementcheck.co.uk/redundancy-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -31,7 +33,7 @@ const STATIC_METADATA: Metadata = {
     card: 'summary_large_image',
     title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate your statutory redundancy entitlement under April 2026 rates (£751 cap). Free instant calculator, no email required.',
+      'Calculate statutory redundancy pay with April 2026 UK rates (£751/wk cap) plus enhanced settlement & tax-free net pay. Free instant check, no email.',
   },
 }
 
@@ -48,7 +50,7 @@ const REDUNDANCY_STEPS: StepItem[] = [
   {
     n: '02',
     t: 'Compare your offer against statutory and negotiation baselines',
-    d: 'There is often a gap between what an employer first offers and what a reasonable settlement looks like. If you are also signing away the right to bring tribunal claims, the total package should reflect that. The calculator shows where your offer sits.',
+    d: 'There is often a gap between what an employer first offers and what a reasonable settlement looks like. If you are also signing away the right to bring unfair dismissal claims (where statutory compensation is capped up to £123,543 under April 2026 rates), the total package should reflect that. The calculator shows where your offer sits.',
   },
   {
     n: '03',

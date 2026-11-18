@@ -10,16 +10,18 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Redundancy vs Settlement Agreement UK | 2026 Exit Guide',
+  title: {
+    absolute: 'Redundancy & Settlement Agreements UK | SettlementCheck',
+  },
   description:
-    'Redundancy vs settlement agreement UK guide. Compare statutory redundancy pay (£751 cap) against settlement offers, notice pay, and severance premiums.',
+    'Compare redundancy vs settlement agreements under April 2026 rates (£751/wk cap, £30k tax exemption). Check your legal rights and severance payout now.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/redundancy-vs-settlement-agreement/',
   },
   openGraph: {
-    title: 'Redundancy vs Settlement Agreement UK | 2026 Exit Guide',
+    title: 'Redundancy & Settlement Agreements UK | SettlementCheck',
     description:
-      'Redundancy vs settlement agreement UK guide. Compare statutory redundancy pay (£751 cap) against settlement offers, notice pay, and severance premiums.',
+      'Compare redundancy vs settlement agreements under April 2026 rates (£751/wk cap, £30k tax exemption). Check your legal rights and severance payout now.',
     url: 'https://settlementcheck.co.uk/guides/redundancy-vs-settlement-agreement/',
     type: 'article',
     locale: 'en_GB',
@@ -27,9 +29,9 @@ const STATIC_METADATA: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Redundancy vs Settlement Agreement UK | 2026 Exit Guide',
+    title: 'Redundancy & Settlement Agreements UK | SettlementCheck',
     description:
-      'Redundancy vs settlement agreement UK guide. Compare statutory redundancy pay (£751 cap) against settlement offers, notice pay, and severance premiums.',
+      'Compare redundancy vs settlement agreements under April 2026 rates (£751/wk cap, £30k tax exemption). Check your legal rights and severance payout now.',
   },
 }
 
@@ -243,7 +245,11 @@ export default function RedundancyVsSettlementGuide() {
               Carrying out a genuine redundancy consultation requires significant time, administrative overhead, and management resources. Under <strong>Section 188 of TULRCA 1992</strong>, collective redundancies involving 20 or more staff require a minimum 30-day consultation period (45 days for 100+ employees).
             </p>
             <p className="sc-body mb-4">
-              Even in individual redundancies, employers face substantial legal exposure if selection scoring matrices are subjective or inadvertently discriminate against employees on maternity leave, disability, or part-time contracts. Offering a settlement agreement provides the employer with an instant, irrevocable release of all tribunal claims.
+              Even in individual redundancies, employers face substantial legal exposure if selection scoring matrices are subjective or inadvertently discriminate against employees on maternity leave, disability, or part-time contracts. Under April 2026 rates (SI 2026/310), the statutory compensatory cap for ordinary unfair dismissal is £123,543 (or 52 weeks gross pay, whichever is lower). You can model this exposure using our{' '}
+              <Link href="/unfair-dismissal-calculator/" className="text-coral underline hover:text-ink transition-colors font-medium">
+                unfair dismissal calculator
+              </Link>
+              . Offering a settlement agreement provides the employer with an instant, irrevocable release of all tribunal claims and eliminates liability up to this statutory maximum.
             </p>
           </div>
         </section>
@@ -253,7 +259,15 @@ export default function RedundancyVsSettlementGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-4">2. The Settlement Premium Equation</h2>
             <p className="sc-body mb-4">
-              An employee will want to carefully examine any proposal that merely matches calculated statutory redundancy and contractual notice pay. Where statutory qualifying criteria are met under Section 135 ERA 1996 (and no forfeiture applies under Section 141 for unreasonably refusing suitable alternative employment), statutory redundancy is already a baseline entitlement.
+              An employee will want to carefully examine any proposal that merely matches calculated statutory redundancy and contractual notice pay. Where statutory qualifying criteria are met under Section 135 ERA 1996 (and no forfeiture applies under Section 141 for unreasonably refusing suitable alternative employment), statutory redundancy is already a baseline entitlement. Check your statutory floor first with our{' '}
+              <Link href="/redundancy-calculator/" className="text-coral underline hover:text-ink transition-colors font-medium">
+                redundancy pay calculator
+              </Link>
+              , then compare your full exit offer on our{' '}
+              <Link href="/" className="text-coral underline hover:text-ink transition-colors font-medium">
+                settlement agreement calculator
+              </Link>
+              .
             </p>
             <div className="rounded-xl border border-rule bg-paper p-5 my-6">
               <p className="text-sm font-bold text-coral uppercase tracking-wider mb-2">The Minimum Commercial Settlement Benchmark:</p>

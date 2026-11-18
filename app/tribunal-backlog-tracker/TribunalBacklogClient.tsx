@@ -674,7 +674,28 @@ export default function TribunalBacklogClient() {
       {/* Internal Cross-Linking Navigation */}
       <section className="bg-paper p-6 rounded-xl border border-rule space-y-4">
         <h3 className="text-base font-serif font-semibold text-ink">Related Employment Law Tools &amp; Data Guides</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+          <Link
+            href="/"
+            className="p-3 bg-card rounded-lg border border-rule text-ink hover:text-coral hover:border-coral/50 transition-colors"
+          >
+            <span className="font-semibold block">Settlement Agreement Calculator</span>
+            <span className="text-xs text-muted">Evaluate your full exit offer under April 2026 rates</span>
+          </Link>
+          <Link
+            href="/redundancy-calculator/"
+            className="p-3 bg-card rounded-lg border border-rule text-ink hover:text-coral hover:border-coral/50 transition-colors"
+          >
+            <span className="font-semibold block">Redundancy Pay Calculator</span>
+            <span className="text-xs text-muted">Calculate statutory redundancy under the £751/wk cap</span>
+          </Link>
+          <Link
+            href="/unfair-dismissal-calculator/"
+            className="p-3 bg-card rounded-lg border border-rule text-ink hover:text-coral hover:border-coral/50 transition-colors"
+          >
+            <span className="font-semibold block">Unfair Dismissal Calculator</span>
+            <span className="text-xs text-muted">Calculate compensatory &amp; basic awards</span>
+          </Link>
           <Link
             href="/statutory-rates-history/"
             className="p-3 bg-card rounded-lg border border-rule text-ink hover:text-coral hover:border-coral/50 transition-colors"
@@ -688,13 +709,6 @@ export default function TribunalBacklogClient() {
           >
             <span className="font-semibold block">Settlement vs Tribunal</span>
             <span className="text-xs text-muted">Cost, risk, and timeline comparison guide</span>
-          </Link>
-          <Link
-            href="/unfair-dismissal-calculator/"
-            className="p-3 bg-card rounded-lg border border-rule text-ink hover:text-coral hover:border-coral/50 transition-colors"
-          >
-            <span className="font-semibold block">Unfair Dismissal Calculator</span>
-            <span className="text-xs text-muted">Calculate compensatory &amp; basic awards</span>
           </Link>
           <Link
             href="/guides/how-to-negotiate-a-settlement-agreement/"

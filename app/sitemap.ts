@@ -33,9 +33,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     // Tier 1: Conversion pillars
     { url: `${base}/`,                                                lastModified: getLastMod(`${base}/`), changeFrequency: 'weekly',  priority: 1.0 },
-    { url: `${base}/calculators/`,                                    lastModified: getLastMod(`${base}/calculators/`), changeFrequency: 'weekly',  priority: 1.0 },
-    { url: `${base}/calculator/`,                                     lastModified: getLastMod(`${base}/calculator/`), changeFrequency: 'weekly',  priority: 1.0 },
-    { url: `${base}/settlement-agreement-review/`,                    lastModified: getLastMod(`${base}/settlement-agreement-review/`), changeFrequency: 'weekly',  priority: 1.0 },
+    { url: `${base}/calculators/`,                                    lastModified: getLastMod(`${base}/calculators/`), changeFrequency: 'weekly',  priority: 0.9 },
+    { url: `${base}/calculator/`,                                     lastModified: getLastMod(`${base}/calculator/`), changeFrequency: 'weekly',  priority: 0.8 },
+    { url: `${base}/settlement-agreement-review/`,                    lastModified: getLastMod(`${base}/settlement-agreement-review/`), changeFrequency: 'weekly',  priority: 0.9 },
 
     // Tier 2: Programmatic SEO landing pages
     { url: `${base}/redundancy/`,                                     lastModified: getLastMod(`${base}/redundancy/`), changeFrequency: 'monthly', priority: 0.9 },

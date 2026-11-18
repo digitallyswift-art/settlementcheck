@@ -8,16 +8,16 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Protective Award Calculator & Rules 2026 | SettlementCheck',
+  title: 'Protective Award UK: 90-Day Rules & Guide | SettlementCheck',
   description:
-    'Calculate up to 90 days gross pay for collective redundancy consultation failure. Free calculator, solvent vs insolvent rules, and 2026 statutory caps.',
+    'Claim up to 90 days gross pay for collective redundancy consultation failure under TULRCA 1992 s.189. Solvent vs insolvent rules and 2026 statutory caps.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/protective-award/',
   },
   openGraph: {
-    title: 'Protective Award Calculator & Rules 2026 | SettlementCheck',
+    title: 'Protective Award UK: 90-Day Rules & Guide | SettlementCheck',
     description:
-      'Calculate up to 90 days gross pay for collective redundancy consultation failure. Free calculator, solvent vs insolvent rules, and 2026 statutory caps.',
+      'Claim up to 90 days gross pay for collective redundancy consultation failure under TULRCA 1992 s.189. Solvent vs insolvent rules and 2026 statutory caps.',
     url: 'https://settlementcheck.co.uk/guides/protective-award/',
     type: 'website',
     locale: 'en_GB',
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Protective Award Calculator & Rules 2026 | SettlementCheck',
+    title: 'Protective Award UK: 90-Day Rules & Guide | SettlementCheck',
     description:
-      'Calculate up to 90 days gross pay for collective redundancy consultation failure. Free calculator, solvent vs insolvent rules, and 2026 statutory caps.',
+      'Claim up to 90 days gross pay for collective redundancy consultation failure under TULRCA 1992 s.189. Solvent vs insolvent rules and 2026 statutory caps.',
   },
 }
 
@@ -63,7 +63,7 @@ const faqSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Protective Award Redundancy Claims: 90 Days Pay Calculator & 2026 Rules',
+  headline: 'Protective Award Redundancy Claims: 90 Days Pay & 2026 Rules',
   url: 'https://settlementcheck.co.uk/guides/protective-award/',
   image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-05-23',
@@ -155,9 +155,9 @@ export default function ProtectiveAwardGuide() {
               <span className="text-muted text-xs">/</span>
               <span className="text-xs text-ink truncate">Protective Award</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Statutory Redundancy Rights &amp; Calculator</p>
+            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Statutory Redundancy Rights</p>
             <h1 className="sc-h1 mb-5">
-              Protective Award Redundancy Claims: 90 Days Pay Calculator &amp; 2026 Rules
+              Protective Award Redundancy Claims: 90 Days Pay &amp; 2026 Rules
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
               <span>SettlementCheck Legal Analysis</span>
