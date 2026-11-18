@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
+import RelatedArticles from '@/components/RelatedArticles'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
@@ -344,6 +345,35 @@ export default function AcasEarlyConciliationTimelineGuide() {
           <div className="max-w-2xl mx-auto px-5">
             <h2 className="sc-section-h2 mb-6">Frequently Asked Questions: ACAS Timelines</h2>
             <FaqAccordion faqs={FAQS} />
+            <RelatedArticles
+              title="Related ACAS & Tribunal Guides"
+              items={[
+                {
+                  href: '/guides/acas-statutory-timeline/',
+                  title: 'ACAS Code 4 10-Day & Limitation Date Calculator',
+                  description: 'Use our interactive calculator to check 10-calendar-day consideration windows and 3-month-less-one-day deadlines.',
+                  tag: 'Interactive Tool',
+                },
+                {
+                  href: '/tribunal-backlog-tracker/',
+                  title: 'UK Employment Tribunal Backlog Tracker',
+                  description: 'Track MoJ regional hearing wait times (up to 540 days in London) and employer defence cost exposure.',
+                  tag: 'MoJ Data Tracker',
+                },
+                {
+                  href: '/guides/employment-tribunal-average-awards-uk/',
+                  title: 'Average Employment Tribunal Awards UK (MoJ Tables)',
+                  description: 'Compare median unfair dismissal and discrimination tribunal awards against settlement agreement offers.',
+                  tag: 'MoJ Statistics',
+                },
+                {
+                  href: '/guides/settlement-agreement-time-limits/',
+                  title: 'Settlement Agreement Time Limits (3-Month Rule)',
+                  description: 'Full breakdown of statutory tribunal deadlines, employer ultimatums, and urgent solicitor advice.',
+                  tag: 'Deadlines Guide',
+                },
+              ]}
+            />
           </div>
         </section>
 

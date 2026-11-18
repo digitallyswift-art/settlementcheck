@@ -335,13 +335,27 @@ export default function AcasStatutoryTimelinePage() {
             <h3 className="text-base font-serif font-bold text-ink">
               Related Statutory Calculators &amp; Legal Guides
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
               <Link
                 href="/tribunal-backlog-tracker/"
                 className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
               >
                 <span className="font-semibold block">Tribunal Backlog Tracker</span>
                 <span className="text-muted text-[11px]">Regional wait times &amp; employer defence costs</span>
+              </Link>
+              <Link
+                href="/guides/acas-early-conciliation-timeline/"
+                className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
+              >
+                <span className="font-semibold block">ACAS Early Conciliation Clock Pause</span>
+                <span className="text-muted text-[11px]">Section 18A Day A / Day B limitation freeze &amp; COT3</span>
+              </Link>
+              <Link
+                href="/guides/employment-tribunal-average-awards-uk/"
+                className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
+              >
+                <span className="font-semibold block">Average Tribunal Awards UK</span>
+                <span className="text-muted text-[11px]">Official MoJ median awards &amp; £123,543 cap</span>
               </Link>
               <Link
                 href="/settlement-agreement-review/"

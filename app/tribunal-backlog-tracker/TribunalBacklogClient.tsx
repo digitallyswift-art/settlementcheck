@@ -717,6 +717,27 @@ export default function TribunalBacklogClient() {
             <span className="font-semibold block">Negotiation Guide</span>
             <span className="text-xs text-muted">Step-by-step tactics to increase your exit sum</span>
           </Link>
+          <Link
+            href="/guides/employment-tribunal-average-awards-uk/"
+            className="p-3 bg-card rounded-lg border border-rule text-ink hover:text-coral hover:border-coral/50 transition-colors"
+          >
+            <span className="font-semibold block">Average Tribunal Awards UK</span>
+            <span className="text-xs text-muted">Official MoJ median awards &amp; 2026 Vento bands</span>
+          </Link>
+          <Link
+            href="/guides/acas-early-conciliation-timeline/"
+            className="p-3 bg-card rounded-lg border border-rule text-ink hover:text-coral hover:border-coral/50 transition-colors"
+          >
+            <span className="font-semibold block">ACAS Early Conciliation Timeline</span>
+            <span className="text-xs text-muted">How s.18A pauses the 3-month tribunal limitation clock</span>
+          </Link>
+          <Link
+            href="/reports/uk-settlement-index-2026/"
+            className="p-3 bg-card rounded-lg border border-rule text-ink hover:text-coral hover:border-coral/50 transition-colors"
+          >
+            <span className="font-semibold block">UK Settlement Index 2026</span>
+            <span className="text-xs text-muted">8-sector severance multiples &amp; statutory benchmarks</span>
+          </Link>
         </div>
       </section>
     </div>
