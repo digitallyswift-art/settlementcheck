@@ -31,11 +31,6 @@ const CALCULATOR_LINKS = [
     sub: 'Work out the £30k exemption, PILON & net pay',
   },
   {
-    href: '/settlement-agreement-review/',
-    label: 'Settlement Agreement Review',
-    sub: 'Check draft contract clauses, £30k tax & legal fees',
-  },
-  {
     href: '/protective-award-calculator/',
     label: 'Protective Award Calculator',
     sub: 'Up to 90 days gross pay for failure to consult',
@@ -186,12 +181,12 @@ export default function Nav() {
             </div>
           </div>
 
-          {/* Settlement Agreement & Contract Review Tool */}
+          {/* UK Employment Tribunal Backlog Tracker */}
           <Link
-            href="/settlement-agreement-review/"
+            href="/tribunal-backlog-tracker/"
             className="text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
           >
-            Review Agreement
+            Tribunal Tracker
           </Link>
 
           {/* Guides dropdown */}
@@ -346,13 +341,13 @@ export default function Nav() {
           </div>
 
           <Link
-            href="/settlement-agreement-review/"
+            href="/tribunal-backlog-tracker/"
             className="text-[15px] font-medium text-ink py-2 flex items-center justify-between hover:text-coral transition-colors"
             onClick={() => setMobileOpen(false)}
           >
-            <span>Review Agreement</span>
+            <span>Tribunal Tracker</span>
             <span className="text-[11px] font-mono uppercase tracking-wider text-coral font-semibold bg-coral/10 px-2 py-0.5 rounded">
-              Contract Checker
+              MoJ Wait Times
             </span>
           </Link>
 

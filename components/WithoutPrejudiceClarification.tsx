@@ -33,7 +33,7 @@ export function WithoutPrejudiceClarification({
   const getTopicBody = (t: ClarificationTopic): string => {
     switch (t) {
       case 'legal_fee':
-        return `1. Legal Fee Contribution Clause: The draft records an employer contribution of [£350/£500] + VAT toward independent legal advice. Instructed solicitors routinely review whether the employer will agree to increase this commercial contribution to £500 - £750 + VAT to conclude the s.203(3) ERA 1996 review.`
+        return `1. Legal Fee Contribution Clause: The draft records an employer contribution of [£350/£500] + VAT toward independent legal advice upon completion. Instructed solicitors routinely review whether the employer's capped commercial contribution (typically £350 to £500+ plus VAT) covers the scope of the s.203(3) ERA 1996 review, and confirm any terms for work exceeding the cap or abortive costs.`
 
       case 'ex_gratia_benchmark':
         return `2. Ex-Gratia Termination Payment Review: The recorded figure of ${formattedAmount} is being reviewed alongside statutory notice and redundancy baselines. Consultation with an independent solicitor allows exploratory inquiries (Stevenson, Jacques & Co v McLean [1880]) to proceed without inadvertently triggering counter-offer rejection rules (Hyde v Wrench [1840]).`
@@ -61,7 +61,7 @@ COMMON LAW CONTRACT & PRIVILEGE CONTEXT FOR SOLICITOR DISCUSSION:
 - Under Rush & Tompkins [1989] and Framlington Group v Barnetson [2007], common law Without Prejudice privilege applies only where a genuine dispute exists, and Section 111A ERA 1996 applies solely to ordinary unfair dismissal claims.
 - Solicitor discussions determine how to finalise commercial inquiries before employer consideration deadlines expire.
 
-Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.`
+Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.`
 
   const handleCopy = async () => {
     try {
@@ -128,9 +128,9 @@ Privilege Notice: Transmitting financial proposals directly to HR without legal 
                 : 'bg-[#F7F4EE] text-[#0B1F3A] border-[#E2DCCE] hover:border-[#0B1F3A]'
             }`}
           >
-            <div className="font-bold mb-0.5">1. Solicitor Legal Fee Uplift</div>
+            <div className="font-bold mb-0.5">1. Solicitor Legal Fee Contribution</div>
             <div className={`text-[11px] ${topic === 'legal_fee' ? 'text-white/80' : 'text-[#0B1F3A]/70'}`}>
-              Request £750 - £1,000 + VAT fee coverage without risking the payout.
+              Discuss employer commercial fee contributions (typically £350 to £500+ + VAT) with your solicitor.
             </div>
           </button>
 
@@ -143,9 +143,9 @@ Privilege Notice: Transmitting financial proposals directly to HR without legal 
                 : 'bg-[#F7F4EE] text-[#0B1F3A] border-[#E2DCCE] hover:border-[#0B1F3A]'
             }`}
           >
-            <div className="font-bold mb-0.5">2. Compensation Benchmarking</div>
+            <div className="font-bold mb-0.5">2. Ex-Gratia &amp; Statutory Baselines</div>
             <div className={`text-[11px] ${topic === 'ex_gratia_benchmark' ? 'text-white/80' : 'text-[#0B1F3A]/70'}`}>
-              Inquire about MoJ tribunal comparisons without rejecting the sum.
+              Prepare statutory baseline and offer comparison questions for solicitor review.
             </div>
           </button>
 
@@ -160,7 +160,7 @@ Privilege Notice: Transmitting financial proposals directly to HR without legal 
           >
             <div className="font-bold mb-0.5">3. Agreed Reference &amp; Non-Disparagement</div>
             <div className={`text-[11px] ${topic === 'reference_confidentiality' ? 'text-white/80' : 'text-[#0B1F3A]/70'}`}>
-              Request standard reference schedule and mutual company gagging clause.
+              Review agreed factual reference schedules and mutual non-derogatory wording with a solicitor.
             </div>
           </button>
 
@@ -175,7 +175,7 @@ Privilege Notice: Transmitting financial proposals directly to HR without legal 
           >
             <div className="font-bold mb-0.5">4. Tax &amp; PILON Notice Split</div>
             <div className={`text-[11px] ${topic === 'tax_pilon_structure' ? 'text-white/80' : 'text-[#0B1F3A]/70'}`}>
-              Clarify HMRC s.402D post-employment notice pay vs s.403 tax-free floor.
+              Check HMRC s.402D post-employment notice pay vs the s.403 £30,000 tax-free cap.
             </div>
           </button>
         </div>
@@ -231,7 +231,7 @@ Privilege Notice: Transmitting financial proposals directly to HR without legal 
               Intake Agenda for Your Instructed Solicitor
             </h4>
             <p className="text-xs text-[#0B1F3A]/70 m-0">
-              Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.
+              Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
             </p>
           </div>
           <button

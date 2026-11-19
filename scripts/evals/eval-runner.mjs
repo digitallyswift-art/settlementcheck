@@ -436,12 +436,13 @@ const leadsHasPartnerVerify = leadsRouteContent.includes('verifyPartnerId');
 const leadsHasRateLimit = leadsRouteContent.includes('rateLimitRequest');
 assert(leadsHasIngest && leadsHasPartnerVerify && leadsHasRateLimit, 'app/api/leads/route.ts consolidates via ingestLead with partner validation and rate limiting');
 
-// Test 8E: app/api/review-agreement/route.ts 25k cap, 15s timeout, and rate limiting
+// Test 8E: app/api/review-agreement/route.ts retired (410 Gone) with zero free-text LLM transmission
 const reviewRouteContent = fs.readFileSync(path.resolve('app/api/review-agreement/route.ts'), 'utf8');
-const reviewHasCharCap = reviewRouteContent.includes('25000') && reviewRouteContent.includes('MAX_AGREEMENT_CHARS');
-const reviewHasTimeout = reviewRouteContent.includes('15000') || reviewRouteContent.includes('REVIEW_TIMEOUT_MS');
-const reviewHasRateLimit = reviewRouteContent.includes('rateLimitRequest') && reviewRouteContent.includes('review-agreement');
-assert(reviewHasCharCap && reviewHasTimeout && reviewHasRateLimit, 'app/api/review-agreement/route.ts enforces 25,000 char cap, 15s execution timeout, and rate limiting');
+const reviewIsRetiredZeroLlm =
+  reviewRouteContent.includes('status: 410') &&
+  !reviewRouteContent.includes('auditSettlementAgreement') &&
+  !reviewRouteContent.includes('callAI');
+assert(reviewIsRetiredZeroLlm, 'app/api/review-agreement/route.ts is retired (410 Gone) with zero LLM free-text processing');
 
 // Test 8F: Mutation routes hardened with honeypot and rate limiting
 const saveRouteContent = fs.readFileSync(path.resolve('app/api/save-results/route.ts'), 'utf8');

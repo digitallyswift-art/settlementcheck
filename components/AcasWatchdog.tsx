@@ -71,7 +71,7 @@ Key Points to Discuss with Your Independent Solicitor (s.203(3) ERA 1996):
 3. Pre-Termination Confidentiality (s.111A(4) ERA 1996): Under Paragraph 18 of ACAS Code 4, imposing an unreasonably short ultimatum can be assessed by an Employment Tribunal as potential improper behaviour affecting Section 111A confidentiality for ordinary unfair dismissal claims.
 4. Solicitor Extension Request: Instructing an SRA-regulated solicitor allows a formal extension request to be submitted directly to ${employerName.trim() || 'HR Manager'} to preserve open negotiations through to ${isValidReceived ? formatDateDisplay(acasDeadline) : 'the 10-day guideline date'}.
 
-Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.`
+Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.`
 
   const handleCopyNotice = async () => {
     try {
@@ -177,10 +177,10 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
                 <strong>10 calendar days</strong> as general guidance to consider written terms and obtain independent legal advice. However, under English contract law (<em>Routledge v Grant</em>), an employer may set binding deadlines or revoke an unaccepted offer at any point before acceptance. Never allow an employer&apos;s deadline to pass without taking independent legal advice.
               </p>
               <div className="bg-white/80 border border-[#F3C4B8] rounded-lg p-3 text-xs leading-relaxed text-[#0B1F3A]">
-                <strong>Statutory Protection (ERA 1996 s.111A(4)):</strong> Under Paragraph 18 of ACAS Code 4,
-                imposing an unreasonably short deadline (such as 24, 48, or 72 hours) constitutes{' '}
-                <em>improper behaviour</em>. If an employer behaves improperly, settlement discussions lose their
-                Section 111A statutory confidentiality and can be admitted as evidence in an Employment Tribunal.
+                <strong>Statutory Context (ERA 1996 s.111A(4)):</strong> Under Paragraph 18 of ACAS Code 4,
+                imposing an unreasonably short deadline (such as 24, 48, or 72 hours) may be assessed by an Employment Tribunal as potential{' '}
+                <em>improper behaviour</em>, allowing the tribunal to admit pre-termination discussions as evidence to the extent it considers just. Note that Section 111A confidentiality applies strictly to <strong>ordinary unfair dismissal claims</strong> and does not protect discussions involving discrimination (Equality Act 2010), whistleblowing (s.43B ERA 1996), automatic unfair dismissal, or breach of contract.
+
               </div>
             </div>
           </div>
@@ -237,7 +237,7 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
               Intake Agenda for Your Instructed Solicitor: Timeline Briefing
             </h4>
             <p className="text-xs text-[#0B1F3A]/70 m-0">
-              Important Privilege Notice: Transmitting unreviewed financial proposals directly to HR risks inadvertently waiving legal privilege or compromising legal standing.
+              Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
             </p>
           </div>
           <button

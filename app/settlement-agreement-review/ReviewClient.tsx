@@ -1,25 +1,31 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import type { AuditReport } from '@/lib/ai/agents/settlement-auditor'
-import { getOfficialBenchmark, OfficialBenchmarkData } from '@/lib/statutory-rates'
-import { trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
+import { calcRedundancy, WEEKLY_CAP_GB, WEEKLY_CAP_NI } from '@/lib/calculations'
+import { STATUTORY_RATES_2026_27 } from '@/lib/statutory-rates'
+import { trackSolicitorMatchClick } from '@/lib/telemetry'
 import { AcasWatchdog } from '@/components/AcasWatchdog'
 import { WithoutPrejudiceClarification } from '@/components/WithoutPrejudiceClarification'
-import { RestrictiveCovenantScanner } from '@/components/RestrictiveCovenantScanner'
 import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers'
 
-const SAMPLE_AGREEMENT = `1. The Employment will terminate on 30 April 2026 by mutual agreement.
-2. Subject to the Employee complying with this Agreement, the Employer shall pay an Ex-Gratia termination payment of £38,000.
-3. The Employer shall pay 1 month's contractual salary in lieu of notice (PILON) subject to statutory deductions.
-4. The Employer shall contribute the sum of £350 plus VAT towards the Employee's legal fees incurred in taking advice from a relevant independent adviser.
-5. The Employee hereby agrees to waive all claims against the Company, including accrued pension entitlements, personal injury claims, and statutory rights under the Employment Rights Act 1996.
-6. The Employee agrees not to make any disparaging statements regarding the Employer.`
+type FeeStatus = 'standard' | 'under_350' | 'none_stated' | 'not_sure'
+type NoticeStatus = 'separated' | 'bundled' | 'working_notice' | 'not_sure'
+type TaxThresholdStatus = 'under_30k' | 'over_30k' | 'not_sure'
+type TriState = 'yes' | 'no' | 'not_sure'
+type Jurisdiction = 'GB' | 'NI'
+
+interface ChecklistFlag {
+  id: string
+  status: 'action' | 'watch' | 'info'
+  title: string
+  detail: string
+  legislation: string
+}
 
 function formatGBP(val: number): string {
-  return `£${val.toLocaleString('en-GB')}`
+  return `£${Math.round(val).toLocaleString('en-GB')}`
 }
 
 function InfoPill({ label, children }: { label: string; children: React.ReactNode }) {
@@ -31,7 +37,7 @@ function InfoPill({ label, children }: { label: string; children: React.ReactNod
         onClick={() => setOpen(!open)}
         className="inline-flex items-center gap-1.5 text-xs text-[#5B6577] hover:text-[#0B1F3A] font-medium underline underline-offset-2 cursor-pointer bg-transparent border-0 p-0 transition-colors"
       >
-        <span>ℹ️</span> {label} {open ? '▲' : '▼'}
+        <span>i</span> {label} {open ? '▲' : '▼'}
       </button>
       {open && (
         <div className="mt-2 p-3 bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 rounded-lg text-xs leading-relaxed text-[#4A5568]">
@@ -42,259 +48,281 @@ function InfoPill({ label, children }: { label: string; children: React.ReactNod
   )
 }
 
-/* ── Benchmark Precedents Card Component for Agreement Review ───── */
-function ReviewBenchmarkCard({
-  benchmark,
-  extractedOffer,
-  salary,
-}: {
-  benchmark: OfficialBenchmarkData
-  extractedOffer?: number
-  salary?: number
-}) {
-  const annualSalary = salary && salary > 0 ? salary : 0
-  const monthlySalary = annualSalary > 0 ? annualSalary / 12 : 0
-  const acasLow = monthlySalary > 0 ? Math.round(monthlySalary * benchmark.typicalAcasExGratiaMonths.min) : 0
-  const acasHigh = monthlySalary > 0 ? Math.round(monthlySalary * benchmark.typicalAcasExGratiaMonths.max) : 0
-
-  const offer = extractedOffer ?? 0
-  const isBelowMedian = offer > 0 && offer < benchmark.medianTribunalAward
-  const isAboveMedian = offer > 0 && offer >= benchmark.medianTribunalAward
-
-  return (
-    <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 sm:p-6 shadow-sm mb-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E2DCCE] pb-3 mb-4">
-        <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-coral font-semibold block mb-0.5">
-            Official Statutory &amp; Tribunal Benchmarks
-          </span>
-          <h3 className="text-lg font-serif font-bold text-ink m-0">
-            {benchmark.jurisdictionCategory}: Official Compensation Precedents
-          </h3>
-        </div>
-        <a
-          href={benchmark.sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() =>
-            trackOutboundCitation(benchmark.sourceUrl, benchmark.sourceName, {
-              component: 'review_client_benchmark_card',
-            })
-          }
-          className="text-xs text-ink hover:text-coral underline underline-offset-2 font-mono flex items-center gap-1 self-start sm:self-auto transition-colors"
-        >
-          <span>Source: {benchmark.sourceName}</span>
-          <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-
-      {/* Benchmark Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-        {/* Metric 1: MoJ Median Tribunal Award */}
-        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
-          <div>
-            <span className="text-xs text-muted font-medium block mb-1">1. MoJ Tribunal Median Award</span>
-            <span className="text-xl font-bold text-ink font-serif block">
-              {formatGBP(benchmark.medianTribunalAward)}
-            </span>
-          </div>
-          <span className="text-[11px] text-muted-2 mt-2 block font-mono">
-            Mean average: {formatGBP(benchmark.meanTribunalAward)} (MoJ Tables)
-          </span>
-        </div>
-
-        {/* Metric 2: Acas Typical Ex-Gratia Range */}
-        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
-          <div>
-            <span className="text-xs text-muted font-medium block mb-1">2. Negotiation Benchmark Range</span>
-            <span className="text-xl font-bold text-ink font-serif block">
-              {monthlySalary > 0
-                ? `${formatGBP(acasLow)} – ${formatGBP(acasHigh)}`
-                : `${benchmark.typicalAcasExGratiaMonths.min}–${benchmark.typicalAcasExGratiaMonths.max} Months' Pay`}
-            </span>
-          </div>
-          <span className="text-[11px] text-muted-2 mt-2 block">
-            {annualSalary > 0
-              ? `Based on ${formatGBP(annualSalary)} salary (${benchmark.typicalAcasExGratiaMonths.min}–${benchmark.typicalAcasExGratiaMonths.max} mos)`
-              : 'Illustrative commercial negotiation range'}
-          </span>
-        </div>
-
-        {/* Metric 3: Statutory Compensatory Cap */}
-        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
-          <div>
-            <span className="text-xs text-muted font-medium block mb-1">3. Statutory Cap Limit</span>
-            <span className="text-xl font-bold text-ink font-serif block">
-              {benchmark.maximumCompensatoryCap > 0
-                ? formatGBP(benchmark.maximumCompensatoryCap)
-                : 'Uncapped'}
-            </span>
-          </div>
-          <span className="text-[11px] text-muted-2 mt-2 block">
-            {benchmark.maximumCompensatoryCap > 0
-              ? 'ERA 1996 s.124 (April 2026 cap)'
-              : 'Equality Act 2010 s.124 (Uncapped)'}
-          </span>
-        </div>
-      </div>
-
-      {/* Dynamic Comparative Analysis */}
-      {offer > 0 && (
-        <div
-          className={`rounded-lg p-3.5 text-xs sm:text-sm leading-relaxed mb-4 border ${
-            isBelowMedian
-              ? 'bg-[#FEFBF0] border-[#E0CB94] text-[#7A5B15]'
-              : isAboveMedian
-              ? 'bg-[#F0F5FA] border-[#C4D8EC] text-ink'
-              : 'bg-paper border-rule text-ink'
-          }`}
-        >
-          {isBelowMedian && (
-            <p className="m-0">
-              <strong>⚖️ Below Official MoJ Median:</strong> Your employer&apos;s recorded ex-gratia figure of{' '}
-              <strong>{formatGBP(offer)}</strong> is{' '}
-              <strong>{formatGBP(benchmark.medianTribunalAward - offer)} below the Ministry of Justice median award</strong>{' '}
-              ({formatGBP(benchmark.medianTribunalAward)}) for this complaint category. You can explore this comparison with your independent solicitor during your Section 203(3) ERA 1996 consultation.
-            </p>
-          )}
-          {isAboveMedian && (
-            <p className="m-0">
-              <strong>Above Official MoJ Median:</strong> Your employer&apos;s recorded ex-gratia figure of{' '}
-              <strong>{formatGBP(offer)}</strong> exceeds the MoJ median tribunal award ({formatGBP(benchmark.medianTribunalAward)}) for this category. Points commonly discussed with an instructed solicitor include confirming the customary legal fee contribution (£350 to £500+ + VAT) and attaching an agreed factual reference schedule.
-            </p>
-          )}
-        </div>
-      )}
-
-      {/* Mandatory Regulatory Disclaimers (CMA/DMCC Fee Notice & Hyde v Wrench Contract Notice) */}
-      <MandatoryLegalDisclaimers className="mt-4" />
-    </div>
-  )
-}
-
 export default function ReviewClient() {
   const searchParams = useSearchParams()
 
-  const [agreementText, setAgreementText] = useState('')
+  const [activeTab, setActiveTab] = useState<'checklist' | 'watchdog' | 'agenda'>('checklist')
+  const [jurisdiction, setJurisdiction] = useState<Jurisdiction>('GB')
+
+  // Structured zero-PII checklist state
+  const [feeStatus, setFeeStatus] = useState<FeeStatus>('not_sure')
+  const [noticeStatus, setNoticeStatus] = useState<NoticeStatus>('not_sure')
+  const [taxStatus, setTaxStatus] = useState<TaxThresholdStatus>('not_sure')
+  const [hasCovenants, setHasCovenants] = useState<TriState>('not_sure')
+  const [hasPensionOrPiWaiver, setHasPensionOrPiWaiver] = useState<TriState>('not_sure')
+  const [hasReferenceAndMutual, setHasReferenceAndMutual] = useState<TriState>('not_sure')
+
+  // Optional numeric baseline fields (processed strictly in-browser)
   const [salary, setSalary] = useState('')
   const [yearsOfService, setYearsOfService] = useState('')
   const [age, setAge] = useState('')
-  const [disputeReason, setDisputeReason] = useState('auto')
-  const [loading, setLoading] = useState(false)
-  const [stepIndex, setStepIndex] = useState(0)
-  const [report, setReport] = useState<AuditReport | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<'audit' | 'watchdog' | 'clarification' | 'covenants'>('audit')
-  const [gdprConsent, setGdprConsent] = useState(false)
+  const [exGratiaOffer, setExGratiaOffer] = useState('')
+
+  const [showSummary, setShowSummary] = useState(false)
+  const [copiedAgenda, setCopiedAgenda] = useState(false)
 
   useEffect(() => {
     if (!searchParams) return
     const pSalary = searchParams.get('salary')
     const pYears = searchParams.get('years') || searchParams.get('yearsOfService')
     const pAge = searchParams.get('age')
-    const pReason = searchParams.get('reason') || searchParams.get('disputeReason')
+    const pOffer = searchParams.get('offer')
 
-    if (pSalary) setSalary(pSalary)
-    if (pYears) setYearsOfService(pYears)
-    if (pAge) setAge(pAge)
-    if (pReason) setDisputeReason(pReason)
+    if (pSalary) setSalary(pSalary.replace(/[^0-9]/g, ''))
+    if (pYears) setYearsOfService(pYears.replace(/[^0-9]/g, ''))
+    if (pAge) setAge(pAge.replace(/[^0-9]/g, ''))
+    if (pOffer) {
+      const cleanOffer = pOffer.replace(/[^0-9]/g, '')
+      setExGratiaOffer(cleanOffer)
+      const num = Number(cleanOffer)
+      if (num > 30000) setTaxStatus('over_30k')
+      else if (num > 0) setTaxStatus('under_30k')
+    }
   }, [searchParams])
 
-  const steps = [
-    'Parsing contractual clauses, financial compensation, and dispute context...',
-    'Verifying statutory caps (£751/wk), £30k tax exemption (ITEPA 2003 s.403), and MoJ tribunal tables...',
-    'Preparing Solicitor Discussion Agenda, illustrative valuation range, and clause briefing...',
-  ]
+  const weeklyCap = jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB
+  const waiverActLabel =
+    jurisdiction === 'NI'
+      ? 'Employment Rights (Northern Ireland) Order 1996 art. 245'
+      : 'Employment Rights Act 1996 s.203(3)'
 
-  const handleUseSample = () => {
-    setAgreementText(SAMPLE_AGREEMENT)
-    setSalary('65000')
-    setYearsOfService('5')
-    setAge('43')
-    setDisputeReason('unfair_dismissal')
-    setGdprConsent(true)
-    setError(null)
-  }
+  const numericSalary = Number(salary) || 0
+  const numericYears = Number(yearsOfService) || 0
+  const numericAge = Number(age) || 0
+  const numericOffer = Number(exGratiaOffer) || 0
 
-  const handleReview = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!agreementText || agreementText.trim().length < 20) {
-      setError('Please paste at least 20 characters of your draft agreement or offer letter.')
-      return
+  const calculatedRedundancyBaseline = useMemo(() => {
+    if (numericSalary > 0 && numericYears >= 2 && numericAge >= 18) {
+      return calcRedundancy(numericSalary, numericYears * 12, numericAge, weeklyCap)
     }
+    return null
+  }, [numericSalary, numericYears, numericAge, weeklyCap])
 
-    if (!gdprConsent) {
-      setError('You must give explicit consent to UK GDPR Article 9 data processing before submitting your draft agreement for automated analysis.')
-      return
-    }
+  const flags = useMemo<ChecklistFlag[]>(() => {
+    const items: ChecklistFlag[] = []
 
-    setLoading(true)
-    setError(null)
-    setReport(null)
-    setStepIndex(0)
-
-    const stepInterval = setInterval(() => {
-      setStepIndex((prev) => (prev < 2 ? prev + 1 : prev))
-    }, 1100)
-
-    try {
-      const res = await fetch('/api/review-agreement/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          agreementText,
-          consent: gdprConsent,
-          context: {
-            salary: salary ? Number(salary) : undefined,
-            yearsOfService: yearsOfService ? Number(yearsOfService) : undefined,
-            age: age ? Number(age) : undefined,
-            disputeReason: disputeReason !== 'auto' ? disputeReason : undefined,
-          },
-        }),
+    // 1. Employer legal fee contribution (Trap 5 compliant)
+    if (feeStatus === 'none_stated') {
+      items.push({
+        id: 'fee',
+        status: 'action',
+        title: 'Employer Legal Fee Contribution Not Recorded',
+        detail:
+          'While independent legal advice is required to validate a statutory waiver, employer fee contributions are a commercial convention rather than a legal obligation. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) paid directly to your solicitor upon completion. Discuss with your solicitor whether to ask the employer to include a fee contribution and confirm engagement terms for any abortive or excess costs.',
+        legislation: waiverActLabel,
       })
+    } else if (feeStatus === 'under_350') {
+      items.push({
+        id: 'fee',
+        status: 'watch',
+        title: 'Employer Fee Contribution Below Typical Commercial Range',
+        detail:
+          'Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) upon completion. A lower cap may leave a balance payable under your solicitor’s terms if detailed negotiation is needed. Confirm fee scope and abortive-cost terms with your instructed solicitor before starting work.',
+        legislation: waiverActLabel,
+      })
+    } else if (feeStatus === 'standard') {
+      items.push({
+        id: 'fee',
+        status: 'info',
+        title: 'Employer Legal Fee Contribution Recorded',
+        detail:
+          'A contribution in the standard commercial range (£350 to £500+ plus VAT upon completion) is noted. Your instructed solicitor will confirm whether this covers a standard review and outline their terms if negotiations extend beyond the cap or the agreement does not complete.',
+        legislation: waiverActLabel,
+      })
+    } else {
+      items.push({
+        id: 'fee',
+        status: 'watch',
+        title: 'Check Employer Legal Fee Contribution Clause',
+        detail:
+          'Locate the legal fees clause in your draft agreement. Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) payable upon completion. Confirm with your solicitor how fees exceeding the cap or abortive costs are handled.',
+        legislation: waiverActLabel,
+      })
+    }
 
-      clearInterval(stepInterval)
+    // 2. Notice pay / PILON & PENP separation
+    if (noticeStatus === 'bundled' || noticeStatus === 'not_sure') {
+      items.push({
+        id: 'pilon',
+        status: 'action',
+        title: 'Verify Notice Pay (PILON / PENP) Separation',
+        detail:
+          'Under ITEPA 2003 s.402D, any unworked notice period is treated as Post-Employment Notice Pay (PENP) and taxed as normal earnings (income tax and Class 1 NICs), even if bundled into an ex-gratia lump sum. Ask your solicitor to confirm contractual notice pay is clearly separated from the s.403 termination payment.',
+        legislation: 'ITEPA 2003 s.402D',
+      })
+    } else if (noticeStatus === 'separated') {
+      items.push({
+        id: 'pilon',
+        status: 'info',
+        title: 'Notice Pay (PILON) Separated from Ex-Gratia Sum',
+        detail:
+          'Separating taxable PILON from genuine termination compensation helps align the draft with HMRC PENP rules. Your solicitor can verify that the notice calculation matches your contractual and statutory notice entitlement.',
+        legislation: 'ITEPA 2003 s.402D',
+      })
+    } else {
+      items.push({
+        id: 'pilon',
+        status: 'info',
+        title: 'Working Notice Period Recorded',
+        detail:
+          'Working your full notice period avoids an unworked PENP deduction from the £30,000 exemption, as normal salary during notice is taxed through PAYE as usual.',
+        legislation: 'ITEPA 2003 s.402D',
+      })
+    }
 
-      const data = await res.json()
+    // 3. £30,000 Tax-Free Cap & Employer Class 1A NIC
+    const isOver30k = taxStatus === 'over_30k' || numericOffer > STATUTORY_RATES_2026_27.taxFreeLimit
+    if (isOver30k) {
+      items.push({
+        id: 'tax',
+        status: 'watch',
+        title: 'Termination Payment Above £30,000 Tax-Free Cap',
+        detail: `Under ITEPA 2003 s.403, the first £30,000 of genuine ex-gratia compensation and statutory redundancy pay is exempt from income tax and National Insurance (subject to PENP rules). Amounts above £30,000 are subject to income tax at your marginal rate and employer Class 1A NIC (${(STATUTORY_RATES_2026_27.employerClass1ANICRate * 100).toFixed(1)}% in 2026/27), while employee NIC remains 0%. Discuss tax allocation and any employer pension contribution options with your solicitor.`,
+        legislation: 'ITEPA 2003 s.403',
+      })
+    } else {
+      items.push({
+        id: 'tax',
+        status: 'info',
+        title: '£30,000 Tax-Free Cap (ITEPA 2003 s.403)',
+        detail:
+          'Genuine termination compensation and statutory redundancy pay up to the £30,000 statutory cap are exempt from income tax and National Insurance, provided contractual earnings, accrued holiday pay, PENP (s.402D), and any separate restrictive covenant payments (s.225) are taxed separately.',
+        legislation: 'ITEPA 2003 s.403',
+      })
+    }
 
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || 'Failed to complete review')
+    // 4. Restrictive Covenants & s.225 Tax Consideration
+    if (hasCovenants === 'yes' || hasCovenants === 'not_sure') {
+      items.push({
+        id: 'covenants',
+        status: hasCovenants === 'yes' ? 'action' : 'watch',
+        title: 'Post-Termination Restrictions & ITEPA s.225 Review',
+        detail:
+          'Discuss any new or restated non-compete, non-solicitation, or non-dealing clauses with your independent solicitor. Key discussion points include scope and duration (Tillman v Egon Zehnder [2019] UKSC 32), garden leave set-off, and whether separate consideration is allocated to covenants (which is taxable under PAYE and Class 1 NICs under ITEPA 2003 s.225 rather than the £30,000 exemption).',
+        legislation: 'ITEPA 2003 s.225 / Tillman [2019] UKSC 32',
+      })
+    }
+
+    // 5. Accrued Pension Rights & Future Personal Injury Carve-Outs
+    if (hasPensionOrPiWaiver === 'yes' || hasPensionOrPiWaiver === 'not_sure') {
+      items.push({
+        id: 'waivers',
+        status: hasPensionOrPiWaiver === 'yes' ? 'action' : 'watch',
+        title: 'Accrued Pension Rights & Personal Injury Carve-Outs',
+        detail:
+          'Independent solicitors routinely check that the general waiver expressly carves out accrued occupational pension rights (inalienable under Pensions Act 1995 s.91), unknown future personal injury claims (BCCI v Ali [2001] UKHL 8), and claims to enforce the settlement agreement itself.',
+        legislation: 'Pensions Act 1995 s.91 / BCCI v Ali [2001]',
+      })
+    }
+
+    // 6. Agreed Reference & Mutual Non-Derogatory Clauses
+    if (hasReferenceAndMutual === 'no' || hasReferenceAndMutual === 'not_sure') {
+      items.push({
+        id: 'reference',
+        status: 'watch',
+        title: 'Agreed Reference Schedule & Mutual Non-Derogatory Wording',
+        detail:
+          'Draft agreements often bind the employee to confidentiality and non-derogatory obligations without equivalent employer obligations or an agreed factual reference attached as a schedule. Add these points to your solicitor discussion agenda.',
+        legislation: 'Commercial Practice / ACAS Guidance',
+      })
+    }
+
+    // 7. Calculated Statutory Redundancy Baseline (Trap 4 compliant)
+    if (calculatedRedundancyBaseline !== null && numericOffer > 0) {
+      if (numericOffer < calculatedRedundancyBaseline) {
+        items.push({
+          id: 'baseline',
+          status: 'action',
+          title: 'Recorded Offer Below Calculated Statutory Redundancy Baseline',
+          detail: `Your recorded ex-gratia figure (${formatGBP(numericOffer)}) is below the calculated statutory redundancy baseline of ${formatGBP(calculatedRedundancyBaseline)} (using the April 2026 ${jurisdiction} weekly pay cap of £${weeklyCap}). Note that statutory redundancy is subject to eligibility (ERA 1996 s.141 on unreasonable refusal of suitable alternative employment) and does not apply in cases of lawful dismissal for gross misconduct.`,
+          legislation: jurisdiction === 'NI' ? 'ERO(NI) 1996' : 'ERA 1996 s.141 & s.162',
+        })
+      } else {
+        items.push({
+          id: 'baseline',
+          status: 'info',
+          title: 'Calculated Statutory Redundancy Baseline (Subject to Eligibility)',
+          detail: `Your calculated statutory redundancy baseline is ${formatGBP(calculatedRedundancyBaseline)} (using the April 2026 ${jurisdiction} weekly pay cap of £${weeklyCap}, subject to eligibility under ERA 1996 s.141 and absence of gross misconduct). Your recorded ex-gratia figure of ${formatGBP(numericOffer)} is at or above this statutory redundancy baseline.`,
+          legislation: jurisdiction === 'NI' ? 'ERO(NI) 1996' : 'ERA 1996 s.141 & s.162',
+        })
       }
+    }
 
-      setReport(data.report)
-    } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred while reviewing the agreement.')
-    } finally {
-      setLoading(false)
-      clearInterval(stepInterval)
+    return items
+  }, [
+    feeStatus,
+    noticeStatus,
+    taxStatus,
+    hasCovenants,
+    hasPensionOrPiWaiver,
+    hasReferenceAndMutual,
+    calculatedRedundancyBaseline,
+    numericOffer,
+    jurisdiction,
+    weeklyCap,
+    waiverActLabel,
+  ])
+
+  const solicitorAgendaText = useMemo(() => {
+    const lines = [
+      'INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR: PRE-CONSULTATION CLAUSE CHECKLIST',
+      '',
+      `Jurisdiction: ${jurisdiction === 'NI' ? 'Northern Ireland (£783/wk cap)' : 'Great Britain (£751/wk cap)'}`,
+      numericOffer > 0 ? `Recorded Ex-Gratia Offer: ${formatGBP(numericOffer)}` : 'Recorded Ex-Gratia Offer: Not entered',
+      calculatedRedundancyBaseline !== null
+        ? `Calculated Statutory Redundancy Baseline (Subject to Eligibility): ${formatGBP(calculatedRedundancyBaseline)}`
+        : 'Calculated Statutory Redundancy Baseline: Not calculated (optional context not entered)',
+      '',
+      'POINTS TO DISCUSS WITH YOUR INDEPENDENT SRA-REGULATED SOLICITOR:',
+      ...flags.map((f, idx) => `${idx + 1}. ${f.title} (${f.legislation}): ${f.detail}`),
+      '',
+      'Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.',
+    ]
+    return lines.join('\n')
+  }, [jurisdiction, numericOffer, calculatedRedundancyBaseline, flags])
+
+  const handleCopyAgenda = async () => {
+    try {
+      await navigator.clipboard.writeText(solicitorAgendaText)
+      setCopiedAgenda(true)
+      setTimeout(() => setCopiedAgenda(false), 3000)
+    } catch {
+      setCopiedAgenda(false)
     }
   }
-
-  // Determine active benchmark data
-  const activeBenchmark: OfficialBenchmarkData =
-    report?.officialBenchmark ||
-    getOfficialBenchmark(
-      report?.extractedTerms.disputeReason || (disputeReason !== 'auto' ? disputeReason : 'unfair_dismissal'),
-      Boolean(report?.extractedTerms.isDiscrimination)
-    )
-
-  const effectiveSalary =
-    report?.extractedTerms.salary || (salary ? Number(salary) : undefined)
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      {/* Persistent SRA Rule 5.1 Independent Introducer & Non-Law-Firm Notice */}
+      <div className="mb-6 p-4 bg-card border border-rule rounded-xl text-xs leading-relaxed text-muted">
+        <strong className="text-ink font-semibold block mb-1">
+          Independent Informational Checklist (Not Legal Advice, SRA Rule 5.1 Transparency)
+        </strong>
+        SettlementCheck is an independent statutory information platform and solicitor introducer, not an SRA-regulated law firm. This checklist runs entirely in your browser with zero document uploads or free-text data collection. Any SRA-regulated solicitor you choose to instruct acts solely in your independent best interest under {waiverActLabel}.
+      </div>
+
       {/* Interactive Tool Suite Tabs */}
       <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
         <button
           type="button"
-          onClick={() => setActiveTab('audit')}
+          onClick={() => setActiveTab('checklist')}
           className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-            activeTab === 'audit'
+            activeTab === 'checklist'
               ? 'bg-[#0B1F3A] text-white shadow-sm'
               : 'bg-white text-[#0B1F3A] border border-[#E2DCCE] hover:border-[#0B1F3A]'
           }`}
         >
-          1. Full Agreement Audit
+          1. Clause &amp; Offer Checklist
         </button>
         <button
           type="button"
@@ -305,407 +333,416 @@ export default function ReviewClient() {
               : 'bg-white text-[#0B1F3A] border border-[#E2DCCE] hover:border-[#0B1F3A]'
           }`}
         >
-          2. ACAS 10-Day Watchdog
+          2. ACAS 10-Day Timeline Checker
         </button>
         <button
           type="button"
-          onClick={() => setActiveTab('clarification')}
+          onClick={() => setActiveTab('agenda')}
           className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-            activeTab === 'clarification'
+            activeTab === 'agenda'
               ? 'bg-[#0B1F3A] text-white shadow-sm'
               : 'bg-white text-[#0B1F3A] border border-[#E2DCCE] hover:border-[#0B1F3A]'
           }`}
         >
-          3. Without Prejudice Clarification Mode
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab('covenants')}
-          className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-            activeTab === 'covenants'
-              ? 'bg-[#0B1F3A] text-white shadow-sm'
-              : 'bg-white text-[#0B1F3A] border border-[#E2DCCE] hover:border-[#0B1F3A]'
-          }`}
-        >
-          4. Restrictive Covenant Scanner
+          3. Solicitor Intake Agenda
         </button>
       </div>
 
-      {/* Standalone Tool Views */}
+      {/* Tab 2: ACAS Watchdog */}
       {activeTab === 'watchdog' && (
         <div className="mb-8">
           <AcasWatchdog />
         </div>
       )}
 
-      {activeTab === 'clarification' && (
+      {/* Tab 3: Solicitor Intake Agenda */}
+      {activeTab === 'agenda' && (
         <div className="mb-8">
           <WithoutPrejudiceClarification
-            initialOfferAmount={report?.extractedTerms.exGratiaAmount ? Number(report.extractedTerms.exGratiaAmount) : undefined}
+            initialOfferAmount={numericOffer > 0 ? numericOffer : undefined}
           />
         </div>
       )}
 
-      {activeTab === 'covenants' && (
-        <div className="mb-8">
-          <RestrictiveCovenantScanner initialClauseText={agreementText} />
-        </div>
-      )}
-
-      {/* Input Form Box (Only shown when activeTab === 'audit') */}
-      {activeTab === 'audit' && (
-        <div className="bg-card border border-rule rounded-xl p-6 sm:p-8 shadow-sm mb-8">
-          <form onSubmit={handleReview} className="space-y-6">
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label htmlFor="agreement-text" className="block text-sm font-semibold text-ink">
-                Draft Employment Agreement Clauses or Offer Terms
-              </label>
-              <button
-                type="button"
-                onClick={handleUseSample}
-                className="text-xs text-coral hover:text-coral-ink font-medium underline"
-              >
-                Load Sample Agreement
-              </button>
+      {/* Tab 1: Zero-PII Deterministic Clause & Offer Readiness Checklist */}
+      {activeTab === 'checklist' && (
+        <div className="space-y-6 mb-8">
+          <div className="bg-card border border-rule rounded-xl p-6 sm:p-8 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-rule pb-4 mb-6">
+              <div>
+                <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-coral font-semibold block mb-0.5">
+                  Zero-Upload Browser Checklist
+                </span>
+                <h2 className="text-xl font-serif font-bold text-ink m-0">
+                  Pre-Solicitor Clause Readiness Check
+                </h2>
+              </div>
+              <span className="text-xs font-mono text-muted bg-paper px-2.5 py-1 rounded border border-rule self-start sm:self-auto">
+                No document upload required
+              </span>
             </div>
-            <textarea
-              id="agreement-text"
-              rows={8}
-              value={agreementText}
-              onChange={(e) => setAgreementText(e.target.value)}
-              placeholder="Draft clause snippets, compensation amounts, legal fee contributions, or termination terms..."
-              className="w-full p-3.5 border border-rule rounded-lg font-mono text-xs sm:text-sm text-ink bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
-            />
-            <p className="text-xs text-muted-2 mt-1.5">
-              Strictly confidential. Ephemeral processing under UK GDPR Article 9. Employers standardly provide a capped commercial contribution upon completion.
-            </p>
 
-            {/* Client-Side Redaction & PII Scrubbing Safeguard */}
-            <div className="mt-3 p-3.5 bg-paper-2 border border-rule rounded-lg text-xs leading-relaxed text-muted">
-              <div className="flex items-start gap-2.5">
-                <span className="text-base leading-none select-none">🛡️</span>
+            <div className="space-y-6">
+              {/* Jurisdiction */}
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-ink mb-2">
+                  Jurisdiction (Statutory Weekly Cap &amp; Waiver Act)
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setJurisdiction('GB')}
+                    className={`p-3 rounded-lg border text-left text-xs transition-all cursor-pointer ${
+                      jurisdiction === 'GB'
+                        ? 'bg-[#0B1F3A] text-white border-[#0B1F3A]'
+                        : 'bg-paper text-ink border-rule hover:border-ink'
+                    }`}
+                  >
+                    <div className="font-semibold">Great Britain (England, Scotland, Wales)</div>
+                    <div className={`text-[11px] mt-0.5 ${jurisdiction === 'GB' ? 'text-white/80' : 'text-muted'}`}>
+                      April 2026 cap: £751/week · ERA 1996 s.203(3)
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setJurisdiction('NI')}
+                    className={`p-3 rounded-lg border text-left text-xs transition-all cursor-pointer ${
+                      jurisdiction === 'NI'
+                        ? 'bg-[#0B1F3A] text-white border-[#0B1F3A]'
+                        : 'bg-paper text-ink border-rule hover:border-ink'
+                    }`}
+                  >
+                    <div className="font-semibold">Northern Ireland</div>
+                    <div className={`text-[11px] mt-0.5 ${jurisdiction === 'NI' ? 'text-white/80' : 'text-muted'}`}>
+                      April 2026 cap: £783/week · ERO(NI) 1996 art. 245
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* 6 Structured Clause Questions */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-4 border-t border-rule">
+                {/* Q1 */}
                 <div>
-                  <strong className="text-ink font-semibold block mb-0.5">
-                    Client-Side Redaction &amp; PII Scrubbing Safeguard (UK GDPR Article 9):
-                  </strong>
-                  <span>
-                    Before pasting draft clauses or agreement text, please remove or redact direct personal identifiers such as your full name, home address, National Insurance number, and bank account details. SettlementCheck automatically scrubs sensitive identifiers and processes draft text ephemerally for statutory analysis. No raw agreement text is permanently stored on public databases.
+                  <label htmlFor="fee-select" className="block text-xs font-semibold text-ink mb-1.5">
+                    1. Employer Legal Fee Contribution
+                  </label>
+                  <select
+                    id="fee-select"
+                    value={feeStatus}
+                    onChange={(e) => setFeeStatus(e.target.value as FeeStatus)}
+                    className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper text-ink focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                  >
+                    <option value="not_sure">Not sure / need to check</option>
+                    <option value="standard">£350 to £500+ plus VAT stated</option>
+                    <option value="under_350">Under £350 plus VAT stated</option>
+                    <option value="none_stated">No legal fee contribution stated</option>
+                  </select>
+                </div>
+
+                {/* Q2 */}
+                <div>
+                  <label htmlFor="notice-select" className="block text-xs font-semibold text-ink mb-1.5">
+                    2. Notice Pay / PILON Separation
+                  </label>
+                  <select
+                    id="notice-select"
+                    value={noticeStatus}
+                    onChange={(e) => setNoticeStatus(e.target.value as NoticeStatus)}
+                    className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper text-ink focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                  >
+                    <option value="not_sure">Not sure / need to check</option>
+                    <option value="separated">Separated clearly from ex-gratia sum</option>
+                    <option value="bundled">Bundled into a single lump sum</option>
+                    <option value="working_notice">Working full notice period</option>
+                  </select>
+                </div>
+
+                {/* Q3 */}
+                <div>
+                  <label htmlFor="tax-select" className="block text-xs font-semibold text-ink mb-1.5">
+                    3. Ex-Gratia Sum vs £30,000 Tax-Free Cap
+                  </label>
+                  <select
+                    id="tax-select"
+                    value={taxStatus}
+                    onChange={(e) => setTaxStatus(e.target.value as TaxThresholdStatus)}
+                    className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper text-ink focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                  >
+                    <option value="not_sure">Not sure / no figure yet</option>
+                    <option value="under_30k">£30,000 or less</option>
+                    <option value="over_30k">Over £30,000</option>
+                  </select>
+                </div>
+
+                {/* Q4 */}
+                <div>
+                  <label htmlFor="covenant-select" className="block text-xs font-semibold text-ink mb-1.5">
+                    4. Post-Termination Restrictions (Non-Compete / Non-Solicit)
+                  </label>
+                  <select
+                    id="covenant-select"
+                    value={hasCovenants}
+                    onChange={(e) => setHasCovenants(e.target.value as TriState)}
+                    className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper text-ink focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                  >
+                    <option value="not_sure">Not sure / need to check</option>
+                    <option value="yes">Yes, new or restated restrictions included</option>
+                    <option value="no">No post-termination restrictions</option>
+                  </select>
+                </div>
+
+                {/* Q5 */}
+                <div>
+                  <label htmlFor="waiver-select" className="block text-xs font-semibold text-ink mb-1.5">
+                    5. Pension or Future Personal Injury Waiver Wording
+                  </label>
+                  <select
+                    id="waiver-select"
+                    value={hasPensionOrPiWaiver}
+                    onChange={(e) => setHasPensionOrPiWaiver(e.target.value as TriState)}
+                    className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper text-ink focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                  >
+                    <option value="not_sure">Not sure / need to check</option>
+                    <option value="yes">Yes, broad waiver without clear carve-outs</option>
+                    <option value="no">No, carve-outs explicitly included</option>
+                  </select>
+                </div>
+
+                {/* Q6 */}
+                <div>
+                  <label htmlFor="reference-select" className="block text-xs font-semibold text-ink mb-1.5">
+                    6. Agreed Reference &amp; Mutual Non-Derogatory Clause
+                  </label>
+                  <select
+                    id="reference-select"
+                    value={hasReferenceAndMutual}
+                    onChange={(e) => setHasReferenceAndMutual(e.target.value as TriState)}
+                    className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper text-ink focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                  >
+                    <option value="not_sure">Not sure / need to check</option>
+                    <option value="yes">Yes, both included in draft</option>
+                    <option value="no">No, missing or one-sided</option>
+                  </select>
+                </div>
+              </div>
+
+              <InfoPill label="Six statutory conditions for a valid settlement agreement (ERA 1996 s.203(3))">
+                Under Section 203(3) of the Employment Rights Act 1996 (and art. 245 ERO(NI) 1996 in Northern Ireland), a settlement agreement waiving statutory employment claims is only legally binding if all six conditions are met: (1) it is in writing; (2) it relates to the particular complaint or proceedings (see also <em>Bathgate v Technip Singapore PTE Ltd [2023] CSIH 48</em> on plain and unequivocal drafting); (3) the employee has received advice from a relevant independent adviser; (4) the adviser has professional indemnity insurance in force; (5) the agreement identifies the adviser; and (6) the agreement states that the statutory conditions regulating settlement agreements are satisfied.
+              </InfoPill>
+
+              {/* Optional Numeric Baseline Inputs */}
+              <div className="pt-4 border-t border-rule">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted mb-3">
+                  Optional Figures (Calculates Statutory Redundancy Baseline, Subject to Eligibility)
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                  <div>
+                    <label htmlFor="salary-input" className="block text-xs font-medium text-ink mb-1">
+                      Gross Annual Salary (£)
+                    </label>
+                    <input
+                      id="salary-input"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="e.g. 55000"
+                      value={salary}
+                      onChange={(e) => setSalary(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                      className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="service-input" className="block text-xs font-medium text-ink mb-1">
+                      Complete Years of Service
+                    </label>
+                    <input
+                      id="service-input"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="e.g. 4"
+                      value={yearsOfService}
+                      onChange={(e) => setYearsOfService(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                      className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="age-input" className="block text-xs font-medium text-ink mb-1">
+                      Age
+                    </label>
+                    <input
+                      id="age-input"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="e.g. 38"
+                      value={age}
+                      onChange={(e) => setAge(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                      className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="offer-input" className="block text-xs font-medium text-ink mb-1">
+                      Proposed Ex-Gratia Offer (£)
+                    </label>
+                    <input
+                      id="offer-input"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="e.g. 15000"
+                      value={exGratiaOffer}
+                      onChange={(e) => setExGratiaOffer(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                      className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowSummary(true)}
+                  className="w-full sm:w-auto px-6 py-3.5 bg-coral hover:bg-coral-ink text-white font-medium rounded-lg text-sm transition-colors shadow-sm cursor-pointer"
+                >
+                  Generate Solicitor Discussion Checklist →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Deterministic Checklist Output */}
+          {showSummary && (
+            <div className="bg-card border border-rule rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-rule pb-4">
+                <div>
+                  <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-coral font-semibold block mb-0.5">
+                    Deterministic Statutory Briefing
+                  </span>
+                  <h2 className="text-xl font-serif font-bold text-ink m-0">
+                    Your Pre-Solicitor Clause Checklist
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCopyAgenda}
+                  className="px-4 py-2 bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer self-start sm:self-auto"
+                >
+                  {copiedAgenda ? '✓ Agenda Copied' : 'Copy Solicitor Agenda'}
+                </button>
+              </div>
+
+              {/* Statutory Summary Tiles */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="bg-paper p-3.5 rounded-lg border border-rule">
+                  <span className="text-xs text-muted block mb-1">Weekly Pay Cap (2026/27)</span>
+                  <span className="text-lg font-bold text-ink">£{weeklyCap}/wk ({jurisdiction})</span>
+                </div>
+                <div className="bg-paper p-3.5 rounded-lg border border-rule">
+                  <span className="text-xs text-muted block mb-1">Tax-Free Cap (s.403)</span>
+                  <span className="text-lg font-bold text-ink">£30,000</span>
+                </div>
+                <div className="bg-paper p-3.5 rounded-lg border border-rule">
+                  <span className="text-xs text-muted block mb-1">Recorded Ex-Gratia Offer</span>
+                  <span className="text-lg font-bold text-ink">
+                    {numericOffer > 0 ? formatGBP(numericOffer) : 'Not recorded'}
+                  </span>
+                </div>
+                <div className="bg-paper p-3.5 rounded-lg border border-rule">
+                  <span className="text-xs text-muted block mb-1">Statutory Baseline (Est.)</span>
+                  <span className="text-lg font-bold text-ink">
+                    {calculatedRedundancyBaseline !== null
+                      ? formatGBP(calculatedRedundancyBaseline)
+                      : 'Enter context'}
                   </span>
                 </div>
               </div>
-            </div>
-            <InfoPill label="Statutory conditions for binding settlement agreements (ERA 1996 s.203(3))">
-              Under Section 203(3) Employment Rights Act 1996, an agreement waiving employment claims is only valid if: in writing, relating to the particular proceedings or complaint (*Bathgate v Technip [2023]*), certified by a relevant independent adviser with professional indemnity insurance, and stating that the statutory conditions are satisfied. Employers customarily contribute £350 to £750 + VAT directly toward your solicitor&apos;s advice.
-            </InfoPill>
-          </div>
 
-          {/* Optional Context Inputs */}
-          <div className="pt-4 border-t border-rule">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted mb-3">
-              Optional Context (Enables Statutory Minimum Floor &amp; Benchmark Calibration)
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-              <div>
-                <label htmlFor="salary-input" className="block text-xs font-medium text-ink mb-1">
-                  Gross Annual Salary (£)
-                </label>
-                <input
-                  id="salary-input"
-                  type="text"
-                  inputMode="numeric"
-                  placeholder="e.g. 55000"
-                  value={salary}
-                  onChange={(e) => setSalary(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
-                  className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
-                />
+              {/* Checklist Flags */}
+              <div className="space-y-3">
+                {flags.map((flag) => (
+                  <div
+                    key={flag.id}
+                    className={`p-4 rounded-lg border text-sm flex flex-col sm:flex-row sm:items-start justify-between gap-3 ${
+                      flag.status === 'action'
+                        ? 'bg-[#FEF5F3] border-[#F3C4B8] text-ink'
+                        : flag.status === 'watch'
+                        ? 'bg-[#FEFBF0] border-[#E0CB94] text-ink'
+                        : 'bg-paper border-rule text-ink'
+                    }`}
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span
+                          className={`text-[11px] px-2 py-0.5 rounded font-mono font-semibold uppercase ${
+                            flag.status === 'action'
+                              ? 'bg-[#D9603B] text-white'
+                              : flag.status === 'watch'
+                              ? 'bg-[#7A5B15] text-white'
+                              : 'bg-[#0B1F3A] text-white'
+                          }`}
+                        >
+                          {flag.status === 'action'
+                            ? 'Priority Topic'
+                            : flag.status === 'watch'
+                            ? 'Check With Solicitor'
+                            : 'Statutory Note'}
+                        </span>
+                        <span className="font-semibold text-ink">{flag.title}</span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-ink/90 leading-relaxed m-0">{flag.detail}</p>
+                    </div>
+                    <span className="text-[11px] text-muted whitespace-nowrap self-end sm:self-auto font-mono">
+                      {flag.legislation}
+                    </span>
+                  </div>
+                ))}
               </div>
-              <div>
-                <label htmlFor="service-input" className="block text-xs font-medium text-ink mb-1">
-                  Years of Service
-                </label>
-                <input
-                  id="service-input"
-                  type="text"
-                  inputMode="numeric"
-                  placeholder="e.g. 4"
-                  value={yearsOfService}
-                  onChange={(e) => setYearsOfService(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
-                  className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
-                />
-              </div>
-              <div>
-                <label htmlFor="age-input" className="block text-xs font-medium text-ink mb-1">
-                  Age
-                </label>
-                <input
-                  id="age-input"
-                  type="text"
-                  inputMode="numeric"
-                  placeholder="e.g. 38"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
-                  className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
-                />
-              </div>
-              <div>
-                <label htmlFor="dispute-reason-select" className="block text-xs font-medium text-ink mb-1">
-                  Dispute Reason
-                </label>
-                <select
-                  id="dispute-reason-select"
-                  value={disputeReason}
-                  onChange={(e) => setDisputeReason(e.target.value)}
-                  className="w-full p-2.5 border border-rule rounded-lg text-sm bg-paper focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink"
-                >
-                  <option value="auto">Auto-detect from text</option>
-                  <option value="unfair_dismissal">Unfair Dismissal / Capability</option>
-                  <option value="redundancy">Redundancy</option>
-                  <option value="pip">PIP / Performance Plan</option>
-                  <option value="constructive_dismissal">Constructive Dismissal</option>
-                  <option value="discrimination">Discrimination / Detriment</option>
-                </select>
-              </div>
-            </div>
-          </div>
 
-          {/* Explicit Affirmative UK GDPR Article 9 Consent */}
-          <div className="pt-2">
-            <label className="flex items-start gap-3 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                id="gdpr-article-9-consent"
-                checked={gdprConsent}
-                onChange={(e) => setGdprConsent(e.target.checked)}
-                className="mt-0.5 w-4 h-4 accent-coral flex-shrink-0 cursor-pointer"
-              />
-              <span className="text-xs sm:text-sm text-muted leading-relaxed">
-                I explicitly consent to SettlementCheck temporarily processing the text of my draft agreement for automated extraction and analysis. I understand my data is processed ephemerally and shared only with my instructed SRA panel solicitor under strict professional confidentiality.
-              </span>
-            </label>
-          </div>
-
-          {error && (
-            <div className="p-3 bg-crimson-tint border border-crimson rounded-lg text-xs text-crimson font-medium">
-              {error}
+              {/* High-Intent Next Step Box */}
+              <div className="bg-ink text-paper p-6 sm:p-8 rounded-xl space-y-4">
+                <div className="space-y-2">
+                  <span className="text-xs font-mono uppercase tracking-wider text-coral font-semibold block">
+                    Independent Solicitor Review • {waiverActLabel}
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-serif font-bold text-white m-0">
+                    Connect with an Independent SRA-Regulated Employment Solicitor
+                  </h3>
+                  <p className="text-xs sm:text-sm text-paper opacity-90 max-w-2xl leading-relaxed m-0">
+                    For a settlement agreement to be legally binding, you must receive independent legal advice. Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) paid directly to your solicitor upon completion. Your solicitor will confirm all fee terms, including any abortive or excess costs, before starting work.
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Link
+                    href={`/get-matched/?offer=${numericOffer}&salary=${numericSalary}&months=${numericYears * 12}`}
+                    onClick={() =>
+                      trackSolicitorMatchClick('review_checklist_cta', {
+                        offer: numericOffer || undefined,
+                        salary: numericSalary || undefined,
+                      })
+                    }
+                    className="inline-flex justify-center items-center px-6 py-3.5 bg-coral hover:bg-coral-ink text-white font-semibold rounded-lg text-sm transition-colors text-center shadow-md"
+                  >
+                    Match with an SRA solicitor →
+                  </Link>
+                  <Link
+                    href="/calculator/"
+                    className="inline-flex justify-center items-center px-5 py-3.5 bg-transparent border border-paper text-white hover:bg-white hover:text-ink font-medium rounded-lg text-sm transition-colors text-center"
+                  >
+                    Open full settlement calculator
+                  </Link>
+                  <Link
+                    href="/tribunal-backlog-tracker/"
+                    className="inline-flex justify-center items-center px-5 py-3.5 bg-transparent border border-rule text-paper opacity-85 hover:opacity-100 hover:text-white font-medium rounded-lg text-sm transition-colors text-center"
+                  >
+                    Check Tribunal Wait Times
+                  </Link>
+                </div>
+              </div>
             </div>
           )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full sm:w-auto px-6 py-3.5 bg-coral hover:bg-coral-ink text-white font-medium rounded-lg text-sm transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
-          >
-            {loading ? 'Auditing agreement terms against UK statutory rates...' : 'Review agreement clauses against statutory rates →'}
-          </button>
-        </form>
-
-        {/* Loading Progress State */}
-        {loading && (
-          <div className="mt-6 pt-6 border-t border-rule space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="w-5 h-5 border-2 border-coral border-t-transparent rounded-full animate-spin" />
-              <span className="text-sm font-medium text-ink">{steps[stepIndex]}</span>
-            </div>
-            <div className="w-full bg-paper-2 h-2 rounded-full overflow-hidden">
-              <div
-                className="bg-coral h-full transition-all duration-700 ease-out"
-                style={{ width: `${((stepIndex + 1) / 3) * 100}%` }}
-              />
-            </div>
-          </div>
-        )}
-      </div>
-    )}
-
-      {/* Generated Review Report Card */}
-      {activeTab === 'audit' && report && (
-        <div className="space-y-6">
-          {/* Executive Overview */}
-          <div className="bg-card border border-rule rounded-xl p-6 sm:p-8 shadow-sm">
-            <h2 className="text-xl font-serif font-bold text-ink mb-4">
-              Your Settlement Agreement Breakdown
-            </h2>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-              <div className="bg-paper p-3.5 rounded-lg border border-rule">
-                <span className="text-xs text-muted block mb-1">Ex-Gratia Offer</span>
-                <span className="text-lg font-bold text-ink">
-                  {report.extractedTerms.exGratiaAmount !== undefined
-                    ? formatGBP(report.extractedTerms.exGratiaAmount)
-                    : 'Not Specified'}
-                </span>
-              </div>
-              <div className="bg-paper p-3.5 rounded-lg border border-rule">
-                <span className="text-xs text-muted block mb-1">Notice / PILON</span>
-                <span className="text-lg font-bold text-ink">
-                  {report.extractedTerms.noticePayPilon !== undefined
-                    ? formatGBP(report.extractedTerms.noticePayPilon)
-                    : 'Included / Unstated'}
-                </span>
-              </div>
-              <div className="bg-paper p-3.5 rounded-lg border border-rule">
-                <span className="text-xs text-muted block mb-1">Employer Legal Fee</span>
-                <span className="text-lg font-bold text-ink">
-                  {report.extractedTerms.legalFeeContribution !== undefined
-                    ? `£${report.extractedTerms.legalFeeContribution}`
-                    : '£0 (Missing)'}
-                </span>
-              </div>
-              <div className="bg-paper p-3.5 rounded-lg border border-rule">
-                <span className="text-xs text-muted block mb-1">Tax-Free Floor</span>
-                <span className="text-lg font-bold text-ink">£30,000 (s.403)</span>
-              </div>
-            </div>
-
-            {/* Official MoJ & Statutory Benchmark Card */}
-            <ReviewBenchmarkCard
-              benchmark={activeBenchmark}
-              extractedOffer={report.extractedTerms.exGratiaAmount}
-              salary={effectiveSalary}
-            />
-
-            {/* Statutory Check Badges */}
-            <h3 className="text-sm font-semibold text-ink uppercase tracking-wider mb-3">
-              Statutory Rule &amp; Compliance Checks
-            </h3>
-            <div className="space-y-3 mb-6">
-              {report.statutoryChecks.map((check, idx) => (
-                <div
-                  key={idx}
-                  className={`p-4 rounded-lg border text-sm flex flex-col sm:flex-row sm:items-start justify-between gap-3 ${
-                    check.status === 'critical'
-                      ? 'bg-crimson-tint border-crimson text-crimson'
-                      : check.status === 'warning'
-                      ? 'bg-amber-tint border-amber text-ink'
-                      : 'bg-paper border-rule text-ink'
-                  }`}
-                >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`text-xs px-2 py-0.5 rounded font-mono font-semibold uppercase ${
-                          check.status === 'critical'
-                            ? 'bg-crimson text-white'
-                            : check.status === 'warning'
-                            ? 'bg-amber text-white'
-                            : 'bg-ink text-white'
-                        }`}
-                      >
-                        {check.status}
-                      </span>
-                      <span className="font-semibold">{check.item}</span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-ink opacity-90">{check.detail}</p>
-                  </div>
-                  <span className="text-xs text-muted whitespace-nowrap self-end sm:self-auto font-mono">
-                    {check.governingLegislation}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Solicitor Discussion Agenda & Illustrative Range */}
-            <div className="bg-paper-2 border border-rule rounded-xl p-5 sm:p-6 mb-6">
-              <h3 className="text-base font-serif font-bold text-ink mb-3">
-                Solicitor Discussion Agenda: Key Figures &amp; Clauses Briefing
-              </h3>
-              <ul className="space-y-2 mb-4">
-                {report.tacticalNegotiationPoints.map((point, idx) => (
-                  <li key={idx} className="text-xs sm:text-sm text-ink flex items-start gap-2">
-                    <span className="text-coral font-bold">•</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {report.recommendedCounterOffer && (
-                <div className="mt-4 pt-4 border-t border-rule flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div>
-                    <span className="text-xs text-muted uppercase tracking-wider block">
-                      Calculated Illustrative Negotiation Range
-                    </span>
-                    <span className="text-xl font-bold text-ink font-serif">
-                      {formatGBP(report.recommendedCounterOffer.suggestedExGratiaLow)} – {formatGBP(report.recommendedCounterOffer.suggestedExGratiaHigh)}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-xs text-muted uppercase tracking-wider block">
-                      Customary Legal Fee Contribution
-                    </span>
-                    <span className="text-lg font-bold text-ink">
-                      £{report.recommendedCounterOffer.recommendedLegalFeeContribution} + VAT
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Protective Negotiation Tools & Statutory Shields */}
-            <div className="pt-6 border-t border-rule space-y-6">
-              <div className="border-b border-rule pb-2">
-                <span className="text-xs font-mono uppercase tracking-wider text-coral font-semibold block mb-0.5">
-                  Statutory Timeline &amp; Solicitor Briefing Tools
-                </span>
-                <h3 className="text-lg font-serif font-bold text-ink">
-                  Acas Consideration Watchdog, Solicitor Intake Agenda &amp; Covenant Scanner
-                </h3>
-              </div>
-              <AcasWatchdog />
-              <WithoutPrejudiceClarification
-                initialOfferAmount={report.extractedTerms.exGratiaAmount ? Number(report.extractedTerms.exGratiaAmount) : undefined}
-              />
-              <RestrictiveCovenantScanner initialClauseText={agreementText} />
-            </div>
-
-            {/* High-Intent Next Step Box */}
-            <div className="bg-ink text-paper p-6 sm:p-8 rounded-xl space-y-4">
-              <div className="space-y-2">
-                <span className="text-xs font-mono uppercase tracking-wider text-coral font-semibold block">
-                  Statutory Requirement • Customary Employer Fee Contribution
-                </span>
-                <h4 className="text-xl sm:text-2xl font-serif font-bold text-white">
-                  Have an SRA-Regulated Employment Solicitor Review Your Agreement
-                </h4>
-                <p className="text-xs sm:text-sm text-paper opacity-90 max-w-2xl leading-relaxed">
-                  Under UK law (Employment Rights Act 1996 s.203(3)), a settlement agreement is only legally binding once certified by an independent adviser. Employers customarily contribute £350 to £750 + VAT toward your solicitor&apos;s fees as a commercial term of the agreement.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-3 pt-3">
-                <Link
-                  href={`/get-matched/?offer=${report.extractedTerms.exGratiaAmount || 0}&salary=${effectiveSalary || 0}&verdict=${report.extractedTerms.exGratiaAmount && report.extractedTerms.exGratiaAmount < (report.officialBenchmark?.medianTribunalAward || 0) ? 'BELOW_TYPICAL' : 'WITHIN_RANGE'}&months=${(report.extractedTerms.yearsOfService || 0) * 12}`}
-                  onClick={() =>
-                    trackSolicitorMatchClick('review_client_report_cta', {
-                      offer: report.extractedTerms.exGratiaAmount,
-                      salary: effectiveSalary,
-                    })
-                  }
-                  className="inline-flex justify-center items-center px-6 py-3.5 bg-coral hover:bg-coral-ink text-white font-semibold rounded-lg text-sm transition-colors text-center shadow-md cursor-pointer"
-                >
-                  Match with an SRA solicitor →
-                </Link>
-                <Link
-                  href="/calculator/"
-                  className="inline-flex justify-center items-center px-5 py-3.5 bg-transparent border border-paper text-white hover:bg-white hover:text-ink font-medium rounded-lg text-sm transition-colors text-center"
-                >
-                  Calculate statutory entitlement baseline
-                </Link>
-                <Link
-                  href="/how-it-works/"
-                  className="inline-flex justify-center items-center px-5 py-3.5 bg-transparent border border-rule text-paper opacity-80 hover:opacity-100 hover:text-white font-medium rounded-lg text-sm transition-colors text-center"
-                >
-                  How Solicitor Matching Works
-                </Link>
-              </div>
-            </div>
-
-            <p className="text-xs text-muted-2 mt-4 text-center">
-              {report.disclaimer}
-            </p>
-          </div>
         </div>
       )}
+
+      {/* Persistent Mandatory Regulatory Disclaimers across ALL tabs */}
+      <MandatoryLegalDisclaimers className="mt-6" />
     </div>
   )
 }
-

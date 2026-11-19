@@ -10,14 +10,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 const STATIC_METADATA: Metadata = {
-  title: 'Settlement Agreement Checker UK (2026) | SettlementCheck',
+  title: 'Settlement Agreement Checklist UK (2026) | SettlementCheck',
   description:
-    'Check your UK settlement agreement clauses and offer value. Review April 2026 statutory caps (£751/wk), £30,000 tax rules, and employer legal fee cover.',
+    'Check your UK settlement agreement clauses before speaking to a solicitor. Zero-upload checklist covering April 2026 caps (£751/wk), £30,000 tax rules, and employer fee contributions.',
   alternates: { canonical: 'https://settlementcheck.co.uk/settlement-agreement-review/' },
   openGraph: {
-    title: 'Settlement Agreement Checker UK (2026) | SettlementCheck',
+    title: 'Settlement Agreement Checklist UK (2026) | SettlementCheck',
     description:
-      'Check your UK settlement agreement clauses and offer value. Review April 2026 statutory caps (£751/wk), £30,000 tax rules, and employer legal fee cover.',
+      'Check your UK settlement agreement clauses before speaking to a solicitor. Zero-upload checklist covering April 2026 caps (£751/wk), £30,000 tax rules, and employer fee contributions.',
     url: 'https://settlementcheck.co.uk/settlement-agreement-review/',
     type: 'website',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
@@ -31,45 +31,47 @@ export async function generateMetadata(): Promise<Metadata> {
 const reviewSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'UK Employment Settlement Agreement Checker',
+  name: 'UK Settlement Agreement Clause & Readiness Checklist',
   url: 'https://settlementcheck.co.uk/settlement-agreement-review/',
-  applicationCategory: 'LegalApplication',
+  applicationCategory: 'BusinessApplication',
   operatingSystem: 'All',
   offers: {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
   },
-  description: 'Confidential review tool for UK employment settlement agreements. Verifies statutory compliance, tax exemptions (s.403), and negotiation standing.',
+  description:
+    'Client-side UK settlement agreement readiness checklist covering April 2026 statutory caps (£751/wk GB, £783/wk NI), ITEPA 2003 s.403 tax exemptions, PENP s.402D rules, and ACAS Code 4 timelines.',
   publisher: SETTLEMENT_CHECK_PUBLISHER,
   about: {
     '@type': 'Thing',
     name: 'Employment Settlement Agreement UK',
-    description: 'Statutory compromise and settlement agreements under Section 203 of the UK Employment Rights Act 1996',
+    description: 'Statutory settlement agreements under Section 203 of the UK Employment Rights Act 1996',
   },
 }
 
 const howToSchema = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
-  name: 'How to Check and Review a UK Settlement Agreement',
-  description: 'Step-by-step confidential check of draft employment settlement agreement clauses, statutory redundancy caps, and employer legal fee contributions.',
+  name: 'How to Prepare a UK Settlement Agreement for Solicitor Review',
+  description:
+    'Step-by-step zero-upload checklist of UK settlement agreement clauses, statutory redundancy baselines, ITEPA 2003 tax rules, and ACAS Code 4 timelines.',
   publisher: SETTLEMENT_CHECK_PUBLISHER,
   step: [
     {
       '@type': 'HowToStep',
-      name: 'Input draft agreement terms',
-      text: 'Submitting clause text or settlement offer proposals initiates statutory compliance evaluation.',
+      name: 'Select your clause status and jurisdiction',
+      text: 'Answer six structured checklist questions covering legal fee contributions, notice pay separation, tax thresholds, restrictive covenants, waivers, and references.',
     },
     {
       '@type': 'HowToStep',
-      name: 'Verify statutory compliance and tax rules',
-      text: 'The audit evaluates the April 2026 £751/week statutory cap, £30,000 tax exemption under ITEPA 2003 s.403, and Section 203(3) legal fee contributions.',
+      name: 'Check statutory caps and tax rules',
+      text: 'Compare optional salary and service figures against April 2026 statutory weekly pay caps (£751 GB / £783 NI) and ITEPA 2003 s.402D and s.403 tax rules.',
     },
     {
       '@type': 'HowToStep',
-      name: 'Assess tactical negotiation benchmarks',
-      text: 'Comparing proposed compensation against Ministry of Justice tribunal tables and evaluating restrictive covenants.',
+      name: 'Prepare your solicitor discussion agenda',
+      text: 'Generate a structured Intake Agenda to share with an independent SRA-regulated employment solicitor during your Section 203(3) ERA 1996 consultation.',
     },
   ],
 }
@@ -84,15 +86,15 @@ const faqSchema = {
       name: 'Can I check my settlement agreement before speaking to a solicitor?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "Yes. Checking draft clauses beforehand allows verification of statutory redundancy baselines (£751/week), confirmation of the employer's offered legal fee contribution (£350 to £500+ plus VAT), and review of tax exemptions under ITEPA 2003 s.403 before consulting an independent SRA-regulated solicitor.",
+        text: 'Yes. Using a structured pre-solicitor checklist helps you verify April 2026 statutory redundancy baselines (£751/week GB, £783/week NI), check whether your employer has included a commercial legal fee contribution (typically £350 to £500+ plus VAT upon completion), and review ITEPA 2003 s.402D and s.403 tax rules before consulting an independent SRA-regulated solicitor.',
       },
     },
     {
       '@type': 'Question',
-      name: 'How much should an employer pay towards settlement agreement legal fees?',
+      name: 'How much do employers typically contribute towards settlement agreement legal fees?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'In the UK, employers standardly provide a capped contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion, as certification by an independent SRA-regulated solicitor is a mandatory statutory requirement under Section 203(3) of the Employment Rights Act 1996.',
+        text: 'While Section 203(3) of the Employment Rights Act 1996 requires independent legal advice for a waiver to be valid, employer fee payment is a commercial convention rather than a legal obligation. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. Any fees above the cap or abortive costs if the agreement does not complete are subject to your solicitor’s engagement terms.',
       },
     },
     {
@@ -100,7 +102,7 @@ const faqSchema = {
       name: 'Are settlement agreement payments tax-free in the UK?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Under Section 403 of ITEPA 2003, genuine ex-gratia compensation and statutory redundancy payments up to £30,000 are exempt from income tax and National Insurance. However, payment in lieu of notice (PILON) and accrued holiday pay are always taxed as normal earnings.',
+        text: 'Under Section 403 of ITEPA 2003, genuine ex-gratia termination compensation and statutory redundancy payments up to £30,000 are exempt from income tax and National Insurance. Amounts over £30,000 are subject to income tax and employer Class 1A NIC (15.0% in 2026/27), while employee NIC remains 0%. Payment in lieu of notice (PILON / PENP under s.402D), accrued holiday pay, and separate consideration for restrictive covenants (s.225) are always taxable as normal earnings.',
       },
     },
   ],
@@ -126,21 +128,23 @@ export default function SettlementAgreementReviewPage() {
         {/* Server-rendered Intro Header for immediate SSR H1 and crawlability */}
         <div className="max-w-4xl mx-auto px-4 pt-8 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-paper-2 border border-rule text-xs font-mono text-ink mb-4">
-            <span className="w-2 h-2 rounded-full bg-coral inline-block animate-pulse" />
-            Confidential UK Employment Settlement Check • Free Online Review
+            <span className="w-2 h-2 rounded-full bg-coral inline-block" />
+            Zero-Upload Browser Checklist • April 2026 UK Statutory Rates
           </div>
           <h1 className="text-3xl sm:text-4xl font-serif text-ink font-bold mb-3">
-            Check your employment settlement agreement
+            Settlement agreement clause readiness checklist
           </h1>
           <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto">
-            Confidential evaluation of draft clauses, protected conversation proposals, and employer fee contributions against UK statutory rates, Ministry of Justice tribunal tables, and Section 403 tax rules.
+            Prepare for your independent solicitor consultation with a structured, client-side check of key clauses, ACAS Code 4 timelines, April 2026 statutory caps, and ITEPA 2003 tax rules, without uploading confidential documents.
           </p>
         </div>
-        <Suspense fallback={
-          <div className="max-w-4xl mx-auto px-4 py-16 text-center text-muted">
-            Loading settlement agreement review tool...
-          </div>
-        }>
+        <Suspense
+          fallback={
+            <div className="max-w-4xl mx-auto px-4 py-16 text-center text-muted">
+              Loading settlement agreement readiness checklist...
+            </div>
+          }
+        >
           <ReviewClient />
         </Suspense>
         <DynamicFaqSection pathname="/settlement-agreement-review/" />

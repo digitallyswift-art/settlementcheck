@@ -298,12 +298,12 @@ export default function HomeClient({
                   </Link>
 
                   <div className="pt-3 border-t border-[#0B1F3A]/[0.08] mb-3 text-center">
-                    <span className="text-[12px] text-muted block mb-1">Already received a written offer or draft contract?</span>
+                    <span className="text-[12px] text-muted block mb-1">Already received a written offer or draft agreement?</span>
                     <Link
                       href="/settlement-agreement-review/"
                       className="inline-flex items-center gap-1 text-[13px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
                     >
-                      Review your draft agreement clauses →
+                      Use our 60-second clause readiness checklist →
                     </Link>
                   </div>
 
@@ -372,16 +372,16 @@ export default function HomeClient({
           </div>
         </section>
 
-        {/* ── HOLDING A DRAFT AGREEMENT? CLAUSE REVIEW ─────────── */}
+        {/* ── UK EMPLOYMENT TRIBUNAL BACKLOG TRACKER ─────────── */}
         <section className="py-section bg-card border-b border-rule">
           <div className="sc-container">
             <div className="max-w-[720px] mb-12">
-              <span className="sc-eyebrow">Draft contract &amp; clause review</span>
+              <span className="sc-eyebrow">MoJ &amp; HMCTS Regional Tribunal Data</span>
               <h2 className="sc-section-h2 mt-2">
-                Already received a settlement agreement? Check your clauses before you sign.
+                Track UK Employment Tribunal wait times across 10 Great Britain hearing centres.
               </h2>
               <p className="sc-lead mt-3">
-                Most employees sign the first draft handed to them without realizing the employer contribution to legal fees is below market, restrictive covenants are excessive, and the compensation falls short of statutory tribunal baselines.
+                Understanding regional hearing delays and illustrative employer defence costs provides objective context when weighing a settlement offer against a tribunal claim with your solicitor.
               </p>
             </div>
 
@@ -391,13 +391,13 @@ export default function HomeClient({
                   <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
                     1
                   </div>
-                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Legal fee contribution check</h3>
+                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">46,510 open single claims</h3>
                   <p className="text-[14px] text-muted leading-relaxed">
-                    Under ERA 1996 s.203, you must receive independent legal advice. We check whether your employer is offering the standard £500 to £1,500 + VAT or trying to underfund your solicitor.
+                    Inspect active open caseloads published by the Ministry of Justice and HMCTS across major hearing centres including London Central, Watford, Midlands West, Manchester, and Scotland.
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">
-                  Statutory requirement: ERA 1996 s.203
+                  Source: MoJ &amp; HMCTS Quarterly Statistics
                 </div>
               </div>
 
@@ -406,13 +406,13 @@ export default function HomeClient({
                   <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
                     2
                   </div>
-                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Tax exemption &amp; PILON audit</h3>
+                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Regional hearing wait times</h3>
                   <p className="text-[14px] text-muted leading-relaxed">
-                    Verify that your £30,000 tax-free termination exemption under ITEPA 2003 s.403 is correctly applied, and that notice pay is separated to prevent unexpected tax bills from HMRC.
+                    Compare average days to preliminary and final merits hearings by region, from 270 days up to 540 days in London Central, to understand realistic tribunal timelines.
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">
-                  Tax code: ITEPA 2003 s.402D / s.403
+                  Coverage: 10 Great Britain Hearing Centres
                 </div>
               </div>
 
@@ -421,13 +421,13 @@ export default function HomeClient({
                   <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
                     3
                   </div>
-                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Solicitor discussion agenda points</h3>
+                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Illustrative defence cost context</h3>
                   <p className="text-[14px] text-muted leading-relaxed">
-                    Compare your package against Ministry of Justice tribunal tables and ACAS Code 4 guidance, and identify restrictive covenants and confidentiality clauses to discuss with an independent solicitor.
+                    Review illustrative employer legal defence cost ranges alongside regional backlog pressure ratings to prepare informed questions for your independent SRA-regulated solicitor.
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">
-                  Benchmark: MoJ Tribunal Precedents
+                  Interactive Regional Pressure Map
                 </div>
               </div>
             </div>
@@ -435,17 +435,17 @@ export default function HomeClient({
             <div className="bg-paper-2 border border-rule rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
               <div className="flex flex-col gap-1 text-center sm:text-left">
                 <span className="text-[16px] font-bold text-ink font-serif">
-                  Paste your draft agreement clauses for a free, confidential check
+                  Check wait times at your nearest Employment Tribunal centre
                 </span>
                 <span className="text-[13px] text-muted">
-                  No personal data stored. Takes 60 seconds. Instant benchmark analysis.
+                  Free interactive tracker built on MoJ &amp; HMCTS data. No login or email required.
                 </span>
               </div>
               <Link
-                href="/settlement-agreement-review/"
+                href="/tribunal-backlog-tracker/"
                 className="btn-accent whitespace-nowrap px-6 py-3 text-[14px]"
               >
-                Review my draft agreement →
+                Open Tribunal Backlog Tracker →
               </Link>
             </div>
           </div>
@@ -639,6 +639,13 @@ export default function HomeClient({
                     className="text-[13px] text-coral hover:underline font-medium"
                   >
                     Unfair Dismissal Calculator →
+                  </Link>
+                  <span className="text-muted/40 hidden sm:inline">·</span>
+                  <Link
+                    href="/tribunal-backlog-tracker/"
+                    className="text-[13px] text-coral hover:underline font-medium"
+                  >
+                    Tribunal Backlog Tracker →
                   </Link>
                   <span className="text-muted/40 hidden sm:inline">·</span>
                   <Link
