@@ -445,7 +445,7 @@ export default function GetMatchedClient() {
   return (
     <div
       style={{
-        background: C.bg, minHeight: '100vh',
+        background: C.bg, minHeight: '100dvh',
         fontFamily: SANS, WebkitFontSmoothing: 'antialiased',
         overflowX: 'hidden', position: 'relative',
       }}
@@ -523,8 +523,8 @@ export default function GetMatchedClient() {
       {/* ── Slide container ─────────────────────────────────────────────────── */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        minHeight: '100vh',
-        padding: showProgress ? '178px 24px 80px' : '100px 24px 80px',
+        minHeight: '100dvh',
+        padding: showProgress ? '136px 20px 56px' : '92px 20px 56px',
       }}>
         <div style={{ width: '100%', maxWidth: 560 }}>
           <AnimatePresence mode="wait" custom={dir}>
@@ -575,18 +575,23 @@ export default function GetMatchedClient() {
                     We sent a 6-digit code to{' '}
                     <strong style={{ color: C.navy, fontWeight: 600 }}>{form.email}</strong>
                   </Hint>
-                  <div onPaste={handleOtpPaste} style={{ display: 'flex', gap: 10 }}>
+                  <div onPaste={handleOtpPaste} style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 8, maxWidth: 400 }}>
                     {otpDigits.map((digit, i) => (
                       <input
                         key={i}
                         ref={el => { otpRefs.current[i] = el }}
-                        type="text" inputMode="numeric" maxLength={1} value={digit}
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        autoComplete={i === 0 ? 'one-time-code' : 'off'}
+                        maxLength={1}
+                        value={digit}
                         onChange={e => handleOtpChange(i, e.target.value)}
                         onKeyDown={e => handleOtpKeyDown(i, e)}
                         aria-label={`Digit ${i + 1}`}
                         style={{
-                          width: 'clamp(44px, 13vw, 60px)', height: 'clamp(54px, 15vw, 70px)',
-                          textAlign: 'center', fontSize: 'clamp(22px, 5vw, 30px)',
+                          width: '100%', minWidth: 0, height: 'clamp(50px, 14vw, 66px)',
+                          textAlign: 'center', fontSize: 'clamp(20px, 5vw, 28px)',
                           fontWeight: 700, color: C.navy,
                           background: digit ? C.accentLight : C.white,
                           border: `1.5px solid ${digit ? C.accent : C.border}`,
@@ -742,12 +747,13 @@ export default function GetMatchedClient() {
                     ].map(({ label, value }, i) => (
                       <div key={label} style={{
                         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                        padding: '13px 18px',
+                        gap: 12,
+                        padding: '13px 16px',
                         borderTop: i > 0 ? `1px solid ${C.border}` : 'none',
                         background: C.white,
                       }}>
-                        <span style={{ fontFamily: SANS, fontSize: 14, color: C.muted }}>{label}</span>
-                        <span style={{ fontFamily: SANS, fontSize: 14, color: C.navy, fontWeight: 500 }}>{value}</span>
+                        <span style={{ fontFamily: SANS, fontSize: 14, color: C.muted, flexShrink: 0 }}>{label}</span>
+                        <span style={{ fontFamily: SANS, fontSize: 14, color: C.navy, fontWeight: 500, textAlign: 'right', overflowWrap: 'anywhere' }}>{value}</span>
                       </div>
                     ))}
                   </div>
@@ -765,13 +771,13 @@ export default function GetMatchedClient() {
                   </div>
 
                   {/* Consent Checkboxes */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 18 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 18 }}>
                     <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, cursor: 'pointer', fontSize: 13, lineHeight: 1.5, color: C.navy }}>
                       <input
                         type="checkbox"
                         checked={consentSol}
                         onChange={(e) => setConsentSol(e.target.checked)}
-                        style={{ marginTop: 3, accentColor: C.accent, flexShrink: 0 }}
+                        style={{ marginTop: 2, width: 18, height: 18, accentColor: C.accent, flexShrink: 0 }}
                       />
                       <span>
                         I agree to be introduced to an independent SRA-regulated employment solicitor. I understand SettlementCheck receives an administrative fee from panel firms, panel solicitors act with complete professional independence in my sole interest, and employer fee contributions are conditional upon agreement completion.
@@ -783,7 +789,7 @@ export default function GetMatchedClient() {
                         type="checkbox"
                         checked={consentGdpr}
                         onChange={(e) => setConsentGdpr(e.target.checked)}
-                        style={{ marginTop: 3, accentColor: C.accent, flexShrink: 0 }}
+                        style={{ marginTop: 2, width: 18, height: 18, accentColor: C.accent, flexShrink: 0 }}
                       />
                       <span>
                         I explicitly consent to SettlementCheck temporarily processing my dispute details and case parameters under UK GDPR Article 9 safeguards, shared only with my instructed SRA panel solicitor under professional confidentiality.

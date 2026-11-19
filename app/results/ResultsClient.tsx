@@ -206,7 +206,8 @@ function InputsSummaryPanel({
                       {f.type === 'number' && (
                         <input
                           type="number"
-                          className="w-full max-w-[180px] border border-[#0B1F3A] rounded-md py-1.5 px-2.5 text-[14px] text-[#0B1F3A] bg-white outline-none"
+                          inputMode="numeric"
+                          className="w-full max-w-[180px] border border-[#0B1F3A] rounded-md py-1.5 px-2.5 text-[16px] text-[#0B1F3A] bg-white outline-none"
                           value={draft[f.key]}
                           onChange={(e) => set(f.key, e.target.value.replace(/^0+(?=\d)/, ''))}
                           autoFocus
@@ -214,7 +215,7 @@ function InputsSummaryPanel({
                       )}
                       {f.type === 'select' && f.options && (
                         <select
-                          className="w-full py-1.5 px-2.5 text-[13px] text-[#0B1F3A] bg-white border border-[#0B1F3A] rounded-md outline-none"
+                          className="w-full py-1.5 px-2.5 text-[16px] text-[#0B1F3A] bg-white border border-[#0B1F3A] rounded-md outline-none"
                           value={draft[f.key]}
                           onChange={(e) => set(f.key, e.target.value)}
                           autoFocus
@@ -991,6 +992,7 @@ function VentoBandPanel({
 function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => void }) {
   const [show, setShow] = useState(false)
   const [overFooter, setOverFooter] = useState(false)
+  const [keyboardOpen, setKeyboardOpen] = useState(false)
 
   useEffect(() => {
     const target = document.getElementById('solicitor-intake-card')
@@ -1023,14 +1025,22 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
     }
     window.addEventListener('scroll', onScroll, { passive: true })
 
+    const vv = window.visualViewport
+    const onVpResize = () => {
+      if (!vv) return
+      setKeyboardOpen(window.innerHeight - vv.height > 150)
+    }
+    vv?.addEventListener('resize', onVpResize)
+
     return () => {
       observer.disconnect()
       footerObserver?.disconnect()
       window.removeEventListener('scroll', onScroll)
+      vv?.removeEventListener('resize', onVpResize)
     }
   }, [])
 
-  if (!show) return null
+  if (!show || keyboardOpen) return null
 
   return (
     <div
@@ -1042,13 +1052,13 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
           : 'bg-[#F7F4EE] border-t border-[#E2DCCE] shadow-[0_-4px_20px_rgba(11,31,58,0.12)]'
       }`}
     >
-      <div className="flex items-center justify-between gap-3 max-w-lg mx-auto">
+      <div className="flex items-center justify-between gap-2.5 max-w-lg mx-auto">
         <div className="min-w-0 flex-1">
-          <p className="text-[14px] font-bold text-[#0B1F3A] leading-snug m-0">
+          <p className="text-[13px] font-bold text-[#0B1F3A] leading-snug m-0 truncate">
             Private Solicitor Review
           </p>
-          <p className="text-[11px] text-[#5B6577] leading-tight m-0 mt-0.5">
-            Employers usually contribute £350–£500+ towards fees
+          <p className="text-[11px] text-[#5B6577] leading-tight m-0 mt-0.5 truncate">
+            Employer contributes £350–£500+
           </p>
         </div>
         <button
@@ -1056,7 +1066,7 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
           onClick={onScrollToIntake}
           className="inline-flex items-center justify-center px-3.5 py-2.5 text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg border-0 cursor-pointer flex-shrink-0 whitespace-nowrap"
         >
-          Get my solicitor review →
+          Get solicitor review →
         </button>
       </div>
     </div>
@@ -1148,8 +1158,10 @@ function ResultsContent() {
     trackSolicitorMatchClick('results_mobile_sticky_cta', { verdict: result.verdict, offer, salary })
     const el = document.getElementById('solicitor-intake-card')
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      el.querySelector<HTMLInputElement>('input')?.focus()
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      setTimeout(() => {
+        el.querySelector<HTMLInputElement>('input:not([type="hidden"])')?.focus({ preventScroll: true })
+      }, 350)
       return
     }
     router.push(`/get-matched/?verdict=${result.verdict}&offer=${offer}&salary=${salary}&months=${totalMonths}`)

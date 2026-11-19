@@ -466,17 +466,22 @@ export default function EmployeeLeadTypeform({
                 We sent a 6-digit code to{' '}
                 <strong style={{ color: C.navy, fontWeight: 600 }}>{form.email}</strong>
               </Hint>
-              <div onPaste={handleOtpPaste} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+              <div onPaste={handleOtpPaste} style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 8, maxWidth: 360, marginBottom: 8 }}>
                 {otpDigits.map((digit, i) => (
                   <input
                     key={i}
                     ref={el => { otpRefs.current[i] = el }}
-                    type="text" inputMode="numeric" maxLength={1} value={digit}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    autoComplete={i === 0 ? 'one-time-code' : 'off'}
+                    maxLength={1}
+                    value={digit}
                     onChange={e => handleOtpChange(i, e.target.value)}
                     onKeyDown={e => handleOtpKeyDown(i, e)}
                     aria-label={`Digit ${i + 1}`}
                     style={{
-                      width: 'clamp(40px, 12vw, 52px)', height: 'clamp(48px, 13vw, 60px)',
+                      width: '100%', minWidth: 0, height: 'clamp(48px, 13vw, 58px)',
                       textAlign: 'center', fontSize: 'clamp(20px, 5vw, 26px)', fontWeight: 700,
                       color: C.navy, background: digit ? C.accentLight : C.white,
                       border: `1.5px solid ${digit ? C.accent : C.border}`,
@@ -616,12 +621,13 @@ export default function EmployeeLeadTypeform({
                 ].map(([label, val], i) => (
                   <div key={label} style={{
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    gap: 12,
                     padding: '12px 16px',
                     borderTop: i > 0 ? `1px solid ${C.border}` : 'none',
                     background: C.white,
                   }}>
-                    <span style={{ fontFamily: SANS, fontSize: 14, color: C.muted }}>{label}</span>
-                    <span style={{ fontFamily: SANS, fontSize: 14, color: C.navy, fontWeight: 500 }}>{val}</span>
+                    <span style={{ fontFamily: SANS, fontSize: 14, color: C.muted, flexShrink: 0 }}>{label}</span>
+                    <span style={{ fontFamily: SANS, fontSize: 14, color: C.navy, fontWeight: 500, textAlign: 'right', overflowWrap: 'anywhere' }}>{val}</span>
                   </div>
                 ))}
               </div>
@@ -639,25 +645,25 @@ export default function EmployeeLeadTypeform({
               </div>
 
               {/* Consent Checkboxes */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 14 }}>
-                <label style={{ display: 'flex', alignItems: 'flex-start', gap: 8, cursor: 'pointer', fontSize: 12, lineHeight: 1.45, color: C.navy }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 14 }}>
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, cursor: 'pointer', fontSize: 12, lineHeight: 1.45, color: C.navy }}>
                   <input
                     type="checkbox"
                     checked={consentSol}
                     onChange={(e) => setConsentSol(e.target.checked)}
-                    style={{ marginTop: 2, accentColor: C.accent, flexShrink: 0 }}
+                    style={{ marginTop: 1, width: 18, height: 18, accentColor: C.accent, flexShrink: 0 }}
                   />
                   <span>
                     I agree to be introduced to an independent SRA-regulated employment solicitor. I understand SettlementCheck receives an administrative fee from panel firms, panel solicitors act with complete professional independence in my sole interest, and employer fee contributions are conditional upon agreement completion.
                   </span>
                 </label>
 
-                <label style={{ display: 'flex', alignItems: 'flex-start', gap: 8, cursor: 'pointer', fontSize: 12, lineHeight: 1.45, color: C.navy }}>
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, cursor: 'pointer', fontSize: 12, lineHeight: 1.45, color: C.navy }}>
                   <input
                     type="checkbox"
                     checked={consentGdpr}
                     onChange={(e) => setConsentGdpr(e.target.checked)}
-                    style={{ marginTop: 2, accentColor: C.accent, flexShrink: 0 }}
+                    style={{ marginTop: 1, width: 18, height: 18, accentColor: C.accent, flexShrink: 0 }}
                   />
                   <span>
                     I explicitly consent to SettlementCheck temporarily processing my dispute details and case parameters under UK GDPR Article 9 safeguards, shared only with my instructed SRA panel solicitor under professional confidentiality.

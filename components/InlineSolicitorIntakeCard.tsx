@@ -559,7 +559,7 @@ export default function InlineSolicitorIntakeCard({
                   type="checkbox"
                   checked={consent}
                   onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-1 h-4 w-4 rounded border-[#D8D2C6] text-[#D9603B] focus:ring-[#D9603B] cursor-pointer shrink-0"
+                  className="mt-0.5 h-5 w-5 rounded border-[#D8D2C6] accent-[#D9603B] text-[#D9603B] focus:ring-[#D9603B] cursor-pointer shrink-0"
                 />
                 <span className="text-[14px] text-[#0B1F3A] leading-[1.5]">
                   I agree to share my summary (including any dispute details entered) with one independent SRA-regulated employment solicitor for a confidential call.

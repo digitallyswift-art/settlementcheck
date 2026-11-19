@@ -1,8 +1,14 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Source_Serif_4, Inter, JetBrains_Mono } from 'next/font/google'
 import Script from 'next/script'
 import CookieConsentBanner from '@/components/CookieConsentBanner'
 import './globals.css'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
 
 const sourceSerif4 = Source_Serif_4({
   subsets: ['latin'],

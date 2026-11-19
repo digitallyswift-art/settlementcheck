@@ -64,7 +64,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
   }
 
   const inputClass =
-    'border border-rule rounded-xl px-4 py-3 w-full text-sm focus:ring-2 focus:ring-ink focus:border-transparent outline-none transition bg-white text-ink placeholder:text-muted-2'
+    'border border-rule rounded-xl px-4 py-3 w-full text-base focus:ring-2 focus:ring-ink focus:border-transparent outline-none transition bg-white text-ink placeholder:text-muted-2'
 
   if (submitted) {
     return (
@@ -127,7 +127,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
       {/* Contact time */}
       <div>
         <label className="block text-sm font-medium text-ink mb-2">Preferred contact time</label>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {(['morning', 'afternoon', 'evening'] as const).map((t) => (
             <button
               key={t}

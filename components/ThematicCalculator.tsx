@@ -212,6 +212,46 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
   const onCalculateRef = useRef(onCalculate)
   useEffect(() => { onCalculateRef.current = onCalculate }, [onCalculate])
 
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [vp, setVp] = useState<{ height: number | null; top: number; keyboardOpen: boolean }>({
+    height: null,
+    top: 0,
+    keyboardOpen: false,
+  })
+
+  // Lock body scroll during calculator overlay
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
+  // Sync outer flex shell to actual visualViewport on iOS & Android
+  useEffect(() => {
+    if (phase !== 'stages') return
+    if (typeof window === 'undefined' || !window.visualViewport) return
+    const vv = window.visualViewport
+    const syncViewport = () => {
+      const keyboardH = Math.max(0, window.innerHeight - vv.height)
+      setVp({
+        height: Math.round(vv.height),
+        top: Math.max(0, Math.round(vv.offsetTop)),
+        keyboardOpen: keyboardH > 120,
+      })
+    }
+    syncViewport()
+    vv.addEventListener('resize', syncViewport)
+    vv.addEventListener('scroll', syncViewport)
+    return () => {
+      vv.removeEventListener('resize', syncViewport)
+      vv.removeEventListener('scroll', syncViewport)
+    }
+  }, [phase])
+
+  // Reset scroll to top on stage change
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0
+  }, [stage])
+
   const loadingTimers = useRef<NodeJS.Timeout[]>([])
   useEffect(() => {
     return () => {
@@ -563,30 +603,65 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
   const isSubTwoYears = yearsNum === '0' || yearsNum === '1'
 
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 50, background: '#F7F4EE', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div
+      style={{
+        position: 'fixed',
+        top: vp.top,
+        left: 0,
+        right: 0,
+        height: vp.height ? `${vp.height}px` : '100dvh',
+        zIndex: 50,
+        background: '#F7F4EE',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    >
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 24px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 12,
+          padding: vp.keyboardOpen ? '12px 18px' : '16px 20px',
+          flexShrink: 0,
+          borderBottom: '1px solid rgba(226, 220, 206, 0.55)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
           <LogoMark onClick={() => router.push('/')} />
           <button
             onClick={() => router.push('/')}
-            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 13, color: '#8A93A3', display: 'flex', alignItems: 'center', gap: 4 }}
+            style={{ background: 'none', border: 'none', padding: '4px 0', cursor: 'pointer', fontSize: 13, color: '#8A93A3', display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}
           >
             <BackIcon /> Exit
           </button>
         </div>
-        <div style={{ textAlign: 'right' }}>
+        <div style={{ textAlign: 'right', flexShrink: 0 }}>
           <div style={{ fontSize: 12, fontWeight: 600, color: '#5B6577', marginBottom: 4 }}>
-            Stage {stage} of 4: {milestones[stage as 1 | 2 | 3 | 4]}
+            Stage {stage} of 4
           </div>
-          <div style={{ width: 130, height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden' }}>
+          <div style={{ width: 96, height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden', marginLeft: 'auto' }}>
             <div style={{ height: '100%', width: `${(stage / 4) * 100}%`, background: '#D9603B', transition: 'width 250ms ease' }} />
           </div>
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 24px 220px', display: 'flex', justifyContent: 'center' }}>
+      {/* Main Content Area — strictly bounded between header and docked footer */}
+      <div
+        ref={scrollRef}
+        style={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: 'auto',
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain',
+          padding: vp.keyboardOpen ? '12px 18px 20px' : '18px 20px 32px',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
         <div style={{ width: '100%', maxWidth: 460, opacity: stageVisible ? 1 : 0, transition: 'opacity 150ms ease' }}>
           
           {/* ── STAGE 1: Role & Earnings (Salary + Service) ── */}
@@ -711,7 +786,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                         value={monthsNum}
                         onChange={e => setMonthsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                         onKeyDown={e => e.key === 'Enter' && advance()}
-                        style={{ ...numInputSt, fontSize: 15, padding: '8px 12px' }}
+                        style={{ ...numInputSt, fontSize: 16, padding: '8px 12px' }}
                       />
                       <span style={{ paddingRight: 12, fontSize: 13, color: '#9AA3AE' }}>months</span>
                     </div>
@@ -964,28 +1039,29 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
               <InfoPill label="Protected characteristics under Equality Act 2010">
                 Equality Act 2010 characteristics: age, disability, gender reassignment, marriage/civil partnership, pregnancy/maternity, race, religion/belief, sex, sexual orientation. Discrimination claims carry uncapped compensation under Section 124 and incorporate Presidential Guidance Vento injury-to-feelings bands.
               </InfoPill>
+
+              <div style={{ marginTop: 16 }}>
+                <LegalFeeShieldBadge className="w-full" />
+              </div>
             </div>
           )}
 
         </div>
       </div>
 
-      {/* Persistent Bottom Advance Bar */}
+      {/* Docked Bottom Advance Bar — in normal flex flow so it NEVER overlaps content */}
       <div
         style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: '16px 24px max(32px, env(safe-area-inset-bottom, 32px))',
-          background: 'linear-gradient(to top, #F7F4EE 85%, rgba(247,244,238,0))',
+          flexShrink: 0,
+          borderTop: '1px solid #E2DCCE',
+          background: '#F7F4EE',
+          padding: vp.keyboardOpen
+            ? '10px 18px 12px'
+            : '12px 20px max(20px, env(safe-area-inset-bottom, 20px))',
           zIndex: 10,
         }}
       >
         <div style={{ maxWidth: 460, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{ marginBottom: 8, width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <LegalFeeShieldBadge />
-          </div>
           <button
             onClick={advance}
             style={{
@@ -996,10 +1072,10 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
               fontFamily: 'var(--font-sans)',
               fontWeight: 600,
               fontSize: 16,
-              padding: '14px 20px',
+              padding: vp.keyboardOpen ? '13px 20px' : '14px 20px',
               borderRadius: 10,
               cursor: 'pointer',
-              marginBottom: 10,
+              marginBottom: stage > 1 ? 8 : 0,
             }}
           >
             {stage === 1

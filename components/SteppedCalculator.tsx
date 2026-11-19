@@ -241,8 +241,17 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   const monthsRef = useRef<HTMLInputElement>(null)
   const offerRef = useRef<HTMLInputElement>(null)
 
-  // Advance button container ref for keyboard avoidance
-  const advanceBtnRef = useRef<HTMLDivElement>(null)
+  // Scrollable content container ref (reset scrollTop on step change)
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  // Visual viewport sync — keeps shell sized & anchored to actual visible area
+  // when iOS/Android virtual keyboard opens, so header is never clipped and
+  // footer CTA bar sits cleanly below scrollable content (zero overlap).
+  const [vp, setVp] = useState<{ height: number | null; top: number; keyboardOpen: boolean }>({
+    height: null,
+    top: 0,
+    keyboardOpen: false,
+  })
 
   // Lock body scroll during step/loading overlay
   useEffect(() => {
@@ -254,26 +263,33 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     return () => { document.body.style.overflow = '' }
   }, [phase])
 
-  // visualViewport API — keep advance button above keyboard on iOS and Android
-  // Per spec: translateY(-keyboardHeight) moves button above keyboard
+  // visualViewport API — sync outer flex shell to exact visible viewport on iOS & Android
   useEffect(() => {
     if (phase !== 'steps') return
     if (typeof window === 'undefined' || !window.visualViewport) return
-    const btn = advanceBtnRef.current
 
-    const handleResize = () => {
-      if (!window.visualViewport || !btn) return
-      const keyboardH = Math.max(0, window.innerHeight - window.visualViewport.height)
-      btn.style.transform = `translateY(-${keyboardH}px)`
+    const vv = window.visualViewport
+    const syncViewport = () => {
+      const keyboardH = Math.max(0, window.innerHeight - vv.height)
+      setVp({
+        height: Math.round(vv.height),
+        top: Math.max(0, Math.round(vv.offsetTop)),
+        keyboardOpen: keyboardH > 120,
+      })
     }
 
-    window.visualViewport.addEventListener('resize', handleResize)
-    return () => window.visualViewport?.removeEventListener('resize', handleResize)
+    syncViewport()
+    vv.addEventListener('resize', syncViewport)
+    vv.addEventListener('scroll', syncViewport)
+    return () => {
+      vv.removeEventListener('resize', syncViewport)
+      vv.removeEventListener('scroll', syncViewport)
+    }
   }, [phase])
 
-  // Reset keyboard transform when step changes (keyboard dismisses between steps)
+  // Reset scroll position when step changes
   useEffect(() => {
-    if (advanceBtnRef.current) advanceBtnRef.current.style.transform = 'translateY(0px)'
+    if (scrollRef.current) scrollRef.current.scrollTop = 0
   }, [step])
 
   // Auto-focus inputs on steps 1–4 (per spec: setTimeout(..., 100))
@@ -286,9 +302,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     const ref = map[step]
     if (!ref) return
     const t = setTimeout(() => {
-      ref.current?.focus()
-      // Bring input into view in case scroll container moved
-      ref.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      ref.current?.focus({ preventScroll: true })
     }, 100)
     return () => clearTimeout(t)
   }, [step, phase])
@@ -451,18 +465,18 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   const qSt: React.CSSProperties = {
     fontFamily: 'var(--font-serif)',
     fontWeight: 420,
-    fontSize: 'clamp(24px, 4.5vw, 30px)',
+    fontSize: vp.keyboardOpen ? 'clamp(22px, 4.5vw, 28px)' : 'clamp(24px, 4.5vw, 30px)',
     lineHeight: 1.2,
     letterSpacing: '-0.014em',
     color: '#0B1F3A',
-    margin: '0 0 16px',
+    margin: vp.keyboardOpen ? '0 0 8px' : '0 0 14px',
   }
 
   const helperSt: React.CSSProperties = {
-    fontSize: 16,
+    fontSize: vp.keyboardOpen ? 14 : 16,
     color: '#5B6577',
-    lineHeight: 1.6,
-    margin: '0 0 16px',
+    lineHeight: 1.5,
+    margin: vp.keyboardOpen ? '0 0 12px' : '0 0 16px',
   }
 
   const numInputSt: React.CSSProperties = {
@@ -473,7 +487,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     fontFamily: 'var(--font-sans)',
     fontSize: 22,
     color: '#0B1F3A',
-    padding: '16px 14px',
+    padding: vp.keyboardOpen ? '13px 12px' : '16px 14px',
     minWidth: 0,
     MozAppearance: 'textfield' as React.CSSProperties['MozAppearance'],
     WebkitAppearance: 'none',
@@ -604,15 +618,38 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   /* ── STEPS PHASE ─────────────────────────────────────────────── */
 
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 50, background: '#F7F4EE', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div
+      style={{
+        position: 'fixed',
+        top: vp.top,
+        left: 0,
+        right: 0,
+        height: vp.height ? `${vp.height}px` : '100dvh',
+        zIndex: 50,
+        background: '#F7F4EE',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    >
 
       {/* Header: logo (links home) + exit link + progress indicator */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 12,
+          padding: vp.keyboardOpen ? '12px 18px' : '16px 20px',
+          flexShrink: 0,
+          borderBottom: '1px solid rgba(226, 220, 206, 0.55)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
           <LogoMark onClick={() => router.push('/')} />
           <button
             onClick={() => router.push('/')}
-            style={{ display: 'flex', alignItems: 'center', gap: 5, background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 14, color: '#5B6577', fontFamily: 'var(--font-sans)', letterSpacing: '-0.005em' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'none', border: 'none', padding: '4px 0', cursor: 'pointer', fontSize: 13, color: '#5B6577', fontFamily: 'var(--font-sans)', letterSpacing: '-0.005em', flexShrink: 0 }}
           >
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M10 13L5 8L10 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -621,17 +658,29 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           </button>
         </div>
         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-          <div style={{ fontSize: 13, fontWeight: 500, color: '#5B6577', letterSpacing: '-0.005em', marginBottom: 6 }}>
+          <div style={{ fontSize: 12, fontWeight: 500, color: '#5B6577', letterSpacing: '-0.005em', marginBottom: 5 }}>
             Question {step} of 7
           </div>
-          <div style={{ width: 120, height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden' }}>
+          <div style={{ width: 96, height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden', marginLeft: 'auto' }}>
             <div style={{ height: '100%', width: `${progressPct}%`, background: '#D9603B', borderRadius: 999, transition: 'width 300ms ease' }} />
           </div>
         </div>
       </div>
 
-      {/* Scrollable step content */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '16px 24px 260px', display: 'flex', justifyContent: 'center' }}>
+      {/* Scrollable step content — strictly bounded between header and docked footer CTA */}
+      <div
+        ref={scrollRef}
+        style={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: 'auto',
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain',
+          padding: vp.keyboardOpen ? '12px 18px 20px' : '20px 20px 32px',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
         <div style={{ width: '100%', maxWidth: 480, opacity: stepVisible ? 1 : 0, transition: 'opacity 150ms ease' }}>
 
           {/* ── STEP 1: Annual salary ── */}
@@ -662,7 +711,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
               {shake && (!salary || parseFloat(salary) <= 0) && (
                 <span style={errSt}>Please enter your salary to continue.</span>
               )}
-              <div style={{ marginTop: 24, paddingTop: 16, borderTop: '1px solid #E2DCCE' }}>
+              <div style={{ marginTop: vp.keyboardOpen ? 14 : 22, paddingTop: vp.keyboardOpen ? 12 : 16, borderTop: '1px solid #E2DCCE' }}>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#0B1F3A', marginBottom: 8 }}>
                   Statutory Jurisdiction
                 </label>
@@ -930,7 +979,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
 
           {/* -- STEP 6: Reason for leaving (tappable list: NO keyboard) -- */}
           {step === 6 && (
-            <div style={{ paddingBottom: 120 }}>
+            <div>
               <h2 style={qSt}>Why is your employment ending?</h2>
               <p style={helperSt}>This helps us show which statutory rules apply to your situation.</p>
               <div className={shake && !reason ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
@@ -1000,19 +1049,16 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         </div>
       </div>
 
-      {/* Fixed advance button: keyboard-aware via visualViewport */}
+      {/* Docked footer advance bar — in normal flex flow so it NEVER overlaps content */}
       <div
-        ref={advanceBtnRef}
         style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: '12px 24px env(safe-area-inset-bottom, 24px)',
-          paddingBottom: 'max(24px, env(safe-area-inset-bottom, 24px))',
-          background: 'linear-gradient(to top, #F7F4EE 88%, rgba(247,244,238,0))',
+          flexShrink: 0,
+          borderTop: '1px solid #E2DCCE',
+          background: '#F7F4EE',
+          padding: vp.keyboardOpen
+            ? '10px 18px 12px'
+            : '12px 20px max(20px, env(safe-area-inset-bottom, 20px))',
           zIndex: 10,
-          transition: 'transform 150ms ease',
         }}
       >
         <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
@@ -1021,16 +1067,16 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
             style={{
               width: '100%', background: '#D9603B', border: 'none', color: '#fff',
               fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 16,
-              letterSpacing: '-0.005em', padding: '15px 24px', borderRadius: 10,
-              cursor: 'pointer', marginBottom: step === 4 ? 8 : 10,
+              letterSpacing: '-0.005em', padding: vp.keyboardOpen ? '13px 20px' : '15px 24px', borderRadius: 10,
+              cursor: 'pointer', marginBottom: step === 4 ? 6 : (step > 1 ? 8 : 0),
             }}
           >
             {getAdvanceCopy()}
           </button>
 
           {/* Step 4 midpoint copy: position below advance button */}
-          {step === 4 && (
-            <p style={{ fontSize: 13, color: '#8A93A3', textAlign: 'center', margin: '0 0 12px' }}>
+          {step === 4 && !vp.keyboardOpen && (
+            <p style={{ fontSize: 13, color: '#8A93A3', textAlign: 'center', margin: '0 0 8px' }}>
               You are nearly there. Three more questions.
             </p>
           )}
@@ -1074,7 +1120,9 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
             borderRadius: 16,
             maxWidth: 480,
             width: '100%',
-            padding: '24px 24px 20px',
+            maxHeight: '90dvh',
+            overflowY: 'auto',
+            padding: '24px 20px 20px',
             boxShadow: '0 20px 40px rgba(11,31,58,0.25)',
             border: '2px solid #D9603B',
             animation: 'sc-fade-in 200ms ease forwards',
