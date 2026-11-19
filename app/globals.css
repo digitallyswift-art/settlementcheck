@@ -16,7 +16,7 @@
     overflow-x: hidden;
     background-color: #F7F4EE;
     color: #0B1F3A;
-    font-family: var(--font-sans), Inter, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, 'Helvetica Neue', Arial, sans-serif;
     font-size: 16px;
     line-height: 1.55;
   }
@@ -68,7 +68,7 @@
   }
 
   .sc-eyebrow {
-    font-family: var(--font-sans), Inter, sans-serif;
+    font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
     font-weight: 500;
     font-size: 12px;
     letter-spacing: 0.14em;
@@ -363,7 +363,7 @@ input[type=number] { -moz-appearance: textfield; }
 }
 
 .calc-label {
-  font-family: var(--font-sans), Inter, sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: #0B1F3A;
@@ -399,7 +399,7 @@ input[type=number] { -moz-appearance: textfield; }
   border: none;
   background: transparent;
   outline: none;
-  font-family: var(--font-sans), Inter, sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 15px;
   color: #0B1F3A;
   padding: 13px 14px;
@@ -445,7 +445,7 @@ input[type=number] { -moz-appearance: textfield; }
   border: none;
   background: transparent;
   border-radius: 6px;
-  font-family: var(--font-sans), Inter, sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: #5B6577;
