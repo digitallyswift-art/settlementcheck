@@ -6,6 +6,7 @@
   *, *::before, *::after { box-sizing: border-box; }
 
   html {
+    font-size: 17px;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -16,9 +17,9 @@
     overflow-x: hidden;
     background-color: #F7F4EE;
     color: #0B1F3A;
-    font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.55;
+    font-family: var(--font-sans), Inter, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
   }
 
   a { color: inherit; text-decoration: none; }
@@ -68,7 +69,7 @@
   }
 
   .sc-eyebrow {
-    font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-sans), Inter, sans-serif;
     font-weight: 500;
     font-size: 12px;
     letter-spacing: 0.14em;
@@ -96,7 +97,7 @@
 
   /* Standard body copy - use instead of text-sm / text-[15px] scattered inline */
   .sc-body {
-    font-size: 16px;
+    font-size: 16.5px;
     line-height: 1.65;
     color: #5B6577;
   }
@@ -105,8 +106,8 @@
   .guide-h2 {
     font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
     font-weight: 460;
-    font-size: clamp(20px, 2.4vw, 26px);
-    line-height: 1.2;
+    font-size: clamp(22px, 2.4vw, 28px);
+    line-height: 1.22;
     letter-spacing: -0.014em;
     color: #0B1F3A;
     margin: 0;
@@ -363,7 +364,7 @@ input[type=number] { -moz-appearance: textfield; }
 }
 
 .calc-label {
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-sans), Inter, sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: #0B1F3A;
@@ -399,7 +400,7 @@ input[type=number] { -moz-appearance: textfield; }
   border: none;
   background: transparent;
   outline: none;
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-sans), Inter, sans-serif;
   font-size: 15px;
   color: #0B1F3A;
   padding: 13px 14px;
@@ -445,7 +446,7 @@ input[type=number] { -moz-appearance: textfield; }
   border: none;
   background: transparent;
   border-radius: 6px;
-  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-sans), Inter, sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: #5B6577;

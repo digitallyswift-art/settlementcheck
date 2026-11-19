@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Source_Serif_4, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
+import { Source_Serif_4, Inter, JetBrains_Mono } from 'next/font/google'
 import Script from 'next/script'
 import CookieConsentBanner from '@/components/CookieConsentBanner'
 import './globals.css'
@@ -10,7 +10,7 @@ const sourceSerif4 = Source_Serif_4({
   display: 'swap',
 })
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en-GB"
-      className={`${sourceSerif4.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
+      className={`${sourceSerif4.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <head>
         <Script
