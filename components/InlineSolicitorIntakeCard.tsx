@@ -32,7 +32,8 @@ function getVerdictFraming(
     return {
       heading: 'Expecting an offer? Know where you stand first',
       subtext:
-        'Speak privately with an independent employment solicitor about your baseline and what to watch out for before anything is put in writing.',
+        'Enter your details below to arrange a confidential call with one SRA-regulated employment solicitor.',
+      benefit1: 'Walk through your baseline and options before an offer arrives',
       cta: 'Check my position with a solicitor →',
     }
   }
@@ -44,7 +45,8 @@ function getVerdictFraming(
         ? `Why is your offer ${formattedShortfall} below the legal minimum?`
         : 'Why is your offer below the legal minimum?',
       subtext:
-        'An independent SRA-regulated employment solicitor can check your notice pay, statutory redundancy, and accrued holiday pay before you decide.',
+        'Enter your details below to arrange a confidential call with one SRA-regulated employment solicitor.',
+      benefit1: 'Check your notice pay, statutory redundancy, and accrued holiday pay',
       cta: formattedShortfall
         ? `Check this ${formattedShortfall} gap with a solicitor →`
         : 'Check this gap with a solicitor →',
@@ -54,14 +56,16 @@ function getVerdictFraming(
     return {
       heading: 'Could you be leaving money on the table?',
       subtext:
-        'First offers are often a starting point. An independent solicitor can review your figures, tax-free split, and room to negotiate.',
+        'First offers are often a starting point. Enter your details below to arrange a confidential call with one SRA-regulated employment solicitor.',
+      benefit1: 'Review your figures, £30,000 tax-free split, and room to negotiate',
       cta: 'Check my options with a solicitor →',
     }
   }
   return {
     heading: 'The numbers add up. What about the fine print?',
     subtext:
-      'In the UK, a settlement agreement only becomes legally valid once an independent solicitor signs it, checking your tax-free split, reference, and job restrictions.',
+      'A UK settlement agreement is only legally valid once an independent solicitor signs it. Enter your details below for a confidential call.',
+    benefit1: 'Check your tax-free split, reference wording, and job restrictions',
     cta: 'Check my terms & sign off →',
   }
 }
@@ -333,15 +337,31 @@ export default function InlineSolicitorIntakeCard({
             {framing.heading}
           </h2>
 
-          <p className="text-[14px] text-[#5B6577] leading-[1.55] m-0 mb-3.5">
+          <p className="text-[14px] text-[#5B6577] leading-[1.55] m-0 mb-3">
             {framing.subtext}
           </p>
 
+          {/* Upfront Benefits: Why fill in your details */}
+          <ul className="m-0 mb-3.5 p-0 list-none space-y-1.5 text-[13px] text-[#0B1F3A] leading-[1.45]">
+            <li className="flex items-start gap-2">
+              <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
+              <span>{framing.benefit1}</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
+              <span>Strictly private, with no obligation (your employer is never told)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
+              <span>Employers usually contribute £350 to £500+ (+VAT) on completion</span>
+            </li>
+          </ul>
+
           {/* Attached Calculation Summary Chip */}
           {attachedSummaryParts.length > 0 && (
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] mb-4 text-[12px] text-[#0B1F3A]">
+            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 px-3 py-2 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] mb-4 text-[12px] text-[#0B1F3A]">
               <span className="font-semibold text-[#D9603B] shrink-0">Attached:</span>
-              <span className="truncate font-medium">{attachedSummaryParts.join(' · ')}</span>
+              <span className="font-medium">{attachedSummaryParts.join(' · ')}</span>
             </div>
           )}
 
@@ -462,14 +482,9 @@ export default function InlineSolicitorIntakeCard({
               <span>{submitting ? 'Sending your request' : framing.cta}</span>
             </button>
 
-            <div className="pt-2.5 border-t border-[#EFEAE0] text-[12px] text-[#5B6577] leading-[1.5] space-y-1">
-              <p className="m-0">
-                <strong className="text-[#0B1F3A]">Total privacy:</strong> Sent to one SRA-regulated solicitor only. Your employer is never contacted.
-              </p>
-              <p className="m-0">
-                <strong className="text-[#0B1F3A]">Legal fees:</strong> Employers usually contribute £350 to £500+ (+VAT) on completion.
-              </p>
-            </div>
+            <p className="m-0 pt-1 text-[11px] text-[#6B7485] leading-[1.5] text-center">
+              Sent to one SRA-regulated solicitor only. Fees above the employer cap or abortive costs remain subject to your solicitor&apos;s terms.
+            </p>
           </form>
         </div>
       </div>
