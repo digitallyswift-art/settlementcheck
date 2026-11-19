@@ -1036,7 +1036,7 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
             Confidential SRA Solicitor Check
           </p>
           <p className={`text-[12px] leading-snug mt-0.5 m-0 ${overFooter ? 'text-[#334155]' : 'text-[#5B6577]'}`}>
-            Employer contributes £350–£500+ +VAT
+            One SRA solicitor · Confidential review
           </p>
         </div>
         <button
