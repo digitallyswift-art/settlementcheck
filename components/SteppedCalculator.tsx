@@ -451,7 +451,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   const qSt: React.CSSProperties = {
     fontFamily: 'var(--font-serif)',
     fontWeight: 420,
-    fontSize: 'clamp(22px, 4vw, 28px)',
+    fontSize: 'clamp(24px, 4.5vw, 30px)',
     lineHeight: 1.2,
     letterSpacing: '-0.014em',
     color: '#0B1F3A',
@@ -459,10 +459,10 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   }
 
   const helperSt: React.CSSProperties = {
-    fontSize: 14,
+    fontSize: 16,
     color: '#5B6577',
     lineHeight: 1.6,
-    margin: '0 0 14px',
+    margin: '0 0 16px',
   }
 
   const numInputSt: React.CSSProperties = {
@@ -490,14 +490,14 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
 
   const suffixSt: React.CSSProperties = {
     padding: '0 16px 0 4px',
-    fontSize: 15,
+    fontSize: 16,
     color: '#9AA3AE',
     flexShrink: 0,
     whiteSpace: 'nowrap',
   }
 
   const errSt: React.CSSProperties = {
-    fontSize: 13,
+    fontSize: 14,
     color: '#C0392B',
     margin: '8px 0 0',
     display: 'block',
@@ -506,12 +506,12 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   function optionSt(selected: boolean): React.CSSProperties {
     return {
       width: '100%',
-      minHeight: 48,
+      minHeight: 52,
       padding: '14px 16px',
       textAlign: 'left',
       border: `1.5px solid ${selected ? '#0B1F3A' : '#E2DCCE'}`,
       borderRadius: 10,
-      fontSize: 15,
+      fontSize: 16,
       fontFamily: 'var(--font-sans)',
       fontWeight: selected ? 500 : 400,
       cursor: 'pointer',
@@ -612,7 +612,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           <LogoMark onClick={() => router.push('/')} />
           <button
             onClick={() => router.push('/')}
-            style={{ display: 'flex', alignItems: 'center', gap: 5, background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 13, color: '#8A93A3', fontFamily: 'var(--font-sans)', letterSpacing: '-0.005em' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 5, background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 14, color: '#5B6577', fontFamily: 'var(--font-sans)', letterSpacing: '-0.005em' }}
           >
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M10 13L5 8L10 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -621,7 +621,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           </button>
         </div>
         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-          <div style={{ fontSize: 12, fontWeight: 500, color: '#5B6577', letterSpacing: '-0.005em', marginBottom: 6 }}>
+          <div style={{ fontSize: 13, fontWeight: 500, color: '#5B6577', letterSpacing: '-0.005em', marginBottom: 6 }}>
             Question {step} of 7
           </div>
           <div style={{ width: 120, height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden' }}>
@@ -964,6 +964,11 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
             </div>
           )}
 
+          {/* Fee contribution note placed inside scrollable flow so it never covers inputs on mobile */}
+          <div style={{ marginTop: 28 }}>
+            <LegalFeeShieldBadge className="w-full" />
+          </div>
+
         </div>
       </div>
 
@@ -975,24 +980,21 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           bottom: 0,
           left: 0,
           right: 0,
-          padding: '16px 24px env(safe-area-inset-bottom, 32px)',
-          paddingBottom: 'max(32px, env(safe-area-inset-bottom, 32px))',
-          background: 'linear-gradient(to top, #F7F4EE 85%, rgba(247,244,238,0))',
+          padding: '12px 24px env(safe-area-inset-bottom, 24px)',
+          paddingBottom: 'max(24px, env(safe-area-inset-bottom, 24px))',
+          background: 'linear-gradient(to top, #F7F4EE 88%, rgba(247,244,238,0))',
           zIndex: 10,
           transition: 'transform 150ms ease',
         }}
       >
         <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
-          <div style={{ marginBottom: 10, width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <LegalFeeShieldBadge />
-          </div>
           <button
             onClick={advance}
             style={{
               width: '100%', background: '#D9603B', border: 'none', color: '#fff',
               fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 16,
               letterSpacing: '-0.005em', padding: '15px 24px', borderRadius: 10,
-              cursor: 'pointer', marginBottom: step === 4 ? 10 : 12,
+              cursor: 'pointer', marginBottom: step === 4 ? 8 : 10,
             }}
           >
             {getAdvanceCopy()}
