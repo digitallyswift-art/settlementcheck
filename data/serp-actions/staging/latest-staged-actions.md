@@ -1,15 +1,15 @@
 # 🛡️ Autonomous SEO Actuator — Multi-Route Staged Review Digest
-**Generated At**: 2026-11-15T11:21:21.767Z
+**Generated At**: 2026-11-19T11:58:44.522Z
 **Compliance**: 100% BRAND.md, April 2026 Statutory Invariants & Zero-Fabrication Standard
 
 ### 🎯 "settlement agreement calculator" [CRITICAL]
-- **Target Canonical**: [https://settlementcheck.co.uk/calculator/](https://settlementcheck.co.uk/calculator/)
+- **Target Canonical**: [https://settlementcheck.co.uk/](https://settlementcheck.co.uk/)
 - **SERP Title** (59 chars): `Settlement Agreement Calculator UK (2026) | SettlementCheck`
 - **SERP Meta** (150 chars): `Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.`
 - **AI Overview Direct Answer**: Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.
 - **In-Prose Body Paragraph Upgrade** (`app/guides/how-to-negotiate-a-settlement-agreement/page.tsx`):
   - *Existing*: "Before accepting an initial exit offer, employees should research typical settlement figures for their industry."
-  - *Upgraded*: "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator](/calculator/)."
+  - *Upgraded*: "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator](/)."
 - **Statutory Mathematical Illustration** (Pure formula, zero fiction):
   - *Title*: 3-Tier Statutory Settlement Structure (ERA 1996 & ITEPA 2003)
   - *Formula Basis*: Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.
@@ -51,13 +51,13 @@
 
 ---
 ### 🎯 "calculate settlement agreement" [CRITICAL]
-- **Target Canonical**: [https://settlementcheck.co.uk/calculator/](https://settlementcheck.co.uk/calculator/)
+- **Target Canonical**: [https://settlementcheck.co.uk/](https://settlementcheck.co.uk/)
 - **SERP Title** (59 chars): `Settlement Agreement Calculator UK (2026) | SettlementCheck`
 - **SERP Meta** (150 chars): `Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.`
 - **AI Overview Direct Answer**: Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.
 - **In-Prose Body Paragraph Upgrade** (`app/guides/how-to-negotiate-a-settlement-agreement/page.tsx`):
   - *Existing*: "Before accepting an initial exit offer, employees should research typical settlement figures for their industry."
-  - *Upgraded*: "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [calculate settlement agreement](/calculator/)."
+  - *Upgraded*: "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [calculate settlement agreement](/)."
 - **Statutory Mathematical Illustration** (Pure formula, zero fiction):
   - *Title*: 3-Tier Statutory Settlement Structure (ERA 1996 & ITEPA 2003)
   - *Formula Basis*: Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.
@@ -67,13 +67,13 @@
 
 ---
 ### 🎯 "settlement agreement calculator uk" [CRITICAL]
-- **Target Canonical**: [https://settlementcheck.co.uk/calculator/](https://settlementcheck.co.uk/calculator/)
+- **Target Canonical**: [https://settlementcheck.co.uk/](https://settlementcheck.co.uk/)
 - **SERP Title** (59 chars): `Settlement Agreement Calculator UK (2026) | SettlementCheck`
 - **SERP Meta** (150 chars): `Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.`
 - **AI Overview Direct Answer**: Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.
 - **In-Prose Body Paragraph Upgrade** (`app/guides/how-to-negotiate-a-settlement-agreement/page.tsx`):
   - *Existing*: "Before accepting an initial exit offer, employees should research typical settlement figures for their industry."
-  - *Upgraded*: "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator uk](/calculator/)."
+  - *Upgraded*: "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator uk](/)."
 - **Statutory Mathematical Illustration** (Pure formula, zero fiction):
   - *Title*: 3-Tier Statutory Settlement Structure (ERA 1996 & ITEPA 2003)
   - *Formula Basis*: Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.

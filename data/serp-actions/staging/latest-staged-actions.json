@@ -1,6 +1,6 @@
 [
   {
-    "id": "pkg_actuator_1794741681766_1",
+    "id": "pkg_actuator_1795089524518_1",
     "query": "settlement agreement calculator",
     "priority": "CRITICAL",
     "actionType": "CONTENT_DEPTH_UPGRADE",
@@ -11,9 +11,9 @@
       "deploymentRisk": "LOW_RISK",
       "executiveSummary": "Pre-audited with 1 automatic counter-plan adjustment(s) applied to protect route contracts and statutory precision.",
       "critiquePoints": [
-        "Calculator core route preserved. Headline locked to prevent Google Title-Link rewrite drift."
+        "Homepage route protected under Anti-Decoupling Law. Full title overwrite converted to ADDITIVE_CONTENT_AND_LINKS."
       ],
-      "evaluatedAt": "2026-11-15T11:21:21.766Z"
+      "evaluatedAt": "2026-11-19T11:58:44.518Z"
     },
     "seoTechnicalBrief": {
       "query": "settlement agreement calculator",
@@ -24,7 +24,7 @@
         "ctr": 1.52
       },
       "searchIntent": "TRANSACTIONAL_CALCULATOR",
-      "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/",
       "characterBudgets": {
         "titleMin": 45,
         "titleMax": 60,
@@ -47,7 +47,7 @@
         "sourceRoutes": [
           "/guides/how-to-negotiate-a-settlement-agreement/"
         ],
-        "destinationRoute": "/calculator/",
+        "destinationRoute": "/",
         "exactAnchorText": "settlement agreement calculator"
       }
     },
@@ -61,9 +61,9 @@
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-        "targetRoute": "/calculator/",
+        "targetRoute": "/",
         "anchorText": "settlement agreement calculator",
-        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [settlement agreement calculator](/calculator/) before negotiating."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [settlement agreement calculator](/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -148,7 +148,7 @@
       "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
       "anchorText": "settlement agreement calculator",
       "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator](/calculator/)."
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator](/)."
     },
     "statutoryAudit": {
       "isCompliant": true,
@@ -175,12 +175,12 @@
       "roboticMarkersFound": [],
       "humanTouchImprovements": []
     },
-    "stagedDiffSummary": "Pre-audited multi-layer optimization for settlement agreement calculator on /calculator/",
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for settlement agreement calculator on /",
     "status": "VALIDATED",
-    "timestamp": "2026-11-15T11:21:21.766Z"
+    "timestamp": "2026-11-19T11:58:44.519Z"
   },
   {
-    "id": "pkg_actuator_1794741681766_2",
+    "id": "pkg_actuator_1795089524519_2",
     "query": "settlement agreement tax calculator uk",
     "priority": "CRITICAL",
     "actionType": "STATUTORY_COMPARISON_TABLE",
@@ -193,7 +193,7 @@
       "critiquePoints": [
         "Substituted high-authority statutory citation answer for Google AI Overviews."
       ],
-      "evaluatedAt": "2026-11-15T11:21:21.766Z"
+      "evaluatedAt": "2026-11-19T11:58:44.519Z"
     },
     "seoTechnicalBrief": {
       "query": "settlement agreement tax calculator uk",
@@ -357,10 +357,10 @@
     },
     "stagedDiffSummary": "Pre-audited multi-layer optimization for settlement agreement tax calculator uk on /settlement-agreement-tax-calculator/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-15T11:21:21.766Z"
+    "timestamp": "2026-11-19T11:58:44.519Z"
   },
   {
-    "id": "pkg_actuator_1794741681766_3",
+    "id": "pkg_actuator_1795089524519_3",
     "query": "compromise agreement calculator",
     "priority": "CRITICAL",
     "actionType": "CONTENT_DEPTH_UPGRADE",
@@ -373,7 +373,7 @@
       "critiquePoints": [
         "Substituted high-authority statutory citation answer for Google AI Overviews."
       ],
-      "evaluatedAt": "2026-11-15T11:21:21.766Z"
+      "evaluatedAt": "2026-11-19T11:58:44.519Z"
     },
     "seoTechnicalBrief": {
       "query": "compromise agreement calculator",
@@ -537,10 +537,10 @@
     },
     "stagedDiffSummary": "Pre-audited multi-layer optimization for compromise agreement calculator on /guides/compromise-agreement-calculator-uk/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-15T11:21:21.766Z"
+    "timestamp": "2026-11-19T11:58:44.519Z"
   },
   {
-    "id": "pkg_actuator_1794741681766_4",
+    "id": "pkg_actuator_1795089524519_4",
     "query": "calculate settlement agreement",
     "priority": "CRITICAL",
     "actionType": "CONTENT_DEPTH_UPGRADE",
@@ -551,9 +551,9 @@
       "deploymentRisk": "LOW_RISK",
       "executiveSummary": "Pre-audited with 1 automatic counter-plan adjustment(s) applied to protect route contracts and statutory precision.",
       "critiquePoints": [
-        "Calculator core route preserved. Headline locked to prevent Google Title-Link rewrite drift."
+        "Homepage route protected under Anti-Decoupling Law. Full title overwrite converted to ADDITIVE_CONTENT_AND_LINKS."
       ],
-      "evaluatedAt": "2026-11-15T11:21:21.766Z"
+      "evaluatedAt": "2026-11-19T11:58:44.519Z"
     },
     "seoTechnicalBrief": {
       "query": "calculate settlement agreement",
@@ -564,7 +564,7 @@
         "ctr": 0.15
       },
       "searchIntent": "TRANSACTIONAL_CALCULATOR",
-      "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/",
       "characterBudgets": {
         "titleMin": 45,
         "titleMax": 60,
@@ -587,7 +587,7 @@
         "sourceRoutes": [
           "/guides/how-to-negotiate-a-settlement-agreement/"
         ],
-        "destinationRoute": "/calculator/",
+        "destinationRoute": "/",
         "exactAnchorText": "calculate settlement agreement"
       }
     },
@@ -601,9 +601,9 @@
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-        "targetRoute": "/calculator/",
+        "targetRoute": "/",
         "anchorText": "calculate settlement agreement",
-        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [calculate settlement agreement](/calculator/) before negotiating."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [calculate settlement agreement](/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -688,7 +688,7 @@
       "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
       "anchorText": "calculate settlement agreement",
       "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [calculate settlement agreement](/calculator/)."
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [calculate settlement agreement](/)."
     },
     "statutoryAudit": {
       "isCompliant": true,
@@ -715,12 +715,12 @@
       "roboticMarkersFound": [],
       "humanTouchImprovements": []
     },
-    "stagedDiffSummary": "Pre-audited multi-layer optimization for calculate settlement agreement on /calculator/",
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for calculate settlement agreement on /",
     "status": "VALIDATED",
-    "timestamp": "2026-11-15T11:21:21.766Z"
+    "timestamp": "2026-11-19T11:58:44.519Z"
   },
   {
-    "id": "pkg_actuator_1794741681767_5",
+    "id": "pkg_actuator_1795089524519_5",
     "query": "settlement agreement calculator uk",
     "priority": "CRITICAL",
     "actionType": "CONTENT_DEPTH_UPGRADE",
@@ -731,9 +731,9 @@
       "deploymentRisk": "LOW_RISK",
       "executiveSummary": "Pre-audited with 1 automatic counter-plan adjustment(s) applied to protect route contracts and statutory precision.",
       "critiquePoints": [
-        "Calculator core route preserved. Headline locked to prevent Google Title-Link rewrite drift."
+        "Homepage route protected under Anti-Decoupling Law. Full title overwrite converted to ADDITIVE_CONTENT_AND_LINKS."
       ],
-      "evaluatedAt": "2026-11-15T11:21:21.767Z"
+      "evaluatedAt": "2026-11-19T11:58:44.519Z"
     },
     "seoTechnicalBrief": {
       "query": "settlement agreement calculator uk",
@@ -744,7 +744,7 @@
         "ctr": 2.56
       },
       "searchIntent": "TRANSACTIONAL_CALCULATOR",
-      "targetCanonicalUrl": "https://settlementcheck.co.uk/calculator/",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/",
       "characterBudgets": {
         "titleMin": 45,
         "titleMax": 60,
@@ -767,7 +767,7 @@
         "sourceRoutes": [
           "/guides/how-to-negotiate-a-settlement-agreement/"
         ],
-        "destinationRoute": "/calculator/",
+        "destinationRoute": "/",
         "exactAnchorText": "settlement agreement calculator uk"
       }
     },
@@ -781,9 +781,9 @@
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-        "targetRoute": "/calculator/",
+        "targetRoute": "/",
         "anchorText": "settlement agreement calculator uk",
-        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [settlement agreement calculator uk](/calculator/) before negotiating."
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [settlement agreement calculator uk](/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -868,7 +868,7 @@
       "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
       "anchorText": "settlement agreement calculator uk",
       "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator uk](/calculator/)."
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [settlement agreement calculator uk](/)."
     },
     "statutoryAudit": {
       "isCompliant": true,
@@ -895,12 +895,12 @@
       "roboticMarkersFound": [],
       "humanTouchImprovements": []
     },
-    "stagedDiffSummary": "Pre-audited multi-layer optimization for settlement agreement calculator uk on /calculator/",
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for settlement agreement calculator uk on /",
     "status": "VALIDATED",
-    "timestamp": "2026-11-15T11:21:21.767Z"
+    "timestamp": "2026-11-19T11:58:44.519Z"
   },
   {
-    "id": "pkg_actuator_1794741681767_6",
+    "id": "pkg_actuator_1795089524519_6",
     "query": "average settlement agreement amount uk",
     "priority": "CRITICAL",
     "actionType": "DIGITAL_PR_PITCH",
@@ -911,7 +911,7 @@
       "deploymentRisk": "LOW_RISK",
       "executiveSummary": "Approved. Preserves canonical route contracts and complies with April 2026 statutory rates (£751/wk cap).",
       "critiquePoints": [],
-      "evaluatedAt": "2026-11-15T11:21:21.767Z"
+      "evaluatedAt": "2026-11-19T11:58:44.519Z"
     },
     "seoTechnicalBrief": {
       "query": "average settlement agreement amount uk",
@@ -1075,6 +1075,6 @@
     },
     "stagedDiffSummary": "Pre-audited multi-layer optimization for average settlement agreement amount uk on /guides/average-settlement-agreement-payout-uk/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-15T11:21:21.767Z"
+    "timestamp": "2026-11-19T11:58:44.519Z"
   }
 ]
