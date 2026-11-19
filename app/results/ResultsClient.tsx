@@ -978,6 +978,7 @@ function VentoBandPanel({
 
 function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => void }) {
   const [show, setShow] = useState(false)
+  const [overFooter, setOverFooter] = useState(false)
 
   useEffect(() => {
     const target = document.getElementById('solicitor-intake-card')
@@ -993,6 +994,18 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
     )
     observer.observe(target)
 
+    const footerEl = document.querySelector('footer')
+    let footerObserver: IntersectionObserver | null = null
+    if (footerEl) {
+      footerObserver = new IntersectionObserver(
+        (entries) => {
+          setOverFooter(!!entries[0]?.isIntersecting)
+        },
+        { threshold: 0.05 }
+      )
+      footerObserver.observe(footerEl)
+    }
+
     const onScroll = () => {
       setShow(!cardVisible && window.scrollY > 360)
     }
@@ -1000,6 +1013,7 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
 
     return () => {
       observer.disconnect()
+      footerObserver?.disconnect()
       window.removeEventListener('scroll', onScroll)
     }
   }, [])
@@ -1010,14 +1024,18 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
     <div
       role="region"
       aria-label="Request solicitor review"
-      className="lg:hidden fixed inset-x-0 bottom-0 z-40 bg-[#F7F4EE]/98 backdrop-blur-md border-t border-[#E2DCCE] px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_rgba(11,31,58,0.12)] no-print"
+      className={`lg:hidden fixed inset-x-0 bottom-0 z-40 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-colors duration-200 no-print ${
+        overFooter
+          ? 'bg-white border-t-2 border-[#D9603B] shadow-[0_-8px_24px_rgba(0,0,0,0.28)]'
+          : 'bg-[#F7F4EE] border-t border-[#E2DCCE] shadow-[0_-4px_20px_rgba(11,31,58,0.12)]'
+      }`}
     >
       <div className="flex items-center justify-between gap-3 max-w-lg mx-auto">
         <div className="min-w-0 flex-1">
           <p className="text-[14px] font-bold text-[#0B1F3A] leading-snug m-0">
             Confidential SRA Solicitor Check
           </p>
-          <p className="text-[12px] text-[#5B6577] leading-snug mt-0.5 m-0">
+          <p className={`text-[12px] leading-snug mt-0.5 m-0 ${overFooter ? 'text-[#334155]' : 'text-[#5B6577]'}`}>
             Employer contributes £350–£500+ +VAT
           </p>
         </div>
