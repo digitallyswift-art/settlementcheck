@@ -2,7 +2,7 @@
   {
     "id": "SC-E-CLM-001",
     "file": "app/calculator/page.tsx",
-    "lineNumber": 176,
+    "lineNumber": 181,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "name: 'What is an average settlement agreement payout in the UK?',",
@@ -13,7 +13,7 @@
   {
     "id": "SC-E-CLM-002",
     "file": "app/calculator/page.tsx",
-    "lineNumber": 216,
+    "lineNumber": 221,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "<li><a href=\"/guides/settlement-agreement-how-much/\">Average Settlement Agreement Amount UK (How Much Should You Get?)</a></li>",
@@ -23,8 +23,19 @@
   },
   {
     "id": "SC-E-CLM-003",
+    "file": "app/cockpit/CockpitClient.tsx",
+    "lineNumber": 786,
+    "pattern": "average settlement",
+    "matchedText": "average settlement",
+    "context": "targetQuery: 'average settlement agreement payout uk',",
+    "riskReason": "Implies statistically verified average across UK settlements without published sample data.",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-004",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 36,
+    "lineNumber": 38,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "q: 'What is the average settlement agreement payout in the UK?',",
@@ -33,9 +44,9 @@
     "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-004",
+    "id": "SC-E-CLM-005",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 66,
+    "lineNumber": 68,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "headline: 'Average Settlement Agreement Payout UK 2026: What is a Normal Offer?',",
@@ -44,9 +55,9 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-005",
+    "id": "SC-E-CLM-006",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 155,
+    "lineNumber": 157,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "Settlement Agreement Payouts UK 2026: Benchmark Ranges &amp; Average Settlement Guide",
@@ -55,9 +66,9 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-006",
+    "id": "SC-E-CLM-007",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 183,
+    "lineNumber": 185,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "What is the average settlement agreement payout in the UK?",
@@ -66,9 +77,9 @@
     "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-007",
+    "id": "SC-E-CLM-008",
     "file": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
-    "lineNumber": 147,
+    "lineNumber": 148,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 months",
     "context": "subtitle=\"Compare your employer's opening offer against the statutory redundancy floor and observed 1 to 3 months commercial negotiation ben",
@@ -77,9 +88,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-008",
+    "id": "SC-E-CLM-009",
     "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
-    "lineNumber": 31,
+    "lineNumber": 32,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "q: 'What is the average settlement agreement payout in the UK?',",
@@ -88,9 +99,20 @@
     "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-009",
+    "id": "SC-E-CLM-010",
+    "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
+    "lineNumber": 396,
+    "pattern": "average settlement",
+    "matchedText": "Average Settlement",
+    "context": "title: 'Average Settlement Agreement Payouts UK (2026)',",
+    "riskReason": "Implies statistically verified average across UK settlements without published sample data.",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-011",
     "file": "app/guides/page.tsx",
-    "lineNumber": 146,
+    "lineNumber": 154,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payouts UK 2026',",
@@ -99,9 +121,9 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-010",
+    "id": "SC-E-CLM-012",
     "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
-    "lineNumber": 51,
+    "lineNumber": 53,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 months",
     "context": "a: 'A standard commercial settlement offer typically exceeds calculated statutory redundancy pay plus contractual notice pay (subject to eli",
@@ -110,9 +132,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-011",
+    "id": "SC-E-CLM-013",
     "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
-    "lineNumber": 187,
+    "lineNumber": 189,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 months",
     "context": "A settlement agreement should always pay more than statutory redundancy. At minimum, the offer must cover your <strong>Statutory Redundancy ",
@@ -121,9 +143,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-012",
+    "id": "SC-E-CLM-014",
     "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
-    "lineNumber": 209,
+    "lineNumber": 211,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 Months",
     "context": "<span className=\"font-bold text-ink text-sm\">1 to 3 Months Salary</span>",
@@ -132,9 +154,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-013",
+    "id": "SC-E-CLM-015",
     "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
-    "lineNumber": 261,
+    "lineNumber": 275,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 Months",
     "context": "Settlement Target = Statutory Redundancy Pay + Full Notice Pay + Ex-Gratia Premium (Illustrative 1 to 3 Months Commercial Benchmark)",
@@ -143,9 +165,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-014",
+    "id": "SC-E-CLM-016",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 196,
+    "lineNumber": 197,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
     "context": "In standard commercial redundancy or capability exits, employers often propose an ex-gratia starting point of one to three months of gross s",
@@ -154,9 +176,9 @@
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-015",
+    "id": "SC-E-CLM-017",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 204,
+    "lineNumber": 205,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 Months",
     "context": "<span className=\"font-bold text-ink text-sm\">1 to 3 Months' Gross Pay</span>",
@@ -165,9 +187,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-016",
+    "id": "SC-E-CLM-018",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 301,
+    "lineNumber": 302,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
     "context": "This is the discretionary compensation offered in exchange for signing away your right to take your employer to an employment tribunal. In s",
@@ -176,9 +198,9 @@
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-017",
+    "id": "SC-E-CLM-019",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 375,
+    "lineNumber": 376,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
     "context": "Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering an ex-gratia payment of one to three months of g",
@@ -187,9 +209,9 @@
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-018",
+    "id": "SC-E-CLM-020",
     "file": "app/guides/settlement-agreement-instead-of-pip/page.tsx",
-    "lineNumber": 528,
+    "lineNumber": 529,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
     "context": "desc: 'As an illustrative commercial negotiation starting point (not a statutory entitlement), one to three months of gross pay to reflect c",
@@ -198,9 +220,42 @@
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-019",
+    "id": "SC-E-CLM-021",
+    "file": "app/guides/what-is-a-fair-settlement-agreement/page.tsx",
+    "lineNumber": 554,
+    "pattern": "average settlement",
+    "matchedText": "Average Settlement",
+    "context": "title: 'Average Settlement Agreement Payouts UK (2026)',",
+    "riskReason": "Implies statistically verified average across UK settlements without published sample data.",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-022",
+    "file": "app/page.tsx",
+    "lineNumber": 262,
+    "pattern": "average settlement",
+    "matchedText": "Average Settlement",
+    "context": "{ href: '/guides/average-settlement-agreement-payout-uk/', label: 'Average Settlement Agreement Payouts UK' },",
+    "riskReason": "Implies statistically verified average across UK settlements without published sample data.",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-023",
+    "file": "app/regulatory-framework/page.tsx",
+    "lineNumber": 170,
+    "pattern": "almost always",
+    "matchedText": "almost always",
+    "context": "<strong>No Statutory Obligation to Pay:</strong> Employers are not legally required by statute to fund the employee’s legal fees. However, b",
+    "riskReason": "Overstated certainty in legal or negotiation outcomes.",
+    "severity": "P2",
+    "recommendedAction": "Qualify or rephrase \"almost always\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-024",
     "file": "app/reports/uk-settlement-index-2026/page.tsx",
-    "lineNumber": 153,
+    "lineNumber": 156,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 months",
     "context": "noticePeriodAverage: '1 to 3 months',",
@@ -209,9 +264,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-020",
+    "id": "SC-E-CLM-025",
     "file": "app/settlement-agreement-tax-calculator/page.tsx",
-    "lineNumber": 258,
+    "lineNumber": 262,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "label: 'Average Settlement Agreement Payouts UK',",
@@ -220,9 +275,9 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-021",
+    "id": "SC-E-CLM-026",
     "file": "app/sitemap/page.tsx",
-    "lineNumber": 207,
+    "lineNumber": 232,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payout in the UK',",
@@ -231,7 +286,18 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-022",
+    "id": "SC-E-CLM-027",
+    "file": "components/EmbeddedCalculatorCard.tsx",
+    "lineNumber": 204,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "<span className=\"block text-[10px] text-muted\">Statutory + 1 to 3 months illustrative range</span>",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-028",
     "file": "components/FaqAccordion.tsx",
     "lineNumber": 25,
     "pattern": "1 to 3 months",
@@ -242,9 +308,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-023",
+    "id": "SC-E-CLM-029",
     "file": "components/Nav.tsx",
-    "lineNumber": 53,
+    "lineNumber": 64,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "label: 'Average Settlement Agreement Payouts',",

@@ -213,6 +213,9 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
   useEffect(() => { onCalculateRef.current = onCalculate }, [onCalculate])
 
   const scrollRef = useRef<HTMLDivElement>(null)
+  const offerSectionRef = useRef<HTMLDivElement>(null)
+  const offerInputRef = useRef<HTMLInputElement>(null)
+  const pendingOfferScrollRef = useRef(false)
   const [vp, setVp] = useState<{ height: number | null; top: number; keyboardOpen: boolean }>({
     height: null,
     top: 0,
@@ -251,6 +254,39 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0
   }, [stage])
+
+  function scrollToOfferField(shouldFocus = true) {
+    const container = scrollRef.current
+    const target = offerSectionRef.current
+    if (container && target) {
+      const containerRect = container.getBoundingClientRect()
+      const targetRect = target.getBoundingClientRect()
+      const nextTop = container.scrollTop + (targetRect.top - containerRect.top) - 16
+      container.scrollTo({ top: Math.max(0, nextTop), behavior: 'smooth' })
+    }
+    if (shouldFocus && offerInputRef.current) {
+      offerInputRef.current.focus({ preventScroll: true })
+    }
+  }
+
+  function handleSelectFormalOffer() {
+    if (hasOffer) {
+      scrollToOfferField(true)
+    } else {
+      pendingOfferScrollRef.current = true
+      setHasOffer(true)
+    }
+  }
+
+  useEffect(() => {
+    if (hasOffer && pendingOfferScrollRef.current) {
+      pendingOfferScrollRef.current = false
+      const rafId = requestAnimationFrame(() => {
+        scrollToOfferField(true)
+      })
+      return () => cancelAnimationFrame(rafId)
+    }
+  }, [hasOffer])
 
   const loadingTimers = useRef<NodeJS.Timeout[]>([])
   useEffect(() => {
@@ -408,6 +444,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
       }
       if (hasOffer && (!offer || parseFloat(offer) <= 0)) {
         triggerShake()
+        scrollToOfferField(true)
         return
       }
       goToStage(4)
@@ -916,7 +953,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                 <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
                   <button
                     type="button"
-                    onClick={() => setHasOffer(true)}
+                    onClick={handleSelectFormalOffer}
                     style={{
                       flex: 1,
                       padding: '10px 12px',
@@ -951,11 +988,16 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                 </div>
 
                 {hasOffer && (
-                  <div>
-                    <label style={{ ...labelSt, fontSize: 12 }}>Proposed settlement sum</label>
-                    <div className="step-input-wrap" style={{ marginBottom: 10 }}>
+                  <div ref={offerSectionRef}>
+                    <label htmlFor="sc-offer-input" style={{ ...labelSt, fontSize: 12 }}>Proposed settlement sum</label>
+                    <div
+                      className={`step-input-wrap${shake && (!offer || parseFloat(offer) <= 0) ? ' sc-shake' : ''}`}
+                      style={{ marginBottom: 10 }}
+                    >
                       <span style={{ padding: '0 4px 0 14px', fontSize: 18, color: '#9AA3AE', fontFamily: 'var(--font-mono)' }}>£</span>
                       <input
+                        id="sc-offer-input"
+                        ref={offerInputRef}
                         type="text"
                         inputMode="numeric"
                         placeholder="15,000"
