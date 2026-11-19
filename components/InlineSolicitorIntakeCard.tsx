@@ -74,6 +74,7 @@ export default function InlineSolicitorIntakeCard({
   const [emailSent, setEmailSent] = useState(false)
   const [triageId, setTriageId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [showTerms, setShowTerms] = useState(false)
   const [honeypot, setHoneypot] = useState('')
 
   const cardRef = useRef<HTMLDivElement>(null)
@@ -426,8 +427,24 @@ export default function InlineSolicitorIntakeCard({
 
           <div className="flex flex-wrap items-center justify-between gap-1.5 text-[11px] text-[#5B6577] pt-0.5">
             <span>🔒 Strictly private (employer never notified)</span>
-            <span>⚖️ Standard employer fee contribution (£350–£500+ +VAT)</span>
+            <button
+              type="button"
+              onClick={() => setShowTerms(!showTerms)}
+              className="text-[#0B1F3A] underline underline-offset-2 bg-transparent border-0 p-0 cursor-pointer text-[11px]"
+            >
+              {showTerms ? 'Hide fee & legal terms' : 'Employer fee & legal terms'}
+            </button>
           </div>
+          {showTerms && (
+            <div className="p-3 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[11px] text-[#5B6577] leading-relaxed space-y-1">
+              <p className="m-0">
+                <strong className="text-[#0B1F3A]">How legal fees work:</strong> Employers standardly provide a capped contribution (typically £350 to £500+ +VAT) paid directly to your solicitor upon agreement completion. Work outside that cap or abortive fees if you do not complete remain subject to your solicitor&apos;s terms.
+              </p>
+              <p className="m-0">
+                <strong className="text-[#0B1F3A]">Independence:</strong> SettlementCheck is an independent introducer, not a law firm. Matched SRA-regulated solicitors act solely in your interest under s.203(3) ERA 1996.
+              </p>
+            </div>
+          )}
         </form>
       ) : (
         <form onSubmit={handleSubmit} noValidate className="space-y-4">
@@ -492,9 +509,21 @@ export default function InlineSolicitorIntakeCard({
                 className="mt-0.5 h-4 w-4 rounded border-[#E2DCCE] text-[#D9603B] focus:ring-[#D9603B] cursor-pointer"
               />
               <span className="text-xs text-[#5B6577] leading-snug">
-                I consent to SettlementCheck securely sharing my calculation summary with one independent SRA-regulated employment solicitor to contact me confidentially. I understand employers standardly provide a capped contribution (£350–£500+ +VAT) upon agreement completion, and work outside that cap or abortive fees remain subject to the solicitor&apos;s terms.
+                I agree to share my summary with one independent SRA-regulated employment solicitor for a confidential call.
               </span>
             </label>
+            <button
+              type="button"
+              onClick={() => setShowTerms(!showTerms)}
+              className="mt-1.5 text-[11px] text-[#5B6577] underline underline-offset-2 bg-transparent border-0 p-0 cursor-pointer"
+            >
+              {showTerms ? 'Hide full fee & SRA terms' : 'Read full fee & SRA introducer terms'}
+            </button>
+            {showTerms && (
+              <p className="mt-2 p-2.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[11px] text-[#5B6577] leading-relaxed m-0">
+                Employers standardly provide a capped contribution (£350–£500+ +VAT) upon agreement completion; work outside that cap or abortive fees remain subject to the solicitor&apos;s terms. SettlementCheck is an independent introducer, not an authorised law firm.
+              </p>
+            )}
           </div>
 
           {error && (
@@ -514,10 +543,6 @@ export default function InlineSolicitorIntakeCard({
           >
             <span>{submitting ? 'Submitting Case Details…' : 'Confirm Solicitor Match Request →'}</span>
           </button>
-
-          <p className="text-[10px] leading-normal m-0 text-[#8A93A3]">
-            SRA Rule 5.1 Notice: SettlementCheck is an independent calculation platform and introducer, not an authorised law firm. Instructed solicitors act independently in your sole interest.
-          </p>
         </form>
       )}
     </div>

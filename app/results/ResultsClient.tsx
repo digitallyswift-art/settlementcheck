@@ -2251,7 +2251,8 @@ function ResultsContent() {
   })
   const [showJurisdictionToggle, setShowJurisdictionToggle] = useState(false)
   const [prefillEmail, setPrefillEmail] = useState(searchParams.get('email') ?? '')
-  const [activeDetailTab, setActiveDetailTab] = useState<'breakdown' | 'negotiation' | 'benchmarks'>('breakdown')
+  const [activeDetailTab, setActiveDetailTab] = useState<'breakdown' | 'negotiation' | 'benchmarks' | null>(null)
+  const [showBottomLegal, setShowBottomLegal] = useState(false)
   const saveCardRef = useRef<HTMLDivElement>(null)
   const resultsTrackedRef = useRef(false)
 
@@ -2510,31 +2511,41 @@ function ResultsContent() {
                   )}
                 </div>
 
-                {/* ── TABBED DETAILED ANALYSIS (Eliminates 9,700px Cognitive Overload) ── */}
-                <div className="no-print bg-white border border-[#E2DCCE] rounded-xl p-2 flex flex-wrap gap-1.5" role="tablist" aria-label="Detailed breakdown sections">
-                  {([
-                    { id: 'breakdown', label: '1. Breakdown & Tax Split' },
-                    { id: 'negotiation', label: '2. Deadlines & Solicitor Brief' },
-                    { id: 'benchmarks', label: '3. Tribunal Benchmarks & FAQs' },
-                  ] as const).map((tab) => (
-                    <button
-                      key={tab.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={activeDetailTab === tab.id}
-                      onClick={() => {
-                        setActiveDetailTab(tab.id)
-                        trackClientEvent('results_secondary_tab_click', { tab: tab.id })
-                      }}
-                      className={`flex-1 min-w-[160px] px-3.5 py-2.5 rounded-lg text-[13px] font-semibold transition-all cursor-pointer border-0 ${
-                        activeDetailTab === tab.id
-                          ? 'bg-[#0B1F3A] text-white shadow-sm'
-                          : 'bg-transparent text-[#5B6577] hover:bg-[#F7F4EE] hover:text-[#0B1F3A]'
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
+                {/* ── COLLAPSIBLE DETAILED ANALYSIS (Closed by default to prevent tax & text overload) ── */}
+                <div className="no-print flex flex-col gap-2.5">
+                  <p className="text-[12px] font-semibold text-[#5B6577] uppercase tracking-wider m-0 px-1">
+                    Want the full numbers? Tap to expand:
+                  </p>
+                  <div className="bg-white border border-[#E2DCCE] rounded-xl p-2 flex flex-col sm:flex-row gap-1.5" role="tablist" aria-label="Detailed breakdown sections">
+                    {([
+                      { id: 'breakdown', label: '1. Tax & Redundancy Breakdown' },
+                      { id: 'negotiation', label: '2. Deadlines & Call Prep' },
+                      { id: 'benchmarks', label: '3. Tribunal Benchmarks & FAQs' },
+                    ] as const).map((tab) => {
+                      const isOpen = activeDetailTab === tab.id
+                      return (
+                        <button
+                          key={tab.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isOpen}
+                          onClick={() => {
+                            const next = isOpen ? null : tab.id
+                            setActiveDetailTab(next)
+                            if (next) trackClientEvent('results_secondary_tab_click', { tab: next })
+                          }}
+                          className={`flex-1 px-3.5 py-2.5 rounded-lg text-[13px] font-semibold transition-all cursor-pointer border-0 flex items-center justify-between sm:justify-center gap-2 ${
+                            isOpen
+                              ? 'bg-[#0B1F3A] text-white shadow-sm'
+                              : 'bg-transparent text-[#0B1F3A] hover:bg-[#F7F4EE]'
+                          }`}
+                        >
+                          <span>{tab.label}</span>
+                          <span className="text-[11px] opacity-75">{isOpen ? '▲' : '▼'}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
                 </div>
 
                 {activeDetailTab === 'breakdown' && (
@@ -2620,9 +2631,21 @@ function ResultsContent() {
                   <NonConverterFallback onScrollToSave={scrollToSave} />
                 </div>
 
-                <p className="text-[11px] text-[#8A93A3] leading-[1.6] text-center px-4 m-0 no-print">
-                  Calculation estimates are based on UK statutory rates (weekly cap £{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI, 2026/27). This utility is an independent technology platform and introducer, not a law firm or tax practice. We do not provide legal or tax advice. Employer fee contributions are a commercial standard, capped, and conditional upon completion. SettlementCheck introduces independent, SRA-regulated solicitors.
-                </p>
+                <div className="text-[11px] text-[#8A93A3] leading-[1.6] text-center px-4 no-print">
+                  <span>Estimates use 2026/27 UK statutory rates. SettlementCheck is an introducer, not a law firm. </span>
+                  <button
+                    type="button"
+                    onClick={() => setShowBottomLegal(!showBottomLegal)}
+                    className="underline underline-offset-2 text-[#5B6577] bg-transparent border-0 p-0 cursor-pointer text-[11px]"
+                  >
+                    {showBottomLegal ? 'Hide regulatory notice' : 'Full regulatory notice'}
+                  </button>
+                  {showBottomLegal && (
+                    <p className="mt-2 m-0 text-[11px] text-[#8A93A3]">
+                      Calculation estimates are based on UK statutory rates (weekly cap £{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI, 2026/27). This utility is an independent technology platform and introducer, not a law firm or tax practice. We do not provide legal or tax advice. Employer fee contributions are a commercial standard, capped, and conditional upon completion. SettlementCheck introduces independent, SRA-regulated solicitors.
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Right Column - Conversions (Sticky on Desktop, clears fixed Nav) */}

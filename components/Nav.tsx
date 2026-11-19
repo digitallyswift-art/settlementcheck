@@ -95,7 +95,7 @@ export default function Nav() {
       className="sticky top-0 z-50 border-b border-rule"
       style={{ background: 'rgba(247,244,238,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
     >
-      <LegalFeeAnnouncementBar />
+      {!isResultsPage && <LegalFeeAnnouncementBar />}
       <div className="sc-container px-4 sm:px-6 xl:px-8 flex items-center justify-between gap-4 xl:gap-8 h-[68px]">
 
         {/* Logo */}
