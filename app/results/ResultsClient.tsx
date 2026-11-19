@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams, useRouter } from 'next/navigation'
-import React, { Suspense, useState, useRef, useMemo, useEffect } from 'react'
+import React, { Suspense, useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -15,824 +15,9 @@ import {
 } from '@/lib/calculations'
 import { getOfficialBenchmark } from '@/lib/statutory-rates'
 import { trackClientEvent, trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
-import { LegalFeeShieldBadge, LegalFeeInlineCard } from '@/components/LegalFeeShieldBadge'
-import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers'
 import InlineSolicitorIntakeCard from '@/components/InlineSolicitorIntakeCard'
 
-/* ── Shared tiny components ─────────────────────────────────────── */
-
-function CheckIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  )
-}
-
-/* ── Statutory Standards & Protections Card ─────────────────────── */
-
-function StatutoryProtectionsCard() {
-  const protections = [
-    {
-      title: 'April 2026 Statutory Caps',
-      statute: 'ERA 1996 s.227 & SI 2026/310',
-      desc: 'Redundancy pay uses a weekly pay cap of £751 (GB) or £783 (NI). The unfair dismissal compensatory award is capped at £123,543 or 52 weeks\' pay, whichever is lower.',
-    },
-    {
-      title: 'Independent Advice',
-      statute: 'ERA 1996 s.203(3)',
-      desc: 'A settlement agreement only settles statutory claims if you have received advice from an independent adviser. You can ask your employer to contribute towards the cost.',
-    },
-    {
-      title: 'Time to Consider',
-      statute: 'ACAS Code of Practice 4',
-      desc: 'The ACAS Code says you should be given a reasonable period to consider the terms, normally at least 10 calendar days.',
-    },
-    {
-      title: 'Tax-Free Exemption Boundary',
-      statute: 'ITEPA 2003 s.403',
-      desc: 'First £30,000 of compensation for loss of office is exempt from income tax and employee NICs. PILON is taxable under s.402D.',
-    },
-  ]
-  return (
-    <div className="bg-paper border border-[#E2DCCE] rounded-xl p-5 mb-6">
-      <div className="flex items-center justify-between gap-2 border-b border-[#E2DCCE] pb-3 mb-4">
-        <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.10em] text-[#0B1F3A] font-semibold block">
-            Statutory Protections &amp; Standards
-          </span>
-          <h4 className="text-[15px] font-serif font-bold text-ink m-0">
-            How UK Employment Law Protects Your Settlement
-          </h4>
-        </div>
-        <span className="text-[11px] font-mono text-muted hidden sm:inline-block">
-          Active Rates: 2026/27
-        </span>
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2">
-        {protections.map((p, i) => (
-          <div key={i} className="bg-white border border-[#E2DCCE] rounded-lg p-3.5 flex flex-col justify-between">
-            <div>
-              <div className="flex items-baseline justify-between gap-2 mb-1">
-                <span className="text-[13px] font-semibold text-ink">{p.title}</span>
-              </div>
-              <span className="text-[10px] font-mono text-coral font-medium block mb-1.5">{p.statute}</span>
-              <p className="text-[12px] text-muted leading-relaxed m-0">{p.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ── 3-Tier Regulatory & Information Architecture Header ────────── */
-
-function ThreeTierFrameworkHeader() {
-  return (
-    <div className="bg-[#FAF8F5] border border-[#E2DCCE] rounded-xl p-4 no-print text-[12px] text-[#5B6577] flex flex-col gap-2.5 mb-2">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-[#E2DCCE] pb-2">
-        <span className="font-mono text-[10px] uppercase font-bold tracking-wider text-[#0B1F3A]">
-          3-Tier Legal &amp; Information Architecture
-        </span>
-        <span className="text-[11px] text-[#8A93A3]">
-          Clear separation: statutory calculation, public precedents, and independent legal advice
-        </span>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-[#E2DCCE]">
-          <span className="w-5 h-5 rounded-full bg-[#0B1F3A] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
-            1
-          </span>
-          <div>
-            <strong className="text-[#0B1F3A] block text-[12px]">Tier 1: Statutory Baselines (Subject to Eligibility)</strong>
-            <span className="text-[11px] leading-tight block text-[#5B6577]">Calculated statutory baselines (ERA 1996 s.86 notice &amp; s.162 redundancy, subject to qualifying service &amp; s.141 criteria).</span>
-          </div>
-        </div>
-        <div className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-[#E2DCCE]">
-          <span className="w-5 h-5 rounded-full bg-[#D9603B] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
-            2
-          </span>
-          <div>
-            <strong className="text-[#0B1F3A] block text-[12px]">Tier 2: Public Benchmarks</strong>
-            <span className="text-[11px] leading-tight block text-[#5B6577]">MoJ tribunal median precedents &amp; ACAS conciliation guidelines.</span>
-          </div>
-        </div>
-        <div className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-[#E2DCCE]">
-          <span className="w-5 h-5 rounded-full bg-[#0B1F3A] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
-            3
-          </span>
-          <div>
-            <strong className="text-[#0B1F3A] block text-[12px]">Tier 3: Independent Legal Review</strong>
-            <span className="text-[11px] leading-tight block text-[#5B6577]">Qualitative legal advice &amp; Section 203(3) ERA 1996 solicitor certification.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-
-/* ── Official Government & Statutory Benchmarks Card ────────────── */
-
-function OfficialBenchmarkCard({
-  reason,
-  salary,
-  offer,
-  result,
-  isDiscrimination,
-  totalMonths,
-}: {
-  reason: string;
-  salary: number;
-  /** The user's REAL employer offer. Never pass a simulated/midpoint figure here. */
-  offer: number;
-  result: VerdictResult;
-  isDiscrimination: boolean;
-  totalMonths: number;
-}) {
-  const benchmark = getOfficialBenchmark(reason, isDiscrimination)
-  const monthlySalary = salary / 12
-  const refLow = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.min)
-  const refHigh = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.max)
-
-  // Reason not confirmed ('other' = "I am not sure", 'mutual' = mutual agreement).
-  const reasonUnconfirmed = reason === 'other' || reason === 'mutual'
-  // Ordinary unfair dismissal needs 2 years' service (ERA 1996 s.108). Tribunal medians for these
-  // claim types are not shown where that threshold is not met on the answers given.
-  const isOrdinaryUnfairDismissalBenchmark =
-    !isDiscrimination && reason !== 'redundancy' && reason !== 'redundancy_collective'
-  const belowQualifyingService = totalMonths < 24
-  const showTribunalMedian = !(isOrdinaryUnfairDismissalBenchmark && belowQualifyingService)
-
-  const categoryLabel = reasonUnconfirmed && !isDiscrimination
-    ? 'Reason not confirmed'
-    : benchmark.jurisdictionCategory
-
-  // Only compare an offer the user actually entered. Uses the effective package
-  // (adds notice pay where the user said it is paid on top).
-  const hasRealOffer = offer > 0
-  const comparedOffer = result.effectiveOffer
-  const isBelowFigures = hasRealOffer && result.minimum > 0 && comparedOffer < result.minimum
-  const isBelowRef = hasRealOffer && !isBelowFigures && comparedOffer < refLow
-  const isWithinOrAboveRef = hasRealOffer && comparedOffer >= refLow
-
-  // Describe exactly what the figure is made of.
-  const floorParts = [
-    result.pilon > 0 ? 'Notice (s.86)' : null,
-    result.redundancy > 0 ? 'Redundancy (s.162)' : null,
-  ].filter(Boolean)
-  const floorLabel = floorParts.length > 0 ? `${floorParts.join(' + ')} ERA 1996` : 'No notice or redundancy pay identified from your answers'
-
-  return (
-    <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 md:p-6 shadow-sm no-print">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E2DCCE] pb-3 mb-4">
-        <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-[#D9603B] font-semibold block mb-0.5">
-            Tier 2: Published Tribunal &amp; Conciliation Benchmarks
-          </span>
-          <h3 className="text-[17px] font-serif font-bold text-ink m-0">
-            {categoryLabel}: Official Compensation Precedents
-          </h3>
-        </div>
-        <a
-          href={benchmark.sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackOutboundCitation(benchmark.sourceUrl, benchmark.sourceName, { component: 'official_benchmark_card' })}
-          className="text-[11px] text-[#0B1F3A] hover:text-[#D9603B] underline underline-offset-2 font-mono flex items-center gap-1 self-start sm:self-auto transition-colors"
-        >
-          <span>Source: {benchmark.sourceName}</span>
-          <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-        {/* Metric 1: Statutory Floor */}
-        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
-          <div>
-            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">1. Statutory Baseline</span>
-            <span className="text-[18px] font-bold text-ink block font-serif">
-              {formatCurrency(result.minimum)}
-            </span>
-          </div>
-          <span className="text-[10px] text-[#8A93A3] mt-2 block">
-            {floorLabel}
-          </span>
-        </div>
-
-        {/* Metric 2: HMCTS Tribunal Median */}
-        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
-          <div>
-            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">2. MoJ Tribunal Median Award</span>
-            <span className="text-[18px] font-bold text-ink block font-serif">
-              {showTribunalMedian ? formatCurrency(benchmark.medianTribunalAward) : 'N/A (< 2 yrs service)'}
-            </span>
-          </div>
-          <span className="text-[10px] text-[#8A93A3] mt-2 block">
-            {showTribunalMedian
-              ? `Mean average: ${formatCurrency(benchmark.meanTribunalAward)} (MoJ Tables)`
-              : 'Ordinary unfair dismissal claims require 2 years continuous service (ERA 1996 s.108)'}
-          </span>
-        </div>
-
-        {/* Metric 3: Typical Negotiation Benchmark Range */}
-        <div className="bg-paper p-3.5 rounded-lg border border-[#E2DCCE] flex flex-col justify-between">
-          <div>
-            <span className="text-[11px] text-[#5B6577] font-medium block mb-1">3. Commercial Negotiation Benchmark</span>
-            <span className="text-[18px] font-bold text-ink block font-serif">
-              {formatCurrency(refLow)} to {formatCurrency(refHigh)}
-            </span>
-          </div>
-          <span className="text-[10px] text-[#8A93A3] mt-2 block">
-            Baseline + {benchmark.typicalAcasExGratiaMonths.min} to {benchmark.typicalAcasExGratiaMonths.max} months negotiation benchmark
-          </span>
-        </div>
-      </div>
-
-      {/* No offer entered: neutral guidance, no verdict on a figure the user never gave */}
-      {!hasRealOffer && (
-        <div className="rounded-lg p-3.5 text-[13px] leading-relaxed mb-4 border bg-paper border-[#E2DCCE] text-[#0B1F3A]">
-          <p className="m-0">
-            <strong>No offer entered yet.</strong> These figures provide an objective reference baseline. When your employer makes an offer, enter it to see how it compares.
-          </p>
-        </div>
-      )}
-
-      {/* Dynamic Status / Negotiation Standing Callout */}
-      {hasRealOffer && (
-        <div className={`rounded-lg p-3.5 text-[13px] leading-relaxed mb-4 border ${
-          isBelowFigures
-            ? 'bg-[#FBF0EE] border-[#F2C4BA] text-[#A8341F]'
-            : isBelowRef
-            ? 'bg-[#FFF8E6] border-[#F0D597] text-[#7A5B15]'
-            : 'bg-[#F0F5FA] border-[#C4D8EC] text-[#0B1F3A]'
-        }`}>
-          {isBelowFigures && (
-            <p className="m-0">
-              <strong>Offer Comparison:</strong> Your recorded offer of <strong>{formatCurrency(comparedOffer)}</strong> is <strong>{formatCurrency(result.minimum - comparedOffer)}</strong> lower than the calculated notice and redundancy baseline ({formatCurrency(result.minimum)}). Parties can agree settlement terms under Section 203 of the Employment Rights Act 1996, but this comparison indicates your offer sits below the statutory exit entitlement.
-            </p>
-          )}
-          {isBelowRef && (
-            <p className="m-0">
-              <strong>Offer Comparison:</strong> Your recorded offer of <strong>{formatCurrency(comparedOffer)}</strong> covers the calculated baseline ({formatCurrency(result.minimum)}), but sits below the illustrative negotiation benchmark range ({formatCurrency(refLow)} to {formatCurrency(refHigh)}).
-            </p>
-          )}
-          {isWithinOrAboveRef && (
-            <p className="m-0">
-              <strong>Offer Comparison:</strong> Your recorded offer of <strong>{formatCurrency(comparedOffer)}</strong> sits within or above the illustrative negotiation benchmark range ({formatCurrency(refLow)} to {formatCurrency(refHigh)}).
-            </p>
-          )}
-        </div>
-      )}
-
-      {/* Mandatory Regulatory Disclaimers (CMA/DMCC Fee Notice & Hyde v Wrench Contract Notice) */}
-      <MandatoryLegalDisclaimers className="mt-4" />
-    </div>
-  )
-}
-
-/* ── Agreement Review Cross-Sell Card ───────────────────────────── */
-
-function AgreementReviewCrossSellCard({
-  salary,
-  yearsNum,
-  age,
-  reason,
-}: {
-  salary?: number | string
-  yearsNum?: number | string
-  age?: number | string
-  reason?: string
-}) {
-  const queryParams = new URLSearchParams()
-  if (salary && Number(salary) > 0) queryParams.set('salary', String(salary))
-  if (yearsNum && Number(yearsNum) > 0) queryParams.set('years', String(yearsNum))
-  if (age && Number(age) > 0) queryParams.set('age', String(age))
-  if (reason) queryParams.set('reason', String(reason))
-
-  const queryString = queryParams.toString()
-  const reviewHref = `/settlement-agreement-review/${queryString ? `?${queryString}` : ''}`
-
-  return (
-    <div className="bg-[#0B1F3A] text-white rounded-xl p-5 md:p-6 shadow-sm flex flex-col gap-3.5 border border-[#1A2F4E] no-print">
-      <div className="flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse" />
-        <span className="text-[11px] font-mono text-[#D9603B] font-semibold uppercase tracking-[0.10em]">
-          Already have an offer in writing?
-        </span>
-      </div>
-      <h3 className="text-[17px] font-serif font-bold text-white m-0 leading-snug">
-        Check your draft employment settlement clauses
-      </h3>
-      <p className="text-[13px] text-white/80 leading-relaxed m-0">
-        If your employer has handed you draft terms, paste them here. We check your £30,000 tax exemption, notice pay, and employer legal fee contributions in seconds.
-      </p>
-      <Link
-        href={reviewHref}
-        className="mt-1 inline-flex items-center justify-center px-4 py-3 bg-[#D9603B] hover:bg-[#B14A28] text-white font-semibold rounded-lg text-[13px] transition-colors text-center"
-      >
-        Check my draft settlement terms →
-      </Link>
-    </div>
-  )
-}
-
-/* ── Verdict panel ──────────────────────────────────────────────── */
-
-function VerdictPanel({ result, offer, salary, yearsNum, age }: {
-  result: VerdictResult; offer: number; salary: number; yearsNum: number; age: number
-}) {
-  const completedYears = yearsNum
-
-  if (offer === 0) {
-    const minEntitlement = result.minimum
-    const breakdownDesc = result.redundancy > 0
-      ? `${formatCurrency(result.pilon)} notice + ${formatCurrency(result.redundancy)} redundancy`
-      : `${formatCurrency(result.pilon)} statutory notice pay`
-
-    return (
-      <div className="rounded-xl p-4 sm:p-6 bg-[#F2F5F8] border border-[#C8D3DF]">
-        <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase mb-2.5 bg-white text-[#0B1F3A] border border-[#C8D3DF]">
-          Pre-Offer Baseline
-        </span>
-        <h2 className="font-serif text-[21px] sm:text-[26px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-3">
-          Know your {formatCurrency(minEntitlement)} baseline before your employer makes an offer.
-        </h2>
-        <OfferVsRange result={result} offer={offer} />
-        <p className="text-[13px] sm:text-[14px] text-[#5B6577] leading-relaxed mt-3 mb-0">
-          Based on {completedYears} {completedYears === 1 ? 'year' : 'years'} of service ({breakdownDesc}). ACAS guidance recommends at least 10 calendar days to consider any formal proposal.
-        </p>
-      </div>
-    )
-  }
-
-  if (result.verdict === 'BELOW_MINIMUM') {
-    const shortfall = Math.max(0, result.minimum - offer)
-    return (
-      <div className="rounded-xl p-4 sm:p-6" style={{ background: '#FBF0EE', border: '1px solid #D9A99E' }}>
-        <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase mb-2.5" style={{ background: '#fff', color: '#A8341F', border: '1px solid #D9A99E' }}>
-          Below Statutory Baseline
-        </span>
-        <h2 className="font-serif text-[21px] sm:text-[26px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-3">
-          Your {formatCurrency(offer)} offer is {formatCurrency(shortfall)} below your statutory baseline.
-        </h2>
-        <OfferVsRange result={result} offer={offer} />
-        <p className="text-[13px] sm:text-[14px] text-[#5B6577] leading-relaxed mt-3 mb-0">
-          Your calculated notice and redundancy baseline is <strong className="text-ink">{formatCurrency(result.minimum)}</strong>. Before you sign or reply, an independent SRA solicitor can check what is missing.
-        </p>
-      </div>
-    )
-  }
-
-  if (result.verdict === 'BELOW_TYPICAL') {
-    return (
-      <div className="rounded-xl p-4 sm:p-6" style={{ background: '#FEFBF0', border: '1px solid #E0CB94' }}>
-        <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase mb-2.5" style={{ background: '#fff', color: '#B5802A', border: '1px solid #E0CB94' }}>
-          Below Typical Range
-        </span>
-        <h2 className="font-serif text-[21px] sm:text-[26px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-3">
-          Your {formatCurrency(offer)} offer covers the minimum, but sits below typical payouts.
-        </h2>
-        <OfferVsRange result={result} offer={offer} />
-        <p className="text-[13px] sm:text-[14px] text-[#5B6577] leading-relaxed mt-3 mb-0">
-          First offers are often a starting point. For {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, an SRA solicitor can review your financial terms, notice, and reference wording.
-        </p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="rounded-xl p-4 sm:p-6" style={{ background: '#F2F7F3', border: '1px solid #BCD0BF' }}>
-      <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase mb-2.5" style={{ background: '#fff', color: '#0B1F3A', border: '1px solid #BCD0BF' }}>
-        <CheckIcon size={11} /> Within Reference Range
-      </span>
-      <h2 className="font-serif text-[21px] sm:text-[26px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-3">
-        Your {formatCurrency(offer)} offer sits within the typical range for your role.
-      </h2>
-      <OfferVsRange result={result} offer={offer} />
-      <p className="text-[13px] sm:text-[14px] text-[#5B6577] leading-relaxed mt-3 mb-0">
-        Under Section 203(3) ERA 1996, you still need an independent solicitor to sign off the agreement, and check your £30,000 tax exemption, reference, and restrictions.
-      </p>
-    </div>
-  )
-}
-
-/* ── Offer vs range numbers + methodology ───────────────────────── */
-
-function OfferVsRange({ result, offer }: { result: VerdictResult; offer: number }) {
-  const [showMethodology, setShowMethodology] = useState(false)
-
-  return (
-    <div className="py-3 border-y border-[#0B1F3A]/10">
-      <div className="grid grid-cols-2 gap-3 sm:gap-5 items-start">
-        <div>
-          <div className="sc-eyebrow mb-0.5 text-[10px]">{offer > 0 ? 'Your offer' : 'Statutory baseline'}</div>
-          <div className="font-serif text-ink text-[22px] sm:text-[26px] font-medium tracking-[-0.015em] leading-tight">
-            {formatCurrency(offer > 0 ? offer : result.minimum)}
-          </div>
-          {offer > 0 && (
-            <div className="text-[11px] text-[#5B6577] mt-0.5">
-              Baseline: {formatCurrency(result.minimum)}
-            </div>
-          )}
-        </div>
-        <div className="border-l border-[#0B1F3A]/10 pl-3 sm:pl-5">
-          <div className="sc-eyebrow mb-0.5 text-[10px]">Typical range</div>
-          <div className="font-serif text-ink text-[20px] sm:text-[26px] font-medium tracking-[-0.015em] leading-tight">
-            {result.typicalHighUncapped
-              ? <>{formatCurrency(result.typicalLow)}+ <span className="text-[13px] font-sans font-normal text-[#5B6577]">(uncapped)</span></>
-              : <>{formatCurrency(result.typicalLow)}–{formatCurrency(result.typicalHigh)}</>
-            }
-          </div>
-          <button
-            type="button"
-            onClick={() => setShowMethodology(!showMethodology)}
-            className="text-[11px] text-[#5B6577] underline underline-offset-2 hover:text-[#0B1F3A] bg-transparent border-0 p-0 mt-1 cursor-pointer text-left"
-          >
-            {showMethodology ? 'Hide how this is calculated' : 'How is this calculated?'}
-          </button>
-        </div>
-      </div>
-
-      {result.discriminationAsterisk && (
-        <p className="text-[11px] text-[#8A93A3] mt-2 mb-0 leading-relaxed">
-          * Calculated on a non-discrimination basis. Established Equality Act 2010 claims are uncapped.
-        </p>
-      )}
-
-      {showMethodology && (
-        <div className="mt-3 pt-2.5 border-t border-[#0B1F3A]/10">
-          <p className="text-[12px] text-[#5B6577] leading-[1.55] m-0">
-            The lower figure reflects your calculated statutory baseline (notice + statutory redundancy, subject to eligibility) plus an illustrative negotiation allowance. The upper figure reflects broader commercial or dispute factors. Actual outcomes vary by facts and documentation.
-          </p>
-        </div>
-      )}
-    </div>
-  )
-}
-
-/* ── Gross-to-Net CSS Stack Chart ───────────────────────────────── */
-
-function FinancialSplitChart({
-  offer,
-  pilon,
-  taxFreeAmount,
-  taxableTermination,
-  estimatedTax,
-  netTakeHome,
-  isSimulated = false,
-  pensionSacrifice = 0,
-}: {
-  offer: number;
-  pilon: number;
-  taxFreeAmount: number;
-  taxableTermination: number;
-  estimatedTax: number;
-  netTakeHome: number;
-  isSimulated?: boolean;
-  pensionSacrifice?: number;
-}) {
-  const adjustedTaxableTermination = Math.max(0, taxableTermination - pensionSacrifice)
-  const total = Math.max(offer, pilon + taxFreeAmount + taxableTermination) || 1;
-  const pilonPct = Math.min(100, Math.max(0, (pilon / total) * 100));
-  const taxFreePct = Math.min(100, Math.max(0, (taxFreeAmount / total) * 100));
-  const taxableTermPct = Math.min(100, Math.max(0, (adjustedTaxableTermination / total) * 100));
-  const pensionPct = Math.min(100, Math.max(0, (pensionSacrifice / total) * 100));
-
-  return (
-    <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 shadow-sm flex flex-col gap-4">
-      <div className="flex justify-between items-center">
-        <h4 className="text-[13px] font-bold tracking-wider text-[#5B6577] uppercase m-0">Visual Settlement Split</h4>
-        <span className="text-[12px] bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A] font-semibold px-2.5 py-1 rounded-full">
-          {isSimulated ? 'Simulated Gross' : 'Gross'}: {formatCurrency(offer)}
-        </span>
-      </div>
-
-      {isSimulated && (
-        <div className="p-3.5 bg-[#FEFBF0] border border-[#E0CB94] rounded-lg text-[13px] text-[#B5802A] leading-relaxed flex gap-2">
-          <span className="text-[16px] flex-shrink-0">💡</span>
-          <div>
-            <strong>Simulation Mode:</strong> Showing typical midpoint settlement package ({formatCurrency(offer)}) for negotiation planning.
-          </div>
-        </div>
-      )}
-
-      {/* Visual Stacked Bar */}
-      <div className="flex w-full h-8 rounded-lg overflow-hidden bg-[#F7F4EE] border border-[#E2DCCE]">
-        {taxFreePct > 0 && (
-          <div
-            style={{ width: `${taxFreePct}%` }}
-            className="bg-[#0B1F3A] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-white font-bold"
-            title={`Tax-Free Termination Payment: ${formatCurrency(taxFreeAmount)}`}
-          >
-            {taxFreePct > 12 && 'Tax-Free'}
-          </div>
-        )}
-        {taxableTermPct > 0 && (
-          <div
-            style={{ width: `${taxableTermPct}%` }}
-            className="bg-[#E0CB94] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-[#0B1F3A] font-bold"
-            title={`Taxable Termination Payment: ${formatCurrency(adjustedTaxableTermination)}`}
-          >
-            {taxableTermPct > 12 && 'Taxable'}
-          </div>
-        )}
-        {pensionPct > 0 && (
-          <div
-            style={{ width: `${pensionPct}%` }}
-            className="bg-[#5B6577] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-white font-bold"
-            title={`To Pension: ${formatCurrency(pensionSacrifice)}`}
-          >
-            {pensionPct > 12 && 'To Pension'}
-          </div>
-        )}
-        {pilonPct > 0 && (
-          <div
-            style={{ width: `${pilonPct}%` }}
-            className="bg-[#D9A99E] hover:opacity-90 transition-opacity flex items-center justify-center text-[11px] text-[#0B1F3A] font-bold"
-            title={`Notice Pay (PILON): ${formatCurrency(pilon)}`}
-          >
-            {pilonPct > 12 && 'Notice Pay'}
-          </div>
-        )}
-      </div>
-
-      {/* Labels Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-1">
-        <div className="flex items-center gap-2">
-          <span className="w-3.5 h-3.5 rounded bg-[#0B1F3A] block border border-[#0B1F3A]"></span>
-          <div className="text-[13px] leading-tight">
-            <span className="text-[#8A93A3] block text-[10px] uppercase font-bold tracking-wider">Tax-Free Ex-Gratia</span>
-            <span className="font-semibold text-[#0B1F3A]">{formatCurrency(taxFreeAmount)}</span>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-3.5 h-3.5 rounded bg-[#E0CB94] block border border-[#CBB37E]"></span>
-          <div className="text-[13px] leading-tight">
-            <span className="text-[#8A93A3] block text-[10px] uppercase font-bold tracking-wider">Taxable Ex-Gratia</span>
-            <span className="font-semibold text-[#0B1F3A]">{formatCurrency(adjustedTaxableTermination)}</span>
-          </div>
-        </div>
-        {pensionSacrifice > 0 && (
-          <div className="flex items-center gap-2">
-            <span className="w-3.5 h-3.5 rounded bg-[#5B6577] block border border-[#0B1F3A]"></span>
-            <div className="text-[13px] leading-tight">
-              <span className="text-[#8A93A3] block text-[10px] uppercase font-bold tracking-wider">To Pension (Tax-Free)</span>
-              <span className="font-semibold text-[#0B1F3A]">{formatCurrency(pensionSacrifice)}</span>
-            </div>
-          </div>
-        )}
-        <div className="flex items-center gap-2">
-          <span className="w-3.5 h-3.5 rounded bg-[#D9A99E] block border border-[#C59286]"></span>
-          <div className="text-[13px] leading-tight">
-            <span className="text-[#8A93A3] block text-[10px] uppercase font-bold tracking-wider">Notice Pay (PILON)</span>
-            <span className="font-semibold text-[#0B1F3A]">{formatCurrency(pilon)}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Outcome Arrow and Final Results */}
-      <div className="border-t border-[#E2DCCE] pt-3.5 mt-1 flex flex-row justify-between items-center">
-        <div className="flex flex-col">
-          <span className="text-[#8A93A3] text-[10px] uppercase tracking-wider font-bold">Estimated Tax</span>
-          <span className="text-[16px] font-bold text-[#A8341F]">- {formatCurrency(estimatedTax)}</span>
-        </div>
-        <div className="flex flex-col items-end">
-          <span className="text-[#0B1F3A] text-[10px] uppercase tracking-wider font-bold">Net Take-Home Cash</span>
-          <span className="text-[22px] font-extrabold text-[#0B1F3A]">{formatCurrency(netTakeHome)}</span>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-/* ── Interactive Pension Sacrifice Simulator ────────────────────── */
-
-function PensionSacrificeWidget({
-  taxableTermination,
-  salary,
-  sacrificeVal,
-  setSacrificeVal,
-  isSimulated = false,
-  simulatedOffer = 0,
-}: {
-  taxableTermination: number;
-  salary: number;
-  sacrificeVal: number;
-  setSacrificeVal: (val: number) => void;
-  isSimulated?: boolean;
-  simulatedOffer?: number;
-}) {
-  const isDemoMode = taxableTermination <= 0 && salary >= 100000
-  const [demoSacrificeVal, setDemoSacrificeVal] = useState(10000)
-  const demoTaxableTermination = 20000
-
-  const limitToUse = isDemoMode ? demoTaxableTermination : taxableTermination
-  const valToUse = isDemoMode ? demoSacrificeVal : sacrificeVal
-  const setValToUse = isDemoMode ? setDemoSacrificeVal : setSacrificeVal
-
-  const res = calcPensionSacrifice(limitToUse, valToUse, salary)
-  const isTrapRange = salary >= 100000 && salary <= 125140
-
-  if (!isDemoMode && taxableTermination <= 0) return null
-
-  return (
-    <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 shadow-sm flex flex-col gap-4">
-      <div>
-        <span className="inline-block bg-[#F7F4EE] text-[#0B1F3A] text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full mb-1">
-          {isDemoMode ? 'Illustrative Tax Modelling' : 'Tax Restructuring Optimiser'}
-        </span>
-        <h3 className="sc-h3 mt-1 text-[#0B1F3A]">Pension Sacrifice Simulator</h3>
-        <p className="sc-body mt-1.5 text-[13px] text-[#5B6577] leading-relaxed">
-          {isDemoMode ? (
-            <>
-              Your current offer details do not include a taxable termination payment above the £30,000 threshold. However, for higher earners, where a settlement agreement includes an ex-gratia sum above £30,000 (e.g. £50,000), the portion above £30,000 can be structured directly into a registered pension as an employer contribution under s.408 ITEPA 2003.
-            </>
-          ) : (
-            <>
-              UK law allows termination payments up to £30,000 tax-free. Payments above £30,000 are subject to income tax. By sacrificing a portion of your taxable settlement directly into your pension as an employer contribution, you avoid income tax entirely on that portion.
-            </>
-          )}
-        </p>
-      </div>
-
-      {isDemoMode && (
-        <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg text-[13px] text-[#0B1F3A] leading-relaxed flex gap-2">
-          <span className="text-[16px] flex-shrink-0">💡</span>
-          <div>
-            <strong>Interactive Demo:</strong> Showing a simulated £50,000 settlement package (with £20,000 taxable termination pay). Adjust the slider below to see how pension sacrifice affects tax for an income of {formatCurrency(salary)}.
-          </div>
-        </div>
-      )}
-
-      {!isDemoMode && isSimulated && (
-        <div className="p-3 bg-[#FEFBF0] border border-[#E0CB94] rounded-lg text-[13px] text-[#B5802A] leading-relaxed flex gap-2">
-          <span className="text-[16px] flex-shrink-0">💡</span>
-          <div>
-            <strong>Simulation Mode:</strong> Based on the typical midpoint settlement package of {formatCurrency(simulatedOffer)}.
-          </div>
-        </div>
-      )}
-
-      {isTrapRange && !isDemoMode && (
-        <div className="p-3.5 bg-[#FEFBF0] border border-[#E0CB94] rounded-lg text-[13px] text-[#B5802A] leading-relaxed flex gap-2">
-          <span className="text-[16px] flex-shrink-0">⚠️</span>
-          <div>
-            <strong>60% Tax Trap Active:</strong> Because your annual income sits between £100,000 and £125,140, your Personal Allowance is being tapered. Redirecting taxable settlement funds into a pension restores your allowance, resulting in massive tax savings.
-          </div>
-        </div>
-      )}
-
-      {/* Slider Control */}
-      <div className="flex flex-col gap-2 pt-1">
-        <div className="flex justify-between text-[14px] font-semibold text-[#0B1F3A]">
-          <span>Sacrifice Amount:</span>
-          <span className="text-[16px] text-[#D9603B] font-bold">{formatCurrency(valToUse)}</span>
-        </div>
-        <input
-          type="range"
-          min="0"
-          max={limitToUse}
-          step="100"
-          value={valToUse}
-          onChange={(e) => setValToUse(Number(e.target.value))}
-          className="sc-slider w-full cursor-pointer"
-          style={{
-            background: `linear-gradient(to right, #D9603B 0%, #D9603B ${(valToUse / (limitToUse || 1)) * 100}%, #E2DCCE ${(valToUse / (limitToUse || 1)) * 100}%, #E2DCCE 100%)`
-          }}
-        />
-        <div className="flex justify-between text-[11px] text-[#8A93A3] font-semibold">
-          <span>£0 (Take Cash)</span>
-          <span>Max: {formatCurrency(limitToUse)}</span>
-        </div>
-      </div>
-
-      {/* Dynamic Results Grid */}
-      <div className="grid grid-cols-2 gap-4 border-t border-[#E2DCCE] pt-3.5 mt-1">
-        <div className="flex flex-col">
-          <span className="text-[#8A93A3] text-[10px] uppercase tracking-wider font-bold">Immediate Tax Saved</span>
-          <span className="text-[17px] font-bold text-[#0B1F3A]">{res.taxSaved > 0 ? `+${formatCurrency(res.taxSaved)}` : '£0'}</span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-[#8A93A3] text-[10px] uppercase tracking-wider font-bold">Growth in Pension</span>
-          <span className="text-[17px] font-bold text-[#0B1F3A]">{formatCurrency(res.pensionGrowth)}</span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-[#8A93A3] text-[10px] uppercase tracking-wider font-bold">Net Cash Reduced</span>
-          <span className="text-[14px] font-medium text-[#5B6577]">{formatCurrency(res.cashNetReduction)}</span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-[#8A93A3] text-[10px] uppercase tracking-wider font-bold">Net Wealth Benefit</span>
-          <span className="text-[17px] font-extrabold text-[#D9603B]">{res.netWealthBenefit > 0 ? `+${formatCurrency(res.netWealthBenefit)}` : '£0'}</span>
-        </div>
-      </div>
-
-      <p className="text-[11px] text-[#8A93A3] m-0 italic leading-relaxed">
-        * Sacrificing termination pay must be written explicitly into the final settlement agreement before signing and requires your employer&apos;s administrative consent.
-      </p>
-    </div>
-  )
-}
-
-/* ── Interactive Vento Band Discrimination Selector ─────────────── */
-
-function VentoBandWidget({
-  onBandSelect,
-  selectedBand,
-  ventoBands,
-}: {
-  onBandSelect: (band: 'lower' | 'middle' | 'upper' | 'exceptional' | null) => void;
-  selectedBand: 'lower' | 'middle' | 'upper' | 'exceptional' | null;
-  ventoBands: {
-    lowerMin: number;
-    lowerMax: number;
-    middleMin: number;
-    middleMax: number;
-    upperMin: number;
-    upperMax: number;
-    exceptionalMin: number;
-  };
-}) {
-  const bands = [
-    {
-      key: 'lower' as const,
-      name: 'Lower Band',
-      range: `${formatCurrency(ventoBands.lowerMin)} – ${formatCurrency(ventoBands.lowerMax)}`,
-      desc: 'For one-off or minor discrimination incidents.',
-    },
-    {
-      key: 'middle' as const,
-      name: 'Middle Band',
-      range: `${formatCurrency(ventoBands.middleMin)} – ${formatCurrency(ventoBands.middleMax)}`,
-      desc: 'For serious, persistent discrimination occurring over several weeks or months.',
-    },
-    {
-      key: 'upper' as const,
-      name: 'Upper Band',
-      range: `${formatCurrency(ventoBands.upperMin)} – ${formatCurrency(ventoBands.upperMax)}`,
-      desc: 'For long-term campaigns of harassment or severe discrimination resulting in dismissal.',
-    },
-    {
-      key: 'exceptional' as const,
-      name: 'Exceptional Cases',
-      range: `${formatCurrency(ventoBands.exceptionalMin)}+`,
-      desc: 'Reserved for exceptionally severe and catastrophic discrimination campaigns.',
-    },
-  ]
-
-  return (
-    <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 shadow-sm flex flex-col gap-4">
-      <div>
-        <span className="inline-block bg-[#FBF0EE] text-[#A8341F] text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full mb-1">
-          Equality Act 2010
-        </span>
-        <h3 className="sc-h3 mt-1 text-[#0B1F3A]">Injury to Feelings Assessed Value</h3>
-        <p className="sc-body mt-1.5 text-[13px] text-[#5B6577] leading-relaxed">
-          Because your case involves discrimination, you may claim damages for Injury to Feelings. Employment tribunals calculate these under the official **Vento Bands**. Click a band to model its impact on your negotiation position:
-        </p>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        {bands.map((b) => {
-          const selected = selectedBand === b.key
-          return (
-            <button
-              key={b.key}
-              type="button"
-              onClick={() => onBandSelect(selected ? null : b.key)}
-              className="w-full text-left p-3.5 rounded-lg border transition-all duration-200 flex flex-col gap-1 focus:outline-none cursor-pointer"
-              style={{
-                background: selected ? '#0B1F3A' : '#ffffff',
-                borderColor: selected ? '#0B1F3A' : '#E2DCCE',
-                color: selected ? '#ffffff' : '#0B1F3A',
-                boxShadow: selected ? '0 4px 12px rgba(11,31,58,0.12)' : 'none',
-              }}
-            >
-              <div className="flex justify-between items-center w-full">
-                <span className="font-bold text-[14px]">{b.name}</span>
-                <span
-                  className="font-mono text-[14px] font-bold"
-                  style={{ color: selected ? '#ffffff' : '#D9603B' }}
-                >
-                  {b.range}
-                </span>
-              </div>
-              <p
-                className="text-[12px] leading-relaxed m-0"
-                style={{ color: selected ? 'rgba(255,255,255,0.85)' : '#5B6577' }}
-              >
-                {b.desc}
-              </p>
-            </button>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
-
-/* ── Barrister-Ready Case Brief ─────────────────────────────────── */
+/* ── Types ──────────────────────────────────────────────────────── */
 
 interface EditableInputs {
   salary: string
@@ -846,862 +31,50 @@ interface EditableInputs {
   contractualNotice: string
 }
 
-function CaseBriefSection({
-  inputs,
-  result,
-  selectedVentoBand,
-  ventoBands,
-}: {
-  inputs: EditableInputs;
-  result: VerdictResult;
-  selectedVentoBand: 'lower' | 'middle' | 'upper' | 'exceptional' | null;
-  ventoBands: any;
-}) {
-  const [open, setOpen] = useState(false)
-
-  const formatReason = (r: string) => {
-    const labels: Record<string, string> = {
-      redundancy: 'Redundancy',
-      redundancy_collective: 'Redundancy: Collective (20+ employees)',
-      dismissal: 'Performance or Disciplinary Dismissal',
-      constructive: 'Constructive Dismissal',
-      mutual: 'Mutual Agreement / Exit',
-      other: 'Other / Mutual Exit',
-    }
-    return labels[r] || r
-  }
-
-  const getVentoValue = (band: string | null) => {
-    if (!band) return 0
-    if (band === 'lower') return (ventoBands.lowerMin + ventoBands.lowerMax) / 2
-    if (band === 'middle') return (ventoBands.middleMin + ventoBands.middleMax) / 2
-    if (band === 'upper') return (ventoBands.upperMin + ventoBands.upperMax) / 2
-    return ventoBands.exceptionalMin
-  }
-
-  const ventoVal = getVentoValue(selectedVentoBand)
-  const basicOrRedundancy = result.redundancy || result.basicAward
-  const potentialTribunalValue = basicOrRedundancy + result.pilon + ventoVal
-  const caseId = `SC-${Math.abs(parseFloat(inputs.salary) - parseInt(inputs.age) * (parseFloat(inputs.yearsNum) * 12 + parseFloat(inputs.monthsNum))).toString(16).toUpperCase()}`
-
-  return (
-    <div className="bg-white border border-[#E2DCCE] rounded-xl overflow-hidden shadow-sm" id="printable-case-brief-wrapper">
-      
-      {/* Screen Header Toggle (Click to collapse on screen, hidden in print) */}
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="w-full p-5 text-left flex justify-between items-center bg-[#F7F4EE] border-b border-[#E2DCCE] focus:outline-none cursor-pointer no-print"
-      >
-        <div>
-          <span className="text-[#8A93A3] text-[10px] font-bold uppercase tracking-wider block mb-1">
-            Tier 3: Solicitor Intake Brief
-          </span>
-          <h3 className="sc-h3 text-[#0B1F3A] m-0">Case Assessment Summary for Instructed Solicitor</h3>
-        </div>
-        <span
-          className="text-[#0B1F3A] font-bold text-[18px] transition-transform duration-200"
-          style={{ transform: open ? 'rotate(180deg)' : 'none' }}
-        >
-          ▾
-        </span>
-      </button>
-
-      {/* Case Brief Body */}
-      <div
-        className={`transition-all duration-300 ${open ? 'max-h-[3000px] opacity-100 p-5' : 'max-h-0 opacity-0 overflow-hidden print:p-0 print:overflow-visible'}`}
-        id="printable-case-brief"
-      >
-        {/* ==================== PAGE 1 ==================== */}
-        <div className="flex flex-col gap-5 print-page-1">
-          {/* Print-Only Brand Header */}
-          <div className="hidden print:flex items-center justify-between border-b-2 border-[#0B1F3A] pb-4 mb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-[#D9603B]" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 22 22" fill="none" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-                  <rect x="1" y="1" width="20" height="20" rx="4" stroke="#D9603B" strokeWidth="1.5" fill="none"/>
-                  <path d="M6 11.5L9.5 15L16 7.5" stroke="#D9603B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-              <span className="font-serif text-[22px] font-bold tracking-[-0.01em]">
-                <span style={{ color: '#D9603B' }}>Settlement</span><span style={{ color: '#0B1F3A' }}>Check</span>
-              </span>
-            </div>
-            <div className="text-right">
-              <span className="text-[10px] text-[#8A93A3] font-bold uppercase tracking-wider block">CASE ASSESSMENT BRIEF</span>
-              <span className="text-[11px] text-[#0B1F3A] font-bold">Case ID: {caseId}</span>
-            </div>
-          </div>
-
-          <div className="pb-3 border-b border-[#E2DCCE]">
-            <h4 className="text-[16px] font-bold text-[#0B1F3A] mb-1 print:text-[18px]">Client Profile & Claims Analysis</h4>
-            <p className="text-[13px] text-[#5B6577] leading-relaxed m-0">
-              This intake assessment report compiles client parameters, statutory entitlements, and potential claims value. It is structured to assist legal counsel during intake review to assess settlement viability and evaluate negotiation strength.
-            </p>
-          </div>
-
-          {/* Grid of details */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[13px] text-[#5B6577] border-b border-[#E2DCCE] pb-3 print:grid-cols-4">
-            <div>
-              <span className="block text-[10px] text-[#8A93A3] font-bold uppercase">Basic Salary</span>
-              <strong className="text-[#0B1F3A]">{formatCurrency(parseFloat(inputs.salary))} / yr</strong>
-            </div>
-            <div>
-              <span className="block text-[10px] text-[#8A93A3] font-bold uppercase">Service Length</span>
-              <strong className="text-[#0B1F3A]">{inputs.yearsNum}y {inputs.monthsNum}m</strong>
-            </div>
-            <div>
-              <span className="block text-[10px] text-[#8A93A3] font-bold uppercase">Employee Age</span>
-              <strong className="text-[#0B1F3A]">{inputs.age} yrs</strong>
-            </div>
-            <div>
-              <span className="block text-[10px] text-[#8A93A3] font-bold uppercase">Jurisdiction</span>
-              <strong className="text-[#0B1F3A]">{result.jurisdiction === 'NI' ? 'Northern Ireland' : 'England & Wales / Scot'}</strong>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-b border-[#E2DCCE] pb-3 text-[13px] print:grid-cols-2">
-            <div>
-              <span className="block text-[10px] text-[#8A93A3] font-bold uppercase">Dismissal Context</span>
-              <strong className="text-[#0B1F3A]">{formatReason(inputs.reason)}</strong>
-            </div>
-            <div>
-              <span className="block text-[10px] text-[#8A93A3] font-bold uppercase">Discrimination Flagged</span>
-              <strong className="text-[#0B1F3A]">{inputs.discrimination === 'yes' ? 'Yes (Equality Act 2010)' : inputs.discrimination === 'not_sure' ? 'Potential / Unresolved' : 'No'}</strong>
-            </div>
-          </div>
-
-          {/* Statutory Calculations Table */}
-          <div>
-            <h5 className="text-[13px] font-bold text-[#0B1F3A] mb-2.5">Statutory Assessment</h5>
-            <div className="border border-[#E2DCCE] rounded-lg overflow-hidden">
-              <table className="w-full text-left text-[13px] border-collapse">
-                <thead>
-                  <tr className="bg-[#F7F4EE] border-b border-[#E2DCCE] text-[10px] text-[#8A93A3] font-bold uppercase">
-                    <th className="p-3">Entitlement Category</th>
-                    <th className="p-3 text-right">Value</th>
-                    <th className="p-3">Legislation Citation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {result.redundancy > 0 && (
-                    <tr className="border-b border-[#E2DCCE]">
-                      <td className="p-3 text-[#0B1F3A] font-medium">Statutory Redundancy Pay</td>
-                      <td className="p-3 text-right font-mono font-semibold">{formatCurrency(result.redundancy)}</td>
-                      <td className="p-3 text-[#8A93A3] italic">s.162 Employment Rights Act 1996</td>
-                    </tr>
-                  )}
-                  {result.basicAward > 0 && (
-                    <tr className="border-b border-[#E2DCCE]">
-                      <td className="p-3 text-[#0B1F3A] font-medium">Basic Award (Unfair Dismissal)</td>
-                      <td className="p-3 text-right font-mono font-semibold">{formatCurrency(result.basicAward)}</td>
-                      <td className="p-3 text-[#8A93A3] italic">s.119 Employment Rights Act 1996</td>
-                    </tr>
-                  )}
-                  <tr className="border-b border-[#E2DCCE]">
-                    <td className="p-3 text-[#0B1F3A] font-medium">Statutory Minimum Notice Pay</td>
-                    <td className="p-3 text-right font-mono font-semibold">{formatCurrency(result.pilon)}</td>
-                    <td className="p-3 text-[#8A93A3] italic">s.86 Employment Rights Act 1996</td>
-                  </tr>
-                  {result.collectiveRedundancy && result.protectiveAwardMax > 0 && (
-                    <tr className="border-b border-[#E2DCCE]">
-                      <td className="p-3 text-[#0B1F3A] font-medium">Protective Award (Collective)</td>
-                      <td className="p-3 text-right font-mono font-semibold text-[#A8341F]">{formatCurrency(result.protectiveAwardMax)}</td>
-                      <td className="p-3 text-[#8A93A3] italic">s.189 TULRCA 1992</td>
-                    </tr>
-                  )}
-                  {selectedVentoBand && (
-                    <tr className="border-b border-[#E2DCCE]">
-                      <td className="p-3 text-[#0B1F3A] font-medium">Injury to Feelings ({selectedVentoBand})</td>
-                      <td className="p-3 text-right font-mono font-semibold text-[#0B1F3A]">{formatCurrency(ventoVal)}</td>
-                      <td className="p-3 text-[#8A93A3] italic">s.124 EqA 2010 (Vento)</td>
-                    </tr>
-                  )}
-                  <tr className="bg-[#F7F4EE] font-bold text-[13px]">
-                    <td className="p-3 text-[#0B1F3A]">Aggregate Minimum Entitlement</td>
-                    <td className="p-3 text-right font-mono text-[#0B1F3A]">{formatCurrency(potentialTribunalValue)}</td>
-                    <td className="p-3 text-[#8A93A3] font-normal italic">Statutory Assessment Total</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Verdict Overview */}
-          <div className="p-4 bg-[#F2F7F3] border border-[#BCD0BF] rounded-lg text-[12px] text-[#5B6577] leading-relaxed">
-            <span className="font-bold text-[#0B1F3A] block mb-1">Assessment Summary:</span>
-            {parseFloat(inputs.offer) <= 0 ? (
-              <p className="m-0"><strong>Pre-Offer Assessment:</strong> No employer settlement offer recorded yet. The client is evaluating their statutory baselines and negotiation benchmarks prior to receiving terms.</p>
-            ) : result.verdict === 'BELOW_MINIMUM' ? (
-              <p className="m-0 text-[#A8341F]"><strong>Baseline Comparison:</strong> The recorded settlement offer is lower than the calculated notice and statutory redundancy baseline. Reviewing counsel can assess whether this variance reflects the commercial context or whether pursuing full statutory figures is appropriate.</p>
-            ) : result.verdict === 'BELOW_TYPICAL' ? (
-              <p className="m-0">The recorded offer covers the calculated baseline but sits below the illustrative negotiation range for this profile. Independent counsel can assist in identifying potential avenues for negotiation on financial or non-financial terms.</p>
-            ) : (
-              <p className="m-0">The recorded offer aligns with or exceeds the illustrative benchmark range for this profile. Counsel review can focus on non-financial covenants (agreed references, confidentiality, restrictive covenants, and waiver scope) to support a clean exit.</p>
-            )}
-          </div>
-        </div>
-
-        {/* ==================== PAGE 2 ==================== */}
-        <div className="page-break flex flex-col gap-5 mt-8 pt-8 border-t border-[#E2DCCE] print:border-0 print:mt-0 print:pt-0 print-page-2">
-          
-          {/* Print-Only Brand Header for Page 2 */}
-          <div className="hidden print:flex items-center justify-between border-b border-[#E2DCCE] pb-3 mb-4">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[#D9603B]">✔</span>
-              <span className="font-serif text-[15px] font-bold text-[#0B1F3A]">SettlementCheck Intake Brief</span>
-            </div>
-            <div className="text-right">
-              <span className="text-[11px] text-[#5B6577]">Case ID: {caseId} • Page 2 of 2</span>
-            </div>
-          </div>
-
-          <div>
-            <h4 className="text-[16px] font-bold text-[#0B1F3A] mb-1 print:text-[18px]">Tactical Negotiation Notes & Tax Guidance</h4>
-            <p className="text-[13px] text-[#5B6577] leading-relaxed m-0">
-              Key considerations for reviewing counsel regarding tax restructuring, discrimination multipliers, and compliance rules:
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3.5 text-[12px] text-[#5B6577] leading-relaxed">
-            <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg">
-              <span className="font-bold text-[#0B1F3A] block mb-1">Notice Pay (PILON) & Ex-Gratia Tax Allocation</span>
-              Under <strong>s.402D ITEPA 2003</strong>, all payments in lieu of notice (PILON) must be taxed as general earnings under the Post-Employment Notice Pay (PENP) formula. However, genuine ex-gratia termination payments qualify for the first £30,000 tax-free exemption under <strong>s.403 ITEPA 2003</strong>. Any ex-gratia amount exceeding £30,000 is subject to the employee&apos;s marginal income tax rate.
-            </div>
-
-            <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg">
-              <span className="font-bold text-[#0B1F3A] block mb-1">Pension Sacrifice Opportunities</span>
-              If the ex-gratia termination payment exceeds £30,000, the employee can discuss with their solicitor whether the employer will pay the excess taxable portion directly into a registered pension scheme as an employer contribution. If completed before the settlement agreement is signed, this restructuring is exempt from income tax and National Insurance contributions under <strong>s.408 ITEPA 2003</strong>.
-            </div>
-
-            {inputs.discrimination === 'yes' && (
-              <div className="p-3.5 bg-[#FBF0EE] border border-[#D9A99E] rounded-lg text-[#A8341F]">
-                <span className="font-bold block mb-1">Equality Act 2010 & Vento Injury to Feelings Guidelines</span>
-                This case involves discrimination elements. Injury to feelings damages are calculated separately from financial loss under the Vento bands, which are uncapped by the statutory unfair dismissal limits. In negotiations, these damages must be allocated carefully. Under HMRC rules, genuine compensation for injury to feelings related to pre-termination discrimination may be paid tax-free under s.403, whereas compensation for discrimination leading to termination is taxed.
-              </div>
-            )}
-
-            {result.collectiveRedundancy && (
-              <div className="p-3.5 bg-[#FEFBF0] border border-[#E0CB94] rounded-lg text-[#B5802A]">
-                <span className="font-bold block mb-1">TULRCA 1992 s.188 Collective Consultation Obligations</span>
-                Because 20 or more employees are affected, a statutory collective consultation obligation exists. Failure to consult gives rise to a protective award claim under <strong>s.189 TULRCA 1992</strong> of up to 90 days&apos; gross pay. This is a separate tribunal action and is not waived by standard redundancy parameters unless explicitly compromised in the agreement.
-              </div>
-            )}
-
-            <div className="p-3.5 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg">
-              <span className="font-bold text-[#0B1F3A] block mb-1">Strict Platform Disclaimer & Compliance Warning</span>
-              <strong>IMPORTANT NOTICE:</strong> This brief is generated dynamically for intake assessment and informational purposes only. SettlementCheck (operated by Digitally Swift Ltd) is an intake support platform, not a legal advisory body, SRA-regulated law firm, or barrister chambers. This report does not constitute formal legal advice, nor does it create a solicitor-client relationship. Under <strong>s.203(3) of the Employment Rights Act 1996</strong>, a settlement agreement is only legally binding if the employee receives independent advice from a qualified adviser (such as a certified solicitor). The recipient of this report must consult a matched solicitor to verify all figures, check contract clauses, and execute the final agreement.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-/* ── Negotiation Response Draftsman ─────────────────────────────── */
-
-interface NegotiationDraftsmanProps {
-  result: VerdictResult
-  offer: number
-  salary: number
-  yearsNum: number
-  onGetMatched: () => void
-}
-
-function NegotiationDraftsman({
-  result,
-  offer,
-  salary,
-  yearsNum,
-  onGetMatched,
-}: NegotiationDraftsmanProps) {
-  const [open, setOpen] = useState(true)
-  const [copied, setCopied] = useState(false)
-  const [activeTemplate, setActiveTemplate] = useState<'uplift' | 'fee_only'>('uplift')
-
-  const hasOffer = offer > 0
-  const redundancyAmount = result.redundancy
-  const pilonAmount = result.pilon
-  const minFloor = result.minimum
-  const targetUplift = result.typicalLow > offer ? result.typicalLow : Math.round(offer * 1.25)
-
-  // Pre-offer mode: offer === 0
-  // When no offer exists, we strictly suppress the counter-offer template to prevent
-  // users from sending an unsolicited financial demand or referencing a £0 offer.
-  if (!hasOffer) {
-    return (
-      <div className="bg-white border border-[#E2DCCE] rounded-xl overflow-hidden shadow-sm" id="negotiation-draftsman">
-        <button
-          type="button"
-          onClick={() => setOpen((o) => !o)}
-          className="w-full p-5 text-left flex justify-between items-center bg-[#F7F4EE] border-b border-[#E2DCCE] focus:outline-none cursor-pointer"
-        >
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="bg-[#0B1F3A] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
-                Pre-Offer Strategy
-              </span>
-              <span className="text-[#8A93A3] text-[11px] font-semibold">Before You Negotiate</span>
-            </div>
-            <h3 className="sc-h3 text-[#0B1F3A] m-0">Preparing for discussions with your employer</h3>
-          </div>
-          <span
-            className="text-[#0B1F3A] font-bold text-[18px] transition-transform duration-200"
-            style={{ transform: open ? 'rotate(180deg)' : 'none' }}
-          >
-            ▾
-          </span>
-        </button>
-
-        {open && (
-          <div className="p-5 md:p-6 flex flex-col gap-4">
-            <div className="bg-[#FAF8F5] border border-[#E2DCCE] rounded-lg p-4 text-[13px] text-[#2B3445] leading-relaxed flex flex-col gap-3">
-              <p className="m-0 font-medium text-[#0B1F3A]">
-                <strong>No formal offer recorded yet:</strong> In UK employment practice, submitting an unsolicited financial proposal before your employer has tabled terms can weaken your negotiating position.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
-                <div className="bg-white p-3 rounded border border-[#E2DCCE]">
-                  <span className="text-[11px] font-bold text-[#D9603B] uppercase tracking-wider block mb-1">1. Await First Move</span>
-                  <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
-                    Allow your employer to set the opening terms. Section 111A ERA 1996 protects pre-termination discussions strictly for standard unfair dismissal claims.
-                  </p>
-                </div>
-                <div className="bg-white p-3 rounded border border-[#E2DCCE]">
-                  <span className="text-[11px] font-bold text-[#D9603B] uppercase tracking-wider block mb-1">2. Request in Writing</span>
-                  <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
-                    Listen calmly in any verbal meeting, take detailed notes, and ask HR to provide any proposed terms and draft agreement in writing.
-                  </p>
-                </div>
-                <div className="bg-white p-3 rounded border border-[#E2DCCE]">
-                  <span className="text-[11px] font-bold text-[#D9603B] uppercase tracking-wider block mb-1">3. Consider Deadlines &amp; ACAS Guidance</span>
-                  <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
-                    ACAS Code 4 recommends 10 calendar days to consider terms, but employers can set earlier deadlines or withdraw offers before acceptance. Consult a solicitor promptly.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between pt-1">
-              <p className="text-[12px] text-[#5B6577] m-0">
-                A specialist solicitor can guide your preparation and advise on strategy before formal discussions commence.
-              </p>
-              <button
-                type="button"
-                onClick={onGetMatched}
-                className="px-4 py-2.5 rounded-lg text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#c25230] transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm flex-shrink-0"
-              >
-                <span>Have a solicitor guide your strategy →</span>
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    )
-  }
-
-  // Active offer mode: offer > 0
-  const upliftSubject = 'Intake Agenda for Your Instructed Solicitor - Summary of Figures'
-  const upliftBody = `INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR (SECTION 203(3) ERA 1996)
-Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.
-
-1. STATUTORY BASELINE CALCULATIONS (SUBJECT TO ELIGIBILITY)
-${redundancyAmount > 0 ? `- Statutory Redundancy: Based on ${yearsNum} complete ${yearsNum === 1 ? 'year' : 'years'} of continuous service, calculated statutory redundancy is ${formatCurrency(redundancyAmount)} (s.162 ERA 1996, subject to s.141 eligibility).\n- Notice Pay (PILON): Under contract and Section 86 ERA 1996, calculated notice baseline is ${formatCurrency(pilonAmount)}.\n- Total Calculated Statutory Baseline: ${formatCurrency(minFloor)}.` : `- Notice Pay (PILON): Under contract and Section 86 ERA 1996, calculated notice baseline is ${formatCurrency(pilonAmount)}.\n- Total Calculated Statutory Baseline: ${formatCurrency(minFloor)}.`}
-
-2. OFFER COMPARISON & DISCUSSION POINTS FOR YOUR SOLICITOR
-- Current Recorded Employer Offer: ${formatCurrency(offer)}
-- Calculated Illustrative Reference Figure to Discuss with Solicitor: ${formatCurrency(targetUplift)}
-
-3. INDEPENDENT LEGAL ADVICE FEE CONTRIBUTION
-- Point to confirm with your instructed solicitor: Whether the employer's draft agreement includes the customary commercial legal fee contribution (commonly £350 to £750 plus VAT) toward independent Section 203(3) ERA 1996 review.`
-
-  const feeSubject = 'Intake Agenda for Your Instructed Solicitor - Fee Contribution Check'
-  const feeBody = `INTAKE AGENDA FOR YOUR INSTRUCTED SOLICITOR (SECTION 203(3) ERA 1996)
-Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.
-
-1. SECTION 203(3) ERA 1996 INDEPENDENT ADVISER REQUIREMENT
-- Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement requires independent legal advice from an SRA-regulated solicitor or certified legal adviser to waive statutory claims.
-
-2. FEE CONTRIBUTION CLAUSE TO VERIFY WITH YOUR SOLICITOR
-- Confirm whether the draft agreement includes a customary employer legal fee contribution clause (commonly £350 to £750 plus VAT, paid directly to the instructed solicitor upon completion), noting that any shortfall above the employer's contribution is payable by the employee unless agreed otherwise.`
-
-  const currentSubject = activeTemplate === 'uplift' ? upliftSubject : feeSubject
-  const currentBody = activeTemplate === 'uplift' ? upliftBody : feeBody
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(`Subject: ${currentSubject}\n\n${currentBody}`)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2500)
-    } catch {
-      // Fallback
-    }
-  }
-
-  return (
-    <div className="bg-white border border-[#E2DCCE] rounded-xl overflow-hidden shadow-sm" id="negotiation-draftsman">
-      {/* Header Toggle */}
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="w-full p-5 text-left flex justify-between items-center bg-[#F7F4EE] border-b border-[#E2DCCE] focus:outline-none cursor-pointer"
-      >
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="bg-[#D9603B] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
-              Solicitor Briefing Agenda
-            </span>
-            <span className="text-[#8A93A3] text-[11px] font-semibold">Structured Case Figures</span>
-          </div>
-          <h3 className="sc-h3 text-[#0B1F3A] m-0">Solicitor Discussion Agenda: Key Figures Briefing</h3>
-        </div>
-        <span
-          className="text-[#0B1F3A] font-bold text-[18px] transition-transform duration-200"
-          style={{ transform: open ? 'rotate(180deg)' : 'none' }}
-        >
-          ▾
-        </span>
-      </button>
-
-      {open && (
-        <div className="p-5 md:p-6 flex flex-col gap-4">
-          <p className="text-[14px] text-[#5B6577] m-0 leading-relaxed">
-            When reviewing an agreement, keeping figures clear and factual avoids misunderstandings. Use this structured summary as an objective briefing agenda for your appointed SRA-regulated solicitor.
-          </p>
-
-          {/* Privilege Notice Alert */}
-          <div className="bg-[#FFF8F6] border border-[#E08A75] rounded-lg p-3.5 text-[12px] text-[#0B1F3A] flex items-start gap-2.5">
-            <span className="text-[16px] flex-shrink-0 leading-none">⚠️</span>
-            <div>
-              <strong className="text-[#A8341F] block mb-0.5">Important Privilege Notice: Do not send unreviewed financial proposals directly to HR</strong>
-              <span className="text-[#5B6577] leading-relaxed block">
-                Privilege Notice: Transmitting financial proposals directly to HR without legal review can inadvertently waive privilege, disclose litigation weaknesses, or provoke immediate dismissal. Review all correspondence with your instructed solicitor first.
-              </span>
-            </div>
-          </div>
-
-          {/* Template Switcher */}
-          <div className="flex gap-2 p-1 bg-[#F5F1E9] rounded-lg border border-[#E2DCCE] w-fit">
-            <button
-              type="button"
-              onClick={() => setActiveTemplate('uplift')}
-              className={`px-3 py-1.5 rounded-md text-[12px] font-semibold transition-colors cursor-pointer ${
-                activeTemplate === 'uplift'
-                  ? 'bg-[#0B1F3A] text-white'
-                  : 'text-[#5B6577] hover:text-[#0B1F3A]'
-              }`}
-            >
-              Figures &amp; Adjustment Discussion
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTemplate('fee_only')}
-              className={`px-3 py-1.5 rounded-md text-[12px] font-semibold transition-colors cursor-pointer ${
-                activeTemplate === 'fee_only'
-                  ? 'bg-[#0B1F3A] text-white'
-                  : 'text-[#5B6577] hover:text-[#0B1F3A]'
-              }`}
-            >
-              Legal Fee Contribution Only
-            </button>
-          </div>
-
-          {/* Draft Box */}
-          <div className="bg-[#FAF8F5] border border-[#E2DCCE] rounded-lg p-4 font-mono text-[12px] md:text-[13px] text-[#0B1F3A] leading-relaxed relative flex flex-col gap-2">
-            <div className="border-b border-[#E2DCCE] pb-2 text-[12px] text-[#5B6577] font-sans font-medium">
-              <span className="font-bold text-[#0B1F3A]">Subject:</span> {currentSubject}
-            </div>
-            <pre className="font-sans whitespace-pre-wrap m-0 text-[#2B3445] text-[13px] leading-relaxed">
-              {currentBody}
-            </pre>
-          </div>
-
-          {/* Action Row */}
-          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between pt-1">
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="px-4 py-2.5 rounded-lg text-[13px] font-bold transition-all flex items-center justify-center gap-2 cursor-pointer border"
-              style={{
-                background: copied ? '#0B1F3A' : '#ffffff',
-                borderColor: copied ? '#0B1F3A' : '#C8D3DF',
-                color: copied ? '#ffffff' : '#0B1F3A',
-              }}
-            >
-              {copied ? (
-                <>
-                  <CheckIcon size={15} />
-                  <span>Copied to clipboard</span>
-                </>
-              ) : (
-                <>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                  <span>Copy briefing agenda for solicitor</span>
-                </>
-              )}
-            </button>
-
-            {/* Solicitor Bridge Button */}
-            <button
-              type="button"
-              onClick={onGetMatched}
-              className="px-4 py-2.5 rounded-lg text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#c25230] transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-            >
-              <span>Instruct a solicitor to negotiate for you →</span>
-            </button>
-          </div>
-
-          {/* Conversion Reassurance Bridge */}
-          <div className="rounded-lg p-3 bg-[#F2F5F8] border border-[#C8D3DF] text-[12px] text-[#5B6577] flex items-start gap-2.5">
-            <span className="text-[15px] flex-shrink-0 leading-none">🛡</span>
-            <p className="m-0 leading-relaxed">
-              <strong className="text-[#0B1F3A]">Employer legal fee contribution:</strong> Under UK commercial practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. Independent SRA-regulated solicitors confirm all terms before starting work.
-            </p>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
-/* ── Breakdown table ────────────────────────────────────────────── */
-
-function BreakdownTable({ result, offer, salary }: { result: VerdictResult; offer: number; salary: number }) {
-  const [sourcesOpen, setSourcesOpen] = useState(false)
-  const taxRatePct = Math.round(result.taxRate * 100)
-  const netDisplay = result.estimatedNet < 0 ? 0 : result.estimatedNet
-
-  const srpLabel = result.redundancy > 0 ? 'Statutory redundancy pay' : 'Basic award (unfair dismissal)'
-  const srpValue = result.redundancy > 0 ? result.redundancy : result.basicAward
-  const pilonLabel = `Notice pay (PILON) ${result.noticeWeeksUsed} week${result.noticeWeeksUsed !== 1 ? 's' : ''}`
-
-  const thStyle: React.CSSProperties = { padding: '10px 20px', textAlign: 'left', fontSize: 11, fontWeight: 600, color: '#8A93A3', textTransform: 'uppercase', letterSpacing: '0.08em', borderBottom: '1px solid #E2DCCE', background: '#F7F4EE' }
-  const thRStyle: React.CSSProperties = { ...thStyle, textAlign: 'right' }
-
-  function Row({ label, value, taxTag, highlight, dimmed, isNegative }: {
-    label: React.ReactNode; value: React.ReactNode; taxTag?: React.ReactNode; highlight?: boolean; dimmed?: boolean; isNegative?: boolean
-  }) {
-    return (
-      <tr style={{ borderBottom: '1px solid #E2DCCE', background: highlight ? '#F0EDE6' : undefined }}>
-        <td style={{ padding: '11px 20px', fontSize: 14, color: dimmed ? '#8A93A3' : '#0B1F3A', fontWeight: highlight ? 600 : 400 }}>{label}</td>
-        <td style={{ padding: '11px 20px', fontSize: 14, textAlign: 'right', fontFamily: 'var(--font-mono)', color: isNegative ? '#A8341F' : '#0B1F3A', fontWeight: highlight ? 600 : 400 }}>{value}</td>
-        <td style={{ padding: '11px 20px', fontSize: 12, textAlign: 'right' }}>{taxTag}</td>
-      </tr>
-    )
-  }
-
-  function Tag({ text, color }: { text: string; color: string }) {
-    return <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: 999, fontSize: 11, fontWeight: 600, background: color === 'green' ? 'rgba(11,31,58,0.08)' : 'rgba(168,52,31,0.10)', color: color === 'green' ? '#0B1F3A' : '#A8341F', whiteSpace: 'nowrap' }}>{text}</span>
-  }
-
-  const dividerRow = (
-    <tr><td colSpan={3} style={{ height: 1, background: '#D8D2C6', padding: 0 }} /></tr>
-  )
-
-  return (
-    <div className="bg-card border border-rule rounded-lg overflow-hidden bg-white">
-      <div className="px-5 py-4 border-b border-rule flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-        <div>
-          <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-[#0B1F3A] block mb-0.5">
-            Tier 1: Statutory Entitlements Breakdown
-          </span>
-          <h3 className="sc-h3 text-[#0B1F3A] m-0">Calculated Statutory Baselines (Subject to Eligibility)</h3>
-        </div>
-        <span className="text-[11px] font-mono text-[#5B6577]">
-          ERA 1996 ss.86, 141 &amp; 162
-        </span>
-      </div>
-
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 480 }}>
-          <thead>
-            <tr>
-              <th style={thStyle}>Item</th>
-              <th style={thRStyle}>Amount</th>
-              <th style={thRStyle}>Tax status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {srpValue > 0 && (
-              <Row
-                label={<>{srpLabel} <sup>¹</sup></>}
-                value={formatCurrency(srpValue)}
-                taxTag={<Tag text="Tax-free *" color="green" />}
-              />
-            )}
-            <Row
-              label={<>{pilonLabel} <sup>²</sup></>}
-              value={formatCurrency(result.pilon)}
-              taxTag={<Tag text="Fully taxable" color="red" />}
-            />
-            {dividerRow}
-            <Row label="Calculated statutory baseline" value={formatCurrency(result.minimum)} highlight />
-            <Row label="Illustrative negotiation low" value={formatCurrency(result.typicalLow)} dimmed />
-            <Row
-              label="Illustrative negotiation high"
-              value={result.typicalHighUncapped ? 'Potentially uncapped' : formatCurrency(result.typicalHigh)}
-              dimmed
-            />
-            {offer > 0 ? (
-              <>
-                <Row label="Your offer" value={formatCurrency(offer)} highlight />
-                {dividerRow}
-                <Row
-                  label={`Estimated tax on settlement`}
-                  value={`−${formatCurrency(result.estimatedTax)}`}
-                  taxTag={<span style={{ fontSize: 12, color: '#8A93A3' }}>At {taxRatePct}% rate</span>}
-                  isNegative
-                />
-                <Row label={<strong>Estimated net take-home</strong>} value={<strong>{formatCurrency(netDisplay)}</strong>} highlight />
-              </>
-            ) : (
-              <Row label="Your offer" value={<span className="text-[#8A93A3] italic">No offer yet</span>} highlight />
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {result.collectiveRedundancy && result.protectiveAwardMax > 0 && (
-        <div className="mx-5 my-4 p-4 rounded-md" style={{ background: 'rgba(217,96,59,0.07)', border: '1px solid rgba(217,96,59,0.2)' }}>
-          <p className="text-[13px] text-ink font-medium mb-1">Potential separate Employment Tribunal claim</p>
-          <p className="text-[13px] text-muted leading-[1.55]">
-            Because 20 or more employees were affected, you may have a Protective Award claim of up to <strong className="text-ink">{formatCurrency(result.protectiveAwardMax)}</strong> (90 days pay) if your employer failed to consult properly. This is claimed separately under TULRCA 1992 s.189 and is not included in the figures above.
-          </p>
-        </div>
-      )}
-
-      {/* Tax & Statutory Eligibility footnote */}
-      <div className="px-5 py-4 border-t border-rule text-[#8A93A3]">
-        <p className="text-[12px] leading-[1.65] m-0">
-          * Statutory Eligibility Qualification: Statutory redundancy pay is subject to eligibility under Section 141 of the Employment Rights Act 1996 and can be forfeited if suitable alternative employment is unreasonably refused. Statutory or contractual notice pay can be lost in the event of summary dismissal for gross misconduct (<em>Boston Deep Sea Fishing v Ansell</em>).
-        </p>
-        <p className="text-[12px] mt-2 leading-[1.65] m-0">
-          * The first £30,000 of genuine termination payments is tax-free under ITEPA 2003 s.403. Payment in lieu of notice (PILON, a lump sum paid instead of working your notice period) is always fully taxable regardless of how it is described in your agreement, under ITEPA 2003 s.402D.
-        </p>
-        <p className="text-[12px] mt-2 leading-[1.65] m-0">
-          * Accrued annual leave: In addition to notice and redundancy, any accrued but untaken statutory holiday pay must also be paid upon termination under the Working Time Regulations 1998 (reg. 14).
-        </p>
-        <p className="text-[12px] mt-2 leading-[1.65] m-0">
-          Tax estimate uses {taxRatePct}% based on your salary. Your actual liability depends on your total income in this tax year.
-          {result.isScottishNote && ' Scottish taxpayers have different income tax bands. This estimate uses UK standard rates as a baseline.'}
-        </p>
-      </div>
-
-      {/* Micro-Warning B: Important Legal & Fee Note */}
-      <div className="mx-5 my-4 p-4 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[12px] text-[#0B1F3A]">
-        <div className="font-bold text-[13px] text-[#0B1F3A] mb-2 flex items-center gap-2">
-          <span aria-hidden="true">⚖️</span>
-          <span>Important Legal &amp; Fee Information</span>
-        </div>
-        <ul className="space-y-1.5 pl-4 list-disc text-[#5B6577] leading-relaxed m-0">
-          <li>
-            <strong className="text-[#0B1F3A]">Not Legal Advice:</strong> Calculations are indicative estimates and do not constitute formal legal or tax advice.
-          </li>
-          <li>
-            <strong className="text-[#0B1F3A]">Conditional Fee Contribution:</strong> Under Section 203(3) ERA 1996, independent advice is mandatory for validity. Employer fee contributions (typically £350 to £500+ plus VAT) are a standard commercial practice paid upon agreement completion, not a statutory mandate.
-          </li>
-          <li>
-            <strong className="text-[#0B1F3A]">Personal Liability:</strong> If negotiations collapse, you choose not to sign, or work exceeds the employer&apos;s agreed cap, legal costs remain subject to your instructed solicitor&apos;s retainer.
-          </li>
-        </ul>
-      </div>
-
-      {/* View legal sources toggle */}
-      <div className="border-t border-rule">
-        <button
-          type="button"
-          onClick={() => setSourcesOpen(o => !o)}
-          className="w-full px-5 py-3.5 text-left flex items-center justify-between text-[13px] text-muted hover:text-ink transition-colors cursor-pointer focus:outline-none"
-        >
-          <span>View legal sources</span>
-          <span style={{ transform: sourcesOpen ? 'rotate(180deg)' : 'none', transition: 'transform 200ms' }}>▾</span>
-        </button>
-        {sourcesOpen && (
-          <div className="px-5 pb-5 text-[12px] text-muted leading-[1.8] flex flex-col gap-1">
-            <p><sup>¹</sup> Statutory redundancy pay: <a href="https://www.legislation.gov.uk/ukpga/1996/18/sections/162-163" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">ERA 1996 ss.162-163</a></p>
-            <p><sup>²</sup> Notice entitlement: <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/86" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">ERA 1996 s.86</a></p>
-            <p>Weekly pay cap £{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI: <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/227" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">ERA 1996 s.227</a></p>
-            <p>Tax-free threshold: <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/403" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">ITEPA 2003 s.403</a></p>
-            <p>PILON taxation: <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/402D" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">ITEPA 2003 s.402D</a></p>
-            {result.collectiveRedundancy && (
-              <p>Protective award: <a href="https://www.legislation.gov.uk/ukpga/1992/52/section/189" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">TULRCA 1992 s.189</a></p>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
-
-/* ── Save and share (Section 6) ─────────────────────────────────── */
-
-function SaveCard({ resultRef, result, offer, onEmailCapture, params }: {
-  resultRef: React.RefObject<HTMLDivElement | null>
-  result: VerdictResult
-  offer: number
-  onEmailCapture: (email: string) => void
-  params: Record<string, string | number>
-}) {
-  const [emailOpen, setEmailOpen] = useState(false)
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
-
-  async function sendEmail(e: React.FormEvent) {
-    e.preventDefault()
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return
-    setStatus('sending')
-    try {
-      const res = await fetch('/api/save-results/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          ...params,
-          verdict:            result.verdict,
-          minimum:            result.minimum,
-          typicalLow:         result.typicalLow,
-          typicalHigh:        result.typicalHigh,
-          typicalHighUncapped: result.typicalHighUncapped,
-          estimatedNet:       result.estimatedNet,
-        }),
-      })
-      if (!res.ok) throw new Error()
-      setStatus('sent')
-      onEmailCapture(email)
-    } catch {
-      setStatus('error')
-    }
-  }
-
-  return (
-    <div ref={resultRef} className="bg-card border border-rule rounded-lg p-6 flex flex-col gap-4 bg-white">
-      <div>
-        <span className="sc-eyebrow">Save your results</span>
-        <h3 className="sc-h3 mt-1 text-[#0B1F3A]">Keep a record of your calculation.</h3>
-        <p className="sc-body mt-1.5 text-[14px] text-[#5B6577]">Your figures are based on the details you entered today. Save a copy now so you have something to refer back to, share with a partner, or bring to your first solicitor call.</p>
-      </div>
-
-      <div className="flex flex-col gap-2.5">
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="btn-ghost text-[14px] w-full px-4 py-2.5 cursor-pointer"
-        >
-          Download PDF brief
-        </button>
-
-        {!emailOpen && status !== 'sent' && (
-          <button
-            type="button"
-            data-email-trigger
-            onClick={() => setEmailOpen(true)}
-            className="btn-accent text-[14px] w-full px-4 py-2.5 cursor-pointer"
-          >
-            Email me my results
-          </button>
-        )}
-      </div>
-
-      {emailOpen && status !== 'sent' && (
-        <form onSubmit={sendEmail} className="flex flex-col gap-3 pt-2">
-          <label className="text-[13px] font-medium text-ink">Your email address</label>
-          <div className="input-wrap">
-            <input
-              type="email"
-              className="flex-1 border-0 bg-transparent outline-none py-3 px-3.5 text-[15px] text-ink placeholder-muted-2"
-              placeholder="you@example.com"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              autoFocus
-              required
-            />
-          </div>
-          <p className="text-[12px] text-[#8A93A3] leading-[1.55] m-0">
-            We will send your results once. Your email will not be added to any marketing list unless you choose Step 2 below.
-          </p>
-          {status === 'error' && (
-            <p className="text-[12px] text-crimson">Something went wrong. Please try again.</p>
-          )}
-          <button
-            type="submit"
-            disabled={status === 'sending'}
-            className="btn-accent text-[14px] w-full px-4 py-2.5 disabled:opacity-60 cursor-pointer"
-          >
-            {status === 'sending' ? 'Sending...' : 'Send my results'}
-          </button>
-        </form>
-      )}
-      {status === 'sent' && (
-        <div className="bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg p-4 flex flex-col gap-1.5 mt-1 text-left">
-          <div className="flex items-center gap-2">
-            <span className="text-[#0B1F3A] font-semibold text-[14px]">Results sent to {email}</span>
-          </div>
-          <p className="text-[13px] text-[#5B6577] leading-[1.5] m-0">
-            Sent from <strong>team@settlementcheck.co.uk</strong>. If you do not see it within 60 seconds, please check your <strong>Junk or Spam</strong> folder and tap &ldquo;Not Junk&rdquo; so you receive any solicitor updates directly.
-          </p>
-        </div>
-      )}
-    </div>
-  )
-}
-
-/* ── Non-converter fallback (Section 8) ─────────────────────────── */
-
-function NonConverterFallback({ onScrollToSave }: { onScrollToSave: () => void }) {
-  return (
-    <div className="text-center py-6">
-      <p className="text-[15px] text-[#0B1F3A] font-medium mb-1">Not ready yet?</p>
-      <p className="sc-body mb-3 text-[14px]">Save your results and come back when you are. Most people take a few days to decide.</p>
-      <button
-        type="button"
-        onClick={onScrollToSave}
-        className="text-[14px] text-muted underline underline-offset-4 hover:text-ink transition-colors bg-transparent border-0 cursor-pointer"
-      >
-        Email me my results
-      </button>
-    </div>
-  )
-}
-
-/* ── Inputs summary + inline edit panel ────────────────────────── */
+type DeepDiveTab = 'deadlines' | 'benchmarks' | 'pension' | 'vento'
 
 const REASON_LABELS: Record<string, string> = {
-  redundancy:            'Redundancy',
+  redundancy: 'Redundancy',
   redundancy_collective: 'Collective redundancy (20+ people)',
-  dismissal:             'Unfair dismissal',
-  constructive:          'Constructive dismissal',
-  resignation:           'Resignation / mutual agreement',
-  mutual:                'Mutual agreement',
-  other:                 'Other / Unspecified',
+  dismissal: 'Unfair dismissal',
+  constructive: 'Constructive dismissal',
+  resignation: 'Resignation / mutual agreement',
+  mutual: 'Mutual agreement',
+  other: 'Other / Unspecified',
 }
+
 const DISCRIMINATION_LABELS: Record<string, string> = {
-  no:       'No',
-  yes:      'Yes',
+  no: 'No',
+  yes: 'Yes',
   not_sure: 'Not sure',
 }
 
+/* ── Compact Edit Inputs Drawer ─────────────────────────────────── */
+
 function InputsSummaryPanel({
   inputs,
+  jurisdiction,
+  onJurisdictionChange,
   onUpdate,
 }: {
   inputs: EditableInputs
+  jurisdiction: 'GB' | 'NI'
+  onJurisdictionChange: (j: 'GB' | 'NI') => void
   onUpdate: (next: EditableInputs) => void
 }) {
   const [open, setOpen] = useState(false)
   const [draft, setDraft] = useState<EditableInputs>(inputs)
   const [editingField, setEditingField] = useState<string | null>(null)
+  const [showJurisdiction, setShowJurisdiction] = useState(false)
 
   function togglePanel() {
     if (!open) setDraft(inputs)
-    setOpen(o => !o)
+    setOpen((o) => !o)
     setEditingField(null)
   }
 
   function set(k: keyof EditableInputs, v: string) {
-    setDraft(d => ({ ...d, [k]: v }))
+    setDraft((d) => ({ ...d, [k]: v }))
   }
 
   function apply() {
@@ -1710,75 +83,157 @@ function InputsSummaryPanel({
     setEditingField(null)
   }
 
-  const fields: { key: keyof EditableInputs; label: string; display: (v: string) => string; type: 'number' | 'select' | 'pill'; options?: { value: string; label: string }[] }[] = [
-    { key: 'salary',            label: 'Annual salary',         display: v => v ? `£${Number(v).toLocaleString('en-GB')}` : 'Not set', type: 'number' },
-    { key: 'yearsNum',          label: 'Years of service',      display: v => v ? `${v} year${v === '1' ? '' : 's'}` : '0 years', type: 'number' },
-    { key: 'monthsNum',         label: 'Additional months',     display: v => v ? `${v} month${v === '1' ? '' : 's'}` : '0 months', type: 'number' },
-    { key: 'age',               label: 'Age',                   display: v => v || 'Not set', type: 'number' },
-    { key: 'offer',             label: 'Settlement offer',      display: v => v ? `£${Number(v).toLocaleString('en-GB')}` : '£0', type: 'number' },
-    { key: 'offerIncludesNotice', label: 'Notice included in offer', display: v => v === 'false' ? 'No (paid on top)' : 'Yes (included)', type: 'pill', options: [{ value: 'true', label: 'Yes (included)' }, { value: 'false', label: 'No (paid on top)' }] },
-    { key: 'reason',            label: 'Reason for leaving',    display: v => REASON_LABELS[v] ?? v, type: 'select', options: Object.entries(REASON_LABELS).map(([value, label]) => ({ value, label })) },
-    { key: 'discrimination',    label: 'Discrimination element',display: v => DISCRIMINATION_LABELS[v] ?? v, type: 'pill',   options: [{ value: 'no', label: 'No' }, { value: 'yes', label: 'Yes' }, { value: 'not_sure', label: 'Not sure' }] },
-    { key: 'contractualNotice', label: 'Contractual notice (weeks)', display: v => v ? `${v} week${v === '1' ? '' : 's'}` : '0 weeks', type: 'number' },
+  const fields: {
+    key: keyof EditableInputs
+    label: string
+    display: (v: string) => string
+    type: 'number' | 'select' | 'pill'
+    options?: { value: string; label: string }[]
+  }[] = [
+    { key: 'salary', label: 'Annual salary', display: (v) => (v ? `£${Number(v).toLocaleString('en-GB')}` : 'Not set'), type: 'number' },
+    { key: 'yearsNum', label: 'Years of service', display: (v) => (v ? `${v} year${v === '1' ? '' : 's'}` : '0 years'), type: 'number' },
+    { key: 'monthsNum', label: 'Additional months', display: (v) => (v ? `${v} month${v === '1' ? '' : 's'}` : '0 months'), type: 'number' },
+    { key: 'age', label: 'Age', display: (v) => v || 'Not set', type: 'number' },
+    { key: 'offer', label: 'Settlement offer', display: (v) => (v ? `£${Number(v).toLocaleString('en-GB')}` : '£0'), type: 'number' },
+    {
+      key: 'offerIncludesNotice',
+      label: 'Notice included in offer',
+      display: (v) => (v === 'false' ? 'No (paid on top)' : 'Yes (included)'),
+      type: 'pill',
+      options: [
+        { value: 'true', label: 'Yes (included)' },
+        { value: 'false', label: 'No (paid on top)' },
+      ],
+    },
+    {
+      key: 'reason',
+      label: 'Reason for leaving',
+      display: (v) => REASON_LABELS[v] ?? v,
+      type: 'select',
+      options: Object.entries(REASON_LABELS).map(([value, label]) => ({ value, label })),
+    },
+    {
+      key: 'discrimination',
+      label: 'Discrimination element',
+      display: (v) => DISCRIMINATION_LABELS[v] ?? v,
+      type: 'pill',
+      options: [
+        { value: 'no', label: 'No' },
+        { value: 'yes', label: 'Yes' },
+        { value: 'not_sure', label: 'Not sure' },
+      ],
+    },
+    {
+      key: 'contractualNotice',
+      label: 'Contractual notice (weeks)',
+      display: (v) => (v ? `${v} week${v === '1' ? '' : 's'}` : '0 weeks'),
+      type: 'number',
+    },
   ]
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={togglePanel}
-        className="inline-flex items-center gap-1.5 text-[14px] text-muted hover:text-ink transition-colors mb-6 bg-transparent border-0 cursor-pointer p-0"
-      >
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M10 13L5 8L10 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        Adjust calculator inputs
-      </button>
+    <div className="mb-4 sm:mb-5">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-[#E2DCCE]">
+        <button
+          type="button"
+          onClick={togglePanel}
+          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#0B1F3A] hover:text-[#D9603B] transition-colors bg-transparent border-0 cursor-pointer p-0"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 13L5 8L10 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          {open ? 'Close inputs' : 'Edit my numbers'}
+        </button>
+
+        <div className="flex flex-wrap items-center gap-2 text-[12px] text-[#5B6577]">
+          <span>
+            2026/27 rates · {jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland & Wales'} (£{jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB}/wk cap)
+          </span>
+          {!showJurisdiction ? (
+            <button
+              type="button"
+              onClick={() => setShowJurisdiction(true)}
+              className="underline underline-offset-2 text-[#0B1F3A] hover:text-[#D9603B] bg-transparent border-0 cursor-pointer p-0 text-[12px]"
+            >
+              Change
+            </button>
+          ) : (
+            <div className="inline-flex gap-1.5">
+              {(['GB', 'NI'] as const).map((j) => (
+                <button
+                  key={j}
+                  type="button"
+                  onClick={() => {
+                    onJurisdictionChange(j)
+                    setShowJurisdiction(false)
+                  }}
+                  className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold border cursor-pointer"
+                  style={{
+                    background: jurisdiction === j ? '#0B1F3A' : '#fff',
+                    color: jurisdiction === j ? '#fff' : '#0B1F3A',
+                    borderColor: jurisdiction === j ? '#0B1F3A' : '#E2DCCE',
+                  }}
+                >
+                  {j === 'GB' ? 'GB' : 'NI'}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
 
       {open && (
-        <div className="bg-card border border-rule rounded-lg p-5 mb-6 flex flex-col gap-4 bg-white" style={{ animation: 'sc-fade-in 200ms ease forwards' }}>
+        <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 mt-3 shadow-sm flex flex-col gap-4">
           <div className="flex items-center justify-between">
-            <h3 className="sc-h3 text-[#0B1F3A]" style={{ fontSize: 16 }}>Your inputs</h3>
-            <button type="button" onClick={() => setOpen(false)} className="text-[20px] text-muted hover:text-ink leading-none bg-transparent border-0 cursor-pointer">&times;</button>
+            <h3 className="font-serif text-[17px] font-bold text-[#0B1F3A] m-0">Your details</h3>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="text-[20px] text-[#5B6577] hover:text-[#0B1F3A] leading-none bg-transparent border-0 cursor-pointer"
+              aria-label="Close inputs"
+            >
+              &times;
+            </button>
           </div>
 
-          <div className="flex flex-col divide-y divide-rule">
-            {fields.map(f => (
-              <div key={f.key} className="py-2.5 flex items-start gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 divide-y sm:divide-y-0 divide-[#EFEAE0]">
+            {fields.map((f) => (
+              <div key={f.key} className="py-2.5 flex items-start justify-between gap-2 border-b border-[#EFEAE0]">
                 <div className="flex-1 min-w-0">
-                  <div className="text-[12px] text-muted mb-0.5">{f.label}</div>
-
+                  <div className="text-[11px] text-[#5B6577] mb-0.5">{f.label}</div>
                   {editingField === f.key ? (
-                    <div className="mt-1.5">
+                    <div className="mt-1">
                       {f.type === 'number' && (
-                        <div className="input-wrap" style={{ maxWidth: 200 }}>
-                          <input
-                            type="number"
-                            className="flex-1 border-0 bg-transparent outline-none py-2 px-3 text-[15px] text-ink"
-                            value={draft[f.key]}
-                            onChange={e => set(f.key, e.target.value.replace(/^0+(?=\d)/, ''))}
-                            autoFocus
-                          />
-                        </div>
+                        <input
+                          type="number"
+                          className="w-full max-w-[180px] border border-[#0B1F3A] rounded-md py-1.5 px-2.5 text-[14px] text-[#0B1F3A] bg-white outline-none"
+                          value={draft[f.key]}
+                          onChange={(e) => set(f.key, e.target.value.replace(/^0+(?=\d)/, ''))}
+                          autoFocus
+                        />
                       )}
                       {f.type === 'select' && f.options && (
                         <select
-                          className="input-wrap py-2 px-3 text-[14px] text-ink bg-white border border-[#E2DCCE] rounded-md outline-none"
+                          className="w-full py-1.5 px-2.5 text-[13px] text-[#0B1F3A] bg-white border border-[#0B1F3A] rounded-md outline-none"
                           value={draft[f.key]}
-                          onChange={e => set(f.key, e.target.value)}
+                          onChange={(e) => set(f.key, e.target.value)}
                           autoFocus
                         >
-                          {f.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                          {f.options.map((o) => (
+                            <option key={o.value} value={o.value}>
+                              {o.label}
+                            </option>
+                          ))}
                         </select>
                       )}
                       {f.type === 'pill' && f.options && (
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {f.options.map(o => (
+                        <div className="flex flex-wrap gap-1.5 mt-1">
+                          {f.options.map((o) => (
                             <button
                               key={o.value}
                               type="button"
                               onClick={() => set(f.key, o.value)}
-                              className="px-3 py-1.5 rounded-full text-[13px] font-medium border transition-colors cursor-pointer"
+                              className="px-2.5 py-1 rounded-full text-[12px] font-medium border cursor-pointer"
                               style={{
                                 background: draft[f.key] === o.value ? '#0B1F3A' : '#fff',
                                 color: draft[f.key] === o.value ? '#fff' : '#0B1F3A',
@@ -1792,14 +247,14 @@ function InputsSummaryPanel({
                       )}
                     </div>
                   ) : (
-                    <div className="text-[14px] text-ink font-medium">{f.display(inputs[f.key])}</div>
+                    <div className="text-[14px] text-[#0B1F3A] font-semibold">{f.display(inputs[f.key])}</div>
                   )}
                 </div>
 
                 <button
                   type="button"
                   onClick={() => setEditingField(editingField === f.key ? null : f.key)}
-                  className="text-[12px] font-medium text-[#D9603B] hover:underline bg-transparent border-0 cursor-pointer flex-shrink-0 mt-3"
+                  className="text-[12px] font-semibold text-[#D9603B] hover:underline bg-transparent border-0 cursor-pointer flex-shrink-0 mt-2 p-0"
                 >
                   {editingField === f.key ? 'Done' : 'Edit'}
                 </button>
@@ -1816,184 +271,357 @@ function InputsSummaryPanel({
   )
 }
 
-/* ── Pre-CTA trust USPs + FAQ to address objections ────────────── */
+/* ── Verdict Hero Card (Human, Scannable, Zero Jargon) ──────────── */
 
-const LEAD_FAQS = [
-  {
-    q: 'How does legal fee coverage work?',
-    a: 'In UK practice, employers standardly provide a capped fee contribution (commonly £350 to £500+ VAT, paid directly to your solicitor upon completion) so the settlement agreement satisfies Section 203(3) of the Employment Rights Act 1996. For standard reviews completed within this cap, the employer contribution covers the solicitor\'s fees, and your solicitor will confirm all engagement terms before starting work.',
-  },
-  {
-    q: 'Will I be contacted by multiple firms?',
-    a: 'No. Your details go to one matched solicitor only. We do not share your information with multiple firms or add you to any marketing list.',
-  },
-  {
-    q: 'What if I have already signed?',
-    a: 'Once signed with independent legal certification, a settlement agreement is generally binding. However, a solicitor can review whether the statutory requirements were met, particularly if there was undue pressure or misrepresentation.',
-  },
-  {
-    q: 'I am not sure I have a strong position. Should I still proceed?',
-    a: 'Yes. An independent solicitor can review the terms, explain what claims are being waived, and advise whether the proposed package is reasonable for your situation.',
-  },
-  {
-    q: 'What if my situation does not fit the calculator?',
-    a: 'The calculator covers standard statutory calculations and benchmarks. A qualified solicitor can assess complex circumstances such as whistleblowing, bonus structures, or specific discrimination claims.',
-  },
-]
+function VerdictHeroCard({
+  result,
+  offer,
+  yearsNum,
+}: {
+  result: VerdictResult
+  offer: number
+  yearsNum: number
+}) {
+  const [showMethod, setShowMethod] = useState(false)
 
-function LeadFAQ() {
-  const [open, setOpen] = useState<number | null>(null)
+  let pillText = 'Within Typical Range'
+  let cardBg = '#F2F5F8'
+  let cardBorder = '#C8D3DF'
+  let pillColor = '#0B1F3A'
+  let headline = `Your ${formatCurrency(offer)} offer sits within the typical range.`
+  let summary =
+    'Under Section 203(3) ERA 1996, a settlement agreement only becomes legally binding once an independent solicitor reviews your £30,000 tax split, reference wording, and post-exit restrictions.'
+
+  if (offer === 0) {
+    pillText = 'Pre-Offer Baseline'
+    cardBg = '#F2F5F8'
+    cardBorder = '#C8D3DF'
+    pillColor = '#0B1F3A'
+    headline = `Your calculated statutory baseline is ${formatCurrency(result.minimum)}.`
+    summary = `Based on ${yearsNum} ${yearsNum === 1 ? 'year' : 'years'} of service (${
+      result.redundancy > 0
+        ? `${formatCurrency(result.pilon)} notice + ${formatCurrency(result.redundancy)} statutory redundancy`
+        : `${formatCurrency(result.pilon)} statutory notice`
+    }, subject to eligibility). ACAS guidance recommends at least 10 calendar days to consider any formal proposal.`
+  } else if (result.verdict === 'BELOW_MINIMUM') {
+    const shortfall = Math.max(0, result.minimum - result.effectiveOffer)
+    pillText = 'Below Statutory Baseline'
+    cardBg = '#FBF0EE'
+    cardBorder = '#D9A99E'
+    pillColor = '#A8341F'
+    headline = `Your ${formatCurrency(offer)} offer is ${formatCurrency(shortfall)} below your statutory baseline.`
+    summary = `Your calculated notice and redundancy baseline is ${formatCurrency(result.minimum)} (subject to eligibility). An independent SRA solicitor can check what is missing before you reply to HR.`
+  } else if (result.verdict === 'BELOW_TYPICAL') {
+    pillText = 'Below Typical Range'
+    cardBg = '#FEFBF0'
+    cardBorder = '#E0CB94'
+    pillColor = '#9A6B16'
+    headline = `Your ${formatCurrency(offer)} offer covers the minimum, but sits below typical payouts.`
+    summary = `First offers are often a starting point. For ${yearsNum} ${yearsNum === 1 ? 'year' : 'years'} of service, an SRA solicitor can review your financial terms, tax allocation, and reference wording.`
+  }
+
   return (
-    <div className="bg-card border border-rule rounded-lg overflow-hidden bg-white">
-      <div className="p-5 md:p-6 pb-4">
+    <section
+      aria-label="Settlement estimate summary"
+      className="rounded-2xl p-5 sm:p-6"
+      style={{ background: cardBg, border: `1px solid ${cardBorder}` }}
+    >
+      <span
+        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-[0.08em] uppercase mb-3.5 bg-white"
+        style={{ color: pillColor, border: `1px solid ${cardBorder}` }}
+      >
+        {pillText}
+      </span>
+
+      <h1 className="font-serif text-[26px] sm:text-[30px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-5">
+        {headline}
+      </h1>
+
+      {/* 3-Number Scannable Strip */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4 py-4 border-y border-[#0B1F3A]/10 mb-4">
         <div>
-          <h3 className="sc-h3 mb-4 text-[#0B1F3A]">Frequently Asked Questions</h3>
-          <div className="flex flex-col">
-            {LEAD_FAQS.map((item, i) => (
-              <div key={i} className="border-t border-rule first:border-t-0">
-                <button
-                  onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full flex items-center justify-between py-3.5 text-left gap-4 cursor-pointer focus:outline-none"
-                  aria-expanded={open === i}
-                >
-                  <span className="sc-body font-semibold text-[#0B1F3A] text-[14px]">{item.q}</span>
-                  <span
-                    className="flex-shrink-0 w-7 h-7 rounded-full border border-rule flex items-center justify-center transition-transform duration-200"
-                    style={{ transform: open === i ? 'rotate(45deg)' : 'none' }}
-                    aria-hidden="true"
-                  >
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#5B6577" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </span>
-                </button>
-                {open === i && (
-                  <p className="sc-body text-[#5B6577] pb-4 max-w-[60ch] text-[13px] leading-relaxed m-0">{item.a}</p>
-                )}
-              </div>
-            ))}
+          <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+            {offer > 0 ? 'Your offer' : 'Your offer'}
+          </div>
+          <div className="font-serif text-[23px] sm:text-[26px] font-bold text-[#0B1F3A] leading-tight">
+            {offer > 0 ? formatCurrency(offer) : 'Not yet tabled'}
           </div>
         </div>
+
+        <div className="border-l border-[#0B1F3A]/10 pl-3.5 sm:pl-4">
+          <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+            Statutory baseline
+          </div>
+          <div className="font-serif text-[23px] sm:text-[26px] font-bold text-[#0B1F3A] leading-tight">
+            {formatCurrency(result.minimum)}
+          </div>
+        </div>
+
+        <div className="col-span-2 sm:col-span-1 pt-3 sm:pt-0 border-t sm:border-t-0 sm:border-l border-[#0B1F3A]/10 sm:pl-4">
+          <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+            Typical range
+          </div>
+          <div className="font-serif text-[23px] sm:text-[26px] font-bold text-[#0B1F3A] leading-tight">
+            {result.typicalHighUncapped ? (
+              <>
+                {formatCurrency(result.typicalLow)}+{' '}
+                <span className="text-[14px] font-sans font-normal text-[#5B6577]">(uncapped)</span>
+              </>
+            ) : (
+              `${formatCurrency(result.typicalLow)} to ${formatCurrency(result.typicalHigh)}`
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowMethod((v) => !v)}
+            className="text-[13px] text-[#5B6577] underline underline-offset-2 hover:text-[#0B1F3A] bg-transparent border-0 p-0 mt-1 cursor-pointer"
+          >
+            {showMethod ? 'Hide method' : 'How is this calculated?'}
+          </button>
+        </div>
       </div>
-    </div>
+
+      {showMethod && (
+        <p className="text-[14px] text-[#5B6577] leading-[1.6] bg-white/80 rounded-lg p-3.5 mb-4 border border-[#0B1F3A]/10">
+          The statutory baseline combines calculated notice pay (ERA 1996 s.86) and statutory redundancy pay (s.162, subject to s.141 eligibility). The typical range adds an illustrative negotiation allowance based on UK settlement practice. Actual outcomes depend on your contract and facts.
+        </p>
+      )}
+
+      <p className="text-[16px] text-[#2B3445] leading-[1.6] m-0">{summary}</p>
+
+      {/* Contextual High-Value Flags (Concise, 1 line each) */}
+      {(result.discriminationAsterisk || (result.collectiveRedundancy && result.protectiveAwardMax > 0)) && (
+        <div className="mt-4 pt-3.5 border-t border-[#0B1F3A]/10 space-y-2 text-[14px] text-[#0B1F3A] leading-[1.55]">
+          {result.discriminationAsterisk && (
+            <p className="m-0">
+              <strong>Discrimination flag:</strong> Established Equality Act 2010 claims are uncapped and include Injury to Feelings (Vento bands).
+            </p>
+          )}
+          {result.collectiveRedundancy && result.protectiveAwardMax > 0 && (
+            <p className="m-0">
+              <strong>Collective redundancy (20+):</strong> Failure to consult can carry a separate Protective Award claim of up to{' '}
+              <strong>{formatCurrency(result.protectiveAwardMax)}</strong> (TULRCA 1992 s.189).
+            </p>
+          )}
+        </div>
+      )}
+    </section>
   )
 }
 
-/* ── Get Matched CTA - verdict-aware, high-converting ───────────── */
+/* ── Unified Breakdown & Take-Home Card (Replaces 2 Duplicate Boxes) ── */
 
-function GetMatchedCTA({
-  verdict, offer, salary, totalMonths, prefillEmail, onGetMatched,
+function UnifiedBreakdownCard({
+  result,
+  offer,
+  pensionSacrifice,
+  taxSavedByPension,
 }: {
-  verdict: string; offer: number; salary: number; totalMonths: number
-  prefillEmail: string; onGetMatched: () => void
+  result: VerdictResult
+  offer: number
+  pensionSacrifice: number
+  taxSavedByPension: number
 }) {
-  const urgencyMap: Record<string, { badge: string; badgeColor: string; badgeBg: string; badgeBorder: string; heading: string; body: string; cta: string }> = {
-    BELOW_MINIMUM: {
-      badge: 'Offer below calculated baseline',
-      badgeColor: '#A8341F', badgeBg: '#FBF0EE', badgeBorder: '#D9A99E',
-      heading: 'Review your baseline before signing.',
-      body: 'Under Section 203 of the Employment Rights Act 1996, an agreement is only binding if you receive independent advice. Employers standardly provide a capped contribution upon completion. An SRA-regulated solicitor can examine whether the offer adequately covers your statutory entitlements.',
-      cta: 'Match with a specialist solicitor',
-    },
-    BELOW_TYPICAL: {
-      badge: 'Negotiable Range Detected',
-      badgeColor: '#B5802A', badgeBg: '#FEFBF0', badgeBorder: '#E0CB94',
-      heading: 'Explore potential negotiation points.',
-      body: 'Your offer sits below illustrative market benchmarks. A specialist solicitor can review financial terms, reference wording, and restrictive covenants to advise on your negotiation options.',
-      cta: 'Match with a specialist solicitor',
-    },
-    WITHIN_RANGE: {
-      badge: 'Within reference range',
-      badgeColor: '#0B1F3A', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
-      heading: 'Ensure contract terms are balanced.',
-      body: 'While the financial figure aligns with standard ranges, settlement agreements include warranties, confidentiality restrictions, and legal waivers. Employers standardly provide a capped contribution toward independent legal advice upon completion.',
-      cta: 'Secure your independent legal review',
-    },
-    ABOVE_TYPICAL: {
-      badge: 'Above reference range',
-      badgeColor: '#0B1F3A', badgeBg: '#F2F7F3', badgeBorder: '#BCD0BF',
-      heading: 'Review terms before final sign-off.',
-      body: 'The financial figure is above standard benchmarks. An independent solicitor will ensure the non-financial covenants and tax allocations are properly structured before you sign. Employers standardly contribute toward this advice upon completion.',
-      cta: 'Secure your independent legal review',
-    },
-  }
+  const [sourcesOpen, setSourcesOpen] = useState(false)
+  const taxRatePct = Math.round(result.taxRate * 100)
+  const srpLabel = result.redundancy > 0 ? 'Statutory redundancy pay' : 'Basic award (unfair dismissal)'
+  const srpValue = result.redundancy > 0 ? result.redundancy : result.basicAward
 
-  const preOfferConfig = {
-    badge: 'Pre-Offer Negotiation Planning',
-    badgeColor: '#0B1F3A', badgeBg: '#F7F4EE', badgeBorder: '#E2DCCE',
-    heading: 'Get prepared before your employer makes an offer.',
-    body: 'Understanding your statutory baselines and market precedents helps you understand your legal standing before formal terms are offered. An SRA-regulated solicitor can help structure your strategy. In practice, employers standardly provide a capped contribution toward independent advice upon completion.',
-    cta: 'Match with a specialist solicitor',
-  }
+  const effectiveTax = Math.max(0, result.estimatedTax - taxSavedByPension)
+  const effectiveNet = Math.max(0, result.estimatedNet - pensionSacrifice + taxSavedByPension)
+  const adjustedTaxableTerm = Math.max(0, result.taxableTermination - pensionSacrifice)
 
-  const c = offer <= 0 ? preOfferConfig : (urgencyMap[verdict] ?? urgencyMap['BELOW_TYPICAL'])
+  const totalBar = Math.max(offer, result.pilon + result.taxFreeAmount + result.taxableTermination) || 1
+  const taxFreePct = Math.min(100, Math.max(0, (result.taxFreeAmount / totalBar) * 100))
+  const taxablePct = Math.min(100, Math.max(0, (adjustedTaxableTerm / totalBar) * 100))
+  const pensionPct = Math.min(100, Math.max(0, (pensionSacrifice / totalBar) * 100))
+  const pilonPct = Math.min(100, Math.max(0, (result.pilon / totalBar) * 100))
 
   return (
-    <div className="bg-card border border-rule rounded-lg overflow-hidden bg-white">
-      <div style={{ padding: '16px 20px 0', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-          padding: '5px 12px', borderRadius: 999,
-          fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
-          background: c.badgeBg, color: c.badgeColor, border: `1px solid ${c.badgeBorder}`,
-        }}>
-          {c.badge}
+    <section
+      aria-label="Pay and tax breakdown"
+      className="bg-white border border-[#E2DCCE] rounded-2xl overflow-hidden shadow-sm"
+    >
+      <div className="px-5 py-4 border-b border-[#EFEAE0] flex items-center justify-between gap-2">
+        <h2 className="font-serif text-[20px] sm:text-[22px] font-bold text-[#0B1F3A] m-0">
+          How your numbers break down
+        </h2>
+        <span className="text-[13px] font-mono text-[#5B6577]">
+          {offer > 0 ? `Est. ${taxRatePct}% tax band` : 'Statutory baseline'}
         </span>
       </div>
 
-      <div className="p-5 md:p-6">
-        <h2 className="text-[17px] font-bold text-[#0B1F3A] mb-2">{c.heading}</h2>
-        <p className="sc-body text-muted mb-5 max-w-[58ch] text-[13px] leading-relaxed">{c.body}</p>
-
-        {/* Trust USPs */}
-        <div className="flex flex-col gap-2.5 mb-6">
-          {[
-            'Standard legal fee contribution provided by your employer upon completion (£350 to £500+ +VAT).',
-            'Your data is sent to a single matched firm only.',
-            'Zero obligation following your introductory call.',
-          ].map(t => (
-            <div key={t} className="flex items-start gap-2.5">
-              <span className="flex-shrink-0 w-4.5 h-4.5 rounded-full bg-[#0B1F3A] flex items-center justify-center mt-0.5">
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
+      {/* Compact Rows */}
+      <div className="divide-y divide-[#EFEAE0] text-[15px] sm:text-[16px]">
+        {srpValue > 0 && (
+          <div className="px-5 py-3.5 flex items-center justify-between gap-3">
+            <span className="text-[#0B1F3A]">{srpLabel}</span>
+            <div className="flex items-center gap-2.5 shrink-0">
+              <span className="text-[12px] font-semibold px-2.5 py-0.5 rounded-full bg-[#0B1F3A]/8 text-[#0B1F3A]">
+                Tax-free*
               </span>
-              <span className="text-[13px] text-[#0B1F3A] leading-snug font-medium">{t}</span>
+              <span className="font-mono font-semibold text-[#0B1F3A]">{formatCurrency(srpValue)}</span>
             </div>
-          ))}
+          </div>
+        )}
+
+        <div className="px-5 py-3.5 flex items-center justify-between gap-3">
+          <span className="text-[#0B1F3A]">
+            Notice pay (PILON · {result.noticeWeeksUsed} wk{result.noticeWeeksUsed !== 1 ? 's' : ''})
+          </span>
+          <div className="flex items-center gap-2.5 shrink-0">
+            <span className="text-[12px] font-semibold px-2.5 py-0.5 rounded-full bg-[#A8341F]/10 text-[#A8341F]">
+              Taxable
+            </span>
+            <span className="font-mono font-semibold text-[#0B1F3A]">{formatCurrency(result.pilon)}</span>
+          </div>
         </div>
 
-        {/* Primary CTA */}
+        <div className="px-5 py-3.5 flex items-center justify-between gap-3 bg-[#FAF8F5]">
+          <span className="font-semibold text-[#0B1F3A]">Calculated statutory baseline</span>
+          <span className="font-mono font-bold text-[#0B1F3A]">{formatCurrency(result.minimum)}</span>
+        </div>
+
+        {offer > 0 && (
+          <>
+            <div className="px-5 py-3.5 flex items-center justify-between gap-3">
+              <span className="text-[#5B6577]">Estimated income tax on offer ({taxRatePct}%)</span>
+              <span className="font-mono font-semibold text-[#A8341F]">-{formatCurrency(effectiveTax)}</span>
+            </div>
+
+            <div className="px-5 py-4 flex items-center justify-between gap-3 bg-[#F7F4EE]">
+              <div>
+                <span className="font-bold text-[#0B1F3A] block">Estimated net take-home cash</span>
+                {pensionSacrifice > 0 && (
+                  <span className="text-[13px] text-[#5B6577]">
+                    Plus {formatCurrency(pensionSacrifice)} into pension (tax-free)
+                  </span>
+                )}
+              </div>
+              <span className="font-serif text-[24px] font-bold text-[#0B1F3A]">{formatCurrency(effectiveNet)}</span>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Integrated Visual Tax Split Bar (when offer > 0) */}
+      {offer > 0 && (
+        <div className="px-5 py-4 border-t border-[#EFEAE0]">
+          <div className="flex w-full h-3.5 rounded-full overflow-hidden bg-[#EFEAE0] mb-3">
+            {taxFreePct > 0 && (
+              <div
+                style={{ width: `${taxFreePct}%` }}
+                className="bg-[#0B1F3A]"
+                title={`Tax-free ex-gratia: ${formatCurrency(result.taxFreeAmount)}`}
+              />
+            )}
+            {taxablePct > 0 && (
+              <div
+                style={{ width: `${taxablePct}%` }}
+                className="bg-[#E0CB94]"
+                title={`Taxable ex-gratia: ${formatCurrency(adjustedTaxableTerm)}`}
+              />
+            )}
+            {pensionPct > 0 && (
+              <div
+                style={{ width: `${pensionPct}%` }}
+                className="bg-[#5B6577]"
+                title={`To pension: ${formatCurrency(pensionSacrifice)}`}
+              />
+            )}
+            {pilonPct > 0 && (
+              <div
+                style={{ width: `${pilonPct}%` }}
+                className="bg-[#D9603B]"
+                title={`Notice pay (PILON): ${formatCurrency(result.pilon)}`}
+              />
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[13px] text-[#5B6577]">
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-sm bg-[#0B1F3A] inline-block" />
+              Tax-free: <strong className="text-[#0B1F3A]">{formatCurrency(result.taxFreeAmount)}</strong>
+            </span>
+            {adjustedTaxableTerm > 0 && (
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-sm bg-[#E0CB94] inline-block" />
+                Taxable excess: <strong className="text-[#0B1F3A]">{formatCurrency(adjustedTaxableTerm)}</strong>
+              </span>
+            )}
+            {pensionSacrifice > 0 && (
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-sm bg-[#5B6577] inline-block" />
+                Pension: <strong className="text-[#0B1F3A]">{formatCurrency(pensionSacrifice)}</strong>
+              </span>
+            )}
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-sm bg-[#D9603B] inline-block" />
+              Notice (PILON): <strong className="text-[#0B1F3A]">{formatCurrency(result.pilon)}</strong>
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Collapsible Tax Rules & Legal Sources */}
+      <div className="border-t border-[#EFEAE0] no-print">
         <button
-          onClick={onGetMatched}
-          className="btn-accent text-[14px] sm:text-[15px] font-semibold px-4 py-3.5 w-full cursor-pointer whitespace-normal text-center leading-snug"
-          style={{ borderRadius: 8, boxShadow: '0 4px 16px rgba(217,96,59,0.22)', letterSpacing: '-0.01em', boxSizing: 'border-box' }}
+          type="button"
+          onClick={() => setSourcesOpen((o) => !o)}
+          className="w-full px-5 py-3.5 text-left flex items-center justify-between text-[14px] font-medium text-[#5B6577] hover:text-[#0B1F3A] bg-[#FAF8F5] border-0 cursor-pointer"
         >
-          <span>Connect with an SRA-regulated solicitor &rarr;</span>
+          <span>Tax rules, eligibility &amp; legislation sources</span>
+          <span style={{ transform: sourcesOpen ? 'rotate(180deg)' : 'none', transition: 'transform 180ms' }}>▾</span>
         </button>
 
-        <p className="text-[11px] text-[#8A93A3] mt-3.5 leading-relaxed m-0 text-center">
-          Takes under 2 minutes. Independent solicitor matching. Employer fee contribution applies upon completion.
-          {prefillEmail ? ' Your email is pre-filled.' : ''}
-        </p>
+        {sourcesOpen && (
+          <div className="px-5 py-4 bg-[#FAF8F5] border-t border-[#EFEAE0] text-[14px] text-[#5B6577] leading-[1.6] space-y-2.5">
+            <p className="m-0">
+              * <strong>Statutory eligibility:</strong> Statutory redundancy pay is subject to ERA 1996 s.141 (and may be forfeited if suitable alternative employment is unreasonably refused). Notice pay can be lost on summary dismissal for gross misconduct (<em>Boston Deep Sea Fishing v Ansell</em>).
+            </p>
+            <p className="m-0">
+              * <strong>Tax treatment:</strong> The first £30,000 of genuine termination payments is exempt under{' '}
+              <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/403" target="_blank" rel="noopener noreferrer" className="underline text-[#0B1F3A]">
+                ITEPA 2003 s.403
+              </a>
+              . Notice pay (PILON) is always taxable under{' '}
+              <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/402D" target="_blank" rel="noopener noreferrer" className="underline text-[#0B1F3A]">
+                ITEPA 2003 s.402D
+              </a>
+              . Accrued untaken holiday pay is paid separately under Working Time Regulations 1998 reg. 14.
+              {result.isScottishNote ? ' Scottish taxpayers have different income tax bands.' : ''}
+            </p>
+            <p className="m-0">
+              * <strong>2026/27 statutory caps:</strong>{' '}
+              <a href="https://www.legislation.gov.uk/ukpga/1996/18/sections/162-163" target="_blank" rel="noopener noreferrer" className="underline text-[#0B1F3A]">
+                ERA 1996 ss.162-163
+              </a>{' '}
+              (redundancy),{' '}
+              <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/86" target="_blank" rel="noopener noreferrer" className="underline text-[#0B1F3A]">
+                s.86
+              </a>{' '}
+              (notice),{' '}
+              <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/227" target="_blank" rel="noopener noreferrer" className="underline text-[#0B1F3A]">
+                s.227
+              </a>{' '}
+              (£{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI weekly cap).
+            </p>
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   )
 }
 
-/* ── Tribunal Limitation Clock (SC-B-010) ───────────────────────── */
+/* ── On-Demand Tool: Deadlines & Solicitor Call Prep ────────────── */
 
-function TribunalLimitationClock() {
-  const [terminationDate, setTerminationDate] = useState<string>(() => {
-    return new Date().toISOString().split('T')[0]
-  })
+function DeadlinesAndCallPrepPanel({ offer }: { offer: number }) {
+  const [terminationDate, setTerminationDate] = useState<string>(() => new Date().toISOString().split('T')[0])
 
-  // Under Employment Tribunals Act 1996 s.18A: 3 months minus 1 day
   const deadlineDate = useMemo(() => {
     if (!terminationDate) return null
     const [y, m, d] = terminationDate.split('-').map(Number)
     if (!y || !m || !d) return null
-    // Add 3 calendar months then minus 1 day
     const dt = new Date(y, m - 1 + 3, d)
     dt.setDate(dt.getDate() - 1)
     return dt
@@ -2003,264 +631,450 @@ function TribunalLimitationClock() {
     if (!deadlineDate) return 0
     const now = new Date()
     now.setHours(0, 0, 0, 0)
-    const diff = deadlineDate.getTime() - now.getTime()
-    return Math.ceil(diff / (1000 * 60 * 60 * 24))
+    return Math.ceil((deadlineDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
   }, [deadlineDate])
 
   const formattedDeadline = useMemo(() => {
     if (!deadlineDate) return ''
-    return deadlineDate.toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    })
+    return deadlineDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
   }, [deadlineDate])
 
   return (
-    <div
-      className="bg-white border border-[#E2DCCE] rounded-xl p-5 md:p-6 shadow-sm no-print mb-6"
-      id="tribunal-limitation-clock"
-      style={{ animation: 'sc-fade-in 200ms ease forwards' }}
-    >
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-[#E2DCCE]">
-        <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-[#D9603B] font-semibold block mb-0.5">
-            Employment Tribunals Act 1996 s.18A Watchdog
-          </span>
-          <h3 className="text-[17px] font-serif font-bold text-[#0B1F3A] m-0">
-            Tribunal Limitation Clock: 3 Months Minus 1 Day
+    <div className="bg-white border border-[#E2DCCE] rounded-2xl p-5 shadow-sm space-y-5">
+      {/* Privilege Tip */}
+      <div className="p-4 rounded-xl bg-[#FEFBF0] border border-[#E0CB94] text-[15px] text-[#5A410D] leading-[1.6]">
+        <strong>Important before emailing HR:</strong> Do not send an unreviewed counter-offer directly to your employer. Under English contract law (<em>Hyde v Wrench</em>), an unreviewed counter-offer can put your existing offer at risk. Speak with your solicitor first.
+      </div>
+
+      {/* 3-Month Tribunal Deadline Calculator */}
+      <div>
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <h3 className="font-serif text-[20px] font-bold text-[#0B1F3A] m-0">
+            ACAS Tribunal Deadline (3 months minus 1 day)
           </h3>
-        </div>
-
-        {daysRemaining > 30 ? (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-[#0B1F3A]/10 text-[#0B1F3A] border border-[#0B1F3A]/20 flex-shrink-0">
-            <span className="w-2 h-2 rounded-full bg-[#0B1F3A]" />
-            {daysRemaining} Days Remaining
-          </span>
-        ) : daysRemaining > 0 ? (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/30 flex-shrink-0">
-            <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-ping" />
-            Urgent: {daysRemaining} Days Left
-          </span>
-        ) : (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold bg-[#A8341F]/10 text-[#A8341F] border border-[#A8341F]/30 flex-shrink-0">
-            <span className="w-2 h-2 rounded-full bg-[#A8341F]" />
-            Limitation Window Expired
-          </span>
-        )}
-      </div>
-
-      <p className="text-[13px] text-[#5B6577] leading-relaxed my-3">
-        Under UK employment statute, you have exactly <strong>3 months minus 1 day</strong> from your effective date of termination or the incident to contact ACAS. <strong>Settlement discussions do not pause this clock.</strong> If your employer delays signing and this deadline expires, you lose your right to make an Employment Tribunal claim.
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg p-4 my-3">
-        <div>
-          <label htmlFor="termination-date-input" className="block text-[12px] font-semibold text-[#0B1F3A] mb-1">
-            Your Dismissal / Termination Date:
-          </label>
-          <input
-            id="termination-date-input"
-            type="date"
-            value={terminationDate}
-            onChange={(e) => setTerminationDate(e.target.value)}
-            className="w-full bg-white border border-[#E2DCCE] rounded-md px-3 py-2 text-[14px] text-[#0B1F3A] font-mono outline-none focus:border-[#0B1F3A]"
-          />
-          <span className="block text-[11px] text-[#8A93A3] mt-1">
-            Defaults to today. Change to your actual or proposed leaving date.
+          <span className="text-[12px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#F7F4EE] text-[#0B1F3A] border border-[#E2DCCE]">
+            {daysRemaining > 0 ? `${daysRemaining} days left` : 'Window expired'}
           </span>
         </div>
-
-        <div className="border-t md:border-t-0 md:border-l border-[#E2DCCE] pt-3 md:pt-0 md:pl-4">
-          <span className="block text-[11px] text-[#8A93A3] uppercase font-mono tracking-wider mb-0.5">
-            Absolute ACAS Notification Deadline:
-          </span>
-          <span className="block text-[18px] font-serif font-bold text-[#0B1F3A]">
-            {formattedDeadline}
-          </span>
-          <span className="block text-[11px] text-[#5B6577] mt-0.5">
-            Contacting ACAS for Early Conciliation pauses the clock.
-          </span>
-        </div>
-      </div>
-
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
-        <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
-          Starting ACAS Early Conciliation protects your legal claims while negotiations continue.
+        <p className="text-[15px] text-[#5B6577] leading-[1.6] m-0 mb-3.5">
+          Settlement talks do not pause the statutory Employment Tribunal clock. Enter your leaving or incident date to see your ACAS Early Conciliation cut-off:
         </p>
-        <a
-          href="https://www.acas.org.uk/early-conciliation"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackOutboundCitation('https://www.acas.org.uk/early-conciliation', 'ACAS Early Conciliation', { component: 'tribunal_limitation_clock' })}
-          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-[#0B1F3A] text-[#0B1F3A] hover:bg-[#0B1F3A] hover:text-white transition-colors text-[13px] font-medium flex-shrink-0 text-center"
-        >
-          <span>Notify ACAS (acas.org.uk)</span>
-          <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </div>
-  )
-}
 
-/* ── Local SRA Specialist Availability Card (SC-B-022) ─────────── */
-
-function LocalSpecialistAvailabilityCard({
-  jurisdiction,
-  onGetMatched,
-}: {
-  jurisdiction: 'GB' | 'NI'
-  onGetMatched: () => void
-}) {
-  return (
-    <div
-      className="bg-white border-2 border-[#D9603B] rounded-xl p-5 md:p-6 shadow-sm no-print mb-6"
-      style={{ animation: 'sc-fade-in 200ms ease forwards' }}
-    >
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-[#E2DCCE]">
-        <div className="flex items-center gap-3">
-          <span className="relative flex h-3 w-3 flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D9603B] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#D9603B]"></span>
-          </span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center bg-[#F7F4EE] border border-[#E2DCCE] rounded-xl p-4">
           <div>
-            <h3 className="text-[16px] font-bold text-[#0B1F3A] m-0 leading-snug">
-              Local SRA Employment Specialist Available Today
-            </h3>
-            <p className="text-[12px] text-[#5B6577] m-0 leading-normal">
-              Vetted partner panel active in {jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland and Wales'} · 15-minute SLA reserve window
-            </p>
+            <label htmlFor="termination-date-input" className="block text-[13px] font-semibold text-[#0B1F3A] mb-1.5">
+              Leaving or incident date
+            </label>
+            <input
+              id="termination-date-input"
+              type="date"
+              value={terminationDate}
+              onChange={(e) => setTerminationDate(e.target.value)}
+              className="w-full bg-white border border-[#D8D2C6] rounded-lg px-3 py-2 text-[15px] text-[#0B1F3A] font-mono outline-none focus:border-[#0B1F3A]"
+            />
+          </div>
+          <div className="sm:border-l sm:border-[#E2DCCE] sm:pl-4">
+            <span className="block text-[12px] font-mono uppercase tracking-wider text-[#5B6577]">
+              ACAS notification deadline
+            </span>
+            <span className="block font-serif text-[21px] font-bold text-[#0B1F3A]">{formattedDeadline}</span>
+            <a
+              href="https://www.acas.org.uk/early-conciliation"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackOutboundCitation('https://www.acas.org.uk/early-conciliation', 'ACAS Early Conciliation', {
+                  component: 'deadlines_panel',
+                })
+              }
+              className="text-[13px] text-[#0B1F3A] underline hover:text-[#D9603B]"
+            >
+              ACAS Early Conciliation guidance ↗
+            </a>
           </div>
         </div>
-
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#0B1F3A]/10 text-[#0B1F3A] border border-[#0B1F3A]/20 flex-shrink-0">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#0B1F3A]" />
-          Capacity: Available
-        </span>
       </div>
 
-      <div className="pt-4 grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
-        <div className="md:col-span-2 text-xs text-[#0B1F3A]/80 leading-relaxed">
-          <p className="m-0 mb-2 font-medium text-[#0B1F3A]">
-            <strong>Section 203 ERA 1996 Requirement:</strong> To be legally binding, a settlement agreement waiving statutory claims requires independent advice from an insured solicitor or qualified adviser.
-          </p>
-          <p className="m-0 text-[#5B6577]">
-            Employers standardly provide a capped contribution toward this fee (commonly £350 to £500+ +VAT, paid directly to your solicitor upon completion). Standard reviews within this cap are covered by the contribution.
-          </p>
+      {/* Concise Solicitor Call Checklist */}
+      <div className="pt-3.5 border-t border-[#EFEAE0]">
+        <h3 className="font-serif text-[19px] font-bold text-[#0B1F3A] m-0 mb-2.5">
+          What to bring to your solicitor call
+        </h3>
+        <ul className="m-0 pl-5 space-y-2 text-[15px] text-[#5B6577] leading-[1.6]">
+          <li>Your employment contract (to verify contractual notice, bonus, and restrictive covenants).</li>
+          <li>
+            {offer > 0
+              ? 'Your draft settlement agreement or offer email, including any deadline HR has mentioned.'
+              : 'Notes from any verbal exit discussions (ask HR to confirm any proposal in writing).'}
+          </li>
+          <li>Questions on tax allocation (the £30,000 exemption under s.403), agreed reference wording, and accrued holiday pay.</li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+/* ── On-Demand Tool: Benchmarks & FAQs ──────────────────────────── */
+
+const CONCISE_FAQS = [
+  {
+    q: 'Who pays the solicitor fees?',
+    a: 'Employers standardly provide a capped contribution (typically £350 to £500+ +VAT) paid directly to your solicitor upon completion of the agreement. For standard reviews within that cap, the employer contribution covers the legal fee. Work outside the cap or abortive fees if you choose not to complete remain subject to your solicitor\'s terms.',
+  },
+  {
+    q: 'Will my employer know I used SettlementCheck?',
+    a: 'No. Your calculation and enquiry are completely private. Your details are sent to one SRA-regulated employment solicitor only, and your employer is never contacted unless you formally instruct the solicitor to do so.',
+  },
+  {
+    q: 'How quickly can a solicitor sign off my agreement?',
+    a: 'Standard settlement reviews normally complete within 24 to 48 hours once you instruct your solicitor. ACAS Code 4 recommends at least 10 calendar days to consider terms, though employers can set shorter deadlines.',
+  },
+  {
+    q: 'What if I have not received a written offer yet?',
+    a: 'You can still speak with a solicitor to understand your statutory baseline and how to handle protected conversations (s.111A ERA 1996 applies strictly to ordinary unfair dismissal and excludes discrimination or whistleblowing).',
+  },
+]
+
+function BenchmarksAndFaqPanel({
+  reason,
+  salary,
+  result,
+  isDiscrimination,
+  totalMonths,
+}: {
+  reason: string
+  salary: number
+  result: VerdictResult
+  isDiscrimination: boolean
+  totalMonths: number
+}) {
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const benchmark = getOfficialBenchmark(reason, isDiscrimination)
+  const monthlySalary = salary / 12
+  const refLow = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.min)
+  const refHigh = Math.round(result.minimum + monthlySalary * benchmark.typicalAcasExGratiaMonths.max)
+
+  const isOrdinaryUnfairDismissal = !isDiscrimination && reason !== 'redundancy' && reason !== 'redundancy_collective'
+  const showTribunalMedian = !(isOrdinaryUnfairDismissal && totalMonths < 24)
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-white border border-[#E2DCCE] rounded-2xl p-5 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3.5 border-b border-[#EFEAE0]">
+          <h3 className="font-serif text-[17px] font-bold text-[#0B1F3A] m-0">
+            Published UK Tribunal Benchmarks
+          </h3>
+          <a
+            href={benchmark.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() =>
+              trackOutboundCitation(benchmark.sourceUrl, benchmark.sourceName, { component: 'benchmarks_panel' })
+            }
+            className="text-[11px] font-mono text-[#0B1F3A] underline hover:text-[#D9603B]"
+          >
+            Source: {benchmark.sourceName} ↗
+          </a>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <button
-            onClick={onGetMatched}
-            className="w-full py-3.5 px-4 rounded-lg bg-[#D9603B] hover:bg-[#c25230] text-white text-[13px] font-bold shadow-sm transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
-          >
-            <span>Connect with specialist solicitor →</span>
-          </button>
-          <span className="text-[11px] text-center text-[#8A93A3]">
-            1-click dossier dispatch · Zero obligation
-          </span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="bg-[#FAF8F5] border border-[#E2DCCE] rounded-xl p-3.5">
+            <span className="text-[11px] text-[#5B6577] block mb-0.5">MoJ Tribunal Median Award</span>
+            <span className="font-serif text-[20px] font-bold text-[#0B1F3A] block">
+              {showTribunalMedian ? formatCurrency(benchmark.medianTribunalAward) : 'N/A (< 2 yrs service)'}
+            </span>
+            <span className="text-[11px] text-[#8A93A3] block mt-1">
+              {showTribunalMedian
+                ? `Mean average: ${formatCurrency(benchmark.meanTribunalAward)}`
+                : 'Ordinary unfair dismissal requires 2 years continuous service (ERA 1996 s.108)'}
+            </span>
+          </div>
+
+          <div className="bg-[#FAF8F5] border border-[#E2DCCE] rounded-xl p-3.5">
+            <span className="text-[11px] text-[#5B6577] block mb-0.5">Illustrative Negotiation Benchmark</span>
+            <span className="font-serif text-[20px] font-bold text-[#0B1F3A] block">
+              {formatCurrency(refLow)} to {formatCurrency(refHigh)}
+            </span>
+            <span className="text-[11px] text-[#8A93A3] block mt-1">
+              Baseline + {benchmark.typicalAcasExGratiaMonths.min} to {benchmark.typicalAcasExGratiaMonths.max} months ex-gratia
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Crisp 4-item FAQ */}
+      <div className="bg-white border border-[#E2DCCE] rounded-2xl p-5 shadow-sm">
+        <h3 className="font-serif text-[20px] font-bold text-[#0B1F3A] m-0 mb-3">Common questions</h3>
+        <div className="divide-y divide-[#EFEAE0]">
+          {CONCISE_FAQS.map((item, i) => (
+            <div key={item.q}>
+              <button
+                type="button"
+                onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                aria-expanded={openFaq === i}
+                className="w-full py-3.5 text-left flex items-center justify-between gap-3 bg-transparent border-0 cursor-pointer"
+              >
+                <span className="text-[16px] font-semibold text-[#0B1F3A]">{item.q}</span>
+                <span className="text-[#5B6577] font-bold text-[18px] shrink-0">{openFaq === i ? '−' : '+'}</span>
+              </button>
+              {openFaq === i && (
+                <p className="text-[15px] text-[#5B6577] leading-[1.6] m-0 pb-4">{item.a}</p>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>
   )
 }
 
-/* ── Sticky Mobile Action Bar (Direction B CRO) ─────────────────── */
+/* ── On-Demand Tool: Pension Sacrifice Optimiser ────────────────── */
 
-function StickyResultsMobileBar({ onGetMatched }: { onGetMatched: () => void }) {
-  const [visible, setVisible] = useState(false)
+function PensionSacrificePanel({
+  taxableTermination,
+  salary,
+  sacrificeVal,
+  setSacrificeVal,
+}: {
+  taxableTermination: number
+  salary: number
+  sacrificeVal: number
+  setSacrificeVal: (val: number) => void
+}) {
+  const isDemoMode = taxableTermination <= 0 && salary >= 100000
+  const [demoVal, setDemoVal] = useState(10000)
+  const limit = isDemoMode ? 20000 : taxableTermination
+  const currentVal = isDemoMode ? demoVal : sacrificeVal
+  const setVal = isDemoMode ? setDemoVal : setSacrificeVal
+  const res = calcPensionSacrifice(limit, currentVal, salary)
+
+  return (
+    <div className="bg-white border border-[#E2DCCE] rounded-2xl p-5 shadow-sm space-y-4">
+      <div>
+        <h3 className="font-serif text-[17px] font-bold text-[#0B1F3A] m-0 mb-1">
+          Pension Sacrifice Tax Optimiser (s.408 ITEPA 2003)
+        </h3>
+        <p className="text-[13px] text-[#5B6577] leading-relaxed m-0">
+          {isDemoMode
+            ? 'Illustrative demo for a £50,000 package (£20,000 above the £30,000 tax-free threshold). Directing taxable ex-gratia pay into a registered pension avoids income tax on that slice.'
+            : 'Termination payments above £30,000 are taxed at your marginal rate. Directing part of that excess into a pension as an employer contribution avoids income tax on that amount.'}
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <div className="flex justify-between text-[13px] font-semibold text-[#0B1F3A]">
+          <span>Amount redirected to pension</span>
+          <span className="text-[#D9603B] font-mono">{formatCurrency(currentVal)}</span>
+        </div>
+        <input
+          type="range"
+          min="0"
+          max={limit}
+          step="100"
+          value={currentVal}
+          onChange={(e) => setVal(Number(e.target.value))}
+          className="sc-slider w-full cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #D9603B 0%, #D9603B ${(currentVal / (limit || 1)) * 100}%, #E2DCCE ${(currentVal / (limit || 1)) * 100}%, #E2DCCE 100%)`,
+          }}
+        />
+        <div className="flex justify-between text-[11px] text-[#8A93A3]">
+          <span>£0 (take cash)</span>
+          <span>Max: {formatCurrency(limit)}</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t border-[#EFEAE0]">
+        <div>
+          <span className="text-[10px] font-mono uppercase text-[#8A93A3] block">Tax saved</span>
+          <span className="text-[17px] font-bold text-[#0B1F3A]">{formatCurrency(res.taxSaved)}</span>
+        </div>
+        <div>
+          <span className="text-[10px] font-mono uppercase text-[#8A93A3] block">Into pension</span>
+          <span className="text-[17px] font-bold text-[#0B1F3A]">{formatCurrency(res.pensionGrowth)}</span>
+        </div>
+        <div>
+          <span className="text-[10px] font-mono uppercase text-[#8A93A3] block">Net wealth gain</span>
+          <span className="text-[17px] font-bold text-[#D9603B]">+{formatCurrency(res.netWealthBenefit)}</span>
+        </div>
+      </div>
+
+      <p className="text-[11px] text-[#8A93A3] m-0">
+        Must be written into the settlement agreement before signing and requires employer agreement.
+      </p>
+    </div>
+  )
+}
+
+/* ── On-Demand Tool: Vento Bands (Only if Discrimination Flagged) ─ */
+
+function VentoBandPanel({
+  selectedBand,
+  onBandSelect,
+  ventoBands,
+}: {
+  selectedBand: 'lower' | 'middle' | 'upper' | 'exceptional' | null
+  onBandSelect: (b: 'lower' | 'middle' | 'upper' | 'exceptional' | null) => void
+  ventoBands: {
+    lowerMin: number
+    lowerMax: number
+    middleMin: number
+    middleMax: number
+    upperMin: number
+    upperMax: number
+    exceptionalMin: number
+  }
+}) {
+  const bands = [
+    { key: 'lower' as const, name: 'Lower Band', range: `${formatCurrency(ventoBands.lowerMin)} to ${formatCurrency(ventoBands.lowerMax)}`, desc: 'One-off or less serious incidents.' },
+    { key: 'middle' as const, name: 'Middle Band', range: `${formatCurrency(ventoBands.middleMin)} to ${formatCurrency(ventoBands.middleMax)}`, desc: 'Serious or repeated discrimination over time.' },
+    { key: 'upper' as const, name: 'Upper Band', range: `${formatCurrency(ventoBands.upperMin)} to ${formatCurrency(ventoBands.upperMax)}`, desc: 'Lengthy campaigns of harassment or severe dismissal.' },
+    { key: 'exceptional' as const, name: 'Exceptional', range: `${formatCurrency(ventoBands.exceptionalMin)}+`, desc: 'Reserved for the most severe cases.' },
+  ]
+
+  return (
+    <div className="bg-white border border-[#E2DCCE] rounded-2xl p-5 shadow-sm space-y-3">
+      <div>
+        <h3 className="font-serif text-[17px] font-bold text-[#0B1F3A] m-0 mb-1">
+          Injury to Feelings Guidelines (Vento Bands)
+        </h3>
+        <p className="text-[13px] text-[#5B6577] m-0 leading-relaxed">
+          Equality Act 2010 claims are uncapped. Tribunals assess Injury to Feelings separately from financial loss using these bands:
+        </p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        {bands.map((b) => {
+          const active = selectedBand === b.key
+          return (
+            <button
+              key={b.key}
+              type="button"
+              onClick={() => onBandSelect(active ? null : b.key)}
+              className="text-left p-3 rounded-xl border transition cursor-pointer"
+              style={{
+                background: active ? '#0B1F3A' : '#FAF8F5',
+                borderColor: active ? '#0B1F3A' : '#E2DCCE',
+                color: active ? '#ffffff' : '#0B1F3A',
+              }}
+            >
+              <div className="flex items-center justify-between gap-2 mb-0.5">
+                <span className="font-bold text-[13px]">{b.name}</span>
+                <span className="font-mono text-[12px] font-bold" style={{ color: active ? '#fff' : '#D9603B' }}>
+                  {b.range}
+                </span>
+              </div>
+              <p className="text-[11px] m-0 leading-snug" style={{ color: active ? 'rgba(255,255,255,0.85)' : '#5B6577' }}>
+                {b.desc}
+              </p>
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+/* ── Smart Mobile Sticky Bar (Hides when Intake Card is visible) ── */
+
+function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => void }) {
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 380) {
-        setVisible(true)
-      } else {
-        setVisible(false)
-      }
+    const target = document.getElementById('solicitor-intake-card')
+    if (!target || typeof IntersectionObserver === 'undefined') return
+
+    let cardVisible = true
+    const observer = new IntersectionObserver(
+      (entries) => {
+        cardVisible = !!entries[0]?.isIntersecting
+        setShow(!cardVisible && window.scrollY > 360)
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(target)
+
+    const onScroll = () => {
+      setShow(!cardVisible && window.scrollY > 360)
     }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
-  if (!visible) return null
+  if (!show) return null
 
   return (
     <div
       role="region"
-      aria-label="Solicitor match quick action"
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#F7F4EE]/95 backdrop-blur-md border-t border-[#E2DCCE] px-4 py-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_rgba(11,31,58,0.12)] transition-all duration-200 no-print"
+      aria-label="Request solicitor review"
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#F7F4EE]/95 backdrop-blur-md border-t border-[#E2DCCE] px-4 py-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_rgba(11,31,58,0.12)] no-print"
     >
       <div className="flex items-center justify-between gap-3 max-w-lg mx-auto">
         <div className="min-w-0 flex-1">
           <p className="text-[12px] font-bold text-[#0B1F3A] leading-tight truncate m-0">
-            Independent Legal Review
+            Confidential SRA Solicitor Check
           </p>
           <p className="text-[11px] text-[#5B6577] leading-tight mt-0.5 truncate m-0">
-            Capped employer fee contribution (£350–£500+ +VAT)
+            Employer typically contributes £350 to £500+ +VAT
           </p>
         </div>
         <button
-          onClick={onGetMatched}
-          className="inline-flex items-center justify-center px-4 py-2 text-[13px] font-semibold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg shadow-sm transition-colors duration-150 flex-shrink-0 cursor-pointer"
+          type="button"
+          onClick={onScrollToIntake}
+          className="inline-flex items-center justify-center px-4 py-2 text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg border-0 cursor-pointer flex-shrink-0"
         >
-          Match Solicitor &rarr;
+          Speak to a solicitor →
         </button>
       </div>
     </div>
   )
 }
 
-/* ── Main results content ───────────────────────────────────────── */
+/* ── Main Results Page ──────────────────────────────────────────── */
 
 function ResultsContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
   const [inputs, setInputs] = useState<EditableInputs>({
-    salary:              searchParams.get('salary')              ?? '0',
-    yearsNum:            searchParams.get('yearsNum')            ?? '0',
-    monthsNum:           searchParams.get('monthsNum')           ?? '0',
-    age:                 searchParams.get('age')                 ?? '0',
-    offer:               searchParams.get('offer')               ?? '0',
+    salary: searchParams.get('salary') ?? '0',
+    yearsNum: searchParams.get('yearsNum') ?? '0',
+    monthsNum: searchParams.get('monthsNum') ?? '0',
+    age: searchParams.get('age') ?? '0',
+    offer: searchParams.get('offer') ?? '0',
     offerIncludesNotice: searchParams.get('offerIncludesNotice') ?? 'true',
-    reason:              searchParams.get('reason')              ?? '',
-    discrimination:      searchParams.get('discrimination')      ?? 'no',
-    contractualNotice:   searchParams.get('contractualNotice')   ?? '0',
+    reason: searchParams.get('reason') ?? '',
+    discrimination: searchParams.get('discrimination') ?? 'no',
+    contractualNotice: searchParams.get('contractualNotice') ?? '0',
   })
 
-  // Selected Vento Band for interactive discrimination modelling
+  const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>(() =>
+    searchParams.get('jurisdiction') === 'NI' ? 'NI' : 'GB'
+  )
   const [selectedVentoBand, setSelectedVentoBand] = useState<'lower' | 'middle' | 'upper' | 'exceptional' | null>(null)
-
-  // Interactive Pension Sacrifice hoisted state
   const [sacrificeVal, setSacrificeVal] = useState(0)
+  const [activeTab, setActiveTab] = useState<DeepDiveTab | null>(null)
 
-  const salary              = parseFloat(inputs.salary)
-  const yearsNum            = parseFloat(inputs.yearsNum)
-  const monthsNum           = parseFloat(inputs.monthsNum)
-  const totalMonths         = yearsNum * 12 + monthsNum
-  const age                 = parseInt(inputs.age)
-  const offer               = parseFloat(inputs.offer)
+  const salary = parseFloat(inputs.salary)
+  const yearsNum = parseFloat(inputs.yearsNum)
+  const monthsNum = parseFloat(inputs.monthsNum)
+  const totalMonths = yearsNum * 12 + monthsNum
+  const age = parseInt(inputs.age, 10)
+  const offer = parseFloat(inputs.offer)
   const offerIncludesNotice = inputs.offerIncludesNotice !== 'false'
-  const reason              = inputs.reason
-  const discrimination      = inputs.discrimination
-  const contractualNotice   = isNaN(parseInt(inputs.contractualNotice, 10)) ? 0 : parseInt(inputs.contractualNotice, 10)
-
-  const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>(() => {
-    const j = searchParams.get('jurisdiction')
-    return j === 'NI' ? 'NI' : 'GB'
-  })
-  const [showJurisdictionToggle, setShowJurisdictionToggle] = useState(false)
-  const [prefillEmail, setPrefillEmail] = useState(searchParams.get('email') ?? '')
-  const [activeDetailTab, setActiveDetailTab] = useState<'breakdown' | 'negotiation' | 'benchmarks' | null>(null)
-  const [showBottomLegal, setShowBottomLegal] = useState(false)
-  const saveCardRef = useRef<HTMLDivElement>(null)
-  const resultsTrackedRef = useRef(false)
+  const reason = inputs.reason
+  const discrimination = inputs.discrimination
+  const contractualNotice = isNaN(parseInt(inputs.contractualNotice, 10)) ? 0 : parseInt(inputs.contractualNotice, 10)
 
   const valid = salary > 0 && age > 0 && offer >= 0 && reason !== ''
   const result: VerdictResult | null = valid
     ? getVerdict(salary, totalMonths, age, offer, reason, discrimination, contractualNotice, jurisdiction, offerIncludesNotice)
     : null
 
+  const resultsTrackedRef = React.useRef(false)
   useEffect(() => {
     if (result && !resultsTrackedRef.current) {
       resultsTrackedRef.current = true
@@ -2271,429 +1085,197 @@ function ResultsContent() {
     }
   }, [result, offer])
 
-  // ── Pre-offer Simulation / Low Offer Opportunity Mode ─────────────────
-  const hasOffer = offer > 0
-  const typicalMidpoint = result
-    ? (result.typicalHighUncapped
-        ? Math.round(result.typicalLow * 1.5)
-        : Math.round((result.typicalLow + result.typicalHigh) / 2))
-    : 0
-
-  // If they have no offer, we simulate the midpoint.
-  // If they have an offer but no taxable termination, AND they are a high earner (£100k+),
-  // we simulate a typical midpoint offer so they can see the pension widget opportunity.
-  const isOpportunityMode = !!(hasOffer && result && result.taxableTermination <= 0 && salary >= 100000 && typicalMidpoint > offer)
-  const displayOffer = (hasOffer && !isOpportunityMode) ? offer : typicalMidpoint
-
-  const displayResult = valid
-    ? ((hasOffer && !isOpportunityMode)
-        ? result
-        : getVerdict(salary, totalMonths, age, displayOffer, reason, discrimination, contractualNotice, jurisdiction, offerIncludesNotice))
-    : null
-
-  const isSimulated = !hasOffer || isOpportunityMode
-
-  // Calculate maximum sacrifice possible based on the display/simulated taxable termination
-  const maxSacrifice = (displayResult && displayResult.taxableTermination > 0) ? displayResult.taxableTermination : 0
+  const maxSacrifice = result && result.taxableTermination > 0 ? result.taxableTermination : 0
   const adjustedSacrificeVal = Math.min(sacrificeVal, maxSacrifice)
+  const pensionRes =
+    result && maxSacrifice > 0 ? calcPensionSacrifice(maxSacrifice, adjustedSacrificeVal, salary) : null
 
-  // Hoisted pension sacrifice calculations
-  const pensionRes = (displayResult && maxSacrifice > 0)
-    ? calcPensionSacrifice(maxSacrifice, adjustedSacrificeVal, salary)
-    : null
+  const showPensionTab = maxSacrifice > 0 || salary >= 100000
+  const showVentoTab = !!(result?.discriminationFlag && result?.ventoBands)
+
+  const availableTabs: { id: DeepDiveTab; label: string }[] = [
+    { id: 'deadlines', label: 'Deadlines & Call Prep' },
+    { id: 'benchmarks', label: 'Tribunal Benchmarks & FAQs' },
+    ...(showPensionTab ? [{ id: 'pension' as const, label: 'Pension Tax Optimiser' }] : []),
+    ...(showVentoTab ? [{ id: 'vento' as const, label: 'Discrimination (Vento)' }] : []),
+  ]
 
   const saveParams = {
-    salary, yearsNum, monthsNum, age, offer, offerIncludesNotice: String(offerIncludesNotice), reason, discrimination,
-    contractualNotice, jurisdiction,
+    salary,
+    yearsNum,
+    monthsNum,
+    age,
+    offer,
+    offerIncludesNotice: String(offerIncludesNotice),
+    reason,
+    discrimination,
+    contractualNotice,
+    jurisdiction,
   }
 
-  const handleSolicitorMatch = () => {
+  function handleScrollToIntake() {
     if (!result) return
-    trackSolicitorMatchClick('results_primary_cta', {
-      verdict: result.verdict,
-      offer,
-      salary,
-    })
-    const cardEl = document.getElementById('solicitor-intake-card')
-    if (cardEl) {
-      cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      const nameInput = cardEl.querySelector('input')
-      if (nameInput) nameInput.focus()
+    trackSolicitorMatchClick('results_mobile_sticky_cta', { verdict: result.verdict, offer, salary })
+    const el = document.getElementById('solicitor-intake-card')
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      el.querySelector<HTMLInputElement>('input')?.focus()
       return
     }
-    const variantParam = searchParams.get('variant') || (typeof window !== 'undefined' ? sessionStorage.getItem('sc_calc_assigned_variant') : null) || 'sequential'
-    const p = new URLSearchParams({
-      verdict: result.verdict,
-      offer:   String(offer),
-      salary:  String(salary),
-      months:  String(totalMonths),
-      variant: variantParam,
-    })
-    if (prefillEmail) { p.set('email', prefillEmail); p.set('ev', '1') }
-    router.push(`/get-matched/?${p.toString()}`)
-  }
-
-  function scrollToSave() {
-    saveCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    setTimeout(() => saveCardRef.current?.querySelector<HTMLButtonElement>('[data-email-trigger]')?.click(), 400)
+    router.push(`/get-matched/?verdict=${result.verdict}&offer=${offer}&salary=${salary}&months=${totalMonths}`)
   }
 
   return (
     <>
       <Nav />
-      {/* Inject print-only and layout styling */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         @media print {
-          @page {
-            size: A4 portrait;
-            margin: 15mm 15mm 15mm 15mm;
-          }
-          html, body, main, .sc-container, #__next, #react-root {
-            height: auto !important;
-            overflow: visible !important;
-          }
-          body {
-            background-color: #ffffff !important;
-            color: #0B1F3A !important;
-            font-family: var(--font-sans), Inter, sans-serif !important;
-            margin: 0 !important;
-            padding: 0 !important;
-          }
-          nav, footer, .no-print {
-            display: none !important;
-          }
-          main {
-            padding: 0 !important;
-            margin: 0 !important;
-            background: none !important;
-            min-height: auto !important;
-          }
-          .sc-container {
-            padding: 0 !important;
-            margin: 0 !important;
-            max-width: 100% !important;
-            width: 100% !important;
-          }
-          /* Ensure layout containers do not use grid/flex layout when printing */
-          .grid, .flex-col, .lg\:col-span-2 {
-            display: block !important;
-            width: 100% !important;
-            padding: 0 !important;
-            margin: 0 !important;
-          }
-          #printable-case-brief-wrapper {
-            display: block !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            background: white !important;
-          }
-          #printable-case-brief {
-            display: block !important;
-            opacity: 1 !important;
-            max-height: none !important;
-            overflow: visible !important;
-            height: auto !important;
-            padding: 0 !important;
-            margin: 0 !important;
-          }
-          .page-break {
-            page-break-before: always !important;
-            break-before: page !important;
-            margin-top: 0 !important;
-            padding-top: 15mm !important;
-          }
-          /* Ensure text colors print correctly */
-          * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-          }
-          /* Force standard table formatting */
-          table {
-            width: 100% !important;
-            border-collapse: collapse !important;
-            margin-top: 5px !important;
-            margin-bottom: 5px !important;
-          }
-          th, td {
-            border: 1px solid #E2DCCE !important;
-            padding: 6px 10px !important;
-            font-size: 11px !important;
-          }
-          /* Ensure text reads well */
-          .text-coral, span[style*="color: rgb(217, 96, 59)"] {
-            color: #D9603B !important;
-          }
-          .text-ink {
-            color: #0B1F3A !important;
-          }
+          @page { size: A4 portrait; margin: 14mm; }
+          nav, footer, .no-print { display: none !important; }
+          body, main { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
         }
-      `}} />
+      `,
+        }}
+      />
 
-      <main className="bg-paper-2 min-h-screen pb-24" style={{ animation: 'sc-fade-in 400ms ease forwards' }}>
-        <div className="sc-container pt-4 md:pt-10" style={{ maxWidth: 1120 }}>
-
+      <main className="bg-paper-2 min-h-screen pb-20">
+        <div className="sc-container pt-4 md:pt-8" style={{ maxWidth: 1120 }}>
           <div className="no-print">
-            <InputsSummaryPanel inputs={inputs} onUpdate={(next) => {
-              setInputs(next)
-              setSelectedVentoBand(null) // reset Vento band when fields change
-            }} />
+            <InputsSummaryPanel
+              inputs={inputs}
+              jurisdiction={jurisdiction}
+              onJurisdictionChange={setJurisdiction}
+              onUpdate={(next) => {
+                setInputs(next)
+                setSelectedVentoBand(null)
+              }}
+            />
           </div>
 
           {!valid && (
-            <div className="bg-amber-tint border border-[#E0CB94] rounded-lg p-6 mb-6">
-              <p className="text-amber font-medium">Missing details. Please go back and complete the calculator.</p>
-              <Link href="/calculator/" className="mt-3 inline-block text-[14px] text-ink underline underline-offset-4">Return to calculator</Link>
+            <div className="bg-[#FEFBF0] border border-[#E0CB94] rounded-xl p-6 mb-6">
+              <p className="text-[#9A6B16] font-semibold m-0">
+                Missing calculation details. Please complete the calculator to view your estimate.
+              </p>
+              <Link href="/calculator/" className="mt-3 inline-block text-[14px] font-semibold text-[#0B1F3A] underline underline-offset-4">
+                Return to calculator →
+              </Link>
             </div>
           )}
 
           {result && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
-              
-              {/* Left Column - Calculations, interactive sliders, visual chart, detailed breakdowns */}
-              <div className="lg:col-span-2 flex flex-col gap-4 sm:gap-5">
-                
-                {/* Reassurance progress indicator */}
-                <div className="flex items-center justify-between text-[11px] sm:text-[13px] text-muted border-b border-[#E2DCCE] pb-2 no-print">
-                  <span>Case ID: SC-{Math.abs(salary - age * totalMonths).toString(16).toUpperCase()}</span>
-                  <span className="flex items-center gap-1.5 font-semibold text-[#0B1F3A]">
-                    <span className="w-2 h-2 rounded-full bg-[#0B1F3A] animate-pulse"></span>
-                    2026 UK Statutory Rates
-                  </span>
-                </div>
-
-                {/* Verdict panel */}
-                <div className="no-print">
-                  <VerdictPanel result={result} offer={offer} salary={salary} yearsNum={Math.floor(yearsNum)} age={age} />
-                </div>
-
-                {/* Immediate Statutory Match Intake (Directly below verdict for instant lead capture) */}
-                <div className="no-print">
-                  <InlineSolicitorIntakeCard
-                    verdict={result.verdict}
-                    offer={offer}
-                    salary={salary}
-                    years={yearsNum}
-                    disputeReason={reason}
-                    sourceUrl="/results/"
-                    saveParams={saveParams}
-                    resultSummary={{
-                      minimum: result.minimum,
-                      typicalLow: result.typicalLow,
-                      typicalHigh: result.typicalHigh,
-                      typicalHighUncapped: result.typicalHighUncapped,
-                      estimatedNet: result.estimatedNet,
-                    }}
-                  />
-                </div>
-
-                {/* Jurisdiction toggles (placed below primary intake so mobile reaches form faster) */}
-                <div className="text-[12px] text-muted flex flex-wrap items-center gap-2 no-print">
-                  <span>Calculated for {jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland & Wales'} (£{jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB}/wk cap).</span>
-                  {!showJurisdictionToggle && (
-                    <button type="button" onClick={() => setShowJurisdictionToggle(true)} className="underline underline-offset-2 hover:text-[#0B1F3A] transition-colors bg-transparent border-0 cursor-pointer text-[12px] text-muted">Change</button>
-                  )}
-                  {showJurisdictionToggle && (
-                    <div className="flex gap-2">
-                      {(['GB', 'NI'] as const).map(j => (
-                        <button
-                          key={j}
-                          type="button"
-                          onClick={() => { setJurisdiction(j); setShowJurisdictionToggle(false) }}
-                          className="px-3 py-1 rounded-full text-[12px] font-medium border transition-colors cursor-pointer"
-                          style={{ background: jurisdiction === j ? '#0B1F3A' : '#fff', color: jurisdiction === j ? '#fff' : '#0B1F3A', borderColor: jurisdiction === j ? '#0B1F3A' : '#E2DCCE' }}
-                        >
-                          {j === 'GB' ? 'England, Scotland or Wales' : 'Northern Ireland'}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* ── COLLAPSIBLE DETAILED ANALYSIS (Closed by default to prevent tax & text overload) ── */}
-                <div className="no-print flex flex-col gap-2.5">
-                  <p className="text-[12px] font-semibold text-[#5B6577] uppercase tracking-wider m-0 px-1">
-                    Want the full numbers? Tap to expand:
-                  </p>
-                  <div className="bg-white border border-[#E2DCCE] rounded-xl p-2 flex flex-col sm:flex-row gap-1.5" role="tablist" aria-label="Detailed breakdown sections">
-                    {([
-                      { id: 'breakdown', label: '1. Tax & Redundancy Breakdown' },
-                      { id: 'negotiation', label: '2. Deadlines & Call Prep' },
-                      { id: 'benchmarks', label: '3. Tribunal Benchmarks & FAQs' },
-                    ] as const).map((tab) => {
-                      const isOpen = activeDetailTab === tab.id
-                      return (
-                        <button
-                          key={tab.id}
-                          type="button"
-                          role="tab"
-                          aria-selected={isOpen}
-                          onClick={() => {
-                            const next = isOpen ? null : tab.id
-                            setActiveDetailTab(next)
-                            if (next) trackClientEvent('results_secondary_tab_click', { tab: next })
-                          }}
-                          className={`flex-1 px-3.5 py-2.5 rounded-lg text-[13px] font-semibold transition-all cursor-pointer border-0 flex items-center justify-between sm:justify-center gap-2 ${
-                            isOpen
-                              ? 'bg-[#0B1F3A] text-white shadow-sm'
-                              : 'bg-transparent text-[#0B1F3A] hover:bg-[#F7F4EE]'
-                          }`}
-                        >
-                          <span>{tab.label}</span>
-                          <span className="text-[11px] opacity-75">{isOpen ? '▲' : '▼'}</span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-
-                {activeDetailTab === 'breakdown' && (
-                  <div className="flex flex-col gap-5 no-print">
-                    <BreakdownTable result={result} offer={offer} salary={salary} />
-
-                    <FinancialSplitChart
-                      offer={isSimulated ? displayOffer : offer}
-                      pilon={displayResult?.pilon ?? 0}
-                      taxFreeAmount={displayResult?.taxFreeAmount ?? 0}
-                      taxableTermination={displayResult?.taxableTermination ?? 0}
-                      estimatedTax={(displayResult?.estimatedTax ?? 0) - (pensionRes?.taxSaved ?? 0)}
-                      netTakeHome={(displayResult?.estimatedNet ?? 0) - adjustedSacrificeVal + (pensionRes?.taxSaved ?? 0)}
-                      isSimulated={isSimulated}
-                      pensionSacrifice={adjustedSacrificeVal}
-                    />
-
-                    {(maxSacrifice > 0 || salary >= 100000) && (
-                      <PensionSacrificeWidget
-                        taxableTermination={maxSacrifice}
-                        salary={salary}
-                        sacrificeVal={adjustedSacrificeVal}
-                        setSacrificeVal={setSacrificeVal}
-                        isSimulated={isSimulated}
-                        simulatedOffer={isSimulated ? displayOffer : 0}
-                      />
-                    )}
-                  </div>
-                )}
-
-                {activeDetailTab === 'negotiation' && (
-                  <div className="flex flex-col gap-5 no-print">
-                    <TribunalLimitationClock />
-
-                    <NegotiationDraftsman
-                      result={result}
-                      offer={offer}
-                      salary={salary}
-                      yearsNum={Math.floor(yearsNum)}
-                      onGetMatched={handleSolicitorMatch}
-                    />
-
-                    <CaseBriefSection
-                      inputs={inputs}
-                      result={result}
-                      selectedVentoBand={selectedVentoBand}
-                      ventoBands={result.ventoBands}
-                    />
-
-                    <LocalSpecialistAvailabilityCard
-                      jurisdiction={jurisdiction}
-                      onGetMatched={handleSolicitorMatch}
-                    />
-                  </div>
-                )}
-
-                {activeDetailTab === 'benchmarks' && (
-                  <div className="flex flex-col gap-5 no-print">
-                    <OfficialBenchmarkCard
-                      reason={reason}
-                      salary={salary}
-                      offer={offer}
-                      result={result}
-                      isDiscrimination={discrimination === 'yes'}
-                      totalMonths={totalMonths}
-                    />
-
-                    {result.discriminationFlag && result.ventoBands && (
-                      <VentoBandWidget
-                        ventoBands={result.ventoBands}
-                        selectedBand={selectedVentoBand}
-                        onBandSelect={(band) => setSelectedVentoBand(band)}
-                      />
-                    )}
-
-                    <StatutoryProtectionsCard />
-
-                    <LeadFAQ />
-                  </div>
-                )}
-
-                <div className="no-print">
-                  <NonConverterFallback onScrollToSave={scrollToSave} />
-                </div>
-
-                <div className="text-[11px] text-[#8A93A3] leading-[1.6] text-center px-4 no-print">
-                  <span>Estimates use 2026/27 UK statutory rates. SettlementCheck is an introducer, not a law firm. </span>
-                  <button
-                    type="button"
-                    onClick={() => setShowBottomLegal(!showBottomLegal)}
-                    className="underline underline-offset-2 text-[#5B6577] bg-transparent border-0 p-0 cursor-pointer text-[11px]"
-                  >
-                    {showBottomLegal ? 'Hide regulatory notice' : 'Full regulatory notice'}
-                  </button>
-                  {showBottomLegal && (
-                    <p className="mt-2 m-0 text-[11px] text-[#8A93A3]">
-                      Calculation estimates are based on UK statutory rates (weekly cap £{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI, 2026/27). This utility is an independent technology platform and introducer, not a law firm or tax practice. We do not provide legal or tax advice. Employer fee contributions are a commercial standard, capped, and conditional upon completion. SettlementCheck introduces independent, SRA-regulated solicitors.
-                    </p>
-                  )}
-                </div>
+            /* Single-DOM CSS Grid:
+               - Mobile: Verdict -> Intake Card -> Breakdown -> Deep-Dive Tabs -> Regulatory Footer
+               - Desktop (lg): Left 7 cols (Verdict, Breakdown, Tabs, Footer) | Right 5 cols Sticky (Intake Card) */
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
+              {/* 1. Verdict Hero (Top-Left on Desktop, 1st on Mobile) */}
+              <div className="lg:col-span-7 lg:col-start-1">
+                <VerdictHeroCard result={result} offer={offer} yearsNum={Math.floor(yearsNum)} />
               </div>
 
-              {/* Right Column - Conversions (Sticky on Desktop, clears fixed Nav) */}
-              <div className="lg:col-span-1 lg:sticky lg:top-[118px] flex flex-col gap-6 no-print">
-                
-                {/* Get Matched Solicitor CTA */}
-                <GetMatchedCTA
+              {/* 2. THE ONE Conversion Card (Sticky Top-Right on Desktop, 2nd on Mobile) */}
+              <div className="lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:row-span-4 lg:sticky lg:top-[104px] no-print">
+                <InlineSolicitorIntakeCard
                   verdict={result.verdict}
                   offer={offer}
                   salary={salary}
-                  totalMonths={totalMonths}
-                  prefillEmail={prefillEmail}
-                  onGetMatched={handleSolicitorMatch}
+                  years={yearsNum}
+                  disputeReason={reason}
+                  sourceUrl="/results/"
+                  saveParams={saveParams}
+                  resultSummary={{
+                    minimum: result.minimum,
+                    typicalLow: result.typicalLow,
+                    typicalHigh: result.typicalHigh,
+                    typicalHighUncapped: result.typicalHighUncapped,
+                    estimatedNet: result.estimatedNet,
+                  }}
                 />
-
-                {/* Signing Deadline Alert */}
-                <div className="rounded-lg p-4 flex gap-3.5 items-start" style={{ background: '#F5F1E9', border: '1px solid #D8D2C6' }}>
-                  <span className="text-[17px] flex-shrink-0 leading-none">🗓</span>
-                  <div className="text-[13px] text-[#5B6577] leading-relaxed">
-                    <p className="text-[#0B1F3A] font-semibold mb-1 m-0">Typical 7–10 Day signing deadline</p>
-                    <p className="m-0">Legal review processes generally complete in 24–48 hours. Starting early leaves headroom for legal adjustments without timeline pressure.</p>
-                  </div>
-                </div>
-
-                {/* Save results panel */}
-                <SaveCard
-                  resultRef={saveCardRef}
-                  result={result}
-                  offer={offer}
-                  onEmailCapture={em => setPrefillEmail(em)}
-                  params={saveParams}
-                />
-
-                {/* Agreement Review Cross-Sell Card */}
-                <AgreementReviewCrossSellCard
-                  salary={inputs.salary}
-                  yearsNum={inputs.yearsNum}
-                  age={inputs.age}
-                  reason={inputs.reason}
-                />
-
               </div>
 
+              {/* 3. Unified Breakdown & Take-Home Card (Left on Desktop, 3rd on Mobile) */}
+              <div className="lg:col-span-7 lg:col-start-1">
+                <UnifiedBreakdownCard
+                  result={result}
+                  offer={offer}
+                  pensionSacrifice={adjustedSacrificeVal}
+                  taxSavedByPension={pensionRes?.taxSaved ?? 0}
+                />
+              </div>
+
+              {/* 4. On-Demand Deep-Dive Tools (Closed by default, zero clutter) */}
+              <div className="lg:col-span-7 lg:col-start-1 space-y-3 no-print">
+                <div className="flex flex-wrap gap-2" role="tablist" aria-label="Additional tools">
+                  {availableTabs.map((tab) => {
+                    const isOpen = activeTab === tab.id
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={isOpen}
+                        onClick={() => {
+                          const next = isOpen ? null : tab.id
+                          setActiveTab(next)
+                          if (next) trackClientEvent('results_secondary_tab_click', { tab: next })
+                        }}
+                        className={`px-4 py-2.5 rounded-xl text-[14px] font-semibold border transition cursor-pointer flex items-center gap-2 ${
+                          isOpen
+                            ? 'bg-[#0B1F3A] text-white border-[#0B1F3A]'
+                            : 'bg-white text-[#0B1F3A] border-[#E2DCCE] hover:bg-[#FAF8F5]'
+                        }`}
+                      >
+                        <span>{tab.label}</span>
+                        <span className="text-[10px] opacity-75">{isOpen ? '▲' : '▼'}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {activeTab === 'deadlines' && <DeadlinesAndCallPrepPanel offer={offer} />}
+
+                {activeTab === 'benchmarks' && (
+                  <BenchmarksAndFaqPanel
+                    reason={reason}
+                    salary={salary}
+                    result={result}
+                    isDiscrimination={discrimination === 'yes'}
+                    totalMonths={totalMonths}
+                  />
+                )}
+
+                {activeTab === 'pension' && showPensionTab && (
+                  <PensionSacrificePanel
+                    taxableTermination={maxSacrifice}
+                    salary={salary}
+                    sacrificeVal={adjustedSacrificeVal}
+                    setSacrificeVal={setSacrificeVal}
+                  />
+                )}
+
+                {activeTab === 'vento' && showVentoTab && result.ventoBands && (
+                  <VentoBandPanel
+                    ventoBands={result.ventoBands}
+                    selectedBand={selectedVentoBand}
+                    onBandSelect={setSelectedVentoBand}
+                  />
+                )}
+              </div>
+
+              {/* 5. Single, Calm Regulatory Disclosure (Replaces 7 repeated legal boxes) */}
+              <div className="lg:col-span-7 lg:col-start-1 pt-2 text-[13px] text-[#5B6577] leading-[1.6] no-print">
+                <p className="m-0">
+                  Estimates use 2026/27 UK statutory rates (£{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI weekly cap) for general guidance only and do not constitute legal or tax advice. SettlementCheck is an independent introducer, not a law firm. Employer legal fee contributions (£350 to £500+ +VAT) are standard commercial practice paid upon completion, not a statutory requirement; fees above the cap or abortive costs remain subject to your solicitor&apos;s terms.
+                </p>
+              </div>
             </div>
           )}
         </div>
       </main>
-      <StickyResultsMobileBar onGetMatched={handleSolicitorMatch} />
+
+      <SmartMobileStickyBar onScrollToIntake={handleScrollToIntake} />
       <Footer />
     </>
   )
@@ -2701,11 +1283,13 @@ function ResultsContent() {
 
 export default function ResultsClient() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-paper-2 flex items-center justify-center">
-        <p className="text-[#5B6577] text-[15px]">Loading case calculations…</p>
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-paper-2 flex items-center justify-center">
+          <p className="text-[#5B6577] text-[15px]">Calculating your estimate...</p>
+        </div>
+      }
+    >
       <ResultsContent />
     </Suspense>
   )

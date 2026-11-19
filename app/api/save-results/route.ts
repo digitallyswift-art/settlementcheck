@@ -99,40 +99,54 @@ export async function POST(req: NextRequest) {
     const rangeHigh = typicalHighUncapped ? 'Potentially uncapped' : fmt(typicalHigh)
     const jurisdictionLabel = jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland and Wales'
 
+    // Build 1-click pre-filled solicitor match URL (skips email + OTP slides)
+    const totalMonths = (Number(yearsNum) || 0) * 12 + (Number(monthsNum) || 0)
+    const matchParams = new URLSearchParams()
+    if (verdict) matchParams.set('verdict', String(verdict))
+    if (offer != null) matchParams.set('offer', String(offer))
+    if (salary != null) matchParams.set('salary', String(salary))
+    if (totalMonths > 0) matchParams.set('months', String(totalMonths))
+    matchParams.set('email', safeEmail)
+    matchParams.set('ev', '1')
+    const matchQuery = matchParams.toString()
+    const oneClickMatchUrl = `https://settlementcheck.co.uk/get-matched/?${matchQuery}`
+
     const textBody = [
-      'SettlementCheck - Your Settlement Calculation Results',
-      '=====================================================',
+      'SettlementCheck - Your Settlement Figures & Solicitor Checklist',
+      '================================================================',
       '',
       `Verdict: ${vLabel}`,
       `Jurisdiction: ${jurisdictionLabel} (2026/27 rates)`,
       '',
-      `Your offer:               ${fmt(offer)}`,
+      `Your offer:                    ${fmt(offer)}`,
       `Calculated statutory baseline: ${fmt(minimum)}`,
-      `Typical negotiated range: ${fmt(typicalLow)} to ${rangeHigh}`,
-      `Estimated net take-home:  ${fmt(estimatedNet)}`,
+      `Typical negotiated range:      ${fmt(typicalLow)} to ${rangeHigh}`,
+      `Estimated net take-home:       ${fmt(estimatedNet)}`,
       '',
-      'What happens next?',
-      'For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). In practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor\'s terms. A review typically takes 24 to 48 hours, and you are under no obligation after the first call.',
+      'Your 3-Point Solicitor Call Checklist:',
+      '1. Tax split: Confirm the first £30,000 genuine termination payment is tax-free (ITEPA 2003 s.403) and notice pay (PILON) is separated correctly (s.402D).',
+      '2. Non-financial terms: Check agreed reference wording, confidentiality clauses, accrued holiday pay, and any post-exit restrictions.',
+      '3. Legal fee contribution: Check the employer fee contribution clause (typically £350 to £500+ +VAT paid on completion under s.203(3) ERA 1996).',
       '',
-      'Get matched with an SRA-regulated solicitor:',
-      'https://settlementcheck.co.uk/get-matched/',
+      'Ready to speak with an SRA-regulated employment solicitor? (1-click, details pre-filled):',
+      oneClickMatchUrl,
       '',
-      '-----------------------------------------------------',
+      '----------------------------------------------------------------',
       'SettlementCheck • United Kingdom • team@settlementcheck.co.uk',
       'Estimate based on UK statutory rates (ERA 1996, ITEPA 2003). Not legal advice.',
-      'SettlementCheck is an introduction service, not a law firm. You received this email because you requested your calculation results.',
+      'SettlementCheck is an introduction service, not a law firm. Employer fee contributions are standard commercial practice upon completion; fees above the cap or abortive costs remain subject to your solicitor\'s terms. This email was sent once because you requested your calculation.',
     ].join('\n')
 
     await resend.emails.send({
       from:    'SettlementCheck <team@settlementcheck.co.uk>',
       replyTo: 'team@settlementcheck.co.uk',
       to:      safeEmail,
-      subject: 'Your settlement calculation results - SettlementCheck',
+      subject: 'Your settlement figures & solicitor checklist - SettlementCheck',
       text:    textBody,
       html: `
         <!-- Hidden Preheader -->
         <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
-          Your settlement calculation results: ${vLabel}. Estimated net: ${fmt(estimatedNet)}.
+          Your settlement figures &amp; 3-point solicitor checklist. Estimated net: ${fmt(estimatedNet)}.
         </div>
 
         <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#fff;">
@@ -140,11 +154,11 @@ export async function POST(req: NextRequest) {
             <span style="font-size:18px;font-weight:700;color:#0B1F3A;letter-spacing:-0.015em;">SettlementCheck</span>
           </div>
 
-          <h1 style="font-size:22px;font-weight:700;color:#0B1F3A;margin:0 0 8px;letter-spacing:-0.02em;">Your settlement calculation</h1>
-          <p style="color:#5B6577;font-size:14px;margin:0 0 28px;">Here are the results from your calculation, based on the details you provided. Keep this for reference.</p>
+          <h1 style="font-size:22px;font-weight:700;color:#0B1F3A;margin:0 0 8px;letter-spacing:-0.02em;">Your settlement figures &amp; checklist</h1>
+          <p style="color:#5B6577;font-size:14px;margin:0 0 24px;">Here is a private copy of your calculation and a quick checklist to bring to your solicitor call when you are ready.</p>
 
           <div style="background:#F7F4EE;border-radius:10px;padding:20px 24px;margin-bottom:24px;">
-            <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#8A93A3;margin:0 0 6px;">Verdict</p>
+            <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#8A93A3;margin:0 0 6px;">Summary</p>
             <p style="font-size:20px;font-weight:700;color:${vColor};margin:0 0 4px;">${vLabel}</p>
             <p style="font-size:13px;color:#5B6577;margin:0;">Based on ${jurisdictionLabel} rates (2026/27)</p>
           </div>
@@ -168,22 +182,30 @@ export async function POST(req: NextRequest) {
             </tr>
           </table>
 
-          <div style="background:#FBF0EE;border-radius:10px;padding:18px 20px;margin-bottom:28px;">
-            <p style="font-size:14px;font-weight:600;color:#0B1F3A;margin:0 0 6px;">What happens next?</p>
-            <p style="font-size:13px;color:#5B6577;line-height:1.6;margin:0;">For your settlement agreement to be legally binding, you must receive independent legal advice (Employment Rights Act 1996 s.203). In practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor's terms. A review typically takes 24 to 48 hours, and you are under no obligation after the first call.</p>
+          <div style="background:#FAF8F5;border:1px solid #E2DCCE;border-radius:10px;padding:18px 20px;margin-bottom:24px;">
+            <p style="font-size:14px;font-weight:700;color:#0B1F3A;margin:0 0 10px;">3-point solicitor call checklist</p>
+            <ol style="margin:0;padding-left:18px;font-size:13px;color:#5B6577;line-height:1.6;">
+              <li style="margin-bottom:6px;"><strong style="color:#0B1F3A;">Tax split:</strong> Check the £30,000 tax-free exemption (ITEPA 2003 s.403) and that notice pay (PILON) is separated correctly.</li>
+              <li style="margin-bottom:6px;"><strong style="color:#0B1F3A;">Contract terms:</strong> Review your agreed reference wording, accrued holiday pay, and any post-exit restrictions.</li>
+              <li><strong style="color:#0B1F3A;">Employer fee contribution:</strong> Confirm the employer legal fee contribution clause (typically £350 to £500+ +VAT paid upon completion under s.203(3) ERA 1996).</li>
+            </ol>
           </div>
 
-          <a href="https://settlementcheck.co.uk/get-matched/"
-             style="display:inline-block;background:#D9603B;color:#fff;font-size:15px;font-weight:600;padding:13px 24px;border-radius:6px;text-decoration:none;letter-spacing:-0.01em;">
-            Get matched with a solicitor
+          <a href="https://settlementcheck.co.uk/get-matched/?${matchQuery}"
+             style="display:inline-block;background:#D9603B;color:#fff;font-size:15px;font-weight:700;padding:14px 24px;border-radius:8px;text-decoration:none;letter-spacing:-0.01em;">
+            Speak with an SRA solicitor (details pre-filled) &rarr;
           </a>
 
-          <div style="margin-top:40px;padding-top:20px;border-top:1px solid #E2DCCE;">
+          <p style="font-size:12px;color:#5B6577;margin:12px 0 0;line-height:1.5;">
+            1-click link: your email and calculation figures are already loaded. Most s.203(3) reviews complete within 24 to 48 hours.
+          </p>
+
+          <div style="margin-top:36px;padding-top:20px;border-top:1px solid #E2DCCE;">
             <p style="font-size:11px;color:#8A93A3;line-height:1.6;margin:0 0 6px;">
               SettlementCheck &bull; United Kingdom &bull; <a href="mailto:team@settlementcheck.co.uk" style="color:#8A93A3;">team@settlementcheck.co.uk</a>
             </p>
             <p style="font-size:11px;color:#8A93A3;line-height:1.6;margin:0;">
-              Estimate based on UK statutory rates (ERA 1996, ITEPA 2003). Not legal advice. SettlementCheck is an introduction service, not a law firm. This email was sent once because you requested your calculation results.
+              Estimate based on UK statutory rates (ERA 1996, ITEPA 2003). Not legal advice. SettlementCheck is an independent introducer, not a law firm. Employer fee contributions are standard commercial practice paid upon completion; work exceeding the cap or abortive costs remain subject to your solicitor&apos;s terms. This email was sent once because you requested your calculation.
             </p>
           </div>
         </div>
