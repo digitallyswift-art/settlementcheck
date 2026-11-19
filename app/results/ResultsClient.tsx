@@ -786,6 +786,8 @@ function ResultsContent() {
   const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>(() =>
     searchParams.get('jurisdiction') === 'NI' ? 'NI' : 'GB'
   )
+  const initialEmail = searchParams.get('email') ?? ''
+  const focusIntake = searchParams.get('focus') === 'intake'
 
   const salary = parseFloat(inputs.salary)
   const yearsNum = parseFloat(inputs.yearsNum)
@@ -813,6 +815,20 @@ function ResultsContent() {
       })
     }
   }, [result, offer])
+
+  useEffect(() => {
+    if (!result) return
+    if (focusIntake || window.location.hash === '#solicitor-intake-card') {
+      const el = document.getElementById('solicitor-intake-card')
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          const firstNameInput = document.getElementById('sc-first-name') as HTMLInputElement | null
+          firstNameInput?.focus({ preventScroll: true })
+        }, 120)
+      }
+    }
+  }, [result, focusIntake])
 
   const saveParams = {
     salary,
@@ -903,6 +919,8 @@ function ResultsContent() {
                   disputeReason={reason}
                   disputeReasonLabel={REASON_LABELS[reason] ?? ''}
                   sourceUrl="/results/"
+                  initialEmail={initialEmail}
+                  hideEmailCapture={focusIntake && !!initialEmail}
                   saveParams={saveParams}
                   resultSummary={{
                     minimum: result.minimum,

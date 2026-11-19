@@ -12,6 +12,8 @@ interface Props {
   disputeReason?: string
   disputeReasonLabel?: string
   sourceUrl?: string
+  initialEmail?: string
+  hideEmailCapture?: boolean
   className?: string
   saveParams?: Record<string, string | number>
   resultSummary?: {
@@ -78,12 +80,14 @@ export default function InlineSolicitorIntakeCard({
   disputeReason = 'redundancy',
   disputeReasonLabel = '',
   sourceUrl = '/results/',
+  initialEmail = '',
+  hideEmailCapture = false,
   className = '',
   saveParams,
   resultSummary,
 }: Props) {
   const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState(initialEmail)
   const [phone, setPhone] = useState('')
   const [contactTime, setContactTime] = useState<'Morning' | 'Afternoon' | 'Evening'>('Morning')
   const [consent, setConsent] = useState(false)
@@ -490,6 +494,7 @@ export default function InlineSolicitorIntakeCard({
       </div>
 
       {/* SECONDARY ACTION: SUBORDINATE INLINE EMAIL CAPTURE */}
+      {!hideEmailCapture && (
       <div className="bg-white/90 border border-[#E2DCCE] rounded-xl p-4">
         {emailSent ? (
           <div className="space-y-1">
@@ -585,6 +590,7 @@ export default function InlineSolicitorIntakeCard({
           </form>
         )}
       </div>
+      )}
     </div>
   )
 }

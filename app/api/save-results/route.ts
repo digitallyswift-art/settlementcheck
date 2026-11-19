@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
       monthsNum,
       age,
       offer,
+      offerIncludesNotice,
       reason,
       discrimination,
       contractualNotice,
@@ -99,17 +100,22 @@ export async function POST(req: NextRequest) {
     const rangeHigh = typicalHighUncapped ? 'Potentially uncapped' : fmt(typicalHigh)
     const jurisdictionLabel = jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland and Wales'
 
-    // Build 1-click pre-filled solicitor match URL (skips email + OTP slides)
-    const totalMonths = (Number(yearsNum) || 0) * 12 + (Number(monthsNum) || 0)
-    const matchParams = new URLSearchParams()
-    if (verdict) matchParams.set('verdict', String(verdict))
-    if (offer != null) matchParams.set('offer', String(offer))
-    if (salary != null) matchParams.set('salary', String(salary))
-    if (totalMonths > 0) matchParams.set('months', String(totalMonths))
-    matchParams.set('email', safeEmail)
-    matchParams.set('ev', '1')
-    const matchQuery = matchParams.toString()
-    const oneClickMatchUrl = `https://settlementcheck.co.uk/get-matched/?${matchQuery}`
+    // Build frictionless 1-click return URL straight to the single-screen solicitor card on /results/
+    const returnParams = new URLSearchParams()
+    if (salary != null) returnParams.set('salary', String(salary))
+    if (yearsNum != null) returnParams.set('yearsNum', String(yearsNum))
+    if (monthsNum != null) returnParams.set('monthsNum', String(monthsNum))
+    if (age != null) returnParams.set('age', String(age))
+    if (offer != null) returnParams.set('offer', String(offer))
+    if (offerIncludesNotice != null) returnParams.set('offerIncludesNotice', String(offerIncludesNotice))
+    if (reason) returnParams.set('reason', String(reason))
+    if (discrimination) returnParams.set('discrimination', String(discrimination))
+    if (contractualNotice != null) returnParams.set('contractualNotice', String(contractualNotice))
+    if (jurisdiction) returnParams.set('jurisdiction', String(jurisdiction))
+    returnParams.set('email', safeEmail)
+    returnParams.set('focus', 'intake')
+    const returnQuery = returnParams.toString()
+    const oneClickMatchUrl = `https://settlementcheck.co.uk/results/?${returnQuery}#solicitor-intake-card`
 
     const textBody = [
       'SettlementCheck - Your Settlement Figures & Solicitor Checklist',
@@ -126,7 +132,7 @@ export async function POST(req: NextRequest) {
       'Your 3-Point Solicitor Call Checklist:',
       '1. Tax split: Confirm the first £30,000 genuine termination payment is tax-free (ITEPA 2003 s.403) and notice pay (PILON) is separated correctly (s.402D).',
       '2. Non-financial terms: Check agreed reference wording, confidentiality clauses, accrued holiday pay, and any post-exit restrictions.',
-      '3. Legal fee contribution: Check the employer fee contribution clause (typically £350 to £500+ +VAT paid on completion under s.203(3) ERA 1996).',
+      '3. Legal fee contribution: Check the employer fee contribution clause (typically £350 to £500+ +VAT paid upon completion).',
       '',
       'Ready to speak with an SRA-regulated employment solicitor? (1-click, details pre-filled):',
       oneClickMatchUrl,
@@ -187,17 +193,17 @@ export async function POST(req: NextRequest) {
             <ol style="margin:0;padding-left:18px;font-size:13px;color:#5B6577;line-height:1.6;">
               <li style="margin-bottom:6px;"><strong style="color:#0B1F3A;">Tax split:</strong> Check the £30,000 tax-free exemption (ITEPA 2003 s.403) and that notice pay (PILON) is separated correctly.</li>
               <li style="margin-bottom:6px;"><strong style="color:#0B1F3A;">Contract terms:</strong> Review your agreed reference wording, accrued holiday pay, and any post-exit restrictions.</li>
-              <li><strong style="color:#0B1F3A;">Employer fee contribution:</strong> Confirm the employer legal fee contribution clause (typically £350 to £500+ +VAT paid upon completion under s.203(3) ERA 1996).</li>
+              <li><strong style="color:#0B1F3A;">Employer fee contribution:</strong> Confirm the employer legal fee contribution clause (typically £350 to £500+ +VAT paid upon completion).</li>
             </ol>
           </div>
 
-          <a href="https://settlementcheck.co.uk/get-matched/?${matchQuery}"
+          <a href="https://settlementcheck.co.uk/results/?${returnQuery}#solicitor-intake-card"
              style="display:inline-block;background:#D9603B;color:#fff;font-size:15px;font-weight:700;padding:14px 24px;border-radius:8px;text-decoration:none;letter-spacing:-0.01em;">
             Speak with an SRA solicitor (details pre-filled) &rarr;
           </a>
 
           <p style="font-size:12px;color:#5B6577;margin:12px 0 0;line-height:1.5;">
-            1-click link: your email and calculation figures are already loaded. Most s.203(3) reviews complete within 24 to 48 hours.
+            1-click link: your email and calculation figures are already loaded on one screen. Most reviews complete within 24 to 48 hours.
           </p>
 
           <div style="margin-top:36px;padding-top:20px;border-top:1px solid #E2DCCE;">
