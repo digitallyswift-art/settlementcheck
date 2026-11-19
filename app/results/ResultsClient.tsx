@@ -1035,9 +1035,6 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
           <p className="text-[14px] font-bold text-[#0B1F3A] leading-snug m-0">
             Confidential SRA Solicitor Check
           </p>
-          <p className={`text-[12px] leading-snug mt-0.5 m-0 ${overFooter ? 'text-[#334155]' : 'text-[#5B6577]'}`}>
-            One SRA solicitor · Confidential review
-          </p>
         </div>
         <button
           type="button"
