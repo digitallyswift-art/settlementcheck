@@ -348,88 +348,72 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
   if (offer === 0) {
     const minEntitlement = result.minimum
     const breakdownDesc = result.redundancy > 0
-      ? `includes ${formatCurrency(result.pilon)} statutory notice pay and ${formatCurrency(result.redundancy)} statutory redundancy pay`
-      : `reflects ${formatCurrency(result.pilon)} statutory notice pay`
+      ? `${formatCurrency(result.pilon)} notice + ${formatCurrency(result.redundancy)} redundancy`
+      : `${formatCurrency(result.pilon)} statutory notice pay`
 
     return (
-      <div className="rounded-lg p-6 md:p-8 bg-[#F2F5F8] border border-[#C8D3DF]">
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4 bg-white text-[#0B1F3A] border border-[#C8D3DF]">
-          Negotiation Baseline
+      <div className="rounded-xl p-4 sm:p-6 bg-[#F2F5F8] border border-[#C8D3DF]">
+        <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase mb-2.5 bg-white text-[#0B1F3A] border border-[#C8D3DF]">
+          Pre-Offer Baseline
         </span>
-        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Understand your position before discussing terms.</h2>
-        <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
-          <p>
-            Based on your answers ({completedYears} {completedYears === 1 ? 'year' : 'years'} of service, age {age}, and salary), your calculated statutory baseline is <strong className="text-ink">{formatCurrency(minEntitlement)}</strong> ({breakdownDesc}).
-          </p>
-          <p>
-            For reference, illustrative negotiation ranges for similar parameters sit between <strong className="text-ink">{formatCurrency(result.typicalLow)}</strong> and {result.typicalHighUncapped ? <strong className="text-ink">an uncapped figure (depending on circumstances)</strong> : <strong className="text-ink">{formatCurrency(result.typicalHigh)}</strong>}.
-          </p>
-          <p>
-            Under the ACAS Code of Practice 4, parties should generally have at least 10 calendar days to consider settlement agreement proposals. You can use the breakdown and tools below to review your options.
-          </p>
-        </div>
+        <h2 className="font-serif text-[21px] sm:text-[26px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-3">
+          Know your {formatCurrency(minEntitlement)} baseline before your employer makes an offer.
+        </h2>
+        <OfferVsRange result={result} offer={offer} />
+        <p className="text-[13px] sm:text-[14px] text-[#5B6577] leading-relaxed mt-3 mb-0">
+          Based on {completedYears} {completedYears === 1 ? 'year' : 'years'} of service ({breakdownDesc}). ACAS guidance recommends at least 10 calendar days to consider any formal proposal.
+        </p>
       </div>
     )
   }
 
   if (result.verdict === 'BELOW_MINIMUM') {
-    const breakdownDesc = result.redundancy > 0
-      ? `notice pay of ${formatCurrency(result.pilon)} and statutory redundancy pay of ${formatCurrency(result.redundancy)}`
-      : `notice pay of ${formatCurrency(result.pilon)}`
+    const shortfall = Math.max(0, result.minimum - offer)
     return (
-      <div className="rounded-lg p-5 md:p-7" style={{ background: '#FBF0EE', border: '1px solid #D9A99E' }}>
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-3" style={{ background: '#fff', color: '#A8341F', border: '1px solid #D9A99E' }}>
-          Below Calculated Baseline
+      <div className="rounded-xl p-4 sm:p-6" style={{ background: '#FBF0EE', border: '1px solid #D9A99E' }}>
+        <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase mb-2.5" style={{ background: '#fff', color: '#A8341F', border: '1px solid #D9A99E' }}>
+          Below Statutory Baseline
         </span>
-        <h2 className="sc-h2 text-[#0B1F3A] mb-2">Your offer sits below your calculated statutory baseline.</h2>
+        <h2 className="font-serif text-[21px] sm:text-[26px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-3">
+          Your {formatCurrency(offer)} offer is {formatCurrency(shortfall)} below your statutory baseline.
+        </h2>
         <OfferVsRange result={result} offer={offer} />
-        <div className="sc-body mt-4 max-w-[66ch] flex flex-col gap-2 text-[14px] text-[#5B6577]">
-          <p className="m-0">
-            Your calculated statutory baseline is <strong className="text-ink">{formatCurrency(result.minimum)}</strong> ({breakdownDesc}), compared to your recorded offer of <strong className="text-ink">{formatCurrency(offer)}</strong>.
-          </p>
-          <p className="m-0">
-            Under Section 203 ERA 1996, a settlement agreement requires independent solicitor advice to be valid. Review this shortfall with an SRA-regulated solicitor before signing.
-          </p>
-        </div>
+        <p className="text-[13px] sm:text-[14px] text-[#5B6577] leading-relaxed mt-3 mb-0">
+          Your calculated notice and redundancy baseline is <strong className="text-ink">{formatCurrency(result.minimum)}</strong>. Before you sign or reply, an independent SRA solicitor can check what is missing.
+        </p>
       </div>
     )
   }
 
   if (result.verdict === 'BELOW_TYPICAL') {
     return (
-      <div className="rounded-lg p-5 md:p-7" style={{ background: '#FEFBF0', border: '1px solid #E0CB94' }}>
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-3" style={{ background: '#fff', color: '#B5802A', border: '1px solid #E0CB94' }}>
-          Below Reference Range
+      <div className="rounded-xl p-4 sm:p-6" style={{ background: '#FEFBF0', border: '1px solid #E0CB94' }}>
+        <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase mb-2.5" style={{ background: '#fff', color: '#B5802A', border: '1px solid #E0CB94' }}>
+          Below Typical Range
         </span>
-        <h2 className="sc-h2 text-[#0B1F3A] mb-2">Your offer covers the baseline, but sits below the illustrative range.</h2>
+        <h2 className="font-serif text-[21px] sm:text-[26px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-3">
+          Your {formatCurrency(offer)} offer covers the minimum, but sits below typical payouts.
+        </h2>
         <OfferVsRange result={result} offer={offer} />
-        <div className="sc-body mt-4 max-w-[66ch] flex flex-col gap-2 text-[14px] text-[#5B6577]">
-          <p className="m-0">
-            For {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, illustrative settlement ranges sit between <strong className="text-ink">{formatCurrency(result.typicalLow)}</strong> and <strong className="text-ink">{result.typicalHighUncapped ? 'an uncapped amount' : formatCurrency(result.typicalHigh)}</strong>.
-          </p>
-          <p className="m-0">
-            Initial offers often provide an opening position. An independent SRA-regulated solicitor can review your financial terms, notice, and reference wording.
-          </p>
-        </div>
+        <p className="text-[13px] sm:text-[14px] text-[#5B6577] leading-relaxed mt-3 mb-0">
+          First offers are often a starting point. For {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, an SRA solicitor can review your financial terms, notice, and reference wording.
+        </p>
       </div>
     )
   }
 
   return (
-    <div className="rounded-lg p-5 md:p-7" style={{ background: '#F2F7F3', border: '1px solid #BCD0BF' }}>
-      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-3" style={{ background: '#fff', color: '#0B1F3A', border: '1px solid #BCD0BF' }}>
-        <CheckIcon size={12} /> Within Reference Range
+    <div className="rounded-xl p-4 sm:p-6" style={{ background: '#F2F7F3', border: '1px solid #BCD0BF' }}>
+      <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase mb-2.5" style={{ background: '#fff', color: '#0B1F3A', border: '1px solid #BCD0BF' }}>
+        <CheckIcon size={11} /> Within Reference Range
       </span>
-      <h2 className="sc-h2 text-[#0B1F3A] mb-2">This offer aligns with or exceeds the illustrative range.</h2>
+      <h2 className="font-serif text-[21px] sm:text-[26px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-3">
+        Your {formatCurrency(offer)} offer sits within the typical range for your role.
+      </h2>
       <OfferVsRange result={result} offer={offer} />
-      <div className="sc-body mt-4 max-w-[66ch] flex flex-col gap-2 text-[14px] text-[#5B6577]">
-        <p className="m-0">
-          Your offer of <strong className="text-ink">{formatCurrency(offer)}</strong> sits within or above the illustrative comparison range.
-        </p>
-        <p className="m-0">
-          Under Section 203(3) ERA 1996, independent legal advice is still required for the agreement to be legally binding, and to check tax allocation (£30,000 exemption), reference wording, and restrictive covenants.
-        </p>
-      </div>
+      <p className="text-[13px] sm:text-[14px] text-[#5B6577] leading-relaxed mt-3 mb-0">
+        Under Section 203(3) ERA 1996, you still need an independent solicitor to sign off the agreement, and check your £30,000 tax exemption, reference, and restrictions.
+      </p>
     </div>
   )
 }
@@ -437,38 +421,53 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
 /* ── Offer vs range numbers + methodology ───────────────────────── */
 
 function OfferVsRange({ result, offer }: { result: VerdictResult; offer: number }) {
+  const [showMethodology, setShowMethodology] = useState(false)
+
   return (
-    <div className="mt-3 pb-5" style={{ borderBottom: '1px solid rgba(11,31,58,0.12)' }}>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div className="py-3 border-y border-[#0B1F3A]/10">
+      <div className="grid grid-cols-2 gap-3 sm:gap-5 items-start">
         <div>
-          <div className="sc-eyebrow mb-1">Your offer</div>
-          <div className="font-serif text-ink" style={{ fontSize: 26, fontWeight: 420, letterSpacing: '-0.015em' }}>
-            {formatCurrency(offer)}
+          <div className="sc-eyebrow mb-0.5 text-[10px]">{offer > 0 ? 'Your offer' : 'Statutory baseline'}</div>
+          <div className="font-serif text-ink text-[22px] sm:text-[26px] font-medium tracking-[-0.015em] leading-tight">
+            {formatCurrency(offer > 0 ? offer : result.minimum)}
           </div>
+          {offer > 0 && (
+            <div className="text-[11px] text-[#5B6577] mt-0.5">
+              Baseline: {formatCurrency(result.minimum)}
+            </div>
+          )}
         </div>
-        <div className="hidden sm:block" style={{ width: 1, background: 'rgba(11,31,58,0.12)', height: '100%' }} aria-hidden="true" />
-        <div>
-          <div className="sc-eyebrow mb-1">Reference range</div>
-          <div className="font-serif text-ink animate-fade-in" style={{ fontSize: 26, fontWeight: 420, letterSpacing: '-0.015em' }}>
+        <div className="border-l border-[#0B1F3A]/10 pl-3 sm:pl-5">
+          <div className="sc-eyebrow mb-0.5 text-[10px]">Typical range</div>
+          <div className="font-serif text-ink text-[20px] sm:text-[26px] font-medium tracking-[-0.015em] leading-tight">
             {result.typicalHighUncapped
-              ? <>{formatCurrency(result.typicalLow)} to <span className="text-[18px]">Potentially uncapped</span></>
-              : <>{formatCurrency(result.typicalLow)} to {formatCurrency(result.typicalHigh)}</>
+              ? <>{formatCurrency(result.typicalLow)}+ <span className="text-[13px] font-sans font-normal text-[#5B6577]">(uncapped)</span></>
+              : <>{formatCurrency(result.typicalLow)}–{formatCurrency(result.typicalHigh)}</>
             }
           </div>
-          {result.discriminationAsterisk && (
-            <p className="text-[11px] text-[#8A93A3] mt-2 leading-relaxed">
-              * This range is calculated on a non-discrimination basis. Where an unlawful discrimination or detriment claim under the Equality Act 2010 is established, compensation is uncapped and may include Injury to Feelings awards.
-            </p>
-          )}
+          <button
+            type="button"
+            onClick={() => setShowMethodology(!showMethodology)}
+            className="text-[11px] text-[#5B6577] underline underline-offset-2 hover:text-[#0B1F3A] bg-transparent border-0 p-0 mt-1 cursor-pointer text-left"
+          >
+            {showMethodology ? 'Hide how this is calculated' : 'How is this calculated?'}
+          </button>
         </div>
       </div>
 
-      <div className="mt-5 pt-4" style={{ borderTop: '1px solid rgba(11,31,58,0.08)' }}>
-        <p className="text-[13px] text-[#5B6577] leading-[1.6] m-0">
-          <strong className="text-[#0B1F3A] font-semibold">Where does the reference range come from?</strong>{' '}
-          The lower figure represents your calculated statutory baseline plus an illustrative negotiation allowance. The upper figure reflects outcomes where broader commercial or dispute factors are negotiated. Actual outcomes vary depending on individual facts and documentation.
+      {result.discriminationAsterisk && (
+        <p className="text-[11px] text-[#8A93A3] mt-2 mb-0 leading-relaxed">
+          * Calculated on a non-discrimination basis. Established Equality Act 2010 claims are uncapped.
         </p>
-      </div>
+      )}
+
+      {showMethodology && (
+        <div className="mt-3 pt-2.5 border-t border-[#0B1F3A]/10">
+          <p className="text-[12px] text-[#5B6577] leading-[1.55] m-0">
+            The lower figure reflects your calculated statutory baseline (notice + statutory redundancy, subject to eligibility) plus an illustrative negotiation allowance. The upper figure reflects broader commercial or dispute factors. Actual outcomes vary by facts and documentation.
+          </p>
+        </div>
+      )}
     </div>
   )
 }
@@ -2432,7 +2431,7 @@ function ResultsContent() {
       `}} />
 
       <main className="bg-paper-2 min-h-screen pb-24" style={{ animation: 'sc-fade-in 400ms ease forwards' }}>
-        <div className="sc-container pt-8 md:pt-12" style={{ maxWidth: 1120 }}>
+        <div className="sc-container pt-4 md:pt-10" style={{ maxWidth: 1120 }}>
 
           <div className="no-print">
             <InputsSummaryPanel inputs={inputs} onUpdate={(next) => {
@@ -2449,17 +2448,17 @@ function ResultsContent() {
           )}
 
           {result && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
               
               {/* Left Column - Calculations, interactive sliders, visual chart, detailed breakdowns */}
-              <div className="lg:col-span-2 flex flex-col gap-6">
+              <div className="lg:col-span-2 flex flex-col gap-4 sm:gap-5">
                 
                 {/* Reassurance progress indicator */}
-                <div className="flex items-center justify-between text-[13px] text-muted border-b border-[#E2DCCE] pb-3 no-print">
+                <div className="flex items-center justify-between text-[11px] sm:text-[13px] text-muted border-b border-[#E2DCCE] pb-2 no-print">
                   <span>Case ID: SC-{Math.abs(salary - age * totalMonths).toString(16).toUpperCase()}</span>
                   <span className="flex items-center gap-1.5 font-semibold text-[#0B1F3A]">
                     <span className="w-2 h-2 rounded-full bg-[#0B1F3A] animate-pulse"></span>
-                    Verified: 2026 UK Statutory Rates
+                    2026 UK Statutory Rates
                   </span>
                 </div>
 
@@ -2468,11 +2467,23 @@ function ResultsContent() {
                   <VerdictPanel result={result} offer={offer} salary={salary} yearsNum={Math.floor(yearsNum)} age={age} />
                 </div>
 
-                {/* Jurisdiction toggles */}
-                <div className="text-[13px] text-muted flex flex-wrap items-center gap-2 no-print">
-                  <span>Results calculated for {jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland and Wales'} (£{jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB} per week cap).</span>
+                {/* Immediate Statutory Match Intake (Directly below verdict for instant lead capture) */}
+                <div className="no-print">
+                  <InlineSolicitorIntakeCard
+                    verdict={result.verdict}
+                    offer={offer}
+                    salary={salary}
+                    years={yearsNum}
+                    disputeReason={reason}
+                    sourceUrl="/results/"
+                  />
+                </div>
+
+                {/* Jurisdiction toggles (placed below primary intake so mobile reaches form faster) */}
+                <div className="text-[12px] text-muted flex flex-wrap items-center gap-2 no-print">
+                  <span>Calculated for {jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland & Wales'} (£{jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB}/wk cap).</span>
                   {!showJurisdictionToggle && (
-                    <button type="button" onClick={() => setShowJurisdictionToggle(true)} className="underline underline-offset-2 hover:text-[#0B1F3A] transition-colors bg-transparent border-0 cursor-pointer text-[13px] text-muted">Change jurisdiction</button>
+                    <button type="button" onClick={() => setShowJurisdictionToggle(true)} className="underline underline-offset-2 hover:text-[#0B1F3A] transition-colors bg-transparent border-0 cursor-pointer text-[12px] text-muted">Change</button>
                   )}
                   {showJurisdictionToggle && (
                     <div className="flex gap-2">
@@ -2489,18 +2500,6 @@ function ResultsContent() {
                       ))}
                     </div>
                   )}
-                </div>
-
-                {/* Immediate Statutory Match Intake (Directly below verdict for instant lead capture) */}
-                <div className="no-print my-2">
-                  <InlineSolicitorIntakeCard
-                    verdict={result.verdict}
-                    offer={offer}
-                    salary={salary}
-                    years={yearsNum}
-                    disputeReason={reason}
-                    sourceUrl="/results/"
-                  />
                 </div>
 
                 {/* ── TABBED DETAILED ANALYSIS (Eliminates 9,700px Cognitive Overload) ── */}
