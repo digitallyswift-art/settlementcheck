@@ -717,10 +717,10 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           {/* ── STEP 2: Age ── */}
           {step === 2 && (
             <div>
-              <p style={helperSt}>
-                UK law applies different redundancy multipliers at ages 22 and 41. Your age directly affects your statutory entitlement.
-              </p>
               <h2 style={qSt}>How old are you?</h2>
+              <p style={helperSt}>
+                Your age determines which statutory multiplier applies to your calculation.
+              </p>
               <div className={`step-input-wrap${shake && ageError ? ' sc-shake' : ''}`}>
                 <input
                   ref={ageRef}
@@ -748,10 +748,10 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           {/* ── STEP 3: Length of service ── */}
           {step === 3 && (
             <div>
-              <p style={helperSt}>
-                Count from your contract start date. Only complete years count toward statutory redundancy pay, but months affect other parts of your calculation.
-              </p>
               <h2 style={qSt}>How long have you worked there?</h2>
+              <p style={helperSt}>
+                Count from your contract start date. Complete years and months both factor into your estimate.
+              </p>
               <div style={{ display: 'flex', gap: 12 }}>
                 <div className="step-input-wrap" style={{ flex: 1 }}>
                   <input
@@ -802,10 +802,10 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           {/* ── STEP 4: Settlement offered ── */}
           {step === 4 && (
             <div>
-              <p style={helperSt}>
-                Enter the total figure as presented. If no offer has been made yet, enter 0 and we will show you what to expect.
-              </p>
               <h2 style={qSt}>What has your employer offered?</h2>
+              <p style={helperSt}>
+                Enter the total figure from your letter or email.
+              </p>
               <div className="step-input-wrap">
                 <span style={prefixSt}>£</span>
                 <input
@@ -830,28 +830,57 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 <span style={{ ...errSt, color: '#B5802A' }}>{offerWarning}</span>
               )}
 
+              <button
+                type="button"
+                onClick={() => {
+                  setOffer('0')
+                  setOfferWarning('')
+                  goToStep(5)
+                }}
+                style={{
+                  marginTop: 12,
+                  width: '100%',
+                  padding: '13px 16px',
+                  background: '#ffffff',
+                  border: '1.5px solid #E2DCCE',
+                  borderRadius: 10,
+                  color: '#0B1F3A',
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <span>I haven&apos;t received an offer yet</span>
+                <span style={{ color: '#D9603B', fontSize: 16 }} aria-hidden="true">→</span>
+              </button>
+
               {/* SC-B-020: Notice pay inclusion toggle */}
               {parseFloat(offer) > 0 && (
-                <div style={{ marginTop: 20, padding: '16px', background: '#fff', border: '1px solid #E2DCCE', borderRadius: 12 }}>
+                <div style={{ marginTop: 16, padding: '14px 16px', background: '#fff', border: '1px solid #E2DCCE', borderRadius: 12 }}>
                   <label style={{ display: 'block', fontSize: 14, fontWeight: 600, color: '#0B1F3A', marginBottom: 4 }}>
                     Does this £{Number(offer).toLocaleString('en-GB')} include your notice pay?
                   </label>
-                  <p style={{ fontSize: 13, color: '#5B6577', margin: '0 0 12px', lineHeight: 1.5 }}>
-                    Under ITEPA 2003 s.402D, notice pay (PILON) is taxed separately from compensation. Clarifying this ensures your tax-free allowance and net payout are accurate.
+                  <p style={{ fontSize: 13, color: '#5B6577', margin: '0 0 12px', lineHeight: 1.45 }}>
+                    Notice pay is taxed differently from compensation, so this helps us estimate your take-home pay.
                   </p>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                     <button
                       type="button"
                       onClick={() => setOfferIncludesNotice(true)}
                       style={{
                         ...optionSt(offerIncludesNotice),
-                        padding: '12px 14px',
+                        padding: '11px 12px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
+                        gap: 6,
                       }}
                     >
-                      <span style={{ fontSize: 14 }}>Yes: notice pay is included in this £{Number(offer).toLocaleString('en-GB')}</span>
+                      <span style={{ fontSize: 13.5, fontWeight: 600 }}>Yes, included</span>
                       {offerIncludesNotice && <Tick />}
                     </button>
                     <button
@@ -859,13 +888,14 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                       onClick={() => setOfferIncludesNotice(false)}
                       style={{
                         ...optionSt(!offerIncludesNotice),
-                        padding: '12px 14px',
+                        padding: '11px 12px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
+                        gap: 6,
                       }}
                     >
-                      <span style={{ fontSize: 14 }}>No: notice pay is being paid on top (in addition)</span>
+                      <span style={{ fontSize: 13.5, fontWeight: 600 }}>No, paid on top</span>
                       {!offerIncludesNotice && <Tick />}
                     </button>
                   </div>
@@ -877,10 +907,10 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           {/* -- STEP 5: Notice period (tappable list: NO keyboard) -- */}
           {step === 5 && (
             <div>
-              <p style={helperSt}>
-                Check your written contract, not what your manager said. The written term governs what you are owed.
-              </p>
               <h2 style={qSt}>What does your contract say about your notice period?</h2>
+              <p style={helperSt}>
+                Check your written employment contract if you have it to hand.
+              </p>
               <div className={shake && !noticeOption ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
                 {([
                   { value: 'statutory', label: 'Statutory only (1 week per year of service, max 12)' },
@@ -901,8 +931,8 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           {/* -- STEP 6: Reason for leaving (tappable list: NO keyboard) -- */}
           {step === 6 && (
             <div style={{ paddingBottom: 120 }}>
-              <p style={helperSt}>This affects which entitlements apply to your situation.</p>
               <h2 style={qSt}>Why is your employment ending?</h2>
+              <p style={helperSt}>This helps us show which statutory rules apply to your situation.</p>
               <div className={shake && !reason ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
                 {([
                   { value: 'redundancy_individual', label: 'Redundancy' },
@@ -936,14 +966,10 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           {/* ── STEP 7: Discrimination (NO auto-advance) ── */}
           {step === 7 && (
             <div>
-              {/* CRITICAL: helper text ABOVE the options */}
-              <p style={helperSt}>
-                Were you treated differently because of age, gender, race, disability, pregnancy, or another protected characteristic?
-              </p>
-              <p style={{ ...helperSt, marginTop: -6 }}>
-                If you are not certain, choose Not sure. Many people underestimate whether what happened to them qualifies. You do not need to be certain to flag it.
-              </p>
               <h2 style={qSt}>Was discrimination involved?</h2>
+              <p style={helperSt}>
+                For example, being treated differently due to age, gender, race, disability, pregnancy, or another protected characteristic. Choose &ldquo;Not sure&rdquo; if you are uncertain.
+              </p>
               {/* 56px minimum tap targets: higher than standard 48px due to consequence of mis-tap */}
               <div className={shake && !discrimination ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
                 {([
@@ -964,10 +990,12 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
             </div>
           )}
 
-          {/* Fee contribution note placed inside scrollable flow so it never covers inputs on mobile */}
-          <div style={{ marginTop: 28 }}>
-            <LegalFeeShieldBadge className="w-full" />
-          </div>
+          {/* Fee contribution note shown only on final step so it never clips behind sticky CTA on mid-flow steps */}
+          {step === 7 && (
+            <div style={{ marginTop: 24 }}>
+              <LegalFeeShieldBadge className="w-full" />
+            </div>
+          )}
 
         </div>
       </div>
