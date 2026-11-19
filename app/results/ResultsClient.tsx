@@ -14,7 +14,7 @@ import {
   calcPensionSacrifice,
 } from '@/lib/calculations'
 import { getOfficialBenchmark } from '@/lib/statutory-rates'
-import { trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
+import { trackClientEvent, trackOutboundCitation, trackSolicitorMatchClick } from '@/lib/telemetry'
 import { LegalFeeShieldBadge, LegalFeeInlineCard } from '@/components/LegalFeeShieldBadge'
 import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers'
 import InlineSolicitorIntakeCard from '@/components/InlineSolicitorIntakeCard'
@@ -377,62 +377,59 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
       ? `notice pay of ${formatCurrency(result.pilon)} and statutory redundancy pay of ${formatCurrency(result.redundancy)}`
       : `notice pay of ${formatCurrency(result.pilon)}`
     return (
-      <div className="rounded-lg p-6 md:p-8" style={{ background: '#FBF0EE', border: '1px solid #D9A99E' }}>
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4" style={{ background: '#fff', color: '#A8341F', border: '1px solid #D9A99E' }}>
+      <div className="rounded-lg p-5 md:p-7" style={{ background: '#FBF0EE', border: '1px solid #D9A99E' }}>
+        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-3" style={{ background: '#fff', color: '#A8341F', border: '1px solid #D9A99E' }}>
           Below Calculated Baseline
         </span>
-        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Your recorded offer sits below your calculated baseline.</h2>
-        <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
-          <p>
-            Based on your inputs, your calculated statutory baseline is <strong className="text-ink">{formatCurrency(result.minimum)}</strong> ({breakdownDesc}).
+        <h2 className="sc-h2 text-[#0B1F3A] mb-2">Your offer sits below your calculated statutory baseline.</h2>
+        <OfferVsRange result={result} offer={offer} />
+        <div className="sc-body mt-4 max-w-[66ch] flex flex-col gap-2 text-[14px] text-[#5B6577]">
+          <p className="m-0">
+            Your calculated statutory baseline is <strong className="text-ink">{formatCurrency(result.minimum)}</strong> ({breakdownDesc}), compared to your recorded offer of <strong className="text-ink">{formatCurrency(offer)}</strong>.
           </p>
-          <p>
-            Your recorded offer of <strong className="text-ink">{formatCurrency(offer)}</strong> is lower than this calculated figure.
-          </p>
-          <p>
-            Under Section 203 of the Employment Rights Act 1996, settlement agreements allow parties to mutually compromise claims (subject to independent legal advice). Reviewing this difference helps you assess whether the terms reflect your standard exit entitlements.
+          <p className="m-0">
+            Under Section 203 ERA 1996, a settlement agreement requires independent solicitor advice to be valid. Review this shortfall with an SRA-regulated solicitor before signing.
           </p>
         </div>
-        <OfferVsRange result={result} offer={offer} />
       </div>
     )
   }
 
   if (result.verdict === 'BELOW_TYPICAL') {
     return (
-      <div className="rounded-lg p-6 md:p-8" style={{ background: '#FEFBF0', border: '1px solid #E0CB94' }}>
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4" style={{ background: '#fff', color: '#B5802A', border: '1px solid #E0CB94' }}>
+      <div className="rounded-lg p-5 md:p-7" style={{ background: '#FEFBF0', border: '1px solid #E0CB94' }}>
+        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-3" style={{ background: '#fff', color: '#B5802A', border: '1px solid #E0CB94' }}>
           Below Reference Range
         </span>
-        <h2 className="sc-h2 text-[#0B1F3A] mb-3">Your offer covers the calculated baseline, but sits below the illustrative range.</h2>
-        <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
-          <p>
-            Based on your salary, age, and {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, illustrative commercial settlement ranges for comparable scenarios fall between <strong className="text-ink">{formatCurrency(result.typicalLow)}</strong> and <strong className="text-ink">{result.typicalHighUncapped ? 'an uncapped amount (depending on circumstances)' : formatCurrency(result.typicalHigh)}</strong>.
+        <h2 className="sc-h2 text-[#0B1F3A] mb-2">Your offer covers the baseline, but sits below the illustrative range.</h2>
+        <OfferVsRange result={result} offer={offer} />
+        <div className="sc-body mt-4 max-w-[66ch] flex flex-col gap-2 text-[14px] text-[#5B6577]">
+          <p className="m-0">
+            For {completedYears} {completedYears === 1 ? 'year' : 'years'} of service, illustrative settlement ranges sit between <strong className="text-ink">{formatCurrency(result.typicalLow)}</strong> and <strong className="text-ink">{result.typicalHighUncapped ? 'an uncapped amount' : formatCurrency(result.typicalHigh)}</strong>.
           </p>
-          <p>
-            Your recorded offer of <strong className="text-ink">{formatCurrency(offer)}</strong> sits below that illustrative range.
-          </p>
-          <p>
-            Initial offers often provide an opening position for discussion. Independent legal advice can help clarify whether seeking an adjustment to the financial or non-financial terms is appropriate.
+          <p className="m-0">
+            Initial offers often provide an opening position. An independent SRA-regulated solicitor can review your financial terms, notice, and reference wording.
           </p>
         </div>
-        <OfferVsRange result={result} offer={offer} />
       </div>
     )
   }
 
   return (
-    <div className="rounded-lg p-6 md:p-8" style={{ background: '#F2F7F3', border: '1px solid #BCD0BF' }}>
-      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-4" style={{ background: '#fff', color: '#0B1F3A', border: '1px solid #BCD0BF' }}>
+    <div className="rounded-lg p-5 md:p-7" style={{ background: '#F2F7F3', border: '1px solid #BCD0BF' }}>
+      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.10em] uppercase mb-3" style={{ background: '#fff', color: '#0B1F3A', border: '1px solid #BCD0BF' }}>
         <CheckIcon size={12} /> Within Reference Range
       </span>
-      <h2 className="sc-h2 text-[#0B1F3A] mb-3">This offer aligns with or exceeds the illustrative range for your circumstances.</h2>
-      <div className="sc-body mt-3 max-w-[66ch] flex flex-col gap-3 text-[15px] text-[#5B6577]">
-        <p>Based on your inputs, your employer&apos;s offer of <strong className="text-ink">{formatCurrency(offer)}</strong> sits within or above the illustrative comparison range.</p>
-        <p>In addition to the financial sum, settlement agreements include non-financial clauses such as reference wording, confidentiality restrictions, post-termination covenants, and waiver scope, each of which forms an important part of the overall terms.</p>
-        <p>Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is required for the agreement to be valid. Employers standardly provide a capped contribution toward this fee upon completion (commonly £350 to £500+ +VAT).</p>
-      </div>
+      <h2 className="sc-h2 text-[#0B1F3A] mb-2">This offer aligns with or exceeds the illustrative range.</h2>
       <OfferVsRange result={result} offer={offer} />
+      <div className="sc-body mt-4 max-w-[66ch] flex flex-col gap-2 text-[14px] text-[#5B6577]">
+        <p className="m-0">
+          Your offer of <strong className="text-ink">{formatCurrency(offer)}</strong> sits within or above the illustrative comparison range.
+        </p>
+        <p className="m-0">
+          Under Section 203(3) ERA 1996, independent legal advice is still required for the agreement to be legally binding, and to check tax allocation (£30,000 exemption), reference wording, and restrictive covenants.
+        </p>
+      </div>
     </div>
   )
 }
@@ -441,7 +438,7 @@ function VerdictPanel({ result, offer, salary, yearsNum, age }: {
 
 function OfferVsRange({ result, offer }: { result: VerdictResult; offer: number }) {
   return (
-    <div className="mt-6 pt-6" style={{ borderTop: '1px solid rgba(11,31,58,0.12)' }}>
+    <div className="mt-3 pb-5" style={{ borderBottom: '1px solid rgba(11,31,58,0.12)' }}>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <div className="sc-eyebrow mb-1">Your offer</div>
@@ -2255,12 +2252,24 @@ function ResultsContent() {
   })
   const [showJurisdictionToggle, setShowJurisdictionToggle] = useState(false)
   const [prefillEmail, setPrefillEmail] = useState(searchParams.get('email') ?? '')
+  const [activeDetailTab, setActiveDetailTab] = useState<'breakdown' | 'negotiation' | 'benchmarks'>('breakdown')
   const saveCardRef = useRef<HTMLDivElement>(null)
+  const resultsTrackedRef = useRef(false)
 
   const valid = salary > 0 && age > 0 && offer >= 0 && reason !== ''
   const result: VerdictResult | null = valid
     ? getVerdict(salary, totalMonths, age, offer, reason, discrimination, contractualNotice, jurisdiction, offerIncludesNotice)
     : null
+
+  useEffect(() => {
+    if (result && !resultsTrackedRef.current) {
+      resultsTrackedRef.current = true
+      trackClientEvent('results_viewed', {
+        verdict: result.verdict,
+        has_offer: offer > 0,
+      })
+    }
+  }, [result, offer])
 
   // ── Pre-offer Simulation / Low Offer Opportunity Mode ─────────────────
   const hasOffer = offer > 0
@@ -2483,7 +2492,7 @@ function ResultsContent() {
                 </div>
 
                 {/* Immediate Statutory Match Intake (Directly below verdict for instant lead capture) */}
-                <div className="no-print my-3">
+                <div className="no-print my-2">
                   <InlineSolicitorIntakeCard
                     verdict={result.verdict}
                     offer={offer}
@@ -2494,32 +2503,37 @@ function ResultsContent() {
                   />
                 </div>
 
-                {/* ── 3-TIER LEGAL & INFORMATION FRAMEWORK HEADER ── */}
-                <ThreeTierFrameworkHeader />
+                {/* ── TABBED DETAILED ANALYSIS (Eliminates 9,700px Cognitive Overload) ── */}
+                <div className="no-print bg-white border border-[#E2DCCE] rounded-xl p-2 flex flex-wrap gap-1.5" role="tablist" aria-label="Detailed breakdown sections">
+                  {([
+                    { id: 'breakdown', label: '1. Breakdown & Tax Split' },
+                    { id: 'negotiation', label: '2. Deadlines & Solicitor Brief' },
+                    { id: 'benchmarks', label: '3. Tribunal Benchmarks & FAQs' },
+                  ] as const).map((tab) => (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={activeDetailTab === tab.id}
+                      onClick={() => {
+                        setActiveDetailTab(tab.id)
+                        trackClientEvent('results_secondary_tab_click', { tab: tab.id })
+                      }}
+                      className={`flex-1 min-w-[160px] px-3.5 py-2.5 rounded-lg text-[13px] font-semibold transition-all cursor-pointer border-0 ${
+                        activeDetailTab === tab.id
+                          ? 'bg-[#0B1F3A] text-white shadow-sm'
+                          : 'bg-transparent text-[#5B6577] hover:bg-[#F7F4EE] hover:text-[#0B1F3A]'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
 
-                {/* ── TIER 1: CALCULATED STATUTORY ENTITLEMENTS ── */}
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between border-b-2 border-[#0B1F3A] pb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#0B1F3A] text-white">
-                        Tier 1
-                      </span>
-                      <h3 className="text-[15px] font-bold text-[#0B1F3A] m-0">
-                        Calculated Statutory Baselines (Subject to Eligibility)
-                      </h3>
-                    </div>
-                    <span className="text-[11px] font-mono text-[#5B6577] hidden sm:inline">
-                      ERA 1996 ss.86 &amp; 162 &bull; ITEPA 2003
-                    </span>
-                  </div>
-
-                  {/* Statutory breakdown table */}
-                  <div className="no-print">
+                {activeDetailTab === 'breakdown' && (
+                  <div className="flex flex-col gap-5 no-print">
                     <BreakdownTable result={result} offer={offer} salary={salary} />
-                  </div>
 
-                  {/* Visual Chart - Dynamic stacked bar */}
-                  <div className="no-print">
                     <FinancialSplitChart
                       offer={isSimulated ? displayOffer : offer}
                       pilon={displayResult?.pilon ?? 0}
@@ -2530,11 +2544,8 @@ function ResultsContent() {
                       isSimulated={isSimulated}
                       pensionSacrifice={adjustedSacrificeVal}
                     />
-                  </div>
 
-                  {/* Interactive Pension Sacrifice Slider */}
-                  {(maxSacrifice > 0 || salary >= 100000) && (
-                    <div className="no-print">
+                    {(maxSacrifice > 0 || salary >= 100000) && (
                       <PensionSacrificeWidget
                         taxableTermination={maxSacrifice}
                         salary={salary}
@@ -2543,77 +2554,14 @@ function ResultsContent() {
                         isSimulated={isSimulated}
                         simulatedOffer={isSimulated ? displayOffer : 0}
                       />
-                    </div>
-                  )}
-
-                  {/* Statutory Reassurance & Protections */}
-                  <div className="no-print">
-                    <StatutoryProtectionsCard />
+                    )}
                   </div>
-                </div>
+                )}
 
-                {/* ── TIER 2: PUBLISHED TRIBUNAL & CONCILIATION BENCHMARKS ── */}
-                <div className="flex flex-col gap-4 mt-2">
-                  <div className="flex items-center justify-between border-b-2 border-[#D9603B] pb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#D9603B] text-white">
-                        Tier 2
-                      </span>
-                      <h3 className="text-[15px] font-bold text-[#0B1F3A] m-0">
-                        Published Tribunal &amp; Conciliation Benchmarks (Historical Context)
-                      </h3>
-                    </div>
-                    <span className="text-[11px] font-mono text-[#5B6577] hidden sm:inline">
-                      MoJ Tables &bull; ACAS Research
-                    </span>
-                  </div>
+                {activeDetailTab === 'negotiation' && (
+                  <div className="flex flex-col gap-5 no-print">
+                    <TribunalLimitationClock />
 
-                  {/* Official Statutory & Tribunal Benchmarks */}
-                  <OfficialBenchmarkCard
-                    reason={reason}
-                    salary={salary}
-                    offer={offer}
-                    result={result}
-                    isDiscrimination={discrimination === 'yes'}
-                    totalMonths={totalMonths}
-                  />
-
-                  {/* Interactive Vento Band Selector */}
-                  {result.discriminationFlag && result.ventoBands && (
-                    <div className="no-print">
-                      <VentoBandWidget
-                        ventoBands={result.ventoBands}
-                        selectedBand={selectedVentoBand}
-                        onBandSelect={(band) => setSelectedVentoBand(band)}
-                      />
-                    </div>
-                  )}
-                </div>
-
-                {/* ── TIER 3: MATTERS FOR INDEPENDENT LEGAL REVIEW ── */}
-                <div className="flex flex-col gap-4 mt-2">
-                  <div className="flex items-center justify-between border-b-2 border-[#0B1F3A] pb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#0B1F3A] text-white">
-                        Tier 3
-                      </span>
-                      <h3 className="text-[15px] font-bold text-[#0B1F3A] m-0">
-                        Matters for Independent Legal Review (SRA-Regulated Solicitor)
-                      </h3>
-                    </div>
-                    <span className="text-[11px] font-mono text-[#5B6577] hidden sm:inline">
-                      ERA 1996 s.203(3)
-                    </span>
-                  </div>
-
-                  {/* SC-B-022: Dynamic Local SRA Specialist Availability & 1-Click Match Bridge */}
-                  <LocalSpecialistAvailabilityCard
-                    jurisdiction={jurisdiction}
-                    onGetMatched={handleSolicitorMatch}
-                  />
-
-                  {/* Negotiation Response Draftsman (Practical Next Step) */}
-                  <div className="no-print">
                     <NegotiationDraftsman
                       result={result}
                       offer={offer}
@@ -2621,24 +2569,45 @@ function ResultsContent() {
                       yearsNum={Math.floor(yearsNum)}
                       onGetMatched={handleSolicitorMatch}
                     />
+
+                    <CaseBriefSection
+                      inputs={inputs}
+                      result={result}
+                      selectedVentoBand={selectedVentoBand}
+                      ventoBands={result.ventoBands}
+                    />
+
+                    <LocalSpecialistAvailabilityCard
+                      jurisdiction={jurisdiction}
+                      onGetMatched={handleSolicitorMatch}
+                    />
                   </div>
+                )}
 
-                  {/* SC-B-010: Dynamic Tribunal Limitation Clock (3 Months Minus 1 Day) */}
-                  <TribunalLimitationClock />
+                {activeDetailTab === 'benchmarks' && (
+                  <div className="flex flex-col gap-5 no-print">
+                    <OfficialBenchmarkCard
+                      reason={reason}
+                      salary={salary}
+                      offer={offer}
+                      result={result}
+                      isDiscrimination={discrimination === 'yes'}
+                      totalMonths={totalMonths}
+                    />
 
-                  {/* Barrister-Ready Case Brief (Intake brief) */}
-                  <CaseBriefSection
-                    inputs={inputs}
-                    result={result}
-                    selectedVentoBand={selectedVentoBand}
-                    ventoBands={result.ventoBands}
-                  />
-                </div>
+                    {result.discriminationFlag && result.ventoBands && (
+                      <VentoBandWidget
+                        ventoBands={result.ventoBands}
+                        selectedBand={selectedVentoBand}
+                        onBandSelect={(band) => setSelectedVentoBand(band)}
+                      />
+                    )}
 
-                {/* FAQ obection handling */}
-                <div className="no-print">
-                  <LeadFAQ />
-                </div>
+                    <StatutoryProtectionsCard />
+
+                    <LeadFAQ />
+                  </div>
+                )}
 
                 <div className="no-print">
                   <NonConverterFallback onScrollToSave={scrollToSave} />
@@ -2649,8 +2618,8 @@ function ResultsContent() {
                 </p>
               </div>
 
-              {/* Right Column - Conversions (Sticky on Desktop) */}
-              <div className="lg:col-span-1 lg:sticky lg:top-6 flex flex-col gap-6 no-print">
+              {/* Right Column - Conversions (Sticky on Desktop, clears fixed Nav) */}
+              <div className="lg:col-span-1 lg:sticky lg:top-[118px] flex flex-col gap-6 no-print">
                 
                 {/* Get Matched Solicitor CTA */}
                 <GetMatchedCTA
@@ -2662,13 +2631,14 @@ function ResultsContent() {
                   onGetMatched={handleSolicitorMatch}
                 />
 
-                {/* Agreement Review Cross-Sell Card */}
-                <AgreementReviewCrossSellCard
-                  salary={inputs.salary}
-                  yearsNum={inputs.yearsNum}
-                  age={inputs.age}
-                  reason={inputs.reason}
-                />
+                {/* Signing Deadline Alert */}
+                <div className="rounded-lg p-4 flex gap-3.5 items-start" style={{ background: '#F5F1E9', border: '1px solid #D8D2C6' }}>
+                  <span className="text-[17px] flex-shrink-0 leading-none">🗓</span>
+                  <div className="text-[13px] text-[#5B6577] leading-relaxed">
+                    <p className="text-[#0B1F3A] font-semibold mb-1 m-0">Typical 7–10 Day signing deadline</p>
+                    <p className="m-0">Legal review processes generally complete in 24–48 hours. Starting early leaves headroom for legal adjustments without timeline pressure.</p>
+                  </div>
+                </div>
 
                 {/* Save results panel */}
                 <SaveCard
@@ -2679,14 +2649,13 @@ function ResultsContent() {
                   params={saveParams}
                 />
 
-                {/* Signing Deadline Alert */}
-                <div className="rounded-lg p-4 flex gap-3.5 items-start" style={{ background: '#F5F1E9', border: '1px solid #D8D2C6' }}>
-                  <span className="text-[17px] flex-shrink-0 leading-none">🗓</span>
-                  <div className="text-[13px] text-[#5B6577] leading-relaxed">
-                    <p className="text-[#0B1F3A] font-semibold mb-1 m-0">Typical 7–10 Day signing deadline</p>
-                    <p className="m-0">Legal review processes generally complete in 24–48 hours. Starting early leaves headroom for legal adjustments without timeline pressure.</p>
-                  </div>
-                </div>
+                {/* Agreement Review Cross-Sell Card */}
+                <AgreementReviewCrossSellCard
+                  salary={inputs.salary}
+                  yearsNum={inputs.yearsNum}
+                  age={inputs.age}
+                  reason={inputs.reason}
+                />
 
               </div>
 

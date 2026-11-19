@@ -10,6 +10,7 @@ In your chat canvas:
 - **Mention with `@`**: Type `@` to open the context dropdown. You can mention:
   - `@AGENTS.md` — Loads the full agent routing and system context.
   - `@seo-architect` — Invokes the SEO Architect for audits, meta tags, schema, keyword gaps, and internal linking.
+  - `@cro-architect` — Invokes the CRO Architect for data-led GA4/GSC funnel audits, drop-off diagnostics, and conversion restructuring.
   - `@conversion-copywriter` — Invokes the Conversion Copywriter for hero copy, CTAs, FAQs, and brand compliance.
   - `@link-checker` — Invokes the automated route and link verification workflow.
   - `@stack-and-architecture` — Invokes Next.js App Router standards, Tailwind tokens, and tech stack guidelines.
@@ -147,6 +148,20 @@ Specialist in statutory calculation logic, April 2026 caps, verdict mathematical
 **Key Commands to prompt the agent with:**
 - `audit rates` — Checks April 2026 statutory rates and caps across codebase.
 - `verify otp flow` — Audits 3-state OTP pipeline and database mutation security.
+
+### M. `cro-architect`
+Data-led Conversion Rate Optimization (CRO) specialist combining live GA4 funnel/engagement telemetry, GSC landing-page intent, Supabase ground truth, and dual-viewport UX audits for stressed UK employees.
+
+**Terminal Commands:**
+```bash
+npm run cro:data   # Pulls 28-day GA4 funnel, device splits, events & GSC landing pages
+npm run audit:cro  # Runs adversarial CRO funnel audit & statistical significance gate
+```
+
+**Key Commands to prompt the agent with:**
+- `audit cro [route]` — Full GA4/GSC + desktop/mobile UX audit of a conversion page.
+- `diagnose dropoff [route]` — Pinpoints why engaged users stall before lead submission.
+- `review funnel mobile` — Audits the `375×812` mobile calculator-to-lead journey.
 
 ---
 

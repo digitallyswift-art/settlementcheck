@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { LegalFeeAnnouncementBar } from '@/components/LegalFeeShieldBadge'
 
 const CALCULATOR_LINKS = [
@@ -81,6 +82,8 @@ const GUIDES_LINKS = [
 ]
 
 export default function Nav() {
+  const pathname = usePathname()
+  const isResultsPage = pathname?.startsWith('/results')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [calculatorsOpen, setCalculatorsOpen] = useState(false)
   const [guidesOpen, setGuidesOpen] = useState(false)
@@ -270,24 +273,42 @@ export default function Nav() {
 
         {/* Desktop Primary CTA */}
         <div className="hidden lg:flex items-center flex-nowrap shrink-0">
-          <Link
-            href="/calculator/"
-            className="btn-accent text-[13px] xl:text-[14px] px-4 py-2 xl:px-5 xl:py-2.5 whitespace-nowrap shrink-0"
-          >
-            Check my offer →
-          </Link>
+          {isResultsPage ? (
+            <a
+              href="#solicitor-intake-card"
+              className="btn-accent text-[13px] xl:text-[14px] px-4 py-2 xl:px-5 xl:py-2.5 whitespace-nowrap shrink-0"
+            >
+              Match Solicitor →
+            </a>
+          ) : (
+            <Link
+              href="/calculator/"
+              className="btn-accent text-[13px] xl:text-[14px] px-4 py-2 xl:px-5 xl:py-2.5 whitespace-nowrap shrink-0"
+            >
+              Check my offer →
+            </Link>
+          )}
         </div>
 
         {/* Mobile / Tablet Header Controls */}
-        <div className="flex items-center gap-2.5 lg:hidden">
-          <Link
-            href="/calculator/"
-            className="btn-accent text-[12px] sm:text-[13px] px-3 py-1.5 whitespace-nowrap font-medium"
-          >
-            Check my offer →
-          </Link>
+        <div className="flex items-center gap-1.5 sm:gap-2.5 lg:hidden shrink-0">
+          {isResultsPage ? (
+            <a
+              href="#solicitor-intake-card"
+              className="btn-accent text-[11px] sm:text-[13px] px-2.5 sm:px-3 py-1.5 whitespace-nowrap font-medium"
+            >
+              Match Solicitor →
+            </a>
+          ) : (
+            <Link
+              href="/calculator/"
+              className="btn-accent text-[11px] sm:text-[13px] px-2.5 sm:px-3 py-1.5 whitespace-nowrap font-medium"
+            >
+              Check my offer →
+            </Link>
+          )}
           <button
-            className="flex flex-col justify-center items-center gap-[5px] w-9 h-9 p-1 rounded-md hover:bg-black/5 transition-colors"
+            className="flex flex-col justify-center items-center gap-[5px] w-9 h-9 p-1 rounded-md hover:bg-black/5 transition-colors shrink-0"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(!mobileOpen)}

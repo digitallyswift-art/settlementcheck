@@ -51,6 +51,33 @@ export interface Ga4TodayMetrics {
   bounceRate: number; // percentage
 }
 
+export interface Ga4PageEngagementRow {
+  pagePath: string;
+  deviceCategory: string;
+  sessions: number;
+  activeUsers: number;
+  screenPageViews: number;
+  engagementRate: number; // percentage 0-100
+  averageSessionDuration: number; // seconds
+  bounceRate: number; // percentage 0-100
+  keyEvents: number;
+}
+
+export interface Ga4EventCountRow {
+  eventName: string;
+  eventCount: number;
+  totalUsers: number;
+}
+
+export interface Ga4CroFunnelReport {
+  propertyId: string;
+  startDate: string;
+  endDate: string;
+  topPagesByDevice: Ga4PageEngagementRow[];
+  funnelPagesByDevice: Ga4PageEngagementRow[];
+  events: Ga4EventCountRow[];
+}
+
 export interface Ga4ConnectionCheck {
   isConfigured: boolean;
   hasCredentials: boolean;
@@ -503,5 +530,108 @@ export class GoogleAnalytics4Client {
     } catch {
       return null;
     }
+  }
+
+  /**
+   * Fetches multi-day GA4 page engagement, device breakdown, and event funnel counts for CRO analysis.
+   */
+  public static async getCroFunnelReport(days = 28): Promise<Ga4CroFunnelReport> {
+    const propId = this.getPropertyId();
+    if (!propId) {
+      throw new Error('GA4_PROPERTY_ID is not configured.');
+    }
+
+    const token = await this.getAccessToken();
+    const endpoint = `https://analyticsdata.googleapis.com/v1beta/properties/${propId}:runReport`;
+    const startDate = `${days}daysAgo`;
+    const endDate = 'yesterday';
+
+    const runQuery = async (body: Record<string, unknown>) => {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`GA4 runReport failed (${res.status}): ${text}`);
+      }
+      return res.json();
+    };
+
+    const pageMetrics = [
+      { name: 'sessions' },
+      { name: 'activeUsers' },
+      { name: 'screenPageViews' },
+      { name: 'engagementRate' },
+      { name: 'averageSessionDuration' },
+      { name: 'bounceRate' },
+      { name: 'keyEvents' },
+    ];
+
+    const parsePageRows = (data: any): Ga4PageEngagementRow[] => {
+      if (!data?.rows) return [];
+      return data.rows.map((row: any) => ({
+        pagePath: row.dimensionValues?.[0]?.value || '/',
+        deviceCategory: row.dimensionValues?.[1]?.value || 'desktop',
+        sessions: parseInt(row.metricValues?.[0]?.value || '0', 10),
+        activeUsers: parseInt(row.metricValues?.[1]?.value || '0', 10),
+        screenPageViews: parseInt(row.metricValues?.[2]?.value || '0', 10),
+        engagementRate: Math.round(parseFloat(row.metricValues?.[3]?.value || '0') * 1000) / 10,
+        averageSessionDuration: Math.round(parseFloat(row.metricValues?.[4]?.value || '0')),
+        bounceRate: Math.round(parseFloat(row.metricValues?.[5]?.value || '0') * 1000) / 10,
+        keyEvents: parseInt(row.metricValues?.[6]?.value || '0', 10),
+      }));
+    };
+
+    const [topPagesRaw, funnelPagesRaw, eventsRaw] = await Promise.all([
+      runQuery({
+        dateRanges: [{ startDate, endDate }],
+        dimensions: [{ name: 'pagePath' }, { name: 'deviceCategory' }],
+        metrics: pageMetrics,
+        orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+        limit: 40,
+      }),
+      runQuery({
+        dateRanges: [{ startDate, endDate }],
+        dimensions: [{ name: 'pagePath' }, { name: 'deviceCategory' }],
+        metrics: pageMetrics,
+        dimensionFilter: {
+          filter: {
+            fieldName: 'pagePath',
+            inListFilter: {
+              values: ['/calculator/', '/results/', '/get-matched/', '/settlement-agreement-review/'],
+            },
+          },
+        },
+        orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+        limit: 30,
+      }),
+      runQuery({
+        dateRanges: [{ startDate, endDate }],
+        dimensions: [{ name: 'eventName' }],
+        metrics: [{ name: 'eventCount' }, { name: 'totalUsers' }],
+        orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+        limit: 35,
+      }),
+    ]);
+
+    const events: Ga4EventCountRow[] = (eventsRaw?.rows || []).map((row: any) => ({
+      eventName: row.dimensionValues?.[0]?.value || '',
+      eventCount: parseInt(row.metricValues?.[0]?.value || '0', 10),
+      totalUsers: parseInt(row.metricValues?.[1]?.value || '0', 10),
+    }));
+
+    return {
+      propertyId: propId,
+      startDate,
+      endDate,
+      topPagesByDevice: parsePageRows(topPagesRaw),
+      funnelPagesByDevice: parsePageRows(funnelPagesRaw),
+      events,
+    };
   }
 }
