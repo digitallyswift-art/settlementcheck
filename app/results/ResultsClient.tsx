@@ -750,7 +750,7 @@ function SmartMobileStickyBar({
             Private Solicitor Review
           </p>
           <p className="text-[11px] text-[#5B6577] leading-tight m-0 mt-0.5 truncate">
-            Employer contributes £350 to £500+
+            1 SRA-regulated solicitor · Strictly private
           </p>
         </div>
         <button
