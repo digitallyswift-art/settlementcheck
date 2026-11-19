@@ -12,41 +12,41 @@ interface Props {
   disputeReason?: string
   sourceUrl?: string
   className?: string
+  saveParams?: Record<string, string | number>
+  resultSummary?: {
+    minimum: number
+    typicalLow: number
+    typicalHigh: number
+    typicalHighUncapped: boolean
+    estimatedNet: number
+  }
 }
 
 function getVerdictFraming(verdict: string, offerNum: number) {
   if (offerNum <= 0) {
     return {
-      eyebrow: 'Pre-Offer Strategy Check · s.203(3) ERA 1996',
+      eyebrow: 'Confidential Solicitor Check · Step 1 of 2',
       heading: 'Get prepared before your employer tables an offer',
-      subtext:
-        'Speak confidentially with an SRA-regulated employment solicitor about your calculated baseline and exit options.',
       step1Cta: 'Check Solicitor Availability →',
     }
   }
   if (verdict === 'BELOW_MINIMUM') {
     return {
-      eyebrow: 'Below Statutory Baseline · Priority Review',
-      heading: 'Have an independent solicitor review this shortfall',
-      subtext:
-        'Your recorded offer sits below your calculated statutory baseline. A specialist SRA-regulated solicitor can review your entitlements before you sign.',
+      eyebrow: 'Confidential Solicitor Check · Step 1 of 2',
+      heading: 'Have an SRA solicitor check what is missing',
       step1Cta: 'Review This Shortfall With a Solicitor →',
     }
   }
   if (verdict === 'BELOW_TYPICAL') {
     return {
-      eyebrow: 'Negotiable Range · Independent Review',
-      heading: 'Explore your negotiation options before signing',
-      subtext:
-        'Your offer sits below typical illustrative ranges. An SRA-regulated solicitor can review your financial terms, notice, and reference wording.',
+      eyebrow: 'Confidential Solicitor Check · Step 1 of 2',
+      heading: 'See if you can negotiate a better exit package',
       step1Cta: 'Explore Options With a Solicitor →',
     }
   }
   return {
-    eyebrow: 'Mandatory s.203(3) Certification · 24–48h Turnaround',
-    heading: 'Arrange your required independent solicitor sign-off',
-    subtext:
-      'Under Section 203(3) ERA 1996, a settlement agreement is only legally binding once certified by an independent solicitor. Check tax & restrictive covenants before signing.',
+    eyebrow: 's.203(3) Sign-Off · Step 1 of 2',
+    heading: 'Arrange your required solicitor sign-off (24–48h)',
     step1Cta: 'Arrange s.203(3) Solicitor Review →',
   }
 }
@@ -59,7 +59,10 @@ export default function InlineSolicitorIntakeCard({
   disputeReason = 'redundancy',
   sourceUrl = '/results/',
   className = '',
+  saveParams,
+  resultSummary,
 }: Props) {
+  const [mode, setMode] = useState<'match' | 'email_only'>('match')
   const [step, setStep] = useState<1 | 2>(1)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -68,6 +71,7 @@ export default function InlineSolicitorIntakeCard({
   const [consent, setConsent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [emailSent, setEmailSent] = useState(false)
   const [triageId, setTriageId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [honeypot, setHoneypot] = useState('')
@@ -202,6 +206,61 @@ export default function InlineSolicitorIntakeCard({
     }
   }
 
+  async function handleEmailResultsOnly(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email.trim() || !emailRegex.test(email.trim())) {
+      setError('Please enter a valid personal email address.')
+      trackClientEvent('intake_validation_error', { field: 'email', step: 'email_only' })
+      return
+    }
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/save-results/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          ...(saveParams || { salary, yearsNum: years, offer }),
+          verdict,
+          ...(resultSummary || {}),
+        }),
+      })
+      if (!res.ok) throw new Error('Failed to send results.')
+      trackClientEvent('results_emailed_self_serve', { verdict, has_offer: offerNum > 0 })
+      setEmailSent(true)
+    } catch {
+      setError('Could not send your results right now. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  if (emailSent) {
+    return (
+      <div className={`bg-[#F7F4EE] border border-[#E2DCCE] rounded-2xl p-5 sm:p-6 text-[#0B1F3A] ${className}`}>
+        <h3 className="font-serif text-lg font-bold text-[#0B1F3A] m-0 mb-1.5">
+          Breakdown sent to {email}
+        </h3>
+        <p className="text-xs sm:text-sm text-[#5B6577] leading-relaxed m-0 mb-4">
+          Sent from <strong>team@settlementcheck.co.uk</strong>. Check Junk/Spam if it does not arrive within 60 seconds. Ready for an SRA solicitor to review your offer?
+        </p>
+        <button
+          type="button"
+          onClick={() => {
+            setEmailSent(false)
+            setMode('match')
+            setStep(1)
+          }}
+          className="w-full py-3 px-5 rounded-xl text-white font-bold text-sm bg-[#D9603B] hover:bg-[#B14A28] transition-all cursor-pointer border-0"
+        >
+          Request a Confidential Solicitor Review →
+        </button>
+      </div>
+    )
+  }
+
   if (submitted) {
     return (
       <div className={`bg-[#F7F4EE] border border-[#E2DCCE] rounded-2xl p-6 sm:p-8 text-[#0B1F3A] ${className}`}>
@@ -236,29 +295,45 @@ export default function InlineSolicitorIntakeCard({
     <div
       ref={cardRef}
       id="solicitor-intake-card"
-      className={`bg-white border-2 border-[#0B1F3A] rounded-2xl p-5 sm:p-6 shadow-lg relative overflow-hidden ${className}`}
+      className={`bg-white border-2 border-[#0B1F3A] rounded-2xl p-4 sm:p-6 shadow-lg relative overflow-hidden ${className}`}
     >
       {/* Top Banner */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#F0EBE0] pb-3 mb-4">
+      <div className="flex items-center justify-between gap-2 pb-2.5 mb-3 border-b border-[#F0EBE0]">
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#D9603B] animate-pulse" />
-          <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A]">
-            {framing.eyebrow}
+          <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse" />
+          <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#0B1F3A]">
+            {mode === 'email_only' ? 'Save Your Breakdown' : step === 1 ? framing.eyebrow : 'Confidential Solicitor Check · Step 2 of 2'}
           </span>
         </div>
-        <span className="text-[11px] font-mono text-[#5B6577]">
-          Step {step} of 2
-        </span>
+        {mode === 'match' ? (
+          <button
+            type="button"
+            onClick={() => {
+              setError(null)
+              setMode('email_only')
+              trackClientEvent('intake_mode_switched', { to: 'email_only', verdict })
+            }}
+            className="text-[11px] font-medium text-[#5B6577] underline underline-offset-2 hover:text-[#0B1F3A] bg-transparent border-0 p-0 cursor-pointer"
+          >
+            Just email my results
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              setError(null)
+              setMode('match')
+            }}
+            className="text-[11px] font-medium text-[#D9603B] underline underline-offset-2 bg-transparent border-0 p-0 cursor-pointer"
+          >
+            ← Back to solicitor review
+          </button>
+        )}
       </div>
 
-      <div className="mb-4">
-        <h3 className="font-serif text-lg sm:text-xl font-bold text-[#0B1F3A] m-0 mb-1.5">
-          {framing.heading}
-        </h3>
-        <p className="text-xs sm:text-sm text-[#5B6577] leading-relaxed m-0">
-          {framing.subtext}
-        </p>
-      </div>
+      <h3 className="font-serif text-[18px] sm:text-xl font-bold text-[#0B1F3A] m-0 mb-3 leading-snug">
+        {mode === 'email_only' ? 'Email me a copy of this breakdown' : framing.heading}
+      </h3>
 
       {/* Honeypot */}
       <input
@@ -271,9 +346,40 @@ export default function InlineSolicitorIntakeCard({
         autoComplete="off"
       />
 
-      {step === 1 ? (
-        <form onSubmit={handleStep1Continue} noValidate className="space-y-3.5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+      {mode === 'email_only' ? (
+        <form onSubmit={handleEmailResultsOnly} noValidate className="space-y-3">
+          <div>
+            <label className="block text-xs font-semibold text-[#0B1F3A] mb-1">
+              Personal Email <span className="text-[#D9603B]">*</span>
+            </label>
+            <input
+              type="email"
+              required
+              placeholder="e.g. sarah.personal@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3.5 py-2.5 rounded-lg border border-[#E2DCCE] text-sm text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
+            />
+          </div>
+          {error && (
+            <div className="p-2.5 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+              {error}
+            </div>
+          )}
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full py-3 px-5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer bg-[#0B1F3A] hover:bg-[#16345E]"
+          >
+            <span>{submitting ? 'Sending…' : 'Send My Calculation Breakdown →'}</span>
+          </button>
+          <p className="text-[11px] text-[#5B6577] m-0">
+            Sent once to your inbox. Not added to any marketing list.
+          </p>
+        </form>
+      ) : step === 1 ? (
+        <form onSubmit={handleStep1Continue} noValidate className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
             <div>
               <label className="block text-xs font-semibold text-[#0B1F3A] mb-1">
                 First Name <span className="text-[#D9603B]">*</span>
@@ -306,21 +412,21 @@ export default function InlineSolicitorIntakeCard({
           </div>
 
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+            <div className="p-2.5 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
               {error}
             </div>
           )}
 
           <button
             type="submit"
-            className="w-full py-3.5 px-6 rounded-xl text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer bg-[#D9603B] hover:bg-[#B14A28] shadow-[0_4px_16px_rgba(217,96,59,0.28)]"
+            className="w-full py-3 sm:py-3.5 px-5 rounded-xl text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer bg-[#D9603B] hover:bg-[#B14A28] shadow-[0_4px_16px_rgba(217,96,59,0.28)]"
           >
             <span>{framing.step1Cta}</span>
           </button>
 
-          <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#5B6577] pt-1">
-            <span>🔒 Private &amp; never shared with your employer</span>
-            <span>⚖️ Employers standardly contribute £350–£500+ +VAT upon completion</span>
+          <div className="flex flex-wrap items-center justify-between gap-1.5 text-[11px] text-[#5B6577] pt-0.5">
+            <span>🔒 Strictly private (employer never notified)</span>
+            <span>⚖️ Standard employer fee contribution (£350–£500+ +VAT)</span>
           </div>
         </form>
       ) : (

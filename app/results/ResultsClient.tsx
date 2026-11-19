@@ -2476,6 +2476,14 @@ function ResultsContent() {
                     years={yearsNum}
                     disputeReason={reason}
                     sourceUrl="/results/"
+                    saveParams={saveParams}
+                    resultSummary={{
+                      minimum: result.minimum,
+                      typicalLow: result.typicalLow,
+                      typicalHigh: result.typicalHigh,
+                      typicalHighUncapped: result.typicalHighUncapped,
+                      estimatedNet: result.estimatedNet,
+                    }}
                   />
                 </div>
 
