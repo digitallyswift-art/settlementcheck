@@ -1010,23 +1010,23 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
     <div
       role="region"
       aria-label="Request solicitor review"
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#F7F4EE]/95 backdrop-blur-md border-t border-[#E2DCCE] px-4 py-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_rgba(11,31,58,0.12)] no-print"
+      className="lg:hidden fixed inset-x-0 bottom-0 z-40 bg-[#F7F4EE]/98 backdrop-blur-md border-t border-[#E2DCCE] px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_rgba(11,31,58,0.12)] no-print"
     >
       <div className="flex items-center justify-between gap-3 max-w-lg mx-auto">
         <div className="min-w-0 flex-1">
-          <p className="text-[12px] font-bold text-[#0B1F3A] leading-tight truncate m-0">
+          <p className="text-[14px] font-bold text-[#0B1F3A] leading-snug m-0">
             Confidential SRA Solicitor Check
           </p>
-          <p className="text-[11px] text-[#5B6577] leading-tight mt-0.5 truncate m-0">
-            Employer typically contributes £350 to £500+ +VAT
+          <p className="text-[12px] text-[#5B6577] leading-snug mt-0.5 m-0">
+            Employer contributes £350–£500+ +VAT
           </p>
         </div>
         <button
           type="button"
           onClick={onScrollToIntake}
-          className="inline-flex items-center justify-center px-4 py-2 text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg border-0 cursor-pointer flex-shrink-0"
+          className="inline-flex items-center justify-center px-3.5 py-2.5 text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg border-0 cursor-pointer flex-shrink-0 whitespace-nowrap"
         >
-          Speak to a solicitor →
+          Get my solicitor review →
         </button>
       </div>
     </div>

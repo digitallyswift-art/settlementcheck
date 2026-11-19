@@ -22,36 +22,51 @@ interface Props {
   }
 }
 
-function getVerdictFraming(verdict: string, offerNum: number) {
+function getVerdictFraming(
+  verdict: string,
+  offerNum: number,
+  resultSummary?: Props['resultSummary']
+) {
   if (offerNum <= 0) {
     return {
       eyebrow: 'Step 1 of 2 · Confidential Solicitor Check',
       heading: 'Speak with an employment solicitor before terms are tabled',
-      subtext: 'Get clear on your statutory baseline and what to look out for when your employer puts an offer in writing.',
-      step1Cta: 'Check solicitor availability →',
+      subtext: 'Get clear on your calculated statutory baseline and what to look out for when your employer puts an offer in writing.',
+      step1Cta: 'Get my solicitor review →',
     }
   }
   if (verdict === 'BELOW_MINIMUM') {
+    const shortfall = resultSummary ? Math.max(0, Math.round(resultSummary.minimum - offerNum)) : 0
+    const shortfallText = shortfall > 0
+      ? `Your offer sits £${shortfall.toLocaleString('en-GB')} below your calculated statutory baseline.`
+      : 'Your offer sits below your calculated statutory baseline.'
     return {
       eyebrow: 'Step 1 of 2 · Confidential Solicitor Check',
       heading: 'Have an SRA solicitor check what is missing',
-      subtext: 'Your offer sits below your calculated statutory baseline. A specialist solicitor can check your notice, redundancy, and tax position before you reply.',
-      step1Cta: 'Review this shortfall with a solicitor →',
+      subtext: `${shortfallText} A specialist solicitor can check your notice, redundancy, and tax position before you reply.`,
+      step1Cta: 'Get my solicitor review →',
     }
   }
   if (verdict === 'BELOW_TYPICAL') {
+    const gap = resultSummary ? Math.max(0, Math.round(resultSummary.typicalLow - offerNum)) : 0
+    const gapText = gap > 0
+      ? `Your offer sits £${gap.toLocaleString('en-GB')} below the illustrative range for your role.`
+      : 'First offers are often a starting point.'
     return {
       eyebrow: 'Step 1 of 2 · Confidential Solicitor Check',
-      heading: 'See where your package can be improved',
-      subtext: 'First offers are often a starting point. An independent solicitor can review your figures, tax split, and reference wording.',
-      step1Cta: 'Explore my options with a solicitor →',
+      heading: 'Review your tax split and ex-gratia terms',
+      subtext: `${gapText} An independent solicitor can review your figures, tax split, and reference wording before you sign.`,
+      step1Cta: 'Get my solicitor review →',
     }
   }
+  const netText = resultSummary && resultSummary.estimatedNet > 0
+    ? `Review your £${Math.round(resultSummary.estimatedNet).toLocaleString('en-GB')} estimated take-home before signing.`
+    : 'Review your estimated take-home before signing.'
   return {
     eyebrow: 'Step 1 of 2 · Required s.203(3) Sign-Off',
     heading: 'Arrange your required solicitor sign-off',
-    subtext: 'Most reviews complete within 24 to 48 hours. Your solicitor checks the £30,000 tax split, reference wording, and any post-exit restrictions.',
-    step1Cta: 'Arrange my solicitor review →',
+    subtext: `${netText} Most s.203(3) reviews complete within 24 to 48 hours, checking the £30,000 tax split, reference wording, and any post-exit restrictions.`,
+    step1Cta: 'Get my solicitor review →',
   }
 }
 
@@ -85,7 +100,7 @@ export default function InlineSolicitorIntakeCard({
   const inViewTrackedRef = useRef(false)
 
   const offerNum = Number(offer) || 0
-  const framing = getVerdictFraming(verdict, offerNum)
+  const framing = getVerdictFraming(verdict, offerNum, resultSummary)
 
   useEffect(() => {
     const el = cardRef.current
@@ -571,7 +586,7 @@ export default function InlineSolicitorIntakeCard({
                   : 'bg-[#D9603B] hover:bg-[#B14A28] shadow-[0_4px_16px_rgba(217,96,59,0.28)]'
               }`}
             >
-              <span>{submitting ? 'Confirming...' : 'Confirm my confidential callback →'}</span>
+              <span>{submitting ? 'Confirming...' : 'Confirm my solicitor review →'}</span>
             </button>
           </form>
         )}

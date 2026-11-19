@@ -278,7 +278,7 @@ export default function Nav() {
               href="#solicitor-intake-card"
               className="btn-accent text-[13px] xl:text-[14px] px-4 py-2 xl:px-5 xl:py-2.5 whitespace-nowrap shrink-0"
             >
-              Match Solicitor →
+              Get solicitor review →
             </a>
           ) : (
             <Link
@@ -297,7 +297,7 @@ export default function Nav() {
               href="#solicitor-intake-card"
               className="btn-accent text-[11px] sm:text-[13px] px-2.5 sm:px-3 py-1.5 whitespace-nowrap font-medium"
             >
-              Match Solicitor →
+              Get solicitor review →
             </a>
           ) : (
             <Link
