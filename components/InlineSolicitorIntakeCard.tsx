@@ -29,33 +29,33 @@ function getVerdictFraming(
 ) {
   if (offerNum <= 0) {
     return {
-      eyebrow: 'Step 1 of 2 · Confidential Solicitor Check',
-      heading: 'Speak with an employment solicitor before terms are tabled',
-      subtext: 'Get clear on your calculated statutory baseline and what to look out for when your employer puts an offer in writing.',
+      eyebrow: 'Step 1 of 2 · Confidential Check',
+      heading: 'Know where you stand before HR makes an offer',
+      subtext: 'Speak with an employment solicitor about your legal minimum and what to look out for before your employer puts anything in writing.',
       step1Cta: 'Get my solicitor review →',
     }
   }
   if (verdict === 'BELOW_MINIMUM') {
     const shortfall = resultSummary ? Math.max(0, Math.round(resultSummary.minimum - offerNum)) : 0
     const shortfallText = shortfall > 0
-      ? `Your offer sits £${shortfall.toLocaleString('en-GB')} below your calculated statutory baseline.`
-      : 'Your offer sits below your calculated statutory baseline.'
+      ? `Your offer sits £${shortfall.toLocaleString('en-GB')} below your calculated legal minimum.`
+      : 'Your offer sits below your calculated legal minimum.'
     return {
-      eyebrow: 'Step 1 of 2 · Confidential Solicitor Check',
-      heading: 'Have an SRA solicitor check what is missing',
-      subtext: `${shortfallText} A specialist solicitor can check your notice, redundancy, and tax position before you reply.`,
+      eyebrow: 'Step 1 of 2 · Confidential Check',
+      heading: 'Could your offer be missing pay you are entitled to?',
+      subtext: `${shortfallText} An employment solicitor can check your notice, redundancy, and holiday pay before you reply to HR.`,
       step1Cta: 'Get my solicitor review →',
     }
   }
   if (verdict === 'BELOW_TYPICAL') {
     const gap = resultSummary ? Math.max(0, Math.round(resultSummary.typicalLow - offerNum)) : 0
     const gapText = gap > 0
-      ? `Your offer sits £${gap.toLocaleString('en-GB')} below the illustrative range for your role.`
+      ? `Your offer sits £${gap.toLocaleString('en-GB')} below the typical range for your role.`
       : 'First offers are often a starting point.'
     return {
-      eyebrow: 'Step 1 of 2 · Confidential Solicitor Check',
-      heading: 'Review your tax split and ex-gratia terms',
-      subtext: `${gapText} An independent solicitor can review your figures, tax split, and reference wording before you sign.`,
+      eyebrow: 'Step 1 of 2 · Confidential Check',
+      heading: 'Could you get a better settlement with a solicitor?',
+      subtext: `${gapText} An employment solicitor can check your figures, tax-free split, and whether there is room to negotiate before you sign.`,
       step1Cta: 'Get my solicitor review →',
     }
   }
@@ -63,9 +63,9 @@ function getVerdictFraming(
     ? `Review your £${Math.round(resultSummary.estimatedNet).toLocaleString('en-GB')} estimated take-home before signing.`
     : 'Review your estimated take-home before signing.'
   return {
-    eyebrow: 'Step 1 of 2 · Required s.203(3) Sign-Off',
-    heading: 'Arrange your required solicitor sign-off',
-    subtext: `${netText} Most s.203(3) reviews complete within 24 to 48 hours, checking the £30,000 tax split, reference wording, and any post-exit restrictions.`,
+    eyebrow: 'Step 1 of 2 · Legally Required Sign-Off',
+    heading: 'Protect your payout and get legally signed off',
+    subtext: `${netText} In the UK, a settlement agreement is not binding until a solicitor signs it. Most reviews take 24 to 48 hours and check your £30,000 tax-free split, reference, and restrictions.`,
     step1Cta: 'Get my solicitor review →',
   }
 }

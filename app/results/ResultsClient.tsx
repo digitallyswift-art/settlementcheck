@@ -290,34 +290,34 @@ function VerdictHeroCard({
   let pillColor = '#0B1F3A'
   let headline = `Your ${formatCurrency(offer)} offer sits within the typical range.`
   let summary =
-    'Under Section 203(3) ERA 1996, a settlement agreement only becomes legally binding once an independent solicitor reviews your £30,000 tax split, reference wording, and post-exit restrictions.'
+    'In the UK, a settlement agreement only becomes legally binding once an independent solicitor signs it off, checking your £30,000 tax-free split, reference wording, and any clauses restricting your next job.'
 
   if (offer === 0) {
     pillText = 'Pre-Offer Baseline'
     cardBg = '#F2F5F8'
     cardBorder = '#C8D3DF'
     pillColor = '#0B1F3A'
-    headline = `Your calculated statutory baseline is ${formatCurrency(result.minimum)}.`
+    headline = `Your calculated legal minimum is ${formatCurrency(result.minimum)}.`
     summary = `Based on ${yearsNum} ${yearsNum === 1 ? 'year' : 'years'} of service (${
       result.redundancy > 0
         ? `${formatCurrency(result.pilon)} notice + ${formatCurrency(result.redundancy)} statutory redundancy`
         : `${formatCurrency(result.pilon)} statutory notice`
-    }, subject to eligibility). ACAS guidance recommends at least 10 calendar days to consider any formal proposal.`
+    }, subject to eligibility). ACAS guidance recommends at least 10 calendar days to consider any formal offer once it is put in writing.`
   } else if (result.verdict === 'BELOW_MINIMUM') {
     const shortfall = Math.max(0, result.minimum - result.effectiveOffer)
-    pillText = 'Below Statutory Baseline'
+    pillText = 'Below Legal Minimum'
     cardBg = '#FBF0EE'
     cardBorder = '#D9A99E'
     pillColor = '#A8341F'
-    headline = `Your ${formatCurrency(offer)} offer is ${formatCurrency(shortfall)} below your statutory baseline.`
-    summary = `Your calculated notice and redundancy baseline is ${formatCurrency(result.minimum)} (subject to eligibility). An independent SRA solicitor can check what is missing before you reply to HR.`
+    headline = `Your ${formatCurrency(offer)} offer is ${formatCurrency(shortfall)} below your calculated legal minimum.`
+    summary = `Your calculated notice and redundancy floor is ${formatCurrency(result.minimum)} (subject to eligibility). Do not reply to HR yet: an employment solicitor can check what is missing from your offer.`
   } else if (result.verdict === 'BELOW_TYPICAL') {
     pillText = 'Below Typical Range'
     cardBg = '#FEFBF0'
     cardBorder = '#E0CB94'
     pillColor = '#9A6B16'
     headline = `Your ${formatCurrency(offer)} offer covers the minimum, but sits below typical payouts.`
-    summary = `First offers are often a starting point. For ${yearsNum} ${yearsNum === 1 ? 'year' : 'years'} of service, an SRA solicitor can review your financial terms, tax allocation, and reference wording.`
+    summary = `First offers are often a starting point. For ${yearsNum} ${yearsNum === 1 ? 'year' : 'years'} of service, an employment solicitor can check your figures, tax-free split, and whether there is room to negotiate.`
   }
 
   return (
@@ -442,13 +442,20 @@ function UnifiedBreakdownCard({
       aria-label="Pay and tax breakdown"
       className="bg-white border border-[#E2DCCE] rounded-2xl overflow-hidden shadow-sm"
     >
-      <div className="px-5 py-4 border-b border-[#EFEAE0] flex items-center justify-between gap-2">
-        <h2 className="font-serif text-[20px] sm:text-[22px] font-bold text-[#0B1F3A] m-0">
-          How your numbers break down
-        </h2>
-        <span className="text-[13px] font-mono text-[#5B6577]">
-          {offer > 0 ? `Est. ${taxRatePct}% tax band` : 'Statutory baseline'}
-        </span>
+      <div className="px-5 py-4 border-b border-[#EFEAE0]">
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <h2 className="font-serif text-[20px] sm:text-[22px] font-bold text-[#0B1F3A] m-0">
+            How your payout breaks down
+          </h2>
+          {offer > 0 && (
+            <span className="text-[13px] font-mono text-[#5B6577] shrink-0">
+              Est. {taxRatePct}% tax band
+            </span>
+          )}
+        </div>
+        <p className="text-[14px] text-[#5B6577] leading-[1.5] m-0">
+          Settlements are split into notice pay (taxed like normal wages) and redundancy or compensation (usually tax-free up to £30,000).
+        </p>
       </div>
 
       {/* Compact Rows */}
@@ -467,7 +474,7 @@ function UnifiedBreakdownCard({
 
         <div className="px-5 py-3.5 flex items-center justify-between gap-3">
           <span className="text-[#0B1F3A]">
-            Notice pay (PILON · {result.noticeWeeksUsed} wk{result.noticeWeeksUsed !== 1 ? 's' : ''})
+            Notice pay (paid as a lump sum · {result.noticeWeeksUsed} wk{result.noticeWeeksUsed !== 1 ? 's' : ''})
           </span>
           <div className="flex items-center gap-2.5 shrink-0">
             <span className="text-[12px] font-semibold px-2.5 py-0.5 rounded-full bg-[#A8341F]/10 text-[#A8341F]">
@@ -478,8 +485,13 @@ function UnifiedBreakdownCard({
         </div>
 
         <div className="px-5 py-3.5 flex items-center justify-between gap-3 bg-[#FAF8F5]">
-          <span className="font-semibold text-[#0B1F3A]">Calculated statutory baseline</span>
-          <span className="font-mono font-bold text-[#0B1F3A]">{formatCurrency(result.minimum)}</span>
+          <div>
+            <span className="font-semibold text-[#0B1F3A] block">Your legal minimum floor</span>
+            <span className="text-[12px] text-[#5B6577]">
+              Baseline notice + statutory redundancy before any extra compensation
+            </span>
+          </div>
+          <span className="font-mono font-bold text-[#0B1F3A] shrink-0">{formatCurrency(result.minimum)}</span>
         </div>
 
         {offer > 0 && (
@@ -557,7 +569,7 @@ function UnifiedBreakdownCard({
             )}
             <span className="inline-flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-sm bg-[#D9603B] inline-block" />
-              Notice (PILON): <strong className="text-[#0B1F3A]">{formatCurrency(result.pilon)}</strong>
+              Notice pay: <strong className="text-[#0B1F3A]">{formatCurrency(result.pilon)}</strong>
             </span>
           </div>
         </div>
@@ -1033,7 +1045,10 @@ function SmartMobileStickyBar({ onScrollToIntake }: { onScrollToIntake: () => vo
       <div className="flex items-center justify-between gap-3 max-w-lg mx-auto">
         <div className="min-w-0 flex-1">
           <p className="text-[14px] font-bold text-[#0B1F3A] leading-snug m-0">
-            Confidential SRA Solicitor Check
+            Private Solicitor Review
+          </p>
+          <p className="text-[11px] text-[#5B6577] leading-tight m-0 mt-0.5">
+            Employers usually contribute £350–£500+ towards fees
           </p>
         </div>
         <button
@@ -1109,10 +1124,10 @@ function ResultsContent() {
   const showVentoTab = !!(result?.discriminationFlag && result?.ventoBands)
 
   const availableTabs: { id: DeepDiveTab; label: string }[] = [
-    { id: 'deadlines', label: 'Deadlines & Call Prep' },
-    { id: 'benchmarks', label: 'Tribunal Benchmarks & FAQs' },
-    ...(showPensionTab ? [{ id: 'pension' as const, label: 'Pension Tax Optimiser' }] : []),
-    ...(showVentoTab ? [{ id: 'vento' as const, label: 'Discrimination (Vento)' }] : []),
+    { id: 'deadlines', label: 'How long you have & call prep' },
+    { id: 'benchmarks', label: 'Typical payouts & FAQs' },
+    ...(showPensionTab ? [{ id: 'pension' as const, label: 'Save tax with pension' }] : []),
+    ...(showVentoTab ? [{ id: 'vento' as const, label: 'Discrimination awards (Vento)' }] : []),
   ]
 
   const saveParams = {
@@ -1220,9 +1235,17 @@ function ResultsContent() {
                 />
               </div>
 
-              {/* 4. On-Demand Deep-Dive Tools (Closed by default, zero clutter) */}
-              <div className="lg:col-span-7 lg:col-start-1 space-y-3 no-print">
-                <div className="flex flex-wrap gap-2" role="tablist" aria-label="Additional tools">
+              {/* 4. On-Demand Deep-Dive Tools (Closed by default, with clear layman context) */}
+              <div className="lg:col-span-7 lg:col-start-1 space-y-3 no-print pt-2">
+                <div>
+                  <h2 className="font-serif text-[19px] sm:text-[21px] font-bold text-[#0B1F3A] m-0 mb-1">
+                    Before you reply to HR
+                  </h2>
+                  <p className="text-[14px] text-[#5B6577] leading-[1.5] m-0">
+                    Tap below to check how long you have to decide, see what similar cases settle for, and prepare for your call.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2" role="tablist" aria-label="Before you reply to HR">
                   {availableTabs.map((tab) => {
                     const isOpen = activeTab === tab.id
                     return (
