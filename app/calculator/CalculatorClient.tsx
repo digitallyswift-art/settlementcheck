@@ -1,17 +1,35 @@
 'use client'
 
 import { Suspense, useMemo, useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { useRouter, useSearchParams } from 'next/navigation'
 import SteppedCalculator, { CalcPayload, InitialCalcValues } from '@/components/SteppedCalculator'
-import ThematicCalculator from '@/components/ThematicCalculator'
 import { hasAnalyticsConsent } from '@/lib/consent'
+
+const ThematicCalculator = dynamic(() => import('@/components/ThematicCalculator'), {
+  loading: () => (
+    <div className="min-h-screen bg-paper-2 flex items-center justify-center">
+      <p className="text-[#5B6577] text-[15px]">Loading calculator…</p>
+    </div>
+  ),
+})
 
 function CalculatorInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const [variant, setVariant] = useState<'sequential' | 'thematic'>('sequential')
-  const [resolved, setResolved] = useState(false)
+  const [variant, setVariant] = useState<'sequential' | 'thematic'>(() => {
+    const override = searchParams.get('v')
+    if (override === 'thematic' || override === 'sequential') return override
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = sessionStorage.getItem('sc_calc_assigned_variant')
+        if (stored === 'thematic' || stored === 'sequential') return stored
+      } catch {}
+    }
+    return 'sequential'
+  })
+  const userInteractedRef = useMemo(() => ({ current: false }), [])
 
   const initialValues: InitialCalcValues = useMemo(() => {
     return {
@@ -29,48 +47,39 @@ function CalculatorInner() {
   }, [searchParams])
 
   useEffect(() => {
-    async function resolveVariant() {
+    const markInteracted = () => {
+      userInteractedRef.current = true
+    }
+    window.addEventListener('pointerdown', markInteracted, { once: true, passive: true })
+    window.addEventListener('keydown', markInteracted, { once: true, passive: true })
+    return () => {
+      window.removeEventListener('pointerdown', markInteracted)
+      window.removeEventListener('keydown', markInteracted)
+    }
+  }, [userInteractedRef])
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function reconcileVariantNonBlocking() {
       // 1. Explicit URL parameter override for debugging/inspection (?v=thematic or ?v=sequential)
       const override = searchParams.get('v')
       if (override === 'thematic' || override === 'sequential') {
         setVariant(override)
-        setResolved(true)
         return
       }
 
-      // 2. Fetch remote experiment configuration
-      try {
-        const res = await fetch('/api/experiments/config/?id=calc_ux_v2')
-        if (res.ok) {
-          const data = await res.json()
-          if (data?.config?.mode === 'winner_selected' && data?.config?.winner) {
-            setVariant(data.config.winner)
-            setResolved(true)
-            return
-          }
-        }
-      } catch {
-        // Fall back to local session logic
-      }
-
-      // 3. Client session persistence (50/50 split) — gated by UK PECR analytics consent
-      if (!hasAnalyticsConsent()) {
-        setVariant('sequential')
-        setResolved(true)
-        return
-      }
-
-      try {
-        const stored = sessionStorage.getItem('sc_calc_assigned_variant')
-        if (stored === 'thematic' || stored === 'sequential') {
-          setVariant(stored)
-        } else {
-          const assigned: 'sequential' | 'thematic' = Math.random() < 0.5 ? 'sequential' : 'thematic'
-          sessionStorage.setItem('sc_calc_assigned_variant', assigned)
-          setVariant(assigned)
-
-          // Emit enrollment telemetry for sequential variant (thematic emits inside its own component)
-          if (assigned === 'sequential') {
+      // 2. Client session persistence — gated by UK PECR analytics consent
+      let localAssigned: 'sequential' | 'thematic' = 'sequential'
+      if (hasAnalyticsConsent()) {
+        try {
+          const stored = sessionStorage.getItem('sc_calc_assigned_variant')
+          if (stored === 'thematic' || stored === 'sequential') {
+            localAssigned = stored
+            if (!userInteractedRef.current) setVariant(stored)
+          } else {
+            localAssigned = 'sequential'
+            sessionStorage.setItem('sc_calc_assigned_variant', localAssigned)
             fetch('/api/telemetry/experiment-event/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -82,16 +91,34 @@ function CalculatorInner() {
               }),
             }).catch(() => {})
           }
+        } catch {
+          localAssigned = 'sequential'
         }
-      } catch {
-        setVariant('sequential')
       }
 
-      setResolved(true)
+      // 3. Reconcile remote experiment configuration non-blockingly if user hasn't interacted yet
+      try {
+        const res = await fetch('/api/experiments/config/?id=calc_ux_v2')
+        if (!cancelled && res.ok) {
+          const data = await res.json()
+          if (
+            data?.config?.mode === 'winner_selected' &&
+            (data?.config?.winner === 'sequential' || data?.config?.winner === 'thematic') &&
+            !userInteractedRef.current
+          ) {
+            setVariant(data.config.winner)
+          }
+        }
+      } catch {
+        // Keep immediate default variant
+      }
     }
 
-    resolveVariant()
-  }, [searchParams])
+    reconcileVariantNonBlocking()
+    return () => {
+      cancelled = true
+    }
+  }, [searchParams, userInteractedRef])
 
   function handleCalculate(payload: CalcPayload) {
     // Record completion event for sequential variant (only when analytics consent is granted)
@@ -122,15 +149,6 @@ function CalculatorInner() {
       variant:           variant,
     })
     router.push(`/results/?${p.toString()}`)
-  }
-
-  // Fallback while reading variant
-  if (!resolved) {
-    return (
-      <div className="min-h-screen bg-paper-2 flex items-center justify-center">
-        <p className="text-[#5B6577] text-[15px]">Loading calculator…</p>
-      </div>
-    )
   }
 
   return variant === 'thematic' ? (
