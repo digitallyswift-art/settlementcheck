@@ -34,7 +34,7 @@ const DEFAULT_FAQS: FaqItem[] = [
   },
   {
     q: 'How does the solicitor matching service work?',
-    a: 'The calculator and solicitor matching service are live and free to use today. When you submit your details and verify via SMS OTP, we introduce your enquiry to an independent SRA-regulated employment solicitor from our panel who acts solely in your best interest.',
+    a: 'The calculator and solicitor matching service are live and free to use today. When you submit your details and confirm your consent, we introduce your enquiry to an independent SRA-regulated employment solicitor from our panel who acts solely in your best interest.',
   },
   {
     q: 'What if I want to negotiate a higher amount?',

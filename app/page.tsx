@@ -203,7 +203,7 @@ const faqSchema = {
       name: 'How does the solicitor matching service work?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The calculator and solicitor matching service are live and free to use today. When you submit your details and verify via SMS OTP, we introduce your enquiry to an independent SRA-regulated employment solicitor from our panel who acts solely in your best interest.',
+        text: 'The calculator and solicitor matching service are live and free to use today. When you submit your details and confirm your consent, we introduce your enquiry to an independent SRA-regulated employment solicitor from our panel who acts solely in your best interest.',
       },
     },
     {

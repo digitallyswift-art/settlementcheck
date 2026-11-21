@@ -63,3 +63,14 @@ Translate abstract features into lived moments without sacrificing calm authorit
 3. **Pair Statute with Consequence (Never Strip E-E-A-T)**: Keep primary statutory anchors (`ITEPA 2003`, `ERA 1996 s.203(3)`, `SRA Rule 5.1`, `April 2026`), paired with a 1-line real-world consequence (e.g. spotting non-competes that affect your next job).
 4. **Question-Led Section Headers**: Mirror the employee's internal questions (*"How does the offer compare?"*, *"How much will HMRC take?"*, *"Who pays for the solicitor?"*) instead of internal process labels.
 5. **Eyes-Closed + Compliance Gate**: Every scene rewrite must pass both the Eyes-Closed Test and FCA/SRA/CMA boundaries: never ask *"Is this offer fair?"*, never say *"statutory floor"*, never frame ACAS 10 days as a binding countdown, and always keep *"capped"* plus the solicitor's terms caveat on employer fee contributions.
+
+## 6. Qualification & Point-of-Action Micro-Copy
+
+Conversion quality depends on reducing friction at sensitive inputs while setting accurate expectations before a user requests a solicitor introduction:
+
+1. **Point-of-Action Objection Reversal**: Place a 1-line reassurance directly beneath sensitive fields (phone number, email, salary, or employer context) rather than relying on a bottom-of-page FAQ. Example: *"Only shared with the single SRA-regulated solicitor you choose to speak with. Never shared with your employer."*
+2. **Expectation-Setting Before Submission**: Before the final consent checkbox, state clearly what happens next, who makes contact, and how fees work:
+   - Who: One independent SRA-regulated solicitor from the panel (no multi-firm auction or cold-call list).
+   - Fees: Employers standardly offer a capped contribution (typically £350 to £500+ plus VAT) upon completion, and extra or abortive work depends on your solicitor's terms.
+3. **Qualify Intent Without Prescriptive Gatekeeping**: Use descriptive scope cues (*"Best suited if you have a draft settlement agreement, an active exit discussion, or a redundancy notice"*) so users self-qualify before requesting a callback.
+4. **VoC Mirroring**: Ground form headers, field hints, and results-to-solicitor transitions in real UK employee phrasing from `forum-demand-researcher` (e.g. *"garden leave"*, *"notice pay taxed as wages"*, *"non-compete clause"*) rather than legal jargon.

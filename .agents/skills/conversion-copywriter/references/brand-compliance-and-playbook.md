@@ -65,3 +65,14 @@ Before publishing or approving any guide page, verify:
 | **Results Summary** | `Connect with independent solicitor →` | Employers standardly contribute £350 to £500+ plus VAT upon completion |
 | **Dossier Generation** | `Generate pre-flight briefing →` | Ready for your independent solicitor discussion |
 | **Partner Portal** | `Claim instruction (15m lock) →` | Direct PMS intake into Clio / LEAP |
+
+---
+
+## 5. Point-of-Action Micro-Copy Matrix (Funnel & Form Fields)
+
+| Funnel Moment | Goal | Compliant Micro-Copy Example |
+| :--- | :--- | :--- |
+| **Email / Phone Input** | Remove fear of HR or spam | *"Used only so your matched SRA-regulated solicitor can reach you at your chosen time. Never shared with your employer."* |
+| **Results-to-Solicitor Bridge** | Explain why a review matters without an FCA verdict | *"Your baseline shows the statutory numbers. A solicitor can check your contract, notice wording, and non-compete clauses."* |
+| **Consent & Fee Disclosure** | Prevent surprise expectations on legal costs | *"Confirm your consent to be introduced to one independent solicitor. Standard employer contributions (£350 to £500+ plus VAT) apply upon completion; extra or abortive work depends on their terms."* |
+| **Post-Submit Confirmation** | Reduce callback anxiety | *"Your case summary has been sent to one SRA-regulated solicitor for your chosen window. You are under no obligation to instruct."* |
