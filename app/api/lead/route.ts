@@ -46,6 +46,15 @@ export async function POST(req: NextRequest) {
       salary,
       months_service,
       monthsService,
+      dispute_reason,
+      disputeReason,
+      signing_urgency,
+      signingUrgency,
+      urgency,
+      intake_stage,
+      intakeStage,
+      lead_id,
+      leadId,
       consent,
       postcode,
       postcode_region,
@@ -56,6 +65,7 @@ export async function POST(req: NextRequest) {
       source_url,
       sourceUrl,
       benchmark_data,
+      benchmarkData,
       verification_token,
       verificationToken,
       token,
@@ -63,10 +73,14 @@ export async function POST(req: NextRequest) {
 
     const leadFirstName = (firstName || first_name || '').trim()
     const leadEmail = (email || '').trim().toLowerCase()
-    const leadPhone = (phone || '').trim()
+    const leadPhone = typeof phone === 'string' ? phone.trim() : ''
+    const rawContactTime = contactTime || contact_time
+    const leadContactTime = leadPhone.length > 0 && typeof rawContactTime === 'string' && rawContactTime.trim().length > 0
+      ? rawContactTime.trim()
+      : undefined
 
-    // ── 3. Input Validation ─────────────────────────────────────────────────
-    if (!leadFirstName || !leadEmail || !leadPhone || (!consent && !body.gdpr_consent && !body.gdprConsent)) {
+    // ── 3. Input Validation (phone is optional; firstName, email & consent required) ──
+    if (!leadFirstName || !leadEmail || (!consent && !body.gdpr_consent && !body.gdprConsent)) {
       return NextResponse.json({ error: 'Missing required fields or affirmative consent' }, { status: 400 })
     }
 
@@ -116,16 +130,20 @@ export async function POST(req: NextRequest) {
     }
 
     // ── 5. Ingestion via Unified Lead Service ────────────────────────────────
-    // Never reject a valid UK employee enquiry; flag verification tier appropriately
+    // Never reject a valid UK employee enquiry; flag verification tier and phone presence cleanly
     const result = await ingestLead({
       firstName: leadFirstName,
       email: leadEmail,
       phone: leadPhone,
-      contactTime: contactTime || contact_time,
+      contactTime: leadContactTime,
       verdict,
       offerAmount: offerAmount ?? offer_amount,
       salary,
       monthsService: monthsService ?? months_service,
+      disputeReason: disputeReason ?? dispute_reason,
+      signingUrgency: signingUrgency ?? signing_urgency ?? urgency,
+      intakeStage: intakeStage ?? intake_stage,
+      leadId: leadId ?? lead_id,
       consent: true,
       postcode,
       postcodeRegion: postcode_region,
@@ -133,7 +151,7 @@ export async function POST(req: NextRequest) {
       postcodeLng: postcode_lng,
       partnerId: partnerId ?? partner_id,
       sourceUrl: sourceUrl ?? source_url,
-      benchmarkData: benchmark_data,
+      benchmarkData: benchmarkData ?? benchmark_data,
       emailVerified: isOtpVerified,
     })
 
@@ -141,6 +159,7 @@ export async function POST(req: NextRequest) {
       success: true,
       triageId: result.triageId,
       leadId: result.leadId,
+      phoneProvided: result.phoneProvided,
       triage: {
         matterTier: result.triage.matterTier,
         tenureClassification: result.triage.employment.tenureClassification,

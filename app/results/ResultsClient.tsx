@@ -133,7 +133,7 @@ function InputsSummaryPanel({
         <button
           type="button"
           onClick={togglePanel}
-          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#0B1F3A] hover:text-[#D9603B] transition-colors bg-transparent border-0 cursor-pointer p-0"
+          className="inline-flex items-center gap-1.5 text-[14px] font-medium text-[#0B1F3A] hover:text-[#D9603B] transition-colors bg-transparent border-0 cursor-pointer p-0"
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M10 13L5 8L10 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -141,7 +141,7 @@ function InputsSummaryPanel({
           {open ? 'Close inputs' : 'Edit my numbers'}
         </button>
 
-        <div className="flex flex-wrap items-center gap-2 text-[12px] text-[#5B6577]">
+        <div className="flex flex-wrap items-center gap-2 text-[13px] text-[#5B6577]">
           <span>
             2026/27 rates · {jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland & Wales'} (£{jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB}/wk cap)
           </span>
@@ -149,7 +149,7 @@ function InputsSummaryPanel({
             <button
               type="button"
               onClick={() => setShowJurisdiction(true)}
-              className="underline underline-offset-2 text-[#0B1F3A] hover:text-[#D9603B] bg-transparent border-0 cursor-pointer p-0 text-[12px]"
+              className="underline underline-offset-2 text-[#0B1F3A] hover:text-[#D9603B] bg-transparent border-0 cursor-pointer p-0 text-[13px]"
             >
               Change
             </button>
@@ -163,7 +163,7 @@ function InputsSummaryPanel({
                     onJurisdictionChange(j)
                     setShowJurisdiction(false)
                   }}
-                  className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold border cursor-pointer"
+                  className="px-2.5 py-0.5 rounded-full text-[12px] font-semibold border cursor-pointer"
                   style={{
                     background: jurisdiction === j ? '#0B1F3A' : '#fff',
                     color: jurisdiction === j ? '#fff' : '#0B1F3A',
@@ -348,7 +348,7 @@ function EstimateReportCard({
       >
         <div className="flex items-center justify-between gap-2 mb-3">
           <span
-            className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-[0.08em] uppercase bg-white"
+            className="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-bold tracking-[0.08em] uppercase bg-white"
             style={{ color: pillColor, border: `1px solid ${headerBorder}` }}
           >
             {pillText}
@@ -357,13 +357,13 @@ function EstimateReportCard({
           <button
             type="button"
             onClick={onJumpToIntake}
-            className="lg:hidden text-[13px] font-semibold text-[#D9603B] hover:underline bg-transparent border-0 p-0 cursor-pointer no-print"
+            className="lg:hidden text-[14px] font-semibold text-[#D9603B] hover:underline bg-transparent border-0 p-0 cursor-pointer no-print"
           >
             Solicitor review ↓
           </button>
         </div>
 
-        <h1 className="font-serif text-[25px] sm:text-[29px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-4">
+        <h1 className="font-serif text-[26px] sm:text-[31px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-4">
           {headline}
         </h1>
 
@@ -372,28 +372,28 @@ function EstimateReportCard({
           {offer > 0 ? (
             <>
               <div>
-                <div className="text-[11px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
                   Your offer
                 </div>
-                <div className="font-serif text-[22px] sm:text-[25px] font-bold text-[#0B1F3A] leading-tight">
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight">
                   {formatCurrency(offer)}
                 </div>
               </div>
 
               <div className="border-l border-[#0B1F3A]/10 pl-3.5 sm:pl-4">
-                <div className="text-[11px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
                   Legal minimum
                 </div>
-                <div className="font-serif text-[22px] sm:text-[25px] font-bold text-[#0B1F3A] leading-tight">
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight">
                   {formatCurrency(result.minimum)}
                 </div>
               </div>
 
               <div className="col-span-2 sm:col-span-1 pt-3 sm:pt-0 border-t sm:border-t-0 sm:border-l border-[#0B1F3A]/10 sm:pl-4">
-                <div className="text-[11px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
                   What you keep (est.)
                 </div>
-                <div className="font-serif text-[22px] sm:text-[25px] font-bold text-[#D9603B] leading-tight">
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#D9603B] leading-tight">
                   {formatCurrency(result.estimatedNet)}
                 </div>
               </div>
@@ -401,28 +401,28 @@ function EstimateReportCard({
           ) : (
             <>
               <div>
-                <div className="text-[11px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
                   Legal minimum
                 </div>
-                <div className="font-serif text-[22px] sm:text-[25px] font-bold text-[#0B1F3A] leading-tight">
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight">
                   {formatCurrency(result.minimum)}
                 </div>
               </div>
 
               <div className="border-l border-[#0B1F3A]/10 pl-3.5 sm:pl-4">
-                <div className="text-[11px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
                   Notice pay ({result.noticeWeeksUsed} wk{result.noticeWeeksUsed !== 1 ? 's' : ''})
                 </div>
-                <div className="font-serif text-[22px] sm:text-[25px] font-bold text-[#0B1F3A] leading-tight">
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight">
                   {formatCurrency(result.pilon)}
                 </div>
               </div>
 
               <div className="col-span-2 sm:col-span-1 pt-3 sm:pt-0 border-t sm:border-t-0 sm:border-l border-[#0B1F3A]/10 sm:pl-4">
-                <div className="text-[11px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
                   Typical range
                 </div>
-                <div className="font-serif text-[20px] sm:text-[22px] font-bold text-[#0B1F3A] leading-tight">
+                <div className="font-serif text-[22px] sm:text-[24px] font-bold text-[#0B1F3A] leading-tight">
                   {typicalRangeText}
                 </div>
               </div>
@@ -430,16 +430,55 @@ function EstimateReportCard({
           )}
         </div>
 
-        <p className="text-[15px] text-[#2B3445] leading-[1.6] m-0">{summary}</p>
+        <p className="text-[16px] text-[#2B3445] leading-[1.65] m-0">{summary}</p>
         {offer > 0 && (
-          <p className="text-[13px] text-[#5B6577] leading-[1.55] m-0 mt-2">
+          <p className="text-[14px] text-[#5B6577] leading-[1.55] m-0 mt-2">
             ACAS guidance recommends 10 calendar days to consider a written offer, though employers can set shorter deadlines.
           </p>
         )}
 
+        {/* High-Trust Statutory Reassurance Callout */}
+        <div className="mt-4 p-3.5 rounded-xl bg-white border border-[#C8D3DF] flex items-start gap-3 shadow-sm">
+          <div className="w-8 h-8 rounded-full bg-[#0B1F3A]/8 text-[#0B1F3A] flex items-center justify-center shrink-0 mt-0.5">
+            <svg className="w-4 h-4 text-[#D9603B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <div className="min-w-0 text-[14px] text-[#0B1F3A] leading-[1.55]">
+            <p className="font-bold text-[#0B1F3A] m-0 mb-0.5">
+              100% Confidential under Section 203(3) ERA 1996
+            </p>
+            <p className="text-[#5B6577] m-0">
+              Your employer is never contacted. Standard employer legal fee contributions (£350 to £500+ +VAT) apply upon completion, making independent solicitor review typically £0 to you.
+            </p>
+          </div>
+        </div>
+
+        {/* Above-the-fold Mobile Intake Jump CTA */}
+        <div className="mt-3.5 lg:hidden no-print">
+          <button
+            type="button"
+            onClick={onJumpToIntake}
+            className="w-full py-3.5 px-4 rounded-xl bg-[#D9603B] hover:bg-[#B14A28] text-white font-bold text-base flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(217,96,59,0.26)] border-0 cursor-pointer transition-colors"
+          >
+            <span>
+              {offer <= 0
+                ? 'Check solicitor availability →'
+                : result.verdict === 'BELOW_MINIMUM'
+                ? 'Review this shortfall with a solicitor →'
+                : result.verdict === 'BELOW_TYPICAL'
+                ? 'Check my options with a solicitor →'
+                : 'Check my terms & sign off →'}
+            </span>
+          </button>
+          <p className="text-[12.5px] text-[#5B6577] text-center m-0 mt-1.5">
+            Takes 20 seconds · Phone number optional · 1 SRA firm match
+          </p>
+        </div>
+
         {/* Contextual 1-Line High-Value Flags (only when triggered) */}
         {hasAlerts && (
-          <div className="mt-3.5 pt-3 border-t border-[#0B1F3A]/10 space-y-2 text-[13px] text-[#0B1F3A] leading-[1.55]">
+          <div className="mt-3.5 pt-3 border-t border-[#0B1F3A]/10 space-y-2 text-[14px] text-[#0B1F3A] leading-[1.55]">
             {result.taxableTermination > 0 && (
               <p className="m-0">
                 <strong>Above £30,000 tax-free threshold:</strong> {formatCurrency(result.taxableTermination)} of your termination payment is taxable. Ask a solicitor whether redirecting part into a pension (ITEPA 2003 s.408) can reduce your tax bill before signing.
@@ -463,25 +502,25 @@ function EstimateReportCard({
       {/* Seamless Breakdown Body */}
       <div>
         <div className="px-5 sm:px-6 py-3.5 border-b border-[#EFEAE0] flex items-center justify-between gap-2">
-          <h2 className="font-serif text-[18px] font-bold text-[#0B1F3A] m-0">
+          <h2 className="font-serif text-[20px] font-bold text-[#0B1F3A] m-0">
             What these numbers mean
           </h2>
           {offer > 0 && (
-            <span className="text-[12px] font-mono text-[#5B6577] shrink-0">
+            <span className="text-[13px] font-mono text-[#5B6577] shrink-0">
               Est. {taxRatePct}% tax band
             </span>
           )}
         </div>
 
-        <div className="divide-y divide-[#EFEAE0] text-[15px]">
+        <div className="divide-y divide-[#EFEAE0] text-[16px]">
           {srpValue > 0 && (
-            <div className="px-5 sm:px-6 py-3 flex items-center justify-between gap-3">
+            <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3">
               <div>
                 <span className="text-[#0B1F3A] block">{srpLabel}</span>
-                <span className="text-[12px] text-[#5B6577]">Usually tax-free up to £30,000</span>
+                <span className="text-[13.5px] text-[#5B6577]">Usually tax-free up to £30,000</span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#0B1F3A]/8 text-[#0B1F3A]">
+                <span className="text-[12px] font-semibold px-2.5 py-0.5 rounded-full bg-[#0B1F3A]/8 text-[#0B1F3A]">
                   Tax-free
                 </span>
                 <span className="font-mono font-semibold text-[#0B1F3A]">{formatCurrency(srpValue)}</span>
@@ -489,42 +528,42 @@ function EstimateReportCard({
             </div>
           )}
 
-          <div className="px-5 sm:px-6 py-3 flex items-center justify-between gap-3">
+          <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3">
             <div>
               <span className="text-[#0B1F3A] block">
                 Notice pay ({result.noticeWeeksUsed} week{result.noticeWeeksUsed !== 1 ? 's' : ''})
               </span>
-              <span className="text-[12px] text-[#5B6577]">Taxed like normal wages</span>
+              <span className="text-[13.5px] text-[#5B6577]">Taxed like normal wages</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#A8341F]/10 text-[#A8341F]">
+              <span className="text-[12px] font-semibold px-2.5 py-0.5 rounded-full bg-[#A8341F]/10 text-[#A8341F]">
                 Taxable
               </span>
               <span className="font-mono font-semibold text-[#0B1F3A]">{formatCurrency(result.pilon)}</span>
             </div>
           </div>
 
-          <div className="px-5 sm:px-6 py-3 flex items-center justify-between gap-3 bg-[#FAF8F5]">
+          <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3 bg-[#FAF8F5]">
             <div>
               <span className="font-semibold text-[#0B1F3A] block">Your legal minimum</span>
-              <span className="text-[12px] text-[#5B6577]">Notice pay plus statutory redundancy before any extra compensation</span>
+              <span className="text-[13.5px] text-[#5B6577]">Notice pay plus statutory redundancy before any extra compensation</span>
             </div>
             <span className="font-mono font-bold text-[#0B1F3A] shrink-0">{formatCurrency(result.minimum)}</span>
           </div>
 
           {offer > 0 && (
             <>
-              <div className="px-5 sm:px-6 py-3 flex items-center justify-between gap-3">
+              <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3">
                 <span className="text-[#5B6577]">Estimated income tax on offer ({taxRatePct}%)</span>
                 <span className="font-mono font-semibold text-[#A8341F]">-{formatCurrency(result.estimatedTax)}</span>
               </div>
 
-              <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3 bg-[#F7F4EE]">
+              <div className="px-5 sm:px-6 py-4 flex items-center justify-between gap-3 bg-[#F7F4EE]">
                 <div>
                   <span className="font-bold text-[#0B1F3A] block">What you actually keep (estimated)</span>
-                  <span className="text-[12px] text-[#5B6577]">Estimated take-home cash after income tax</span>
+                  <span className="text-[13.5px] text-[#5B6577]">Estimated take-home cash after income tax</span>
                 </div>
-                <span className="font-serif text-[22px] font-bold text-[#0B1F3A] shrink-0">{formatCurrency(result.estimatedNet)}</span>
+                <span className="font-serif text-[24px] font-bold text-[#0B1F3A] shrink-0">{formatCurrency(result.estimatedNet)}</span>
               </div>
             </>
           )}
@@ -532,7 +571,7 @@ function EstimateReportCard({
 
         {/* Compact Visual Tax Split Bar */}
         {offer > 0 && (
-          <div className="px-5 sm:px-6 py-3.5 border-t border-[#EFEAE0]">
+          <div className="px-5 sm:px-6 py-4 border-t border-[#EFEAE0]">
             <div className="flex w-full h-3 rounded-full overflow-hidden bg-[#EFEAE0] mb-2.5">
               {taxFreePct > 0 && (
                 <div
@@ -557,7 +596,7 @@ function EstimateReportCard({
               )}
             </div>
 
-            <div className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-[#5B6577]">
+            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[13.5px] text-[#5B6577]">
               <span className="inline-flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-sm bg-[#0B1F3A] inline-block" />
                 Tax-free: <strong className="text-[#0B1F3A]">{formatCurrency(result.taxFreeAmount)}</strong>
@@ -581,14 +620,14 @@ function EstimateReportCard({
           <button
             type="button"
             onClick={() => setDetailsOpen((o) => !o)}
-            className="w-full px-5 sm:px-6 py-3 text-left flex items-center justify-between text-[13px] font-medium text-[#5B6577] hover:text-[#0B1F3A] bg-[#FAF8F5] border-0 cursor-pointer"
+            className="w-full px-5 sm:px-6 py-3.5 text-left flex items-center justify-between text-[14px] font-medium text-[#5B6577] hover:text-[#0B1F3A] bg-[#FAF8F5] border-0 cursor-pointer"
           >
             <span>How this is calculated &amp; UK tax rules</span>
             <span style={{ transform: detailsOpen ? 'rotate(180deg)' : 'none', transition: 'transform 180ms' }}>▾</span>
           </button>
 
           {detailsOpen && (
-            <div className="px-5 sm:px-6 py-4 bg-[#FAF8F5] border-t border-[#EFEAE0] text-[13px] text-[#5B6577] leading-[1.6] space-y-2.5">
+            <div className="px-5 sm:px-6 py-4 bg-[#FAF8F5] border-t border-[#EFEAE0] text-[14px] text-[#5B6577] leading-[1.65] space-y-2.5">
               <p className="m-0">
                 <strong>Method:</strong> The legal minimum combines statutory notice pay (ERA 1996 s.86) and statutory redundancy pay (s.162, subject to s.141 eligibility). Typical ranges add an illustrative negotiation allowance based on UK settlement practice. Actual outcomes depend on your contract and facts.
               </p>
@@ -653,18 +692,18 @@ function WhatHappensNextStrip() {
       aria-label="What happens next"
       className="bg-white border border-[#E2DCCE] rounded-2xl p-5 no-print"
     >
-      <h2 className="font-serif text-[18px] font-bold text-[#0B1F3A] m-0 mb-3.5">
+      <h2 className="font-serif text-[20px] font-bold text-[#0B1F3A] m-0 mb-3.5">
         What happens next
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {steps.map((s) => (
           <div key={s.num} className="flex items-start gap-2.5 sm:block">
-            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#0B1F3A] text-white text-[12px] font-mono font-bold shrink-0 sm:mb-2">
+            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#0B1F3A] text-white text-[13px] font-mono font-bold shrink-0 sm:mb-2">
               {s.num}
             </span>
             <div>
-              <div className="text-[14px] font-bold text-[#0B1F3A] mb-0.5">{s.title}</div>
-              <p className="text-[13px] text-[#5B6577] leading-[1.5] m-0">{s.desc}</p>
+              <div className="text-[15.5px] font-bold text-[#0B1F3A] mb-1">{s.title}</div>
+              <p className="text-[14.5px] text-[#5B6577] leading-[1.55] m-0">{s.desc}</p>
             </div>
           </div>
         ))}
@@ -694,7 +733,7 @@ function SmartMobileStickyBar({
     const observer = new IntersectionObserver(
       (entries) => {
         cardVisible = !!entries[0]?.isIntersecting
-        setShow(!cardVisible && window.scrollY > 360)
+        setShow(!cardVisible && window.scrollY > 120)
       },
       { threshold: 0.1 }
     )
@@ -713,7 +752,7 @@ function SmartMobileStickyBar({
     }
 
     const onScroll = () => {
-      setShow(!cardVisible && window.scrollY > 360)
+      setShow(!cardVisible && window.scrollY > 120)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
 
@@ -750,13 +789,13 @@ function SmartMobileStickyBar({
             Private Solicitor Review
           </p>
           <p className="text-[11px] text-[#5B6577] leading-tight m-0 mt-0.5 truncate">
-            1 SRA-regulated solicitor · Strictly private
+            Employer pays fee contribution · 100% confidential
           </p>
         </div>
         <button
           type="button"
           onClick={onScrollToIntake}
-          className="inline-flex items-center justify-center px-3.5 py-2.5 text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg border-0 cursor-pointer flex-shrink-0 whitespace-nowrap"
+          className="inline-flex items-center justify-center px-3.5 py-2.5 text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg border-0 cursor-pointer flex-shrink-0 whitespace-nowrap shadow-sm"
         >
           {ctaLabel}
         </button>
@@ -938,7 +977,7 @@ function ResultsContent() {
               </div>
 
               {/* 4. Quiet Compliance Disclosure */}
-              <div className="lg:col-span-7 lg:col-start-1 pt-1 text-[12px] text-[#6B7485] leading-[1.6] no-print">
+              <div className="lg:col-span-7 lg:col-start-1 pt-1 text-[13.5px] text-[#6B7485] leading-[1.6] no-print">
                 <p className="m-0">
                   Estimates use 2026/27 UK statutory rates (£{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI weekly cap) for general guidance only and do not constitute legal or tax advice. SettlementCheck is an independent introducer, not a law firm. Employer legal fee contributions (£350 to £500+ +VAT) are standard commercial practice paid upon completion, not a statutory requirement. Fees above the cap or abortive costs remain subject to your solicitor&apos;s terms.
                 </p>
