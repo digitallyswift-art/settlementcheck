@@ -33,9 +33,8 @@ function getVerdictFraming(
   if (offerNum <= 0) {
     return {
       heading: 'Expecting an offer? Know where you stand first',
-      subtext:
-        'Enter your details below to have one available SRA-regulated employment solicitor review your figures and get in touch.',
-      benefit1: 'Walk through your calculated baseline and options before an offer is tabled',
+      subtext: 'Check your options with 1 available SRA-regulated employment solicitor before terms arrive.',
+      benefit1: 'Check your statutory baseline & options early',
       ctaLabel: 'Check solicitor availability →',
     }
   }
@@ -46,9 +45,8 @@ function getVerdictFraming(
       heading: formattedShortfall
         ? `Why is your offer ${formattedShortfall} below the legal minimum?`
         : 'Why is your offer below the legal minimum?',
-      subtext:
-        'Enter your details below to have one available SRA-regulated employment solicitor review your figures and get in touch.',
-      benefit1: 'Check your notice pay, statutory redundancy, and accrued holiday pay',
+      subtext: 'Have 1 available SRA-regulated employment solicitor review your notice and statutory floor.',
+      benefit1: 'Check notice pay, redundancy & accrued holiday',
       ctaLabel: formattedShortfall
         ? `Review this ${formattedShortfall} gap with a solicitor →`
         : 'Review this gap with a solicitor →',
@@ -57,17 +55,15 @@ function getVerdictFraming(
   if (verdict === 'BELOW_TYPICAL') {
     return {
       heading: 'Could you be leaving money on the table?',
-      subtext:
-        'First offers are often a starting point. Enter your details below to have one available SRA-regulated employment solicitor review your figures and get in touch.',
-      benefit1: 'Review your figures, £30,000 tax-free split, and room to negotiate',
+      subtext: 'First offers are often a starting point. Get a confidential review from 1 SRA-regulated solicitor.',
+      benefit1: 'Check your £30k tax-free split & room to negotiate',
       ctaLabel: 'Check my options with a solicitor →',
     }
   }
   return {
     heading: 'The numbers add up. What about the fine print?',
-    subtext:
-      'A UK settlement agreement is only legally valid once an independent solicitor signs it off under Section 203(3) ERA 1996. Enter your details below to have one available SRA-regulated employment solicitor review your figures and get in touch.',
-    benefit1: 'Check your tax-free split, reference wording, and job restrictions',
+    subtext: 'A UK settlement agreement is only binding once signed off by an independent solicitor (ERA 1996 s.203).',
+    benefit1: 'Check your tax-free split, reference & restrictions',
     ctaLabel: 'Check my terms & sign off →',
   }
 }
@@ -242,12 +238,12 @@ export default function InlineSolicitorIntakeCard({
     }
   }
 
-  // Attached calculation chip text
+  // Attached calculation chip text (concise 1-line summary)
   const attachedSummaryParts: string[] = []
   if (offerNum > 0) {
     attachedSummaryParts.push(`£${Math.round(offerNum).toLocaleString('en-GB')} offer`)
     if (resultSummary && resultSummary.estimatedNet > 0) {
-      attachedSummaryParts.push(`Est. £${Math.round(resultSummary.estimatedNet).toLocaleString('en-GB')} take-home`)
+      attachedSummaryParts.push(`£${Math.round(resultSummary.estimatedNet).toLocaleString('en-GB')} est. net`)
     }
   } else if (resultSummary && resultSummary.minimum > 0) {
     attachedSummaryParts.push(`£${Math.round(resultSummary.minimum).toLocaleString('en-GB')} legal minimum`)
@@ -342,39 +338,39 @@ export default function InlineSolicitorIntakeCard({
         <div className="h-1.5 bg-[#0B1F3A]" />
 
         <div className="p-5 sm:p-6">
-          <h2 className="font-serif text-[23px] sm:text-[25px] font-bold text-[#0B1F3A] m-0 mb-2 leading-[1.25]">
+          <h2 className="font-serif text-[23px] sm:text-[25px] font-bold text-[#0B1F3A] m-0 mb-1.5 leading-[1.22]">
             {framing.heading}
           </h2>
 
-          <p className="text-[15.5px] text-[#5B6577] leading-[1.6] m-0 mb-4">
+          <p className="text-[15px] text-[#5B6577] leading-[1.55] m-0 mb-3.5">
             {framing.subtext}
           </p>
 
-          {/* 3 Checkmark Bullets */}
-          <ul className="m-0 mb-4 p-0 list-none space-y-2 text-[14.5px] text-[#0B1F3A] leading-[1.5]">
-            <li className="flex items-start gap-2.5">
+          {/* 3 Scannable Single-Line Checkmark Bullets */}
+          <ul className="m-0 mb-3.5 p-0 list-none space-y-1.5 text-[14px] text-[#0B1F3A] leading-[1.45]">
+            <li className="flex items-start gap-2">
               <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
               <span>{framing.benefit1}</span>
             </li>
-            <li className="flex items-start gap-2.5">
+            <li className="flex items-start gap-2">
               <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
-              <span>Strictly private, with no obligation (your employer is never told)</span>
+              <span>100% private (your employer is never told)</span>
             </li>
-            <li className="flex items-start gap-2.5">
+            <li className="flex items-start gap-2">
               <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
-              <span>Employers usually contribute £350 to £500+ (+VAT) on completion</span>
+              <span>Employers usually cover £350–£500+ (+VAT) fees</span>
             </li>
           </ul>
 
-          {/* Attached Calculation Summary Pill */}
+          {/* Compact 1-Line Attached Summary Pill */}
           {attachedSummaryParts.length > 0 && (
-            <div className="px-3.5 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2DCCE] mb-4 text-[13.5px] text-[#0B1F3A]">
-              <div className="font-bold text-[#D9603B] mb-0.5">Attached:</div>
-              <div className="font-semibold leading-snug">{attachedSummaryParts.join(' · ')}</div>
+            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 px-3 py-2 rounded-xl bg-[#FAF8F5] border border-[#E2DCCE] mb-4 text-[13px] text-[#0B1F3A]">
+              <span className="font-bold text-[#D9603B] shrink-0">Attached:</span>
+              <span className="font-semibold">{attachedSummaryParts.join(' · ')}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
+          <form onSubmit={handleSubmit} noValidate className="space-y-3">
             {/* Honeypot */}
             <input
               type="text"
@@ -387,7 +383,7 @@ export default function InlineSolicitorIntakeCard({
             />
 
             <div>
-              <label htmlFor="sc-first-name" className="block text-[14.5px] font-semibold text-[#0B1F3A] mb-1.5">
+              <label htmlFor="sc-first-name" className="block text-[14.5px] font-semibold text-[#0B1F3A] mb-1">
                 First name <span className="text-[#D9603B]">*</span>
               </label>
               <input
@@ -399,12 +395,12 @@ export default function InlineSolicitorIntakeCard({
                 value={name}
                 onFocus={handleFormFocus}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3.5 py-3 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
               />
             </div>
 
             <div>
-              <label htmlFor="sc-personal-email" className="block text-[14.5px] font-semibold text-[#0B1F3A] mb-1.5">
+              <label htmlFor="sc-personal-email" className="block text-[14.5px] font-semibold text-[#0B1F3A] mb-1">
                 Personal email <span className="text-[#D9603B]">*</span>
               </label>
               <input
@@ -416,13 +412,17 @@ export default function InlineSolicitorIntakeCard({
                 value={email}
                 onFocus={handleFormFocus}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-3 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
               />
             </div>
 
             <div>
-              <label htmlFor="sc-phone" className="block text-[14.5px] font-semibold text-[#0B1F3A] mb-1.5">
-                UK mobile or telephone <span className="text-[#5B6577] font-normal">(optional, for a faster callback)</span>
+              <label
+                htmlFor="sc-phone"
+                className="flex items-baseline justify-between gap-2 text-[14.5px] font-semibold text-[#0B1F3A] mb-1"
+              >
+                <span>UK mobile or telephone</span>
+                <span className="text-[12.5px] text-[#5B6577] font-normal">Optional · faster callback</span>
               </label>
               <input
                 id="sc-phone"
@@ -432,13 +432,13 @@ export default function InlineSolicitorIntakeCard({
                 value={phone}
                 onFocus={handleFormFocus}
                 onChange={(e) => handlePhoneChange(e.target.value)}
-                className="w-full px-3.5 py-3 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
               />
             </div>
 
             {hasPhoneInput && (
               <div className="pt-0.5">
-                <span className="block text-[14.5px] font-semibold text-[#0B1F3A] mb-1.5">
+                <span className="block text-[14px] font-semibold text-[#0B1F3A] mb-1.5">
                   Best time to call <span className="text-[#5B6577] font-normal">(optional)</span>
                 </span>
                 <div className="grid grid-cols-3 gap-2">
@@ -460,10 +460,10 @@ export default function InlineSolicitorIntakeCard({
               </div>
             )}
 
-            <div className="pt-1">
+            <div className="pt-0.5">
               <label
                 htmlFor="sc-consent"
-                className="flex items-start gap-3 cursor-pointer select-none py-1"
+                className="flex items-start gap-2.5 cursor-pointer select-none py-0.5"
               >
                 <input
                   id="sc-consent"
@@ -472,14 +472,14 @@ export default function InlineSolicitorIntakeCard({
                   onChange={(e) => setConsent(e.target.checked)}
                   className="mt-0.5 h-5 w-5 rounded border-[#D8D2C6] accent-[#D9603B] text-[#D9603B] focus:ring-[#D9603B] cursor-pointer shrink-0"
                 />
-                <span className="text-[14px] text-[#2B3445] leading-[1.55]">
-                  I&apos;m happy for SettlementCheck to share my figures with one available SRA-regulated employment solicitor so they can review them and get in touch.
+                <span className="text-[13.5px] text-[#2B3445] leading-[1.5]">
+                  Share my figures with <strong>one</strong> available SRA-regulated employment solicitor so they can review them and get in touch.
                 </span>
               </label>
             </div>
 
             {error && (
-              <div className="p-3.5 bg-[#FBF0EE] border border-[#D9A99E] rounded-xl text-[14px] text-[#A8341F]">
+              <div className="p-3 bg-[#FBF0EE] border border-[#D9A99E] rounded-xl text-[14px] text-[#A8341F]">
                 {error}
               </div>
             )}
@@ -487,7 +487,7 @@ export default function InlineSolicitorIntakeCard({
             <button
               type="submit"
               disabled={submitting}
-              className={`w-full py-4 px-5 rounded-xl text-white font-bold text-base flex items-center justify-center gap-2 transition-all cursor-pointer border-0 ${
+              className={`w-full py-3.5 px-5 rounded-xl text-white font-bold text-base flex items-center justify-center gap-2 transition-all cursor-pointer border-0 ${
                 submitting
                   ? 'bg-[#E2DCCE] text-[#5B6577] cursor-not-allowed'
                   : 'bg-[#D9603B] hover:bg-[#B14A28] shadow-[0_4px_16px_rgba(217,96,59,0.28)]'
@@ -496,8 +496,8 @@ export default function InlineSolicitorIntakeCard({
               <span>{submitting ? 'Sending your figures...' : framing.ctaLabel}</span>
             </button>
 
-            <p className="m-0 pt-1 text-[13px] text-[#5B6577] leading-[1.55] text-center">
-              Private and confidential: your employer is never contacted. SettlementCheck introduces you to one available SRA-regulated employment solicitor and is not a law firm. Any extra work beyond your employer&apos;s contribution is agreed with you upfront. Estimates are a guide only, not legal advice.
+            <p className="m-0 pt-0.5 text-[12.5px] text-[#5B6577] leading-[1.5] text-center">
+              SettlementCheck introduces you to 1 SRA-regulated solicitor and is not a law firm. Any extra work beyond your employer&apos;s contribution is agreed upfront.
             </p>
           </form>
         </div>

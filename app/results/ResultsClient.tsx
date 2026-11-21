@@ -437,25 +437,8 @@ function EstimateReportCard({
           </p>
         )}
 
-        {/* High-Trust Statutory Reassurance Callout */}
-        <div className="mt-4 p-3.5 rounded-xl bg-white border border-[#C8D3DF] flex items-start gap-3 shadow-sm">
-          <div className="w-8 h-8 rounded-full bg-[#0B1F3A]/8 text-[#0B1F3A] flex items-center justify-center shrink-0 mt-0.5">
-            <svg className="w-4 h-4 text-[#D9603B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-          </div>
-          <div className="min-w-0 text-[14px] text-[#0B1F3A] leading-[1.55]">
-            <p className="font-bold text-[#0B1F3A] m-0 mb-0.5">
-              100% Confidential under Section 203(3) ERA 1996
-            </p>
-            <p className="text-[#5B6577] m-0">
-              Your employer is never contacted. Standard employer legal fee contributions (£350 to £500+ +VAT) apply upon completion, making independent solicitor review typically £0 to you.
-            </p>
-          </div>
-        </div>
-
         {/* Above-the-fold Mobile Intake Jump CTA */}
-        <div className="mt-3.5 lg:hidden no-print">
+        <div className="mt-4 lg:hidden no-print">
           <button
             type="button"
             onClick={onJumpToIntake}
@@ -472,7 +455,7 @@ function EstimateReportCard({
             </span>
           </button>
           <p className="text-[12.5px] text-[#5B6577] text-center m-0 mt-1.5">
-            Takes 20 seconds · Phone number optional · 1 SRA firm match
+            Takes 20 seconds · Phone optional · 1 SRA firm match
           </p>
         </div>
 
@@ -672,18 +655,18 @@ function WhatHappensNextStrip() {
   const steps = [
     {
       num: '1',
-      title: 'One solicitor, total privacy',
-      desc: 'We pass your numbers to one SRA-regulated employment solicitor. Your employer is never told.',
+      title: '1 solicitor match',
+      desc: 'Your figures go to one SRA-regulated employment solicitor.',
     },
     {
       num: '2',
-      title: 'A plain-English review',
-      desc: 'They check your pay, £30,000 tax-free split, reference, and any clauses restricting your next job.',
+      title: 'Plain-English check',
+      desc: 'They check your pay, tax-free split, reference, and job restrictions.',
     },
     {
       num: '3',
       title: 'Sign off or negotiate',
-      desc: 'Most sign-offs finish in 24 to 48 hours. Employers usually contribute £350 to £500+ (+VAT) on completion.',
+      desc: 'Most reviews finish in 24 to 48 hours once you are happy.',
     },
   ]
 
@@ -977,9 +960,9 @@ function ResultsContent() {
               </div>
 
               {/* 4. Quiet Compliance Disclosure */}
-              <div className="lg:col-span-7 lg:col-start-1 pt-1 text-[13.5px] text-[#6B7485] leading-[1.6] no-print">
+              <div className="lg:col-span-7 lg:col-start-1 pt-1 text-[13px] text-[#6B7485] leading-[1.55] no-print">
                 <p className="m-0">
-                  Estimates use 2026/27 UK statutory rates (£{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI weekly cap) for general guidance only and do not constitute legal or tax advice. SettlementCheck is an independent introducer, not a law firm. Employer legal fee contributions (£350 to £500+ +VAT) are standard commercial practice paid upon completion, not a statutory requirement. Fees above the cap or abortive costs remain subject to your solicitor&apos;s terms.
+                  Estimates use 2026/27 UK statutory rates (£{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI weekly cap) as a general guide, not legal or tax advice. Employer legal fee contributions (£350 to £500+ +VAT) are standard practice paid on completion, not a statutory requirement.
                 </p>
               </div>
             </div>
