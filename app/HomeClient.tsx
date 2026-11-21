@@ -393,12 +393,12 @@ export default function HomeClient({
                   <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
                     1
                   </div>
-                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">46,510 open single claims</h3>
+                  <h3 className="sc-h3 mb-2">46,510 open single claims</h3>
                   <p className="sc-body">
                     Inspect active open caseloads published by the Ministry of Justice and HMCTS across major hearing centres including London Central, Watford, Midlands West, Manchester, and Scotland.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">
+                <div className="mt-4 pt-3 border-t border-rule text-[13.5px] font-sans font-medium text-muted">
                   Source: MoJ &amp; HMCTS Quarterly Statistics
                 </div>
               </div>
@@ -408,12 +408,12 @@ export default function HomeClient({
                   <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
                     2
                   </div>
-                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Regional hearing wait times</h3>
+                  <h3 className="sc-h3 mb-2">Regional hearing wait times</h3>
                   <p className="sc-body">
                     Compare average days to preliminary and final merits hearings by region, from 270 days up to 540 days in London Central, to understand realistic tribunal timelines.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">
+                <div className="mt-4 pt-3 border-t border-rule text-[13.5px] font-sans font-medium text-muted">
                   Coverage: 10 Great Britain Hearing Centres
                 </div>
               </div>
@@ -423,29 +423,29 @@ export default function HomeClient({
                   <div className="w-10 h-10 rounded-lg bg-coral/10 text-coral flex items-center justify-center font-bold text-base mb-4">
                     3
                   </div>
-                  <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Illustrative defence cost context</h3>
+                  <h3 className="sc-h3 mb-2">Illustrative defence cost context</h3>
                   <p className="sc-body">
                     Review illustrative employer legal defence cost ranges alongside regional backlog pressure ratings to prepare informed questions for your independent SRA-regulated solicitor.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-rule text-[12px] font-mono text-muted-2">
+                <div className="mt-4 pt-3 border-t border-rule text-[13.5px] font-sans font-medium text-muted">
                   Interactive Regional Pressure Map
                 </div>
               </div>
             </div>
 
             <div className="bg-paper-2 border border-rule rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="flex flex-col gap-1 text-center sm:text-left">
-                <span className="text-[16px] font-bold text-ink font-serif">
+              <div className="flex flex-col gap-1.5 text-center sm:text-left">
+                <span className="sc-h3">
                   Check wait times at your nearest Employment Tribunal centre
                 </span>
-                <span className="text-[13px] text-muted">
+                <span className="text-[14px] leading-relaxed text-muted">
                   Free interactive tracker built on MoJ &amp; HMCTS data. No login or email required.
                 </span>
               </div>
               <Link
                 href="/tribunal-backlog-tracker/"
-                className="btn-accent whitespace-nowrap px-6 py-3 text-[14px]"
+                className="btn-accent whitespace-nowrap w-full sm:w-auto px-6 py-3"
               >
                 Open Tribunal Backlog Tracker →
               </Link>
@@ -463,21 +463,21 @@ export default function HomeClient({
                 <p className="sc-lead">The headline figure on your draft is rarely what lands in your bank. Checking the tax split shows you what is actually yours.</p>
                 <p className="sc-body">A £20,000 offer does not mean £20,000 in your bank if notice pay is bundled in. Split taxable PILON from your £30,000 tax-free allowance before payday.</p>
                 <div className="border-l-2 border-coral pl-4 mt-1">
-                  <p className="text-[13px] font-semibold text-ink mb-0.5">What is PILON?</p>
-                  <p className="sc-body" style={{ fontSize: 13 }}>PILON stands for <em>Payment in Lieu of Notice</em>. It is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
+                  <p className="text-[15px] font-semibold text-ink mb-1">What is PILON?</p>
+                  <p className="text-[14px] leading-[1.55] text-muted">PILON stands for <em>Payment in Lieu of Notice</em>. It is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
                 </div>
               </div>
               <div className="flex flex-col gap-6">
                 <div className="bg-card border border-rule rounded-lg p-6">
-                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">PILON is always taxed like wages</div>
+                  <div className="sc-h3 mb-2">PILON is always taxed like wages</div>
                   <p className="sc-body">Under ITEPA 2003 s.402D, notice pay is taxed as normal earnings with income tax and National Insurance, whatever your draft calls it.</p>
                 </div>
                 <div className="bg-card border border-rule rounded-lg p-6">
-                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">The first £30,000 of termination pay is tax-free</div>
+                  <div className="sc-h3 mb-2">The first £30,000 of termination pay is tax-free</div>
                   <p className="sc-body">Statutory redundancy and ex-gratia compensation up to £30,000 are tax-free under ITEPA 2003 s.403. Anything above £30,000 is taxed at your marginal rate.</p>
                 </div>
                 <div className="bg-card border border-rule rounded-lg p-6">
-                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">See what actually lands in your bank</div>
+                  <div className="sc-h3 mb-2">See what actually lands in your bank</div>
                   <p className="sc-body">Most calculators show one gross figure. This one splits taxable notice pay from your £30,000 allowance so you see your estimated net take-home.</p>
                 </div>
                 <Link href={ctaHref} className="btn-accent self-start">See my net take-home →</Link>
@@ -509,7 +509,7 @@ export default function HomeClient({
                       <Check />
                     </div>
                     <div>
-                      <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3]">{it.t}</div>
+                      <div className="sc-h3">{it.t}</div>
                       <div className="sc-body mt-1">{it.d}</div>
                     </div>
                   </div>
@@ -532,7 +532,7 @@ export default function HomeClient({
                 <p className="sc-lead">Clear answers before you calculate your estimate.</p>
 
                 <div className="mt-4 p-6 rounded-xl border border-rule bg-card flex flex-col gap-3">
-                  <div className="text-body-sm font-semibold text-ink font-serif">
+                  <div className="sc-h3 text-[19px]">
                     Need guidance on your specific situation?
                   </div>
                   <p className="sc-body">
@@ -541,13 +541,13 @@ export default function HomeClient({
                   <div className="pt-2 flex flex-col gap-2">
                     <Link
                       href="/guides/"
-                      className="text-[13px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
+                      className="text-[14px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
                     >
                       Browse settlement agreement guides →
                     </Link>
                     <Link
                       href="/settlement-agreement-review/"
-                      className="text-[13px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
+                      className="text-[14px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
                     >
                       Review draft agreement clauses →
                     </Link>
@@ -589,7 +589,7 @@ export default function HomeClient({
                   </tbody>
                 </table>
               </div>
-              <p className="sc-body mt-5" style={{ fontSize: 13 }}>
+              <p className="text-[14px] leading-[1.55] text-muted mt-5">
                 Sources:{' '}
                 <a
                   href="https://www.legislation.gov.uk/ukpga/1996/18/section/227"
@@ -610,7 +610,7 @@ export default function HomeClient({
                 </a>{' '}
                 (£30,000 threshold). Figures effective 6 April 2026.
               </p>
-              <p className="sc-body mt-1" style={{ fontSize: 12, color: '#8A93A3' }}>
+              <p className="text-[14px] leading-[1.55] text-muted-2 mt-1.5">
                 Figures reflect the{' '}
                 <a
                   href="https://www.legislation.gov.uk/uksi/2026/310/contents/made"

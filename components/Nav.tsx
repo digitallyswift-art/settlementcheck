@@ -91,12 +91,13 @@ export default function Nav() {
   const [mobileGuidesOpen, setMobileGuidesOpen] = useState(false)
 
   return (
-    <header
-      className="sticky top-0 z-50 border-b border-rule"
-      style={{ background: 'rgba(247,244,238,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
-    >
+    <>
       {!isResultsPage && <LegalFeeAnnouncementBar />}
-      <div className="sc-container px-4 sm:px-6 xl:px-8 flex items-center justify-between gap-4 xl:gap-8 h-[68px]">
+      <header
+        className="sticky top-0 z-50 border-b border-rule"
+        style={{ background: 'rgba(247,244,238,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
+      >
+        <div className="sc-container px-4 sm:px-6 xl:px-8 flex items-center justify-between gap-4 xl:gap-8 h-[68px]">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0" aria-label="SettlementCheck home">
@@ -422,6 +423,7 @@ export default function Nav() {
           </Link>
         </div>
       )}
-    </header>
+      </header>
+    </>
   )
 }

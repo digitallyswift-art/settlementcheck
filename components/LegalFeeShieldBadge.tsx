@@ -12,7 +12,7 @@ import Link from 'next/link'
 
 export function LegalFeeAnnouncementBar() {
   return (
-    <div className="bg-[#0B1F3A] text-[#F7F4EE] border-b border-[#0B1F3A] py-2 px-4 text-xs font-sans">
+    <div className="bg-[#0B1F3A] text-[#F7F4EE] border-b border-[#0B1F3A] py-2 px-4 text-[13px] leading-[1.4] font-sans">
       <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="flex items-center justify-center w-4 h-4 rounded-full bg-[#D9603B]/20 text-[#D9603B] flex-shrink-0" aria-hidden="true">
@@ -22,8 +22,8 @@ export function LegalFeeAnnouncementBar() {
           </span>
           <span>
             <strong className="text-white font-semibold">Legal Fee Coverage:</strong>{' '}
-            <span className="text-[#F7F4EE]/85">
-              Independent advice is required under Section 203(3) ERA 1996. Employers standardly provide a capped contribution (£350 to £500+ +VAT) upon completion.
+            <span className="text-[#F7F4EE]/90">
+              Employers standardly contribute £350–£500+ VAT upon completion (s.203(3) ERA 1996).
             </span>
           </span>
         </div>
@@ -65,13 +65,13 @@ export function LegalFeeInlineCard({ className = '' }: { className?: string }) {
           </svg>
         </div>
         <div>
-          <h3 className="text-sm font-bold text-[#0B1F3A] m-0 mb-1">
+          <h3 className="sc-h3 text-[18px] sm:text-[19px] font-semibold text-ink m-0 mb-1.5">
             Independent Legal Advice Fee Contribution
           </h3>
-          <p className="text-body text-[#0B1F3A]/70 leading-relaxed m-0 mb-3">
+          <p className="text-[15px] text-[#0B1F3A]/80 leading-[1.58] m-0 mb-3">
             For a settlement agreement to legally waive employment tribunal claims, Section 203(3) requires you to receive independent legal advice. Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon agreement completion. If negotiations abort or legal work exceeds the agreed cap, liability depends on your solicitor&apos;s terms of engagement.
           </p>
-          <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#5B6577]">
+          <div className="flex flex-wrap items-center gap-3 text-[13px] text-[#5B6577]">
             <span className="flex items-center gap-1.5 font-medium text-[#0B1F3A]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D9603B]" />
               Independent matching service
