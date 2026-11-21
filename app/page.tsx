@@ -179,7 +179,7 @@ const faqSchema = {
       name: 'How much should an employee settlement agreement be?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'A typical UK settlement agreement pays between one and three months of gross salary, plus notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with the first £30,000 paid tax-free.',
+        text: 'In standard commercial redundancy or capability exits, employers often propose an illustrative ex-gratia starting point of 1 to 3 months of gross salary (an observed commercial negotiation range, not a statutory entitlement) on top of notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with qualifying termination payments up to £30,000 paid tax-free.',
       },
     },
     {

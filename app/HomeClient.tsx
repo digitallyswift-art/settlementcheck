@@ -5,7 +5,7 @@ import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
-  { n: '10 days', l: 'ACAS consideration period' },
+  { n: '10 days', l: 'ACAS recommended review window (guidance)' },
   { n: '£751',    l: 'Weekly pay cap 2026/27' },
   { n: '£0',      l: 'To check your rights (no email required)' },
   { n: 'Net pay', l: 'PILON and £30k exemption split' },
@@ -121,7 +121,7 @@ export default function HomeClient({
   steps,
   ctaLabel = 'Calculate my estimate →',
   ctaHref = '/calculator/',
-  howItWorksTitle = 'Three steps. Sixty seconds. Zero cost.',
+  howItWorksTitle = 'Three steps. Sixty seconds. Free to check.',
   howItWorksLead = 'From an unread draft in your inbox to clear numbers. Free to calculate, with a standard capped employer fee contribution if a solicitor completes your agreement.',
   taxSectionTitle = 'How much tax will you pay on your employment settlement?',
 }: HomeProps = {}) {
@@ -267,17 +267,17 @@ export default function HomeClient({
                     Free calculator
                   </span>
                   <p style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 420, lineHeight: 1.3, color: '#0B1F3A', margin: '0 0 8px', letterSpacing: '-0.012em' }}>
-                    Most employees want to see how their offer compares.{' '}
-                    <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Compare yours against UK statute.</em>
+                    See how your offer compares.{' '}
+                    <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Measure it against April 2026 UK statute.</em>
                   </p>
                   <p style={{ fontSize: 15, color: '#5B6577', margin: '0 0 24px', lineHeight: 1.55 }}>
-                    Seven questions. Sixty seconds. No email required.
+                    For draft offers, active exit talks, or redundancy notices. Seven questions, 60 seconds, no email required.
                   </p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
                     {[
                       'Check privately on any device with no email required',
                       'April 2026 statutory baselines (£751/wk cap) built in',
-                      'No law firm behind the maths; no calls unless you ask',
+                      'No law firm behind the maths, and no calls unless you ask',
                     ].map(label => (
                       <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                         <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(217,96,59,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -460,7 +460,7 @@ export default function HomeClient({
               <div className="flex flex-col gap-5">
                 <span className="sc-eyebrow">Tax calculation</span>
                 <h2 className="sc-section-h2">{taxSectionTitle}</h2>
-                <p className="sc-lead">Most employees sign the first number they receive without questioning it. That number is rarely the final one.</p>
+                <p className="sc-lead">The headline figure on your draft is rarely what lands in your bank. Checking the tax split shows you what is actually yours.</p>
                 <p className="sc-body">A £20,000 offer does not mean £20,000 in your bank if notice pay is bundled in. Split taxable PILON from your £30,000 tax-free allowance before payday.</p>
                 <div className="border-l-2 border-coral pl-4 mt-1">
                   <p className="text-[13px] font-semibold text-ink mb-0.5">What is PILON?</p>
@@ -528,8 +528,8 @@ export default function HomeClient({
             <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.4fr]">
               <div className="flex flex-col gap-3.5">
                 <span className="sc-eyebrow">Common questions</span>
-                <h2 className="sc-section-h2">What people ask before they start.</h2>
-                <p className="sc-lead">What employees want to know before clicking &ldquo;calculate.&rdquo;</p>
+                <h2 className="sc-section-h2">What you may want to check first.</h2>
+                <p className="sc-lead">Clear answers before you calculate your estimate.</p>
 
                 <div className="mt-4 p-6 rounded-xl border border-rule bg-card flex flex-col gap-3">
                   <div className="text-[15px] font-semibold text-ink font-serif">
@@ -698,7 +698,7 @@ export default function HomeClient({
           <div className="sc-container relative">
             <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:gap-10">
               <div>
-                <h2 className="sc-section-h2 text-white" style={{ maxWidth: '20ch' }}>Most opening offers have room to move.</h2>
+                <h2 className="sc-section-h2 text-white" style={{ maxWidth: '20ch' }}>Check where your opening offer stands.</h2>
                 <p className="sc-lead mt-3" style={{ color: 'rgba(247,244,238,0.78)', maxWidth: '46ch' }}>
                   Compare your offer against UK statutory baselines and see your net take-home in 7 questions. No email required.
                 </p>
