@@ -249,7 +249,7 @@ export default function HomePage() {
             <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Calculator UK</em> (2026 Rates)
           </>
         }
-        lead="Calculate whether your employment settlement offer is fair in 60 seconds. Our free UK calculator checks statutory redundancy, notice pay, and tax-free compensation under April 2026 rates (£751 cap). Whether your paperwork says settlement agreement or compromise agreement, find out where you stand for free."
+        lead="Got a draft settlement or compromise agreement? Compare your offer against April 2026 statutory baselines (£751/wk cap) for free. See your statutory redundancy, taxable notice pay, and tax-free amount in 7 questions."
         statutoryRows={statutoryRows}
         pageLinks={[
           { href: '/calculator/', label: 'Settlement Agreement Calculator' },

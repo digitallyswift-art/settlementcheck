@@ -14,20 +14,20 @@ const STATS = [
 const STEPS = [
   {
     n: '01',
-    t: 'Calculate your position in 60 seconds',
-    d: 'Enter your salary, length of service, and current offer. You will get an instant calculation of your statutory redundancy entitlement, notice pay, and whether your offer sits below, within, or above typical UK benchmarks.',
+    t: 'How does the offer compare?',
+    d: 'Enter your salary, service, and offer. See your calculated statutory redundancy baseline, notice pay, and how your offer compares against UK benchmarks.',
   },
   {
     n: '02',
-    t: 'Review draft clauses and tax split',
-    d: 'Verify how your package is taxed under ITEPA 2003, check your £30,000 tax-free exemption, and inspect clauses such as restrictive covenants, confidentiality terms, and agreed references.',
+    t: 'How much will HMRC take?',
+    d: 'See what HMRC taxes under ITEPA 2003 and what sits inside the £30,000 tax-free limit. Spot non-competes or reference clauses that could affect your next job.',
   },
   {
     n: '03',
-    t: 'Independent legal advice with employer contribution',
+    t: 'Who pays for the solicitor?',
     d: (
       <>
-        To make your settlement legally binding under s.203(3) ERA 1996, you must receive independent legal advice. In practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.{' '}
+        Under s.203(3) ERA 1996, a settlement is only binding once you take independent legal advice. Employers standardly offer a capped contribution (typically £350 to £500+ plus VAT) upon completion, though extra or abortive work depends on your solicitor&apos;s terms.{' '}
         <Link href="/get-matched/" className="underline hover:text-coral transition-colors font-medium">
           Connect with an SRA-regulated specialist
         </Link>{' '}
@@ -74,7 +74,7 @@ const TRUST: { t: string; d: React.ReactNode }[] = [
   },
   {
     t: 'Employer legal fee contribution',
-    d: 'While Section 203(3) requires independent advice for your agreement to be valid, employers standardly offer a capped contribution (£350 to £500+ plus VAT) to your solicitor upon completion to ensure the waiver is binding.',
+    d: 'While Section 203(3) requires independent advice, employers standardly offer a capped contribution (typically £350 to £500+ plus VAT) upon completion. Fees beyond the cap, or if you do not sign, depend on your solicitor\u2019s terms.',
   },
   {
     t: 'SRA-regulated solicitor panel',
@@ -122,7 +122,7 @@ export default function HomeClient({
   ctaLabel = 'Calculate my estimate →',
   ctaHref = '/calculator/',
   howItWorksTitle = 'Three steps. Sixty seconds. Zero cost.',
-  howItWorksLead = 'From a quick check to a vetted solicitor on the phone. No cost to you.',
+  howItWorksLead = 'From an unread draft in your inbox to clear numbers. Free to calculate, with a standard capped employer fee contribution if a solicitor completes your agreement.',
   taxSectionTitle = 'How much tax will you pay on your employment settlement?',
 }: HomeProps = {}) {
   return (
@@ -274,7 +274,11 @@ export default function HomeClient({
                     Seven questions. Sixty seconds. No email required.
                   </p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
-                    {['Private and secure', 'Built on UK statute', 'No email needed to see your result'].map(label => (
+                    {[
+                      'Check privately on any device with no email required',
+                      'April 2026 statutory baselines (£751/wk cap) built in',
+                      'No law firm behind the maths; no calls unless you ask',
+                    ].map(label => (
                       <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                         <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(217,96,59,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <Check />
@@ -379,7 +383,7 @@ export default function HomeClient({
                 Track UK Employment Tribunal wait times across 10 Great Britain hearing centres.
               </h2>
               <p className="sc-lead mt-3">
-                Understanding regional hearing delays and illustrative employer defence costs provides objective context when weighing a settlement offer against a tribunal claim with your solicitor.
+                Take the offer on the table, or wait 270 to 540 days for a hearing? Check real MoJ wait times across 10 Great Britain centres before you decide with your solicitor.
               </p>
             </div>
 
@@ -457,7 +461,7 @@ export default function HomeClient({
                 <span className="sc-eyebrow">Tax calculation</span>
                 <h2 className="sc-section-h2">{taxSectionTitle}</h2>
                 <p className="sc-lead">Most employees sign the first number they receive without questioning it. That number is rarely the final one.</p>
-                <p className="sc-body">Enter your salary, length of service, and your offer to see your estimated net take-home after tax. PILON and the £30,000 exemption are calculated separately.</p>
+                <p className="sc-body">A £20,000 offer does not mean £20,000 in your bank if notice pay is bundled in. Split taxable PILON from your £30,000 tax-free allowance before payday.</p>
                 <div className="border-l-2 border-coral pl-4 mt-1">
                   <p className="text-[13px] font-semibold text-ink mb-0.5">What is PILON?</p>
                   <p className="sc-body" style={{ fontSize: 13 }}>PILON stands for <em>Payment in Lieu of Notice</em>. It is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
@@ -465,16 +469,16 @@ export default function HomeClient({
               </div>
               <div className="flex flex-col gap-6">
                 <div className="bg-card border border-rule rounded-lg p-6">
-                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">PILON is always taxable</div>
-                  <p className="sc-body">Payment in lieu of notice is treated as earnings under ITEPA 2003 s.402D. It is subject to income tax and National Insurance at your normal rate, regardless of what your agreement calls it.</p>
+                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">PILON is always taxed like wages</div>
+                  <p className="sc-body">Under ITEPA 2003 s.402D, notice pay is taxed as normal earnings with income tax and National Insurance, whatever your draft calls it.</p>
                 </div>
                 <div className="bg-card border border-rule rounded-lg p-6">
-                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">Up to £30,000 is tax-free</div>
-                  <p className="sc-body">Statutory redundancy pay and other termination payments up to £30,000 are exempt from income tax under ITEPA 2003 s.403. The portion above £30,000 is taxable at your marginal rate.</p>
+                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">The first £30,000 of termination pay is tax-free</div>
+                  <p className="sc-body">Statutory redundancy and ex-gratia compensation up to £30,000 are tax-free under ITEPA 2003 s.403. Anything above £30,000 is taxed at your marginal rate.</p>
                 </div>
                 <div className="bg-card border border-rule rounded-lg p-6">
-                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">The calculator separates both</div>
-                  <p className="sc-body">Most calculators show a gross figure. This one calculates PILON and redundancy pay separately, applies the correct tax treatment to each, and shows your estimated net take-home figure.</p>
+                  <div className="font-serif text-[17px] md:text-[19px] font-460 text-ink tracking-[-0.008em] leading-[1.3] mb-2">See what actually lands in your bank</div>
+                  <p className="sc-body">Most calculators show one gross figure. This one splits taxable notice pay from your £30,000 allowance so you see your estimated net take-home.</p>
                 </div>
                 <Link href={ctaHref} className="btn-accent self-start">See my net take-home →</Link>
               </div>
@@ -490,7 +494,7 @@ export default function HomeClient({
                 <span className="sc-eyebrow">Why SettlementCheck</span>
                 <h2 className="sc-section-h2">Built for the employee. Not the employer.</h2>
                 <p className="sc-lead">
-                  Most settlement calculators online are built by law firms trying to capture your case. Ours is independent. Participating law firms pay a fixed subscription or introducer fee to access pre-flight intake dossiers in compliance with SRA Rule 5.1. We have no single firm to push you towards, and all panel solicitors exercise complete professional independence.
+                  Most settlement calculators online are built by one law firm trying to win your case. Ours is independent. Panel firms pay a fixed subscription or introducer fee to receive your case summary when you ask for a callback, in line with SRA Rule 5.1. Every panel solicitor acts independently in your best interest.
                 </p>
               </div>
 
@@ -696,7 +700,7 @@ export default function HomeClient({
               <div>
                 <h2 className="sc-section-h2 text-white" style={{ maxWidth: '20ch' }}>Most opening offers have room to move.</h2>
                 <p className="sc-lead mt-3" style={{ color: 'rgba(247,244,238,0.78)', maxWidth: '46ch' }}>
-                  Get your free estimate in under two minutes and find out where yours stands.
+                  Compare your offer against UK statutory baselines and see your net take-home in 7 questions. No email required.
                 </p>
               </div>
               <Link href={ctaHref} className="btn-accent whitespace-nowrap self-start md:self-auto">
