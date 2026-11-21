@@ -7,6 +7,7 @@ import {
   DocumentReadiness,
 } from '@/lib/leads/triage-contract'
 import { AgenticOrchestrator } from '@/lib/agentic-engine'
+import { escapeHtml, isSafeIdentifier } from '@/lib/security/html-sanitizer'
 
 export interface UnifiedLeadInput {
   firstName?: string
@@ -14,7 +15,7 @@ export interface UnifiedLeadInput {
   lastName?: string
   last_name?: string
   email: string
-  phone: string
+  phone?: string | null
   contactTime?: string
   contact_time?: string
   verdict?: string | null
@@ -44,12 +45,16 @@ export interface UnifiedLeadInput {
   documentReadiness?: DocumentReadiness
   emailVerified?: boolean
   email_verified?: boolean
+  signingUrgency?: string | null
+  intakeStage?: string | null
+  leadId?: string | null
 }
 
 export interface UnifiedLeadResult {
   success: boolean
   triageId: string
   leadId?: string
+  phoneProvided: boolean
   triage: SraTriageDossier
   clioPayload?: any
   leapPayload?: any
@@ -68,7 +73,7 @@ export interface PartnerVerificationResult {
  * Gracefully falls back to unverified queue so NO lead is ever dropped.
  */
 export async function verifyPartnerId(partnerId: string | null | undefined): Promise<PartnerVerificationResult> {
-  if (!partnerId || typeof partnerId !== 'string' || partnerId.trim() === '') {
+  if (!partnerId || typeof partnerId !== 'string' || !isSafeIdentifier(partnerId)) {
     return { verified: false }
   }
 
@@ -130,9 +135,10 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
   const rawEmail = input.email || ''
   const normalizedEmail = rawEmail.trim().toLowerCase()
   const rawPhone = (input.phone || '').trim()
+  const phoneProvided = rawPhone.length > 0
 
-  if (!firstName || !normalizedEmail || !rawPhone) {
-    throw new Error('Missing required contact fields: firstName, email, and phone are mandatory.')
+  if (!firstName || !normalizedEmail) {
+    throw new Error('Missing required contact fields: firstName and email are mandatory.')
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -172,7 +178,16 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
 
   const partnerId = input.partnerId?.trim() || input.partner_id?.trim() || null
   const sourceUrl = input.sourceUrl?.trim() || input.source_url?.trim() || null
-  const benchmarkData = input.benchmarkData || input.benchmark_data || null
+  const rawBenchmarkData = input.benchmarkData || input.benchmark_data || null
+  const benchmarkData =
+    rawBenchmarkData || input.signingUrgency || input.intakeStage
+      ? {
+          ...(typeof rawBenchmarkData === 'object' && rawBenchmarkData !== null ? rawBenchmarkData : {}),
+          phone_provided: phoneProvided,
+          ...(input.signingUrgency ? { signing_urgency: input.signingUrgency } : {}),
+          ...(input.intakeStage ? { intake_stage: input.intakeStage } : {}),
+        }
+      : { phone_provided: phoneProvided }
   const verdict = input.verdict || 'unknown'
 
   // ── 3. Partner Verification ───────────────────────────────────────────────
@@ -241,12 +256,49 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
     benchmark_data: benchmarkData,
   }
 
-  let leadId: string | undefined
-  let { data: insertedRow, error: insertError } = await supabase
-    .from('leads')
-    .insert(insertPayload)
-    .select('id')
-    .maybeSingle()
+  let leadId: string | undefined = input.leadId?.trim() || undefined
+  let insertedRow: { id: string } | null = null
+  let insertError: any = null
+
+  if (leadId && !leadId.startsWith('lead_offline_')) {
+    const updateRes = await supabase
+      .from('leads')
+      .update({
+        phone: rawPhone,
+        contact_time: safeContactTime,
+        benchmark_data: benchmarkData,
+      })
+      .eq('id', leadId)
+      .select('id')
+      .maybeSingle()
+
+    if (!updateRes.error && updateRes.data?.id) {
+      insertedRow = updateRes.data
+    } else {
+      const fallbackUpdate = await supabase
+        .from('leads')
+        .update({
+          phone: rawPhone,
+          contact_time: safeContactTime,
+        })
+        .eq('id', leadId)
+        .select('id')
+        .maybeSingle()
+      if (!fallbackUpdate.error && fallbackUpdate.data?.id) {
+        insertedRow = fallbackUpdate.data
+      }
+    }
+  }
+
+  if (!insertedRow) {
+    const res = await supabase
+      .from('leads')
+      .insert(insertPayload)
+      .select('id')
+      .maybeSingle()
+    insertedRow = res.data
+    insertError = res.error
+  }
 
   if (insertError) {
     console.warn('Initial lead insert failed, attempting fallback without optional columns:', insertError)
@@ -302,13 +354,15 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
       ? ` [Partner: ${partnerCheck.firmName}]`
       : ''
 
+    const phoneDisplay = rawPhone || 'Not provided (Email preferred)'
+
     try {
       await resend.emails.send({
         from: 'SettlementCheck <team@settlementcheck.co.uk>',
         to: recipients,
         subject: `[${triage.matterTier}]${firmLabel} ${firstName} • SRA Triage (${triage.triageId})`,
         replyTo: normalizedEmail,
-        text: `SRA QUALIFIED SOLICITOR INTAKE DOSSIER\nReference: ${triage.triageId}\nMatter Tier: ${triage.matterTier}\nPartner Routing: ${partnerCheck.verified ? (partnerCheck.firmName || 'Verified Partner') : 'SettlementCheck Primary Pool'}\n\nCLIENT CONTACT:\nName: ${firstName} ${lastName}\nEmail: ${normalizedEmail}\nPhone: ${rawPhone}\nPreferred Time: ${safeContactTime}\nPostcode: ${postcode || 'Not provided'}${postcodeRegion ? ` (${postcodeRegion})` : ''}\n\nSTATUTORY QUALIFICATION:\nSalary: ${salaryFormatted}\nService: ${serviceYears} (${triage.employment.tenureYears} yrs)\nTenure Status: ${triage.employment.tenureClassification === 'QUALIFIED_2_PLUS_YEARS' ? 'Qualified (2+ yrs) - Full ERA 1996 s.94/98 rights' : 'Tactical (Under 2 yrs) - Section 108 threshold applies'}\nLimitation: ${triage.regulatoryLimitation.statutoryDeadlineNotice}\n\nCOMMERCIAL & FEES:\nOffer: ${offerFormatted}\nVerdict: ${verdictLabel[triage.commercialOffer.verdict] ?? triage.commercialOffer.verdict}\nS.203(3) Fee Contribution: ${triage.commercialOffer.standardFeeBenchmark}\n\nSRA COMPLIANCE NOTES:\n${triage.sraComplianceNotes.map(n => `- ${n}`).join('\n')}`,
+        text: `SRA QUALIFIED SOLICITOR INTAKE DOSSIER\nReference: ${triage.triageId}\nMatter Tier: ${triage.matterTier}\nPartner Routing: ${partnerCheck.verified ? (partnerCheck.firmName || 'Verified Partner') : 'SettlementCheck Primary Pool'}\n\nCLIENT CONTACT:\nName: ${firstName} ${lastName}\nEmail: ${normalizedEmail}\nPhone: ${phoneDisplay}\nPreferred Time: ${safeContactTime}\nPostcode: ${postcode || 'Not provided'}${postcodeRegion ? ` (${postcodeRegion})` : ''}\n\nSTATUTORY QUALIFICATION:\nSalary: ${salaryFormatted}\nService: ${serviceYears} (${triage.employment.tenureYears} yrs)\nTenure Status: ${triage.employment.tenureClassification === 'QUALIFIED_2_PLUS_YEARS' ? 'Qualified (2+ yrs) - Full ERA 1996 s.94/98 rights' : 'Tactical (Under 2 yrs) - Section 108 threshold applies'}\nLimitation: ${triage.regulatoryLimitation.statutoryDeadlineNotice}\n\nCOMMERCIAL & FEES:\nOffer: ${offerFormatted}\nVerdict: ${verdictLabel[triage.commercialOffer.verdict] ?? triage.commercialOffer.verdict}\nS.203(3) Fee Contribution: ${triage.commercialOffer.standardFeeBenchmark}\n\nSRA COMPLIANCE NOTES:\n${triage.sraComplianceNotes.map(n => `- ${n}`).join('\n')}`,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 24px 16px; color: #0B1F3A;">
             <div style="background: #0B1F3A; padding: 16px 20px; border-radius: 8px 8px 0 0; color: #ffffff;">
@@ -316,7 +370,7 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
                 SRA Qualified Solicitor Intake &bull; ${triage.triageId}${firmLabel}
               </span>
               <h1 style="font-size: 20px; font-weight: 700; color: #ffffff; margin: 6px 0 0; letter-spacing: -0.015em;">
-                ${triage.matterTier}: ${firstName} ${lastName}
+                ${escapeHtml(triage.matterTier)}: ${escapeHtml(firstName)} ${escapeHtml(lastName)}
               </h1>
             </div>
 
@@ -324,23 +378,23 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
               <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px;">
                 <tr>
                   <td style="padding: 9px 0; color: #5B6577; border-bottom: 1px solid #F0ECE1; width: 150px;">Client Name</td>
-                  <td style="padding: 9px 0; color: #0B1F3A; font-weight: 600; border-bottom: 1px solid #F0ECE1;">${firstName} ${lastName}</td>
+                  <td style="padding: 9px 0; color: #0B1F3A; font-weight: 600; border-bottom: 1px solid #F0ECE1;">${escapeHtml(firstName)} ${escapeHtml(lastName)}</td>
                 </tr>
                 <tr>
                   <td style="padding: 9px 0; color: #5B6577; border-bottom: 1px solid #F0ECE1;">Email</td>
-                  <td style="padding: 9px 0; font-weight: 500; border-bottom: 1px solid #F0ECE1;"><a href="mailto:${normalizedEmail}" style="color: #D9603B;">${normalizedEmail}</a></td>
+                  <td style="padding: 9px 0; font-weight: 500; border-bottom: 1px solid #F0ECE1;"><a href="mailto:${escapeHtml(normalizedEmail)}" style="color: #D9603B;">${escapeHtml(normalizedEmail)}</a></td>
                 </tr>
                 <tr>
                   <td style="padding: 9px 0; color: #5B6577; border-bottom: 1px solid #F0ECE1;">Phone</td>
-                  <td style="padding: 9px 0; font-weight: 500; border-bottom: 1px solid #F0ECE1;"><a href="tel:${rawPhone}" style="color: #D9603B;">${rawPhone}</a></td>
+                  <td style="padding: 9px 0; font-weight: 500; border-bottom: 1px solid #F0ECE1;">${rawPhone ? `<a href="tel:${escapeHtml(rawPhone)}" style="color: #D9603B;">${escapeHtml(rawPhone)}</a>` : '<span style="color: #5B6577;">Not provided (Email preferred)</span>'}</td>
                 </tr>
                 ${postcode ? `<tr>
                   <td style="padding: 9px 0; color: #5B6577; border-bottom: 1px solid #F0ECE1;">Postcode</td>
-                  <td style="padding: 9px 0; color: #0B1F3A; font-weight: 500; border-bottom: 1px solid #F0ECE1;">${postcode}${postcodeRegion ? ` (${postcodeRegion})` : ''}</td>
+                  <td style="padding: 9px 0; color: #0B1F3A; font-weight: 500; border-bottom: 1px solid #F0ECE1;">${escapeHtml(postcode)}${postcodeRegion ? ` (${escapeHtml(postcodeRegion)})` : ''}</td>
                 </tr>` : ''}
                 <tr>
                   <td style="padding: 9px 0; color: #5B6577; border-bottom: 1px solid #F0ECE1;">Preferred Contact</td>
-                  <td style="padding: 9px 0; color: #0B1F3A; font-weight: 600; border-bottom: 1px solid #F0ECE1;">${safeContactTime}</td>
+                  <td style="padding: 9px 0; color: #0B1F3A; font-weight: 600; border-bottom: 1px solid #F0ECE1;">${escapeHtml(safeContactTime)}</td>
                 </tr>
                 <tr>
                   <td style="padding: 9px 0; color: #5B6577; border-bottom: 1px solid #F0ECE1;">Tenure (ERA s.108)</td>
@@ -443,6 +497,7 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
     success: true,
     triageId: triage.triageId,
     leadId,
+    phoneProvided,
     triage,
     clioPayload,
     leapPayload,
