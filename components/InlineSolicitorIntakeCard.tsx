@@ -35,7 +35,7 @@ function getVerdictFraming(
       heading: 'Expecting an offer? Know where you stand first',
       subtext: 'Check your options with 1 available SRA-regulated employment solicitor before terms arrive.',
       benefit1: 'Check your statutory baseline & options early',
-      ctaLabel: 'Check solicitor availability →',
+      ctaLabel: 'Check my options with a solicitor →',
     }
   }
   if (verdict === 'BELOW_MINIMUM') {
@@ -45,7 +45,7 @@ function getVerdictFraming(
       heading: formattedShortfall
         ? `Why is your offer ${formattedShortfall} below the legal minimum?`
         : 'Why is your offer below the legal minimum?',
-      subtext: 'Have 1 available SRA-regulated employment solicitor review your notice and statutory floor.',
+      subtext: 'Have 1 available SRA-regulated employment solicitor review your notice and calculated statutory baseline.',
       benefit1: 'Check notice pay, redundancy & accrued holiday',
       ctaLabel: formattedShortfall
         ? `Review this ${formattedShortfall} gap with a solicitor →`
@@ -54,7 +54,7 @@ function getVerdictFraming(
   }
   if (verdict === 'BELOW_TYPICAL') {
     return {
-      heading: 'Could you be leaving money on the table?',
+      heading: 'Below typical payouts. Want a solicitor to check why?',
       subtext: 'First offers are often a starting point. Get a confidential review from 1 SRA-regulated solicitor.',
       benefit1: 'Check your £30k tax-free split & room to negotiate',
       ctaLabel: 'Check my options with a solicitor →',
@@ -63,7 +63,7 @@ function getVerdictFraming(
   return {
     heading: 'The numbers add up. What about the fine print?',
     subtext: 'A UK settlement agreement is only binding once signed off by an independent solicitor (ERA 1996 s.203).',
-    benefit1: 'Check your tax-free split, reference & restrictions',
+    benefit1: 'Check your tax-free split, reference & non-compete clauses',
     ctaLabel: 'Check my terms & sign off →',
   }
 }
@@ -302,7 +302,7 @@ export default function InlineSolicitorIntakeCard({
                 Helpful to have ready
               </h4>
               <ul className="m-0 pl-4 space-y-2 text-[14.5px] text-[#5B6577] leading-[1.6]">
-                <li>Your employment contract (to verify notice period, bonus, and any post-termination restrictions).</li>
+                <li>Your employment contract (to verify notice period, bonus, and any non-compete or job restrictions).</li>
                 <li>
                   {offerNum > 0
                     ? 'Your draft settlement agreement or written offer, including any signing date your employer has mentioned.'
@@ -358,7 +358,7 @@ export default function InlineSolicitorIntakeCard({
             </li>
             <li className="flex items-start gap-2">
               <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
-              <span>Employers usually cover £350–£500+ (+VAT) fees</span>
+              <span>Standard capped employer contribution (£350 to £500+ +VAT) on completion</span>
             </li>
           </ul>
 
@@ -434,6 +434,9 @@ export default function InlineSolicitorIntakeCard({
                 onChange={(e) => handlePhoneChange(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
               />
+              <p className="m-0 mt-1 text-[12px] text-[#5B6577] leading-[1.4]">
+                Never shared with your employer. Used only by your 1 matched solicitor.
+              </p>
             </div>
 
             {hasPhoneInput && (
@@ -460,7 +463,10 @@ export default function InlineSolicitorIntakeCard({
               </div>
             )}
 
-            <div className="pt-0.5">
+            <div className="pt-0.5 space-y-2">
+              <p className="m-0 text-[12.5px] text-[#5B6577] leading-[1.45]">
+                Shared with 1 SRA-regulated solicitor only. Extra or abortive work depends on their terms. No obligation to instruct.
+              </p>
               <label
                 htmlFor="sc-consent"
                 className="flex items-start gap-2.5 cursor-pointer select-none py-0.5"
@@ -495,10 +501,6 @@ export default function InlineSolicitorIntakeCard({
             >
               <span>{submitting ? 'Sending your figures...' : framing.ctaLabel}</span>
             </button>
-
-            <p className="m-0 pt-0.5 text-[12.5px] text-[#5B6577] leading-[1.5] text-center">
-              SettlementCheck introduces you to 1 SRA-regulated solicitor and is not a law firm. Any extra work beyond your employer&apos;s contribution is agreed upfront.
-            </p>
           </form>
         </div>
       </div>

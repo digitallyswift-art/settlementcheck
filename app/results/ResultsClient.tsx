@@ -316,7 +316,7 @@ function EstimateReportCard({
     headerBorder = '#D9A99E'
     pillColor = '#A8341F'
     headline = `Your ${formatCurrency(offer)} offer is ${formatCurrency(shortfall)} below your legal minimum.`
-    summary = `Your calculated floor for notice and statutory redundancy is ${formatCurrency(result.minimum)} (subject to eligibility). An independent solicitor can check whether anything has been missed.`
+    summary = `Your calculated statutory baseline for notice and redundancy is ${formatCurrency(result.minimum)} (subject to eligibility). An independent solicitor can check whether anything has been missed.`
   } else if (result.verdict === 'BELOW_TYPICAL') {
     pillText = 'Below Typical Range'
     headerBg = '#FEFBF0'
@@ -353,14 +353,6 @@ function EstimateReportCard({
           >
             {pillText}
           </span>
-
-          <button
-            type="button"
-            onClick={onJumpToIntake}
-            className="lg:hidden text-[14px] font-semibold text-[#D9603B] hover:underline bg-transparent border-0 p-0 cursor-pointer no-print"
-          >
-            Solicitor review ↓
-          </button>
         </div>
 
         <h1 className="font-serif text-[26px] sm:text-[31px] leading-[1.2] font-bold text-[#0B1F3A] m-0 mb-4">
@@ -446,7 +438,7 @@ function EstimateReportCard({
           >
             <span>
               {offer <= 0
-                ? 'Check solicitor availability →'
+                ? 'Check my options with a solicitor →'
                 : result.verdict === 'BELOW_MINIMUM'
                 ? 'Review this shortfall with a solicitor →'
                 : result.verdict === 'BELOW_TYPICAL'
@@ -486,7 +478,7 @@ function EstimateReportCard({
       <div>
         <div className="px-5 sm:px-6 py-3.5 border-b border-[#EFEAE0] flex items-center justify-between gap-2">
           <h2 className="font-serif text-[20px] font-bold text-[#0B1F3A] m-0">
-            What these numbers mean
+            How do these numbers break down?
           </h2>
           {offer > 0 && (
             <span className="text-[13px] font-mono text-[#5B6577] shrink-0">
@@ -605,7 +597,7 @@ function EstimateReportCard({
             onClick={() => setDetailsOpen((o) => !o)}
             className="w-full px-5 sm:px-6 py-3.5 text-left flex items-center justify-between text-[14px] font-medium text-[#5B6577] hover:text-[#0B1F3A] bg-[#FAF8F5] border-0 cursor-pointer"
           >
-            <span>How this is calculated &amp; UK tax rules</span>
+            <span>How are these figures calculated and taxed?</span>
             <span style={{ transform: detailsOpen ? 'rotate(180deg)' : 'none', transition: 'transform 180ms' }}>▾</span>
           </button>
 
@@ -613,6 +605,13 @@ function EstimateReportCard({
             <div className="px-5 sm:px-6 py-4 bg-[#FAF8F5] border-t border-[#EFEAE0] text-[14px] text-[#5B6577] leading-[1.65] space-y-2.5">
               <p className="m-0">
                 <strong>Method:</strong> The legal minimum combines statutory notice pay (ERA 1996 s.86) and statutory redundancy pay (s.162, subject to s.141 eligibility). Typical ranges add an illustrative negotiation allowance based on UK settlement practice. Actual outcomes depend on your contract and facts.
+              </p>
+              <p className="m-0">
+                <strong>Legal sign-off:</strong> Under{' '}
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/203" target="_blank" rel="noopener noreferrer" className="underline text-[#0B1F3A]">
+                  ERA 1996 s.203(3)
+                </a>
+                , a settlement agreement is only legally binding once an independent solicitor signs it off.
               </p>
               <p className="m-0">
                 <strong>Tax treatment:</strong> The first £30,000 of genuine termination payments is exempt under{' '}
@@ -651,7 +650,7 @@ function EstimateReportCard({
 
 /* ── Compact 3-Step "What Happens Next" Strip ───────────────────── */
 
-function WhatHappensNextStrip() {
+function WhatHappensNextStrip({ hasOffer }: { hasOffer: boolean }) {
   const steps = [
     {
       num: '1',
@@ -665,8 +664,10 @@ function WhatHappensNextStrip() {
     },
     {
       num: '3',
-      title: 'Sign off or negotiate',
-      desc: 'Most reviews finish in 24 to 48 hours once you are happy.',
+      title: hasOffer ? 'Sign off or negotiate' : 'Prepare before terms arrive',
+      desc: hasOffer
+        ? 'Most reviews finish in 24 to 48 hours once you are happy.'
+        : 'Know your baseline and options before you respond.',
     },
   ]
 
@@ -772,7 +773,7 @@ function SmartMobileStickyBar({
             Private Solicitor Review
           </p>
           <p className="text-[11px] text-[#5B6577] leading-tight m-0 mt-0.5 truncate">
-            Employer pays fee contribution · 100% confidential
+            100% private · Standard capped employer contribution on completion
           </p>
         </div>
         <button
@@ -911,7 +912,7 @@ function ResultsContent() {
                 Missing calculation details. Please complete the calculator to view your estimate.
               </p>
               <Link href="/calculator/" className="mt-3 inline-block text-[14px] font-semibold text-[#0B1F3A] underline underline-offset-4">
-                Return to calculator →
+                Calculate my estimate →
               </Link>
             </div>
           )}
@@ -956,13 +957,13 @@ function ResultsContent() {
 
               {/* 3. What Happens Next (Left on Desktop, 3rd on Mobile) */}
               <div className="lg:col-span-7 lg:col-start-1">
-                <WhatHappensNextStrip />
+                <WhatHappensNextStrip hasOffer={offer > 0} />
               </div>
 
               {/* 4. Quiet Compliance Disclosure */}
               <div className="lg:col-span-7 lg:col-start-1 pt-1 text-[13px] text-[#6B7485] leading-[1.55] no-print">
                 <p className="m-0">
-                  Estimates use 2026/27 UK statutory rates (£{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI weekly cap) as a general guide, not legal or tax advice. Employer legal fee contributions (£350 to £500+ +VAT) are standard practice paid on completion, not a statutory requirement.
+                  Estimates use 2026/27 UK statutory rates (£{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI weekly cap) as a general guide, not legal or tax advice. Standard capped employer contributions (£350 to £500+ +VAT) apply on completion; extra or abortive work depends on your solicitor&apos;s terms.
                 </p>
               </div>
             </div>
