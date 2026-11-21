@@ -258,8 +258,8 @@ export default function UnfairDismissalSettlementAgreementGuide() {
             </p>
             <div className="space-y-3 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-sm mb-1">Whistleblowing (ERA 1996 s.103A)</p>
-                <p className="sc-body text-sm">
+                <p className="font-semibold text-ink text-body mb-1">Whistleblowing (ERA 1996 s.103A)</p>
+                <p className="sc-body">
                   Dismissals caused by making a protected disclosure about wrongdoing, legal breaches, or regulatory failures. Compensation for whistleblowing dismissal has no statutory financial cap. Read our full guide on{' '}
                   <Link href="/guides/whistleblowing-settlement-agreements/" className="text-coral underline hover:text-ink">
                     whistleblowing settlement agreements
@@ -268,20 +268,20 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-sm mb-1">Pregnancy and Maternity (ERA 1996 s.99)</p>
-                <p className="sc-body text-sm">
+                <p className="font-semibold text-ink text-body mb-1">Pregnancy and Maternity (ERA 1996 s.99)</p>
+                <p className="sc-body">
                   Dismissals linked to pregnancy, childbirth, maternity leave, or related family leave rights. These claims often include unlawful sex discrimination under the Equality Act 2010.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-sm mb-1">Health and Safety Activities (ERA 1996 s.100)</p>
-                <p className="sc-body text-sm">
+                <p className="font-semibold text-ink text-body mb-1">Health and Safety Activities (ERA 1996 s.100)</p>
+                <p className="sc-body">
                   Dismissals for raising workplace safety hazards, acting as a safety representative, or refusing to work in conditions of serious and imminent danger.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-sm mb-1">Asserting Statutory Rights (ERA 1996 s.104)</p>
-                <p className="sc-body text-sm">
+                <p className="font-semibold text-ink text-body mb-1">Asserting Statutory Rights (ERA 1996 s.104)</p>
+                <p className="sc-body">
                   Dismissals for claiming statutory entitlements, such as the National Minimum Wage, statutory annual leave, or correct working time limits.
                 </p>
               </div>
@@ -351,25 +351,25 @@ export default function UnfairDismissalSettlementAgreementGuide() {
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-white">
                 <h3 className="text-sm font-semibold text-ink mb-1">Actual Financial Loss and Mitigation</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   Tribunals require employees to mitigate their loss by looking for work. If your industry has high vacancies, employers argue you will find work within three months. If your sector has few openings, your realistic loss may span six to twelve months.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
                 <h3 className="text-sm font-semibold text-ink mb-1">Notice Pay and Benefits</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   You are legally entitled to your contractual notice period or statutory notice, whichever is greater. A settlement offer must provide for your notice alongside additional compensation.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
                 <h3 className="text-sm font-semibold text-ink mb-1">The Polkey Reduction Risk</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   Under the legal principle from Polkey v AE Dayton Services Ltd, an employer may argue that a fair procedure would have led to your dismissal anyway. If a tribunal agrees, it reduces compensatory awards by a percentage. Employers cite Polkey arguments to justify opening offers below your full claim value.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
                 <h3 className="text-sm font-semibold text-ink mb-1">ACAS Code 1 Procedural Uplift</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   Under Section 207A of the Trade Union and Labour Relations (Consolidation) Act 1992, tribunals can increase awards by up to 25% if an employer unreasonably failed to follow the ACAS Code of Practice on disciplinary and grievance procedures. This potential 25% uplift increases your negotiation settlement figure.
                 </p>
               </div>
@@ -392,7 +392,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
             </p>
             <div className="rounded-xl border border-rule bg-paper p-4 flex gap-3 my-6">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 Holiday pay, contractual bonuses, and salary arrears are also subject to ordinary deductions for income tax and National Insurance. Only the ex-gratia compensation element qualifies for the £30,000 exemption.
               </p>
             </div>
@@ -432,7 +432,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 </span>
                 <div>
                   <h3 className="text-base font-semibold text-ink mb-1">Evaluate the initial offer against statutory caps</h3>
-                  <p className="sc-body text-sm">
+                  <p className="sc-body">
                     Calculate your basic award using the 2026 cap of £751 per week. Estimate your realistic loss of earnings up to the compensatory limit of £123,543. Compare this total to your employer opening figure.
                   </p>
                 </div>
@@ -443,7 +443,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 </span>
                 <div>
                   <h3 className="text-base font-semibold text-ink mb-1">Assess procedural flaws and ACAS Code breaches</h3>
-                  <p className="sc-body text-sm">
+                  <p className="sc-body">
                     Identify where your employer cut corners. Did they fail to provide evidence? Did they deny you the right to be accompanied? Document these points to support a request for an uplift.
                   </p>
                 </div>
@@ -454,7 +454,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 </span>
                 <div>
                   <h3 className="text-base font-semibold text-ink mb-1">Conduct without prejudice discussions</h3>
-                  <p className="sc-body text-sm">
+                  <p className="sc-body">
                     Negotiate under Section 111A of ERA 1996 or common-law without prejudice rules. Propose a realistic counter-offer supported by evidence of your ongoing losses and job market realities.
                   </p>
                 </div>
@@ -465,7 +465,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 </span>
                 <div>
                   <h3 className="text-base font-semibold text-ink mb-1">Instruct an independent solicitor</h3>
-                  <p className="sc-body text-sm">
+                  <p className="sc-body">
                     Send the draft agreement to your chosen legal adviser. They will review non-financial clauses, including agreed job references, confidentiality wording, and mutual non-derogatory covenants.
                   </p>
                 </div>
@@ -476,7 +476,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 </span>
                 <div>
                   <h3 className="text-base font-semibold text-ink mb-1">Sign the agreement and receive payment</h3>
-                  <p className="sc-body text-sm">
+                  <p className="sc-body">
                     Both parties execute the agreement, and your solicitor signs the adviser certificate. Settlement payments are usually transferred to your bank account within 14 to 28 days of completion.
                   </p>
                 </div>

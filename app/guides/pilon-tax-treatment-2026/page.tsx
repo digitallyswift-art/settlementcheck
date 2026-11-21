@@ -250,7 +250,7 @@ export default function PilonTaxTreatmentGuide() {
         <section className="py-10 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-white p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Key tax rules for PILON</p>
+              <p className="text-body font-semibold text-ink mb-3">Key tax rules for PILON</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'All notice pay is taxable as earnings, regardless of your contract terms.',
@@ -417,11 +417,11 @@ export default function PilonTaxTreatmentGuide() {
               ].map(({ title, points }) => (
                 <div key={title} className="rounded-xl border border-rule overflow-hidden">
                   <div className="bg-ink px-4 py-3">
-                    <p className="text-white text-sm font-medium">{title}</p>
+                    <p className="text-white text-body font-medium">{title}</p>
                   </div>
                   <div className="p-4 bg-paper flex flex-col gap-2">
                     {points.map((point, index) => (
-                      <p key={index} className="sc-body text-sm">{point}</p>
+                      <p key={index} className="sc-body">{point}</p>
                     ))}
                   </div>
                 </div>
@@ -448,7 +448,7 @@ export default function PilonTaxTreatmentGuide() {
             </p>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 You can <Link href="/redundancy-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> to find out where you stand.
               </p>
             </div>
@@ -496,13 +496,13 @@ export default function PilonTaxTreatmentGuide() {
                 <li key={n} className="flex gap-4">
                   <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
-                    <p className="text-sm font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
+                    <p className="text-body font-semibold text-ink mb-1">{title}</p>
+                    <p className="sc-body">{body}</p>
                   </div>
                 </li>
               ))}
             </ol>
-            <p className="text-xs text-muted mt-6 italic">
+            <p className="text-body text-muted mt-6 italic">
               Disclaimer: The information on this page is for general guidance only and does not constitute formal legal or tax advice. Legal and tax rules can vary depending on your contract and individual circumstances.
             </p>
             <p className="sc-body mt-6">

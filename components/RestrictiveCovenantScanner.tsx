@@ -191,7 +191,7 @@ Important Privilege Notice: Transmitting unreviewed financial proposals directly
         </button>
       </div>
 
-      <p className="text-xs sm:text-sm text-[#0B1F3A]/80 leading-relaxed mb-4">
+      <p className="text-body sm:text-body text-[#0B1F3A]/80 leading-relaxed mb-4">
         Employers frequently insert fresh 6 to 12-month non-competes into settlement agreements or allocate taxable
         consideration that triggers unexpected HMRC tax deductions under ITEPA 2003 s.225. Paste your draft clause to audit restraint of trade risks.
       </p>

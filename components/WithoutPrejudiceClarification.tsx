@@ -98,7 +98,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
       {/* Hyde v Wrench vs Stevenson v McLean Legal Explainer */}
       {showLegalExplanation && (
         <div className="bg-[#F0F5FA] border border-[#C4D8EC] rounded-lg p-4 mb-5 text-xs text-[#0B1F3A] leading-relaxed">
-          <p className="font-bold text-sm mb-1.5 text-[#0B1F3A]">
+          <p className="font-bold text-body mb-1.5 text-[#0B1F3A]">
             ⚖️ The Legal Rule: Counter-Offer vs Exploratory Inquiry
           </p>
           <p className="mb-2">
@@ -230,7 +230,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
             <h4 className="text-sm font-bold text-[#0B1F3A] m-0">
               Intake Agenda for Your Instructed Solicitor
             </h4>
-            <p className="text-xs text-[#0B1F3A]/70 m-0">
+            <p className="text-body text-[#0B1F3A]/70 m-0">
               Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
             </p>
           </div>

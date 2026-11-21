@@ -505,14 +505,13 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     }
 
     loadingTimers.current.forEach(clearTimeout)
+    setLoadStep(3)
     loadingTimers.current = [
-      setTimeout(() => setLoadStep(2), 800),
-      setTimeout(() => setLoadStep(3), 1600),
       setTimeout(() => {
         if (pendingPayload.current) {
           onCalculateRef.current(pendingPayload.current)
         }
-      }, 2400),
+      }, 150),
     ]
   }
 

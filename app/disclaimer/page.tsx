@@ -21,7 +21,7 @@ export default function Disclaimer() {
             <span className="text-2xl flex-shrink-0">⚠️</span>
             <div>
               <h2 className="font-bold text-amber-900 mb-1">Important: No Legal or Tax Advice</h2>
-              <p className="text-sm text-amber-800 leading-relaxed">
+              <p className="text-body text-amber-800 leading-relaxed">
                 SettlementCheck is an independent calculation platform and introducer, not a law firm. The calculations
                 and guidance on this website provide indicative estimates only and do not constitute legal, tax, or
                 financial advice. Under Section 203(3) of the Employment Rights Act 1996, you must obtain advice from an
@@ -66,7 +66,7 @@ export default function Disclaimer() {
           ].map((s) => (
             <div key={s.title} className="mb-8">
               <h2 className="text-lg font-bold text-gray-900 mb-2">{s.title}</h2>
-              <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{s.body}</p>
+              <p className="text-body text-gray-600 leading-relaxed whitespace-pre-line">{s.body}</p>
             </div>
           ))}
         </div>

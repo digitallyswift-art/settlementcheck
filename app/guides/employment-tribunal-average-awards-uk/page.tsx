@@ -208,7 +208,7 @@ export default function TribunalAverageAwardsGuide() {
                 <h2 className="text-2xl font-serif font-bold text-ink">
                   Employment Tribunal Compensation Tables (Ministry of Justice)
                 </h2>
-                <p className="text-sm text-muted mt-1 leading-relaxed">
+                <p className="text-body text-muted mt-1 leading-relaxed">
                   The table below presents the official median and mean compensatory awards across primary employment tribunal jurisdictions published in the Ministry of Justice Employment Tribunal Annual Statistics, alongside statutory caps under the Employment Rights Act 1996 and Equality Act 2010.
                 </p>
               </div>
@@ -284,7 +284,7 @@ export default function TribunalAverageAwardsGuide() {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-muted-2 mt-2 font-mono">
+              <p className="text-body text-muted-2 mt-2 font-mono">
                 Source: Ministry of Justice Employment Tribunal Statistics Table E.1 (Annual Series). Statutory limits reflect SI 2026/310 (effective 6 April 2026).
               </p>
             </div>
@@ -297,7 +297,7 @@ export default function TribunalAverageAwardsGuide() {
               <h2 className="text-2xl font-serif font-bold text-ink mb-3">
                 Vento Bands 2026/27: Compensation for Injury to Feelings
               </h2>
-              <p className="text-sm text-muted leading-relaxed mb-6">
+              <p className="text-body text-muted leading-relaxed mb-6">
                 In claims involving unlawful discrimination, harassment, victimisation, or whistleblowing detriment, tribunals award an additional sum for injury to feelings under the landmark <em>Vento v Chief Constable of West Yorkshire Police</em> guidelines. These bands are uprated annually in line with the RPI all items index.
               </p>
 
@@ -305,21 +305,21 @@ export default function TribunalAverageAwardsGuide() {
                 <div className="p-4 rounded-lg bg-paper border border-rule">
                   <span className="text-xs font-mono uppercase font-bold text-muted block mb-1">Lower Band</span>
                   <span className="text-xl font-bold text-ink font-serif block mb-2">£1,300 to £12,600</span>
-                  <p className="text-xs text-muted leading-relaxed m-0">
+                  <p className="text-body text-muted leading-relaxed m-0">
                     Appropriate for isolated, one-off discriminatory remarks or minor unlawful detriments with limited long-term impact on wellbeing.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-paper border border-rule">
                   <span className="text-xs font-mono uppercase font-bold text-muted block mb-1">Middle Band</span>
                   <span className="text-xl font-bold text-ink font-serif block mb-2">£12,600 to £37,700</span>
-                  <p className="text-xs text-muted leading-relaxed m-0">
+                  <p className="text-body text-muted leading-relaxed m-0">
                     Applied to serious, recurring discriminatory conduct, discriminatory dismissals, or persistent failure to implement reasonable adjustments.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-paper border border-rule">
                   <span className="text-xs font-mono uppercase font-bold text-muted block mb-1">Upper Band</span>
                   <span className="text-xl font-bold text-ink font-serif block mb-2">£37,700 to £62,900+</span>
-                  <p className="text-xs text-muted leading-relaxed m-0">
+                  <p className="text-body text-muted leading-relaxed m-0">
                     Reserved for the most egregious, prolonged campaigns of discriminatory bullying, sexual harassment, or career-ending victimisation. Exceptional cases exceed £62,900.
                   </p>
                 </div>
@@ -335,7 +335,7 @@ export default function TribunalAverageAwardsGuide() {
                 <h2 className="text-2xl font-serif font-bold text-ink">
                   Employment Tribunal vs Settlement Agreement: Key Differences
                 </h2>
-                <p className="text-sm text-muted mt-1 leading-relaxed">
+                <p className="text-body text-muted mt-1 leading-relaxed">
                   While headline tribunal judgments can sound high, actual net returns from an employment tribunal hearing are frequently lower than a well-negotiated settlement agreement when factoring in time, legal costs, tax treatment, and mitigation rules.
                 </p>
               </div>
@@ -406,7 +406,7 @@ export default function TribunalAverageAwardsGuide() {
                 <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
                   Compare Your Employer&apos;s Offer Against Official MoJ Benchmarks
                 </h3>
-                <p className="text-sm text-paper opacity-90 leading-relaxed">
+                <p className="text-body text-paper opacity-90 leading-relaxed">
                   Use our free UK settlement calculator to determine your statutory floor, view MoJ tribunal medians for your role, and check whether your exit offer is fair under 2026 employment rates.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 pt-3">

@@ -423,7 +423,7 @@ export default function SitemapPage() {
               <div key={category.title} className="space-y-6">
                 <div className="border-b border-rule pb-3">
                   <h2 className="text-2xl font-serif font-semibold text-ink tracking-tight">{category.title}</h2>
-                  <p className="text-sm text-ink/70 mt-1">{category.description}</p>
+                  <p className="text-body text-ink/70 mt-1">{category.description}</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -466,7 +466,7 @@ export default function SitemapPage() {
         <section className="bg-ink text-white py-14 border-t border-rule">
           <div className="max-w-3xl mx-auto px-4 text-center">
             <h2 className="text-2xl font-serif font-medium mb-3">Received a Settlement Agreement?</h2>
-            <p className="text-white/70 text-sm mb-6 max-w-xl mx-auto">
+            <p className="text-white/70 text-body mb-6 max-w-xl mx-auto">
               Check your offer in under 60 seconds with our free statutory calculator and get matched with an independent SRA-regulated solicitor. Standard employer fee contributions apply upon completion.
             </p>
             <Link href="/calculator/" className="btn-accent inline-block">

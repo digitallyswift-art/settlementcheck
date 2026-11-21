@@ -188,7 +188,7 @@ export default function RedundancySectorHubPage() {
                   Full NHS Guide →
                 </Link>
               </div>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Staff employed under NHS Agenda for Change (AfC) terms benefit from contractual redundancy arrangements that far exceed statutory minimums. Governed by <strong>Section 16 of the AfC Terms and Conditions Handbook</strong>, payments are calculated using actual basic monthly salary rather than the statutory weekly cap.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
@@ -228,7 +228,7 @@ export default function RedundancySectorHubPage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 2. Civil Service Compensation Scheme (CSCS)
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Civil servants in ministerial departments, executive agencies, and non-departmental public bodies are covered by the statutory <strong>Civil Service Compensation Scheme (CSCS)</strong> made under the Superannuation Act 1972.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
@@ -261,7 +261,7 @@ export default function RedundancySectorHubPage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 3. Regulated Financial Services &amp; City Restructuring (FCA / PRA SM&amp;CR)
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Departures in banking, wealth management, insurance, and fintech require careful legal navigation due to the overlay of statutory employment law and regulatory oversight from the Financial Conduct Authority (FCA) and Prudential Regulation Authority (PRA).
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
@@ -295,7 +295,7 @@ export default function RedundancySectorHubPage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 4. Private Sector &amp; SME Statutory Redundancy Baselines
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 In the broader commercial economy, redundant employees are entitled to statutory redundancy pay under Section 135 and Section 162 of the Employment Rights Act 1996 if they have at least 2 complete years of continuous service.
               </p>
               <div className="overflow-x-auto">

@@ -170,7 +170,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
                   ACAS Standard: Minimum 10 Days
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-[#0B1F3A]/90 leading-relaxed mb-3">
+              <p className="text-body sm:text-body text-[#0B1F3A]/90 leading-relaxed mb-3">
                 Your employer has specified a <strong>{parsedDeadlineDays}-day</strong> response window (deadline:{' '}
                 {isValidReceived ? formatDateDisplay(actualDeadline) : `${parsedDeadlineDays} days`}).{' '}
                 <strong>ACAS Code of Practice 4 Paragraph 12</strong> recommends a minimum of{' '}
@@ -195,7 +195,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
               <span className="font-bold text-sm sm:text-base text-[#0B1F3A] block mb-1">
                 ACAS Code 4 Compliant Window ({parsedDeadlineDays} Days Allowed)
               </span>
-              <p className="text-xs sm:text-sm text-[#0B1F3A]/90 leading-relaxed m-0">
+              <p className="text-body sm:text-body text-[#0B1F3A]/90 leading-relaxed m-0">
                 The {parsedDeadlineDays}-day window satisfies the ACAS minimum 10-day guideline. You have approximately{' '}
                 <strong>{daysRemainingActual} days remaining</strong> before the deadline of{' '}
                 {isValidReceived ? formatDateDisplay(actualDeadline) : `${parsedDeadlineDays} days`}.
@@ -236,7 +236,7 @@ Important Privilege Notice: Do not send unreviewed financial proposals directly 
             <h4 className="text-sm font-bold text-[#0B1F3A] m-0">
               Intake Agenda for Your Instructed Solicitor: Timeline Briefing
             </h4>
-            <p className="text-xs text-[#0B1F3A]/70 m-0">
+            <p className="text-body text-[#0B1F3A]/70 m-0">
               Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
             </p>
           </div>

@@ -278,7 +278,7 @@ export default function TaxFreeSettlementGuide() {
               Only specific parts of your settlement agreement qualify for the £30,000 tax-free limit. Other components are always fully taxable.
             </p>
             <div className="rounded-xl border border-rule bg-paper p-5 mb-8">
-              <p className="text-sm font-semibold text-ink mb-4">Qualifying tax-free payments</p>
+              <p className="text-body font-semibold text-ink mb-4">Qualifying tax-free payments</p>
               <ul className="flex flex-col gap-3">
                 <li className="flex items-start gap-3">
                   <CheckIcon />
@@ -385,7 +385,7 @@ export default function TaxFreeSettlementGuide() {
                 </tbody>
               </table>
             </div>
-            <p className="sc-body text-xs text-muted mt-3">
+            <p className="sc-body text-muted mt-3">
               Figures and rules reflect current UK employment tax legislation for the 2026/27 tax year.
             </p>
           </div>
@@ -428,11 +428,11 @@ export default function TaxFreeSettlementGuide() {
               ].map(({ title, points }) => (
                 <div key={title} className="rounded-xl border border-rule overflow-hidden">
                   <div className="bg-ink px-4 py-3">
-                    <p className="text-white text-sm font-medium">{title}</p>
+                    <p className="text-white text-body font-medium">{title}</p>
                   </div>
                   <div className="p-4 bg-paper flex flex-col gap-2">
                     {points.map((point, index) => (
-                      <p key={index} className="sc-body text-sm">{point}</p>
+                      <p key={index} className="sc-body">{point}</p>
                     ))}
                   </div>
                 </div>
@@ -503,15 +503,15 @@ export default function TaxFreeSettlementGuide() {
                 <li key={n} className="flex gap-4">
                   <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
-                    <p className="text-sm font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
+                    <p className="text-body font-semibold text-ink mb-1">{title}</p>
+                    <p className="sc-body">{body}</p>
                   </div>
                 </li>
               ))}
             </ol>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3 mt-8">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards your solicitor fees upon completion of the agreement. Independent legal advice protects you from costly tax calculation errors.
               </p>
             </div>
@@ -624,7 +624,7 @@ export default function TaxFreeSettlementGuide() {
         {/* Disclaimer */}
         <section className="py-6 border-b border-rule bg-paper">
           <div className="max-w-2xl mx-auto px-5">
-            <p className="sc-body text-xs text-muted leading-relaxed">
+            <p className="sc-body text-muted leading-relaxed">
               Disclaimer: Tax calculations on this page are statutory estimates based on 2026/27 HMRC rates. They do not constitute formal legal or tax advice. Confirm your specific offer using our free calculator.
             </p>
           </div>

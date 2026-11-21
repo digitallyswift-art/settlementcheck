@@ -375,7 +375,7 @@ export default function NhsSettlementAgreements() {
               </p>
               <div className="bg-paper border border-rule rounded-xl p-5 space-y-3">
                 <h3 className="text-base font-semibold text-ink">Two key pension choices on compulsory redundancy</h3>
-                <p className="text-sm text-ink leading-relaxed">
+                <p className="text-body text-ink leading-relaxed">
                   Under Agenda for Change Section 16, if you have reached minimum pension age (age 50 for the 1995 section, age 55 for the 2008/2015 sections) and are made redundant, you may be eligible to choose:
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
@@ -405,7 +405,7 @@ export default function NhsSettlementAgreements() {
               </p>
               <div className="bg-paper border border-rule rounded-xl p-5 space-y-2">
                 <span className="text-xs font-bold text-coral uppercase tracking-wider">Clawback Mechanism</span>
-                <p className="text-sm text-ink leading-relaxed">
+                <p className="text-body text-ink leading-relaxed">
                   If you return to NHS employment (including bank or agency shifts within an NHS trust) within the specified break period, you may be required to repay a proportion of your severance payment. An independent solicitor will examine your draft agreement to verify whether re-employment restrictions are reasonable.
                 </p>
               </div>
@@ -470,7 +470,7 @@ export default function NhsSettlementAgreements() {
                     </span>
                     <div>
                       <h3 className="text-sm font-semibold text-ink mb-1">{title}</h3>
-                      <p className="text-xs text-muted leading-relaxed">{desc}</p>
+                      <p className="text-body text-muted leading-relaxed">{desc}</p>
                     </div>
                   </div>
                 ))}
@@ -496,7 +496,7 @@ export default function NhsSettlementAgreements() {
               <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
                 Find out where your NHS settlement offer stands
               </h2>
-              <p className="text-white/70 text-sm leading-relaxed mb-6">
+              <p className="text-white/70 text-body leading-relaxed mb-6">
                 Free statutory calculation. SRA-regulated solicitor matched within 24 hours. NHS employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -602,7 +602,7 @@ export default function NhsSettlementAgreements() {
             </div>
 
             {/* Disclaimer */}
-            <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed">
+            <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed">
               SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement process and does not constitute legal counsel.
             </p>
 

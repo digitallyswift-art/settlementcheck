@@ -183,10 +183,10 @@ export default function PenpCalculatorPage() {
           <h2 className="text-2xl font-serif font-bold text-[#0B1F3A]">
             How Post-Employment Notice Pay (PENP) Works in the UK
           </h2>
-          <p className="text-sm leading-relaxed text-[#0B1F3A]/85">
+          <p className="text-body leading-relaxed text-[#0B1F3A]/85">
             Prior to April 2018, employers and employees could occasionally negotiate settlement agreements where payment in lieu of notice (PILON) was classified as non-taxable compensation if the employment contract lacked a formal PILON clause. Under <strong>Finance Act 2017</strong> and <strong>Section 402D of the Income Tax (Earnings and Pensions) Act 2003</strong>, this practice was eliminated.
           </p>
-          <p className="text-sm leading-relaxed text-[#0B1F3A]/85">
+          <p className="text-body leading-relaxed text-[#0B1F3A]/85">
             The statutory rules treat all unworked notice pay as <strong>Post-Employment Notice Pay (PENP)</strong>. Regardless of how the settlement agreement terms are worded or whether PILON is expressly referenced, HMRC requires the PENP formula to be executed. The resulting PENP figure must be subjected to standard PAYE income tax and employee Class 1 National Insurance before any residual compensation qualifies for the <strong>£30,000 tax exemption under Section 403</strong>.
           </p>
 

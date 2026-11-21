@@ -158,7 +158,7 @@ export default function SettlementAgreementSickLeaveGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Key sick leave settlement facts for 2026</p>
+              <p className="text-body font-semibold text-ink mb-3">Key sick leave settlement facts for 2026</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'Your employer can propose a settlement agreement during sick leave, but you do not have to accept.',
@@ -249,13 +249,13 @@ export default function SettlementAgreementSickLeaveGuide() {
 
             <div className="rounded-xl border border-rule bg-white p-5 mb-6">
               <h3 className="text-base font-semibold text-ink mb-2">How Section 87(4) protects your notice pay</h3>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Section 86 sets statutory minimum notice: one week for service between one month and two years, plus one additional week for each complete year of service up to twelve weeks <sup>5</sup>.
               </p>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Under Section 87(4), statutory pay protections apply if your contractual notice is <strong>not at least one week longer</strong> than your statutory notice entitlement.
               </p>
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 When this condition is met, Section 88(1)(b) states that an employee incapable of work due to sickness is entitled to <strong>full normal contractual pay</strong> for their notice period. This applies even if you have exhausted contractual sick pay and receive only SSP or zero pay.
               </p>
             </div>
@@ -264,10 +264,10 @@ export default function SettlementAgreementSickLeaveGuide() {
               <div className="rounded-xl border border-rule bg-paper p-5">
                 <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage block w-fit mb-2">Full Statutory Notice Protection</span>
                 <h4 className="text-sm font-semibold text-ink mb-2">Scenario A: Contractual notice matches statutory notice</h4>
-                <p className="sc-body text-xs text-muted mb-2">
+                <p className="sc-body text-muted mb-2">
                   You have five years of service (five weeks statutory notice). Your contract requires five weeks or one month of notice.
                 </p>
-                <p className="sc-body text-xs text-ink font-medium">
+                <p className="sc-body text-ink font-medium">
                   Your contractual notice is not at least one week longer than statutory notice. You are legally entitled to 100% full pay for all five weeks of notice.
                 </p>
               </div>
@@ -275,10 +275,10 @@ export default function SettlementAgreementSickLeaveGuide() {
               <div className="rounded-xl border border-rule bg-paper p-5">
                 <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber block w-fit mb-2">Negotiation Required</span>
                 <h4 className="text-sm font-semibold text-ink mb-2">Scenario B: Contractual notice exceeds statutory by 1+ weeks</h4>
-                <p className="sc-body text-xs text-muted mb-2">
+                <p className="sc-body text-muted mb-2">
                   You have two years of service (two weeks statutory notice). Your contract requires three months of notice.
                 </p>
-                <p className="sc-body text-xs text-ink font-medium">
+                <p className="sc-body text-ink font-medium">
                   Section 87(4) excludes you from statutory full pay. Notice follows your contract, but your solicitor will negotiate full pay in the settlement agreement.
                 </p>
               </div>
@@ -286,7 +286,7 @@ export default function SettlementAgreementSickLeaveGuide() {
 
             <div className="rounded-xl border border-rule bg-white p-5 flex gap-3">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 If your employer calculates your Pay in Lieu of Notice (PILON) using SSP or nil pay, point out Sections 87 and 88 of the Employment Rights Act 1996. Your independent solicitor will ensure your notice pay reflects your true legal entitlement. Read our guide to <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax treatment in 2026</Link> to understand how notice pay is taxed.
               </p>
             </div>
@@ -475,10 +475,10 @@ export default function SettlementAgreementSickLeaveGuide() {
 
             <div className="rounded-xl border border-rule bg-white p-5 mt-6">
               <h3 className="text-base font-semibold text-ink mb-2">Unsure whether to accept or decline?</h3>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Declining a settlement offer does not mean immediate termination. Your employer must continue your contractual sick pay and follow a fair capability investigation.
               </p>
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 Explore your strategic choices in our guides on <Link href="/guides/what-happens-if-you-do-not-sign/" className="underline hover:text-ink">what happens if you do not sign a settlement agreement</Link> and <Link href="/guides/is-my-settlement-offer-fair/" className="underline hover:text-ink">how to tell if your settlement offer is fair</Link>.
               </p>
             </div>
@@ -500,10 +500,10 @@ export default function SettlementAgreementSickLeaveGuide() {
               <div className="rounded-xl border border-rule bg-paper p-5">
                 <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage block w-fit mb-2">Tax-Free up to £30,000</span>
                 <h3 className="text-sm font-semibold text-ink mb-2">Ex-Gratia Termination Payment</h3>
-                <p className="sc-body text-xs text-muted mb-2">
+                <p className="sc-body text-muted mb-2">
                   Under Section 403 of ITEPA 2003, genuine compensation for loss of employment is exempt from income tax and National Insurance up to £30,000 <sup>12</sup>.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   Any excess above £30,000 is subject to income tax and employer National Insurance.
                 </p>
               </div>
@@ -511,10 +511,10 @@ export default function SettlementAgreementSickLeaveGuide() {
               <div className="rounded-xl border border-rule bg-paper p-5">
                 <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber block w-fit mb-2">Fully Taxable</span>
                 <h3 className="text-sm font-semibold text-ink mb-2">Notice Pay (PILON)</h3>
-                <p className="sc-body text-xs text-muted mb-2">
+                <p className="sc-body text-muted mb-2">
                   Under Section 402D of ITEPA 2003, Pay in Lieu of Notice is classified as Post-Employment Notice Pay (PENP) <sup>13</sup>.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   Your employer must deduct standard income tax and Class 1 National Insurance from all notice pay.
                 </p>
               </div>
@@ -522,20 +522,20 @@ export default function SettlementAgreementSickLeaveGuide() {
 
             <div className="rounded-xl border border-rule bg-paper p-5 mb-6">
               <h3 className="text-sm font-semibold text-ink mb-2">Accrued Holiday Pay and Sick Pay Arrears</h3>
-              <p className="sc-body text-sm mb-2">
+              <p className="sc-body mb-2">
                 Under Regulation 13 and 13A of the Working Time Regulations 1998, workers are entitled to 5.6 weeks of paid annual leave per year <sup>14</sup>.
               </p>
-              <p className="sc-body text-sm mb-2">
+              <p className="sc-body mb-2">
                 You continue to accrue statutory holiday while off sick. If your illness prevented you from taking holiday, it carries forward under retained case law (such as <em>Stringer v HM Revenue and Customs</em>) <sup>15</sup>.
               </p>
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 All outstanding holiday pay and sick pay arrears must be paid in full upon departure. These sums are treated as normal earnings and taxed under PAYE.
               </p>
             </div>
 
             <div className="rounded-xl border border-rule bg-white p-5 flex gap-3">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 If your settlement includes compensation for pre-termination disability discrimination, that portion is 100% tax-free under Section 406 of ITEPA 2003, outside the £30,000 limit. Learn more in our complete guide to the <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">£30,000 settlement tax exemption</Link> and read our benchmark analysis of <Link href="/guides/average-settlement-agreement-payout-uk/" className="underline hover:text-ink">average UK settlement agreement payouts</Link>.
               </p>
             </div>
@@ -648,7 +648,7 @@ export default function SettlementAgreementSickLeaveGuide() {
                 >
                   <div>
                     <h3 className="text-sm font-semibold text-ink mb-1">{name}</h3>
-                    <p className="sc-body text-xs text-muted mb-3">{desc}</p>
+                    <p className="sc-body text-muted mb-3">{desc}</p>
                   </div>
                   <span className="text-xs font-semibold text-coral-ink">Visit official site &rarr;</span>
                 </a>
@@ -810,7 +810,7 @@ export default function SettlementAgreementSickLeaveGuide() {
         </section>
 
         {/* Disclaimer */}
-        <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
           Disclaimer: SettlementCheck is an independent information service and calculator platform, not a law firm. The content on this page is for general information only and does not constitute formal legal counsel. Use our free calculator to evaluate your settlement offer.
         </p>
       </main>

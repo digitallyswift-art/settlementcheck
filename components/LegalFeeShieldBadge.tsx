@@ -68,7 +68,7 @@ export function LegalFeeInlineCard({ className = '' }: { className?: string }) {
           <h3 className="text-sm font-bold text-[#0B1F3A] m-0 mb-1">
             Independent Legal Advice Fee Contribution
           </h3>
-          <p className="text-xs text-[#0B1F3A]/70 leading-relaxed m-0 mb-3">
+          <p className="text-body text-[#0B1F3A]/70 leading-relaxed m-0 mb-3">
             For a settlement agreement to legally waive employment tribunal claims, Section 203(3) requires you to receive independent legal advice. Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon agreement completion. If negotiations abort or legal work exceeds the agreed cap, liability depends on your solicitor&apos;s terms of engagement.
           </p>
           <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#5B6577]">

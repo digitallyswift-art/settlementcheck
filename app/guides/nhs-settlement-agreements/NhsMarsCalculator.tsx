@@ -40,7 +40,7 @@ export default function NhsMarsCalculator() {
       <h3 className="text-xl font-bold text-ink mb-1">
         NHS Redundancy &amp; MARS Payout Calculator
       </h3>
-      <p className="text-xs text-muted mb-6 leading-relaxed">
+      <p className="text-body text-muted mb-6 leading-relaxed">
         Estimate your contractual redundancy or voluntary MARS payout under NHS Agenda for Change terms.
       </p>
 

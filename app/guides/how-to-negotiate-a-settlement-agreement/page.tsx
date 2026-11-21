@@ -40,24 +40,24 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const FAQS = [
   {
-    q: 'Does an employee make the first offer?',
-    a: 'Usually, the employer makes the initial offer. This establishes a baseline figure. Once the employer presents a number, the employee can evaluate it against their statutory entitlements and counter-offer.',
+    q: 'Do you have to make the first offer?',
+    a: 'Usually your employer puts forward the opening figure, which gives you a baseline to check against your notice pay, holiday pay, and statutory entitlements. Once you have that draft in writing, you and your solicitor can decide whether there is room to ask for more.',
   },
   {
-    q: 'Can an employer dismiss an employee for negotiating?',
-    a: 'No. Negotiating a settlement is not a legal ground for dismissal. However, if the alternative to the settlement is a formal redundancy or performance process, refusing the settlement means that formal process will resume.',
+    q: 'Can my employer dismiss me just for trying to negotiate?',
+    a: 'Asking questions or proposing higher terms is not a fair reason for dismissal on its own. That said, if talks break down and your employer was already running a genuine redundancy or capability process, that formal process will normally pick up where it left off.',
   },
   {
-    q: 'Does the employer pay the legal fees for negotiation?',
-    a: 'Employers pay a set contribution (typically £350 to £750) for the employee to receive independent legal advice on the terms of the agreement. If the solicitor spends additional time negotiating new terms, those extra fees usually fall to the employee, unless the solicitor secures an agreement from the employer to cover them.',
+    q: 'Does my employer pay the legal fees if we negotiate?',
+    a: 'Employers standardly offer a capped contribution (typically £350 to £500+ plus VAT) paid directly to your solicitor upon completion of the agreement. That contribution usually covers reviewing and advising on the draft. If your solicitor spends extra time negotiating new terms, the additional cost is governed by your engagement terms unless your employer agrees to raise the fee cap.',
   },
   {
-    q: 'How long does the process take?',
-    a: 'ACAS recommends employers provide a minimum of 10 calendar days for an employee to consider an initial offer. A standard negotiation involving counter-offers typically concludes within one to three weeks.',
+    q: 'How long do settlement negotiations usually take?',
+    a: 'ACAS Code of Practice 4 recommends giving you at least 10 calendar days to consider an initial written offer, though this is guidance rather than a strict legal right. In practice, straightforward talks with one or two counter-proposals usually wrap up within one to three weeks.',
   },
   {
-    q: 'Can an employer withdraw the offer?',
-    a: 'Yes. In contract law, a counter-offer acts as a rejection of the original offer. The employer can choose to remove the settlement entirely. In practice, employers usually reject the counter-offer and reiterate their original offer rather than withdrawing the agreement completely.',
+    q: 'Can my employer withdraw the offer if I ask for more?',
+    a: 'Yes. Under UK contract law, making a counter-proposal rejects the original offer, so your employer can legally walk away before anything is signed. Most employers will simply say no or meet partway rather than pulling the plug, but it is a real risk worth weighing up with your solicitor first.',
   },
 ]
 
@@ -108,11 +108,14 @@ export default function HowToNegotiateGuide() {
               <span className="text-rule-strong text-xs">/</span>
               <span className="text-xs font-medium text-muted tracking-wide uppercase">Settlement agreements</span>
             </div>
-            <h1 className="sc-h1 mb-6">
+            <h1 className="sc-h1 mb-4">
               How to Negotiate a Settlement Agreement
             </h1>
+            <p className="text-body text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 &amp; ACAS Code 4
+            </p>
             <p className="sc-lead text-[17px] leading-relaxed">
-              A settlement agreement is a commercial transaction. Employers offer a sum of money in exchange for an employee giving up their right to bring an employment tribunal claim. This guide breaks down the facts of the negotiation process, the rules of "Without Prejudice" conversations, and how settlement values are calculated.
+              Being handed a settlement agreement can feel personal, but to your employer it is a commercial trade: they pay an agreed sum so both sides can part ways without the cost and uncertainty of an employment tribunal. Here is how UK settlement talks actually work in practice, what tends to move the figure, and how to protect yourself before you respond.
             </p>
           </div>
         </section>
@@ -123,19 +126,19 @@ export default function HowToNegotiateGuide() {
 
             {/* Key Takeaways Callout */}
             <div className="bg-paper-2 border border-rule rounded-xl p-6 md:p-8">
-              <h2 className="font-serif text-[19px] font-[460] text-ink mb-4">Core Facts</h2>
+              <h2 className="font-serif text-[19px] font-[460] text-ink mb-4">What to Know Before You Respond</h2>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-[15px] text-ink leading-relaxed">The initial offer is rarely the employer's maximum budget.</span>
+                  <span className="text-[15px] text-ink leading-relaxed">The first figure on the page is rarely your employer&apos;s final ceiling, especially if notice, bonus, or dismissal risk is in play.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-[15px] text-ink leading-relaxed">Employees must receive independent legal advice for the agreement to be binding.</span>
+                  <span className="text-[15px] text-ink leading-relaxed">Under Section 203(3) of the Employment Rights Act 1996, the agreement is not legally binding until an independent solicitor advises you on it.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-[15px] text-ink leading-relaxed">Up to £30,000 of a genuine compensation payment can often be paid tax-free.</span>
+                  <span className="text-[15px] text-ink leading-relaxed">Up to £30,000 of a genuine ex-gratia termination payment can normally be paid free of income tax, though contractual notice and holiday pay are always taxed.</span>
                 </li>
               </ul>
             </div>
@@ -161,29 +164,29 @@ export default function HowToNegotiateGuide() {
 
         {/* Section 1 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">1. The Employer's Motivation</h2>
+              <h2 className="guide-h2 text-[24px]">1. Why Your Employer Wants a Deal</h2>
               <p className="guide-body">
-                Employers use settlement agreements to secure certainty. Dismissing an employee carries legal risk and administrative costs. Even if an employer follows a fair procedure, the employee retains the right to bring a claim to an employment tribunal.
+                Employers rarely offer a settlement agreement out of generosity. They use one to buy certainty, because dismissing someone carries legal risk, management distraction, and tribunal defence costs even when HR thinks their paperwork is tidy.
               </p>
               <p className="guide-body">
-                Tribunal claims require expensive legal defence and consume management time. A settlement agreement completely eliminates this risk. 
+                Once you see the agreement as a risk-management exercise rather than a verdict on your work, it becomes much easier to spot where there is room to move.
               </p>
-              
+
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="border border-rule rounded-lg p-5">
-                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Common Triggers</h3>
+                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Why Offers Happen</h3>
                   <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
-                    <li>Avoiding a long redundancy consultation.</li>
-                    <li>Bypassing a lengthy performance management plan.</li>
-                    <li>Resolving an employee grievance quickly.</li>
-                    <li>Facilitating a change in business leadership.</li>
+                    <li>Skipping a drawn-out redundancy consultation.</li>
+                    <li>Avoiding months of formal performance management.</li>
+                    <li>Closing down an unresolved grievance or dispute.</li>
+                    <li>Making a quick leadership or restructure change.</li>
                   </ul>
                 </div>
                 <div className="border border-rule rounded-lg p-5">
-                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">The Negotiation Window</h3>
+                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Where the Budget Comes From</h3>
                   <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
-                    <li>The difference between the employer's current offer and their future legal costs.</li>
-                    <li>The cost of management time required to manage the employee out.</li>
+                    <li>The legal fees and management hours saved by avoiding a tribunal defence.</li>
+                    <li>The salary your employer would otherwise pay during a long consultation or PIP.</li>
                   </ul>
                 </div>
               </div>
@@ -193,22 +196,22 @@ export default function HowToNegotiateGuide() {
             <div className="space-y-4">
               <h2 className="guide-h2 text-[24px]">2. Protected and Without Prejudice Conversations</h2>
               <p className="guide-body">
-                Settlement discussions occur under specific legal frameworks to prevent the conversation from being used as evidence in a future tribunal.
+                Most settlement talks happen off the record so neither side can quote the figures in a future employment tribunal. In UK law, two different rules cover this, and the difference matters if talks break down.
               </p>
-              
+
               <ul className="space-y-4 mt-2">
                 <li className="flex gap-4">
                   <div className="w-8 h-8 rounded-full bg-paper-2 border border-rule flex items-center justify-center font-sans text-[13px] font-semibold text-ink flex-shrink-0">A</div>
                   <div>
                     <strong className="text-ink block text-[16px] mb-1">Without Prejudice</strong>
-                    <span className="text-muted text-[15px] leading-relaxed">This rule applies when an active dispute already exists between the employer and employee. It allows both parties to propose settlement figures without admitting liability.</span>
+                    <span className="text-muted text-[15px] leading-relaxed">Applies only when there is already a genuine dispute between you and your employer. It lets both sides discuss settlement figures openly without those offers being used as an admission of fault.</span>
                   </div>
                 </li>
                 <li className="flex gap-4">
                   <div className="w-8 h-8 rounded-full bg-paper-2 border border-rule flex items-center justify-center font-sans text-[13px] font-semibold text-ink flex-shrink-0">B</div>
                   <div>
                     <strong className="text-ink block text-[16px] mb-1">Section 111A (Protected Conversations)</strong>
-                    <span className="text-muted text-[15px] leading-relaxed">This applies even when no active dispute exists. Employers can propose a settlement agreement to end employment on agreed terms.</span>
+                    <span className="text-muted text-[15px] leading-relaxed">Lets your employer propose a settlement even when no dispute exists yet. Crucially, Section 111A only shields standard unfair dismissal claims. It does not protect discrimination, whistleblowing, automatic unfair dismissal, or breach of contract claims.</span>
                   </div>
                 </li>
               </ul>
@@ -216,7 +219,7 @@ export default function HowToNegotiateGuide() {
               <div className="bg-[#FFF8F6] border border-coral/20 rounded-lg p-5 mt-6 flex items-start gap-3">
                 <AlertIcon />
                 <p className="text-[14px] text-ink leading-relaxed">
-                  <strong>Exceptions:</strong> These protections do not cover discriminatory remarks, whistleblowing claims, or cases of "improper behaviour" (such as bullying an employee into signing). If your employer is rushing or intimidating you, read our guide on{' '}
+                  <strong>Watch for improper behaviour:</strong> Neither rule protects an employer who bullies you, threatens automatic dismissal if you refuse, or gives you an unreasonable deadline to sign. If you are being rushed, read our guide on{' '}
                   <Link href="/guides/pressured-to-sign/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
                     your rights when pressured to sign quickly
                   </Link>.
@@ -226,37 +229,37 @@ export default function HowToNegotiateGuide() {
 
             {/* Section 3 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">3. Assessing Your Position</h2>
+              <h2 className="guide-h2 text-[24px]">3. Weighing Up Your Position</h2>
               <p className="guide-body">
-                The strength of your position dictates the potential value of a settlement. A strong position exists when the employer faces significant financial or reputational risk if the employee refuses to sign. A weak position exists when the employer has a watertight, legally sound case for dismissal.
+                Negotiating power comes down to what happens if you do not sign. If walking away leaves your employer facing a credible legal claim or months of procedural work, your opening offer is more likely to move. If they have followed a clean process and your statutory entitlements are already covered, there is less room on the cash figure.
               </p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <div>
-                  <h3 className="font-serif text-[18px] text-ink mb-3 border-b border-rule pb-2">Strong Position</h3>
+                  <h3 className="font-serif text-[18px] text-ink mb-3 border-b border-rule pb-2">Stronger Grounds to Negotiate</h3>
                   <ul className="space-y-2">
                     <li className="text-[14px] text-muted flex items-start gap-2">
-                      <span className="text-coral mt-1">•</span> Strong evidence of discrimination.
+                      <span className="text-coral mt-1">•</span> Potential discrimination, maternity, or disability issues.
                     </li>
                     <li className="text-[14px] text-muted flex items-start gap-2">
-                      <span className="text-coral mt-1">•</span> A pending whistleblowing claim.
+                      <span className="text-coral mt-1">•</span> Concerns raised about whistleblowing or protected disclosures.
                     </li>
                     <li className="text-[14px] text-muted flex items-start gap-2">
-                      <span className="text-coral mt-1">•</span> Failure by the employer to follow statutory procedures.
+                      <span className="text-coral mt-1">•</span> Procedural shortcuts, such as skipping redundancy consultation or a fair disciplinary process.
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-serif text-[18px] text-ink mb-3 border-b border-rule pb-2">Weak Position</h3>
+                  <h3 className="font-serif text-[18px] text-ink mb-3 border-b border-rule pb-2">Tighter Room to Move</h3>
                   <ul className="space-y-2">
                     <li className="text-[14px] text-muted flex items-start gap-2">
-                      <span className="text-coral mt-1">•</span> A genuine redundancy with full consultation completed.
+                      <span className="text-coral mt-1">•</span> A genuine redundancy where fair consultation has already happened.
                     </li>
                     <li className="text-[14px] text-muted flex items-start gap-2">
-                      <span className="text-coral mt-1">•</span> Documented gross misconduct by the employee.
+                      <span className="text-coral mt-1">•</span> Clear, documented gross misconduct.
                     </li>
                     <li className="text-[14px] text-muted flex items-start gap-2">
-                      <span className="text-coral mt-1">•</span> Employee has less than two years of service (with no discrimination claims).
+                      <span className="text-coral mt-1">•</span> Under two years of continuous service, unless discrimination or automatic unfair dismissal applies.
                     </li>
                   </ul>
                 </div>
@@ -272,16 +275,16 @@ export default function HowToNegotiateGuide() {
 
             {/* Section 4 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">4. Calculating the Value</h2>
+              <h2 className="guide-h2 text-[24px]">4. Breaking Down the Offer</h2>
               <p className="guide-body">
-                A settlement offer comprises several financial components. Employees evaluate offers by breaking them down into statutory minimums and compensatory amounts.
+                Employers often present a single headline number that looks generous at first glance, until you realise it already includes your notice pay and unused holiday. Split the offer into four parts before you judge it, bearing in mind that statutory redundancy baselines depend on qualifying service, absence of gross misconduct, and any suitable alternative employment rules under Section 141 ERA 1996.
               </p>
-              
+
               <ul className="space-y-3 bg-paper-2 border border-rule rounded-xl p-6">
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
                   <span className="text-[15px] text-ink">
-                    <strong>Notice Pay:</strong> Payment for the contractual notice period. Note that PILON is always taxable as earnings (see our guide on{' '}
+                    <strong>Notice Pay (PILON or PENP):</strong> Pay for your contractual notice period. Contractual payment in lieu of notice and Post-Employment Notice Pay (PENP) under ITEPA 2003 s.402D are always taxed as earnings (see our guide on{' '}
                     <Link href="/guides/pilon-tax-treatment-2026/" className="text-coral underline underline-offset-2 hover:text-ink">
                       PILON tax treatment
                     </Link>).
@@ -289,16 +292,16 @@ export default function HowToNegotiateGuide() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
-                  <span className="text-[15px] text-ink"><strong>Holiday Pay:</strong> Payment for accrued but untaken annual leave.</span>
+                  <span className="text-[15px] text-ink"><strong>Accrued Holiday Pay:</strong> Wages owed for annual leave you have built up but not taken by your termination date, also subject to income tax and National Insurance.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
                   <span className="text-[15px] text-ink">
-                    <strong>Statutory Redundancy / Basic Award:</strong> The legal minimum calculation based on age, service, and the £751 weekly pay cap. Check our{' '}
+                    <strong>Statutory Redundancy or Basic Award:</strong> The legal floor based on your age, complete years of service (capped at 20), and the April 2026 weekly pay cap of £751. Check your baseline with our{' '}
                     <Link href="/redundancy-calculator/" className="text-coral underline underline-offset-2 hover:text-ink">
                       Redundancy Calculator
                     </Link>{' '}
-                    or read our guide on{' '}
+                    or read{' '}
                     <Link href="/guides/settlement-agreement-acas-calculations/" className="text-coral underline underline-offset-2 hover:text-ink">
                       ACAS-based calculations
                     </Link>.
@@ -307,10 +310,10 @@ export default function HowToNegotiateGuide() {
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
                   <span className="text-[15px] text-ink">
-                    <strong>Ex-gratia Payment:</strong> Discretionary compensation to secure the waiver of claims. Up to £30,000 can be paid tax-free (see the{' '}
+                    <strong>Ex-Gratia Compensation:</strong> The extra sum paid specifically for waiving your right to bring claims. Up to £30,000 can usually be paid tax-free (see the{' '}
                     <Link href="/guides/tax-free-settlement-30000/" className="text-coral underline underline-offset-2 hover:text-ink">
                       £30,000 tax exemption rule
-                    </Link>). Learn what a reasonable multiple is in{' '}
+                    </Link>). For typical UK multiples, see{' '}
                     <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
                       What Is a Fair Settlement Agreement?
                     </Link>
@@ -321,55 +324,55 @@ export default function HowToNegotiateGuide() {
 
             {/* Section 5 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">5. Non-Financial Terms</h2>
+              <h2 className="guide-h2 text-[24px]">5. Non-Financial Terms Worth Checking</h2>
               <p className="guide-body">
-                Settlement agreements dictate the terms of the employee's departure. The non-financial clauses hold significant value and are standard points of negotiation.
+                Even when an employer will not budge on the headline cash figure, they will often agree to practical changes that protect your next job move and cost them nothing.
               </p>
-              
+
               <div className="space-y-4">
                 <div className="border-l-2 border-coral pl-4 py-1">
-                  <strong className="text-ink block text-[16px]">Agreed Reference</strong>
-                  <span className="text-muted text-[15px]">A clause attaching an exact, agreed-upon factual reference to the contract. The employer guarantees to provide this exact wording to future employers.</span>
+                  <strong className="text-ink block text-[16px]">An Agreed Reference</strong>
+                  <span className="text-muted text-[15px]">Ask for the exact reference wording to be attached as a schedule to the agreement, so future employers receive a clean, consistent statement.</span>
                 </div>
                 <div className="border-l-2 border-coral pl-4 py-1">
-                  <strong className="text-ink block text-[16px]">Internal Announcements</strong>
-                  <span className="text-muted text-[15px]">Agreed wording regarding how the employee's departure will be communicated to the rest of the business and clients.</span>
+                  <strong className="text-ink block text-[16px]">Internal &amp; Client Announcements</strong>
+                  <span className="text-muted text-[15px]">Agreeing the wording of your departure email or announcement protects your professional reputation in a small industry.</span>
                 </div>
                 <div className="border-l-2 border-coral pl-4 py-1">
-                  <strong className="text-ink block text-[16px]">Restrictive Covenants</strong>
-                  <span className="text-muted text-[15px]">The negotiation of any post-termination restrictions, such as non-compete clauses, to ensure they do not unfairly restrict future employment.</span>
+                  <strong className="text-ink block text-[16px]">Restrictive Covenants &amp; Bonus / Commission</strong>
+                  <span className="text-muted text-[15px]">Your solicitor can check whether non-compete clauses should be waived or narrowed, and confirm how earned bonuses, shares, or commission are treated.</span>
                 </div>
               </div>
             </div>
 
             {/* Section 6 */}
             <div className="space-y-6">
-              <h2 className="guide-h2 text-[24px]">6. The Step-by-Step Process</h2>
-              
+              <h2 className="guide-h2 text-[24px]">6. How the Negotiation Process Usually Runs</h2>
+
               <div className="relative border-l border-rule ml-3 space-y-8 pb-4">
-                
+
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">1</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Receive the offer</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">The employer presents the settlement offer and the draft agreement. ACAS advises giving the employee 10 days to review it.</p>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Get the offer in writing</h3>
+                  <p className="text-[15px] text-muted leading-relaxed">Ask for the draft agreement and a breakdown of the numbers. ACAS Code 4 recommends at least 10 calendar days to consider it, though employers can set shorter deadlines or withdraw an unaccepted offer.</p>
                 </div>
-                
+
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">2</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Instruct an independent solicitor</h3>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Speak to an independent solicitor early</h3>
                   <p className="text-[15px] text-muted leading-relaxed">
-                    The employee provides the draft to an independent solicitor. Remember: you have the legal right to choose your own adviser (read{' '}
+                    You have the right to choose your own SRA-regulated solicitor rather than using one suggested by HR (read{' '}
                     <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink">
-                      do you have to use your employer's solicitor?
+                      do you have to use your employer&apos;s solicitor?
                     </Link>).
                   </p>
                 </div>
 
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">3</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Submit a counter-offer</h3>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Agree a counter-proposal agenda with your solicitor</h3>
                   <p className="text-[15px] text-muted leading-relaxed">
-                    If the offer is insufficient, submit a factual counter-offer outlining the commercial justification. If your employer resists, understand your alternatives in our guide on{' '}
+                    Rather than firing off an emotional email to HR and risking privilege, prepare a clear list of figures and clauses to discuss with your solicitor. They can advise on timing, put forward a measured counter-proposal, or walk through{' '}
                     <Link href="/guides/what-happens-if-you-do-not-sign/" className="text-coral underline underline-offset-2 hover:text-ink">
                       what happens if you do not sign
                     </Link>.
@@ -378,8 +381,8 @@ export default function HowToNegotiateGuide() {
 
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">4</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Finalise terms and sign</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">Once a figure is agreed, the solicitor ensures the final contract reflects the agreement. Both parties sign, and the employment ends.</p>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Finalise the wording and sign</h3>
+                  <p className="text-[15px] text-muted leading-relaxed">Once both sides agree on the numbers and non-financial clauses, your solicitor signs the adviser&apos;s certificate so the agreement becomes legally binding.</p>
                 </div>
 
               </div>
@@ -414,10 +417,10 @@ export default function HowToNegotiateGuide() {
             {/* CTA */}
             <div className="bg-ink rounded-2xl p-8 text-center mt-10">
               <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
-                Evaluate an offer
+                Check where your offer stands
               </h2>
               <p className="text-white/70 text-[15px] leading-relaxed mb-6">
-                Calculate statutory minimums and view typical UK settlement ranges based on specific circumstances.
+                See your statutory minimums, tax split, and typical UK settlement ranges before you speak to a solicitor.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <Link href="/calculator/" className="btn-accent">
@@ -505,7 +508,7 @@ export default function HowToNegotiateGuide() {
                 {
                   href: '/guides/employer-recommended-solicitor/',
                   title: 'Do You Have to Use Their Solicitor?',
-                  description: 'Your right to appoint your own independent legal counsel at their expense.',
+                  description: 'Your right to appoint your own independent solicitor with a standard employer fee contribution.',
                   tag: 'Legal Advice',
                 },
                 {

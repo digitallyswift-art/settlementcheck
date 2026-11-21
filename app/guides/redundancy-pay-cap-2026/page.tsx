@@ -282,7 +282,7 @@ export default function RedundancyPayCapGuide() {
 
             {/* Formula steps */}
             <div className="rounded-xl border border-rule bg-paper p-5 mb-8">
-              <p className="text-sm font-semibold text-ink mb-4">The statutory redundancy formula</p>
+              <p className="text-body font-semibold text-ink mb-4">The statutory redundancy formula</p>
               <ol className="flex flex-col gap-4">
                 <li className="flex items-start gap-4">
                   <span className="w-6 h-6 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
@@ -335,7 +335,7 @@ export default function RedundancyPayCapGuide() {
               ].map(({ title, rows, note }) => (
                 <div key={title} className="rounded-xl border border-rule overflow-hidden">
                   <div className="bg-ink px-4 py-3">
-                    <p className="text-white text-sm font-medium">{title}</p>
+                    <p className="text-white text-body font-medium">{title}</p>
                   </div>
                   <div className="divide-y divide-rule">
                     {rows.map(([label, value]) => (
@@ -346,7 +346,7 @@ export default function RedundancyPayCapGuide() {
                     ))}
                   </div>
                   <div className="bg-paper px-4 py-3">
-                    <p className="text-xs text-muted">{note}</p>
+                    <p className="text-body text-muted">{note}</p>
                   </div>
                 </div>
               ))}
@@ -387,7 +387,7 @@ export default function RedundancyPayCapGuide() {
                 </tbody>
               </table>
             </div>
-            <p className="sc-body text-xs text-muted mt-3">
+            <p className="sc-body text-muted mt-3">
               Great Britain figures. Northern Ireland caps: £661 (2024), £749 (2025), £783 (2026). Source: SI 2026/310 and preceding orders.
             </p>
           </div>
@@ -406,8 +406,8 @@ export default function RedundancyPayCapGuide() {
                   Included
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-0.5">Gross weekly pay</p>
-                  <p className="sc-body text-sm text-muted">Take your annual salary and divide by 52. Use gross pay before tax and National Insurance, not take-home.</p>
+                  <p className="text-body font-semibold text-ink mb-0.5">Gross weekly pay</p>
+                  <p className="sc-body text-muted">Take your annual salary and divide by 52. Use gross pay before tax and National Insurance, not take-home.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
@@ -415,8 +415,8 @@ export default function RedundancyPayCapGuide() {
                   Included
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-0.5">Guaranteed overtime</p>
-                  <p className="sc-body text-sm text-muted">Include overtime only if it is contractually guaranteed. Voluntary or occasional overtime is excluded.</p>
+                  <p className="text-body font-semibold text-ink mb-0.5">Guaranteed overtime</p>
+                  <p className="sc-body text-muted">Include overtime only if it is contractually guaranteed. Voluntary or occasional overtime is excluded.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
@@ -424,8 +424,8 @@ export default function RedundancyPayCapGuide() {
                   Included
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-0.5">Contractual bonuses and commission</p>
-                  <p className="sc-body text-sm text-muted">Include if the bonus or commission is contractual and regular. A discretionary annual bonus is excluded; a guaranteed quarterly commission is included.</p>
+                  <p className="text-body font-semibold text-ink mb-0.5">Contractual bonuses and commission</p>
+                  <p className="sc-body text-muted">Include if the bonus or commission is contractual and regular. A discretionary annual bonus is excluded; a guaranteed quarterly commission is included.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
@@ -433,8 +433,8 @@ export default function RedundancyPayCapGuide() {
                   Included
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-0.5">Variable hours</p>
-                  <p className="sc-body text-sm text-muted">If your pay or hours fluctuate, use the average weekly pay over the 12 weeks before redundancy <sup>5</sup>.</p>
+                  <p className="text-body font-semibold text-ink mb-0.5">Variable hours</p>
+                  <p className="sc-body text-muted">If your pay or hours fluctuate, use the average weekly pay over the 12 weeks before redundancy <sup>5</sup>.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
@@ -442,8 +442,8 @@ export default function RedundancyPayCapGuide() {
                   Excluded
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-0.5">Employer pension contributions</p>
-                  <p className="sc-body text-sm text-muted">What your employer pays into your pension does not count. Only salary is used.</p>
+                  <p className="text-body font-semibold text-ink mb-0.5">Employer pension contributions</p>
+                  <p className="sc-body text-muted">What your employer pays into your pension does not count. Only salary is used.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 rounded-xl border border-rule p-4">
@@ -451,8 +451,8 @@ export default function RedundancyPayCapGuide() {
                   Excluded
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-0.5">Benefits in kind</p>
-                  <p className="sc-body text-sm text-muted">Company car, private health insurance, gym membership, and other non-cash benefits are excluded.</p>
+                  <p className="text-body font-semibold text-ink mb-0.5">Benefits in kind</p>
+                  <p className="sc-body text-muted">Company car, private health insurance, gym membership, and other non-cash benefits are excluded.</p>
                 </div>
               </div>
             </div>
@@ -474,7 +474,7 @@ export default function RedundancyPayCapGuide() {
             </p>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 If your employer's settlement offer is lower than your capped statutory entitlement, that offer is unlawful, not just unfair. The statutory minimum is not negotiable. Use the calculator below to confirm your baseline before evaluating any offer.
               </p>
             </div>
@@ -492,29 +492,29 @@ export default function RedundancyPayCapGuide() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Calculate your correct figure</p>
-                  <p className="sc-body text-sm">Apply the formula: (weekly pay capped at £751) x (age multiplier) x (years of service, max 20). Use your gross pay. Write it down.</p>
+                  <p className="text-body font-semibold text-ink mb-1">Calculate your correct figure</p>
+                  <p className="sc-body">Apply the formula: (weekly pay capped at £751) x (age multiplier) x (years of service, max 20). Use your gross pay. Write it down.</p>
                 </div>
               </li>
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Check your payslip</p>
-                  <p className="sc-body text-sm">Verify the redundancy payment shown on your final payslip against your calculation. If the number is lower, proceed.</p>
+                  <p className="text-body font-semibold text-ink mb-1">Check your payslip</p>
+                  <p className="sc-body">Verify the redundancy payment shown on your final payslip against your calculation. If the number is lower, proceed.</p>
                 </div>
               </li>
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Raise it formally in writing</p>
-                  <p className="sc-body text-sm">Email your employer's HR or payroll team with your calculation, the correct figure, and a citation to Section 227 of the Employment Rights Act 1996 <sup>1</sup>. Request correction within 7 days.</p>
+                  <p className="text-body font-semibold text-ink mb-1">Raise it formally in writing</p>
+                  <p className="sc-body">Email your employer's HR or payroll team with your calculation, the correct figure, and a citation to Section 227 of the Employment Rights Act 1996 <sup>1</sup>. Request correction within 7 days.</p>
                 </div>
               </li>
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Bring a tribunal claim if they refuse</p>
-                  <p className="sc-body text-sm">If the employer does not respond or refuses, you can bring a claim in the <Link href="/guides/settlement-agreement-vs-tribunal-claim/" className="underline hover:text-ink">Employment Tribunal</Link> for unlawful deduction of wages. The time limit is 3 months from the date of underpayment. A tribunal can award the unpaid amount plus interest.</p>
+                  <p className="text-body font-semibold text-ink mb-1">Bring a tribunal claim if they refuse</p>
+                  <p className="sc-body">If the employer does not respond or refuses, you can bring a claim in the <Link href="/guides/settlement-agreement-vs-tribunal-claim/" className="underline hover:text-ink">Employment Tribunal</Link> for unlawful deduction of wages. The time limit is 3 months from the date of underpayment. A tribunal can award the unpaid amount plus interest.</p>
                 </div>
               </li>
             </ol>

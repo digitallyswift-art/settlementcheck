@@ -181,7 +181,7 @@ export default function ProtectedConversationsGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Core rules every employee must know</p>
+              <p className="text-body font-semibold text-ink mb-3">Core rules every employee must know</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'Section 111A allows employers to start exit talks without any prior disciplinary or capability process.',
@@ -293,7 +293,7 @@ export default function ProtectedConversationsGuide() {
             </div>
 
             <div className="rounded-lg border border-rule bg-white p-4">
-              <p className="sc-body text-xs leading-relaxed text-muted">
+              <p className="sc-body leading-relaxed text-muted">
                 <strong className="text-ink">Why this distinction matters:</strong> If your employer labels an unexpected meeting &quot;Without Prejudice&quot; without any ongoing grievance or disciplinary dispute, that label is legally invalid. The talk can only be protected under Section 111A, meaning it provides zero confidentiality for discrimination or whistleblowing issues.
               </p>
             </div>
@@ -311,7 +311,7 @@ export default function ProtectedConversationsGuide() {
             <div className="space-y-4 mb-6">
               <div className="rounded-xl border border-rule bg-card p-5">
                 <h3 className="font-serif text-[17px] font-[460] text-ink mb-2">1. Unlawful Discrimination (Equality Act 2010)</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Section 111A does not apply to claims under the{' '}
                   <a
                     href="https://www.legislation.gov.uk/ukpga/2010/15/contents"
@@ -323,17 +323,17 @@ export default function ProtectedConversationsGuide() {
                   </a>
                   . If you experience mistreatment related to age, sex, disability, race, religion, sexual orientation, pregnancy, or maternity, the conversation is admissible as evidence.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   Unlike unfair dismissal awards, compensation for unlawful discrimination under Section 124 of the Equality Act 2010 is completely uncapped. Tribunals also award separate sums for injury to feelings under the Vento guidelines.
                 </p>
               </div>
 
               <div className="rounded-xl border border-rule bg-card p-5">
                 <h3 className="font-serif text-[17px] font-[460] text-ink mb-2">2. Whistleblowing (Protected Disclosures)</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Under Sections 43A to 43L of the Employment Rights Act 1996, workers who expose regulatory failures, safety risks, or illegal activity are protected whistleblowers.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   If an employer opens exit negotiations after you disclose protected concerns, Section 111A confidentiality does not apply. Whistleblowing dismissals are automatically unfair from day one and compensation is completely uncapped. Read our dedicated guide on{' '}
                   <Link href="/guides/whistleblowing-settlement-agreements/" className="text-coral underline hover:text-ink">
                     whistleblowing settlement agreements
@@ -344,14 +344,14 @@ export default function ProtectedConversationsGuide() {
 
               <div className="rounded-xl border border-rule bg-card p-5">
                 <h3 className="font-serif text-[17px] font-[460] text-ink mb-2">3. Automatically Unfair Dismissals</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   The statute does not protect conversations where dismissal relates to trade union activities, family leave rights, statutory health and safety duties, or asserting statutory wage rights.
                 </p>
               </div>
 
               <div className="rounded-xl border border-rule bg-card p-5">
                 <h3 className="font-serif text-[17px] font-[460] text-ink mb-2">4. Breach of Contract &amp; Wrongful Dismissal</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   Section 111A does not cover disputes about unpaid contractual notice pay, outstanding bonuses, or contractual benefit violations.
                 </p>
               </div>
@@ -408,10 +408,10 @@ export default function ProtectedConversationsGuide() {
                 <span className="text-xs font-semibold uppercase tracking-wider text-coral">ACAS Statutory Benchmark</span>
               </div>
               <h3 className="font-serif text-[18px] font-[460] text-ink mb-2">The 10 Calendar Day Consideration Period</h3>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Paragraph 12 of ACAS Code of Practice 4 states that parties should be allowed a reasonable period of time to consider an offer. As a general rule, a minimum period of <strong>10 calendar days</strong> should be provided to review the formal written terms and obtain independent legal advice.
               </p>
-              <p className="sc-body text-xs text-muted">
+              <p className="sc-body text-muted">
                 If your employer gives you 24 or 48 hours to sign, you can write back citing Paragraph 12 of the ACAS Code of Practice. For practical guidance, read our guide on{' '}
                 <Link href="/guides/pressured-to-sign/" className="text-coral underline hover:text-ink">
                   what to do when pressured to sign a settlement agreement
@@ -481,14 +481,14 @@ export default function ProtectedConversationsGuide() {
               </table>
             </div>
 
-            <p className="sc-body text-sm mb-6">
+            <p className="sc-body mb-6">
               Use our interactive calculator to verify whether your offer meets or falls below these statutory standards:
             </p>
 
             <div className="p-5 rounded-xl border border-coral/30 bg-paper-2 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <p className="font-serif text-[17px] font-[460] text-ink">Check your settlement offer now</p>
-                <p className="text-xs text-muted">Free, confidential estimate in under 2 minutes. No contact info needed.</p>
+                <p className="text-body text-muted">Free, confidential estimate in under 2 minutes. No contact info needed.</p>
               </div>
               <Link href="/calculator/" className="btn-accent text-xs whitespace-nowrap">
                 Calculate my estimate →
@@ -508,7 +508,7 @@ export default function ProtectedConversationsGuide() {
             <div className="space-y-4 mb-6">
               <div className="rounded-xl border border-rule bg-card p-5">
                 <h3 className="font-serif text-[17px] font-[460] text-ink mb-1.5">The £30,000 Tax-Free Limit (ITEPA 2003 s.403)</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   Under{' '}
                   <a
                     href="https://www.legislation.gov.uk/ukpga/2003/1/section/403"
@@ -528,7 +528,7 @@ export default function ProtectedConversationsGuide() {
 
               <div className="rounded-xl border border-rule bg-card p-5">
                 <h3 className="font-serif text-[17px] font-[460] text-ink mb-1.5">Notice Pay Is Always Taxable (ITEPA 2003 s.402D)</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   Under{' '}
                   <a
                     href="https://www.legislation.gov.uk/ukpga/2003/1/section/402D"
@@ -544,7 +544,7 @@ export default function ProtectedConversationsGuide() {
 
               <div className="rounded-xl border border-rule bg-card p-5">
                 <h3 className="font-serif text-[17px] font-[460] text-ink mb-1.5">Employer Legal Fee Contribution (HMRC Concession)</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Under{' '}
                   <a
                     href="https://www.legislation.gov.uk/ukpga/1996/18/section/203"
@@ -556,7 +556,7 @@ export default function ProtectedConversationsGuide() {
                   </a>
                   , you must receive independent legal advice for a settlement agreement to be binding.
                 </p>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) paid directly to your solicitor upon completion. Under HMRC guidance{' '}
                   <a
                     href="https://www.gov.uk/hmrc-internal-manuals/employment-income-manual/eim13750"
@@ -611,7 +611,7 @@ export default function ProtectedConversationsGuide() {
               </div>
             </div>
 
-            <p className="sc-body text-xs text-muted">
+            <p className="sc-body text-muted">
               <strong>Tip:</strong> Keep comprehensive notes immediately after the discussion. Note the time, attendees, and any statements made. Save these notes to your personal phone or personal email, not your employer&apos;s IT system.
             </p>
           </div>
@@ -630,7 +630,7 @@ export default function ProtectedConversationsGuide() {
                 <div>
                   <span className="text-xs font-semibold uppercase tracking-wider text-coral block mb-1">Option 1</span>
                   <h3 className="font-serif text-[16px] font-[460] text-ink mb-2">Accept the Offer</h3>
-                  <p className="text-xs text-muted leading-relaxed">
+                  <p className="text-body text-muted leading-relaxed">
                     If the financial sum is fair, notice is honoured, and an agreed reference is included, accepting provides a clean exit. Employers standardly provide a capped commercial contribution toward your legal fees upon agreement completion.
                   </p>
                 </div>
@@ -640,7 +640,7 @@ export default function ProtectedConversationsGuide() {
                 <div>
                   <span className="text-xs font-semibold uppercase tracking-wider text-coral block mb-1">Option 2</span>
                   <h3 className="font-serif text-[16px] font-[460] text-ink mb-2">Negotiate Terms</h3>
-                  <p className="text-xs text-muted leading-relaxed">
+                  <p className="text-body text-muted leading-relaxed">
                     First offers are usually opening positions. You can negotiate for an increased ex-gratia payout or extended notice. Read our guide on{' '}
                     <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline hover:text-ink">
                       how to negotiate a settlement agreement
@@ -654,7 +654,7 @@ export default function ProtectedConversationsGuide() {
                 <div>
                   <span className="text-xs font-semibold uppercase tracking-wider text-coral block mb-1">Option 3</span>
                   <h3 className="font-serif text-[16px] font-[460] text-ink mb-2">Reject the Offer</h3>
-                  <p className="text-xs text-muted leading-relaxed">
+                  <p className="text-body text-muted leading-relaxed">
                     You can refuse to sign. Your employment continues, and your employer must follow a fair formal procedure if they wish to dismiss you. Read{' '}
                     <Link href="/guides/what-happens-if-you-do-not-sign/" className="text-coral underline hover:text-ink">
                       what happens if you do not sign

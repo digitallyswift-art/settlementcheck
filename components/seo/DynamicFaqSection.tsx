@@ -105,7 +105,7 @@ export default async function DynamicFaqSection({
           <div className="mt-3 text-xs sm:text-sm leading-relaxed text-[#0B1F3A]/80 border-t border-[#0B1F3A]/10 pt-3 space-y-2.5">
             <p>{activeOptimization.faqAnswer}</p>
             {activeOptimization.contextualLinkSnippet && (
-              <p className="text-xs text-[#0B1F3A]/90 bg-white/80 p-3 rounded-xl border border-[#0B1F3A]/10">
+              <p className="text-body text-[#0B1F3A]/90 bg-white/80 p-3 rounded-xl border border-[#0B1F3A]/10">
                 {renderContextualSnippetWithLinks(activeOptimization.contextualLinkSnippet, pathname)}
               </p>
             )}

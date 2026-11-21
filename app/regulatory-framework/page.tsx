@@ -73,13 +73,13 @@ export default function RegulatoryFrameworkPage() {
               <h2 className="text-xl font-serif font-bold text-ink">
                 1. Legal Entity Status &amp; Reserved Legal Activities Boundary
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 SettlementCheck (settlementcheck.co.uk) is operated by <strong>Digitally Swift Ltd</strong> (Registered in England and Wales). SettlementCheck is a digital software and statutory triage platform.
               </p>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 SettlementCheck is <strong>not</strong> a law firm, a licensed Alternative Business Structure (ABS), or a regulated financial or tax advisory practice. It is not authorised or regulated by the Solicitors Regulation Authority (SRA), the Bar Standards Board (BSB), the Law Society of Scotland, the Law Society of Northern Ireland, or the Financial Conduct Authority (FCA).
               </p>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Under Section 12 and Schedule 2 of the Legal Services Act 2007, SettlementCheck does not carry out any reserved legal activities (such as the exercise of a right of audience, the conduct of litigation, reserved instrument activities, probate activities, notarial activities, or the administration of oaths). All calculations, benchmarks, guides, and pre-flight briefing agendas generated on this platform are provided strictly for educational, informational, and triage purposes.
               </p>
             </section>
@@ -89,7 +89,7 @@ export default function RegulatoryFrameworkPage() {
               <h2 className="text-xl font-serif font-bold text-ink">
                 2. SRA Standards &amp; Regulations Rule 5.1 Introducer Disclosure
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 SettlementCheck operates in rigorous accordance with the <strong>SRA Code of Conduct for Solicitors, RELs and RFLs Rule 5.1</strong> (Referrals, introductions and separate businesses) and Rule 8.9 (Anti-touting).
               </p>
               <div className="bg-paper-2 border border-rule rounded-xl p-5 text-xs text-ink/80 space-y-3 leading-relaxed">
@@ -113,10 +113,10 @@ export default function RegulatoryFrameworkPage() {
               <h2 className="text-xl font-serif font-bold text-ink">
                 3. Non-Claims-Management Declaration (FSMA 2000 RAO Arts. 89G–89M)
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Under the Financial Services and Markets Act 2000 (Regulated Activities) Order 2001 (as amended), regulated claims management services in Great Britain require authorisation by the Financial Conduct Authority (FCA).
               </p>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 SettlementCheck is <strong>not</strong> a Claims Management Company (CMC) and does not provide claims management services under FSMA 2000 RAO arts. 89G–89M:
               </p>
               <ul className="list-disc pl-5 text-sm text-muted space-y-1.5 leading-relaxed">
@@ -125,7 +125,7 @@ export default function RegulatoryFrameworkPage() {
                 <li>We do not act as an advocate, representative, or negotiator in disputes between employers and employees.</li>
                 <li>We do not handle, hold, or disburse client monies or settlement funds.</li>
               </ul>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Our tools provide pure mathematical calculations applying primary legislation (such as statutory redundancy pay under Section 162 ERA 1996 and tax baselines under Part 6 Chapter 3 ITEPA 2003) to user-entered figures.
               </p>
             </section>
@@ -135,10 +135,10 @@ export default function RegulatoryFrameworkPage() {
               <h2 className="text-xl font-serif font-bold text-ink">
                 4. LASPO 2012 Section 56 Regulatory Insulation
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Under Section 56 of the Legal Aid, Sentencing and Punishment of Offenders Act 2012 (LASPO 2012), referral fees in personal injury claims are prohibited in England and Wales. High-value settlement agreements often settle all potential claims, including compromises of personal injury or psychiatric injury arising in the course of employment.
               </p>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 To guarantee absolute compliance with LASPO 2012 s.56:
               </p>
               <div className="bg-paper-2 border border-rule rounded-xl p-5 text-xs text-ink/80 space-y-2 leading-relaxed">
@@ -159,7 +159,7 @@ export default function RegulatoryFrameworkPage() {
               <h2 className="text-xl font-serif font-bold text-ink">
                 5. CMA, DMCC Act 2024 &amp; CAP Code Fee Contribution Transparency
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 In strict accordance with the Digital Markets, Competition and Consumers Act 2024 (DMCC Act 2024), the Consumer Protection from Unfair Trading Regulations 2008 (CPUTR 2008), and ASA CAP Code 3.1:
               </p>
               <ul className="list-disc pl-5 text-sm text-muted space-y-1.5 leading-relaxed">
@@ -180,7 +180,7 @@ export default function RegulatoryFrameworkPage() {
               <h2 className="text-xl font-serif font-bold text-ink">
                 6. Common Law Contract &amp; Privilege Safeguards
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 To prevent users from inadvertently prejudicing their legal standing or extinguishing open settlement proposals under English contract law:
               </p>
               <div className="bg-paper-2 border border-rule rounded-xl p-5 text-xs text-ink/80 space-y-2 leading-relaxed">
@@ -201,7 +201,7 @@ export default function RegulatoryFrameworkPage() {
               <h2 className="text-xl font-serif font-bold text-ink">
                 Mandatory Alert Disclaimers
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 The following two statutory alerts are embedded directly into all SettlementCheck calculation outputs and dossier reviews:
               </p>
               <MandatoryLegalDisclaimers />

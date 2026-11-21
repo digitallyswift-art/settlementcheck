@@ -24,7 +24,11 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
   function validate() {
     const e: Record<string, string> = {}
     if (!form.firstName.trim()) e.firstName = 'Please enter your first name'
-    if (!form.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Please enter a valid email address'
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = 'Please enter a valid email address'
+    const cleanedPhone = form.phone.trim().replace(/[\s\-\(\)]/g, '')
+    if (cleanedPhone.length > 0 && cleanedPhone.length < 7) {
+      e.phone = 'Please enter a valid UK telephone number or leave blank to be contacted by email'
+    }
     if (!form.consent) e.consent = 'You must agree to be matched before continuing'
     if (!form.gdprArticle9Consent) e.gdprArticle9Consent = 'You must give explicit consent to data processing before continuing'
     return e
@@ -37,17 +41,22 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
     if (Object.keys(errs).length > 0) return
     setLoading(true)
     try {
+      const trimmedPhone = form.phone.trim()
       const res = await fetch('/api/lead/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          first_name:     form.firstName,
-          email:          form.email,
-          phone:          form.phone,
+          firstName:      form.firstName.trim(),
+          first_name:     form.firstName.trim(),
+          email:          form.email.trim().toLowerCase(),
+          phone:          trimmedPhone,
+          contactTime:    contact.charAt(0).toUpperCase() + contact.slice(1),
           contact_time:   contact.charAt(0).toUpperCase() + contact.slice(1),
           verdict,
+          offerAmount:    offer ? Number(offer) : null,
           offer_amount:   offer,
-          salary,
+          salary:         salary ? Number(salary) : null,
+          monthsService:  Number(years) * 12,
           months_service: Number(years) * 12,
           consent:        form.consent,
           gdpr_consent:   form.gdprArticle9Consent,
@@ -77,7 +86,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
         <h3 className="text-xl font-bold text-ink mb-2">
           You&apos;re matched. A solicitor will contact you within 24 hours.
         </h3>
-        <p className="text-sm text-muted">
+        <p className="text-body text-muted">
           Check your email. We have sent you a confirmation with next steps.
         </p>
       </div>
@@ -96,7 +105,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
           value={form.firstName}
           onChange={(e) => setForm({ ...form, firstName: e.target.value })}
         />
-        {errors.firstName && <p className="text-xs text-crimson mt-1">{errors.firstName}</p>}
+        {errors.firstName && <p className="text-body text-crimson mt-1">{errors.firstName}</p>}
       </div>
 
       {/* Email */}
@@ -109,7 +118,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
-        {errors.email && <p className="text-xs text-crimson mt-1">{errors.email}</p>}
+        {errors.email && <p className="text-body text-crimson mt-1">{errors.email}</p>}
       </div>
 
       {/* Phone */}
@@ -122,6 +131,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
         />
+        {errors.phone && <p className="text-body text-crimson mt-1">{errors.phone}</p>}
       </div>
 
       {/* Contact time */}
@@ -158,7 +168,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
             I agree to be introduced to an independent SRA-regulated employment solicitor regarding my settlement agreement. I understand SettlementCheck is an independent platform (receiving an administrative fee from panel firms), panel solicitors act with complete professional independence in my sole interest, and employer fee contributions (£350 to £500+ +VAT) are conditional upon agreement completion.
           </span>
         </label>
-        {errors.consent && <p className="text-xs text-crimson mt-1">{errors.consent}</p>}
+        {errors.consent && <p className="text-body text-crimson mt-1">{errors.consent}</p>}
       </div>
 
       {/* Consent: UK GDPR Article 9 Explicit Affirmative Processing */}
@@ -174,7 +184,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
             I explicitly consent to SettlementCheck temporarily processing the text of my draft agreement for automated extraction and analysis. I understand my data is processed ephemerally and shared only with my instructed SRA panel solicitor under strict professional confidentiality.
           </span>
         </label>
-        {errors.gdprArticle9Consent && <p className="text-xs text-crimson mt-1">{errors.gdprArticle9Consent}</p>}
+        {errors.gdprArticle9Consent && <p className="text-body text-crimson mt-1">{errors.gdprArticle9Consent}</p>}
       </div>
 
       {/* Privacy & Client-Side PII Scrubbing Safeguard */}
@@ -189,7 +199,7 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
         SettlementCheck is operated by Digitally Swift Ltd and is not an authorised law firm. We introduce you to independent, SRA-regulated solicitors and receive a fixed administrative introduction fee. Instructed solicitors act with complete professional independence in your sole interest. You have free choice of representation and are not required to instruct our panel.
       </div>
 
-      {errors.form && <p className="text-sm text-crimson">{errors.form}</p>}
+      {errors.form && <p className="text-body text-crimson">{errors.form}</p>}
 
       <button
         type="submit"

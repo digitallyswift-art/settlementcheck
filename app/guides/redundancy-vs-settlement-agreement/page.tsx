@@ -274,7 +274,7 @@ export default function RedundancyVsSettlementGuide() {
               <p className="text-base font-semibold text-ink leading-snug">
                 Settlement Target = Statutory Redundancy Pay + Full Notice Pay + Ex-Gratia Premium (Illustrative 1 to 3 Months Commercial Benchmark)
               </p>
-              <p className="text-xs text-muted mt-2 leading-relaxed">
+              <p className="text-body text-muted mt-2 leading-relaxed">
                 If the employer does not offer an ex-gratia premium, you are waiving your right to challenge unfair selection scoring for zero financial benefit.
               </p>
             </div>

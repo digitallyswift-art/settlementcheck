@@ -33,7 +33,7 @@ export default function StickyMobileCta() {
     >
       <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-semibold text-ink leading-tight truncate">
+          <p className="text-body font-semibold text-ink leading-tight truncate">
             Received a settlement offer?
           </p>
           <p className="text-[11px] text-muted leading-tight mt-0.5">

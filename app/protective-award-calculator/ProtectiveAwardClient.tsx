@@ -116,7 +116,7 @@ export default function ProtectiveAwardClient() {
               <div className="bg-paper p-6 md:p-8 rounded-2xl border border-rule flex flex-col gap-6">
                 <div className="border-b border-rule pb-4">
                   <h2 className="text-lg font-bold text-ink mb-1">Your Employment Details</h2>
-                  <p className="text-xs text-muted">Enter your salary and redundancy circumstances below.</p>
+                  <p className="text-body text-muted">Enter your salary and redundancy circumstances below.</p>
                 </div>
 
                 {/* Gross Annual Salary */}
@@ -313,7 +313,7 @@ export default function ProtectiveAwardClient() {
                         ? formatCurrency(result.solventAward)
                         : formatCurrency(result.insolventAward)}
                     </div>
-                    <p className="text-xs text-muted">
+                    <p className="text-body text-muted">
                       Estimated gross entitlement based on {daysAwarded} days ({result.weeksAwarded} weeks) of remuneration.
                     </p>
                   </div>
@@ -390,7 +390,7 @@ export default function ProtectiveAwardClient() {
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-ink mb-1">Strict 3-Month Tribunal Deadline</h3>
-                    <p className="text-xs text-muted leading-relaxed">
+                    <p className="text-body text-muted leading-relaxed">
                       You must start ACAS Early Conciliation within <strong>3 months minus 1 day</strong> from your date of dismissal. Missing this window means you lose the right to claim a protective award.
                     </p>
                   </div>
@@ -414,7 +414,7 @@ export default function ProtectiveAwardClient() {
                   Option 1: Trading Employer
                 </span>
                 <h3 className="text-base font-bold text-ink mb-2">Claim Against a Solvent Company</h3>
-                <p className="sc-body text-xs text-muted mb-4 leading-relaxed">
+                <p className="sc-body text-muted mb-4 leading-relaxed">
                   When the company continues trading, the award is paid directly by your employer. The calculation uses your actual gross earnings without any statutory weekly cap.
                 </p>
                 <ul className="flex flex-col gap-2 text-xs text-ink">
@@ -438,7 +438,7 @@ export default function ProtectiveAwardClient() {
                   Option 2: Insolvent Employer
                 </span>
                 <h3 className="text-base font-bold text-ink mb-2">Claim from the Insolvency Service</h3>
-                <p className="sc-body text-xs text-muted mb-4 leading-relaxed">
+                <p className="sc-body text-muted mb-4 leading-relaxed">
                   When a company enters liquidation or administration, payments come from the National Insurance Fund via the Redundancy Payments Service.
                 </p>
                 <ul className="flex flex-col gap-2 text-xs text-ink">
@@ -471,7 +471,7 @@ export default function ProtectiveAwardClient() {
                 <h2 className="text-xl font-bold text-ink mb-2">
                   Have you been offered a settlement agreement?
                 </h2>
-                <p className="sc-body text-xs text-muted leading-relaxed">
+                <p className="sc-body text-muted leading-relaxed">
                   Signing a settlement agreement waives your right to claim a protective award. If your employer failed to consult collectively on 20+ redundancies, you should factor this entitlement into your settlement negotiations.
                 </p>
               </div>

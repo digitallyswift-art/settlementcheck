@@ -153,7 +153,7 @@ export default function SettlementAgreementVsTribunalGuide() {
         <section className="py-10 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-white p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Core comparison facts</p>
+              <p className="text-body font-semibold text-ink mb-3">Core comparison facts</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'A settlement agreement provides a legally binding, tax-efficient payment completed in weeks.',
@@ -331,15 +331,15 @@ export default function SettlementAgreementVsTribunalGuide() {
                 <li key={n} className="flex gap-4">
                   <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
-                    <p className="text-sm font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
+                    <p className="text-body font-semibold text-ink mb-1">{title}</p>
+                    <p className="sc-body">{body}</p>
                   </div>
                 </li>
               ))}
             </ol>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3 mt-8">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 You can <Link href="/calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link>, inspect live regional hearing delays in our{' '}
                 <Link href="/tribunal-backlog-tracker/" className="text-coral underline hover:text-ink transition-colors font-semibold">UK Employment Tribunal backlog tracker</Link>, compare{' '}
                 <Link href="/guides/employment-tribunal-average-awards-uk/" className="text-coral underline hover:text-ink transition-colors font-semibold">average Employment Tribunal awards (MoJ tables)</Link>, or review how{' '}

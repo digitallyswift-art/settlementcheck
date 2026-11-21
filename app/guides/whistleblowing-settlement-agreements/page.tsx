@@ -281,7 +281,7 @@ export default function WhistleblowingSettlementAgreementsGuide() {
                   <span className="text-xs font-mono font-semibold text-coral block mb-1">
                     Category {idx + 1}: {item.label}
                   </span>
-                  <p className="sc-body text-sm">{item.desc}</p>
+                  <p className="sc-body">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -298,8 +298,8 @@ export default function WhistleblowingSettlementAgreementsGuide() {
               <div className="flex items-start gap-3">
                 <AlertIcon />
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Disclosures to Prescribed Regulators</p>
-                  <p className="sc-body text-xs text-muted leading-relaxed">
+                  <p className="text-body font-semibold text-ink mb-1">Disclosures to Prescribed Regulators</p>
+                  <p className="sc-body text-muted leading-relaxed">
                     Under Section 43F, you can make protected disclosures directly to statutory watchdogs. Prescribed bodies include the Financial Conduct Authority (FCA), Health and Safety Executive (HSE), Care Quality Commission (CQC), Charity Commission, Information Commissioner&apos;s Office (ICO), and Environment Agency.
                   </p>
                 </div>
@@ -374,7 +374,7 @@ export default function WhistleblowingSettlementAgreementsGuide() {
               </table>
             </div>
 
-            <p className="sc-body text-xs text-muted">
+            <p className="sc-body text-muted">
               Because an employment tribunal can award complete future loss of earnings and career stigma (under <em>Royal Mail Group Ltd v Jhuti [2019] UKSC 55</em>), employers face enormous financial exposure. This gives you substantial negotiating strength during settlement discussions.
             </p>
           </div>
@@ -435,14 +435,14 @@ export default function WhistleblowingSettlementAgreementsGuide() {
                     <h4 className="text-base font-semibold text-ink">{band}</h4>
                     <span className="text-sm font-bold text-coral-ink font-mono">{range}</span>
                   </div>
-                  <p className="sc-body text-sm">{description}</p>
+                  <p className="sc-body">{description}</p>
                 </div>
               ))}
             </div>
 
             <div className="rounded-xl border border-rule bg-paper p-5">
               <h4 className="text-sm font-semibold text-ink mb-1">Personal Liability of Managers (Section 47B(1A))</h4>
-              <p className="sc-body text-xs text-muted leading-relaxed">
+              <p className="sc-body text-muted leading-relaxed">
                 Under Section 47B(1A) ERA 1996, individual managers, HR officers, and directors who subject you to detriment can be sued in their personal capacity at employment tribunal. The employer is vicariously liable under Section 47B(1B). The risk of named personal litigation gives individuals a strong incentive to resolve disputes amicably through a comprehensive settlement agreement.
               </p>
             </div>
@@ -488,7 +488,7 @@ export default function WhistleblowingSettlementAgreementsGuide() {
             </ul>
 
             <div className="p-4 rounded-xl border border-rule bg-white">
-              <p className="sc-body text-xs text-muted leading-relaxed">
+              <p className="sc-body text-muted leading-relaxed">
                 <strong className="text-ink">What your settlement agreement can legitimately restrict:</strong> Parties can agree on mutual non-disparagement, commercial confidentiality regarding intellectual property and customer data, and keeping the financial settlement amount confidential. However, standard agreements must contain explicit carve-outs permitting protected disclosures under Part IVA ERA 1996.
               </p>
             </div>
@@ -627,7 +627,7 @@ export default function WhistleblowingSettlementAgreementsGuide() {
             </ul>
 
             <div className="rounded-xl border border-rule bg-white p-4">
-              <p className="sc-body text-xs text-muted">
+              <p className="sc-body text-muted">
                 <strong>Why service duration mattered:</strong> Under ordinary unfair dismissal rules, this employee had only 18 months of service and would have received £0 in statutory unfair dismissal protection. Because whistleblowing is a day-one statutory right with uncapped damages, the employee secured an outcome reflecting genuine financial loss.
               </p>
             </div>
@@ -671,7 +671,7 @@ export default function WhistleblowingSettlementAgreementsGuide() {
               ].map(({ step, text }) => (
                 <div key={step} className="p-5 rounded-xl border border-rule bg-paper">
                   <h3 className="text-sm font-semibold text-ink mb-1">{step}</h3>
-                  <p className="sc-body text-xs text-muted leading-relaxed">{text}</p>
+                  <p className="sc-body text-muted leading-relaxed">{text}</p>
                 </div>
               ))}
             </div>
@@ -718,7 +718,7 @@ export default function WhistleblowingSettlementAgreementsGuide() {
                 >
                   <div>
                     <h3 className="text-sm font-semibold text-ink mb-1">{name}</h3>
-                    <p className="sc-body text-xs text-muted mb-3">{desc}</p>
+                    <p className="sc-body text-muted mb-3">{desc}</p>
                   </div>
                   <span className="text-xs font-semibold text-coral-ink">Visit official resource &rarr;</span>
                 </a>
@@ -881,7 +881,7 @@ export default function WhistleblowingSettlementAgreementsGuide() {
         </section>
 
         {/* Disclaimer */}
-        <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
           Disclaimer: SettlementCheck is an independent information service and calculator platform, not a law firm. The content on this page is for general information only and does not constitute formal legal counsel. Always consult an independent qualified solicitor before signing any settlement agreement.
         </p>
       </main>

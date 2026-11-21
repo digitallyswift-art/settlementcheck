@@ -248,7 +248,7 @@ export default function TribunalBacklogClient() {
         <div>
           <span className="text-xs font-semibold uppercase tracking-wider text-coral">Interactive Tool</span>
           <h2 className="text-2xl font-serif font-semibold text-ink mt-1">Regional Wait Times &amp; Employer Defence Cost Estimator</h2>
-          <p className="text-sm text-muted mt-1 leading-relaxed">
+          <p className="sc-body mt-1">
             Choose your nearest Employment Tribunal hearing centre and claim type. You will see typical wait times to preliminary and final hearings, plus illustrative employer legal costs.
           </p>
         </div>
@@ -294,7 +294,7 @@ export default function TribunalBacklogClient() {
               <div>
                 <span className="text-xs uppercase tracking-wider text-muted font-medium">Hearing Centre</span>
                 <h3 className="text-xl font-serif font-bold text-ink">{selectedRegion.regionName}</h3>
-                <p className="text-xs text-muted mt-0.5">{selectedRegion.hearingCentre}</p>
+                <p className="text-body text-muted mt-0.5">{selectedRegion.hearingCentre}</p>
               </div>
               <span
                 className={`px-2.5 py-1 rounded-full text-xs font-bold ${
@@ -324,7 +324,7 @@ export default function TribunalBacklogClient() {
               </div>
             </div>
 
-            <p className="text-xs text-muted pt-2 border-t border-rule leading-relaxed">
+            <p className="sc-body pt-2 border-t border-rule">
               {selectedRegion.summaryNote}
             </p>
           </div>
@@ -334,14 +334,14 @@ export default function TribunalBacklogClient() {
             <div>
               <span className="text-xs uppercase tracking-wider text-coral font-medium">Illustrative Estimate</span>
               <h3 className="text-xl font-serif font-bold text-ink">Employer Defence Costs</h3>
-              <p className="text-xs text-muted mt-0.5">SettlementCheck illustrative market range</p>
+              <p className="text-body text-muted mt-0.5">SettlementCheck illustrative market range</p>
             </div>
 
             <div className="space-y-2 pt-2">
               <div className="text-2xl sm:text-3xl font-serif font-bold text-ink">
                 £{exposureAnalysis.totalExposureLow.toLocaleString('en-GB')} to £{exposureAnalysis.totalExposureHigh.toLocaleString('en-GB')}
               </div>
-              <p className="text-xs text-muted leading-relaxed">
+              <p className="sc-body">
                 Illustrative range covering external solicitor fees, barrister fees, and internal preparation time to defend a contested claim to a final hearing in {selectedRegion.regionName}. Actual costs vary by complexity and hearing length.
               </p>
             </div>
@@ -361,7 +361,7 @@ export default function TribunalBacklogClient() {
               </div>
             </div>
 
-            <p className="text-[11px] text-muted">
+            <p className="text-body-sm text-muted">
               Unlike civil court claims, Employment Tribunals rarely order losing claimants to pay the employer&apos;s legal fees.
             </p>
           </div>
@@ -372,13 +372,13 @@ export default function TribunalBacklogClient() {
               <div>
                 <span className="text-xs uppercase tracking-wider text-muted font-medium">Commercial Context</span>
                 <h3 className="text-xl font-serif font-bold text-ink">Why Delays Affect Settlement Talks</h3>
-                <p className="text-xs text-muted mt-0.5">General context to discuss with a solicitor</p>
+                <p className="text-body text-muted mt-0.5">General context to discuss with a solicitor</p>
               </div>
 
-              <p className="text-xs text-muted leading-relaxed">
+              <p className="sc-body">
                 Defending a contested claim in {selectedRegion.regionName} typically involves a wait of around {exposureAnalysis.months} months and substantial unrecoverable legal fees.
               </p>
-              <p className="text-xs text-muted leading-relaxed">
+              <p className="sc-body">
                 Many employers consider a settlement agreement under Section 203(3) ERA 1996 to gain certainty and limit legal spend. Every case depends on its own facts, qualifying service, and deadlines, so an independent solicitor can help you weigh your options.
               </p>
             </div>
@@ -395,7 +395,7 @@ export default function TribunalBacklogClient() {
         </div>
 
         {/* Mandatory Privilege & SRA Rule 5.1 Introducer Notice */}
-        <div className="p-4 bg-paper-2 rounded-xl border border-rule text-xs text-muted leading-relaxed">
+        <div className="p-4 bg-paper-2 rounded-xl border border-rule text-body-sm text-muted">
           <strong className="text-ink">Important Information:</strong> SettlementCheck is an informational platform and introducer, not a regulated law firm. Regional wait times are based on published Ministry of Justice and HMCTS statistics. Employer defence cost figures are illustrative estimates only and do not assess the merits or value of any individual claim. <strong className="text-ink">Do not send unreviewed financial proposals directly to HR</strong>, as unreviewed correspondence can waive legal privilege or result in an offer being withdrawn. Speak with an independent SRA-regulated solicitor about your specific circumstances.
         </div>
       </section>
@@ -405,7 +405,7 @@ export default function TribunalBacklogClient() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h2 className="text-xl font-serif font-semibold text-ink">All Great Britain Hearing Centres Compared</h2>
-            <p className="text-xs text-muted mt-0.5">MoJ and HMCTS open single claims and wait times, alongside SettlementCheck illustrative defence cost estimates</p>
+            <p className="text-body-sm text-muted mt-0.5">MoJ and HMCTS open single claims and wait times, alongside SettlementCheck illustrative defence cost estimates</p>
           </div>
           <div className="w-full sm:w-64">
             <label htmlFor="search-hearing-centres" className="sr-only">Filter hearing centre</label>
@@ -480,10 +480,10 @@ export default function TribunalBacklogClient() {
             01
           </div>
           <h3 className="text-lg font-serif font-semibold text-ink">Rising Employer Defence Costs</h3>
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="sc-body">
             Defending a contested tribunal claim is expensive. Depending on location and complexity, taking a multi-day case through disclosure, witness statements, and a final hearing can cost an employer tens of thousands of pounds in illustrative legal fees.
           </p>
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="sc-body">
             Employment Tribunals rarely order losing claimants to pay the employer&apos;s costs, except in limited circumstances such as unreasonable conduct or no reasonable prospect of success under Rule 74 of the Employment Tribunal Procedure Rules 2024.
           </p>
         </div>
@@ -493,10 +493,10 @@ export default function TribunalBacklogClient() {
             02
           </div>
           <h3 className="text-lg font-serif font-semibold text-ink">Staff Turnover &amp; Fading Memories</h3>
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="sc-body">
             With waits of around 17.8 months in London and 10 to 14 months elsewhere, key managers and HR staff often leave your employer before the final hearing arrives.
           </p>
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="sc-body">
             Former managers are harder to coordinate as witnesses. Detailed recollection of performance reviews, grievance meetings, or redundancy scoring naturally fades over 12 to 18 months, weakening the employer&apos;s evidential position.
           </p>
         </div>
@@ -506,10 +506,10 @@ export default function TribunalBacklogClient() {
             03
           </div>
           <h3 className="text-lg font-serif font-semibold text-ink">Certainty &amp; Timing of Settlement</h3>
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="sc-body">
             A settlement agreement provides an agreed sum now rather than waiting 12 to 18 months for an uncertain tribunal outcome. Qualifying termination payments can benefit from the £30,000 tax-free exemption under Section 403 ITEPA 2003, subject to Post-Employment Notice Pay (PENP) rules.
           </p>
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="sc-body">
             Settling also avoids litigation risks, including Polkey reductions and the ordinary unfair dismissal compensatory cap (the lower of £123,543 or 52 weeks&apos; gross pay from April 2026 under Section 124(1ZA) ERA 1996, though discrimination and whistleblowing awards are uncapped). Employers standardly offer a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. Work beyond the cap or abortive fees remain subject to your solicitor&apos;s terms.
           </p>
         </div>
@@ -519,10 +519,10 @@ export default function TribunalBacklogClient() {
             04
           </div>
           <h3 className="text-lg font-serif font-semibold text-ink">Privacy &amp; Moving On</h3>
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="sc-body">
             Waiting over a year for a hearing can prolong stress and delay your next career step. Preliminary hearings and document disclosure require ongoing time and energy.
           </p>
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="sc-body">
             Tribunal judgments are published on the public GOV.UK register and indexed by search engines. Settlement agreements typically include mutual confidentiality clauses (which cannot restrict protected whistleblowing, reporting crimes to the police, regulatory disclosures, or seeking legal, medical, or tax advice) and let you negotiate an agreed reference.
           </p>
         </div>
@@ -532,21 +532,21 @@ export default function TribunalBacklogClient() {
       <section className="bg-paper p-6 sm:p-8 rounded-xl border border-rule space-y-6">
         <div className="space-y-2">
           <h2 className="text-xl font-serif font-semibold text-ink">Essential Legal Rules &amp; Time Limits</h2>
-          <p className="text-sm text-muted leading-relaxed">
+          <p className="sc-body">
             Tribunal backlogs do not extend statutory deadlines. Employees must observe strict time limits to protect their legal position.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-4 bg-card rounded-lg border border-rule space-y-2">
             <span className="font-semibold text-ink block">Strict Tribunal &amp; Acas Time Limits</span>
-            <p className="text-xs text-muted leading-relaxed">
+            <p className="sc-body">
               Private settlement talks or internal grievances do not pause statutory tribunal deadlines. For most unfair dismissal claims (Section 111(2) ERA 1996) and discrimination claims (Section 123(1) Equality Act 2010), you must start Acas Early Conciliation (Section 18A Employment Tribunals Act 1996) within 3 months less 1 day of the dismissal or act complained of. Statutory redundancy pay claims generally carry a 6-month limit (Section 164 ERA 1996). Missing a deadline will usually prevent a tribunal from hearing the claim.
             </p>
             <div className="pt-1">
               <Link
                 href="/guides/settlement-agreement-time-limits/"
-                className="text-xs font-semibold text-coral hover:underline"
+                className="text-body-sm font-semibold text-coral hover:underline"
               >
                 Read our guide to settlement agreement time limits →
               </Link>
@@ -555,13 +555,13 @@ export default function TribunalBacklogClient() {
 
           <div className="p-4 bg-card rounded-lg border border-rule space-y-2">
             <span className="font-semibold text-ink block">Section 203(3) Independent Advice &amp; Fee Contributions</span>
-            <p className="text-xs text-muted leading-relaxed">
+            <p className="sc-body">
               Outside an Acas COT3 agreement, a settlement agreement is only legally binding if you receive advice from a qualified independent adviser (such as an SRA-regulated solicitor) under Section 203(3) and (3A) ERA 1996. Employers standardly offer a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. Advice beyond the agreed cap or abortive fees if you choose not to complete remain subject to your solicitor&apos;s engagement terms.
             </p>
             <div className="pt-1">
               <Link
                 href="/settlement-agreement-review/"
-                className="text-xs font-semibold text-coral hover:underline"
+                className="text-body-sm font-semibold text-coral hover:underline"
               >
                 Connect with an independent solicitor →
               </Link>

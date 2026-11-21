@@ -236,7 +236,7 @@ export default function GrievanceSettlementGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Core rules every employee must know</p>
+              <p className="text-body font-semibold text-ink mb-3">Core rules every employee must know</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'Proposing a settlement agreement does not automatically pause or cancel your formal grievance unless mutually agreed, and neither a grievance nor settlement talks pause the strict 3-month-less-1-day tribunal time limit.',
@@ -295,13 +295,13 @@ export default function GrievanceSettlementGuide() {
                     <h3 className="text-sm font-bold text-ink">
                       Procedural safeguards: grievance withdrawal, deadlines &amp; offer revocation
                     </h3>
-                    <p className="text-xs text-muted leading-relaxed">
+                    <p className="text-body text-muted leading-relaxed">
                       <strong>Grievance withdrawal:</strong> Withdrawing a formal grievance before a binding settlement agreement is fully executed and certified by an instructed solicitor can weaken your internal procedural position and affect potential ACAS Code 1 adjustments. (Statutory protection against victimisation under s.27 Equality Act 2010 or whistleblowing detriment under s.47B ERA 1996 still attaches to a protected act already done, even if a grievance is later withdrawn.)
                     </p>
-                    <p className="text-xs text-muted leading-relaxed">
+                    <p className="text-body text-muted leading-relaxed">
                       <strong>Offer deadlines and revocation:</strong> ACAS Code of Practice 4 recommends a minimum of 10 calendar days to consider a written settlement offer as statutory guidance. However, under English contract law (<em>Routledge v Grant</em> (1828)), an employer can lawfully set a shorter deadline or withdraw an unaccepted offer at any time prior to execution, and making a counter-offer can extinguish the original offer (<em>Hyde v Wrench</em> (1840)). Consider consulting an independent solicitor before letting a stated deadline pass.
                     </p>
-                    <p className="text-xs text-muted leading-relaxed">
+                    <p className="text-body text-muted leading-relaxed">
                       <strong>Tribunal time limits:</strong> Raising a grievance or negotiating a settlement agreement does <strong>not</strong> pause the strict statutory deadline of 3 months less 1 day to commence ACAS Early Conciliation and bring an employment tribunal claim.
                     </p>
                   </div>
@@ -395,7 +395,7 @@ export default function GrievanceSettlementGuide() {
                 However, submitting a formal grievance does not automatically establish an existing legal dispute for Without Prejudice purposes (<em>BNP Paribas v Mezzotero</em> [2004]), particularly before the employer has investigated or rejected the complaint. A genuine dispute is more likely to exist once positions are clearly opposed or litigation is contemplated (<em>Framlington Group Ltd v Barnetson</em> [2007]). Simply labelling correspondence &ldquo;Without Prejudice&rdquo; when no genuine legal dispute exists does not create privilege, and privilege never protects unambiguous impropriety such as discriminatory threats or fraud.
               </p>
               <div className="rounded-xl border border-coral/30 bg-[#FBF0EE] p-4 my-4">
-                <p className="text-xs text-ink leading-relaxed m-0">
+                <p className="text-body text-ink leading-relaxed m-0">
                   <strong>Important Privilege Notice:</strong> Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position.
                 </p>
               </div>
@@ -560,32 +560,32 @@ export default function GrievanceSettlementGuide() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Valuation &amp; ACAS Uplift</h3>
-                  <p className="text-xs text-muted leading-relaxed">
+                  <p className="text-body text-muted leading-relaxed">
                     Whether the proposed ex-gratia sum reflects potential statutory baselines, any 25% ACAS Code 1 adjustment, or applicable Vento band brackets.
                   </p>
                 </div>
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Agreed Reference Wording</h3>
-                  <p className="text-xs text-muted leading-relaxed">
+                  <p className="text-body text-muted leading-relaxed">
                     Whether an agreed reference can be attached as a binding schedule alongside mutual non-derogatory statements clauses.
                   </p>
                 </div>
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Tax Apportionment &amp; PENP</h3>
-                  <p className="text-xs text-muted leading-relaxed">
+                  <p className="text-body text-muted leading-relaxed">
                     How unworked notice pay is calculated under s.402D PENP rules, how the combined £30,000 exemption applies, and whether any pre-termination discrimination compensation should be separately apportioned.
                   </p>
                 </div>
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Waiver Exclusions</h3>
-                  <p className="text-xs text-muted leading-relaxed">
+                  <p className="text-body text-muted leading-relaxed">
                     Whether the waiver explicitly excludes accrued pension rights, personal injury claims of which you are currently unaware, and claims to enforce the settlement agreement itself.
                   </p>
                 </div>
               </div>
 
               <div className="rounded-xl border border-rule bg-paper p-4 mt-6">
-                <p className="text-xs text-muted leading-relaxed m-0">
+                <p className="text-body text-muted leading-relaxed m-0">
                   <strong className="text-ink">Regulatory &amp; Informational Notice:</strong> SettlementCheck is an independent statutory information platform and solicitor-matching introducer, not an authorised law firm, and does not provide legal or tax advice. All figures and summaries on this page are strictly informational and descriptive. Any SRA-regulated employment solicitor you instruct acts independently and solely in your best interests under Section 203(3) of the Employment Rights Act 1996.
                 </p>
               </div>

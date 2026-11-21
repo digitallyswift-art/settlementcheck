@@ -270,7 +270,7 @@ export default function HomeClient({
                     See how your offer compares.{' '}
                     <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Measure it against April 2026 UK statute.</em>
                   </p>
-                  <p style={{ fontSize: 15, color: '#5B6577', margin: '0 0 24px', lineHeight: 1.55 }}>
+                  <p className="sc-body mb-6">
                     For draft offers, active exit talks, or redundancy notices. Seven questions, 60 seconds, no email required.
                   </p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
@@ -283,7 +283,7 @@ export default function HomeClient({
                         <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(217,96,59,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <Check />
                         </div>
-                        <span style={{ fontSize: 14, color: '#4A5568' }}>{label}</span>
+                        <span className="text-body-sm text-ink-2">{label}</span>
                       </div>
                     ))}
                   </div>
@@ -394,7 +394,7 @@ export default function HomeClient({
                     1
                   </div>
                   <h3 className="font-serif text-[18px] font-bold text-ink mb-2">46,510 open single claims</h3>
-                  <p className="text-[14px] text-muted leading-relaxed">
+                  <p className="sc-body">
                     Inspect active open caseloads published by the Ministry of Justice and HMCTS across major hearing centres including London Central, Watford, Midlands West, Manchester, and Scotland.
                   </p>
                 </div>
@@ -409,7 +409,7 @@ export default function HomeClient({
                     2
                   </div>
                   <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Regional hearing wait times</h3>
-                  <p className="text-[14px] text-muted leading-relaxed">
+                  <p className="sc-body">
                     Compare average days to preliminary and final merits hearings by region, from 270 days up to 540 days in London Central, to understand realistic tribunal timelines.
                   </p>
                 </div>
@@ -424,7 +424,7 @@ export default function HomeClient({
                     3
                   </div>
                   <h3 className="font-serif text-[18px] font-bold text-ink mb-2">Illustrative defence cost context</h3>
-                  <p className="text-[14px] text-muted leading-relaxed">
+                  <p className="sc-body">
                     Review illustrative employer legal defence cost ranges alongside regional backlog pressure ratings to prepare informed questions for your independent SRA-regulated solicitor.
                   </p>
                 </div>
@@ -532,10 +532,10 @@ export default function HomeClient({
                 <p className="sc-lead">Clear answers before you calculate your estimate.</p>
 
                 <div className="mt-4 p-6 rounded-xl border border-rule bg-card flex flex-col gap-3">
-                  <div className="text-[15px] font-semibold text-ink font-serif">
+                  <div className="text-body-sm font-semibold text-ink font-serif">
                     Need guidance on your specific situation?
                   </div>
-                  <p className="sc-body text-[14px] leading-relaxed">
+                  <p className="sc-body">
                     Every settlement agreement is unique. Explore our in-depth guides on negotiation, ACAS codes, and redundancy, or have your draft clauses reviewed by an independent specialist.
                   </p>
                   <div className="pt-2 flex flex-col gap-2">

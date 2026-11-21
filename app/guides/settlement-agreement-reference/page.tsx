@@ -232,7 +232,7 @@ export default function SettlementAgreementReferenceGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Six critical facts about settlement agreement references</p>
+              <p className="text-body font-semibold text-ink mb-3">Six critical facts about settlement agreement references</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'Under UK law, employers have no general duty to provide a reference unless contractually agreed.',
@@ -332,7 +332,7 @@ export default function SettlementAgreementReferenceGuide() {
               </div>
 
               <div className="bg-paper border-l-4 border-coral p-4 rounded-r-lg">
-                <p className="text-xs text-ink font-medium leading-relaxed m-0">
+                <p className="text-body text-ink font-medium leading-relaxed m-0">
                   <strong>Important reassurance:</strong> A standard factual reference will not harm your job prospects. Recruitment consultants and HR directors see hundreds of factual references every month. They recognise it as standard corporate policy, not a hidden signal of performance concerns.
                 </p>
               </div>
@@ -356,13 +356,13 @@ export default function SettlementAgreementReferenceGuide() {
                   </span>
                   <span className="text-[10px] text-muted font-sans">Standard UK Corporate Format</span>
                 </div>
-                <p className="font-sans text-xs text-muted mb-2">
+                <p className="font-sans text-body text-muted mb-2">
                   [Company Letterhead]
                 </p>
-                <p className="font-sans text-xs text-muted mb-2">
+                <p className="font-sans text-body text-muted mb-2">
                   To Whom It May Concern,
                 </p>
-                <p className="font-sans text-xs text-ink font-medium">
+                <p className="font-sans text-body text-ink font-medium">
                   Re: Reference for [Employee Full Name]
                 </p>
                 <p>
@@ -377,7 +377,7 @@ export default function SettlementAgreementReferenceGuide() {
                 <p>
                   It is company policy to provide only factual references confirming employment dates and position held.
                 </p>
-                <p className="font-sans text-xs text-muted mt-3">
+                <p className="font-sans text-body text-muted mt-3">
                   Yours faithfully,<br />
                   Human Resources Department<br />
                   [Employer Name]
@@ -435,19 +435,19 @@ export default function SettlementAgreementReferenceGuide() {
               <div className="space-y-3">
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Mutual Agreement</h3>
-                  <p className="sc-body text-xs text-muted mb-0">
+                  <p className="sc-body text-muted mb-0">
                     Stating that employment ended &quot;by mutual agreement&quot; is common and neutral. It accurately reflects that both parties agreed to part ways amicably under a settlement agreement.
                   </p>
                 </div>
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Redundancy or Reorganisation</h3>
-                  <p className="sc-body text-xs text-muted mb-0">
+                  <p className="sc-body text-muted mb-0">
                     If your exit was initiated due to restructuring, stating &quot;reason for leaving: redundancy&quot; provides total clarity to future recruiters. It carries zero performance stigma.
                   </p>
                 </div>
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Omission (Silent Reason)</h3>
-                  <p className="sc-body text-xs text-muted mb-0">
+                  <p className="sc-body text-muted mb-0">
                     If your exit involved a workplace dispute, the safest option is to omit the reason for leaving entirely. The reference simply states that standard company policy is to confirm employment dates and role only.
                   </p>
                 </div>
@@ -486,19 +486,19 @@ export default function SettlementAgreementReferenceGuide() {
               <div className="space-y-3">
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Damages for Lost Earnings</h3>
-                  <p className="sc-body text-xs text-muted mb-0">
+                  <p className="sc-body text-muted mb-0">
                     If a prospective employer rescinds a formal job offer as a direct result of the derogatory reference, you can sue your former employer for substantial breach of contract damages, including your lost salary.
                   </p>
                 </div>
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Negligent Misstatement</h3>
-                  <p className="sc-body text-xs text-muted mb-0">
+                  <p className="sc-body text-muted mb-0">
                     Under the doctrine in <em>Hedley Byrne &amp; Co Ltd v Heller &amp; Partners Ltd [1964]</em>, an employer who provides a misleading or inaccurate reference owes a tortious duty of care. You can bring a claim for financial detriment caused by their negligence.
                   </p>
                 </div>
                 <div className="p-4 rounded-xl border border-rule bg-paper">
                   <h3 className="font-semibold text-ink text-sm mb-1">Injunction</h3>
-                  <p className="sc-body text-xs text-muted mb-0">
+                  <p className="sc-body text-muted mb-0">
                     In urgent cases, a solicitor can apply to the County Court or High Court for an interim injunction restraining your former employer from issuing further non-compliant references.
                   </p>
                 </div>

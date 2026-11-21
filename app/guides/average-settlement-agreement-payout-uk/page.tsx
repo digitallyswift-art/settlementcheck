@@ -360,8 +360,8 @@ export default function AveragePayoutGuide() {
                 <li key={n} className="flex gap-4">
                   <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
-                    <p className="text-sm font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
+                    <p className="text-body font-semibold text-ink mb-1">{title}</p>
+                    <p className="sc-body">{body}</p>
                   </div>
                 </li>
               ))}
@@ -463,7 +463,7 @@ export default function AveragePayoutGuide() {
         {/* Disclaimer */}
         <section className="py-6 border-b border-rule bg-paper">
           <div className="max-w-2xl mx-auto px-5">
-            <p className="sc-body text-xs text-muted leading-relaxed">
+            <p className="sc-body text-muted leading-relaxed">
               Disclaimer: SettlementCheck is an independent introduction service and calculator, not a law firm. The information on this page is for general guidance only and does not constitute formal legal or tax advice. Confirm your specific offer using our free calculator.
             </p>
           </div>

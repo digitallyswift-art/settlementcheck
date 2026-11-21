@@ -234,7 +234,7 @@ export default function PipSettlementGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Core rules every employee must know</p>
+              <p className="text-body font-semibold text-ink mb-3">Core rules every employee must know</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'A PIP offer alongside a settlement proposal is usually a pre-termination negotiation under Section 111A ERA 1996.',
@@ -314,7 +314,7 @@ export default function PipSettlementGuide() {
                 <strong className="text-base text-ink block mb-1">
                   Value your Performance Plan exit package
                 </strong>
-                <p className="text-xs text-muted m-0">
+                <p className="text-body text-muted m-0">
                   Calculate employer process cost savings, statutory notice pay, and tax-free ex-gratia benchmarks.
                 </p>
               </div>
@@ -377,7 +377,7 @@ export default function PipSettlementGuide() {
 
             <div className="rounded-xl border border-rule bg-white p-5 space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wider text-coral">Improper behaviour lifts secrecy</p>
-              <p className="sc-body text-xs leading-relaxed text-muted">
+              <p className="sc-body leading-relaxed text-muted">
                 Under Section 111A(4) of the Employment Rights Act 1996, an employment tribunal will admit evidence of exit discussions if your employer behaves improperly. Examples include threatening dismissal before any formal capability process has taken place, demanding that you sign by the end of the day, or imposing penalties for seeking independent legal advice.
               </p>
             </div>
@@ -400,10 +400,10 @@ export default function PipSettlementGuide() {
                 <span className="text-xs font-semibold uppercase tracking-wider text-coral">ACAS Statutory Benchmark</span>
               </div>
               <h3 className="font-serif text-[18px] font-[460] text-ink mb-2">The 10 Calendar Day Consideration Period</h3>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Paragraph 12 of ACAS Code of Practice 4 states that parties should be allowed a reasonable period of time to consider an offer. As a general rule, a minimum period of <strong>10 calendar days</strong> should be provided to review the formal written terms and obtain independent legal advice.
               </p>
-              <p className="sc-body text-xs text-muted">
+              <p className="sc-body text-muted">
                 The 10-day window starts when you receive the formal written agreement, not during your verbal discussion. Refusing to allow reasonable time can be cited as improper behaviour.
               </p>
             </div>
@@ -421,20 +421,20 @@ export default function PipSettlementGuide() {
             <div className="space-y-4 mb-6">
               <div className="rounded-xl border border-rule bg-card p-5">
                 <h3 className="font-serif text-[17px] font-[460] text-ink mb-1.5">Duty to Make Reasonable Adjustments (s.20)</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Under Section 20 of the Equality Act 2010, your employer must make reasonable adjustments for employees with qualifying health conditions or neurodiversity (including ADHD, depression, anxiety, autism, or chronic fatigue).
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   Placing an employee on a PIP without first implementing reasonable adjustments or seeking occupational health input can amount to discrimination arising from disability under Section 15.
                 </p>
               </div>
 
               <div className="rounded-xl border border-rule bg-card p-5">
                 <h3 className="font-serif text-[17px] font-[460] text-ink mb-1.5">Uncapped Compensation Shifts the Balance (s.124)</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Unlike ordinary unfair dismissal awards, compensation for unlawful discrimination under Section 124 of the Equality Act 2010 is completely uncapped. Tribunals also award separate sums for injury to feelings under the Vento guidelines.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   If your performance dipped due to health or neurodiversity, your employer faces substantial exposure. This legal exposure gives you strong standing to negotiate an enhanced financial package.
                 </p>
               </div>
@@ -501,7 +501,7 @@ export default function PipSettlementGuide() {
             <div className="p-5 rounded-xl border border-coral/30 bg-paper-2 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <p className="font-serif text-[17px] font-[460] text-ink">Check your settlement offer now</p>
-                <p className="text-xs text-muted">Free, confidential estimate in under 2 minutes. No contact info needed.</p>
+                <p className="text-body text-muted">Free, confidential estimate in under 2 minutes. No contact info needed.</p>
               </div>
               <Link href="/calculator/?reason=performance" className="btn-accent text-xs whitespace-nowrap">
                 Calculate my estimate →
@@ -555,7 +555,7 @@ export default function PipSettlementGuide() {
               ].map((comp) => (
                 <div key={comp.title} className="rounded-xl border border-rule bg-card p-4">
                   <p className="font-serif text-[15px] font-[460] text-ink mb-1">{comp.title}</p>
-                  <p className="text-xs text-muted leading-relaxed">{comp.desc}</p>
+                  <p className="text-body text-muted leading-relaxed">{comp.desc}</p>
                 </div>
               ))}
             </div>
@@ -604,7 +604,7 @@ export default function PipSettlementGuide() {
               </table>
             </div>
 
-            <p className="sc-body text-xs text-muted">
+            <p className="sc-body text-muted">
               For most employees, accepting a negotiated settlement agreement provides the safest outcome. It protects your mental health, preserves your professional reputation, and secures funds while you find your next role.
             </p>
           </div>
@@ -622,7 +622,7 @@ export default function PipSettlementGuide() {
               <div className="rounded-xl border border-rule bg-paper p-5">
                 <p className="text-xs font-semibold uppercase tracking-wider text-coral mb-1">Agenda Item 1: Initial Meeting Records</p>
                 <p className="font-serif text-[16px] text-ink font-[460] mb-2">Requesting written terms and noting ACAS Code 4 guidance</p>
-                <p className="text-sm text-ink/80 m-0">
+                <p className="text-body text-ink/80 m-0">
                   Ask your employer to provide any proposed settlement terms in writing so you can review them with an independent SRA-regulated solicitor. Under Paragraph 12 of ACAS Code of Practice 4, ACAS recommends a minimum of 10 calendar days as general guidance to consider written terms, although under English contract law (<em>Routledge v Grant</em>) an employer may set binding deadlines or withdraw an unaccepted offer. Never allow an employer&apos;s deadline to pass without taking legal advice.
                 </p>
               </div>
@@ -630,7 +630,7 @@ export default function PipSettlementGuide() {
               <div className="rounded-xl border border-rule bg-paper p-5">
                 <p className="text-xs font-semibold uppercase tracking-wider text-coral mb-1">Agenda Item 2: Section 111A ERA 1996 Scope Boundary</p>
                 <p className="font-serif text-[16px] text-ink font-[460] mb-2">Assessing pre-termination confidentiality limits</p>
-                <p className="text-sm text-ink/80 m-0">
+                <p className="text-body text-ink/80 m-0">
                   Section 111A ERA 1996 confidentiality applies strictly to ordinary unfair dismissal claims. It provides zero protection for discrimination claims (Equality Act 2010), whistleblowing (s.43B ERA 1996), breach of contract, or where improper behaviour (such as an unreasonable ultimatum under ACAS Code 4 para 18) occurs.
                 </p>
               </div>

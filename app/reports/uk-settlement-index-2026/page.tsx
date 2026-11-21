@@ -317,7 +317,7 @@ export default function UkSettlementIndex2026Page() {
                 Statutory Redundancy Cap
               </span>
               <div className="text-3xl font-serif font-bold text-ink">£751<span className="text-base font-sans font-normal text-muted"> / wk</span></div>
-              <p className="mt-2 text-xs text-muted leading-normal">
+              <p className="mt-2 text-body text-muted leading-normal">
                 Effective 6 April 2026 under SI 2026/310. Maximum 20 years statutory redundancy basic award: £22,530.
               </p>
             </div>
@@ -327,7 +327,7 @@ export default function UkSettlementIndex2026Page() {
                 Tax-Free Exemption Ceiling
               </span>
               <div className="text-3xl font-serif font-bold text-coral">£30,000</div>
-              <p className="mt-2 text-xs text-muted leading-normal">
+              <p className="mt-2 text-body text-muted leading-normal">
                 ITEPA 2003 s.403 threshold frozen since 1988 (38 years). Equivalent to over £92,000 in real RPI purchasing power.
               </p>
             </div>
@@ -337,7 +337,7 @@ export default function UkSettlementIndex2026Page() {
                 London Tribunal Wait Time
               </span>
               <div className="text-3xl font-serif font-bold text-ink">540<span className="text-base font-sans font-normal text-muted"> days</span></div>
-              <p className="mt-2 text-xs text-muted leading-normal">
+              <p className="mt-2 text-body text-muted leading-normal">
                 Average wait from ET1 claim to final merits hearing in London Central (MoJ Tribunal Statistics 2025/26).
               </p>
             </div>
@@ -347,7 +347,7 @@ export default function UkSettlementIndex2026Page() {
                 Legal Fee Contribution
               </span>
               <div className="text-3xl font-serif font-bold text-ink">£500<span className="text-base font-sans font-normal text-muted"> + VAT</span></div>
-              <p className="mt-2 text-xs text-muted leading-normal">
+              <p className="mt-2 text-body text-muted leading-normal">
                 Median employer contribution under Section 203(3) ERA 1996 for independent solicitor review.
               </p>
             </div>
@@ -383,7 +383,7 @@ export default function UkSettlementIndex2026Page() {
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink">
               UK Industry Multiples vs Statutory Redundancy Minimum
             </h2>
-            <p className="text-muted text-sm sm:text-base mt-2 max-w-3xl">
+            <p className="text-muted text-body sm:text-base mt-2 max-w-3xl">
               Severance multiples reflect total exit compensation (statutory redundancy pay plus ex-gratia enhancement) divided by the employee statutory redundancy baseline. Data is normalized across comparable tenure (3 to 6 years) and median managerial salary bands.
             </p>
           </div>
@@ -461,7 +461,7 @@ export default function UkSettlementIndex2026Page() {
                     </span>
                   </div>
 
-                  <p className="text-sm text-muted leading-relaxed mb-4">
+                  <p className="text-body text-muted leading-relaxed mb-4">
                     {sec.negotiationDynamics}
                   </p>
 
@@ -553,7 +553,7 @@ export default function UkSettlementIndex2026Page() {
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink">
               Employer Legal Fee Contributions by Seniority Band
             </h2>
-            <p className="text-muted text-sm sm:text-base mt-2 max-w-3xl">
+            <p className="text-muted text-body sm:text-base mt-2 max-w-3xl">
               Under Section 203(3) of the Employment Rights Act 1996, an employee settlement agreement is legally void unless the employee receives advice from an independent relevant adviser (an SRA-regulated solicitor or authorized trade union officer). Employers standardly provide a capped commercial contribution toward this cost paid directly to the solicitor upon agreement completion.
             </p>
           </div>
@@ -564,7 +564,7 @@ export default function UkSettlementIndex2026Page() {
                 Junior / Administrative
               </span>
               <div className="text-2xl font-serif font-bold text-ink">£350 to £500<span className="text-xs font-sans font-normal text-muted"> + VAT</span></div>
-              <p className="mt-2 text-xs text-muted leading-normal">
+              <p className="mt-2 text-body text-muted leading-normal">
                 Standard baseline covering statutory certificate sign-off for single-claim redundancy or straightforward exit terms.
               </p>
             </div>
@@ -574,7 +574,7 @@ export default function UkSettlementIndex2026Page() {
                 Mid-Level / Professional
               </span>
               <div className="text-2xl font-serif font-bold text-ink">£500 to £750<span className="text-xs font-sans font-normal text-muted"> + VAT</span></div>
-              <p className="mt-2 text-xs text-muted leading-normal">
+              <p className="mt-2 text-body text-muted leading-normal">
                 Accommodates reviews involving restrictive covenant adjustments, PILON schedules, and agreed reference wording.
               </p>
             </div>
@@ -584,7 +584,7 @@ export default function UkSettlementIndex2026Page() {
                 Senior Management / Director
               </span>
               <div className="text-2xl font-serif font-bold text-ink">£750 to £1,500<span className="text-xs font-sans font-normal text-muted"> + VAT</span></div>
-              <p className="mt-2 text-xs text-muted leading-normal">
+              <p className="mt-2 text-body text-muted leading-normal">
                 Covers fiduciary discharge, Companies House resignation paperwork (Form TM01), and non-compete renegotiation.
               </p>
             </div>
@@ -594,7 +594,7 @@ export default function UkSettlementIndex2026Page() {
                 Executive / C-Suite
               </span>
               <div className="text-2xl font-serif font-bold text-ink">£1,500 to £3,500+<span className="text-xs font-sans font-normal text-muted"> + VAT</span></div>
-              <p className="mt-2 text-xs text-muted leading-normal">
+              <p className="mt-2 text-body text-muted leading-normal">
                 Complex multi-jurisdiction agreements, deferred remuneration restructuring, bad-leaver carve-outs, and D&amp;O coverage.
               </p>
             </div>
@@ -703,19 +703,19 @@ export default function UkSettlementIndex2026Page() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
                 <div className="p-4 rounded-lg bg-paper border border-rule">
                   <h3 className="font-semibold text-ink text-sm mb-1 font-serif">k-Anonymity (k &ge; 50)</h3>
-                  <p className="text-xs text-muted leading-normal">
+                  <p className="text-body text-muted leading-normal">
                     No cell, sector, or seniority tier is published without a minimum threshold of 50 distinct data points. Outliers and identifiable data are excluded to ensure zero individual re-identification.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-paper border border-rule">
                   <h3 className="font-semibold text-ink text-sm mb-1 font-serif">Zero Special Category Data</h3>
-                  <p className="text-xs text-muted leading-normal">
+                  <p className="text-body text-muted leading-normal">
                     In compliance with Article 9 UK GDPR, SettlementCheck does not harvest, store, or process special category data (such as medical conditions, ethnicity, or trade union membership) in analytical models.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-paper border border-rule">
                   <h3 className="font-semibold text-ink text-sm mb-1 font-serif">Verified External Corpora</h3>
-                  <p className="text-xs text-muted leading-normal">
+                  <p className="text-body text-muted leading-normal">
                     Telemetry is cross-validated against ONS ASHE earnings series, Ministry of Justice Employment Tribunal statistics, and primary UK legislation (SI 2026/310, ITEPA 2003, ERA 1996).
                   </p>
                 </div>
@@ -769,7 +769,7 @@ export default function UkSettlementIndex2026Page() {
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white mb-2">
                 Evaluate Your Settlement Offer in 60 Seconds
               </h2>
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white/80 text-body sm:text-base leading-relaxed">
                 Check whether your redundancy package or exit payment meets statutory limits, calculate your tax-free allowance, and connect with an independent SRA-regulated solicitor.
               </p>
             </div>

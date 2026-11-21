@@ -101,7 +101,7 @@ export default function SectorRestructuringClient() {
         <h2 className="text-2xl sm:text-3xl font-serif font-bold text-ink">
           Sector Redundancy &amp; Exit Framework Comparison
         </h2>
-        <p className="text-sm text-muted mt-1 leading-relaxed">
+        <p className="text-body text-muted mt-1 leading-relaxed">
           Select a sector to examine how exit packages, pay caps, tax treatment, and pension provisions operate across the UK economy.
         </p>
       </div>
@@ -139,7 +139,7 @@ export default function SectorRestructuringClient() {
               Governance Profile
             </span>
             <h3 className="text-xl sm:text-2xl font-serif font-bold text-ink">{current.name}</h3>
-            <p className="text-xs text-muted mt-0.5">{current.governingFramework}</p>
+            <p className="text-body text-muted mt-0.5">{current.governingFramework}</p>
           </div>
           <Link
             href={current.calculatorUrl}
@@ -149,7 +149,7 @@ export default function SectorRestructuringClient() {
           </Link>
         </div>
 
-        <p className="text-sm text-ink leading-relaxed">{current.overview}</p>
+        <p className="text-body text-ink leading-relaxed">{current.overview}</p>
 
         {/* Feature Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">

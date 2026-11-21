@@ -77,7 +77,9 @@ module.exports = {
         faq:  '1.65',
       },
       fontSize: {
-        stat: ['44px', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '420' }],
+        body:      ['var(--text-body)', { lineHeight: '1.65' }],
+        'body-sm': ['var(--text-body-sm)', { lineHeight: '1.55' }],
+        stat:      ['44px', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '420' }],
       },
     },
   },

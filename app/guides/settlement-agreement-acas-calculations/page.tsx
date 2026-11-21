@@ -246,17 +246,17 @@ export default function AcasCalculationsGuide() {
               </table>
             </div>
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Example calculation</p>
-              <p className="sc-body text-sm mb-2">
+              <p className="text-body font-semibold text-ink mb-3">Example calculation</p>
+              <p className="sc-body mb-2">
                 Employee aged 38, 9 years of service, £600 per week gross salary.
               </p>
-              <p className="sc-body text-sm mb-2">
+              <p className="sc-body mb-2">
                 Age 38 falls in the middle tier (22 to 40): 1 week per year of service.
               </p>
-              <p className="sc-body text-sm mb-2">
+              <p className="sc-body mb-2">
                 9 years x £600 = <strong>£5,400 statutory redundancy</strong>
               </p>
-              <p className="sc-body text-sm text-muted">
+              <p className="sc-body text-muted">
                 The £751 cap only applies if weekly salary exceeds £751. At £600/week, the actual salary is used.
               </p>
             </div>
@@ -272,7 +272,7 @@ export default function AcasCalculationsGuide() {
             </p>
             <div className="rounded-xl border border-rule bg-paper p-5 mb-6 flex gap-3">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 PILON (Payment in Lieu of Notice) is always taxed as earnings under ITEPA 2003 s.402D, regardless of the £30,000 limit. Your employer must deduct income tax and National Insurance from PILON before paying it.
               </p>
             </div>

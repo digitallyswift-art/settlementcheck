@@ -42,7 +42,7 @@ export default async function DynamicStatutoryTable({
         </div>
 
         {data.caption && (
-          <p className="text-sm text-[#0B1F3A]/70 mb-4">{data.caption}</p>
+          <p className="text-body text-[#0B1F3A]/70 mb-4">{data.caption}</p>
         )}
 
         {/* Responsive Table */}
@@ -76,7 +76,7 @@ export default async function DynamicStatutoryTable({
 
         {/* Footnote */}
         {data.footnoteCitation && (
-          <p className="mt-4 text-xs text-[#0B1F3A]/60 leading-relaxed border-t border-[#0B1F3A]/10 pt-3">
+          <p className="mt-4 text-body text-[#0B1F3A]/60 leading-relaxed border-t border-[#0B1F3A]/10 pt-3">
             {data.footnoteCitation}
           </p>
         )}

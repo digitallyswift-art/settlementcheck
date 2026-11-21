@@ -257,10 +257,10 @@ export default function HowMuchGuidePage() {
             <div className="space-y-5">
               <div className="p-5 rounded-lg border border-rule bg-card">
                 <h3 className="font-semibold text-ink text-[17px] mb-2">1. Notice Pay (PILON)</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   This is the salary you would have earned during your contractual notice period. Under Section 402D of ITEPA 2003 (PENP rules), notice pay is always treated as taxable earnings. It is subject to income tax and National Insurance deductions.
                 </p>
-                <p className="text-xs text-muted">
+                <p className="text-body text-muted">
                   Statutory minimum notice is 1 week per year of service, up to 12 weeks. Read our complete guide to{' '}
                   <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-coral">
                     PILON tax rules in 2026
@@ -271,7 +271,7 @@ export default function HowMuchGuidePage() {
 
               <div className="p-5 rounded-lg border border-rule bg-card">
                 <h3 className="font-semibold text-ink text-[17px] mb-2">2. Statutory Redundancy Pay</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   If your role is redundant and you have worked for two or more years, you have a legal right to statutory redundancy pay under the Employment Rights Act 1996. For 2026/27, weekly pay is capped at £751 by{' '}
                   <a
                     href="https://www.legislation.gov.uk/uksi/2026/310/contents/made"
@@ -283,7 +283,7 @@ export default function HowMuchGuidePage() {
                   </a>
                   .
                 </p>
-                <p className="text-xs text-muted">
+                <p className="text-body text-muted">
                   Statutory redundancy pay is completely tax-free under Section 403 of ITEPA 2003. Check the{' '}
                   <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-coral">
                     2026 statutory redundancy cap
@@ -298,10 +298,10 @@ export default function HowMuchGuidePage() {
 
               <div className="p-5 rounded-lg border border-rule bg-card">
                 <h3 className="font-semibold text-ink text-[17px] mb-2">3. Ex-Gratia Compensation Payment</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   This is the discretionary compensation offered in exchange for signing away your right to take your employer to an employment tribunal. In straightforward exits, opening packages often benchmark around one to three months of gross salary, although disputed dismissals can secure substantially more.
                 </p>
-                <p className="text-xs text-muted">
+                <p className="text-body text-muted">
                   The first £30,000 of compensation is tax-free under Section 403 of ITEPA 2003. Learn how HMRC handles the{' '}
                   <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-coral">
                     tax-free £30,000 settlement exemption
@@ -369,10 +369,10 @@ export default function HowMuchGuidePage() {
 
             <div className="mt-8 p-5 rounded-lg border border-rule bg-card">
               <h3 className="font-semibold text-ink text-[17px] mb-2">Why does an employer offer extra ex-gratia pay?</h3>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Employers offer ex-gratia money to buy certainty and finality. Defending an ordinary claim at an employment tribunal costs an employer between £8,500 and £15,000 in legal fees alone, regardless of the outcome.
               </p>
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering an ex-gratia payment of one to three months of gross pay is often cheaper and faster for the company than a protracted workplace dispute. Explore live regional delays in our <Link href="/tribunal-backlog-tracker/" className="text-coral underline hover:text-ink">UK Employment Tribunal backlog tracker</Link>, compare <Link href="/guides/average-settlement-agreement-payout-uk/" className="text-coral underline hover:text-ink">average UK settlement agreement payout amounts</Link>, or inspect sector multiples in the <Link href="/reports/uk-settlement-index-2026/" className="text-coral underline hover:text-ink">2026 UK Employment Settlement Index</Link>.
               </p>
             </div>
@@ -392,7 +392,7 @@ export default function HowMuchGuidePage() {
                 <CheckIcon />
                 <div>
                   <strong className="text-ink font-semibold">Weekly Statutory Pay Cap (£751):</strong>
-                  <p className="sc-body text-sm mt-0.5">
+                  <p className="sc-body mt-0.5">
                     Under Section 227 of the Employment Rights Act 1996 and{' '}
                     <a
                       href="https://www.legislation.gov.uk/uksi/2026/310/contents/made"
@@ -410,7 +410,7 @@ export default function HowMuchGuidePage() {
                 <CheckIcon />
                 <div>
                   <strong className="text-ink font-semibold">The £30,000 Tax Exemption:</strong>
-                  <p className="sc-body text-sm mt-0.5">
+                  <p className="sc-body mt-0.5">
                     Under{' '}
                     <a
                       href="https://www.legislation.gov.uk/ukpga/2003/1/section/403"
@@ -428,7 +428,7 @@ export default function HowMuchGuidePage() {
                 <CheckIcon />
                 <div>
                   <strong className="text-ink font-semibold">Unfair Dismissal Compensatory Award (£123,543):</strong>
-                  <p className="sc-body text-sm mt-0.5">
+                  <p className="sc-body mt-0.5">
                     The statutory compensatory award limit for ordinary unfair dismissal is £123,543 (or 52 weeks of gross pay, whichever is lower). Employers consider this financial risk when negotiating settlements. See our guide to{' '}
                     <Link href="/guides/unfair-dismissal-settlement-agreements/" className="underline hover:text-coral">
                       unfair dismissal settlements
@@ -481,13 +481,13 @@ export default function HowMuchGuidePage() {
               <h3 className="font-serif text-[24px] md:text-[28px] text-white font-normal mb-3">
                 Find out how much your settlement offer is worth
               </h3>
-              <p className="text-white/80 max-w-lg mx-auto mb-6 text-sm">
+              <p className="text-white/80 max-w-lg mx-auto mb-6 text-body">
                 Enter your salary, notice period, and service length. Get an instant, independent breakdown of your net take-home pay in 60 seconds.
               </p>
               <Link href="/calculator/" className="sc-btn-primary inline-block py-3 px-7 text-base font-semibold">
                 Calculate my estimate →
               </Link>
-              <p className="text-xs text-white/60 mt-3">Free and completely confidential. No email required to see results.</p>
+              <p className="text-body text-white/60 mt-3">Free and completely confidential. No email required to see results.</p>
             </div>
           </div>
         </section>

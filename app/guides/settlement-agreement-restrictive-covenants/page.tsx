@@ -203,7 +203,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Six critical facts every employee must know</p>
+              <p className="text-body font-semibold text-ink mb-3">Six critical facts every employee must know</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'Post-termination restrictions are legally void by default unless your employer proves they protect a legitimate business interest.',
@@ -237,28 +237,28 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">1. Non-compete clauses</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   These clauses stop you from working for a competing business or setting up a rival company in direct competition with your former employer. Because non-competes restrict your fundamental right to earn a living, courts scrutinise them heavily. They are rarely upheld if they exceed 6 to 12 months.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">2. Non-solicitation clauses</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   A non-solicitation clause stops you from approaching or contacting former clients, customers, or suppliers to win their business. Courts are more willing to enforce these clauses than non-competes, provided they only cover clients with whom you had personal contact during your final 12 months.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">3. Non-dealing clauses</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   Non-dealing clauses go further than non-solicitation. They prohibit you from doing business with former clients even if those clients contact you first without any encouragement. Employers must prove a very close connection to justify this level of restraint.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">4. Non-poaching clauses</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   These restrictions prevent you from hiring, enticing away, or employing former colleagues in your new venture or role. Enforceable non-poaching clauses are typically restricted to senior managers or key technical staff rather than all company personnel.
                 </p>
               </div>
@@ -285,11 +285,11 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-paper">
                   <strong className="text-ink block mb-1">Test 1: Legitimate Proprietary Business Interest</strong>
-                  <p className="text-muted text-xs m-0">The employer must prove they are protecting genuine trade secrets, confidential intellectual property, customer goodwill, or workforce stability. An employer cannot enforce a clause simply to protect themselves against normal, healthy market competition.</p>
+                  <p className="text-muted text-body m-0">The employer must prove they are protecting genuine trade secrets, confidential intellectual property, customer goodwill, or workforce stability. An employer cannot enforce a clause simply to protect themselves against normal, healthy market competition.</p>
                 </div>
                 <div className="p-3 rounded bg-paper">
                   <strong className="text-ink block mb-1">Test 2: Reasonableness in Scope and Duration</strong>
-                  <p className="text-muted text-xs m-0">The covenant must go no further than reasonably necessary to protect that interest. An agreement that restricts an employee for two years across the whole UK when the employer only operates in Manchester will almost certainly be struck down by a court as unreasonable.</p>
+                  <p className="text-muted text-body m-0">The covenant must go no further than reasonably necessary to protect that interest. An agreement that restricts an employee for two years across the whole UK when the employer only operates in Manchester will almost certainly be struck down by a court as unreasonable.</p>
                 </div>
               </div>
             </div>
@@ -327,21 +327,21 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">Option A: Reject the new restrictions entirely</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   Your independent solicitor can inform the employer that you will only agree to affirm the existing terms of your employment contract. In many cases, employers drop new covenants when challenged because their primary goal is securing the waiver of tribunal claims.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">Option B: Demand financial compensation for accepting them</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   If your employer insists on a new non-compete clause, your solicitor can use this demand to push for higher financial compensation. If staying out of your market for 6 months costs you valuable earnings, the settlement sum must compensate you for that commercial sacrifice.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">Option C: Narrow the duration and geographical scope</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   Your solicitor can negotiate specific carve-outs. For example, amending a nationwide ban to a 5-mile radius, reducing the duration from 12 months down to 3 months, or exempting specific non-competing divisions or clients.
                 </p>
               </div>
@@ -360,7 +360,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
               <h3 className="font-semibold text-ink text-base mb-2">
                 Check your restrictive covenants in 30 seconds
               </h3>
-              <p className="sc-body text-xs text-muted mb-4">
+              <p className="sc-body text-muted mb-4">
                 Paste your draft post-termination restrictions below to check non-compete durations, detect missing garden leave offsets, and audit compliance with Supreme Court rules in Tillman v Egon Zehnder.
               </p>
               <RestrictiveCovenantScanner />
@@ -384,12 +384,12 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
 
             <div className="bg-white p-5 rounded-xl border border-rule mb-6 shadow-sm">
               <h3 className="font-semibold text-ink text-base mb-2">Section 225 of ITEPA 2003 (Payments for restrictive undertakings)</h3>
-              <p className="sc-body text-xs text-muted mb-3">
+              <p className="sc-body text-muted mb-3">
                 Under Section 225 and Section 226 of ITEPA 2003, any valuable consideration given for entering into or agreeing to a restrictive undertaking is treated as earnings from employment. It is subject to full PAYE income tax, employee Class 1 National Insurance, and employer National Insurance contributions (currently 15.0% for 2026/27).
               </p>
               <div className="p-3 rounded bg-[#FBF0EE] border border-[#F3C4BC]">
                 <strong className="text-[#A8341F] block mb-1">The Danger of Commingling Compensation</strong>
-                <p className="text-[#A8341F] text-xs m-0">
+                <p className="text-[#A8341F] text-body m-0">
                   If your settlement agreement introduces or reaffirms restrictive covenants without allocating a specific sum to them, HMRC can challenge the agreement under Employment Income Manual guidance EIM03600. HMRC may claim that a portion - or even the entirety - of your tax-free £30,000 payment was actually consideration for the restrictive covenants. This creates an unexpected PAYE tax bill and penalties.
                 </p>
               </div>
@@ -418,7 +418,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
 
             <div className="p-4 rounded-xl border border-rule bg-paper mb-6">
               <h3 className="font-semibold text-ink text-sm mb-2">Section 43J of the Employment Rights Act 1996</h3>
-              <p className="sc-body text-xs text-muted mb-2">
+              <p className="sc-body text-muted mb-2">
                 Under{' '}
                 <a
                   href="https://www.legislation.gov.uk/ukpga/1996/18/section/43J"
@@ -430,7 +430,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                 </a>{' '}
                 and the Public Interest Disclosure Act 1998, any contractual provision that attempts to prevent a worker from making a protected disclosure is void as a matter of law.
               </p>
-              <p className="sc-body text-xs text-muted mb-0">
+              <p className="sc-body text-muted mb-0">
                 You can never be gagged from reporting criminal acts, failures to comply with legal obligations, miscarriages of justice, or health and safety dangers. You retain the right to speak to statutory regulators such as the Financial Conduct Authority (FCA), Solicitors Regulation Authority (SRA), Care Quality Commission (CQC), or HM Revenue and Customs (HMRC).
               </p>
             </div>
@@ -531,28 +531,28 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">1. Clause-by-clause contract comparison</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   Your solicitor will compare the settlement agreement against your original employment contract. If your employer has added restrictions or widened their scope, your solicitor will flag this immediately and challenge the justification.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">2. Negotiating a garden leave offset</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   If your employer placed you on garden leave prior to departure, your solicitor will ensure that the garden leave period is deducted from any post-termination non-compete. For instance, if you have a 6-month non-compete and spent 3 months on garden leave, your remaining restriction should be reduced to 3 months.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">3. Securing client and geography carve-outs</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   If you have already identified a potential new job, your solicitor can negotiate specific wording confirming that taking that role will not breach the settlement agreement. This eliminates future legal threats and gives you complete peace of mind.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">4. Enforcing reciprocal non-disparagement</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   While employers always include clauses forbidding you from criticising the company, solicitors ensure these obligations are strictly mutual. Your solicitor will add clauses binding the company, its directors, and senior managers from making disparaging remarks about you to prospective employers.
                 </p>
               </div>

@@ -17,7 +17,7 @@ export default function Terms() {
       <main className="bg-white py-16">
         <div className="max-w-3xl mx-auto px-4">
           <h1 className="text-3xl font-black text-gray-900 mb-2 tracking-tight">Terms of Use</h1>
-          <p className="text-sm text-gray-400 mb-8">Last updated: 1 January 2026</p>
+          <p className="text-body text-gray-400 mb-8">Last updated: 1 January 2026</p>
 
           {[
             {
@@ -64,7 +64,7 @@ export default function Terms() {
           ].map((s) => (
             <div key={s.title} className="mb-8">
               <h2 className="text-lg font-bold text-gray-900 mb-2">{s.title}</h2>
-              <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{s.body}</p>
+              <p className="text-body text-gray-600 leading-relaxed whitespace-pre-line">{s.body}</p>
             </div>
           ))}
         </div>

@@ -391,7 +391,7 @@ export default function CompromiseAgreementCalculatorPage() {
                 </tbody>
               </table>
             </div>
-            <p className="sc-body text-sm text-muted">
+            <p className="sc-body text-muted">
               Source: Section 23 Enterprise and Regulatory Reform Act 2013. The change in terminology did not alter an employee's statutory rights.
             </p>
           </div>
@@ -406,32 +406,32 @@ export default function CompromiseAgreementCalculatorPage() {
             </p>
             <div className="space-y-4">
               <div className="p-5 rounded-xl border border-rule bg-paper">
-                <p className="font-semibold text-ink text-sm mb-1">1. The agreement must be in writing</p>
-                <p className="sc-body text-sm">
+                <p className="font-semibold text-ink text-body mb-1">1. The agreement must be in writing</p>
+                <p className="sc-body">
                   A verbal offer or exchange of text messages cannot waive employment rights. The agreement must exist as a full written contract detailing every term.
                 </p>
               </div>
               <div className="p-5 rounded-xl border border-rule bg-paper">
-                <p className="font-semibold text-ink text-sm mb-1">2. Particular complaints must be specified</p>
-                <p className="sc-body text-sm">
+                <p className="font-semibold text-ink text-body mb-1">2. Particular complaints must be specified</p>
+                <p className="sc-body">
                   The document must list the specific employment tribunal claims being settled. Broad phrases like "all future claims whatsoever" are legally unenforceable.
                 </p>
               </div>
               <div className="p-5 rounded-xl border border-rule bg-paper">
-                <p className="font-semibold text-ink text-sm mb-1">3. Advice from an independent, insured adviser</p>
-                <p className="sc-body text-sm">
+                <p className="font-semibold text-ink text-body mb-1">3. Advice from an independent, insured adviser</p>
+                <p className="sc-body">
                   The employee must receive advice from a qualified, independent adviser, such as a solicitor. The adviser must hold current professional indemnity insurance covering the advice.
                 </p>
               </div>
               <div className="p-5 rounded-xl border border-rule bg-paper">
-                <p className="font-semibold text-ink text-sm mb-1">4. The adviser must be identified</p>
-                <p className="sc-body text-sm">
+                <p className="font-semibold text-ink text-body mb-1">4. The adviser must be identified</p>
+                <p className="sc-body">
                   The agreement must name the specific solicitor and their legal practice. The adviser signs an adviser certificate attached to the final document.
                 </p>
               </div>
               <div className="p-5 rounded-xl border border-rule bg-paper">
-                <p className="font-semibold text-ink text-sm mb-1">5. Statutory conditions must be stated as satisfied</p>
-                <p className="sc-body text-sm">
+                <p className="font-semibold text-ink text-body mb-1">5. Statutory conditions must be stated as satisfied</p>
+                <p className="sc-body">
                   The contract must contain an express clause confirming that all statutory conditions regulating settlement agreements under Section 203(3) have been met.
                 </p>
               </div>
@@ -449,7 +449,7 @@ export default function CompromiseAgreementCalculatorPage() {
             <div className="space-y-4 mb-8">
               <div className="p-5 rounded-xl border border-rule bg-white shadow-sm">
                 <h3 className="font-semibold text-ink text-base mb-2">Component 1: Statutory redundancy pay floor</h3>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   If your role is redundant, your statutory redundancy pay forms your legal baseline. The formula uses complete years of service (up to 20 years) and an age multiplier:
                 </p>
                 <ul className="list-disc pl-5 text-sm text-muted space-y-1">
@@ -457,28 +457,28 @@ export default function CompromiseAgreementCalculatorPage() {
                   <li>1.0 week of pay per year between ages 22 and 40.</li>
                   <li>1.5 weeks of pay per year aged 41 and over.</li>
                 </ul>
-                <p className="sc-body text-sm mt-2 text-ink">
+                <p className="sc-body mt-2 text-ink">
                   Under SI 2026/310, weekly statutory pay is capped at £751 from 6 April 2026. The maximum statutory redundancy payout is £22,530.
                 </p>
               </div>
 
               <div className="p-5 rounded-xl border border-rule bg-white shadow-sm">
                 <h3 className="font-semibold text-ink text-base mb-2">Component 2: Notice pay (PILON)</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   Your employer must pay for your contractual notice period or statutory notice period, whichever is longer. Under Post-Employment Notice Pay rules, notice pay is always fully subject to tax and National Insurance.
                 </p>
               </div>
 
               <div className="p-5 rounded-xl border border-rule bg-white shadow-sm">
                 <h3 className="font-semibold text-ink text-base mb-2">Component 3: Accrued holiday pay and unpaid salary</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   You are legally entitled to compensation for all accrued, untaken statutory and contractual holiday up to your final termination date. This is taxed as standard earnings.
                 </p>
               </div>
 
               <div className="p-5 rounded-xl border border-rule bg-white shadow-sm">
                 <h3 className="font-semibold text-ink text-base mb-2">Component 4: Ex-gratia compensation payment</h3>
-                <p className="sc-body text-sm">
+                <p className="sc-body">
                   This is the discretionary compensation amount negotiated on top of statutory minimums. It reflects the value of waiving your employment claims. For ordinary unfair dismissal, the statutory compensatory award cap is £123,543 or 52 weeks of gross salary under SI 2026/310.
                 </p>
               </div>
@@ -495,7 +495,7 @@ export default function CompromiseAgreementCalculatorPage() {
             </p>
             <div className="rounded-xl border border-rule overflow-hidden mb-6 shadow-sm">
               <div className="bg-ink px-4 py-3">
-                <p className="text-white text-sm font-medium">Compromise agreement calculation breakdown</p>
+                <p className="text-white text-body font-medium">Compromise agreement calculation breakdown</p>
               </div>
               <table className="w-full text-sm">
                 <thead>
@@ -546,7 +546,7 @@ export default function CompromiseAgreementCalculatorPage() {
                 </tbody>
               </table>
             </div>
-            <p className="sc-body text-sm text-muted">
+            <p className="sc-body text-muted">
               In this scenario, total termination compensation is £24,612 (£9,012 statutory redundancy plus £15,600 ex-gratia compensation). Because £24,612 is under the £30,000 threshold under Section 403 of ITEPA 2003, the full amount is exempt from income tax and National Insurance.
             </p>
           </div>
@@ -561,7 +561,7 @@ export default function CompromiseAgreementCalculatorPage() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div className="p-5 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-sm mb-2">Payments qualifying for £30,000 exemption</p>
+                <p className="font-semibold text-ink text-body mb-2">Payments qualifying for £30,000 exemption</p>
                 <ul className="text-sm text-muted space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckIcon />
@@ -582,7 +582,7 @@ export default function CompromiseAgreementCalculatorPage() {
                 </ul>
               </div>
               <div className="p-5 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-sm mb-2">Payments subject to income tax and NI</p>
+                <p className="font-semibold text-ink text-body mb-2">Payments subject to income tax and NI</p>
                 <ul className="text-sm text-muted space-y-2">
                   <li className="flex items-start gap-2">
                     <AlertIcon />
@@ -603,7 +603,7 @@ export default function CompromiseAgreementCalculatorPage() {
                 </ul>
               </div>
             </div>
-            <p className="sc-body text-sm">
+            <p className="sc-body">
               Under Section 402D of ITEPA 2003, Post-Employment Notice Pay rules treat any payment representing notice as earnings. Employers must deduct income tax and employee National Insurance at source before releasing notice funds.
             </p>
           </div>
@@ -620,8 +620,8 @@ export default function CompromiseAgreementCalculatorPage() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Calculate your statutory floor</p>
-                  <p className="sc-body text-sm">
+                  <p className="text-body font-semibold text-ink mb-1">Calculate your statutory floor</p>
+                  <p className="sc-body">
                     Calculate your statutory redundancy entitlement, contractual notice pay, and untaken holiday. This total represents your absolute legal minimum. Any settlement must sit above this floor.
                   </p>
                 </div>
@@ -629,8 +629,8 @@ export default function CompromiseAgreementCalculatorPage() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Take your 10-day consideration period</p>
-                  <p className="sc-body text-sm">
+                  <p className="text-body font-semibold text-ink mb-1">Take your 10-day consideration period</p>
+                  <p className="sc-body">
                     Review the written terms with an adviser before signing. Under Paragraph 12 of ACAS Code of Practice 4 (Settlement Agreements), ACAS recommends at least 10 calendar days as general guidance to review the proposal and take legal advice, though you should always consult a solicitor before any employer deadline expires.
                   </p>
                 </div>
@@ -638,8 +638,8 @@ export default function CompromiseAgreementCalculatorPage() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Instruct an independent solicitor</p>
-                  <p className="sc-body text-sm">
+                  <p className="text-body font-semibold text-ink mb-1">Instruct an independent solicitor</p>
+                  <p className="sc-body">
                     Choose a specialist employment solicitor. Employers standardly provide a capped commercial contribution (typically £350 to £500+ +VAT) toward this legal advice upon completion.
                   </p>
                 </div>
@@ -647,8 +647,8 @@ export default function CompromiseAgreementCalculatorPage() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Submit a factual counter-proposal</p>
-                  <p className="sc-body text-sm">
+                  <p className="text-body font-semibold text-ink mb-1">Submit a factual counter-proposal</p>
+                  <p className="sc-body">
                     Identify procedural flaws, unexpired notice periods, or potential employment claims. Present a realistic counter-offer based on the time required to find new employment.
                   </p>
                 </div>
@@ -656,8 +656,8 @@ export default function CompromiseAgreementCalculatorPage() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Agree non-financial terms</p>
-                  <p className="sc-body text-sm">
+                  <p className="text-body font-semibold text-ink mb-1">Agree non-financial terms</p>
+                  <p className="sc-body">
                     Negotiate non-financial clauses alongside the payout. Ensure you secure an agreed job reference, mutual confidentiality, non-derogatory covenants, and waiver of restrictive covenants where appropriate.
                   </p>
                 </div>

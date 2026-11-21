@@ -378,7 +378,7 @@ export default function RejectSettlementAgreementGuide() {
             </div>
 
             {/* Disclaimer */}
-            <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed">
+            <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed">
               Figures on this page reflect the Employment Rights (Increase of Limits) Order 2026, in force from 6 April 2026. Last reviewed: May 2026. SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement process and does not constitute legal advice.
             </p>
 

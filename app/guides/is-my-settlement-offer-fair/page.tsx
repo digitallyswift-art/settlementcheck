@@ -227,7 +227,7 @@ export default function IsMyOfferFairGuide() {
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-muted mt-3">
+            <p className="text-body text-muted mt-3">
               *Statutory redundancy capped at £22,530 based on 20 years maximum and £751 weekly pay cap (April 2026). See our full analysis on the <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">2026 redundancy pay cap</Link> and calculate your statutory figure with the <Link href="/redundancy-calculator/" className="underline hover:text-ink font-medium">redundancy calculator</Link>.
             </p>
 
@@ -274,7 +274,7 @@ export default function IsMyOfferFairGuide() {
                   <WarningIcon />
                   <div>
                     <p className="font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">
+                    <p className="sc-body">
                       {detail}
                       {i === 2 && (
                         <> See our guide on being <Link href="/guides/pressured-to-sign/" className="text-ink font-medium underline underline-offset-2 hover:text-coral transition-colors">pressured to sign a settlement agreement</Link>.</>
@@ -317,13 +317,13 @@ export default function IsMyOfferFairGuide() {
                   <CheckIcon />
                   <div>
                     <p className="font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
+                    <p className="sc-body">{body}</p>
                   </div>
                 </div>
               ))}
             </div>
             <div className="mt-8 p-4 bg-paper rounded border border-rule">
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 Ready to take the next step? Read our step-by-step tutorial on <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-ink font-semibold underline underline-offset-2 hover:text-coral transition-colors">how to negotiate a settlement agreement</Link> or understand <Link href="/guides/what-happens-if-you-do-not-sign/" className="text-ink font-semibold underline underline-offset-2 hover:text-coral transition-colors">what happens if you do not sign</Link>.
               </p>
             </div>

@@ -24,8 +24,8 @@ const SERIF = "var(--font-serif, Georgia, 'Times New Roman', serif)"
 // ── Slide config ──────────────────────────────────────────────────────────────
 type SlideId = 'firstName' | 'email' | 'otp' | 'postcode' | 'phone' | 'contactTime' | 'consent' | 'success'
 
-// Full slide order when email not pre-verified, prefilled when it is
-const SLIDES_FULL:    SlideId[] = ['firstName', 'email', 'otp', 'postcode', 'phone', 'contactTime', 'consent', 'success']
+// Full slide order without blocking mid-funnel OTP gate
+const SLIDES_FULL:    SlideId[] = ['firstName', 'email', 'postcode', 'phone', 'contactTime', 'consent', 'success']
 const SLIDES_PREFILL: SlideId[] = ['firstName', 'postcode', 'phone', 'contactTime', 'consent', 'success']
 
 interface FormData {
@@ -362,26 +362,27 @@ export default function GetMatchedClient() {
       if (!form.firstName.trim()) { advancingRef.current = false; setFieldError('Please enter your first name'); return }
       advance()
     } else if (currentSlide === 'email') {
-      if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
         advancingRef.current = false; setFieldError('Please enter a valid email address'); return
       }
-      const ok = await sendOtp(form.email)
-      if (ok) advance()
-      else advancingRef.current = false
+      advance()
     } else if (currentSlide === 'postcode') {
       if (!postcodeValid || !form.postcode.trim()) {
         advancingRef.current = false; setFieldError('Please enter a valid UK postcode to continue'); return
       }
       advance()
     } else if (currentSlide === 'phone') {
-      if (!form.phone || form.phone.trim().length < 7) {
-        advancingRef.current = false; setFieldError('Please enter your phone number'); return
+      const cleanedPhone = form.phone.trim().replace(/[\s\-\(\)]/g, '')
+      if (cleanedPhone.length > 0 && cleanedPhone.length < 7) {
+        advancingRef.current = false
+        setFieldError('Please enter a valid UK telephone number or continue by email below')
+        return
       }
       advance()
     } else {
       advancingRef.current = false
     }
-  }, [currentSlide, form, postcodeValid, advance, sendOtp])
+  }, [currentSlide, form, postcodeValid, advance])
 
   // ── Submit ────────────────────────────────────────────────────────────────────
   const submitLead = useCallback(async () => {
@@ -394,13 +395,17 @@ export default function GetMatchedClient() {
       const res = await fetch('/api/lead/', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          firstName:       form.firstName.trim(),
           first_name:      form.firstName.trim(),
-          email:           form.email.trim(),
+          email:           form.email.trim().toLowerCase(),
           phone:           form.phone.trim(),
+          contactTime:     form.contactTime,
           contact_time:    form.contactTime,
           verdict,
+          offerAmount:     offerAmount,
           offer_amount:    offerAmount,
           salary:          salaryAmount,
+          monthsService:   totalMonths,
           months_service:  totalMonths,
           consent:         true,
           gdpr_consent:    true,
@@ -408,18 +413,22 @@ export default function GetMatchedClient() {
           postcode_region: form.postcode_region,
           postcode_lat:    form.postcode_lat,
           postcode_lng:    form.postcode_lng,
+          sourceUrl:       '/get-matched/',
+          email_verified:  prefilled,
         }),
       })
       if (!res.ok) throw new Error()
-      // Fire conversion event (standard GA4 generate_lead + custom lead_submitted)
+      // Fire conversion event (standard GA4 generate_lead, qualify_lead + custom lead_submitted)
       const w = window as any
       if (typeof w.gtag === 'function') {
         w.gtag('event', 'lead_submitted', { event_category: 'employee_lead', verdict })
         w.gtag('event', 'generate_lead', { event_category: 'employee_lead', verdict, currency: 'GBP', value: 150 })
+        w.gtag('event', 'qualify_lead', { event_category: 'employee_lead', verdict, currency: 'GBP', value: 150 })
       }
       if (Array.isArray(w.dataLayer)) {
         w.dataLayer.push({ event: 'lead_submitted', verdict })
         w.dataLayer.push({ event: 'generate_lead', verdict, currency: 'GBP', value: 150 })
+        w.dataLayer.push({ event: 'qualify_lead', verdict, currency: 'GBP', value: 150 })
       }
 
       // Dispatch experiment lead submission telemetry
@@ -555,15 +564,15 @@ export default function GetMatchedClient() {
               {/* ── email ──────────────────────────────────────────────────── */}
               {currentSlide === 'email' && (
                 <div>
-                  <Q>What is your email address?</Q>
-                  <Hint>We&apos;ll send a 6-digit code to verify it. Takes 30 seconds.</Hint>
+                  <Q>What is your personal email address?</Q>
+                  <Hint>Used only to send your solicitor match confirmation. Your employer is never contacted.</Hint>
                   <LineInput
                     inputRef={inputRef} value={form.email} type="email"
                     placeholder="alex@example.com" autoComplete="email"
                     onChange={v => updateField('email', v)} onEnter={handleNext}
                   />
                   {fieldError && <FieldError msg={fieldError} />}
-                  <OkBtn onClick={handleNext} loading={otpSending} />
+                  <OkBtn onClick={handleNext} />
                 </div>
               )}
 
@@ -673,8 +682,8 @@ export default function GetMatchedClient() {
               {/* ── phone ──────────────────────────────────────────────────── */}
               {currentSlide === 'phone' && (
                 <div>
-                  <Q>Best number to reach you?</Q>
-                  <Hint>A solicitor, not an automated system, will call you directly.</Hint>
+                  <Q>Best number to call you on? <span style={{ fontSize: '0.55em', fontWeight: 400, color: C.muted }}>(optional)</span></Q>
+                  <Hint>One SRA-regulated solicitor, never an automated call centre, will call you directly.</Hint>
                   <LineInput
                     inputRef={inputRef} value={form.phone} type="tel"
                     placeholder="07700 900 000" autoComplete="tel"
@@ -682,6 +691,27 @@ export default function GetMatchedClient() {
                   />
                   {fieldError && <FieldError msg={fieldError} />}
                   <OkBtn onClick={handleNext} />
+                  <div style={{ marginTop: 18 }}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        updateField('phone', '')
+                        advance()
+                      }}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        padding: 0,
+                        color: C.muted,
+                        fontSize: 14,
+                        fontFamily: SANS,
+                        textDecoration: 'underline',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Continue by email instead →
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -741,9 +771,9 @@ export default function GetMatchedClient() {
                     {[
                       { label: 'Name',      value: form.firstName },
                       { label: 'Email',     value: form.email },
-                      { label: 'Phone',     value: form.phone },
+                      { label: 'Phone',     value: form.phone.trim() || 'Email preferred' },
                       { label: 'Postcode',  value: form.postcode },
-                      { label: 'Call time', value: form.contactTime },
+                      { label: 'Preferred window', value: form.contactTime },
                     ].map(({ label, value }, i) => (
                       <div key={label} style={{
                         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -845,9 +875,19 @@ export default function GetMatchedClient() {
                       You&apos;re matched.
                     </h1>
                     <p style={{ fontFamily: SANS, fontSize: 17, color: C.muted, lineHeight: 1.7, margin: '0 0 12px' }}>
-                      A specialist employment solicitor will call you on{' '}
-                      <strong style={{ color: C.navy }}>{form.phone}</strong>{' '}
-                      during the {form.contactTime.toLowerCase()}.
+                      {form.phone.trim() ? (
+                        <>
+                          A specialist employment solicitor will call you on{' '}
+                          <strong style={{ color: C.navy }}>{form.phone}</strong>{' '}
+                          during the {form.contactTime.toLowerCase()}.
+                        </>
+                      ) : (
+                        <>
+                          A specialist employment solicitor will contact you at{' '}
+                          <strong style={{ color: C.navy }}>{form.email}</strong>{' '}
+                          during the {form.contactTime.toLowerCase()}.
+                        </>
+                      )}
                     </p>
                     <p style={{ fontFamily: SANS, fontSize: 15, color: C.muted, lineHeight: 1.65, margin: '0 0 32px' }}>
                       Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon agreement completion.

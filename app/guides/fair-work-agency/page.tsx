@@ -112,7 +112,7 @@ export default function FairWorkAgencyGuide() {
             </p>
             <div className="mt-6 rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
-              <p className="text-sm text-ink">
+              <p className="text-body text-ink">
                 The Fair Work Agency is provided for under the Employment Rights Bill 2024-25 but has not yet commenced operations. No launch date has been confirmed. Do not rely on FWA enforcement until statutory commencement orders are issued.
               </p>
             </div>

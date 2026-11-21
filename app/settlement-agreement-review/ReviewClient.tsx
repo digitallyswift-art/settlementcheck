@@ -687,7 +687,7 @@ export default function ReviewClient() {
                         </span>
                         <span className="font-semibold text-ink">{flag.title}</span>
                       </div>
-                      <p className="text-xs sm:text-sm text-ink/90 leading-relaxed m-0">{flag.detail}</p>
+                      <p className="text-body sm:text-body text-ink/90 leading-relaxed m-0">{flag.detail}</p>
                     </div>
                     <span className="text-[11px] text-muted whitespace-nowrap self-end sm:self-auto font-mono">
                       {flag.legislation}
@@ -705,7 +705,7 @@ export default function ReviewClient() {
                   <h3 className="text-xl sm:text-2xl font-serif font-bold text-white m-0">
                     Connect with an Independent SRA-Regulated Employment Solicitor
                   </h3>
-                  <p className="text-xs sm:text-sm text-paper opacity-90 max-w-2xl leading-relaxed m-0">
+                  <p className="text-body sm:text-body text-paper opacity-90 max-w-2xl leading-relaxed m-0">
                     For a settlement agreement to be legally binding, you must receive independent legal advice. Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) paid directly to your solicitor upon completion. Your solicitor will confirm all fee terms, including any abortive or excess costs, before starting work.
                   </p>
                 </div>

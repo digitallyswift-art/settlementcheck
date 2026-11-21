@@ -160,7 +160,7 @@ Important Contract & Privilege Notice: Putting forward unreviewed counter-propos
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-ink">
             ACAS Code 4 &amp; Section 111(2) Limitation Timeline Calculator
           </h2>
-          <p className="text-sm text-muted mt-1 leading-relaxed">
+          <p className="text-body text-muted mt-1 leading-relaxed">
             Input the date you received your draft settlement agreement and your effective date of termination (EDT). The calculator deterministically models the 10-calendar-day ACAS consideration benchmark alongside your statutory tribunal limitation deadline.
           </p>
         </div>
@@ -247,7 +247,7 @@ Important Contract & Privilege Notice: Putting forward unreviewed counter-propos
                     ACAS Code 4 Benchmark: 10 Days
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-ink/90 leading-relaxed">
+                <p className="text-body sm:text-body text-ink/90 leading-relaxed">
                   Your employer has specified a <strong>{parsedEmployerDays}-day deadline</strong> (expiring on{' '}
                   <strong>{isValidOfferDate ? formatDate(employerDeadlineDate) : `${parsedEmployerDays} days`}</strong>).{' '}
                   <strong>ACAS Code of Practice 4 Paragraph 12</strong> establishes that a minimum of{' '}
@@ -274,7 +274,7 @@ Important Contract & Privilege Notice: Putting forward unreviewed counter-propos
                 <span className="font-bold text-base text-[#0B1F3A] block">
                   Compliant Consideration Window ({parsedEmployerDays} Calendar Days Given)
                 </span>
-                <p className="text-xs sm:text-sm text-ink/90 leading-relaxed m-0">
+                <p className="text-body sm:text-body text-ink/90 leading-relaxed m-0">
                   Your employer has provided a {parsedEmployerDays}-day response window, meeting or exceeding the 10-calendar-day ACAS Code 4 guideline. Your deadline expires on{' '}
                   <strong>{isValidOfferDate ? formatDate(employerDeadlineDate) : `${parsedEmployerDays} days`}</strong>.
                 </p>
@@ -378,7 +378,7 @@ Important Contract & Privilege Notice: Putting forward unreviewed counter-propos
               <h3 className="text-base font-serif font-bold text-ink m-0">
                 Intake Agenda for Your Instructed Solicitor
               </h3>
-              <p className="text-xs text-muted mt-0.5 m-0">
+              <p className="text-body text-muted mt-0.5 m-0">
                 A structured, non-prescriptive briefing ready to share with your chosen SRA-regulated employment solicitor.
               </p>
             </div>
@@ -418,7 +418,7 @@ Important Contract & Privilege Notice: Putting forward unreviewed counter-propos
           <h3 className="text-lg font-serif font-bold text-ink">
             Need Independent Legal Advice Before Your Deadline?
           </h3>
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="text-body text-muted leading-relaxed">
             Connect with a specialist SRA-regulated employment solicitor to review your terms, protect your statutory deadlines, and handle discussions under customary employer fee contributions.
           </p>
         </div>

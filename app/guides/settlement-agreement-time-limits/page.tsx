@@ -390,7 +390,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
 
             <div className="p-4 rounded-xl border border-rule bg-paper mb-6">
               <h3 className="font-semibold text-ink text-sm mb-2">How the three-month minus one day rule works</h3>
-              <p className="sc-body text-xs text-muted mb-0 leading-relaxed">
+              <p className="sc-body text-muted mb-0 leading-relaxed">
                 To calculate your deadline, add three calendar months to your termination date. Then subtract one single calendar day. For example, if your contract terminates on 15 June, your statutory deadline expires on 14 September.
               </p>
             </div>
@@ -482,7 +482,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <strong className="text-ink text-sm block mb-1">
                     Privilege Notice for Settlement Discussions
                   </strong>
-                  <p className="text-xs text-muted leading-relaxed m-0">
+                  <p className="text-body text-muted leading-relaxed m-0">
                     Important Privilege Notice: Do not send unreviewed proposals to HR. Unreviewed correspondence can waive legal privilege or compromise your position. Common law Without Prejudice privilege applies only where a genuine dispute exists. Instruct an SRA-regulated solicitor to manage written negotiations securely.
                   </p>
                 </div>
@@ -617,7 +617,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 <strong className="text-base text-ink block mb-1">
                   Calculate your full settlement entitlement
                 </strong>
-                <p className="text-xs text-muted m-0">
+                <p className="text-body text-muted m-0">
                   Compare your offer against statutory redundancy caps, notice pay, and commercial benchmarks.
                 </p>
               </div>
@@ -667,7 +667,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   </span>
                   <h3 className="font-semibold text-ink text-sm">Day A: The Notification Date</h3>
                 </div>
-                <p className="sc-body text-xs text-muted mb-0 pl-7 leading-relaxed">
+                <p className="sc-body text-muted mb-0 pl-7 leading-relaxed">
                   Day A is the calendar day you submit your online Early Conciliation form to ACAS. The limitation clock stops on this day.
                 </p>
               </div>
@@ -678,7 +678,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   </span>
                   <h3 className="font-semibold text-ink text-sm">Day B: The Certificate Date</h3>
                 </div>
-                <p className="sc-body text-xs text-muted mb-0 pl-7 leading-relaxed">
+                <p className="sc-body text-muted mb-0 pl-7 leading-relaxed">
                   Day B is the date ACAS issues your Early Conciliation certificate. Conciliation can last up to six weeks. The days between Day A and Day B do not count toward your three-month limit.
                 </p>
               </div>
@@ -689,7 +689,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   </span>
                   <h3 className="font-semibold text-ink text-sm">The Guaranteed One-Month Safety Buffer</h3>
                 </div>
-                <p className="sc-body text-xs text-muted mb-0 pl-7 leading-relaxed">
+                <p className="sc-body text-muted mb-0 pl-7 leading-relaxed">
                   Under statutory rules, you always have at least one calendar month from Day B to submit an ET1 claim. This applies even if your original limitation deadline has passed.
                 </p>
               </div>
@@ -733,10 +733,10 @@ export default function SettlementAgreementTimeLimitsGuide() {
 
             <div className="p-4 rounded-xl border border-rule bg-white mb-4 shadow-sm">
               <h3 className="font-semibold text-ink text-sm mb-1">What if your employer pays late?</h3>
-              <p className="sc-body text-xs text-muted mb-2 leading-relaxed">
+              <p className="sc-body text-muted mb-2 leading-relaxed">
                 A signed settlement agreement is a binding contract. If your employer misses the agreed date, they commit a breach of contract.
               </p>
-              <p className="sc-body text-xs text-muted mb-0 leading-relaxed">
+              <p className="sc-body text-muted mb-0 leading-relaxed">
                 You can enforce payment through the County Court rather than an employment tribunal. You may also claim statutory interest at 8% under Section 69 of the County Courts Act 1984.
               </p>
             </div>
@@ -778,7 +778,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
             </div>
 
             <h3 className="font-semibold text-ink text-sm mb-3">Vento Injury to Feelings Guidelines (April 2026 9th Addendum)</h3>
-            <p className="sc-body text-xs text-muted mb-4">
+            <p className="sc-body text-muted mb-4">
               For discrimination complaints under the Equality Act 2010, tribunals award injury to feelings under the Vento bands:
             </p>
 
@@ -789,7 +789,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted block mb-1">Lower Band</span>
                   <span className="text-base font-bold font-mono text-ink block mb-1">£1,300 to £12,600</span>
                 </div>
-                <p className="text-xs text-muted m-0 leading-relaxed">
+                <p className="text-body text-muted m-0 leading-relaxed">
                   For isolated or less serious incidents of unlawful discrimination.
                 </p>
               </div>
@@ -798,7 +798,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted block mb-1">Middle Band</span>
                   <span className="text-base font-bold font-mono text-ink block mb-1">£12,600 to £37,700</span>
                 </div>
-                <p className="text-xs text-muted m-0 leading-relaxed">
+                <p className="text-body text-muted m-0 leading-relaxed">
                   For serious cases that do not merit an award in the highest band.
                 </p>
               </div>
@@ -807,7 +807,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted block mb-1">Upper Band</span>
                   <span className="text-base font-bold font-mono text-coral block mb-1">£37,700 to £62,900</span>
                 </div>
-                <p className="text-xs text-muted m-0 leading-relaxed">
+                <p className="text-body text-muted m-0 leading-relaxed">
                   For the most serious and prolonged campaigns of unlawful discrimination.
                 </p>
               </div>
@@ -816,13 +816,13 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted block mb-1">Exceptional Band</span>
                   <span className="text-base font-bold font-mono text-coral block mb-1">£62,900+</span>
                 </div>
-                <p className="text-xs text-muted m-0 leading-relaxed">
+                <p className="text-body text-muted m-0 leading-relaxed">
                   Reserved exclusively for the most egregious and severe discrimination cases.
                 </p>
               </div>
             </div>
 
-            <p className="sc-body mb-0 text-xs text-muted leading-relaxed">
+            <p className="sc-body mb-0 text-muted leading-relaxed">
               Independent legal advice is required under Section 203(3) ERA 1996 for any settlement waiver to be legally valid. In commercial practice, employers standardly provide a capped fee contribution upon completion. An SRA-regulated solicitor will evaluate whether the financial offer reflects these statutory ceilings.
             </p>
           </div>
@@ -852,7 +852,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 </span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-ink text-sm mb-1">Note your termination date and calculate your deadline</h3>
-                  <p className="sc-body text-xs text-muted mb-0 leading-relaxed">
+                  <p className="sc-body text-muted mb-0 leading-relaxed">
                     Identify your Effective Date of Termination. Calculate three calendar months minus one day. Record this date immediately in your calendar.
                   </p>
                 </div>
@@ -865,7 +865,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 </span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-ink text-sm mb-1">Request 10 calendar days under ACAS Code 4</h3>
-                  <p className="sc-body text-xs text-muted mb-0 leading-relaxed">
+                  <p className="sc-body text-muted mb-0 leading-relaxed">
                     Reply calmly in writing. Reference paragraph 12 of ACAS Code of Practice 4. State that you need reasonable time to obtain independent legal advice.
                   </p>
                 </div>
@@ -891,7 +891,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 </span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-ink text-sm mb-1">Check your figures using an independent calculator</h3>
-                  <p className="sc-body text-xs text-muted mb-0 leading-relaxed">
+                  <p className="sc-body text-muted mb-0 leading-relaxed">
                     Verify your statutory redundancy floor, accrued holiday pay, and notice pay. This clarifies whether the settlement sum meets commercial standards.
                   </p>
                 </div>
@@ -904,7 +904,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 </span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-ink text-sm mb-1">Instruct an SRA-regulated solicitor</h3>
-                  <p className="sc-body text-xs text-muted mb-0 leading-relaxed">
+                  <p className="sc-body text-muted mb-0 leading-relaxed">
                     Employers standardly provide a capped fee contribution upon completion (typically £350 to £500+ plus VAT). A specialist solicitor will review the draft and certify the agreement.
                   </p>
                 </div>
@@ -917,7 +917,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 </span>
                 <div className="flex-1">
                   <h3 className="font-semibold text-ink text-sm mb-1">Notify ACAS if your limitation deadline approaches</h3>
-                  <p className="sc-body text-xs text-muted mb-0 leading-relaxed">
+                  <p className="sc-body text-muted mb-0 leading-relaxed">
                     If discussions extend past week eight or nine, submit an ACAS Early Conciliation form. This stops the limitation clock while talks proceed.
                   </p>
                 </div>
@@ -932,7 +932,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
               <h3 className="font-serif text-lg font-bold text-ink mb-2">
                 Need an independent solicitor to review your agreement?
               </h3>
-              <p className="text-xs text-muted max-w-md mx-auto mb-4 leading-relaxed">
+              <p className="text-body text-muted max-w-md mx-auto mb-4 leading-relaxed">
                 Connect with an SRA-regulated employment solicitor from our panel. Employers standardly provide a capped legal fee contribution upon completion.
               </p>
               <div className="mb-4">

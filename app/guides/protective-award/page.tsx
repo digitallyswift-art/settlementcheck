@@ -236,7 +236,7 @@ export default function ProtectiveAwardGuide() {
         <section className="py-10 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-white p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Key rules for protective awards</p>
+              <p className="text-body font-semibold text-ink mb-3">Key rules for protective awards</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'Applies when your employer proposes 20 or more redundancies at one establishment within 90 days.',
@@ -328,7 +328,7 @@ export default function ProtectiveAwardGuide() {
             </p>
             <div className="bg-[#FFF8F6] border border-coral/20 rounded-lg p-5 flex items-start gap-3">
               <AlertIcon />
-              <p className="text-sm text-ink leading-relaxed">
+              <p className="text-body text-ink leading-relaxed">
                 <strong>These changes are not yet in force.</strong> The proposals under the Employment Rights Bill 2024-25 have not commenced. The current law remains active, meaning the maximum protective award is 90 days&apos; pay, and the requirement for redundancies to be at one establishment still applies.
               </p>
             </div>
@@ -365,11 +365,11 @@ export default function ProtectiveAwardGuide() {
               ].map(({ title, points }) => (
                 <div key={title} className="rounded-xl border border-rule overflow-hidden">
                   <div className="bg-ink px-4 py-3">
-                    <p className="text-white text-sm font-medium">{title}</p>
+                    <p className="text-white text-body font-medium">{title}</p>
                   </div>
                   <div className="p-4 bg-paper flex flex-col gap-2">
                     {points.map((point, index) => (
-                      <p key={index} className="sc-body text-sm">{point}</p>
+                      <p key={index} className="sc-body">{point}</p>
                     ))}
                   </div>
                 </div>
@@ -378,8 +378,8 @@ export default function ProtectiveAwardGuide() {
 
             <div className="mt-8 p-6 rounded-2xl bg-paper border border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <p className="text-sm font-bold text-ink mb-1">Calculate your specific protective award</p>
-                <p className="sc-body text-xs text-muted">
+                <p className="text-body font-bold text-ink mb-1">Calculate your specific protective award</p>
+                <p className="sc-body text-muted">
                   Input your exact salary to calculate your 90-day entitlement and compare solvent vs insolvent outcomes under 2026 rules.
                 </p>
               </div>
@@ -428,8 +428,8 @@ export default function ProtectiveAwardGuide() {
                 <li key={n} className="flex gap-4">
                   <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
-                    <p className="text-sm font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
+                    <p className="text-body font-semibold text-ink mb-1">{title}</p>
+                    <p className="sc-body">{body}</p>
                   </div>
                 </li>
               ))}
@@ -452,7 +452,7 @@ export default function ProtectiveAwardGuide() {
             </p>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 If you have been offered a redundancy settlement package, you can <Link href="/protective-award-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">calculate your protective award</Link>, check your entitlements with our <Link href="/redundancy-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">redundancy pay calculator</Link> and <Link href="/unfair-dismissal-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">unfair dismissal calculator</Link>, or <Link href="/calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your complete settlement offer</Link>.
               </p>
             </div>
@@ -554,7 +554,7 @@ export default function ProtectiveAwardGuide() {
         </section>
 
         {/* Disclaimer */}
-        <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
           Disclaimer: SettlementCheck is an independent introduction service and calculator, not a law firm. The information on this page is for general guidance only and does not constitute formal legal counsel. Confirm your specific offer using our free calculator.
         </p>
       </main>

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --text-body: 19px;
+  --text-body-sm: 15px;
+}
+
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
 
@@ -18,7 +23,7 @@
     background-color: #F7F4EE;
     color: #0B1F3A;
     font-family: var(--font-sans), Inter, -apple-system, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 17px;
+    font-size: var(--text-body);
     line-height: 1.65;
   }
 
@@ -78,7 +83,7 @@
   }
 
   .sc-lead {
-    font-size: clamp(17px, 1.8vw, 19px);
+    font-size: clamp(19.5px, 2vw, 21px);
     line-height: 1.6;
     color: #5B6577;
   }
@@ -95,9 +100,9 @@
     margin: 0;
   }
 
-  /* Standard body copy - use instead of text-sm / text-[15px] scattered inline */
+  /* Standard body copy - single universal token controlled by --text-body */
   .sc-body {
-    font-size: 16.5px;
+    font-size: var(--text-body);
     line-height: 1.65;
     color: #5B6577;
   }
@@ -114,7 +119,7 @@
   }
 
   .guide-body {
-    font-size: 17px;
+    font-size: var(--text-body);
     line-height: 1.72;
     color: #5B6577;
   }

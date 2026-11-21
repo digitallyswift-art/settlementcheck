@@ -212,8 +212,8 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                 <li key={title} className="flex items-start gap-3">
                   <CheckIcon />
                   <div>
-                    <p className="text-sm font-semibold text-ink mb-0.5">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
+                    <p className="text-body font-semibold text-ink mb-0.5">{title}</p>
+                    <p className="sc-body">{body}</p>
                   </div>
                 </li>
               ))}
@@ -235,7 +235,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
               Depending on your circumstances, your baseline comprises statutory redundancy pay (subject to eligibility under s.141 ERA 1996 regarding suitable alternative employment), notice pay (subject to absence of summary dismissal for gross misconduct under <em>Boston Deep Sea Fishing v Ansell</em>), and accrued untaken holiday pay. Here is a worked example:
             </p>
             <div className="rounded-xl border border-rule bg-paper p-5 mb-6">
-              <p className="text-sm font-semibold text-ink mb-3">Example: Sarah, age 38, 8 years service, earning £32,000 per year (£615/week)</p>
+              <p className="text-body font-semibold text-ink mb-3">Example: Sarah, age 38, 8 years service, earning £32,000 per year (£615/week)</p>
               <div className="flex flex-col gap-2">
                 {[
                   ['Statutory redundancy', '8 years x 1 week (age 22-40) x £615 = £4,920'],
@@ -249,7 +249,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-muted mt-3">Sarah earns £615/week, below the £751 cap, so her actual salary is used in the redundancy calculation.</p>
+              <p className="text-body text-muted mt-3">Sarah earns £615/week, below the £751 cap, so her actual salary is used in the redundancy calculation.</p>
             </div>
 
             {/* Multiplier table */}
@@ -311,8 +311,8 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                 <div key={title} className="flex gap-4">
                   <CheckIcon />
                   <div>
-                    <p className="font-semibold text-ink text-sm mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
+                    <p className="font-semibold text-ink text-body mb-1">{title}</p>
+                    <p className="sc-body">{body}</p>
                   </div>
                 </div>
               ))}
@@ -353,8 +353,8 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                 <li key={n} className="flex gap-4">
                   <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
-                    <p className="text-sm font-semibold text-ink mb-1">{title}</p>
-                    <p className="sc-body text-sm">{body}</p>
+                    <p className="text-body font-semibold text-ink mb-1">{title}</p>
+                    <p className="sc-body">{body}</p>
                   </div>
                 </li>
               ))}
@@ -395,7 +395,7 @@ export default function WhatIsAFairSettlementAgreementGuide() {
                 </tbody>
               </table>
             </div>
-            <p className="sc-body text-sm text-muted">
+            <p className="sc-body text-muted">
               PILON sits outside the £30,000 tax-free limit entirely. It is taxed as normal salary, with income tax and National Insurance deducted before payment. How a settlement is structured between PILON and other components directly affects your net take-home.
             </p>
           </div>
@@ -431,8 +431,8 @@ export default function WhatIsAFairSettlementAgreementGuide() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Calculate your statutory baseline</p>
-                  <p className="sc-body text-sm">
+                  <p className="text-body font-semibold text-ink mb-1">Calculate your statutory baseline</p>
+                  <p className="sc-body">
                     Use our free{' '}
                     <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
                       Settlement Agreement Calculator
@@ -451,8 +451,8 @@ export default function WhatIsAFairSettlementAgreementGuide() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Identify any additional claim elements</p>
-                  <p className="sc-body text-sm">
+                  <p className="text-body font-semibold text-ink mb-1">Identify any additional claim elements</p>
+                  <p className="sc-body">
                     Ask yourself: was the dismissal process fair? Were there any protected characteristics involved? Did you raise a concern before dismissal? Are there unpaid wages or breached contractual promises? Each "yes" raises your position and supports a higher counter-offer.
                   </p>
                 </div>
@@ -460,8 +460,8 @@ export default function WhatIsAFairSettlementAgreementGuide() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Make a specific, reasoned counter-offer in writing</p>
-                  <p className="sc-body text-sm">
+                  <p className="text-body font-semibold text-ink mb-1">Make a specific, reasoned counter-offer in writing</p>
+                  <p className="sc-body">
                     Do not respond emotionally. State your statutory entitlement, explain the multiplier you are applying and why, and give a specific pound figure. Follow our structured guidance on{' '}
                     <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
                       how to negotiate a settlement agreement
@@ -472,8 +472,8 @@ export default function WhatIsAFairSettlementAgreementGuide() {
               <li className="flex gap-4">
                 <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
                 <div>
-                  <p className="text-sm font-semibold text-ink mb-1">Instruct an independent solicitor before you sign</p>
-                  <p className="sc-body text-sm">
+                  <p className="text-body font-semibold text-ink mb-1">Instruct an independent solicitor before you sign</p>
+                  <p className="sc-body">
                     Your solicitor confirms whether the final figure is fair, ensures the agreement protects your interests, and checks that all valid claims are correctly captured. Remember you have the right to appoint your own solicitor rather than your employer's choice (read{' '}
                     <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
                       do you have to use your employer's solicitor?

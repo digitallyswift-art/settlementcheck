@@ -103,7 +103,7 @@ export default function HomeInsuranceEligibilityClient() {
         <h2 className="text-xl sm:text-2xl font-serif font-bold text-ink">
           Legal Expenses Insurance (LEI) Cover Diagnostic
         </h2>
-        <p className="text-xs sm:text-sm text-muted mt-1 leading-relaxed">
+        <p className="text-body sm:text-body text-muted mt-1 leading-relaxed">
           Select your current employment situation below to see whether home insurance Legal Expenses Insurance applies, and how independent legal advice is funded.
         </p>
       </div>
@@ -195,7 +195,7 @@ export default function HomeInsuranceEligibilityClient() {
         </div>
 
         <div className="space-y-3 text-xs leading-relaxed text-muted">
-          <p className="text-ink text-sm leading-relaxed">{currentResult.explanation}</p>
+          <p className="text-ink text-body leading-relaxed">{currentResult.explanation}</p>
           <div className="p-3 bg-card rounded-lg border border-rule space-y-1">
             <span className="font-semibold text-ink block">How Independent Legal Advice Is Funded:</span>
             <p className="m-0 text-muted">{currentResult.employerContribution}</p>

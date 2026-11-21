@@ -158,7 +158,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Key discrimination settlement facts for 2026</p>
+              <p className="text-body font-semibold text-ink mb-3">Key discrimination settlement facts for 2026</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'Discrimination compensation is completely uncapped under Section 124 of the Equality Act 2010.',
@@ -295,7 +295,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
                     <h3 className="text-base font-semibold text-ink">{band}</h3>
                     <span className="text-sm font-bold text-coral-ink font-mono">{range}</span>
                   </div>
-                  <p className="sc-body text-sm">{description}</p>
+                  <p className="sc-body">{description}</p>
                 </div>
               ))}
             </div>
@@ -326,10 +326,10 @@ export default function DiscriminationSettlementAgreementsGuide() {
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage">Exempt from Tax</span>
                   <h3 className="text-sm font-semibold text-ink">Pre-Termination Injury to Feelings</h3>
                 </div>
-                <p className="sc-body text-sm mb-3">
+                <p className="sc-body mb-3">
                   Under Section 406 of the Income Tax (Earnings and Pensions) Act 2003, compensation for injury to feelings related to discrimination occurring <em>before</em> and distinct from dismissal is 100% tax-free <sup>4</sup>.
                 </p>
-                <p className="sc-body text-sm text-muted">
+                <p className="sc-body text-muted">
                   There is no £30,000 threshold. It is completely exempt from income tax and National Insurance contributions.
                 </p>
               </div>
@@ -339,10 +339,10 @@ export default function DiscriminationSettlementAgreementsGuide() {
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber">£30,000 Cap Applies</span>
                   <h3 className="text-sm font-semibold text-ink">Termination Compensation</h3>
                 </div>
-                <p className="sc-body text-sm mb-3">
+                <p className="sc-body mb-3">
                   Under Section 403 of ITEPA 2003, compensation paid directly for the loss of your employment is tax-free up to £30,000 <sup>5</sup>.
                 </p>
-                <p className="sc-body text-sm text-muted">
+                <p className="sc-body text-muted">
                   Any excess above £30,000 is subject to income tax. Injury to feelings directly connected with the dismissal itself also falls under this £30,000 cap.
                 </p>
               </div>
@@ -350,17 +350,17 @@ export default function DiscriminationSettlementAgreementsGuide() {
 
             <div className="rounded-xl border border-rule bg-paper p-5 mb-6">
               <h3 className="text-sm font-semibold text-ink mb-2">Notice Pay (PILON) Is Always Taxable</h3>
-              <p className="sc-body text-sm mb-2">
+              <p className="sc-body mb-2">
                 Under Section 402D of ITEPA 2003, Payment in Lieu of Notice (PILON) is classified as Post-Employment Notice Pay (PENP) <sup>6</sup>.
               </p>
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 Your employer must deduct income tax and Class 1 National Insurance from all notice pay. It cannot be disguised as tax-free compensation. For a detailed calculation breakdown, consult our guide on <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax treatment</Link>.
               </p>
             </div>
 
             <div className="rounded-xl border border-rule bg-white p-5 flex gap-3">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 Your settlement agreement must explicitly apportion the settlement into distinct sums: notice pay, ex-gratia termination compensation, and pre-termination injury to feelings. Clear wording prevents HMRC from challenging the tax-free status. Read our complete guide to the <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">£30,000 settlement exemption</Link>.
               </p>
             </div>
@@ -439,11 +439,11 @@ export default function DiscriminationSettlementAgreementsGuide() {
             </p>
 
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-2">Employer Legal Fee Contribution</p>
-              <p className="sc-body text-sm mb-2">
+              <p className="text-body font-semibold text-ink mb-2">Employer Legal Fee Contribution</p>
+              <p className="sc-body mb-2">
                 Under Section 203(3) ERA 1996, independent legal advice is a statutory validity condition. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.
               </p>
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 For a standard review within this cap, the contribution covers the solicitor&apos;s fee upon completion. If negotiations require extended work, your solicitor will agree any scope adjustments in advance.
               </p>
             </div>
@@ -486,7 +486,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
                     {step}
                   </span>
                   <h3 className="text-base font-semibold text-ink mb-1">{title}</h3>
-                  <p className="sc-body text-sm">{desc}</p>
+                  <p className="sc-body">{desc}</p>
                 </div>
               ))}
             </div>
@@ -537,7 +537,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
                 >
                   <div>
                     <h3 className="text-sm font-semibold text-ink mb-1">{name}</h3>
-                    <p className="sc-body text-xs text-muted mb-3">{desc}</p>
+                    <p className="sc-body text-muted mb-3">{desc}</p>
                   </div>
                   <span className="text-xs font-semibold text-coral-ink">Visit official site &rarr;</span>
                 </a>
@@ -650,7 +650,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
         </section>
 
         {/* Disclaimer */}
-        <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
           Disclaimer: SettlementCheck is an independent information service and calculator platform, not a law firm. The content on this page is for general information only and does not constitute formal legal counsel. Use our free calculator to evaluate your settlement offer.
         </p>
       </main>

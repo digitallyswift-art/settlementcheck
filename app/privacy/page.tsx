@@ -18,7 +18,7 @@ export default function Privacy() {
       <main className="bg-white py-16">
         <div className="max-w-3xl mx-auto px-4 prose prose-sm prose-gray">
           <h1 className="text-3xl font-black text-gray-900 mb-2 tracking-tight">Privacy Policy</h1>
-          <p className="text-sm text-gray-400 mb-8">Last updated: November 2026</p>
+          <p className="text-body text-gray-400 mb-8">Last updated: November 2026</p>
 
           <Section title="1. Who we are">
             SettlementCheck.co.uk (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is operated by{' '}
@@ -136,7 +136,7 @@ export default function Privacy() {
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-gray-500">
+            <p className="text-body text-gray-500">
               <strong>Consent audit log (UK GDPR Article 7(1)):</strong> When you accept, reject, or update your cookie settings, we record an anonymous consent receipt (random receipt ID, granted categories, policy version, timestamp, and a one-way salted hash of your IP address) in our secure database. We never store raw IP addresses or personal identifiers in this log.
             </p>
           </Section>

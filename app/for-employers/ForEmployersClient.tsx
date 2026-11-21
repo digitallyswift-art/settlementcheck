@@ -226,7 +226,7 @@ ${companyName}`
                       <h2 className="text-xl font-serif font-semibold text-[#0B1F3A]">
                         Workforce Exit Budget Parameters
                       </h2>
-                      <p className="text-xs text-muted mt-0.5">
+                      <p className="text-body text-muted mt-0.5">
                         Adjust variables to calculate statutory redundancy, ex-gratia packages, and tax liabilities.
                       </p>
                     </div>
@@ -424,7 +424,7 @@ ${companyName}`
                     <div className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
                       £{grandTotalCost.toLocaleString()}
                     </div>
-                    <p className="text-xs text-white/70 border-b border-white/10 pb-4 mb-4">
+                    <p className="text-body text-white/70 border-b border-white/10 pb-4 mb-4">
                       Estimated all-inclusive commercial liability across {headcount} exiting {headcount === 1 ? 'employee' : 'employees'}, including statutory redundancy, tax liabilities, and legal sign-off.
                     </p>
 
@@ -492,7 +492,7 @@ ${companyName}`
                       </h3>
                     </div>
 
-                    <p className="text-xs text-muted leading-relaxed mb-3">
+                    <p className="text-body text-muted leading-relaxed mb-3">
                       {isCollective100Plus
                         ? 'Because you are proposing 100 or more redundancies within 90 days, you are legally required to consult with employee representatives for a minimum of 45 days before the first dismissal takes effect, and file Form HR1 with the Redundancy Payments Service.'
                         : isCollective20Plus
@@ -531,7 +531,7 @@ ${companyName}`
                   <h2 className="text-xl font-serif font-semibold text-[#0B1F3A] mb-2">
                     Section 111A ERA 1996 Statutory Protected Conversation Guide
                   </h2>
-                  <p className="text-xs text-muted leading-relaxed mb-6">
+                  <p className="text-body text-muted leading-relaxed mb-6">
                     Section 111A of the Employment Rights Act 1996 allows employers to propose confidential exit terms without an existing dispute. To ensure discussions remain strictly inadmissible in ordinary unfair dismissal claims, your organisation must respect the following statutory boundaries:
                   </p>
 
@@ -564,7 +564,7 @@ ${companyName}`
                       <h3 className="text-lg font-serif font-semibold text-[#0B1F3A]">
                         Formal Section 111A Offer Letter Generator
                       </h3>
-                      <p className="text-xs text-muted">
+                      <p className="text-body text-muted">
                         Generate a standard, legally robust invitation letter citing Section 111A and ACAS Code 4.
                       </p>
                     </div>
@@ -693,7 +693,7 @@ ${companyName}`}
                       <h2 className="text-xl font-serif font-semibold text-[#0B1F3A] mb-2">
                         Centralised Section 203 Solicitor Dispatch for Corporate Exits
                       </h2>
-                      <p className="text-xs text-muted leading-relaxed">
+                      <p className="text-body text-muted leading-relaxed">
                         Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is legally void unless the employee receives independent advice from an SRA-regulated solicitor. SettlementCheck manages this entire pipeline for UK employers:
                       </p>
 
@@ -727,7 +727,7 @@ ${companyName}`}
                       <h3 className="text-xl font-serif font-semibold text-[#0B1F3A] mb-2">
                         Dispatch Request Received
                       </h3>
-                      <p className="text-xs text-muted max-w-md mx-auto mb-6">
+                      <p className="text-body text-muted max-w-md mx-auto mb-6">
                         Thank you, {dispatchName}. Our enterprise legal operations team will contact you within 2 business hours at {dispatchEmail} to finalise your case intake schedule. Reference ID: <code className="font-mono font-bold text-coral">EMP-2026-{Math.floor(100000 + Math.random() * 900000)}</code>.
                       </p>
                       <button
@@ -752,7 +752,7 @@ ${companyName}`}
                         <h3 className="text-lg font-serif font-semibold text-[#0B1F3A]">
                           Request Enterprise Panel Allocation
                         </h3>
-                        <p className="text-xs text-muted">
+                        <p className="text-body text-muted">
                           Connect your HR team with dedicated panel capacity for planned or ongoing redundancies.
                         </p>
                       </div>
@@ -932,7 +932,7 @@ ${companyName}`}
             <FaqAccordion faqs={EMPLOYER_FAQS} />
 
             <div className="mt-12 text-center p-6 bg-paper rounded-xl border border-rule">
-              <p className="text-xs text-muted mb-3">
+              <p className="text-body text-muted mb-3">
                 Need to discuss custom enterprise requirements or multi-site redundancy programs?
               </p>
               <Link

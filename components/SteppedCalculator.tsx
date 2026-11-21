@@ -292,12 +292,15 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     if (scrollRef.current) scrollRef.current.scrollTop = 0
   }, [step])
 
-  // Auto-focus inputs on steps 1–4 (per spec: setTimeout(..., 100))
-  // Steps 5, 6, 7 have no inputs — no auto-focus, no keyboard appears
+  // Auto-focus inputs on steps 2–4 on desktop viewports only.
+  // Never auto-focus on initial mount (step 1) or on mobile viewports (< 768px)
+  // so the mobile OS keyboard does not collide with bottom-docked bars (z-50).
   useEffect(() => {
     if (phase !== 'steps') return
+    if (step === 1) return
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return
     const map: Record<number, React.RefObject<HTMLInputElement | null>> = {
-      1: salaryRef, 2: ageRef, 3: yearsRef, 4: offerRef,
+      2: ageRef, 3: yearsRef, 4: offerRef,
     }
     const ref = map[step]
     if (!ref) return
@@ -307,33 +310,18 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     return () => clearTimeout(t)
   }, [step, phase])
 
-  // Loading animation — full sequence per spec Section 4
-  // t=0:    Copy state 1 visible, progress bar CSS animation begins (0→100% over 4s)
-  // t=1.4s: Copy cycles to state 2 (200ms opacity fade via React key)
-  // t=2.8s: Copy cycles to state 3
-  // t=4.0s: Progress bar reaches 100%, hold 300ms
-  // t=4.3s: "Your results are ready." holdframe begins
-  // t=4.9s: Crossfade starts (opacity 1→0 over 400ms)
-  // t=5.3s: Navigate — minimum total duration: 5.3s (well above 3s spec minimum)
+  // Immediate navigation upon calculation completion (under 180ms transition feedback; no 5.3s artificial delay)
   useEffect(() => {
     if (phase !== 'loading') return
-    setLoadState(1)
-    setProgressComplete(false)
-    setReadyToReveal(false)
-    setFadeOut(false)
+    setLoadState(3)
+    setProgressComplete(true)
+    setReadyToReveal(true)
 
-    const timers = [
-      setTimeout(() => setLoadState(2), 1400),
-      setTimeout(() => setLoadState(3), 2800),
-      setTimeout(() => setProgressComplete(true), 4000),
-      setTimeout(() => setReadyToReveal(true), 4300),
-      setTimeout(() => setFadeOut(true), 4900),
-      setTimeout(() => {
-        if (pendingPayload.current) onCalculateRef.current(pendingPayload.current)
-      }, 5300),
-    ]
+    const t = setTimeout(() => {
+      if (pendingPayload.current) onCalculateRef.current(pendingPayload.current)
+    }, 150)
 
-    return () => timers.forEach(clearTimeout)
+    return () => clearTimeout(t)
   }, [phase])
 
   /* ── Helpers ──────────────────────────────────────────────────── */

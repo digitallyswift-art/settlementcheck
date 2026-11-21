@@ -67,7 +67,7 @@ export function PipExitCalculator() {
       <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1F3A] mb-2">
         PIP Settlement &amp; Exit Valuation Calculator
       </h3>
-      <p className="text-xs sm:text-sm text-[#0B1F3A]/80 mb-2 leading-relaxed">
+      <p className="text-body sm:text-body text-[#0B1F3A]/80 mb-2 leading-relaxed">
         Commercial valuation of employer process costs versus an agreed settlement package under Section 111A.
       </p>
       <InfoPill label="Statutory framework for protected conversations (ERA 1996 s.111A)">

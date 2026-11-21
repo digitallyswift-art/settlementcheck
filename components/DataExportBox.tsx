@@ -67,7 +67,7 @@ export default function DataExportBox({
           <h2 className="text-xl sm:text-2xl font-serif font-bold text-ink">
             {title}
           </h2>
-          <p className="text-sm text-muted leading-relaxed">
+          <p className="text-body text-muted leading-relaxed">
             {description}
           </p>
         </div>
@@ -75,7 +75,7 @@ export default function DataExportBox({
         {/* Source & Licence Badge */}
         <div className="p-3 bg-paper rounded-xl border border-rule text-xs text-muted space-y-1.5 md:min-w-[220px]">
           <span className="font-semibold text-ink block font-serif">Licence &amp; Provenance</span>
-          <p className="text-xs text-muted leading-normal">
+          <p className="text-body text-muted leading-normal">
             Licensed under the{' '}
             <a
               href={licenceUrl}
@@ -105,7 +105,7 @@ export default function DataExportBox({
                 </span>
                 <span className="text-sm font-semibold text-ink">Spreadsheet Format</span>
               </div>
-              <p className="text-xs text-muted mt-1">
+              <p className="text-body text-muted mt-1">
                 Optimised for Microsoft Excel, Google Sheets, Python Pandas, and R analysis.
               </p>
             </div>
@@ -151,7 +151,7 @@ export default function DataExportBox({
                 </span>
                 <span className="text-sm font-semibold text-ink">Structured API Format</span>
               </div>
-              <p className="text-xs text-muted mt-1">
+              <p className="text-body text-muted mt-1">
                 Structured machine-readable feed with comprehensive metadata, schemas, and descriptors.
               </p>
             </div>

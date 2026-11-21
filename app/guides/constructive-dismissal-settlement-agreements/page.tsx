@@ -192,7 +192,7 @@ export default function ConstructiveDismissalGuide() {
         <section className="py-10 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-white p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Key constructive dismissal rules</p>
+              <p className="text-body font-semibold text-ink mb-3">Key constructive dismissal rules</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'You need two years of continuous service to pursue a standard constructive dismissal case.',
@@ -404,11 +404,11 @@ export default function ConstructiveDismissalGuide() {
               ].map(({ title, points }) => (
                 <div key={title} className="rounded-xl border border-rule overflow-hidden">
                   <div className="bg-ink px-4 py-3">
-                    <p className="text-white text-sm font-medium">{title}</p>
+                    <p className="text-white text-body font-medium">{title}</p>
                   </div>
                   <div className="p-4 bg-paper flex flex-col gap-2">
                     {points.map((point, index) => (
-                      <p key={index} className="sc-body text-sm">{point}</p>
+                      <p key={index} className="sc-body">{point}</p>
                     ))}
                   </div>
                 </div>
@@ -435,7 +435,7 @@ export default function ConstructiveDismissalGuide() {
             </p>
             <div className="rounded-xl border border-rule bg-paper p-4 flex gap-3">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 Your solicitor will verify that the agreement covers your needs and is structured correctly. They will check the tax indemnity terms to protect you from unexpected tax bills.
               </p>
             </div>
@@ -497,7 +497,7 @@ export default function ConstructiveDismissalGuide() {
           </div>
         </section>
         {/* Disclaimer */}
-        <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
           Disclaimer: SettlementCheck is an independent introduction service and calculator, not a law firm. The information on this page is for general guidance only and does not constitute formal legal counsel. Confirm your specific offer using our free calculator.
         </p>
       </main>

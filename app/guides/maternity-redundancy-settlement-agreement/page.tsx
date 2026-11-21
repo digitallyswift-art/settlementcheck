@@ -282,20 +282,20 @@ export default function MaternityRedundancySettlementGuide() {
 
             <div className="rounded-xl border border-rule bg-white p-5 mb-6">
               <h3 className="text-base font-semibold text-ink mb-2">Regulation 10 Priority: Absolute Right to Alternative Vacancies</h3>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Under Regulation 10 of the Maternity and Parental Leave etc. Regulations 1999 (MPLR 1999), your employer has a strict duty. If your existing role is at risk of redundancy, your employer must offer you any suitable alternative vacancy.
               </p>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Your employer cannot require you to attend competitive interviews or complete selection assessments. You have first refusal over all other affected employees.
               </p>
-              <p className="sc-body text-sm text-muted">
+              <p className="sc-body text-muted">
                 Failing to offer an existing suitable vacancy makes your dismissal automatically unfair. This protection is enforced under Section 99 of the Employment Rights Act 1996.
               </p>
             </div>
 
             <div className="flex items-start gap-3 p-4 rounded-xl bg-paper border border-rule">
               <InfoIcon />
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 If you suffer a pregnancy loss before 24 weeks, your statutory redundancy protection continues for two weeks after the end of the pregnancy. For pregnancy loss after 24 weeks, you remain entitled to full maternity leave, SMP, and 18 months of redundancy protection.
               </p>
             </div>
@@ -357,31 +357,31 @@ export default function MaternityRedundancySettlementGuide() {
                   <span className="text-sm font-semibold text-ink">Lower Band</span>
                   <span className="text-xs font-mono font-bold text-coral-ink">£1,300 to £12,600</span>
                 </div>
-                <p className="sc-body text-xs text-muted">Isolated comments or minor administrative oversights during pregnancy.</p>
+                <p className="sc-body text-muted">Isolated comments or minor administrative oversights during pregnancy.</p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-paper border-l-4 border-amber">
                 <div className="flex justify-between items-baseline mb-1">
                   <span className="text-sm font-semibold text-ink">Middle Band</span>
                   <span className="text-xs font-mono font-bold text-coral-ink">£12,600 to £37,700</span>
                 </div>
-                <p className="sc-body text-xs text-muted">Maternity redundancy dismissal, sham restructuring, or failure to offer vacancies.</p>
+                <p className="sc-body text-muted">Maternity redundancy dismissal, sham restructuring, or failure to offer vacancies.</p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-paper border-l-4 border-coral">
                 <div className="flex justify-between items-baseline mb-1">
                   <span className="text-sm font-semibold text-ink">Upper Band</span>
                   <span className="text-xs font-mono font-bold text-coral-ink">£37,700 to £62,900</span>
                 </div>
-                <p className="sc-body text-xs text-muted">Sustained campaigns of exclusion, severe distress, or retaliatory victimisation.</p>
+                <p className="sc-body text-muted">Sustained campaigns of exclusion, severe distress, or retaliatory victimisation.</p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-paper border-l-4 border-crimson">
                 <div className="flex justify-between items-baseline mb-1">
                   <span className="text-sm font-semibold text-ink">Exceptional Cases</span>
                   <span className="text-xs font-mono font-bold text-coral-ink">Over £62,900</span>
                 </div>
-                <p className="sc-body text-xs text-muted">Catastrophic career destruction or severe documented psychiatric injury.</p>
+                <p className="sc-body text-muted">Catastrophic career destruction or severe documented psychiatric injury.</p>
               </div>
             </div>
-            <p className="sc-body text-xs text-muted">
+            <p className="sc-body text-muted">
               Most maternity redundancy settlement negotiations benchmark the injury to feelings element against the Middle Band (£12,600 to £37,700).
             </p>
           </div>
@@ -403,10 +403,10 @@ export default function MaternityRedundancySettlementGuide() {
 
             <div className="rounded-xl border border-rule bg-white p-5 mb-6">
               <h3 className="text-base font-semibold text-ink mb-2">How SMP Qualification Operates on Termination</h3>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 You qualify for SMP by working in the 15th week before your expected week of childbirth. You must also meet standard statutory earnings thresholds.
               </p>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Once qualified, your right to all 39 weeks of SMP is locked in. Even if your employment terminates through redundancy or a settlement agreement, your employer must pay the remaining balance.
               </p>
               <ul className="flex flex-col gap-2 text-sm text-ink font-medium mt-3">
@@ -424,8 +424,8 @@ export default function MaternityRedundancySettlementGuide() {
             <div className="p-4 rounded-xl bg-paper border border-rule flex items-start gap-3">
               <AlertIcon />
               <div>
-                <p className="text-sm font-semibold text-ink mb-1">Employers Reclaim SMP from HMRC</p>
-                <p className="sc-body text-xs text-muted">
+                <p className="text-body font-semibold text-ink mb-1">Employers Reclaim SMP from HMRC</p>
+                <p className="sc-body text-muted">
                   Your employer can reclaim 92% of your SMP from HMRC, or 103% if they qualify for Small Employers Relief. Because the government reimburses this cost, there is no justification for an employer to deduct or offset SMP against your redundancy compensation.
                 </p>
               </div>
@@ -450,10 +450,10 @@ export default function MaternityRedundancySettlementGuide() {
                   <h3 className="text-base font-semibold text-ink">1. Statutory Redundancy Pay Baseline</h3>
                   <span className="text-xs font-mono font-bold text-coral-ink">Capped at £751/week</span>
                 </div>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Calculated based on your age, length of service, and weekly pay up to the 2026 statutory cap of £751 per week (SI 2026/310). This amount forms the calculated statutory baseline (subject to eligibility under Section 141 ERA 1996).
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   Under Section 403 of ITEPA 2003, statutory redundancy pay is 100% tax-free.
                 </p>
               </div>
@@ -463,10 +463,10 @@ export default function MaternityRedundancySettlementGuide() {
                   <h3 className="text-base font-semibold text-ink">2. Ring-Fenced Statutory Maternity Pay</h3>
                   <span className="text-xs font-mono font-bold text-coral-ink">All Remaining Weeks</span>
                 </div>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   All remaining weeks of your 39-week SMP entitlement. This cannot be absorbed into termination compensation. It is paid as a distinct statutory line item subject to PAYE and National Insurance.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   Your employer must continue paying this via monthly payroll or as an upfront lump sum.
                 </p>
               </div>
@@ -476,10 +476,10 @@ export default function MaternityRedundancySettlementGuide() {
                   <h3 className="text-base font-semibold text-ink">3. Notice Pay (PILON / PENP)</h3>
                   <span className="text-xs font-mono font-bold text-coral-ink">Contractual Notice</span>
                 </div>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Payment in Lieu of Notice (PILON) based on your full normal contractual salary, not reduced maternity pay. Under Section 402D of ITEPA 2003, notice pay is taxable under PAYE as Post-Employment Notice Pay.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   You should also receive accrued, untaken annual leave paid in full.
                 </p>
               </div>
@@ -489,10 +489,10 @@ export default function MaternityRedundancySettlementGuide() {
                   <h3 className="text-base font-semibold text-ink">4. Ex-Gratia Compensation &amp; Discrimination Premium</h3>
                   <span className="text-xs font-mono font-bold text-coral-ink">Negotiated Sum</span>
                 </div>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   This represents the true incentive for signing the agreement. It compensates you for loss of office and waiving your uncapped discrimination and automatically unfair dismissal claims.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   Often negotiated between 3 and 9 months of gross salary, plus an injury to feelings sum assessed under the Vento bands.
                 </p>
               </div>
@@ -523,13 +523,13 @@ export default function MaternityRedundancySettlementGuide() {
 
             <div className="rounded-xl border border-rule bg-paper p-5 mb-6">
               <h3 className="text-sm font-semibold text-ink uppercase tracking-wider mb-2">The Dispute Scenario</h3>
-              <p className="sc-body text-sm mb-2">
+              <p className="sc-body mb-2">
                 Four months into her 52-week maternity leave (week 17 of maternity leave), Sarah is informed of a departmental restructuring. Her employer claims her role is redundant.
               </p>
-              <p className="sc-body text-sm mb-2">
+              <p className="sc-body mb-2">
                 An open Product Owner vacancy exists in another division. Under Regulation 10, Sarah is entitled to be offered that role automatically without interview. Her employer ignores Regulation 10 and invites her to an off-the-record discussion.
               </p>
-              <p className="sc-body text-sm">
+              <p className="sc-body">
                 Her employer offers statutory redundancy pay plus 1 month notice, attempting to extinguish her remaining 22 weeks of Statutory Maternity Pay.
               </p>
             </div>
@@ -567,13 +567,13 @@ export default function MaternityRedundancySettlementGuide() {
 
             <div className="p-5 rounded-xl border border-rule bg-paper">
               <h3 className="text-sm font-semibold text-ink mb-2">Key Outcome &amp; Takeaways</h3>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 By instructing an independent SRA-regulated solicitor, Sarah challenged her employer on the Regulation 10 breach, uncapped discrimination exposure, and invalid SMP waiver.
               </p>
-              <p className="sc-body text-sm mb-3">
+              <p className="sc-body mb-3">
                 Her final settlement increased from £9,337 to £62,117.96. Furthermore, £45,000 of the final settlement was structured completely tax-free (£30,000 under s.403 and £15,000 under s.406).
               </p>
-              <p className="sc-body text-sm text-muted">
+              <p className="sc-body text-muted">
                 Her employer paid the £1,000 legal fee contribution directly to her solicitor under Section 203(3). Sarah paid nothing out of pocket for her legal representation.
               </p>
             </div>
@@ -597,10 +597,10 @@ export default function MaternityRedundancySettlementGuide() {
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage">Tax-Free</span>
                   <h3 className="text-sm font-semibold text-ink">£30,000 Exemption (s.403)</h3>
                 </div>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Under Section 403 of ITEPA 2003, genuine compensation for loss of employment and statutory redundancy pay are tax-free up to £30,000.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   Any ex-gratia compensation exceeding £30,000 is subject to income tax at your marginal rate.
                 </p>
               </div>
@@ -610,10 +610,10 @@ export default function MaternityRedundancySettlementGuide() {
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage">100% Tax-Free</span>
                   <h3 className="text-sm font-semibold text-ink">Injury to Feelings (s.406)</h3>
                 </div>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Under Section 406 of ITEPA 2003, compensation for injury to feelings related to discrimination occurring before termination is completely tax-free.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   This sum sits outside the standard £30,000 limit with no ceiling on its tax exemption.
                 </p>
               </div>
@@ -623,10 +623,10 @@ export default function MaternityRedundancySettlementGuide() {
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber">Taxable as Earnings</span>
                   <h3 className="text-sm font-semibold text-ink">Notice Pay (PENP s.402D)</h3>
                 </div>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   Payment in Lieu of Notice is classified as Post-Employment Notice Pay. It must be taxed via PAYE with normal income tax and National Insurance deductions.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   Notice pay cannot be disguised as tax-free compensation.
                 </p>
               </div>
@@ -636,16 +636,16 @@ export default function MaternityRedundancySettlementGuide() {
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber">Taxable as Statutory Pay</span>
                   <h3 className="text-sm font-semibold text-ink">Statutory Maternity Pay</h3>
                 </div>
-                <p className="sc-body text-sm mb-2">
+                <p className="sc-body mb-2">
                   SMP is statutory remuneration, not compensation for loss of office. It is subject to income tax and National Insurance deductions as normal.
                 </p>
-                <p className="sc-body text-xs text-muted">
+                <p className="sc-body text-muted">
                   It must be paid through payroll alongside standard RTI reporting to HMRC.
                 </p>
               </div>
             </div>
 
-            <p className="sc-body text-sm">
+            <p className="sc-body">
               For an in-depth breakdown of tax calculations, explore our guide on the <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">tax-free £30,000 settlement exemption</Link> and our review of <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax rules</Link>.
             </p>
           </div>
@@ -724,7 +724,7 @@ export default function MaternityRedundancySettlementGuide() {
               </ul>
             </div>
 
-            <p className="sc-body text-sm">
+            <p className="sc-body">
               Learn more about selecting the right legal representative in our guide to <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-ink">employer-recommended solicitors versus independent advisers</Link>.
             </p>
           </div>
@@ -770,7 +770,7 @@ export default function MaternityRedundancySettlementGuide() {
                 >
                   <div>
                     <h3 className="text-sm font-semibold text-ink mb-1">{name}</h3>
-                    <p className="sc-body text-xs text-muted mb-3">{desc}</p>
+                    <p className="sc-body text-muted mb-3">{desc}</p>
                   </div>
                   <span className="text-xs font-semibold text-coral-ink">Visit official site &rarr;</span>
                 </a>
@@ -906,7 +906,7 @@ export default function MaternityRedundancySettlementGuide() {
         </section>
 
         {/* SRA Regulatory Boundary & Disclaimer */}
-        <p className="text-xs text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
           Disclaimer: SettlementCheck is an independent information service and calculator platform, not a law firm. The content on this page is for general information only and does not constitute formal legal advice. Independent legal advice on settlement agreements is reserved for instructed SRA-regulated solicitors. Use our free calculator to evaluate your settlement offer.
         </p>
       </main>

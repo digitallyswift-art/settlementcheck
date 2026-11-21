@@ -368,7 +368,7 @@ export default function EmployerRecommendedSolicitor() {
               <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
                 Find out where your offer stands
               </h2>
-              <p className="text-white/70 text-sm leading-relaxed mb-6">
+              <p className="text-white/70 text-body leading-relaxed mb-6">
                 Free calculator. Vetted solicitor matched within 24 hours. Standard employer fee contributions apply upon completion.
               </p>
               <Link href="/calculator/" className="btn-accent">

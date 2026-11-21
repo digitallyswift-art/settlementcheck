@@ -202,7 +202,7 @@ export default function CanEmployerWithdrawSettlementGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-sm font-semibold text-ink mb-3">Six critical facts every employee must know</p>
+              <p className="text-body font-semibold text-ink mb-3">Six critical facts every employee must know</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'A settlement offer is not legally binding until both parties sign and an independent solicitor signs the statutory certificate.',
@@ -282,15 +282,15 @@ export default function CanEmployerWithdrawSettlementGuide() {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-paper">
                   <strong className="text-ink block mb-1">Step 1: The Initial Offer</strong>
-                  <p className="text-muted text-xs m-0">Your employer offers two months of gross salary (£8,000) as a tax-free ex-gratia payment.</p>
+                  <p className="text-muted text-body m-0">Your employer offers two months of gross salary (£8,000) as a tax-free ex-gratia payment.</p>
                 </div>
                 <div className="p-3 rounded bg-paper">
                   <strong className="text-ink block mb-1">Step 2: The Direct Counter-Offer</strong>
-                  <p className="text-muted text-xs m-0">You reply in writing: &quot;I reject your offer of £8,000. I require £16,000 to sign the agreement.&quot;</p>
+                  <p className="text-muted text-body m-0">You reply in writing: &quot;I reject your offer of £8,000. I require £16,000 to sign the agreement.&quot;</p>
                 </div>
                 <div className="p-3 rounded bg-[#FBF0EE] border border-[#F3C4BC]">
                   <strong className="text-[#A8341F] block mb-1">Step 3: The Legal Consequence</strong>
-                  <p className="text-[#A8341F] text-xs m-0">Under contract law, your counter-proposal legally rejected the £8,000 offer. If your employer says no to £16,000, you cannot automatically demand the £8,000 back unless your employer agrees to put it back on the table.</p>
+                  <p className="text-[#A8341F] text-body m-0">Under contract law, your counter-proposal legally rejected the £8,000 offer. If your employer says no to £16,000, you cannot automatically demand the £8,000 back unless your employer agrees to put it back on the table.</p>
                 </div>
               </div>
             </div>
@@ -311,28 +311,28 @@ export default function CanEmployerWithdrawSettlementGuide() {
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-2">1. Use a Request for Clarification instead of a formal rejection</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   Under contract law (the rule in <em>Stevenson v McLean</em>), asking a question or requesting clarification does not reject the original offer. Instead of saying &quot;I will not accept £10,000&quot;, you ask: &quot;Could you clarify how the company calculated the compensation figure, given that statutory notice pay and accrued holiday total £6,500?&quot; This keeps the offer alive while opening the door for improvement.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-2">2. Channel correspondence through your instructed solicitor (Privilege Notice)</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position. Under <em>Framlington Group v Barnetson</em>, common law Without Prejudice privilege applies only where a genuine legal dispute exists, and Section 111A ERA 1996 applies solely to ordinary unfair dismissal claims.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-2">3. Let your independent solicitor negotiate on your behalf</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   Employers expect solicitors to negotiate. When an SRA-regulated solicitor contacts your employer, they explicitly state that the baseline offer is noted while setting out objective statutory arguments for an increase. This provides a professional buffer and protects you from personal friction.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-2">4. Build your case around statutory employment law facts</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   Base your counter-proposal on objective facts. Under the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310), the statutory redundancy weekly pay cap is £751 in Great Britain (£783 in Northern Ireland). Pointing out statutory floors, notice pay entitlements, and unexpired bonus periods justifies higher compensation without sounding combative.
                 </p>
               </div>
@@ -351,7 +351,7 @@ export default function CanEmployerWithdrawSettlementGuide() {
                 <strong className="text-base text-ink block mb-1">
                   Check if your settlement offer is fair
                 </strong>
-                <p className="text-xs text-muted m-0">
+                <p className="text-body text-muted m-0">
                   Calculate statutory redundancy floors, notice pay, and commercial negotiation benchmarks in 60 seconds.
                 </p>
               </div>
@@ -439,21 +439,21 @@ export default function CanEmployerWithdrawSettlementGuide() {
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">Scenario A: Normal employment continues</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   If there was no underlying disciplinary or redundancy situation, you remain employed on your normal terms and conditions. Your employer must continue to pay your contractual salary and benefits. In reality, working together after a failed exit negotiation can be awkward, which is why employers usually prefer to re-engage in settlement talks.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">Scenario B: The employer resumes formal workplace procedures</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   If the settlement offer arose during a redundancy consultation, disciplinary investigation, or Performance Improvement Plan (PIP), the company must now follow full statutory procedures. Under ACAS Code 1, they must hold formal hearings, allow you to be accompanied by a trade union representative or colleague, and provide a right of appeal. Any procedural shortcut risks an unfair dismissal finding at an employment tribunal.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">Scenario C: The employer dismisses you</h3>
-                <p className="sc-body text-xs text-muted mb-0">
+                <p className="sc-body text-muted mb-0">
                   If your employer proceeds to dismiss you, they must still pay your contractual notice pay or statutory notice pay, whichever is greater. If you have at least two years of continuous service under Section 108 of the Employment Rights Act 1996, you can challenge the fairness of that dismissal in an employment tribunal.
                 </p>
               </div>

@@ -204,7 +204,7 @@ export default function AcasStatutoryTimelinePage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 1. The ACAS Code of Practice 4 Framework
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 The Advisory, Conciliation and Arbitration Service (ACAS) issued the statutory{' '}
                 <em>Code of Practice on Settlement Agreements (Code 4)</em> under Section 199 of the Trade Union and Labour Relations (Consolidation) Act 1992. While a failure to observe the Code does not of itself render an employer liable to proceedings, Employment Tribunals are required by Section 207 of the 1992 Act to take its provisions into account when assessing whether parties acted reasonably.
               </p>
@@ -222,7 +222,7 @@ export default function AcasStatutoryTimelinePage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 2. Section 111A Pre-Termination Confidentiality vs Section 203 Waiver Validity
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 A common source of confusion in UK employment exits is the distinction between Section 111A confidentiality and Section 203 statutory waiver validity:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
@@ -255,10 +255,10 @@ export default function AcasStatutoryTimelinePage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 3. The 3-Month-Less-One-Day Limitation Formula (s.111(2) ERA 1996)
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Under Section 111(2) of the Employment Rights Act 1996, an Employment Tribunal cannot hear an unfair dismissal claim unless the claim (or ACAS Early Conciliation notification) is presented before the end of the period of three months beginning with the Effective Date of Termination (EDT).
               </p>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Under English statutory case law (<em>Hammond v Haigh Castle &amp; Co Ltd</em>), &quot;three months beginning with the EDT&quot; means the limitation date expires on the day before the corresponding numerical date three months later:
               </p>
               <div className="overflow-x-auto">
@@ -300,7 +300,7 @@ export default function AcasStatutoryTimelinePage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 4. The ACAS Early Conciliation Clock-Stop Mechanism (s.207B ERA 1996)
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Before you can submit a formal ET1 claim to an Employment Tribunal, you must notify ACAS under Section 18A of the Employment Tribunals Act 1996. Lodging this notification triggers the statutory &quot;clock-stop&quot; rules set out in Section 207B of the ERA 1996:
               </p>
               <ul className="text-xs text-muted space-y-2 list-disc pl-5">

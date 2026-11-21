@@ -69,7 +69,7 @@ export function PenpCalculator() {
       <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1F3A] mb-2">
         Post-Employment Notice Pay (PENP) Calculator
       </h3>
-      <p className="text-xs sm:text-sm text-[#0B1F3A]/80 mb-2 leading-relaxed">
+      <p className="text-body sm:text-body text-[#0B1F3A]/80 mb-2 leading-relaxed">
         Statutory partitioning of termination payments into 100% taxable notice earnings (PENP) versus genuine tax-exempt ex-gratia compensation under Section 403.
       </p>
 

@@ -191,10 +191,10 @@ export default function HomeInsuranceLegalCoverPage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 1. The Shock of the Insurer Rejection
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 When presented with a formal settlement agreement, many UK employees remember that their home contents or buildings insurance policy includes an add-on called &quot;Family Legal Protection&quot; or &quot;Legal Expenses Insurance&quot; (LEI).
               </p>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Employees contact their insurer (such as DAS, ARAG, Arc Legal, Aviva, Direct Line, or Churchill) expecting them to appoint a solicitor to sign off the agreement. Within 48 hours, they receive a formal rejection letter stating that the policy does not cover the matter because there is no &quot;dispute with reasonable prospects of success.&quot;
               </p>
               <div className="p-4 bg-paper rounded-xl border border-rule text-xs space-y-1.5 text-muted">
@@ -211,7 +211,7 @@ export default function HomeInsuranceLegalCoverPage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 2. Why LEI Policies Exclude Pre-Termination Settlement Agreements
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Legal Expenses Insurance is an indemnity product engineered to fund contentious courtroom or tribunal litigation. Understanding why it excludes voluntary settlement agreements comes down to two legal concepts:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
@@ -238,10 +238,10 @@ export default function HomeInsuranceLegalCoverPage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 3. The Employer Legal Fee Contribution Explained
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Under Section 203(3) of the Employment Rights Act 1996, an employee cannot legally waive their statutory employment rights without first receiving advice from an independent relevant adviser - specifically, an SRA-regulated solicitor.
               </p>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Because an unadvised agreement is legally void and leaves the employer vulnerable to immediate Employment Tribunal claims, UK employers standardly include a dedicated legal fee clause in the settlement agreement:
               </p>
               <div className="overflow-x-auto">
@@ -281,7 +281,7 @@ export default function HomeInsuranceLegalCoverPage() {
               <h2 className="text-2xl font-serif font-bold text-ink">
                 4. Freedom of Solicitor Choice (Regulation 6)
               </h2>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 If your negotiations do collapse and you find yourself in an active tribunal dispute where your home insurance LEI policy does grant indemnity funding, remember your statutory rights regarding solicitor representation:
               </p>
               <div className="p-4 bg-paper rounded-xl border border-rule text-xs space-y-2 text-muted leading-relaxed">

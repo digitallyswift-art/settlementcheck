@@ -248,7 +248,7 @@ export default function HmrctaxReturnDeclarationGuide() {
                 <h3 className="font-sans text-sm font-bold text-ink uppercase tracking-wide">
                   Box 5: Lump sums or other benefits up to £30,000
                 </h3>
-                <p className="text-sm text-muted mt-1 leading-relaxed">
+                <p className="text-body text-muted mt-1 leading-relaxed">
                   Enter the genuine compensation amount that qualifies for the £30,000 exemption under Section 403 of ITEPA 2003. This includes statutory redundancy pay, enhanced severance, and non-contractual ex-gratia sums. If your total compensation was £25,000, enter £25,000 here.
                 </p>
               </div>
@@ -257,7 +257,7 @@ export default function HmrctaxReturnDeclarationGuide() {
                 <h3 className="font-sans text-sm font-bold text-ink uppercase tracking-wide">
                   Box 9: Compensation and lump sums exceeding £30,000
                 </h3>
-                <p className="text-sm text-muted mt-1 leading-relaxed">
+                <p className="text-body text-muted mt-1 leading-relaxed">
                   If your total qualifying compensation was £50,000, the first £30,000 is exempt (Box 5) and the remaining £20,000 is entered in Box 9. This amount is subject to income tax at your marginal rate (20%, 40%, or 45%) but remains free of employee National Insurance.
                 </p>
               </div>
@@ -266,7 +266,7 @@ export default function HmrctaxReturnDeclarationGuide() {
                 <h3 className="font-sans text-sm font-bold text-ink uppercase tracking-wide">
                   Box 10: Tax taken off box 9
                 </h3>
-                <p className="text-sm text-muted mt-1 leading-relaxed">
+                <p className="text-body text-muted mt-1 leading-relaxed">
                   Record the PAYE tax already deducted by your employer on the payment entered in Box 9. Employers typically apply an emergency tax code or 0T code. Recording this prevents double taxation.
                 </p>
               </div>

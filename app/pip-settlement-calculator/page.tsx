@@ -161,10 +161,10 @@ export default function PipSettlementCalculatorPage() {
           <h2 className="text-2xl font-serif font-bold text-[#0B1F3A]">
             Why UK Employers Offer Settlement Agreements During a PIP
           </h2>
-          <p className="text-sm leading-relaxed text-[#0B1F3A]/85">
+          <p className="text-body leading-relaxed text-[#0B1F3A]/85">
             A Performance Improvement Plan (PIP) is frequently used by HR departments not to rehabilitate performance, but to build a documentary trail to justify a capability dismissal. However, executing a legally robust capability process under the <strong>Acas Code of Practice 1 on Disciplinary and Grievance Procedures</strong> takes 60 to 90 days, demands substantial senior management hours, and exposes the employer to costly Employment Tribunal litigation under Section 98 of the Employment Rights Act 1996.
           </p>
-          <p className="text-sm leading-relaxed text-[#0B1F3A]/85">
+          <p className="text-body leading-relaxed text-[#0B1F3A]/85">
             Under <strong>Section 111A of the Employment Rights Act 1996</strong>, employers can initiate confidential pre-termination negotiations (a &quot;protected conversation&quot;) to propose an agreed settlement exit. By calculating what the company saves in salary, management overhead, and tribunal risk, employees gain strong standing to negotiate fair ex-gratia compensation and full legal fee coverage.
           </p>
 

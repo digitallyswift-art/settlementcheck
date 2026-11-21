@@ -280,7 +280,7 @@ export default function StatutoryRatesHistoryClient() {
               </table>
             </div>
 
-            <p className="text-xs text-muted leading-relaxed">
+            <p className="text-body text-muted leading-relaxed">
               * Note on Unfair Dismissal Compensatory Award: From 29 July 2013 onwards, under section 124(1ZA) of the Employment Rights Act 1996, the compensatory award is capped at the lower of the statutory ceiling shown above or 52 weeks of the claimant&apos;s gross pay. Caps apply strictly to terminations occurring on or after the specified effective date.
             </p>
           </div>
@@ -291,7 +291,7 @@ export default function StatutoryRatesHistoryClient() {
           <div className="space-y-6">
             <div className="bg-card p-6 rounded-xl border border-rule space-y-6">
               <h3 className="text-xl font-serif font-semibold text-ink">Historical Uplift & Growth Comparator</h3>
-              <p className="text-sm text-muted">
+              <p className="text-body text-muted">
                 Compare statutory employment limits between any two years to evaluate historical compensation growth and the legal basis for claims at different effective termination dates.
               </p>
 
@@ -380,7 +380,7 @@ export default function StatutoryRatesHistoryClient() {
           <div className="space-y-6">
             <div className="bg-card p-6 rounded-xl border border-rule space-y-4">
               <h3 className="text-xl font-serif font-semibold text-ink">Vento Bands for Injury to Feelings (2002 to 2026/27)</h3>
-              <p className="text-sm text-muted leading-relaxed">
+              <p className="text-body text-muted leading-relaxed">
                 Under the Equality Act 2010 and the Employment Tribunal Presidential Guidance (originally established in <em>Vento v Chief Constable of West Yorkshire Police [2002]</em>), compensation for injury to feelings in discrimination, harassment, and whistleblowing detriment claims is categorized into three primary bands.
               </p>
 
@@ -436,7 +436,7 @@ export default function StatutoryRatesHistoryClient() {
               <div className="space-y-2">
                 <span className="text-xs font-semibold uppercase tracking-wider text-amber">Economic Analysis & Fiscal Drag</span>
                 <h3 className="text-2xl font-serif font-semibold text-ink">The Frozen £30,000 Exemption (ITEPA 2003 s.403)</h3>
-                <p className="text-sm text-muted leading-relaxed">
+                <p className="text-body text-muted leading-relaxed">
                   The statutory £30,000 tax-free exemption threshold for termination payments was introduced in the Finance Act 1988 (s.74, amending ICTA 1970 s.188 / ICTA 1988 s.588, now codified in ITEPA 2003 s.403) under Chancellor Nigel Lawson. Unlike redundancy weekly pay caps which are uprated annually by statutory instrument, the £30,000 threshold has remained frozen for nearly 40 years.
                 </p>
               </div>
@@ -446,14 +446,14 @@ export default function StatutoryRatesHistoryClient() {
                 <div className="space-y-2">
                   <span className="text-xs uppercase tracking-wider font-semibold text-muted">Current Statutory Exemption</span>
                   <div className="text-4xl font-serif font-bold text-ink">£30,000</div>
-                  <p className="text-xs text-muted">
+                  <p className="text-body text-muted">
                     Unchanged since 1988. Any termination payment above this threshold is subject to income tax at your marginal rate (20%, 40%, or 45%) plus employer Class 1A NICs at 15.0%.
                   </p>
                 </div>
                 <div className="space-y-2">
                   <span className="text-xs uppercase tracking-wider font-semibold text-coral">CPI Inflation Adjusted (2026)</span>
                   <div className="text-4xl font-serif font-bold text-coral">£92,450+</div>
-                  <p className="text-xs text-muted">
+                  <p className="text-body text-muted">
                     If indexed to the UK Consumer Prices Index (CPI) since 1988, an employee could walk away with over £92,400 completely free of income tax.
                   </p>
                 </div>
@@ -530,10 +530,10 @@ export default function StatutoryRatesHistoryClient() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-card p-6 sm:p-8 rounded-xl border border-rule">
         <div className="space-y-4">
           <h2 className="text-xl font-serif font-semibold text-ink">Effective Date of Termination (EDT) Rules</h2>
-          <p className="text-sm text-muted leading-relaxed">
+          <p className="text-body text-muted leading-relaxed">
             Statutory caps are strictly governed by the employee&apos;s Effective Date of Termination (EDT). If dismissal takes effect on or after 6 April 2026, the 2026/27 caps (£751/week and £123,543 compensatory ceiling) apply automatically under SI 2026/310.
           </p>
-          <p className="text-sm text-muted leading-relaxed">
+          <p className="text-body text-muted leading-relaxed">
             If dismissal occurred on or before 5 April 2026, the 2025/26 caps (£719/week and £118,223 ceiling) govern the claim, even if the tribunal hearing or settlement execution occurs months later.
           </p>
           <div className="pt-2">
@@ -548,10 +548,10 @@ export default function StatutoryRatesHistoryClient() {
 
         <div className="space-y-4">
           <h2 className="text-xl font-serif font-semibold text-ink">Section 203(3) Independent Legal Advice Requirement</h2>
-          <p className="text-sm text-muted leading-relaxed">
+          <p className="text-body text-muted leading-relaxed">
             Under Section 203(3) of the Employment Rights Act 1996, an employee cannot waive statutory employment rights unless they have received independent legal advice from a qualified, insured relevant adviser (such as an SRA-regulated solicitor).
           </p>
-          <p className="text-sm text-muted leading-relaxed">
+          <p className="text-body text-muted leading-relaxed">
             To ensure the agreement is legally binding, employers standardly pay a capped contribution toward the employee&apos;s legal fees (typically £350 to £500+ VAT for a standard sign-off, or higher for complex negotiations) directly to the solicitor upon completion of the agreement. Abortive fees or advice exceeding the cap remain subject to the instructed solicitor&apos;s engagement terms.
           </p>
           <div className="pt-2">

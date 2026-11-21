@@ -68,7 +68,7 @@ export default async function DynamicWorkedExample({
               Notice Pay (PILON)
             </span>
             <div className="text-xl font-bold text-[#0B1F3A]">£{data.noticePayPilon.toLocaleString('en-GB')}</div>
-            <p className="text-xs text-[#0B1F3A]/60 mt-1">Taxable General Earnings (s.402D ITEPA)</p>
+            <p className="text-body text-[#0B1F3A]/60 mt-1">Taxable General Earnings (s.402D ITEPA)</p>
           </div>
 
           <div className="p-4 rounded-2xl border border-[#0B1F3A]/10 bg-white">
@@ -76,7 +76,7 @@ export default async function DynamicWorkedExample({
               Ex-Gratia Sum
             </span>
             <div className="text-xl font-bold text-[#0B1F3A]">£{data.exGratiaCompensation.toLocaleString('en-GB')}</div>
-            <p className="text-xs text-[#0B1F3A]/60 mt-1">100% Tax-Free (s.403 ITEPA exemption)</p>
+            <p className="text-body text-[#0B1F3A]/60 mt-1">100% Tax-Free (s.403 ITEPA exemption)</p>
           </div>
 
           <div className="p-4 rounded-2xl border border-[#D9603B]/20 bg-[#D9603B]/5">
@@ -84,7 +84,7 @@ export default async function DynamicWorkedExample({
               Total Package
             </span>
             <div className="text-xl font-bold text-[#D9603B]">£{data.totalSettlementOffer.toLocaleString('en-GB')}</div>
-            <p className="text-xs text-[#0B1F3A]/70 mt-1">Est. Net Take-Home: £{data.estimatedNetTakeHome.toLocaleString('en-GB')}</p>
+            <p className="text-body text-[#0B1F3A]/70 mt-1">Est. Net Take-Home: £{data.estimatedNetTakeHome.toLocaleString('en-GB')}</p>
           </div>
         </div>
 

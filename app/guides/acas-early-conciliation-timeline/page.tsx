@@ -261,21 +261,21 @@ export default function AcasEarlyConciliationTimelineGuide() {
                 <span className="w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center shrink-0">1</span>
                 <div>
                   <strong className="text-ink text-sm">Day A (Contact Date):</strong>
-                  <p className="text-xs text-muted mt-0.5">The calendar day you submit your online Early Conciliation form to ACAS. The limitation clock stops immediately.</p>
+                  <p className="text-body text-muted mt-0.5">The calendar day you submit your online Early Conciliation form to ACAS. The limitation clock stops immediately.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center shrink-0">2</span>
                 <div>
                   <strong className="text-ink text-sm">Conciliation Window:</strong>
-                  <p className="text-xs text-muted mt-0.5">ACAS conciliation lasts up to 6 calendar weeks. All calendar days spent in conciliation are added to your original limitation date.</p>
+                  <p className="text-body text-muted mt-0.5">ACAS conciliation lasts up to 6 calendar weeks. All calendar days spent in conciliation are added to your original limitation date.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center shrink-0">3</span>
                 <div>
                   <strong className="text-ink text-sm">Day B (Certificate Issued):</strong>
-                  <p className="text-xs text-muted mt-0.5">The day ACAS issues your Early Conciliation certificate. You always receive at least one calendar month from Day B to submit your claim.</p>
+                  <p className="text-body text-muted mt-0.5">The day ACAS issues your Early Conciliation certificate. You always receive at least one calendar month from Day B to submit your claim.</p>
                 </div>
               </div>
             </div>
