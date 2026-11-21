@@ -80,13 +80,13 @@
     font-size: 12px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #5B6577;
+    color: #525D70;
   }
 
   .sc-lead {
-    font-size: clamp(17px, 1.3vw, 18.5px);
-    line-height: 1.52;
-    color: #3D4759;
+    font-size: clamp(18px, 1.3vw, 19px);
+    line-height: 1.50;
+    color: #1E2D42;
   }
 
   /* Section-level h2 - for within-page sections (how it works, trust, FAQ, etc.)
@@ -105,7 +105,7 @@
   .sc-body {
     font-size: var(--text-body);
     line-height: 1.58;
-    color: #5B6577;
+    color: #243247;
   }
 
   /* Guide / article prose */
@@ -122,7 +122,7 @@
   .guide-body {
     font-size: var(--text-body);
     line-height: 1.65;
-    color: #5B6577;
+    color: #243247;
   }
 
   /* Buttons */
@@ -157,8 +157,8 @@
     font-size: 15.5px;
     font-weight: 600;
     letter-spacing: -0.005em;
-    border: 1px solid #D9603B;
-    background: #D9603B;
+    border: 1px solid #C24D29;
+    background: #C24D29;
     color: #fff;
     transition: background 180ms ease, border-color 180ms ease;
     text-align: center;
@@ -166,7 +166,7 @@
     max-width: 100%;
     cursor: pointer;
   }
-  .btn-accent:hover { background: #B14A28; border-color: #B14A28; }
+  .btn-accent:hover { background: #A83E1E; border-color: #A83E1E; }
 
   .btn-ghost {
     display: inline-flex;

@@ -21,8 +21,8 @@ module.exports = {
           strong:  '#C9C0AC',
         },
         muted: {
-          DEFAULT: '#5B6577',
-          2:       '#8A93A3',
+          DEFAULT: '#525D70',
+          2:       '#525D70',
         },
         coral: {
           DEFAULT: '#D9603B',

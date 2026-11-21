@@ -263,12 +263,12 @@ export default function HomeClient({
                   background: 'linear-gradient(170deg, #F5F1E9 0%, #EDE8DF 30%, #E8E2D8 60%, #F0EDE6 100%)',
                   padding: '36px 36px 32px',
                 }}>
-                  <span style={{ display: 'block', fontSize: 11, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8A93A3', marginBottom: 20 }}>
+                  <span className="sc-eyebrow block mb-4">
                     Free calculator
                   </span>
-                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 420, lineHeight: 1.3, color: '#0B1F3A', margin: '0 0 8px', letterSpacing: '-0.012em' }}>
+                  <p className="sc-h3 mb-2">
                     See how your offer compares.{' '}
-                    <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Measure it against April 2026 UK statute.</em>
+                    <em className="italic text-coral-ink">Measure it against April 2026 UK statute.</em>
                   </p>
                   <p className="sc-body mb-6">
                     For draft offers, active exit talks, or redundancy notices. Seven questions, 60 seconds, no email required.
@@ -283,33 +283,28 @@ export default function HomeClient({
                         <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(217,96,59,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <Check />
                         </div>
-                        <span className="text-body-sm text-ink-2">{label}</span>
+                        <span className="text-[15px] text-ink-2">{label}</span>
                       </div>
                     ))}
                   </div>
                   <Link
                     href={ctaHref}
-                    style={{
-                      display: 'block', width: '100%', background: '#D9603B', textDecoration: 'none', color: '#fff',
-                      fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 16,
-                      letterSpacing: '-0.005em', padding: '15px 24px', borderRadius: 10,
-                      cursor: 'pointer', marginBottom: 12, textAlign: 'center', boxSizing: 'border-box',
-                    }}
+                    className="btn-accent w-full py-3.5 px-6 rounded-[10px] mb-3"
                   >
                     {ctaLabel}
                   </Link>
 
                   <div className="pt-3 border-t border-[#0B1F3A]/[0.08] mb-3 text-center">
-                    <span className="text-[12px] text-muted block mb-1">Already received a written offer or draft agreement?</span>
+                    <span className="text-[14px] text-muted block mb-1">Already received a written offer or draft agreement?</span>
                     <Link
                       href="/settlement-agreement-review/"
-                      className="inline-flex items-center gap-1 text-[13px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
+                      className="inline-flex items-center gap-1 text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
                       Use our 60-second clause readiness checklist →
                     </Link>
                   </div>
 
-                  <p style={{ fontSize: 12, color: '#9AA3AE', textAlign: 'center', margin: 0, lineHeight: 1.55 }}>
+                  <p className="text-[14px] text-muted text-center m-0 leading-[1.5]">
                     No data is sold. No solicitor will call unless you ask.
                   </p>
                 </div>
@@ -331,11 +326,11 @@ export default function HomeClient({
                 >
                   <span
                     className="font-serif text-ink"
-                    style={{ fontSize: 40, fontWeight: 420, lineHeight: 1, letterSpacing: '-0.02em' }}
+                    style={{ fontSize: 40, fontWeight: 550, lineHeight: 1, letterSpacing: '-0.02em' }}
                   >
                     {s.n}
                   </span>
-                  <span className="text-[13px] text-muted mt-2">{s.l}</span>
+                  <span className="text-[14px] text-muted mt-2">{s.l}</span>
                 </div>
               ))}
             </div>
@@ -358,12 +353,12 @@ export default function HomeClient({
                   className="bg-card border border-rule rounded-lg p-8 hover:border-rule-strong transition-colors duration-[160ms]"
                 >
                   <div
-                    className="font-serif text-coral"
-                    style={{ fontSize: 56, fontWeight: 420, lineHeight: 1, letterSpacing: '-0.04em' }}
+                    className="font-serif text-coral text-[30px] md:text-[40px] leading-none tracking-[-0.03em]"
+                    style={{ fontWeight: 550 }}
                   >
                     {s.n}
                   </div>
-                  <h3 className="sc-h3 mt-7">{s.t}</h3>
+                  <h3 className="sc-h3 mt-3">{s.t}</h3>
                   <p className="sc-body mt-3">{s.d}</p>
                 </article>
               ))}
@@ -541,13 +536,13 @@ export default function HomeClient({
                   <div className="pt-2 flex flex-col gap-2">
                     <Link
                       href="/guides/"
-                      className="text-[14px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
+                      className="text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
                       Browse settlement agreement guides →
                     </Link>
                     <Link
                       href="/settlement-agreement-review/"
-                      className="text-[14px] font-semibold text-coral hover:text-coral-ink underline underline-offset-2 transition-colors"
+                      className="text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
                       Review draft agreement clauses →
                     </Link>
@@ -625,34 +620,34 @@ export default function HomeClient({
 
               {/* Explore statutory tools strip */}
               <div className="mt-8 pt-6 border-t border-rule flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <span className="text-[13px] font-semibold text-ink uppercase tracking-wider">
+                <span className="text-[14px] font-semibold text-ink uppercase tracking-wider">
                   Explore statutory compensation tools:
                 </span>
                 <div className="flex flex-wrap items-center gap-3">
                   <Link
                     href="/redundancy-calculator/"
-                    className="text-[13px] text-coral hover:underline font-medium"
+                    className="text-[14px] text-coral-ink hover:underline font-medium"
                   >
                     Redundancy Calculator →
                   </Link>
                   <span className="text-muted/40 hidden sm:inline">·</span>
                   <Link
                     href="/unfair-dismissal-calculator/"
-                    className="text-[13px] text-coral hover:underline font-medium"
+                    className="text-[14px] text-coral-ink hover:underline font-medium"
                   >
                     Unfair Dismissal Calculator →
                   </Link>
                   <span className="text-muted/40 hidden sm:inline">·</span>
                   <Link
                     href="/tribunal-backlog-tracker/"
-                    className="text-[13px] text-coral hover:underline font-medium"
+                    className="text-[14px] text-coral-ink hover:underline font-medium"
                   >
                     Tribunal Backlog Tracker →
                   </Link>
                   <span className="text-muted/40 hidden sm:inline">·</span>
                   <Link
                     href="/get-matched/"
-                    className="text-[13px] text-coral hover:underline font-medium"
+                    className="text-[14px] text-coral-ink hover:underline font-medium"
                   >
                     Find a Solicitor →
                   </Link>
