@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --text-body: clamp(16px, 1.1vw, 16.5px);
-  --text-body-sm: 14px;
+  --text-body: clamp(18px, 1.1vw + 5px, 19px);
+  --text-body-sm: 15.5px;
 }
 
 @layer base {
@@ -84,7 +84,7 @@
   }
 
   .sc-lead {
-    font-size: clamp(16px, 1.3vw, 18.5px);
+    font-size: clamp(18.5px, 1.5vw, 20.5px);
     line-height: 1.54;
     color: #1E2D42;
   }
