@@ -84,8 +84,8 @@
   }
 
   .sc-lead {
-    font-size: clamp(18px, 1.3vw, 19px);
-    line-height: 1.50;
+    font-size: clamp(16px, 1.3vw, 18.5px);
+    line-height: 1.54;
     color: #1E2D42;
   }
 

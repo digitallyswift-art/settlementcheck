@@ -255,14 +255,16 @@ export default function HomeClient({
               </div>
 
               <div>
-                <div style={{
-                  borderRadius: 20,
-                  border: '1px solid rgba(11,31,58,0.10)',
-                  overflow: 'hidden',
-                  boxShadow: '0 24px 60px -12px rgba(11,31,58,0.22), 0 8px 24px -6px rgba(11,31,58,0.10)',
-                  background: 'linear-gradient(170deg, #F5F1E9 0%, #EDE8DF 30%, #E8E2D8 60%, #F0EDE6 100%)',
-                  padding: '36px 36px 32px',
-                }}>
+                <div
+                  className="p-6 sm:p-9"
+                  style={{
+                    borderRadius: 20,
+                    border: '1px solid rgba(11,31,58,0.10)',
+                    overflow: 'hidden',
+                    boxShadow: '0 24px 60px -12px rgba(11,31,58,0.22), 0 8px 24px -6px rgba(11,31,58,0.10)',
+                    background: 'linear-gradient(170deg, #F5F1E9 0%, #EDE8DF 30%, #E8E2D8 60%, #F0EDE6 100%)',
+                  }}
+                >
                   <span className="sc-eyebrow block mb-4">
                     Free calculator
                   </span>
@@ -295,17 +297,17 @@ export default function HomeClient({
                   </Link>
 
                   <div className="pt-3 border-t border-[#0B1F3A]/[0.08] mb-3 text-center">
-                    <span className="text-[14px] text-muted block mb-1">Already received a written offer or draft agreement?</span>
+                    <span className="text-[14px] text-muted block mb-1">Already have a written draft?</span>
                     <Link
                       href="/settlement-agreement-review/"
-                      className="inline-flex items-center gap-1 text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
+                      className="inline-flex items-center gap-1 whitespace-nowrap text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
-                      Use our 60-second clause readiness checklist →
+                      60-second clause checklist →
                     </Link>
                   </div>
 
-                  <p className="text-[14px] text-muted text-center m-0 leading-[1.5]">
-                    No data is sold. No solicitor will call unless you ask.
+                  <p className="text-[13.5px] text-muted text-center m-0 leading-[1.45]">
+                    No data sold. No calls unless you ask.
                   </p>
                 </div>
               </div>
@@ -458,8 +460,8 @@ export default function HomeClient({
                 <p className="sc-lead">The headline figure on your draft is rarely what lands in your bank. Checking the tax split shows you what is actually yours.</p>
                 <p className="sc-body">A £20,000 offer does not mean £20,000 in your bank if notice pay is bundled in. Split taxable PILON from your £30,000 tax-free allowance before payday.</p>
                 <div className="border-l-2 border-coral pl-4 mt-1">
-                  <p className="text-[15px] font-semibold text-ink mb-1">What is PILON?</p>
-                  <p className="text-[14px] leading-[1.55] text-muted">PILON stands for <em>Payment in Lieu of Notice</em>. It is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
+                  <p className="text-[16px] font-semibold text-ink mb-1">What is PILON?</p>
+                  <p className="sc-body">PILON stands for <em>Payment in Lieu of Notice</em>. It is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
                 </div>
               </div>
               <div className="flex flex-col gap-6">
