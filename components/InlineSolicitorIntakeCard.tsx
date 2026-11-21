@@ -358,7 +358,7 @@ export default function InlineSolicitorIntakeCard({
             </li>
             <li className="flex items-start gap-2">
               <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
-              <span>Standard capped employer contribution (£350 to £500+ +VAT) on completion</span>
+              <span>Standard capped employer contribution (£350 to £500+ plus VAT) on completion</span>
             </li>
           </ul>
 

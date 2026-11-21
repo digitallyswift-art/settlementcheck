@@ -963,7 +963,7 @@ function ResultsContent() {
               {/* 4. Quiet Compliance Disclosure */}
               <div className="lg:col-span-7 lg:col-start-1 pt-1 text-[13px] text-[#6B7485] leading-[1.55] no-print">
                 <p className="m-0">
-                  Estimates use 2026/27 UK statutory rates (£{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI weekly cap) as a general guide, not legal or tax advice. Standard capped employer contributions (£350 to £500+ +VAT) apply on completion; extra or abortive work depends on your solicitor&apos;s terms.
+                  Estimates use 2026/27 UK statutory rates (£{WEEKLY_CAP_GB} GB / £{WEEKLY_CAP_NI} NI weekly cap) as a general guide, not legal or tax advice. Standard capped employer contributions (£350 to £500+ plus VAT) apply on completion; extra or abortive work depends on your solicitor&apos;s terms.
                 </p>
               </div>
             </div>
