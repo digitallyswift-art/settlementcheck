@@ -131,20 +131,20 @@ export default function HomeClient({
       <main>
         <section
           id="calculator"
-          className="relative overflow-hidden py-14 md:py-[72px]"
+          className="relative overflow-hidden pt-4 pb-10 sm:pt-8 md:py-[72px]"
           style={{ background: '#F7F4EE' }}
         >
           <div className="sc-container relative">
             {alertBanner && (
-              <div className="mb-6 md:mb-8">
+              <div className="mb-4 md:mb-8">
                 {alertBanner}
               </div>
             )}
-            <div className="hero-grid grid gap-10 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
-              <div className="flex flex-col gap-6 md:gap-7 min-w-0">
+            <div className="hero-grid grid gap-5 sm:gap-8 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
+              <div className="flex flex-col min-w-0">
                 {/* Hero Pill / Statutory Rates & SRA Network Badge */}
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-3.5 py-1.5 text-[12px] font-medium text-ink bg-white/70 shadow-sm backdrop-blur-sm">
+                <div className="flex flex-wrap items-center gap-2.5 mb-3 md:mb-5">
+                  <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-2.5 py-1 sm:px-3.5 sm:py-1.5 text-[11.5px] sm:text-[12px] font-medium text-ink bg-white/70 shadow-sm backdrop-blur-sm">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-coral"></span>
@@ -153,19 +153,19 @@ export default function HomeClient({
                       Updated for <strong className="text-ink font-semibold">April 2026</strong> UK statutory rates
                     </span>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 border border-rule-strong rounded-full px-3 py-1.5 text-[12px] font-medium text-muted bg-white/40">
+                  <span className="hidden sm:inline-flex items-center gap-1.5 border border-rule-strong rounded-full px-3 py-1.5 text-[12px] font-medium text-muted bg-white/40">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
                     SRA-Regulated Panel Network
                   </span>
-                  <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-muted pl-1">
+                  <span className="hidden sm:inline-flex items-center gap-1.5 text-[12px] font-medium text-muted pl-1">
                     Independent · Free to use
                   </span>
                 </div>
 
                 {/* SEO keyword eyebrow: carries primary keyword as visible text, H1 carries the core search intent */}
-                <p className="sc-eyebrow" style={{ letterSpacing: '0.10em' }}>
+                <p className="sc-eyebrow text-[11px] sm:text-[12px] leading-snug mb-1.5 md:mb-2.5" style={{ letterSpacing: '0.08em' }}>
                   Independent UK Employment Settlement &amp;{' '}
                   <Link
                     href="/guides/compromise-agreement-calculator-uk/"
@@ -176,7 +176,7 @@ export default function HomeClient({
                   </Link>
                 </p>
 
-                <h1 className="sc-h1">
+                <h1 className="sc-h1 mb-3 md:mb-5">
                   {title || (
                     <>
                       How much should your<br />
@@ -186,7 +186,7 @@ export default function HomeClient({
                 </h1>
 
                 {lead ? (
-                  <p className="sc-lead">{lead}</p>
+                  <p className="text-[16px] leading-[1.48] sm:text-[19px] sm:leading-[1.54] text-[#1E2D42] m-0">{lead}</p>
                 ) : leadBullets ? (
                   <ul className="flex flex-col gap-3 pt-1">
                     {leadBullets.map(({ label, detail }, i) => (
@@ -256,7 +256,7 @@ export default function HomeClient({
 
               <div>
                 <div
-                  className="p-6 sm:p-9"
+                  className="p-5 sm:p-9"
                   style={{
                     borderRadius: 20,
                     border: '1px solid rgba(11,31,58,0.10)',
@@ -265,17 +265,17 @@ export default function HomeClient({
                     background: 'linear-gradient(170deg, #F5F1E9 0%, #EDE8DF 30%, #E8E2D8 60%, #F0EDE6 100%)',
                   }}
                 >
-                  <span className="sc-eyebrow block mb-4">
+                  <span className="sc-eyebrow block mb-2.5 sm:mb-4">
                     Free calculator
                   </span>
-                  <p className="sc-h3 mb-2">
+                  <p className="font-serif font-semibold text-[23px] sm:text-[26px] leading-[1.18] tracking-[-0.015em] text-ink m-0 mb-2">
                     See how your offer compares.{' '}
                     <em className="italic text-coral-ink">Measure it against April 2026 UK statute.</em>
                   </p>
-                  <p className="sc-body mb-6">
+                  <p className="text-[15px] leading-[1.48] sm:text-[16.5px] sm:leading-[1.52] text-[#243247] mt-0 mb-4 sm:mb-6">
                     For draft offers, active exit talks, or redundancy notices. Seven questions, 60 seconds, no email required.
                   </p>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
+                  <div className="flex flex-col gap-2 sm:gap-2.5 mb-5 sm:mb-7">
                     {[
                       'Check privately on any device with no email required',
                       'April 2026 statutory baselines (£751/wk cap) built in',
@@ -285,7 +285,7 @@ export default function HomeClient({
                         <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(217,96,59,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <Check />
                         </div>
-                        <span className="text-[15px] text-ink-2">{label}</span>
+                        <span className="text-[14.5px] sm:text-[15px] text-ink-2 leading-snug">{label}</span>
                       </div>
                     ))}
                   </div>
