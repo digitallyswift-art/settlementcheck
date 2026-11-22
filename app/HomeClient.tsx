@@ -189,7 +189,7 @@ export default function HomeClient({
                 </h1>
 
                 {lead ? (
-                  <p className="sc-lead max-sm:text-[16px] max-sm:leading-[1.48] m-0">{lead}</p>
+                  <p className="sc-lead m-0">{lead}</p>
                 ) : leadBullets ? (
                   <ul className="flex flex-col gap-3 pt-1">
                     {leadBullets.map(({ label, detail }, i) => (
@@ -299,32 +299,32 @@ export default function HomeClient({
                   </div>
 
                   {/* Mobile compact single-line trust points (zero duplication of April 2026 pill) */}
-                  <div className="order-2 lg:hidden flex flex-col gap-2 mb-4">
+                  <div className="order-2 lg:hidden flex flex-col gap-2.5 mb-4">
                     {[
-                      'No email required · check privately in 60 seconds',
+                      'No email required · check privately in 60s',
                       'Independent · no law firm behind the maths',
                       'No calls unless you ask · no data sold',
                     ].map(label => (
-                      <div key={label} className="flex items-center gap-2">
+                      <div key={label} className="flex items-center gap-2.5">
                         <span
-                          className="w-[18px] h-[18px] rounded-full flex items-center justify-center flex-shrink-0 text-coral-ink"
+                          className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-coral-ink"
                           style={{ background: 'rgba(217,96,59,0.12)' }}
                         >
                           <Check />
                         </span>
-                        <span className="text-[13.5px] text-ink-2 leading-snug">{label}</span>
+                        <span className="text-[15px] text-ink-2 leading-snug">{label}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Secondary path (now cleanly visible above the fold on mobile) */}
                   <div className="order-3 pt-3 border-t border-[#0B1F3A]/[0.08] lg:mb-3 text-center">
-                    <span className="text-[13.5px] lg:text-[14px] text-muted lg:block lg:mb-1 mr-1.5 lg:mr-0">
+                    <span className="text-[14.5px] lg:text-[14px] text-muted lg:block lg:mb-1 mr-1.5 lg:mr-0">
                       Have a written draft?
                     </span>
                     <Link
                       href="/settlement-agreement-review/"
-                      className="inline-flex items-center gap-1 whitespace-nowrap text-[13.5px] lg:text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
+                      className="inline-flex items-center gap-1 whitespace-nowrap text-[14.5px] lg:text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
                       60-second clause checklist →
                     </Link>
