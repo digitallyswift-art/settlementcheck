@@ -324,14 +324,7 @@ export default function Nav() {
 
         {/* Mobile / Tablet Header Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 lg:hidden shrink-0">
-          {isResultsPage ? (
-            <a
-              href="#solicitor-intake-card"
-              className="btn-accent text-[12.5px] sm:text-[14px] px-3 sm:px-4 py-2 whitespace-nowrap font-bold"
-            >
-              Get solicitor review →
-            </a>
-          ) : (
+          {!isResultsPage && (
             <Link
               href="/calculator/"
               aria-hidden={!showMobileHeaderCta}

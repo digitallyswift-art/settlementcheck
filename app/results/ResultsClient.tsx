@@ -430,7 +430,7 @@ function EstimateReportCard({
         )}
 
         {/* Above-the-fold Mobile Intake Jump CTA */}
-        <div className="mt-4 lg:hidden no-print">
+        <div id="results-primary-cta" className="mt-4 lg:hidden no-print">
           <button
             type="button"
             onClick={onJumpToIntake}
@@ -696,7 +696,7 @@ function WhatHappensNextStrip({ hasOffer }: { hasOffer: boolean }) {
   )
 }
 
-/* ── Smart Mobile Sticky Bar (Hides when Intake Card is visible) ── */
+/* ── Smart Mobile Sticky Bar (Hides when any primary CTA is visible) ── */
 
 function SmartMobileStickyBar({
   onScrollToIntake,
@@ -710,18 +710,43 @@ function SmartMobileStickyBar({
   const [keyboardOpen, setKeyboardOpen] = useState(false)
 
   useEffect(() => {
-    const target = document.getElementById('solicitor-intake-card')
-    if (!target || typeof IntersectionObserver === 'undefined') return
+    const primaryCtaEl = document.getElementById('results-primary-cta')
+    const intakeSectionEl =
+      document.getElementById('solicitor-intake-section') ??
+      document.getElementById('solicitor-intake-card')
+    if (!intakeSectionEl || typeof IntersectionObserver === 'undefined') return
 
-    let cardVisible = true
-    const observer = new IntersectionObserver(
+    let primaryCtaVisible = !!primaryCtaEl
+    let primaryCtaAboveViewport = !primaryCtaEl
+    let intakeCardVisible = false
+
+    const updateVisibility = () => {
+      setShow(!primaryCtaVisible && primaryCtaAboveViewport && !intakeCardVisible)
+    }
+
+    let primaryObserver: IntersectionObserver | null = null
+    if (primaryCtaEl) {
+      primaryObserver = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0]
+          if (!entry) return
+          primaryCtaVisible = entry.isIntersecting
+          primaryCtaAboveViewport = !entry.isIntersecting && entry.boundingClientRect.top < 56
+          updateVisibility()
+        },
+        { rootMargin: '-56px 0px 0px 0px', threshold: 0.05 }
+      )
+      primaryObserver.observe(primaryCtaEl)
+    }
+
+    const intakeObserver = new IntersectionObserver(
       (entries) => {
-        cardVisible = !!entries[0]?.isIntersecting
-        setShow(!cardVisible && window.scrollY > 120)
+        intakeCardVisible = !!entries[0]?.isIntersecting
+        updateVisibility()
       },
-      { threshold: 0.1 }
+      { rootMargin: '-56px 0px 0px 0px', threshold: 0.05 }
     )
-    observer.observe(target)
+    intakeObserver.observe(intakeSectionEl)
 
     const footerEl = document.querySelector('footer')
     let footerObserver: IntersectionObserver | null = null
@@ -735,11 +760,6 @@ function SmartMobileStickyBar({
       footerObserver.observe(footerEl)
     }
 
-    const onScroll = () => {
-      setShow(!cardVisible && window.scrollY > 120)
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-
     const vv = window.visualViewport
     const onVpResize = () => {
       if (!vv) return
@@ -748,20 +768,25 @@ function SmartMobileStickyBar({
     vv?.addEventListener('resize', onVpResize)
 
     return () => {
-      observer.disconnect()
+      primaryObserver?.disconnect()
+      intakeObserver.disconnect()
       footerObserver?.disconnect()
-      window.removeEventListener('scroll', onScroll)
       vv?.removeEventListener('resize', onVpResize)
     }
   }, [])
 
-  if (!show || keyboardOpen) return null
+  const visible = show && !keyboardOpen
 
   return (
     <div
       role="region"
       aria-label="Request solicitor review"
-      className={`lg:hidden fixed inset-x-0 bottom-0 z-40 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-colors duration-200 no-print ${
+      aria-hidden={!visible}
+      className={`lg:hidden fixed inset-x-0 bottom-0 z-40 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-all duration-200 ease-out no-print ${
+        visible
+          ? 'translate-y-0 opacity-100 pointer-events-auto'
+          : 'translate-y-full opacity-0 pointer-events-none'
+      } ${
         overFooter
           ? 'bg-white border-t-2 border-[#D9603B] shadow-[0_-8px_24px_rgba(0,0,0,0.28)]'
           : 'bg-[#F7F4EE] border-t border-[#E2DCCE] shadow-[0_-4px_20px_rgba(11,31,58,0.12)]'
@@ -778,6 +803,7 @@ function SmartMobileStickyBar({
         </div>
         <button
           type="button"
+          tabIndex={visible ? 0 : -1}
           onClick={onScrollToIntake}
           className="inline-flex items-center justify-center px-3.5 py-2.5 text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg border-0 cursor-pointer flex-shrink-0 whitespace-nowrap shadow-sm"
         >
@@ -933,7 +959,10 @@ function ResultsContent() {
               </div>
 
               {/* 2. Primary Solicitor Intake + Subordinate Email Action (Sticky Top-Right on Desktop, 2nd on Mobile) */}
-              <div className="lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:row-span-3 lg:sticky lg:top-[96px] no-print">
+              <div
+                id="solicitor-intake-section"
+                className="lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:row-span-3 lg:sticky lg:top-[96px] no-print"
+              >
                 <InlineSolicitorIntakeCard
                   verdict={result.verdict}
                   offer={offer}
@@ -971,18 +1000,20 @@ function ResultsContent() {
         </div>
       </main>
 
-      <SmartMobileStickyBar
-        onScrollToIntake={handleScrollToIntake}
-        ctaLabel={
-          offer <= 0
-            ? 'Check my position →'
-            : result?.verdict === 'BELOW_MINIMUM'
-            ? 'Check this gap →'
-            : result?.verdict === 'BELOW_TYPICAL'
-            ? 'Check my options →'
-            : 'Check & sign off →'
-        }
-      />
+      {result && (
+        <SmartMobileStickyBar
+          onScrollToIntake={handleScrollToIntake}
+          ctaLabel={
+            offer <= 0
+              ? 'Check my position →'
+              : result.verdict === 'BELOW_MINIMUM'
+              ? 'Check this gap →'
+              : result.verdict === 'BELOW_TYPICAL'
+              ? 'Check my options →'
+              : 'Check & sign off →'
+          }
+        />
+      )}
       <Footer />
     </>
   )
