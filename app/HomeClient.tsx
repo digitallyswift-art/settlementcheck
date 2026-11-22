@@ -186,7 +186,7 @@ export default function HomeClient({
                 </h1>
 
                 {lead ? (
-                  <p className="text-[16.5px] leading-[1.55] sm:text-[19px] sm:leading-[1.54] text-[#1E2D42] m-0">{lead}</p>
+                  <p className="sc-lead m-0">{lead}</p>
                 ) : leadBullets ? (
                   <ul className="flex flex-col gap-3 pt-1">
                     {leadBullets.map(({ label, detail }, i) => (
@@ -252,23 +252,11 @@ export default function HomeClient({
                     ))}
                   </ul>
                 )}
-
-                <div className="lg:hidden mt-6">
-                  <Link
-                    href={ctaHref}
-                    className="btn-accent w-full py-3.5 px-6 rounded-[10px]"
-                  >
-                    {ctaLabel}
-                  </Link>
-                  <p className="text-[13.5px] text-muted text-center mt-2.5 mb-0">
-                    Free · 7 questions · No email required
-                  </p>
-                </div>
               </div>
 
               <div>
                 <div
-                  className="p-6 sm:p-9"
+                  className="p-6 sm:p-9 flex flex-col"
                   style={{
                     borderRadius: 20,
                     border: '1px solid rgba(11,31,58,0.10)',
@@ -287,7 +275,7 @@ export default function HomeClient({
                   <p className="hidden lg:block text-[16.5px] leading-[1.52] text-[#243247] mt-0 mb-6">
                     For draft offers, active exit talks, or redundancy notices. Seven questions, 60 seconds, no email required.
                   </p>
-                  <div className="flex flex-col gap-3 mb-5 lg:mb-7">
+                  <div className="order-2 lg:order-1 flex flex-col gap-3 mb-5 lg:mb-7">
                     {[
                       'Check privately on any device with no email required',
                       'April 2026 statutory baselines (£751/wk cap) built in',
@@ -301,7 +289,7 @@ export default function HomeClient({
                       </div>
                     ))}
                   </div>
-                  <div className="hidden lg:block mb-3">
+                  <div className="order-1 lg:order-2 mb-5 lg:mb-3">
                     <Link
                       href={ctaHref}
                       className="btn-accent w-full py-3.5 px-6 rounded-[10px]"
@@ -310,7 +298,7 @@ export default function HomeClient({
                     </Link>
                   </div>
 
-                  <div className="pt-3 border-t border-[#0B1F3A]/[0.08] mb-3 text-center">
+                  <div className="order-3 pt-3 border-t border-[#0B1F3A]/[0.08] mb-3 text-center">
                     <span className="text-[14px] text-muted block mb-1">Already have a written draft?</span>
                     <Link
                       href="/settlement-agreement-review/"
@@ -320,7 +308,7 @@ export default function HomeClient({
                     </Link>
                   </div>
 
-                  <p className="text-[13.5px] text-muted text-center m-0 leading-[1.45]">
+                  <p className="order-3 text-[13.5px] text-muted text-center m-0 leading-[1.45]">
                     No data sold. No calls unless you ask.
                   </p>
                 </div>
