@@ -65,11 +65,11 @@ export default function FaqAccordion({ faqs = DEFAULT_FAQS }: { faqs?: FaqItem[]
             else if (openIdx === i) setOpenIdx(null)
           }}
         >
-          <summary className="flex items-center justify-between gap-4 py-5 md:py-6 cursor-pointer list-none font-serif font-460 text-[16px] md:text-[19px] text-ink tracking-[-0.008em] select-none">
+          <summary className="flex items-center justify-between gap-4 py-5 md:py-6 cursor-pointer list-none font-serif font-460 text-[18px] md:text-[20px] text-ink leading-[1.32] tracking-[-0.008em] select-none">
             <span>{faq.q}</span>
             <span className="faq-icon" aria-hidden="true">+</span>
           </summary>
-          <p className="text-[15px] text-muted leading-[1.65] pb-6 max-w-[68ch]">{faq.a}</p>
+          <p className="sc-body text-muted leading-[1.65] pb-6 max-w-[68ch]">{faq.a}</p>
         </details>
       ))}
     </div>

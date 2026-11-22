@@ -337,7 +337,7 @@ export default function Nav() {
             </Link>
           )}
           <button
-            className="flex flex-col justify-center items-center gap-[5px] w-9 h-9 p-1 rounded-md hover:bg-black/5 transition-colors shrink-0"
+            className="flex flex-col justify-center items-center gap-[5px] w-11 h-11 p-2 rounded-md hover:bg-black/5 transition-colors shrink-0"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -355,7 +355,7 @@ export default function Nav() {
           {/* Calculators expandable */}
           <div>
             <button
-              className="w-full flex items-center justify-between text-[15px] font-medium text-ink py-2 bg-transparent border-0 p-0 cursor-pointer"
+              className="w-full min-h-[44px] flex items-center justify-between text-[16px] font-medium text-ink py-2.5 bg-transparent border-0 p-0 cursor-pointer"
               aria-expanded={mobileCalculatorsOpen}
               onClick={() => setMobileCalculatorsOpen(!mobileCalculatorsOpen)}
             >
@@ -373,7 +373,7 @@ export default function Nav() {
                   <Link
                     key={c.href}
                     href={c.href}
-                    className="text-[14px] text-muted py-1.5 leading-snug hover:text-ink"
+                    className="min-h-[44px] flex items-center text-[15px] text-muted py-2 leading-snug hover:text-ink"
                     onClick={() => { setMobileOpen(false); setMobileCalculatorsOpen(false) }}
                   >
                     {c.label}
@@ -381,7 +381,7 @@ export default function Nav() {
                 ))}
                 <Link
                   href="/calculators/"
-                  className="text-[13px] text-coral font-medium py-1.5"
+                  className="min-h-[44px] flex items-center text-[14px] text-coral font-medium py-2"
                   onClick={() => { setMobileOpen(false); setMobileCalculatorsOpen(false) }}
                 >
                   View all calculators hub →
@@ -392,7 +392,7 @@ export default function Nav() {
 
           <Link
             href="/tribunal-backlog-tracker/"
-            className="text-[15px] font-medium text-ink py-2 flex items-center justify-between hover:text-coral transition-colors"
+            className="min-h-[44px] text-[16px] font-medium text-ink py-2.5 flex items-center justify-between hover:text-coral transition-colors"
             onClick={() => setMobileOpen(false)}
           >
             <span>Tribunal Tracker</span>
@@ -404,7 +404,7 @@ export default function Nav() {
           {/* Guides expandable */}
           <div>
             <button
-              className="w-full flex items-center justify-between text-[15px] font-medium text-ink py-2 bg-transparent border-0 p-0 cursor-pointer"
+              className="w-full min-h-[44px] flex items-center justify-between text-[16px] font-medium text-ink py-2.5 bg-transparent border-0 p-0 cursor-pointer"
               aria-expanded={mobileGuidesOpen}
               onClick={() => setMobileGuidesOpen(!mobileGuidesOpen)}
             >
@@ -422,7 +422,7 @@ export default function Nav() {
                   <Link
                     key={g.href}
                     href={g.href}
-                    className="text-[14px] text-muted py-1.5 leading-snug hover:text-ink"
+                    className="min-h-[44px] flex items-center text-[15px] text-muted py-2 leading-snug hover:text-ink"
                     onClick={() => { setMobileOpen(false); setMobileGuidesOpen(false) }}
                   >
                     {g.label}
@@ -430,7 +430,7 @@ export default function Nav() {
                 ))}
                 <Link
                   href="/guides/"
-                  className="text-[13px] text-coral font-medium py-1.5"
+                  className="min-h-[44px] flex items-center text-[14px] text-coral font-medium py-2"
                   onClick={() => { setMobileOpen(false); setMobileGuidesOpen(false) }}
                 >
                   View all guides →
@@ -439,12 +439,12 @@ export default function Nav() {
             )}
           </div>
 
-          <Link href="/how-it-works/" className="text-[15px] text-muted py-2" onClick={() => setMobileOpen(false)}>
+          <Link href="/how-it-works/" className="min-h-[44px] flex items-center text-[16px] text-muted py-2.5" onClick={() => setMobileOpen(false)}>
             How it works
           </Link>
           <Link
             href="/calculator/"
-            className="btn-accent text-center mt-3"
+            className="btn-accent min-h-[48px] text-center mt-3"
             onClick={() => setMobileOpen(false)}
           >
             Check my offer →

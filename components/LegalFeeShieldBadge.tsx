@@ -21,9 +21,15 @@ export function LegalFeeAnnouncementBar() {
             </svg>
           </span>
           <span>
-            <strong className="text-white font-semibold">Legal Fee Coverage:</strong>{' '}
-            <span className="text-[#F7F4EE]/90">
-              Employers standardly contribute £350–£500+ VAT upon completion (s.203(3) ERA 1996).
+            <span className="sm:hidden">
+              <strong className="text-white font-semibold">Employer fee contribution</strong>{' '}
+              <span className="text-[#F7F4EE]/90">· s.203(3) ERA 1996</span>
+            </span>
+            <span className="hidden sm:inline">
+              <strong className="text-white font-semibold">Legal Fee Coverage:</strong>{' '}
+              <span className="text-[#F7F4EE]/90">
+                Employers standardly contribute £350–£500+ VAT upon completion (s.203(3) ERA 1996).
+              </span>
             </span>
           </span>
         </div>

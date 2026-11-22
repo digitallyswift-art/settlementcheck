@@ -146,7 +146,7 @@ export default function HomeClient({
                 <div className="flex flex-wrap items-center gap-2.5 mb-5">
                   <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-3 py-1 sm:px-3.5 sm:py-1.5 text-[12px] font-medium text-ink bg-white/75 shadow-sm backdrop-blur-sm">
                     <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
+                      <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-coral"></span>
                     </span>
                     <span className="sm:hidden">
@@ -318,13 +318,13 @@ export default function HomeClient({
                   </div>
 
                   {/* Secondary path (now cleanly visible above the fold on mobile) */}
-                  <div className="order-3 pt-4 border-t border-[#0B1F3A]/[0.08] lg:pt-3 lg:mb-3 text-center">
+                  <div className="order-3 pt-3 border-t border-[#0B1F3A]/[0.08] lg:pt-3 lg:mb-3 text-center">
                     <span className="text-[14.5px] lg:text-[14px] text-muted lg:block lg:mb-1 mr-1.5 lg:mr-0">
                       Have a written draft?
                     </span>
                     <Link
                       href="/settlement-agreement-review/"
-                      className="inline-flex items-center gap-1 whitespace-nowrap text-[14.5px] lg:text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
+                      className="inline-flex items-center gap-1 whitespace-nowrap py-2 lg:py-0 text-[14.5px] lg:text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
                       60-second clause checklist →
                     </Link>
@@ -340,23 +340,23 @@ export default function HomeClient({
         </section>
 
         {/* ── STATS BAR ─────────────────────────────────────────── */}
-        <section className="bg-paper-2 border-y border-rule py-9">
+        <section className="bg-paper-2 border-y border-rule py-7 md:py-9">
           <div className="sc-container">
             <div className="grid grid-cols-2 md:grid-cols-4">
               {STATS.map((s, i) => (
                 <div
                   key={i}
-                  className={`flex flex-col px-5 py-4 md:py-2 border-rule ${
-                    i % 2 !== 0 ? 'border-l' : ''
-                  } md:border-l-0 ${i > 0 ? 'md:border-l' : ''}`}
+                  className={`flex flex-col py-4 md:py-2 border-rule ${
+                    i % 2 !== 0 ? 'border-l pl-4 pr-0 md:px-5' : 'pl-0 pr-4 md:px-5'
+                  } ${i >= 2 ? 'border-t md:border-t-0' : ''} md:border-l-0 ${i > 0 ? 'md:border-l' : ''}`}
                 >
                   <span
-                    className="font-serif text-ink"
-                    style={{ fontSize: 40, fontWeight: 550, lineHeight: 1, letterSpacing: '-0.02em' }}
+                    className="font-serif text-ink text-[28px] sm:text-[34px] md:text-[40px] leading-none tracking-[-0.02em]"
+                    style={{ fontWeight: 550 }}
                   >
                     {s.n}
                   </span>
-                  <span className="text-[14px] text-muted mt-2">{s.l}</span>
+                  <span className="text-[14px] text-muted mt-2 leading-snug">{s.l}</span>
                 </div>
               ))}
             </div>
@@ -372,11 +372,11 @@ export default function HomeClient({
               <p className="sc-lead">{howItWorksLead}</p>
             </div>
 
-            <div className="grid grid-cols-3 gap-6 mt-14 max-[900px]:grid-cols-1">
+            <div className="grid grid-cols-3 gap-5 md:gap-6 mt-10 md:mt-14 max-[900px]:grid-cols-1">
               {(steps || STEPS).map((s, i) => (
                 <article
                   key={i}
-                  className="bg-card border border-rule rounded-lg p-8 hover:border-rule-strong transition-colors duration-[160ms]"
+                  className="bg-card border border-rule rounded-xl p-5 sm:p-6 md:p-8 hover:border-rule-strong transition-colors duration-[160ms]"
                 >
                   <div
                     className="font-serif text-coral text-[30px] md:text-[40px] leading-none tracking-[-0.03em]"
@@ -389,8 +389,8 @@ export default function HomeClient({
                 </article>
               ))}
             </div>
-            <div className="mt-10 flex justify-center">
-              <Link href={ctaHref} className="btn-accent">{ctaLabel}</Link>
+            <div className="mt-8 md:mt-10 flex justify-center">
+              <Link href={ctaHref} className="btn-accent w-full sm:w-auto min-h-[48px]">{ctaLabel}</Link>
             </div>
           </div>
         </section>
@@ -484,31 +484,31 @@ export default function HomeClient({
                 <p className="sc-lead">The headline figure on your draft is rarely what lands in your bank. Checking the tax split shows you what is actually yours.</p>
                 <p className="sc-body">A £20,000 offer does not mean £20,000 in your bank if notice pay is bundled in. Split taxable PILON from your £30,000 tax-free allowance before payday.</p>
                 <div className="border-l-2 border-coral pl-4 mt-1">
-                  <p className="text-[16px] font-semibold text-ink mb-1">What is PILON?</p>
+                  <p className="sc-h3 text-[19px] mb-1.5">What is PILON?</p>
                   <p className="sc-body">PILON stands for <em>Payment in Lieu of Notice</em>. It is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
                 </div>
               </div>
-              <div className="flex flex-col gap-6">
-                <div className="bg-card border border-rule rounded-lg p-6">
+              <div className="flex flex-col gap-5 md:gap-6">
+                <div className="bg-card border border-rule rounded-xl p-5 sm:p-6">
                   <div className="sc-h3 mb-2">PILON is always taxed like wages</div>
                   <p className="sc-body">Under ITEPA 2003 s.402D, notice pay is taxed as normal earnings with income tax and National Insurance, whatever your draft calls it.</p>
                 </div>
-                <div className="bg-card border border-rule rounded-lg p-6">
+                <div className="bg-card border border-rule rounded-xl p-5 sm:p-6">
                   <div className="sc-h3 mb-2">The first £30,000 of termination pay is tax-free</div>
                   <p className="sc-body">Statutory redundancy and ex-gratia compensation up to £30,000 are tax-free under ITEPA 2003 s.403. Anything above £30,000 is taxed at your marginal rate.</p>
                 </div>
-                <div className="bg-card border border-rule rounded-lg p-6">
+                <div className="bg-card border border-rule rounded-xl p-5 sm:p-6">
                   <div className="sc-h3 mb-2">See what actually lands in your bank</div>
                   <p className="sc-body">Most calculators show one gross figure. This one splits taxable notice pay from your £30,000 allowance so you see your estimated net take-home.</p>
                 </div>
-                <Link href={ctaHref} className="btn-accent self-start">See my net take-home →</Link>
+                <Link href={ctaHref} className="btn-accent w-full sm:w-auto sm:self-start min-h-[48px]">See my net take-home →</Link>
               </div>
             </div>
           </div>
         </section>
 
         {/* ── TRUST ─────────────────────────────────────────────── */}
-        <section id="about" className="py-section bg-paper-2 border-y border-rule">
+        <section id="about" className="py-section bg-card border-b border-rule">
           <div className="sc-container">
             <div className="grid grid-cols-1 gap-10 md:gap-20 lg:grid-cols-[1fr_1.05fr]">
               <div className="flex flex-col gap-3.5">
@@ -536,7 +536,7 @@ export default function HomeClient({
                   </div>
                 ))}
                 <div className="pt-7">
-                  <Link href={ctaHref} className="btn-accent self-start">{ctaLabel}</Link>
+                  <Link href={ctaHref} className="btn-accent w-full sm:w-auto sm:self-start min-h-[48px]">{ctaLabel}</Link>
                 </div>
               </div>
             </div>
@@ -559,16 +559,16 @@ export default function HomeClient({
                   <p className="sc-body">
                     Every settlement agreement is unique. Explore our in-depth guides on negotiation, ACAS codes, and redundancy, or have your draft clauses reviewed by an independent specialist.
                   </p>
-                  <div className="pt-2 flex flex-col gap-2">
+                  <div className="pt-1 flex flex-col gap-1">
                     <Link
                       href="/guides/"
-                      className="text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
+                      className="inline-flex items-center min-h-[44px] py-2 text-[15px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
                       Browse settlement agreement guides →
                     </Link>
                     <Link
                       href="/settlement-agreement-review/"
-                      className="text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
+                      className="inline-flex items-center min-h-[44px] py-2 text-[15px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
                       Review draft agreement clauses →
                     </Link>
@@ -590,21 +590,21 @@ export default function HomeClient({
                 <p className="sc-lead">Updated every April. The calculator always uses the current rates.</p>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse text-sm" style={{ minWidth: 420 }}>
+                <table className="w-full border-collapse text-sm">
                   <caption className="sr-only">UK statutory redundancy and settlement figures compared across 2025/26 and 2026/27 tax years</caption>
                   <thead>
                     <tr className="border-b border-rule">
-                      <th className="text-left py-3 pr-6 font-medium text-ink" style={{ fontSize: 13 }}>Figure</th>
-                      <th className="text-right py-3 px-4 font-medium text-muted" style={{ fontSize: 13 }}>2025/26</th>
-                      <th className="text-right py-3 pl-4 font-medium text-ink" style={{ fontSize: 13 }}>2026/27</th>
+                      <th className="text-left py-3 pr-3 sm:pr-6 font-medium text-ink text-[13px]">Figure</th>
+                      <th className="text-right py-3 px-2 sm:px-4 font-medium text-muted text-[13px] whitespace-nowrap">2025/26</th>
+                      <th className="text-right py-3 pl-2 sm:pl-4 font-medium text-ink text-[13px] whitespace-nowrap">2026/27</th>
                     </tr>
                   </thead>
                   <tbody>
                     {statutoryRows.map((row, i) => (
                       <tr key={i} className="border-b border-rule last:border-0">
-                        <td className="py-3 pr-6 text-ink" style={{ fontSize: 14 }}>{row.label}</td>
-                        <td className="py-3 px-4 text-right text-muted tabular-nums" style={{ fontSize: 14 }}>{row.y2425}</td>
-                        <td className="py-3 pl-4 text-right font-medium text-ink tabular-nums" style={{ fontSize: 14 }}>{row.y2526}</td>
+                        <td className="py-3 pr-3 sm:pr-6 text-ink text-[14px] leading-snug">{row.label}</td>
+                        <td className="py-3 px-2 sm:px-4 text-right text-muted tabular-nums text-[14px] whitespace-nowrap">{row.y2425}</td>
+                        <td className="py-3 pl-2 sm:pl-4 text-right font-medium text-ink tabular-nums text-[14px] whitespace-nowrap">{row.y2526}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -649,31 +649,31 @@ export default function HomeClient({
                 <span className="text-[14px] font-semibold text-ink uppercase tracking-wider">
                   Explore statutory compensation tools:
                 </span>
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-1 sm:gap-3">
                   <Link
                     href="/redundancy-calculator/"
-                    className="text-[14px] text-coral-ink hover:underline font-medium"
+                    className="inline-flex items-center min-h-[44px] sm:min-h-0 py-2 sm:py-0 text-[15px] sm:text-[14px] text-coral-ink hover:underline font-medium"
                   >
                     Redundancy Calculator →
                   </Link>
                   <span className="text-muted/40 hidden sm:inline">·</span>
                   <Link
                     href="/unfair-dismissal-calculator/"
-                    className="text-[14px] text-coral-ink hover:underline font-medium"
+                    className="inline-flex items-center min-h-[44px] sm:min-h-0 py-2 sm:py-0 text-[15px] sm:text-[14px] text-coral-ink hover:underline font-medium"
                   >
                     Unfair Dismissal Calculator →
                   </Link>
                   <span className="text-muted/40 hidden sm:inline">·</span>
                   <Link
                     href="/tribunal-backlog-tracker/"
-                    className="text-[14px] text-coral-ink hover:underline font-medium"
+                    className="inline-flex items-center min-h-[44px] sm:min-h-0 py-2 sm:py-0 text-[15px] sm:text-[14px] text-coral-ink hover:underline font-medium"
                   >
                     Tribunal Backlog Tracker →
                   </Link>
                   <span className="text-muted/40 hidden sm:inline">·</span>
                   <Link
                     href="/get-matched/"
-                    className="text-[14px] text-coral-ink hover:underline font-medium"
+                    className="inline-flex items-center min-h-[44px] sm:min-h-0 py-2 sm:py-0 text-[15px] sm:text-[14px] text-coral-ink hover:underline font-medium"
                   >
                     Find a Solicitor →
                   </Link>
@@ -688,7 +688,47 @@ export default function HomeClient({
           <section className="py-10 bg-paper border-y border-rule">
             <div className="sc-container">
               <span className="sc-eyebrow mb-4 block">Related guides</span>
-              <ul className="flex flex-wrap gap-3">
+
+              {/* Mobile: compact 5-row scannable list + progressive disclosure for remaining links */}
+              <div className="sm:hidden">
+                <ul className="divide-y divide-rule border-y border-rule">
+                  {pageLinks.slice(0, 5).map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="flex items-center justify-between gap-3 min-h-[48px] py-3 text-[15px] font-medium text-ink hover:text-coral transition-colors no-underline"
+                      >
+                        <span>{link.label}</span>
+                        <span className="text-coral shrink-0" aria-hidden="true">→</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                {pageLinks.length > 5 && (
+                  <details className="group mt-3">
+                    <summary className="list-none cursor-pointer inline-flex items-center gap-2 min-h-[44px] py-2 text-[14.5px] font-semibold text-coral-ink select-none">
+                      <span>Show all {pageLinks.length} calculators &amp; guides</span>
+                      <span className="transition-transform duration-150 group-open:rotate-180" aria-hidden="true">▾</span>
+                    </summary>
+                    <ul className="divide-y divide-rule border-t border-rule mt-1">
+                      {pageLinks.slice(5).map((link) => (
+                        <li key={link.href}>
+                          <Link
+                            href={link.href}
+                            className="flex items-center justify-between gap-3 min-h-[48px] py-3 text-[15px] font-medium text-ink hover:text-coral transition-colors no-underline"
+                          >
+                            <span>{link.label}</span>
+                            <span className="text-coral shrink-0" aria-hidden="true">→</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+              </div>
+
+              {/* Desktop / Tablet: full pill grid */}
+              <ul className="hidden sm:flex flex-wrap gap-3">
                 {pageLinks.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -724,7 +764,7 @@ export default function HomeClient({
                   Compare your offer against UK statutory baselines and see your net take-home in 7 questions. No email required.
                 </p>
               </div>
-              <Link href={ctaHref} className="btn-accent whitespace-nowrap self-start md:self-auto">
+              <Link href={ctaHref} className="btn-accent whitespace-nowrap w-full sm:w-auto sm:self-start md:self-auto min-h-[48px]">
                 {ctaLabel}
               </Link>
             </div>

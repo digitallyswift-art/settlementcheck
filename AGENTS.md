@@ -16,6 +16,9 @@ In your chat canvas:
   - `@stack-and-architecture` — Invokes Next.js App Router standards, Tailwind tokens, and tech stack guidelines.
   - `@pages-and-components` — Invokes component catalog, CRO rules, and Calculator-to-Results URL contracts.
   - `@calculator-and-data` — Invokes statutory formulas, Supabase database schemas, and OTP verification flows.
+  - `@refactoring-ui` — Invokes visual hierarchy, spacing, elevation, and Tailwind UI polish rules (within SettlementCheck brand tokens).
+  - `@web-typography` — Invokes typographic scale, line-height rhythm, readable measure, and responsive text legibility rules.
+  - `@ux-heuristics` — Invokes Nielsen's 10 heuristics, Krug's usability laws, cognitive load reduction, and WCAG accessibility audits.
   - Any file or directory (e.g., `@app/sitemap.ts`, `@components/Nav.tsx`).
 - **Trigger Actions with `/`**: Type `/` to run built-in actions:
   - `/plan` — Create a structured step-by-step roadmap before executing large SEO or feature migrations.
@@ -162,6 +165,15 @@ npm run audit:cro  # Runs adversarial CRO funnel audit & statistical significanc
 - `audit cro [route]` — Full GA4/GSC + desktop/mobile UX audit of a conversion page.
 - `diagnose dropoff [route]` — Pinpoints why engaged users stall before lead submission.
 - `review funnel mobile` — Audits the `375×812` mobile calculator-to-lead journey.
+
+### N. `refactoring-ui`
+Specialist in visual hierarchy, constrained spacing scales, elevation/shadows, contrast, and Tailwind component polish (operating strictly within SettlementCheck's `#0B1F3A`, `#D9603B`, and `#F7F4EE` tokens).
+
+### O. `web-typography`
+Specialist in heading-to-body type scales, line-height rhythm, readable line lengths (`45–75ch`), and responsive mobile/desktop text legibility aligned with `--text-body` in `app/globals.css`.
+
+### P. `ux-heuristics`
+Specialist in Nielsen's 10 usability heuristics, Steve Krug's "Don't Make Me Think" principles, form usability, single-CTA viewport discipline, and WCAG accessibility audits.
 
 ---
 
