@@ -131,25 +131,28 @@ export default function HomeClient({
       <main>
         <section
           id="calculator"
-          className="relative overflow-hidden pt-8 pb-12 sm:pt-10 md:py-[72px]"
+          className="relative overflow-hidden pt-5 pb-10 sm:pt-8 sm:pb-12 md:py-[72px]"
           style={{ background: '#F7F4EE' }}
         >
           <div className="sc-container relative">
             {alertBanner && (
-              <div className="mb-6 md:mb-8">
+              <div className="mb-5 md:mb-8">
                 {alertBanner}
               </div>
             )}
-            <div className="hero-grid grid gap-8 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
+            <div className="hero-grid grid gap-5 sm:gap-7 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
               <div className="flex flex-col min-w-0">
                 {/* Hero Pill / Statutory Rates & SRA Network Badge */}
-                <div className="flex flex-wrap items-center gap-2.5 mb-5">
-                  <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11.5px] sm:text-[12px] font-medium text-ink bg-white/70 shadow-sm backdrop-blur-sm">
+                <div className="flex flex-wrap items-center gap-2.5 mb-3.5 sm:mb-5">
+                  <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-3 py-1 sm:px-3.5 sm:py-1.5 text-[12px] font-medium text-ink bg-white/75 shadow-sm backdrop-blur-sm">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-coral"></span>
                     </span>
-                    <span>
+                    <span className="sm:hidden">
+                      <strong className="text-ink font-semibold">April 2026</strong> UK rates · £751/wk cap
+                    </span>
+                    <span className="hidden sm:inline">
                       Updated for <strong className="text-ink font-semibold">April 2026</strong> UK statutory rates
                     </span>
                   </div>
@@ -164,8 +167,8 @@ export default function HomeClient({
                   </span>
                 </div>
 
-                {/* SEO keyword eyebrow: carries primary keyword as visible text, H1 carries the core search intent */}
-                <p className="sc-eyebrow text-[11px] sm:text-[12px] leading-snug mb-2 md:mb-2.5" style={{ letterSpacing: '0.08em' }}>
+                {/* SEO keyword eyebrow: shown on desktop; hidden on mobile to eliminate pre-H1 vertical stack and early link leak */}
+                <p className="hidden lg:block sc-eyebrow text-[12px] leading-snug mb-2.5" style={{ letterSpacing: '0.08em' }}>
                   Independent UK Employment Settlement &amp;{' '}
                   <Link
                     href="/guides/compromise-agreement-calculator-uk/"
@@ -176,7 +179,7 @@ export default function HomeClient({
                   </Link>
                 </p>
 
-                <h1 className="sc-h1 mb-4 md:mb-5">
+                <h1 className="sc-h1 max-sm:text-[31px] max-sm:leading-[1.08] mb-3 sm:mb-4 md:mb-5">
                   {title || (
                     <>
                       How much should your<br />
@@ -186,7 +189,7 @@ export default function HomeClient({
                 </h1>
 
                 {lead ? (
-                  <p className="sc-lead m-0">{lead}</p>
+                  <p className="sc-lead max-sm:text-[16px] max-sm:leading-[1.48] m-0">{lead}</p>
                 ) : leadBullets ? (
                   <ul className="flex flex-col gap-3 pt-1">
                     {leadBullets.map(({ label, detail }, i) => (
@@ -256,14 +259,7 @@ export default function HomeClient({
 
               <div>
                 <div
-                  className="p-6 sm:p-9 flex flex-col"
-                  style={{
-                    borderRadius: 20,
-                    border: '1px solid rgba(11,31,58,0.10)',
-                    overflow: 'hidden',
-                    boxShadow: '0 24px 60px -12px rgba(11,31,58,0.22), 0 8px 24px -6px rgba(11,31,58,0.10)',
-                    background: 'linear-gradient(170deg, #F5F1E9 0%, #EDE8DF 30%, #E8E2D8 60%, #F0EDE6 100%)',
-                  }}
+                  className="p-0 lg:p-9 flex flex-col lg:rounded-[20px] lg:border lg:border-[#0B1F3A]/10 lg:overflow-hidden lg:shadow-[0_24px_60px_-12px_rgba(11,31,58,0.22),0_8px_24px_-6px_rgba(11,31,58,0.10)] lg:bg-[linear-gradient(170deg,#F5F1E9_0%,#EDE8DF_30%,#E8E2D8_60%,#F0EDE6_100%)]"
                 >
                   <span className="sc-eyebrow hidden lg:block mb-4">
                     Free calculator
@@ -275,7 +271,9 @@ export default function HomeClient({
                   <p className="hidden lg:block text-[16.5px] leading-[1.52] text-[#243247] mt-0 mb-6">
                     For draft offers, active exit talks, or redundancy notices. Seven questions, 60 seconds, no email required.
                   </p>
-                  <div className="order-2 lg:order-1 flex flex-col gap-3 mb-5 lg:mb-7">
+
+                  {/* Desktop checklist (unchanged) */}
+                  <div className="hidden lg:flex lg:order-1 flex-col gap-3 mb-7">
                     {[
                       'Check privately on any device with no email required',
                       'April 2026 statutory baselines (£751/wk cap) built in',
@@ -289,26 +287,50 @@ export default function HomeClient({
                       </div>
                     ))}
                   </div>
-                  <div className="order-1 lg:order-2 mb-5 lg:mb-3">
+
+                  {/* Primary CTA (thumb-zone on mobile, bottom of card on desktop) */}
+                  <div id="hero-primary-cta" className="order-1 lg:order-2 mb-4 lg:mb-3">
                     <Link
                       href={ctaHref}
-                      className="btn-accent w-full py-3.5 px-6 rounded-[10px]"
+                      className="btn-accent w-full min-h-[52px] py-3.5 px-6 rounded-[10px] text-[16px] font-bold shadow-sm"
                     >
                       {ctaLabel}
                     </Link>
                   </div>
 
-                  <div className="order-3 pt-3 border-t border-[#0B1F3A]/[0.08] mb-3 text-center">
-                    <span className="text-[14px] text-muted block mb-1">Already have a written draft?</span>
+                  {/* Mobile compact single-line trust points (zero duplication of April 2026 pill) */}
+                  <div className="order-2 lg:hidden flex flex-col gap-2 mb-4">
+                    {[
+                      'No email required · check privately in 60 seconds',
+                      'Independent · no law firm behind the maths',
+                      'No calls unless you ask · no data sold',
+                    ].map(label => (
+                      <div key={label} className="flex items-center gap-2">
+                        <span
+                          className="w-[18px] h-[18px] rounded-full flex items-center justify-center flex-shrink-0 text-coral-ink"
+                          style={{ background: 'rgba(217,96,59,0.12)' }}
+                        >
+                          <Check />
+                        </span>
+                        <span className="text-[13.5px] text-ink-2 leading-snug">{label}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Secondary path (now cleanly visible above the fold on mobile) */}
+                  <div className="order-3 pt-3 border-t border-[#0B1F3A]/[0.08] lg:mb-3 text-center">
+                    <span className="text-[13.5px] lg:text-[14px] text-muted lg:block lg:mb-1 mr-1.5 lg:mr-0">
+                      Have a written draft?
+                    </span>
                     <Link
                       href="/settlement-agreement-review/"
-                      className="inline-flex items-center gap-1 whitespace-nowrap text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
+                      className="inline-flex items-center gap-1 whitespace-nowrap text-[13.5px] lg:text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
                       60-second clause checklist →
                     </Link>
                   </div>
 
-                  <p className="order-3 text-[13.5px] text-muted text-center m-0 leading-[1.45]">
+                  <p className="hidden lg:block order-3 text-[13.5px] text-muted text-center m-0 leading-[1.45]">
                     No data sold. No calls unless you ask.
                   </p>
                 </div>

@@ -246,10 +246,10 @@ export default function HomePage() {
         title={
           <>
             Settlement Agreement<br />
-            <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Calculator UK</em> (2026 Rates)
+            <em style={{ fontStyle: 'italic', color: '#D9603B' }}>Calculator UK</em> (2026)
           </>
         }
-        lead="Got a draft settlement or compromise agreement? Compare your offer against April 2026 statutory baselines (£751/wk cap) for free. See your statutory redundancy, taxable notice pay, and tax-free amount in 7 questions."
+        lead="Compare your settlement or compromise offer against UK statutory baselines for free. See your redundancy pay, taxable notice pay, and tax-free amount in 60 seconds."
         statutoryRows={statutoryRows}
         pageLinks={[
           { href: '/calculator/', label: 'Settlement Agreement Calculator' },

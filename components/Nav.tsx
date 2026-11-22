@@ -1,9 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { LegalFeeAnnouncementBar } from '@/components/LegalFeeShieldBadge'
+
+const HERO_CTA_PATHS = new Set([
+  '/',
+  '/redundancy-calculator/',
+  '/unfair-dismissal-calculator/',
+  '/constructive-dismissal-calculator/',
+  '/settlement-agreement-tax-calculator/',
+])
 
 const CALCULATOR_LINKS = [
   {
@@ -84,11 +92,34 @@ const GUIDES_LINKS = [
 export default function Nav() {
   const pathname = usePathname()
   const isResultsPage = pathname?.startsWith('/results')
+  const hasHeroPrimaryCta = HERO_CTA_PATHS.has(pathname || '')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [calculatorsOpen, setCalculatorsOpen] = useState(false)
   const [guidesOpen, setGuidesOpen] = useState(false)
   const [mobileCalculatorsOpen, setMobileCalculatorsOpen] = useState(false)
   const [mobileGuidesOpen, setMobileGuidesOpen] = useState(false)
+  const [showMobileHeaderCta, setShowMobileHeaderCta] = useState(!hasHeroPrimaryCta)
+
+  useEffect(() => {
+    if (!hasHeroPrimaryCta) {
+      setShowMobileHeaderCta(true)
+      return
+    }
+    const target = document.getElementById('hero-primary-cta')
+    if (!target) {
+      setShowMobileHeaderCta(true)
+      return
+    }
+    setShowMobileHeaderCta(false)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowMobileHeaderCta(!entry.isIntersecting)
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [hasHeroPrimaryCta, pathname])
 
   return (
     <>
@@ -97,7 +128,7 @@ export default function Nav() {
         className="sticky top-0 z-50 border-b border-rule"
         style={{ background: 'rgba(247,244,238,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
       >
-        <div className="sc-container px-4 sm:px-6 xl:px-8 flex items-center justify-between gap-4 xl:gap-8 h-[68px]">
+        <div className="sc-container px-4 sm:px-6 xl:px-8 flex items-center justify-between gap-4 xl:gap-8 h-[56px] lg:h-[68px]">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0" aria-label="SettlementCheck home">
@@ -303,7 +334,11 @@ export default function Nav() {
           ) : (
             <Link
               href="/calculator/"
-              className="btn-accent text-[12.5px] sm:text-[14px] px-3 sm:px-4 py-2 whitespace-nowrap font-bold"
+              aria-hidden={!showMobileHeaderCta}
+              tabIndex={showMobileHeaderCta ? 0 : -1}
+              className={`btn-accent text-[12.5px] sm:text-[14px] px-3 sm:px-4 py-2 whitespace-nowrap font-bold transition-opacity duration-200 ${
+                showMobileHeaderCta ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+              }`}
             >
               Check my offer →
             </Link>
