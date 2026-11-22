@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import ReviewCallout from '@/components/ReviewCallout'
 import RelatedArticles from '@/components/RelatedArticles'
@@ -182,25 +183,39 @@ export default function SettlementAgreementTimelineGuide() {
               <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
-              <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">Settlement Agreement Timeline</span>
+              <span className="text-rule-strong text-xs">/</span>
+              <span className="text-xs font-medium text-muted tracking-wide uppercase">Settlement agreements</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>
-              Statutory Timelines &amp; Payout Rules
-            </p>
-            <h1 className="sc-h1 mb-5">
-              How Long Does a Settlement Agreement Take? UK 2026 Timeline &amp; Payout Dates
+            <h1 className="sc-h1 mb-4">
+              How Long Does a Settlement Agreement Take?
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40" />
-              <span>Updated for 2026/27 (SI 2026/310 &amp; Acas Code 4)</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40" />
-              <span>Last reviewed: October 2026</span>
-            </div>
-            <p className="sc-lead">
-              Receiving a settlement agreement offer brings immediate questions about timing. You need to know how long discussions will take, when you must respond, and when the funds will reach your bank account.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 &amp; ACAS Code 4
             </p>
+            <p className="sc-lead leading-relaxed">
+              Holding a draft settlement agreement and wondering what happens next? Most agreements conclude in one to three weeks, with payouts arriving 14 to 28 days after signing. Check your statutory baseline in 60 seconds with no email required, see each stage from offer to payroll, and prepare clear questions for an independent solicitor.
+            </p>
+          </div>
+        </section>
+
+        {/* Embedded Calculator Card (Immediately below Hero) */}
+        <section className="bg-card pt-12 pb-6">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How does your offer compare to the statutory baseline?"
+              subtitle="Compare your employer's opening figure against your calculated statutory baseline (£751/wk cap) and notice pay before signing."
+              disputeType="timeline"
+              statutoryPills={[
+                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Standard Timeline', value: '1 to 3 Weeks', statute: 'Offer to Signing' },
+                { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+              ]}
+              initialSalary={48000}
+              initialYears={4}
+              initialAge={38}
+              ctaText="Check my offer now →"
+            />
           </div>
         </section>
 
@@ -244,8 +259,8 @@ export default function SettlementAgreementTimelineGuide() {
             <ReviewCallout
               title="Holding a draft settlement agreement?"
               description="Before signing under tight deadlines, check how your offer compares against 2026 statutory rates, verify your £30,000 tax exemption, and check the employer's customary legal fee contribution."
-              ctaText="Check draft agreement terms →"
-              badge="Timeline & Clause Checker"
+              ctaText="Check my offer now →"
+              badge="April 2026 Statutory Check"
             />
           </div>
         </section>
@@ -256,7 +271,7 @@ export default function SettlementAgreementTimelineGuide() {
 
             {/* Section 1: Overview of the Settlement Agreement Timeline */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">How long does the settlement agreement process take?</h2>
+              <h2 className="guide-h2">1. How long does the settlement agreement process take?</h2>
               <p className="guide-body">
                 Most UK settlement agreements conclude within one to three weeks. If both sides agree on terms quickly, an exit can be finalised within 5 to 10 working days.
               </p>
@@ -290,7 +305,7 @@ export default function SettlementAgreementTimelineGuide() {
 
             {/* Section 2: Step-by-Step Visual Timeline Stages */}
             <div className="space-y-6">
-              <h2 className="guide-h2 text-[24px]">Step-by-step timeline stages from offer to payout</h2>
+              <h2 className="guide-h2">2. What happens at each stage from offer to payout?</h2>
               <p className="guide-body">
                 The settlement process follows six distinct stages. Understanding each stage helps you maintain control and plan your next professional steps.
               </p>
@@ -325,7 +340,7 @@ export default function SettlementAgreementTimelineGuide() {
                     Acas 10-day consideration and negotiation period
                   </h3>
                   <p className="text-[14px] text-muted leading-relaxed">
-                    Under ACAS Code of Practice 4 (para 12), ACAS recommends at least 10 calendar days as general guidance to consider the proposal, although under English contract law (<em>Routledge v Grant</em>) an employer may set shorter deadlines or withdraw an unaccepted offer. During this window, you compare the offer against statutory baselines. In 2026, the statutory redundancy pay cap is £751 per week (SI 2026/310), and the unfair dismissal compensatory cap is £123,543. Your instructed solicitor can explore adjustments on compensation, references, bonuses, or notice pay.
+                    Under ACAS Code of Practice 4 (para 12), ACAS recommends at least 10 calendar days as general guidance to consider the proposal. Under English contract law (<em>Routledge v Grant</em> and <em>Hyde v Wrench</em>), an employer may withdraw an unaccepted offer, and a counter-offer extinguishes the original offer. In 2026, the statutory redundancy pay cap is £751 per week (SI 2026/310) and the unfair dismissal compensatory cap is £123,543.
                   </p>
                 </div>
 
@@ -341,7 +356,7 @@ export default function SettlementAgreementTimelineGuide() {
                     Independent solicitor advice and adviser certificate
                   </h3>
                   <p className="text-[14px] text-muted leading-relaxed">
-                    Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is void unless you receive advice from a qualified, independent solicitor. Employers standardly provide a capped commercial contribution (typically £350 to £500+ + VAT) towards this advice upon agreement completion. Your solicitor explains the claims you are waiving, requests necessary clause amendments, and signs the adviser certificate.
+                    Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is void unless you receive advice from a qualified, independent solicitor. Employers standardly contribute £350 to £500+ plus VAT towards this advice upon completion, with excess or abortive work subject to your solicitor engagement terms.
                   </p>
                 </div>
 
@@ -389,7 +404,7 @@ export default function SettlementAgreementTimelineGuide() {
                     Payout release and payroll schedule
                   </h3>
                   <p className="text-[14px] text-muted leading-relaxed">
-                    Your employer releases your settlement funds according to the payment clause (typically within 14 to 28 days of the EDT or signature). Compensation payments up to £30,000 are paid free of tax and National Insurance under Section 403 ITEPA 2003. Any payment in lieu of notice (PILON) is taxed as normal earnings under post-employment notice pay rules. Your P45 is issued.
+                    Your employer releases your settlement funds according to the payment clause (typically within 14 to 28 days of the EDT or signature). Compensation up to £30,000 is paid free of tax under Section 403 ITEPA 2003. Any payment in lieu of notice (PILON) is taxed as wages under post-employment notice pay rules.
                   </p>
                 </div>
               </div>
@@ -398,26 +413,26 @@ export default function SettlementAgreementTimelineGuide() {
             {/* Visual Callout Box: Calculator CTA */}
             <div className="p-6 rounded-xl bg-paper-2 border border-rule">
               <h3 className="font-serif text-[19px] font-bold text-ink mb-2">
-                Calculate your estimated settlement package
+                Check your estimated settlement package
               </h3>
               <p className="text-[14px] text-muted leading-relaxed mb-4">
-                Before agreeing to dates or sums, calculate what you are entitled to under 2026 statutory rates, notice rules, and tax exemptions.
+                Before agreeing to dates or sums, check your calculated statutory baseline under 2026 rates, notice rules, and tax exemptions.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link href="/calculator/" className="btn-accent text-[13px] sm:text-[14px]">
-                  Calculate settlement estimate →
+                  Check my offer now →
                 </Link>
                 <Link href="/settlement-agreement-tax-calculator/" className="btn-secondary text-[13px] sm:text-[14px]">
-                  Check tax breakdown →
+                  Check my tax breakdown →
                 </Link>
               </div>
             </div>
 
             {/* Section 3: Critical Legal Traps & Safeguards */}
             <div className="space-y-6">
-              <h2 className="guide-h2 text-[24px]">Critical legal traps and statutory safeguards</h2>
+              <h2 className="guide-h2">3. What legal deadlines and safeguards apply?</h2>
               <p className="guide-body">
-                While settlement agreements provide a clean exit, misunderstandings about statutory deadlines can put your rights at risk. Keep these four legal protections in mind.
+                Misunderstandings about statutory deadlines can put your rights at risk. Keep these four legal protections in mind.
               </p>
 
               <div className="space-y-4">
@@ -430,7 +445,7 @@ export default function SettlementAgreementTimelineGuide() {
                         1. The 3-month minus 1 day tribunal limitation trap
                       </h3>
                       <p className="text-[14px] text-muted leading-relaxed">
-                        Under Section 18A of the Employment Tribunals Act 1996, you have strictly three months minus one day from your dismissal date to initiate Acas Early Conciliation. Settlement negotiations DO NOT stop or pause this clock. If an employer prolongs discussions close to this date, you must notify Acas to protect your right to bring an employment tribunal claim.
+                        Under Section 18A of the Employment Tribunals Act 1996, an employee has strictly three months minus one day from dismissal to initiate Acas Early Conciliation. Settlement talks do not pause this clock. Notifying Acas freezes the limitation period if discussions run close to the deadline.
                       </p>
                     </div>
                   </div>
@@ -445,7 +460,7 @@ export default function SettlementAgreementTimelineGuide() {
                         2. Artificial deadline pressure (48-hour ultimata)
                       </h3>
                       <p className="text-[14px] text-muted leading-relaxed">
-                        Some employers attempt to force quick signatures by giving 24-hour or 48-hour ultimatums. Under Section 111A(4) of the Employment Rights Act 1996, setting arbitrary deadlines and applying undue pressure constitutes improper behaviour. If an employer acts improperly, confidentiality protection is lost, meaning you can disclose the offer to an employment tribunal.
+                        Some employers issue 24-hour or 48-hour deadlines. Under Section 111A(4) ERA 1996, undue pressure can amount to improper behaviour, removing confidentiality protection in ordinary unfair dismissal claims. Note that Section 111A does not shield discrimination or whistleblowing claims.
                       </p>
                     </div>
                   </div>
@@ -460,7 +475,7 @@ export default function SettlementAgreementTimelineGuide() {
                         3. Late payment remedies and statutory interest
                       </h3>
                       <p className="text-[14px] text-muted leading-relaxed">
-                        A signed settlement agreement is an enforceable contract. If your employer fails to pay on the agreed date, you do not need to start employment tribunal proceedings. You can enforce the debt directly in the County Court or High Court as a breach of contract debt claim. You can also claim 8% statutory interest per annum under Section 69 of the County Courts Act 1984.
+                        A signed settlement agreement is an enforceable contract. If your employer misses the payment date, you can enforce the debt in the County Court or High Court and claim 8% statutory interest per annum under Section 69 of the County Courts Act 1984.
                       </p>
                     </div>
                   </div>
@@ -475,7 +490,7 @@ export default function SettlementAgreementTimelineGuide() {
                         4. HMRC payroll cutoff and P45 timing
                       </h3>
                       <p className="text-[14px] text-muted leading-relaxed">
-                        Employers process settlement payments through their regular payroll software. If an agreement vaguely states payment in the "next normal payroll run", missing a monthly payroll cutoff can delay your money by several weeks. Ensure your agreement states payment within 14 or 21 days of receipt of the signed adviser certificate. Your P45 must also be issued promptly to avoid emergency tax at your next role.
+                        If an agreement states payment in the &quot;next normal payroll run&quot;, missing a monthly cutoff can delay funds by weeks. Many employees ask their solicitor to specify payment within 14 or 21 days of the signed adviser certificate, alongside prompt P45 issue.
                       </p>
                     </div>
                   </div>
@@ -485,7 +500,7 @@ export default function SettlementAgreementTimelineGuide() {
 
             {/* Section 4: Structured Worked Timeline Comparison Table */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">Timeline comparison: simple agreed exit vs negotiated dispute</h2>
+              <h2 className="guide-h2">4. How does a simple exit compare to a negotiated dispute?</h2>
               <p className="guide-body">
                 The total time to reach a settlement varies widely depending on whether the terms are accepted or contested. The table below illustrates the standard timeframes.
               </p>
@@ -542,7 +557,7 @@ export default function SettlementAgreementTimelineGuide() {
 
             {/* Section 5: Tax Breakdown and Statutory Caps 2026 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">Tax rules and statutory compensation limits for 2026/27</h2>
+              <h2 className="guide-h2">5. What are the 2026/27 tax rules and statutory caps?</h2>
               <p className="guide-body">
                 The settlement amount and payment structure must comply with statutory limits and HMRC tax rules. In 2026, the statutory caps set the baseline for negotiation:
               </p>
@@ -580,9 +595,30 @@ export default function SettlementAgreementTimelineGuide() {
               </ul>
             </div>
 
+            {/* Bottom CTA */}
+            <div className="bg-ink rounded-2xl p-8 text-center mt-10">
+              <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+                Check where your offer stands
+              </h2>
+              <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+                See your calculated statutory baseline, tax split, and commercial settlement range before speaking to a solicitor.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link href="/calculator/" className="btn-accent">
+                  Check my offer now →
+                </Link>
+                <Link href="/redundancy-calculator/" className="btn-secondary">
+                  Calculate my redundancy →
+                </Link>
+              </div>
+              <p className="text-white/60 text-[12px] mt-4">
+                Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+              </p>
+            </div>
+
             {/* FAQ Section */}
             <div className="space-y-4 pt-10">
-              <h2 className="guide-h2 text-[24px]">Frequently Asked Questions</h2>
+              <h2 className="guide-h2">Frequently Asked Questions</h2>
               <div className="mt-4">
                 <FaqAccordion faqs={FAQS} />
               </div>

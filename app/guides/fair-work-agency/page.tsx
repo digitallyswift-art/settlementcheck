@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
@@ -28,19 +29,19 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: 'Is the Fair Work Agency the same as ACAS-based enforcement?',
-    a: 'No. ACAS-based enforcement refers to statutory dispute resolution and employment rights guidance used in settlement negotiations. The Fair Work Agency is a separate law enforcement body that will investigate breaches of statutory minimum rights (minimum wage, holiday pay, statutory sick pay) and can impose penalties on employers. The two serve different functions.',
+    a: 'No. ACAS provides dispute resolution and statutory guidance for settlement talks. The Fair Work Agency is a separate enforcement body for statutory minimum rights like minimum wage, holiday pay, and sick pay. They serve different functions.',
   },
   {
-    q: 'Can the Fair Work Agency help me if my employer underpays my settlement?',
-    a: 'The Fair Work Agency cannot enforce the terms of your settlement agreement directly. However, if your settlement fails to include statutory entitlements owed to you (such as holiday pay or minimum wage arrears), the FWA can investigate the employer for the underlying statutory breach. Disputes purely about settlement terms require legal action or an employment tribunal claim.',
+    q: 'Can the Fair Work Agency help if my settlement payout is too low?',
+    a: 'The Fair Work Agency cannot enforce the terms of a private settlement agreement. However, if your agreement omits unpaid statutory entitlements like holiday pay or minimum wage arrears, the FWA can investigate that statutory breach. Disputes about negotiated settlement terms require an employment tribunal claim or civil action.',
   },
   {
     q: 'What rights will the Fair Work Agency enforce?',
-    a: 'The FWA will enforce National Minimum Wage and National Living Wage, statutory holiday pay, statutory sick pay, notice period wages, and protections against modern slavery and labour trafficking. The full scope of powers will be confirmed when the commencement order is issued.',
+    a: 'The FWA will enforce National Minimum Wage, National Living Wage, statutory holiday pay, statutory sick pay, notice pay, and protections against labour trafficking. Its full scope will be confirmed in the statutory commencement order.',
   },
   {
     q: 'Does the Fair Work Agency apply to Scotland and Wales?',
-    a: 'The Fair Work Agency is established as a UK-wide body under the Employment Rights Bill 2024-25. Employment law is partly devolved in Scotland and Wales, so some variation in how FWA powers apply may exist. If you are employed outside England, confirm the position with a solicitor once the FWA has launched.',
+    a: 'The Fair Work Agency is established as a UK-wide body under the Employment Rights Bill 2024-25. Because some employment matters vary across Scotland and Wales, check the position with an independent solicitor once the FWA launches.',
   },
 ]
 
@@ -100,42 +101,65 @@ export default function FairWorkAgencyGuide() {
               <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
-              <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">Fair Work Agency</span>
+              <span className="text-rule-strong text-xs">/</span>
+              <span className="text-xs font-medium text-muted tracking-wide uppercase">Fair Work Agency</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>UK Employment Law Guide</p>
-            <h1 className="sc-h1 mb-5">
+            <h1 className="sc-h1 mb-4">
               What is the Fair Work Agency and does it affect my settlement agreement?
             </h1>
-            <p className="sc-lead">
-              The Fair Work Agency (FWA) is a planned UK enforcement body established under the Employment Rights Bill 2024-25 to enforce workers' rights including minimum wage, holiday pay, and statutory sick pay. It is not yet operational as of 2026. The FWA will consolidate enforcement functions currently held by several separate bodies into a single point of accountability.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against Employment Rights Bill 2024-25
+            </p>
+            <p className="sc-lead leading-relaxed">
+              Wondering if the new Fair Work Agency changes your settlement agreement? The FWA is a planned UK enforcement body under the Employment Rights Bill 2024-25, not yet operational in 2026. Check your statutory baseline in 60 seconds with no email required, see what the FWA will cover, and prepare clear questions for an independent solicitor.
             </p>
             <div className="mt-6 rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
-              <p className="text-body text-ink">
-                The Fair Work Agency is provided for under the Employment Rights Bill 2024-25 but has not yet commenced operations. No launch date has been confirmed. Do not rely on FWA enforcement until statutory commencement orders are issued.
+              <p className="text-[14px] text-ink leading-relaxed">
+                The Fair Work Agency is set out in the Employment Rights Bill 2024-25, but no launch date is confirmed. FWA enforcement powers will only take effect once statutory commencement orders are issued.
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* Embedded Calculator */}
+        <section className="py-10 bg-card border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How does your offer compare to the statutory baseline?"
+              subtitle="Check your calculated statutory baseline, notice pay, and tax-free split under current April 2026 UK limits."
+              disputeType="general"
+              statutoryPills={[
+                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Tax-Free Exemption', value: '£30,000', statute: 'ITEPA 2003 s.403' },
+                { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+              ]}
+              initialSalary={45000}
+              initialYears={4}
+              initialAge={38}
+              ctaText="Check my offer now →"
+            />
           </div>
         </section>
 
         {/* What it will do */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What the Fair Work Agency will do</h2>
-            <p className="sc-body mb-6">
-              The Fair Work Agency is designed to enforce statutory minimum working standards across all sectors. It will carry out workplace inspections, investigate complaints, issue enforcement notices, and take legal action against employers who breach workers' rights.
+            <h2 className="guide-h2 mb-4">What will the Fair Work Agency do?</h2>
+            <p className="guide-body mb-6">
+              The Fair Work Agency will enforce statutory minimum working standards across UK sectors. It will run workplace inspections, investigate complaints, issue notices, and take action against employers who breach minimum rights.
             </p>
             <ul className="flex flex-col gap-3">
               {[
                 'Enforce National Minimum Wage and National Living Wage compliance across all sectors.',
                 'Investigate breaches of holiday pay and statutory sick pay entitlements.',
-                'Conduct workplace inspections and require employers to produce evidence of compliance.',
+                'Conduct workplace inspections and require employers to produce compliance records.',
                 'Issue financial penalties, enforcement notices, and prosecute serious breaches.',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="sc-body">{item}</span>
+                  <span className="text-[15px] text-ink leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
@@ -145,9 +169,9 @@ export default function FairWorkAgencyGuide() {
         {/* Which bodies it replaces */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Which bodies the Fair Work Agency replaces</h2>
-            <p className="sc-body mb-6">
-              The FWA consolidates enforcement responsibilities currently held by separate bodies. This removes the fragmented system where different agencies covered different areas of statutory compliance.
+            <h2 className="guide-h2 mb-4">Which enforcement bodies does the Fair Work Agency replace?</h2>
+            <p className="guide-body mb-6">
+              The FWA brings together enforcement powers currently split across separate bodies. This replaces the older system where different agencies handled different statutory rights.
             </p>
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
@@ -179,15 +203,15 @@ export default function FairWorkAgencyGuide() {
         {/* Settlement impact */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Does the Fair Work Agency affect my settlement agreement?</h2>
-            <p className="sc-body mb-4">
-              The Fair Work Agency enforces statutory minimum standards, not settlement agreement terms. Your settlement is a private contract between you and your employer. The FWA cannot intervene in disputes about settlement payment amounts or negotiated terms.
+            <h2 className="guide-h2 mb-4">Does the Fair Work Agency affect my settlement agreement?</h2>
+            <p className="guide-body mb-4">
+              The Fair Work Agency enforces statutory minimum standards, not private settlement terms. Your settlement agreement is a contract between you and your employer, so the FWA cannot settle disputes over negotiated amounts.
             </p>
-            <p className="sc-body mb-4">
-              However, if your settlement includes amounts below statutory minimums (for example, if holiday pay owed is excluded from the settlement), the FWA can take action against your employer for the underlying statutory breach. A settlement agreement cannot remove your statutory rights.
+            <p className="guide-body mb-4">
+              However, if an agreement omits unpaid statutory entitlements like holiday pay or minimum wage arrears, the FWA can investigate the underlying statutory breach. Under Section 203(3) of the Employment Rights Act 1996, an independent solicitor must advise you before a waiver is valid, with employers standardly contributing £350 to £500+ plus VAT upon completion (excess or abortive work is subject to your solicitor engagement terms).
             </p>
-            <p className="sc-body">
-              For disputes about whether your offer meets standard benchmarks, see our guide on{' '}
+            <p className="guide-body">
+              To check how your offer compares to UK benchmarks, see our guide on{' '}
               <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
                 what makes a settlement agreement fair
               </Link>{' '}
@@ -202,16 +226,16 @@ export default function FairWorkAgencyGuide() {
         {/* Launch timeline */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">When will the Fair Work Agency launch?</h2>
-            <p className="sc-body mb-4">
-              The Employment Rights Bill 2024-25 establishes the agency framework, but no statutory commencement order has been issued as of 2026. The Government must publish an official commencement order before the FWA has operational powers.
+            <h2 className="guide-h2 mb-4">When will the Fair Work Agency launch?</h2>
+            <p className="guide-body mb-4">
+              The Employment Rights Bill 2024-25 sets out the agency framework, but no statutory commencement order has been issued as of 2026. The Government must publish a commencement order before the FWA can use its powers.
             </p>
-            <p className="sc-body">
-              Announcements about the FWA launch date are expected as 2026 progresses. If you are currently negotiating an exit or facing dismissal, you should read our guide on{' '}
+            <p className="guide-body">
+              Updates on the launch date are expected as 2026 progresses. If you are currently negotiating an exit or facing redundancy, see our guide on{' '}
               <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
                 how to negotiate a settlement agreement
               </Link>{' '}
-              rather than waiting for regulatory agency changes.
+              rather than waiting for agency changes.
             </p>
           </div>
         </section>
@@ -219,23 +243,30 @@ export default function FairWorkAgencyGuide() {
         {/* CTA */}
         <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">Not sure what your settlement is worth?</h2>
-            <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              The free calculator applies April 2026 statutory rates and shows your estimated net take-home in under two minutes.
+            <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+              Check where your offer stands
+            </h2>
+            <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+              See your calculated statutory baseline, tax split, and commercial settlement range before speaking to a solicitor.
             </p>
-            <Link
-              href="/calculator/"
-              className="btn-accent"
-            >
-              Calculate my settlement
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/calculator/" className="btn-accent">
+                Check my offer now →
+              </Link>
+              <Link href="/redundancy-calculator/" className="btn-secondary">
+                Calculate my redundancy →
+              </Link>
+            </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
 
         {/* FAQs */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
+            <h2 className="guide-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
 
             {/* Related Articles Component */}
@@ -257,7 +288,7 @@ export default function FairWorkAgencyGuide() {
                 {
                   href: '/guides/how-to-negotiate-a-settlement-agreement/',
                   title: 'How to Negotiate a Settlement Agreement',
-                  description: 'Negotiation strategy, Without Prejudice rules, and practical steps to submit a counter-offer.',
+                  description: 'How settlement talks work, without prejudice rules, and legal fee contributions.',
                   tag: 'Negotiation',
                 },
                 {
@@ -274,16 +305,16 @@ export default function FairWorkAgencyGuide() {
         {/* References */}
         <section className="py-12 bg-paper">
           <div className="max-w-2xl mx-auto px-5">
-            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Statutory Framework & Government Sources</h3>
+            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Statutory Framework &amp; Government Sources</h3>
             <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
               <li>
                 <a href="https://bills.parliament.uk/bills/3737" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
-                  UK Parliament: Employment Rights Bill (Establishing the Fair Work Agency & enforcement powers)
+                  UK Parliament: Employment Rights Bill (Establishing the Fair Work Agency &amp; enforcement powers)
                 </a>
               </li>
               <li>
                 <a href="https://www.gov.uk/government/organisations/department-for-business-and-trade" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
-                  Department for Business and Trade (DBT) – Labour Market Enforcement Directives
+                  Department for Business and Trade (DBT) - Labour Market Enforcement Directives
                 </a>
               </li>
               <li>
@@ -298,7 +329,7 @@ export default function FairWorkAgencyGuide() {
               </li>
             </ol>
             <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
-              <strong>Disclaimer:</strong> SettlementCheck is an independent information service and calculation tool. We are not affiliated with the UK Government or any public enforcement agency. This guide provides factual analysis on labor market enforcement reforms and does not constitute formal legal counsel.
+              <strong>Disclaimer:</strong> SettlementCheck is an independent information service and calculation tool. We are not affiliated with the UK Government or any public enforcement agency. This guide provides factual analysis on labour market enforcement reforms and does not constitute formal legal counsel.
             </div>
           </div>
         </section>

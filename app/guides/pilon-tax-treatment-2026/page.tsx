@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
+import RelatedArticles from '@/components/RelatedArticles'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
@@ -34,19 +35,19 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: 'Is PILON always taxable?',
-    a: 'Yes, PILON is always fully taxable. You must pay income tax and National Insurance contributions on any notice pay you receive.',
+    a: 'Yes, PILON is always fully taxable. You pay income tax and National Insurance contributions on any notice pay you receive.',
   },
   {
     q: 'Can I use the £30,000 tax-free limit for my notice pay?',
-    a: 'No, you cannot. The £30,000 exemption only applies to redundancy and compensation payments, not to notice pay.',
+    a: 'No. The £30,000 exemption under ITEPA 2003 s.403 applies to redundancy and ex-gratia compensation payments, not to notice pay.',
   },
   {
     q: 'How is notice pay tax calculated?',
-    a: 'Your employer calculates the tax using the Post-Employment Notice Pay formula. This formula determines the pay you would have received if you worked your notice.',
+    a: 'Employers calculate the tax using the Post-Employment Notice Pay (PENP) formula. This formula determines the basic pay you would have received if you had worked your notice.',
   },
   {
     q: 'What happens if my contract has no PILON clause?',
-    a: 'The tax treatment is the same. HMRC taxes notice pay as general earnings even if your contract does not mention PILON.',
+    a: 'The tax treatment is the same. HMRC taxes notice pay as general earnings under ITEPA 2003 s.402D even if your contract does not mention PILON.',
   },
 ]
 
@@ -146,19 +147,36 @@ export default function PilonTaxTreatmentGuide() {
               <span className="text-xs text-ink truncate">PILON Tax Treatment 2026</span>
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Tax Guide</p>
-            <h1 className="sc-h1 mb-5">
+            <h1 className="sc-h1 mb-4">
               PILON Tax Treatment UK 2026: Pay in Lieu of Notice is Fully Taxable
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Last reviewed: July 2026</span>
-            </div>
-            <p className="sc-lead">
-              No, Pay in Lieu of Notice (PILON) is not tax-free. Under Section 402D of the Income Tax (Earnings and Pensions) Act 2003 <sup>1</sup>, all notice pay is fully taxable. It does not qualify for the £30,000 tax-free threshold <sup>2</sup>. This rule continues under the April 2026 statutory update <sup>3</sup>. Your employer must deduct tax and National Insurance from your PILON.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ITEPA 2003 s.402D &amp; s.403
             </p>
+            <p className="sc-lead leading-relaxed">
+              Got a draft settlement agreement with a Pay in Lieu of Notice (PILON) clause? Unlike genuine redundancy or ex-gratia sums, notice pay is taxed as wages under ITEPA 2003 s.402D. Check your statutory baseline and tax split in 60 seconds with no email required, whether you are on garden leave or leaving immediately.
+            </p>
+          </div>
+        </section>
+
+        {/* Interactive Statutory Micro-Tool (Immediately below Hero) */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How much of your settlement is taxable notice pay?"
+              subtitle="Compare your PILON and garden leave pay against the £30,000 ex-gratia exemption under April 2026 UK rates."
+              disputeType="pilon_tax"
+              statutoryPills={[
+                { label: 'Notice Tax Rule', value: '100% Taxable', statute: 'ITEPA 2003 s.402D' },
+                { label: 'Ex-Gratia Shield', value: 'First £30,000 Free', statute: 'ITEPA 2003 s.403' },
+                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+              ]}
+              initialSalary={50000}
+              initialYears={4}
+              initialAge={36}
+              ctaText="Check my offer now →"
+            />
           </div>
         </section>
 
@@ -178,7 +196,7 @@ export default function PilonTaxTreatmentGuide() {
                 Is PILON taxable in a UK settlement agreement?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                Yes, Pay in Lieu of Notice (PILON) is always fully taxable in the UK. HMRC treats all notice pay as general earnings under Section 402D of ITEPA 2003. You pay income tax and National Insurance on the full amount. Notice pay cannot be included inside the £30,000 tax-free exemption.
+                Yes. Pay in Lieu of Notice (PILON) is always taxed as wages in the UK. HMRC treats all notice pay as general earnings under Section 402D of ITEPA 2003. It cannot be placed inside the £30,000 tax-free exemption.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -201,7 +219,7 @@ export default function PilonTaxTreatmentGuide() {
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Contribution</span>
                   <span className="font-bold text-ink text-sm">100% Tax-Exempt</span>
-                  <span className="text-muted text-[11px]">Your employer pays your solicitor fees</span>
+                  <span className="text-muted text-[11px]">£350 to £500+ plus VAT upon completion</span>
                 </div>
               </div>
 
@@ -225,32 +243,11 @@ export default function PilonTaxTreatmentGuide() {
           </div>
         </section>
 
-        {/* Interactive Statutory Micro-Tool */}
-        <section className="py-6 bg-paper-2 border-b border-rule">
-          <div className="max-w-2xl mx-auto px-5">
-            <EmbeddedCalculatorCard
-              badge="PILON & Take-Home Tax Engine"
-              title="Calculate Your Net Take-Home After PILON Tax & £30k Exemption"
-              subtitle="See how much of your package is taxed as earnings (PENP) versus shielded under the £30,000 threshold."
-              disputeType="pilon_tax"
-              statutoryPills={[
-                { label: 'Notice Tax Rule', value: '100% Taxable', statute: 'ITEPA 2003 s.402D' },
-                { label: 'Ex-Gratia Shield', value: 'First £30,000 Free', statute: 'ITEPA 2003 s.403' },
-                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
-              ]}
-              initialSalary={50000}
-              initialYears={4}
-              initialAge={36}
-              ctaText="Calculate My Net Settlement Payout →"
-            />
-          </div>
-        </section>
-
         {/* Key takeaways callout */}
         <section className="py-10 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-white p-5">
-              <p className="text-body font-semibold text-ink mb-3">Key tax rules for PILON</p>
+              <p className="text-[15px] font-semibold text-ink mb-3">Key tax rules for PILON</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'All notice pay is taxable as earnings, regardless of your contract terms.',
@@ -270,18 +267,18 @@ export default function PilonTaxTreatmentGuide() {
         {/* How PILON is taxed */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Is PILON taxable?</h2>
+            <h2 className="guide-h2 mb-4">Is Pay in Lieu of Notice (PILON) taxable?</h2>
             <div className="sc-body mb-6 bg-paper p-5 rounded-xl border border-rule font-medium">
-              Yes, Pay in Lieu of Notice (PILON) is fully taxable in the UK. Under Section 402D of the Income Tax (Earnings and Pensions) Act 2003, all notice pay is treated as general earnings. You must pay income tax and National Insurance on the entire notice payment, and it cannot be paid tax-free.
+              Yes. Pay in Lieu of Notice (PILON) is fully taxable in the UK. Under Section 402D of ITEPA 2003, all notice pay is treated as general earnings. You pay income tax and National Insurance on the full amount.
             </div>
             <p className="sc-body mb-4">
-              Your notice period is the time between being told your job will end and your final day. Sometimes, your employer does not want you to work this period. They can choose to pay you instead. This payment is called Pay in Lieu of Notice, or PILON.
+              Your notice period is the time between being told your role will end and your final day. Sometimes an employer asks you to leave immediately or places you on garden leave instead. If they pay a lump sum rather than having you work, that payment is PILON.
             </p>
             <p className="sc-body mb-4">
-              All notice pay is taxed as normal salary. You must pay income tax and National Insurance on the full amount. This applies whether your contract allows PILON or not.
+              All notice pay is taxed as wages. You pay income tax and National Insurance on the full sum, whether your contract includes a PILON clause or not.
             </p>
             <p className="sc-body">
-              This tax rule comes from Section 402D of the Income Tax (Earnings and Pensions) Act 2003 <sup>1</sup>. HMRC calls this Post-Employment Notice Pay. It ensures that employees pay the same tax on notice whether they work it or not.
+              This rule comes from Section 402D of the Income Tax (Earnings and Pensions) Act 2003 <sup>1</sup>. HMRC calls this Post-Employment Notice Pay (PENP). It ensures employees pay the same tax on notice whether they work it or not.
             </p>
           </div>
         </section>
@@ -289,9 +286,9 @@ export default function PilonTaxTreatmentGuide() {
         {/* The £30,000 threshold */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">The £30,000 Tax-Free Exemption: What Qualifies?</h2>
+            <h2 className="guide-h2 mb-4">Which payments qualify for the £30,000 tax-free limit?</h2>
             <p className="sc-body mb-6">
-              UK law allows you to receive up to £30,000 of your termination payment tax-free <sup>2</sup>. However, you cannot apply this exemption to PILON.
+              UK law allows you to receive up to £30,000 of genuine termination compensation tax-free <sup>2</sup>. However, you cannot apply this exemption to PILON.
             </p>
             <p className="sc-body mb-4">
               Only certain parts of a settlement agreement qualify for the £30,000 tax-free limit. These include:
@@ -301,11 +298,11 @@ export default function PilonTaxTreatmentGuide() {
                 Statutory redundancy pay, which is capped at £22,530 in Great Britain <sup>4</sup> (see our <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">Redundancy Pay Cap Guide</Link>).
               </li>
               <li className="sc-body text-sm">
-                Ex-gratia payments, which are discretionary compensation payments.
+                Ex-gratia payments, which are discretionary compensation payments for loss of office.
               </li>
             </ul>
             <p className="sc-body">
-              Other payments are always taxed as earnings. These include notice pay, holiday pay, and bonuses. Your employer must deduct tax from these before paying you.
+              Other payments are always taxed as wages. These include notice pay, accrued holiday pay, and contractual bonuses. Your employer deducts tax from these before paying you.
             </p>
           </div>
         </section>
@@ -313,9 +310,9 @@ export default function PilonTaxTreatmentGuide() {
         {/* Table of components */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Tax Treatment of Settlement Agreement Components</h2>
+            <h2 className="guide-h2 mb-4">How is each settlement agreement component taxed?</h2>
             <p className="sc-body mb-6">
-              A settlement agreement often breaks down your payments into different categories. Each category has its own statutory tax rules.
+              A settlement agreement often breaks down your payments into separate categories. Each category has its own statutory tax rules.
             </p>
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
@@ -335,7 +332,7 @@ export default function PilonTaxTreatmentGuide() {
                       'Taxed as general earnings under Section 402D <sup>1</sup>',
                     ],
                     [
-                      <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">Statutory Redundancy</Link>,
+                      <Link key="srp" href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">Statutory Redundancy</Link>,
                       'Tax-free up to £30,000 <sup>2</sup>',
                       'Capped at £22,530 in GB <sup>4, 6</sup> and £23,490 in NI <sup>5</sup>',
                     ],
@@ -368,7 +365,7 @@ export default function PilonTaxTreatmentGuide() {
                     <tr key={i} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
                       <td className="px-4 py-3 text-ink font-medium">{component}</td>
                       <td className="px-4 py-3 text-ink">{treatment}</td>
-                      <td className="px-4 py-3 text-ink" dangerouslySetInnerHTML={{ __html: limit }} />
+                      <td className="px-4 py-3 text-ink" dangerouslySetInnerHTML={{ __html: String(limit) }} />
                     </tr>
                   ))}
                 </tbody>
@@ -380,7 +377,7 @@ export default function PilonTaxTreatmentGuide() {
         {/* Worked Examples */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Worked Examples: How PILON Affects Your Take-Home Pay</h2>
+            <h2 className="guide-h2 mb-4">How does PILON affect your take-home pay in practice?</h2>
             <p className="sc-body mb-6">
               These three examples show how notice pay and redundancy are taxed in a settlement agreement.
             </p>
@@ -389,35 +386,32 @@ export default function PilonTaxTreatmentGuide() {
                 {
                   title: 'Example 1: Redundancy with No PILON (Notice Worked)',
                   points: [
-                    'You are redundant. You work your full notice period. You receive a statutory redundancy payment of £8,000.',
-                    'Your notice pay is paid through payroll. You pay tax and National Insurance on it as usual.',
-                    'Your £8,000 redundancy payment is paid tax-free. This is because it is below the £30,000 threshold.',
+                    'You are redundant and work your full notice period. You receive a statutory redundancy payment of £8,000.',
+                    'Your notice pay is paid through payroll as normal salary. You pay tax and National Insurance on it as usual.',
+                    'Your £8,000 redundancy payment is paid tax-free because it sits below the £30,000 threshold.',
                   ],
                 },
                 {
                   title: 'Example 2: Redundancy with PILON (Notice Paid in Lieu)',
                   points: [
-                    'You are redundant. Your employer asks you to leave immediately. They pay you £4,000 in lieu of notice.',
-                    'They also pay you a £10,000 ex-gratia payment and £5,000 statutory redundancy pay.',
+                    'You are redundant and leave immediately. Your employer pays £4,000 in lieu of notice.',
+                    'You also receive a £10,000 ex-gratia payment and £5,000 statutory redundancy pay.',
                     'Your £4,000 PILON is fully taxable. Your employer deducts tax and National Insurance from it.',
-                    'The £10,000 ex-gratia payment and £5,000 redundancy pay are combined. This totals £15,000.',
-                    'This £15,000 is paid tax-free. It falls below the £30,000 exemption limit.',
+                    'The £10,000 ex-gratia sum and £5,000 redundancy pay total £15,000. This £15,000 is paid tax-free under the £30,000 limit.',
                   ],
                 },
                 {
                   title: 'Example 3: Settlement Agreement Exceeding the £30,000 Limit',
                   points: [
-                    'You sign a settlement agreement. You receive £5,000 PILON.',
-                    'You also receive £35,000 as ex-gratia compensation.',
+                    'You sign a settlement agreement with £5,000 PILON and £35,000 as ex-gratia compensation.',
                     'Your £5,000 PILON is fully taxable. Your employer deducts tax and National Insurance.',
-                    'The £35,000 ex-gratia payment exceeds the £30,000 limit. The first £30,000 is tax-free.',
-                    'The remaining £5,000 is taxable. Your employer deducts tax from this excess amount.',
+                    'The first £30,000 of the ex-gratia payment is tax-free. The remaining £5,000 is subject to income tax.',
                   ],
                 },
               ].map(({ title, points }) => (
                 <div key={title} className="rounded-xl border border-rule overflow-hidden">
                   <div className="bg-ink px-4 py-3">
-                    <p className="text-white text-body font-medium">{title}</p>
+                    <p className="text-white text-[15px] font-medium">{title}</p>
                   </div>
                   <div className="p-4 bg-paper flex flex-col gap-2">
                     {points.map((point, index) => (
@@ -433,23 +427,20 @@ export default function PilonTaxTreatmentGuide() {
         {/* PENP formula and checking offer */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">How Employers Calculate Notice Pay Tax: What to Check</h2>
+            <h2 className="guide-h2 mb-4">How do employers calculate notice pay tax (PENP)?</h2>
             <p className="sc-body mb-4">
-              Your employer must use the Post-Employment Notice Pay (PENP) formula to calculate the tax <sup>1</sup>. This formula is complex.
+              Employers must use the Post-Employment Notice Pay (PENP) formula to calculate tax on unworked notice <sup>1</sup>. It measures the basic pay you would have earned during your notice period.
             </p>
             <p className="sc-body mb-4">
-              It calculates how much basic pay you would have earned if you worked your notice. This portion is taxed as earnings.
-            </p>
-            <p className="sc-body mb-4">
-              Any remaining compensation can be paid tax-free under the £30,000 limit. You should check your settlement agreement terms.
+              That PENP portion is taxed as wages. Any remaining genuine compensation can sit inside the £30,000 tax-free limit.
             </p>
             <p className="sc-body mb-6">
-              Make sure the agreement separates notice pay from compensation. This prevents HMRC from taxing the whole amount. If you are unsure of the numbers, you can check your offer.
+              Check how your draft agreement separates notice pay from ex-gratia compensation. Clear wording helps prevent payroll from taxing the full package.
             </p>
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3">
               <InfoIcon />
               <p className="sc-body">
-                You can <Link href="/redundancy-calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check your offer</Link> to find out where you stand.
+                You can <Link href="/calculator/" className="text-coral underline hover:text-ink transition-colors font-semibold">check my offer now →</Link> to see your statutory baseline and tax split.
               </p>
             </div>
           </div>
@@ -458,12 +449,12 @@ export default function PilonTaxTreatmentGuide() {
         {/* Solicitor's fees */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Who Pays the Legal Fees for Your Settlement Agreement?</h2>
+            <h2 className="guide-h2 mb-4">Who pays the legal fees for a settlement agreement?</h2>
             <p className="sc-body mb-4">
-              Employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. Under UK law, a settlement agreement is only legally binding if an independent solicitor advises you.
+              Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. Under Section 203(3) of the Employment Rights Act 1996, the agreement is only binding once an independent solicitor advises you.
             </p>
             <p className="sc-body">
-              Your employer pays this contribution directly to your solicitor upon completion of the agreement.
+              This contribution is tax-exempt under ITEPA 2003 s.413A and does not use up your £30,000 limit. Abortive costs or work beyond the agreed cap remain subject to your solicitor&apos;s engagement terms.
             </p>
           </div>
         </section>
@@ -471,42 +462,39 @@ export default function PilonTaxTreatmentGuide() {
         {/* Over-taxation steps */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What to Do if Your Employer Over-Taxes Your Notice Pay</h2>
+            <h2 className="guide-h2 mb-4">What can you check if your notice pay looks over-taxed?</h2>
             <p className="sc-body mb-6">
-              Employers sometimes make mistakes. They might tax the entire settlement agreement by mistake. Here is what to do:
+              Payroll errors sometimes treat an entire termination payment as taxable wages. These practical checks help you and your solicitor review the figures before completion:
             </p>
             <ol className="flex flex-col gap-6">
               {[
                 {
                   n: 1,
-                  title: 'Ask for a detailed breakdown',
-                  body: 'Your employer must show the PENP calculation. Request a written breakdown from payroll.',
+                  title: 'Review the PENP breakdown',
+                  body: 'Payroll calculations usually show how the PENP formula was applied. A written breakdown shows whether notice pay was separated from compensation.',
                 },
                 {
                   n: 2,
-                  title: 'Check the calculations against your contract',
-                  body: 'Confirm your notice period and basic pay. Verify if they used the correct notice duration.',
+                  title: 'Check the notice period against your contract',
+                  body: 'Confirm your contractual notice period, any garden leave already served, and your basic pay figure.',
                 },
                 {
                   n: 3,
-                  title: 'Request a correction before signing',
-                  body: 'If there is an error, request a correction before signing. A solicitor can help you resolve this.',
+                  title: 'Raise discrepancies with your solicitor',
+                  body: 'An independent solicitor can review the tax split clauses and raise any calculation errors before the agreement is signed.',
                 },
               ].map(({ n, title, body }) => (
                 <li key={n} className="flex gap-4">
                   <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
-                    <p className="text-body font-semibold text-ink mb-1">{title}</p>
+                    <p className="text-[15px] font-semibold text-ink mb-1">{title}</p>
                     <p className="sc-body">{body}</p>
                   </div>
                 </li>
               ))}
             </ol>
-            <p className="text-body text-muted mt-6 italic">
+            <p className="text-[14px] text-muted mt-6 italic">
               Disclaimer: The information on this page is for general guidance only and does not constitute formal legal or tax advice. Legal and tax rules can vary depending on your contract and individual circumstances.
-            </p>
-            <p className="sc-body mt-6">
-              Remember, employers standardly provide a capped contribution towards your solicitor&apos;s legal fees upon completion.
             </p>
           </div>
         </section>
@@ -514,21 +502,74 @@ export default function PilonTaxTreatmentGuide() {
         {/* CTA */}
         <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">Check your settlement agreement tax now</h2>
-            <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              Enter your details to calculate your statutory baseline and verify how your notice pay is taxed.
+            <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+              Check where your offer stands
+            </h2>
+            <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+              Enter your details to check your statutory baseline and see how your notice pay is taxed.
             </p>
-            <Link href="/redundancy-calculator/" className="btn-accent">
-              Check my offer
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/calculator/" className="btn-accent">
+                Check my offer now →
+              </Link>
+              <Link href="/redundancy-calculator/" className="btn-secondary">
+                Calculate my redundancy →
+              </Link>
+            </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
 
         {/* FAQs */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
+            <h2 className="guide-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+            <div className="pt-8">
+              <RelatedArticles
+                title="Related Guides & Calculations"
+                items={[
+                  {
+                    href: '/guides/tax-free-settlement-30000/',
+                    title: 'The £30,000 Tax-Free Settlement Rule',
+                    description: 'Learn how redundancy pay, PILON, and ex-gratia sums are taxed under ITEPA 2003 s.403.',
+                    tag: 'Tax Guide',
+                  },
+                  {
+                    href: '/penp-calculator/',
+                    title: 'PENP Calculator UK',
+                    description: 'Calculate your Post-Employment Notice Pay under ITEPA 2003 s.402D.',
+                    tag: 'Calculator',
+                  },
+                  {
+                    href: '/settlement-agreement-tax-calculator/',
+                    title: 'Settlement Agreement Tax Calculator',
+                    description: 'Split your settlement offer into taxable wages and tax-free compensation.',
+                    tag: 'Calculator',
+                  },
+                  {
+                    href: '/guides/hmrc-tax-return-declaration/',
+                    title: 'Declare Settlement on UK Tax Return',
+                    description: 'Box-by-box SA100 and SA102 reporting guide and tax indemnity checks.',
+                    tag: 'Tax Reporting',
+                  },
+                  {
+                    href: '/guides/redundancy-pay-cap-2026/',
+                    title: 'UK Redundancy Pay Cap 2026 (£751/wk)',
+                    description: 'Check the April 2026 weekly pay limit and maximum statutory redundancy.',
+                    tag: 'Statutory Rates',
+                  },
+                  {
+                    href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                    title: 'How to Negotiate a Settlement Agreement',
+                    description: 'Without prejudice rules, tax splits, and what to check with an independent solicitor.',
+                    tag: 'Guide',
+                  },
+                ]}
+              />
+            </div>
           </div>
         </section>
 

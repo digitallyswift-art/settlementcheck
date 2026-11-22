@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
+import RelatedArticles from '@/components/RelatedArticles'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
@@ -42,11 +43,15 @@ const FAQS = [
   },
   {
     q: 'Does my employer contribute to my legal fees?',
-    a: 'To make the agreement legally binding under Section 203(3) ERA 1996, you must receive independent legal advice. Employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.',
+    a: 'Under Section 203(3) ERA 1996, you must receive independent legal advice for the agreement to bind. Employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. Any excess or abortive work is subject to your solicitor engagement terms.',
+  },
+  {
+    q: 'Can my employer withdraw the offer if I ask for more?',
+    a: 'Yes. Under UK contract law, making a counter-proposal rejects the original offer, so your employer can legally withdraw it before anything is signed. ACAS Code 4 also recommends 10 calendar days to consider an initial written offer, though this is guidance rather than a strict legal right.',
   },
   {
     q: 'What happens if I reject the settlement offer?',
-    a: 'If you reject the offer, your employment contract remains in effect, or your resignation stands. You can then raise a grievance or start early conciliation through ACAS to prepare for an employment tribunal case.',
+    a: 'If you decline the offer, your employment contract continues or your resignation stands. You can raise a formal grievance or start ACAS Early Conciliation before the tribunal deadline of three months minus one day.',
   },
 ]
 
@@ -151,18 +156,14 @@ export default function ConstructiveDismissalGuide() {
               <span className="text-xs text-ink truncate">Constructive Dismissal</span>
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Employment Law Guide</p>
-            <h1 className="sc-h1 mb-5">
-              Constructive Dismissal Settlement Agreements in the UK: Rules and Compensation Limits for 2026
+            <h1 className="sc-h1 mb-4">
+              Constructive Dismissal Settlement Agreements in the UK (2026 Rules)
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Last reviewed: July 2026</span>
-            </div>
-            <p className="sc-lead">
-              If you resign because of your employer's conduct, you may have a constructive dismissal case. Rather than going through a private employment tribunal, many employees resolve these disputes through a settlement agreement. This guide explains how constructive dismissal settlement agreements work in the UK. It covers the legal requirements, the 2026 statutory compensation caps, and how the tax rules apply to your payment.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 &amp; SI 2026/310
+            </p>
+            <p className="sc-lead leading-relaxed">
+              Resigning over a serious breach of contract? Before you sign a draft settlement agreement, check how your offer compares against the 2026 statutory caps. Calculate your baseline in 60 seconds with no email required, see what is taxed as wages, and prepare clear questions for an independent solicitor.
             </p>
           </div>
         </section>
@@ -171,8 +172,8 @@ export default function ConstructiveDismissalGuide() {
         <section className="py-6 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <EmbeddedCalculatorCard
-              badge="Constructive Dismissal Exit Engine"
-              title="Calculate Your Constructive Dismissal Settlement Baseline"
+              badge="April 2026 Statutory Check"
+              title="How does your offer compare to the statutory baseline?"
               subtitle="Compare your exit terms against the statutory basic award (£751/wk cap) and unfair dismissal compensatory cap (£123,543)."
               disputeType="constructive_dismissal"
               statutoryPills={[
@@ -183,7 +184,7 @@ export default function ConstructiveDismissalGuide() {
               initialSalary={52000}
               initialYears={5}
               initialAge={42}
-              ctaText="Check Constructive Dismissal Entitlement →"
+              ctaText="Check my offer now →"
             />
           </div>
         </section>
@@ -192,13 +193,13 @@ export default function ConstructiveDismissalGuide() {
         <section className="py-10 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-white p-5">
-              <p className="text-body font-semibold text-ink mb-3">Key constructive dismissal rules</p>
+              <h2 className="font-serif text-[19px] font-[460] text-ink mb-4">Key constructive dismissal rules</h2>
               <ul className="flex flex-col gap-3">
                 {[
                   'You need two years of continuous service to pursue a standard constructive dismissal case.',
-                  'Under the April 2026 rules, standard compensation is capped at the lower of £123,543 or 52 weeks\' gross pay.',
+                  'Under April 2026 rules, standard compensation is capped at the lower of £123,543 or 52 weeks of gross pay.',
                   'Whistleblowing and discrimination cases have no service requirements and offer uncapped compensation.',
-                  'The ex-gratia compensation element of your settlement is tax-free up to £30,000.',
+                  'Genuine ex-gratia compensation is tax-free up to £30,000, while notice pay and holiday pay are taxed as wages.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
@@ -213,9 +214,9 @@ export default function ConstructiveDismissalGuide() {
         {/* What is constructive dismissal? */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What is constructive dismissal?</h2>
+            <h2 className="guide-h2 mb-4">1. What counts as constructive dismissal?</h2>
             <p className="sc-body mb-6 bg-paper p-5 rounded-xl border border-rule">
-              Constructive dismissal occurs when you resign from your job because your employer has committed a fundamental breach of your employment contract. To claim constructive dismissal, the employer&apos;s conduct must be serious enough to force you to leave, and you must resign promptly without accepting or waiving the breach.
+              Constructive dismissal occurs when you resign because your employer commits a fundamental breach of your employment contract. The breach must be serious enough to force your departure, and you must resign promptly without accepting it.
             </p>
             <p className="sc-body mb-6">
               Common examples of a fundamental breach include:
@@ -223,8 +224,8 @@ export default function ConstructiveDismissalGuide() {
             <ul className="flex flex-col gap-3 mb-6">
               {[
                 'A sudden reduction in your salary without your consent.',
-                'Demoting you or stripping you of your core responsibilities without justification.',
-                'Failing to address bullying, harassment, or a hostile work environment.',
+                'Demoting you or stripping core responsibilities without justification.',
+                'Failing to address bullying, harassment, or a hostile workplace.',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <CheckIcon />
@@ -233,10 +234,10 @@ export default function ConstructiveDismissalGuide() {
               ))}
             </ul>
             <p className="sc-body mb-4">
-              You must resign in response to the breach. You must also resign without delay.
+              You must resign in direct response to the breach and without unreasonable delay.
             </p>
             <p className="sc-body">
-              If you stay in your job too long, the law treats you as accepting the breach.
+              If you remain in your role too long, an employment tribunal may treat you as having accepted the breach.
             </p>
           </div>
         </section>
@@ -244,24 +245,21 @@ export default function ConstructiveDismissalGuide() {
         {/* The two-year qualifying service rule */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">The two-year qualifying service rule</h2>
+            <h2 className="guide-h2 mb-4">2. Do I need two years of service to claim?</h2>
             <p className="sc-body mb-4">
-              To raise a constructive dismissal case or negotiate a settlement, you must meet the service requirement. Under Section 108(1) of the Employment Rights Act 1996, you need two years of continuous service <sup>1</sup>.
+              Under Section 108(1) of the Employment Rights Act 1996, ordinary constructive dismissal requires two years of continuous service <sup>1</sup>.
             </p>
             <p className="sc-body mb-4">
-              If you have under two years of service, you generally cannot negotiate a settlement.
-            </p>
-            <p className="sc-body mb-4">
-              However, there are exceptions. The two-year service requirement does not apply to automatically unfair dismissal.
+              With under two years of service, you generally cannot bring a standard unfair dismissal claim. Exceptions apply if the resignation relates to an automatically unfair reason.
             </p>
             <p className="sc-body mb-6">
-              Automatically unfair constructive dismissal includes situations where you resigned because of:
+              Day-one protection applies where you resigned because of:
             </p>
             <ul className="flex flex-col gap-3 mb-6">
               {[
-                'Discrimination based on protected characteristics like age, race, sex, or disability.',
-                'Whistleblowing, which is reporting illegal activities or safety breaches.',
-                'Raising health and safety concerns.',
+                'Discrimination based on protected characteristics such as age, race, sex, or disability.',
+                'Whistleblowing, meaning reporting illegal activities or regulatory breaches.',
+                'Raising workplace health and safety concerns.',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <CheckIcon />
@@ -269,11 +267,8 @@ export default function ConstructiveDismissalGuide() {
                 </li>
               ))}
             </ul>
-            <p className="sc-body mb-4">
-              If you resign due to discrimination or whistleblowing, you have protection from day one.
-            </p>
             <p className="sc-body">
-              You can negotiate a settlement regardless of your length of service.
+              In those day-one cases, Section 111A protected conversation secrecy also does not shield your employer if talks relate to discrimination or whistleblowing.
             </p>
           </div>
         </section>
@@ -281,7 +276,7 @@ export default function ConstructiveDismissalGuide() {
         {/* Statutory compensation caps for 2026 */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Statutory compensation caps for 2026</h2>
+            <h2 className="guide-h2 mb-4">3. What are the 2026 statutory compensation caps?</h2>
             <p className="sc-body mb-6">
               Compensation for constructive dismissal consists of a basic award and a compensatory award. Both awards are subject to statutory limits updated in April 2026.
             </p>
@@ -347,27 +342,27 @@ export default function ConstructiveDismissalGuide() {
         {/* Tax rules for constructive dismissal settlements */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Tax rules for constructive dismissal settlements</h2>
+            <h2 className="guide-h2 mb-4">4. How are constructive dismissal settlements taxed?</h2>
             <p className="sc-body mb-6">
-              Understanding the tax treatment of your settlement agreement ensures you know the exact amount you will receive.
+              Knowing how HMRC splits your settlement helps you see what arrives in your bank account.
             </p>
             <h3 className="text-sm font-semibold text-ink mt-6 mb-3">The £30,000 Tax-Free Exemption</h3>
             <p className="sc-body mb-4">
-              Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003, the first £30,000 is tax-free <sup>3</sup>. This exemption applies to genuine compensation for the loss of your employment, such as ex-gratia payments.
+              Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003, the first £30,000 is tax-free <sup>3</sup>. This applies to genuine ex-gratia compensation for losing your job.
             </p>
             <p className="sc-body mb-4">
-              If your compensation is under £30,000, you will pay no income tax on it. If it is over £30,000, you pay income tax only on the amount that exceeds the threshold. You pay no employee National Insurance contributions on this compensation, even if it is over £30,000. You can read more in our guide to <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">tax-free settlements</Link>.
+              Amounts over £30,000 are subject to income tax, with zero employee National Insurance. See our guide to <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">tax-free settlements</Link>.
             </p>
-            <h3 className="text-sm font-semibold text-ink mt-6 mb-3">Pay in Lieu of Notice (PILON)</h3>
+            <h3 className="text-sm font-semibold text-ink mt-6 mb-3">Pay in Lieu of Notice (PILON) and Garden Leave</h3>
             <p className="sc-body mb-4">
-              Pay in lieu of notice is fully taxable <sup>4</sup>. Under Section 402D of the Income Tax (Earnings and Pensions) Act 2003, notice pay is treated as earnings.
+              Notice pay, accrued holiday pay, and salary paid during garden leave are always taxed as wages <sup>4</sup>. Under Section 402D of ITEPA 2003, Post-Employment Notice Pay (PENP) is subject to income tax and National Insurance.
             </p>
             <p className="sc-body mb-4">
-              Your employer must deduct income tax and National Insurance contributions from your notice pay. This is true even if the total settlement is under £30,000. You can read more about this in our <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax guide</Link>.
+              This applies even if your total settlement is under £30,000. Read more in our <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax guide</Link>.
             </p>
             <h3 className="text-sm font-semibold text-ink mt-6 mb-3">Legal Fees Contribution</h3>
             <p className="sc-body mb-4">
-              Employers standardly provide a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. This contribution is paid directly to your solicitor and does not count towards your £30,000 tax-free exemption.
+              Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. This payment does not count toward your £30,000 tax-free exemption.
             </p>
           </div>
         </section>
@@ -375,36 +370,33 @@ export default function ConstructiveDismissalGuide() {
         {/* Worked examples of settlement calculations */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Worked examples of settlement calculations</h2>
+            <h2 className="guide-h2 mb-4">5. How do these rules apply in practice?</h2>
             <p className="sc-body mb-6">
-              These examples show how these statutory rules apply to different scenarios.
+              These examples show how the April 2026 statutory caps and tax rules apply.
             </p>
             <div className="flex flex-col gap-6">
               {[
                 {
                   title: 'Example 1: Standard constructive dismissal (3 years\' service)',
                   points: [
-                    'An employee resigns because their salary was cut. They have three years of continuous service. Their weekly gross pay is £800.',
-                    'The basic award is calculated using the weekly cap of £751. Since they are 35, they receive 1 week\'s pay per year of service: 3 years x £751 = £2,253.',
-                    'The compensatory award for lost earnings is negotiated at £20,000.',
-                    'The total settlement is £22,253.',
-                    'Because the entire sum is ex-gratia and under £30,000, the employee pays no tax on this settlement.',
+                    'An employee resigns after an unagreed salary cut. They are aged 35 with three years of service and £800 weekly gross pay.',
+                    'Using the £751 weekly cap, the basic award is 3 × £751 = £2,253.',
+                    'They agree an ex-gratia compensatory payment of £20,000, bringing the total to £22,253.',
+                    'Because the entire sum is genuine termination compensation under £30,000, it is paid free of income tax.',
                   ],
                 },
                 {
                   title: 'Example 2: Whistleblowing resignation (6 months\' service)',
                   points: [
-                    'An employee resigns after reporting financial malpractice. They have six months of service. Because they resigned due to whistleblowing, the two-year service rule does not apply. Their annual salary is £50,000.',
-                    'They negotiate a settlement of £55,000 to resolve the dispute.',
-                    'The first £30,000 is tax-free.',
-                    'The remaining £25,000 is subject to income tax.',
-                    'No employee National Insurance is deducted from the £55,000.',
+                    'An employee earning £50,000 resigns after reporting financial malpractice with six months of service. The two-year rule does not apply.',
+                    'They agree a termination payment of £55,000 to resolve the dispute.',
+                    'The first £30,000 is tax-free, and the remaining £25,000 is subject to income tax with zero employee National Insurance.',
                   ],
                 },
               ].map(({ title, points }) => (
                 <div key={title} className="rounded-xl border border-rule overflow-hidden">
                   <div className="bg-ink px-4 py-3">
-                    <p className="text-white text-body font-medium">{title}</p>
+                    <p className="text-white text-[15px] font-medium">{title}</p>
                   </div>
                   <div className="p-4 bg-paper flex flex-col gap-2">
                     {points.map((point, index) => (
@@ -420,23 +412,20 @@ export default function ConstructiveDismissalGuide() {
         {/* Receiving independent legal advice */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Receiving independent legal advice</h2>
+            <h2 className="guide-h2 mb-4">6. Why do I need an independent solicitor?</h2>
             <p className="sc-body mb-4">
-              You must receive independent legal advice to make a settlement agreement legally binding. This is a statutory requirement under Section 203 of the Employment Rights Act 1996 <sup>5</sup>. Before signing, you may review our guide on how to <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">negotiate a settlement agreement</Link>.
+              Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is not binding until an independent solicitor advises you <sup>5</sup>. You can also read how <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">settlement negotiations</Link> work in practice.
             </p>
             <p className="sc-body mb-4">
-              The advice must come from a qualified solicitor or a certified adviser. They must be independent of your employer. They explain the terms of the agreement and their effect on your ability to bring future tribunal cases.
-            </p>
-            <p className="sc-body mb-4">
-              Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards this legal advice upon completion of the agreement.
+              Your solicitor checks the terms, including any non-compete restrictions, tax indemnities, and agreed reference wording. Under UK contract law, a counter-proposal rejects the opening offer, so your solicitor helps weigh any revocation risk before you respond.
             </p>
             <p className="sc-body mb-6">
-              For standard advice within the employer&apos;s contribution cap, your solicitor invoices your employer directly upon signed completion.
+              Employers standardly contribute £350 to £500+ plus VAT toward your legal fees upon completion. Any excess or abortive work is subject to your solicitor engagement terms.
             </p>
             <div className="rounded-xl border border-rule bg-paper p-4 flex gap-3">
               <InfoIcon />
               <p className="sc-body">
-                Your solicitor will verify that the agreement covers your needs and is structured correctly. They will check the tax indemnity terms to protect you from unexpected tax bills.
+                ACAS Code of Practice 4 recommends giving you at least 10 calendar days to consider an initial written offer, though this is guidance rather than a strict legal right.
               </p>
             </div>
           </div>
@@ -445,21 +434,78 @@ export default function ConstructiveDismissalGuide() {
         {/* CTA */}
         <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">Check your settlement offer now</h2>
-            <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              Verify your statutory redundancy entitlement and calculate how much of your settlement is tax-free.
+            <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+              Check where your offer stands
+            </h2>
+            <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+              See your statutory baseline, tax split, and commercial settlement range before speaking to a solicitor.
             </p>
-            <Link href="/constructive-dismissal-calculator/" className="btn-accent">
-              Check my offer now →
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/constructive-dismissal-calculator/" className="btn-accent">
+                Check my offer now →
+              </Link>
+              <Link href="/redundancy-calculator/" className="btn-secondary">
+                Calculate my redundancy →
+              </Link>
+            </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
 
         {/* FAQs */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
+            <h2 className="guide-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
+          </div>
+        </section>
+
+        {/* Related Articles */}
+        <section className="py-12 border-b border-rule bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <RelatedArticles
+              title="Related Guides & Calculators"
+              items={[
+                {
+                  href: '/constructive-dismissal-calculator/',
+                  title: 'Constructive Dismissal Calculator 2026',
+                  description: 'Calculate your basic and compensatory award limits under April 2026 statutory rates.',
+                  tag: 'Calculator',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'Understand without prejudice rules, tax splits, and legal fee contributions.',
+                  tag: 'Guide',
+                },
+                {
+                  href: '/guides/unfair-dismissal-settlement-agreements/',
+                  title: 'Unfair Dismissal Settlement Agreements',
+                  description: 'Compare statutory caps, Polkey reductions, and ACAS procedural uplifts.',
+                  tag: 'Guide',
+                },
+                {
+                  href: '/guides/tax-free-settlement-30000/',
+                  title: 'The £30,000 Tax-Free Exemption',
+                  description: 'Check how HMRC treats ex-gratia compensation, PILON, and garden leave.',
+                  tag: 'Tax Rules',
+                },
+                {
+                  href: '/guides/can-an-employer-withdraw-a-settlement-agreement/',
+                  title: 'Can an Employer Withdraw the Offer?',
+                  description: 'Contract law rules on counter-offers, revocation, and ACAS 10-day guidance.',
+                  tag: 'Offer Protection',
+                },
+                {
+                  href: '/guides/what-happens-if-you-do-not-sign/',
+                  title: 'What Happens if You Do Not Sign?',
+                  description: 'Your options and tribunal deadlines if you decline the agreement.',
+                  tag: 'Alternatives',
+                },
+              ]}
+            />
           </div>
         </section>
 
@@ -494,12 +540,11 @@ export default function ConstructiveDismissalGuide() {
                 </a>
               </li>
             </ol>
+            <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
+              <strong>Disclaimer:</strong> SettlementCheck is an independent introduction service and calculator, not a law firm. The information on this page is for general guidance only and does not constitute formal legal counsel.
+            </div>
           </div>
         </section>
-        {/* Disclaimer */}
-        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
-          Disclaimer: SettlementCheck is an independent introduction service and calculator, not a law firm. The information on this page is for general guidance only and does not constitute formal legal counsel. Confirm your specific offer using our free calculator.
-        </p>
       </main>
       <Footer />
     </>

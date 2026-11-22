@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 import { RestrictiveCovenantScanner } from '@/components/RestrictiveCovenantScanner'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
@@ -35,27 +36,27 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: 'Can my employer add new restrictive covenants to a settlement agreement?',
-    a: 'Yes, an employer can propose new restrictive covenants in a settlement agreement. However, under English contract law, you are under no obligation to accept them. Any new restriction requires separate, valuable consideration to be enforceable. If your employer wants to prevent you from working in your industry, an SRA-regulated solicitor can negotiate to remove the clause or demand higher financial compensation for accepting it.',
+    a: 'Yes, an employer can propose new restrictive covenants in a settlement agreement. Under English contract law, you do not have to accept them. Any new restriction requires separate, valuable consideration to be enforceable. An SRA-regulated solicitor can ask to remove the clause or seek higher compensation in return.',
   },
   {
     q: 'How does HMRC tax payments for restrictive covenants in a settlement agreement?',
-    a: 'Under Section 225 of the Income Tax (Earnings and Pensions) Act 2003 (ITEPA 2003), any payment made in return for entering into a restrictive undertaking is taxable as employment earnings. This means it is subject to PAYE income tax and Class 1 National Insurance. It does not qualify for the £30,000 tax-free exemption under Section 403. Settlement agreements must allocate a separate nominal sum, typically £100 to £500, to ensure HMRC does not challenge the tax-free status of the remaining compensation.',
+    a: 'Under Section 225 of ITEPA 2003, any payment for a restrictive undertaking is taxed as wages. It is subject to PAYE income tax and Class 1 National Insurance. It does not qualify for the £30,000 tax-free exemption under Section 403. Agreements usually allocate a separate nominal sum, typically £100 to £500, to protect the tax-free status of the remaining compensation.',
   },
   {
-    q: 'Are post-termination non-compete clauses legally enforceable under UK employment law?',
-    a: 'In UK employment law, all restrictive covenants are void by default under the doctrine of restraint of trade. A covenant is only enforceable if your employer can prove it protects a legitimate business interest, such as trade secrets or customer connections. The restriction must also go no further than reasonably necessary in duration and geographical reach, as established by the Supreme Court in Tillman v Egon Zehnder Ltd [2019].',
+    q: 'Are post-termination non-compete clauses enforceable under UK employment law?',
+    a: 'In UK employment law, restrictive covenants are void by default under the restraint of trade doctrine. A clause is only enforceable if your employer proves it protects a legitimate business interest, such as trade secrets or client connections. It must also go no further than reasonably necessary in duration and scope, as confirmed in Tillman v Egon Zehnder Ltd [2019].',
   },
   {
     q: 'Can a settlement agreement prevent me from whistleblowing or speaking to regulators?',
-    a: 'No. Under Section 43J of the Employment Rights Act 1996 and the Public Interest Disclosure Act 1998, any clause attempting to prevent an employee from making a protected disclosure is void as a matter of law. You retain the absolute legal right to report criminal acts, regulatory wrongdoing, or health and safety risks to regulators such as the FCA, SRA, CQC, or HMRC, as well as to the police.',
+    a: 'No. Under Section 43J of the Employment Rights Act 1996, any clause trying to stop a protected disclosure is void by law. You keep the right to report criminal acts, regulatory breaches, or safety risks to bodies like the FCA, SRA, CQC, HMRC, or the police.',
   },
   {
-    q: 'Who pays the solicitor fee to review and negotiate my restrictive covenants?',
-    a: 'Employers standardly provide a capped commercial contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion. Under Section 203 of the Employment Rights Act 1996, independent legal advice is mandatory. Your solicitor will review every restrictive covenant, ensure tax compliance under Section 225, and negotiate amendments directly with your employer.',
+    q: 'Who pays the solicitor fee to review my restrictive covenants?',
+    a: 'Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion. Under Section 203(3) of the Employment Rights Act 1996, independent advice is mandatory for a valid waiver. That contribution usually covers reviewing the draft. Extra negotiation time or abortive work is subject to your solicitor engagement terms unless your employer raises the cap.',
   },
   {
-    q: 'Can my solicitor negotiate to remove or reduce restrictive covenants from my settlement agreement?',
-    a: 'Yes. Negotiating post-termination restrictions is a standard part of an independent solicitor review. Common amendments include reducing a 12-month non-compete down to 3 or 6 months, ensuring time spent on garden leave is deducted from the restriction period, or agreeing specific carve-outs that allow you to work for non-competing divisions or named companies.',
+    q: 'Can my solicitor negotiate to remove or reduce restrictive covenants?',
+    a: 'Yes. Reviewing post-termination restrictions is a standard part of an independent solicitor review. Common changes include shortening a 12-month non-compete to 3 or 6 months, deducting time spent on garden leave, or adding carve-outs for non-competing roles.',
   },
 ]
 
@@ -119,27 +120,43 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
               <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
-              <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">Restrictive Covenants</span>
+              <span className="text-rule-strong text-xs">/</span>
+              <span className="text-xs font-medium text-muted tracking-wide uppercase">Restrictive Covenants</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Non-Compete Clauses, Restraint of Trade &amp; HMRC Section 225</p>
-            <h1 className="sc-h1 mb-5">
+            <h1 className="sc-h1 mb-4">
               Restrictive Covenants in Settlement Agreements
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Updated for 2026/27 (ITEPA 2003 s.225 &amp; Supreme Court Precedent)</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Last reviewed: October 2026</span>
-            </div>
-            <p className="sc-lead">
-              When an employer hands you a settlement agreement, the headline payout often hides restrictive covenants in the fine print. These clauses can prevent you from working for competitors, speaking to clients, or hiring former colleagues for months. Understanding your statutory rights under UK employment law and the critical HMRC tax rules helps you protect your career and your money.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 &amp; ITEPA 2003 s.225
+            </p>
+            <p className="sc-lead leading-relaxed">
+              Got a draft settlement agreement with a non-compete or confidentiality clause? These terms can affect where you work next and how your payout is taxed. Check your statutory baseline in 60 seconds with no email required, see how UK law treats restrictive covenants, and prepare clear questions for an independent solicitor.
             </p>
           </div>
         </section>
 
-        {/* STATUTORY QUICK ANSWER (AEO / FEATURED SNIPPET OPTIMISED) */}
+        {/* EMBEDDED CALCULATOR */}
+        <section className="py-10 bg-card border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How does your offer compare to the statutory baseline?"
+              subtitle="Compare your employer's offer against your calculated statutory baseline and check whether restrictive covenants are fairly priced."
+              disputeType="negotiation"
+              statutoryPills={[
+                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Covenant Tax Rule', value: 'Taxed as Wages', statute: 'ITEPA 2003 s.225' },
+                { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+              ]}
+              initialSalary={50000}
+              initialYears={4}
+              initialAge={38}
+              ctaText="Check my offer now →"
+            />
+          </div>
+        </section>
+
+        {/* STATUTORY QUICK ANSWER */}
         <section className="py-8 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
@@ -154,8 +171,8 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
               <h2 className="text-base font-bold text-ink mb-2">
                 Are restrictive covenants in a settlement agreement enforceable?
               </h2>
-              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                Under UK employment law, all restrictive covenants are void by default under the doctrine of restraint of trade. They are only enforceable if your employer proves they protect a legitimate business interest and go no further than reasonably necessary. Furthermore, under Section 225 of ITEPA 2003, payments for restrictive covenants are fully taxable under PAYE. They do not qualify for the £30,000 tax-free exemption.
+              <p className="text-[14px] text-ink mb-4 leading-relaxed">
+                Under UK employment law, restrictive covenants are void by default under the restraint of trade doctrine. They only hold if your employer proves they protect a legitimate business interest and go no further than reasonably necessary. Under Section 225 of ITEPA 2003, payments for restrictive covenants are taxed as wages under PAYE and do not qualify for the £30,000 exemption.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -163,22 +180,22 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Typical Duration</span>
                   <span className="font-bold text-ink text-sm">3 to 12 Months</span>
-                  <span className="text-muted text-[11px]">Clauses over 12 months rarely hold in tribunal</span>
+                  <span className="text-muted text-[11px]">Clauses over 12 months rarely hold</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Legitimate Interests</span>
                   <span className="font-bold text-ink text-sm">Trade Secrets &amp; Clients</span>
-                  <span className="text-muted text-[11px]">Cannot merely stop fair market competition</span>
+                  <span className="text-muted text-[11px]">Cannot stop fair market competition</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">HMRC Tax Treatment</span>
-                  <span className="font-bold text-ink text-sm">Taxable via PAYE</span>
+                  <span className="font-bold text-ink text-sm">Taxed as Wages (PAYE)</span>
                   <span className="text-muted text-[11px]">Subject to tax and NI under s.225 ITEPA</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Legal Advice Fee</span>
-                  <span className="font-bold text-ink text-sm">Employer Pays (£500+ VAT)</span>
-                  <span className="text-muted text-[11px]">Mandatory condition under s.203(3)</span>
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Legal Fee Contribution</span>
+                  <span className="font-bold text-ink text-sm">£350 to £500+ plus VAT</span>
+                  <span className="text-muted text-[11px]">Paid on completion under s.203(3)</span>
                 </div>
               </div>
 
@@ -191,7 +208,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                     Check my draft clauses →
                   </Link>
                   <Link href="/calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
-                    Calculate my settlement baseline →
+                    Check my offer now →
                   </Link>
                 </div>
               </div>
@@ -203,19 +220,19 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-body font-semibold text-ink mb-3">Six critical facts every employee must know</p>
+              <p className="text-[15px] font-semibold text-ink mb-3">Six key rules on restrictive covenants</p>
               <ul className="flex flex-col gap-3">
                 {[
-                  'Post-termination restrictions are legally void by default unless your employer proves they protect a legitimate business interest.',
-                  'Your employer cannot unilaterally impose new restrictive covenants without giving you separate valuable consideration.',
-                  'Payments for agreeing to restrictive covenants are taxable under Section 225 of ITEPA 2003 and do not qualify for the £30,000 tax-free exemption.',
-                  'Non-disclosure clauses cannot lawfully gag you from reporting wrongdoing or whistleblowing under Section 43J of the Employment Rights Act 1996.',
-                  'An SRA-regulated solicitor can often negotiate to delete, shorten, or narrow aggressive restrictions during settlement discussions.',
-                  'Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards independent solicitor advice under Section 203 upon agreement completion.',
+                  'Post-termination restrictions are void by default unless your employer proves a legitimate business interest.',
+                  'Your employer cannot add new restrictive covenants without separate valuable consideration.',
+                  'Payments for restrictive covenants are taxed as wages under Section 225 of ITEPA 2003, outside the £30,000 exemption.',
+                  'Confidentiality clauses cannot stop you from whistleblowing under Section 43J of the Employment Rights Act 1996.',
+                  'An SRA-regulated solicitor can negotiate to remove, shorten, or narrow broad restrictions.',
+                  'Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion under Section 203.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
-                    <span className="sc-body text-sm">{item}</span>
+                    <span className="text-[15px] text-ink leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -226,46 +243,46 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         {/* SECTION 1: THE FOUR TYPES OF RESTRICTIVE COVENANTS */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">The four types of restrictive covenants in UK settlement agreements</h2>
-            <p className="sc-body mb-4">
-              When reviewing a draft settlement agreement, you will often find restrictive covenants placed under headings such as &quot;Post-Termination Restrictions&quot; or &quot;Continuing Obligations&quot;. Employers use these clauses to protect their commercial interests after you leave.
+            <h2 className="guide-h2 mb-4">What are the four types of restrictive covenants?</h2>
+            <p className="guide-body mb-4">
+              In a draft settlement agreement, restrictive covenants usually appear under &quot;Post-Termination Restrictions&quot; or &quot;Continuing Obligations&quot;. Employers use them to protect commercial interests after you leave.
             </p>
-            <p className="sc-body mb-4">
-              UK employment contracts and settlement agreements typically feature four distinct types of restrictions:
+            <p className="guide-body mb-4">
+              UK agreements typically include four types of restrictions:
             </p>
 
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">1. Non-compete clauses</h3>
-                <p className="sc-body text-muted mb-0">
-                  These clauses stop you from working for a competing business or setting up a rival company in direct competition with your former employer. Because non-competes restrict your fundamental right to earn a living, courts scrutinise them heavily. They are rarely upheld if they exceed 6 to 12 months.
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  Non-compete clauses stop you from joining or starting a rival business. Courts scrutinise them closely because they restrict your right to earn a living. Restrictions over 6 to 12 months rarely hold.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">2. Non-solicitation clauses</h3>
-                <p className="sc-body text-muted mb-0">
-                  A non-solicitation clause stops you from approaching or contacting former clients, customers, or suppliers to win their business. Courts are more willing to enforce these clauses than non-competes, provided they only cover clients with whom you had personal contact during your final 12 months.
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  These clauses stop you from contacting former clients, customers, or suppliers to win their business. Courts are more likely to uphold them if they only cover clients you personally worked with in your final 12 months.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">3. Non-dealing clauses</h3>
-                <p className="sc-body text-muted mb-0">
-                  Non-dealing clauses go further than non-solicitation. They prohibit you from doing business with former clients even if those clients contact you first without any encouragement. Employers must prove a very close connection to justify this level of restraint.
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  Non-dealing goes further than non-solicitation. It stops you from working with former clients even if they contact you first. Employers must show a strong commercial connection to justify this restriction.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">4. Non-poaching clauses</h3>
-                <p className="sc-body text-muted mb-0">
-                  These restrictions prevent you from hiring, enticing away, or employing former colleagues in your new venture or role. Enforceable non-poaching clauses are typically restricted to senior managers or key technical staff rather than all company personnel.
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  These clauses stop you from hiring or recruiting former colleagues. Enforceable non-poaching terms usually apply only to senior managers or key technical staff, not the whole workforce.
                 </p>
               </div>
             </div>
 
-            <p className="sc-body mb-4">
-              Before signing, check whether your settlement agreement simply repeats the clauses in your employment contract, or whether your employer has slipped in broader restrictions.
+            <p className="guide-body mb-4">
+              Before agreeing to any terms, check whether the draft simply repeats your existing employment contract or adds broader restrictions.
             </p>
           </div>
         </section>
@@ -273,30 +290,30 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         {/* SECTION 2: ENFORCEABILITY AND THE RESTRAINT OF TRADE DOCTRINE */}
         <section className="py-12 border-b border-rule bg-paper-2">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Are restrictive covenants enforceable? The restraint of trade doctrine</h2>
-            <p className="sc-body mb-4">
-              Under English common law, any agreement that restrains an individual from freely exercising their trade or profession is contrary to public policy and void. This is known as the doctrine of restraint of trade.
+            <h2 className="guide-h2 mb-4">Are restrictive covenants enforceable in the UK?</h2>
+            <p className="guide-body mb-4">
+              Under English common law, any term that stops someone from freely working in their trade is void by default. This is the doctrine of restraint of trade.
             </p>
-            <p className="sc-body mb-4">
-              To enforce a restrictive covenant against you in court, your employer must satisfy two strict legal tests:
+            <p className="guide-body mb-4">
+              To enforce a restrictive covenant in court, your employer must pass two tests:
             </p>
 
             <div className="bg-white p-5 rounded-xl border border-rule mb-6 shadow-sm">
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-paper">
-                  <strong className="text-ink block mb-1">Test 1: Legitimate Proprietary Business Interest</strong>
-                  <p className="text-muted text-body m-0">The employer must prove they are protecting genuine trade secrets, confidential intellectual property, customer goodwill, or workforce stability. An employer cannot enforce a clause simply to protect themselves against normal, healthy market competition.</p>
+                  <strong className="text-ink block mb-1">Test 1: Legitimate Business Interest</strong>
+                  <p className="text-muted text-[14px] leading-relaxed m-0">Your employer must prove they are protecting genuine trade secrets, confidential IP, client goodwill, or workforce stability. They cannot use a covenant simply to block ordinary market competition.</p>
                 </div>
                 <div className="p-3 rounded bg-paper">
-                  <strong className="text-ink block mb-1">Test 2: Reasonableness in Scope and Duration</strong>
-                  <p className="text-muted text-body m-0">The covenant must go no further than reasonably necessary to protect that interest. An agreement that restricts an employee for two years across the whole UK when the employer only operates in Manchester will almost certainly be struck down by a court as unreasonable.</p>
+                  <strong className="text-ink block mb-1">Test 2: Reasonable Scope and Duration</strong>
+                  <p className="text-muted text-[14px] leading-relaxed m-0">The restriction must go no further than reasonably necessary. A two-year UK-wide ban for a business that only operates in Manchester will almost certainly fail as unreasonable.</p>
                 </div>
               </div>
             </div>
 
             <h3 className="font-semibold text-ink text-base mb-2">The Supreme Court ruling in Tillman v Egon Zehnder Ltd</h3>
-            <p className="sc-body mb-4">
-              In the landmark authority{' '}
+            <p className="guide-body mb-4">
+              In{' '}
               <a
                 href="https://www.supremecourt.uk/cases/uksc-2017-0177.html"
                 target="_blank"
@@ -305,10 +322,10 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
               >
                 Tillman v Egon Zehnder Ltd [2019] UKSC 32
               </a>
-              , the UK Supreme Court clarified how courts handle overly wide restrictive covenants.
+              , the UK Supreme Court clarified how courts handle overly wide clauses.
             </p>
-            <p className="sc-body mb-4">
-              Under the &quot;blue pencil&quot; rule, a judge will only sever or delete unreasonable words if the remaining clause makes sense without altering the fundamental character of the contract. Courts will not rewrite a bad covenant for an employer. If a restriction is drafted too broadly, the entire clause fails and becomes unenforceable.
+            <p className="guide-body mb-4">
+              Under the &quot;blue pencil&quot; rule, a judge can only delete unreasonable words if the remaining clause still makes sense without changing the contract&apos;s character. Courts will not rewrite a defective covenant. If a restriction is drafted too broadly, the whole clause can fail.
             </p>
           </div>
         </section>
@@ -316,33 +333,33 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         {/* SECTION 3: CAN AN EMPLOYER ADD NEW RESTRICTIONS? */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Can an employer add new restrictive covenants in a settlement agreement?</h2>
-            <p className="sc-body mb-4">
-              Many employees discover that their draft settlement agreement introduces new 6-month or 12-month non-compete clauses that never existed in their original employment contract. Employers often attempt to insert these terms during redundancy or workplace restructuring.
+            <h2 className="guide-h2 mb-4">Can my employer add new restrictive covenants?</h2>
+            <p className="guide-body mb-4">
+              Some draft settlement agreements introduce new 6-month or 12-month non-compete clauses that were not in your original employment contract. This often happens during redundancy or restructuring.
             </p>
-            <p className="sc-body mb-4">
-              Legally, your employer cannot force you to accept new restrictions. Under basic English contract law, a new promise requires new consideration.
+            <p className="guide-body mb-4">
+              Your employer cannot force you to accept new restrictions. Under English contract law, a new obligation requires separate consideration.
             </p>
 
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-paper">
-                <h3 className="font-semibold text-ink text-sm mb-1">Option A: Reject the new restrictions entirely</h3>
-                <p className="sc-body text-muted mb-0">
-                  Your independent solicitor can inform the employer that you will only agree to affirm the existing terms of your employment contract. In many cases, employers drop new covenants when challenged because their primary goal is securing the waiver of tribunal claims.
+                <h3 className="font-semibold text-ink text-sm mb-1">Option A: Keep only your existing contract terms</h3>
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  Your independent solicitor can propose sticking strictly to the restrictions already in your employment contract. Employers often drop new covenants when challenged if their main aim is waiving employment tribunal claims.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
-                <h3 className="font-semibold text-ink text-sm mb-1">Option B: Demand financial compensation for accepting them</h3>
-                <p className="sc-body text-muted mb-0">
-                  If your employer insists on a new non-compete clause, your solicitor can use this demand to push for higher financial compensation. If staying out of your market for 6 months costs you valuable earnings, the settlement sum must compensate you for that commercial sacrifice.
+                <h3 className="font-semibold text-ink text-sm mb-1">Option B: Seek financial compensation for new restrictions</h3>
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  If your employer insists on a new non-compete, your solicitor can ask for higher compensation to reflect that restriction. Staying out of your sector for 6 months has a real financial cost.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
-                <h3 className="font-semibold text-ink text-sm mb-1">Option C: Narrow the duration and geographical scope</h3>
-                <p className="sc-body text-muted mb-0">
-                  Your solicitor can negotiate specific carve-outs. For example, amending a nationwide ban to a 5-mile radius, reducing the duration from 12 months down to 3 months, or exempting specific non-competing divisions or clients.
+                <h3 className="font-semibold text-ink text-sm mb-1">Option C: Narrow the duration and scope</h3>
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  Your solicitor can propose targeted edits, such as reducing 12 months to 3 months, narrowing a nationwide restriction, or adding carve-outs for specific non-competing roles.
                 </p>
               </div>
             </div>
@@ -360,8 +377,8 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
               <h3 className="font-semibold text-ink text-base mb-2">
                 Check your restrictive covenants in 30 seconds
               </h3>
-              <p className="sc-body text-muted mb-4">
-                Paste your draft post-termination restrictions below to check non-compete durations, detect missing garden leave offsets, and audit compliance with Supreme Court rules in Tillman v Egon Zehnder.
+              <p className="text-[14px] text-muted leading-relaxed mb-4">
+                Paste your draft post-termination restrictions below to check non-compete durations, spot missing garden leave offsets, and review against Tillman v Egon Zehnder.
               </p>
               <RestrictiveCovenantScanner />
             </div>
@@ -371,36 +388,33 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         {/* SECTION 4: THE HMRC SECTION 225 TAX TRAP */}
         <section className="py-12 border-b border-rule bg-paper-2">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">The HMRC Section 225 tax trap: Why separate consideration matters</h2>
-            <p className="sc-body mb-4">
-              One of the most dangerous traps in a UK settlement agreement involves the tax treatment of restrictive covenants under HMRC rules.
+            <h2 className="guide-h2 mb-4">How does HMRC tax restrictive covenants under Section 225?</h2>
+            <p className="guide-body mb-4">
+              One common trap in a UK settlement agreement is how HMRC taxes restrictive covenants.
             </p>
-            <p className="sc-body mb-4">
-              Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003 (ITEPA 2003), genuine compensation payments for loss of office are free of income tax up to £30,000. Many employees assume this £30,000 exemption covers the entire settlement package.
-            </p>
-            <p className="sc-body mb-4">
-              However, restrictive covenants fall under a completely different statutory tax regime:
+            <p className="guide-body mb-4">
+              Under Section 403 of ITEPA 2003, genuine compensation for loss of office is usually tax-free up to £30,000. However, restrictive covenants follow a separate tax rule.
             </p>
 
             <div className="bg-white p-5 rounded-xl border border-rule mb-6 shadow-sm">
               <h3 className="font-semibold text-ink text-base mb-2">Section 225 of ITEPA 2003 (Payments for restrictive undertakings)</h3>
-              <p className="sc-body text-muted mb-3">
-                Under Section 225 and Section 226 of ITEPA 2003, any valuable consideration given for entering into or agreeing to a restrictive undertaking is treated as earnings from employment. It is subject to full PAYE income tax, employee Class 1 National Insurance, and employer National Insurance contributions (currently 15.0% for 2026/27).
+              <p className="text-[14px] text-muted leading-relaxed mb-3">
+                Under Sections 225 and 226 of ITEPA 2003, any payment made in return for a restrictive covenant is taxed as wages. It attracts PAYE income tax, employee Class 1 National Insurance, and employer Class 1A National Insurance (15.0% for 2026/27).
               </p>
               <div className="p-3 rounded bg-[#FBF0EE] border border-[#F3C4BC]">
-                <strong className="text-[#A8341F] block mb-1">The Danger of Commingling Compensation</strong>
-                <p className="text-[#A8341F] text-body m-0">
-                  If your settlement agreement introduces or reaffirms restrictive covenants without allocating a specific sum to them, HMRC can challenge the agreement under Employment Income Manual guidance EIM03600. HMRC may claim that a portion - or even the entirety - of your tax-free £30,000 payment was actually consideration for the restrictive covenants. This creates an unexpected PAYE tax bill and penalties.
+                <strong className="text-[#A8341F] block mb-1">The Risk of Unallocated Payments</strong>
+                <p className="text-[#A8341F] text-[14px] leading-relaxed m-0">
+                  If an agreement adds or reaffirms restrictive covenants without allocating a specific sum to them, HMRC can challenge the split under EIM03600. HMRC may argue that some or all of your £30,000 tax-free sum was actually paid for the covenants, triggering an unexpected PAYE tax bill.
                 </p>
               </div>
             </div>
 
             <h3 className="font-semibold text-ink text-base mb-2">How solicitors protect your £30,000 tax-free exemption</h3>
-            <p className="sc-body mb-4">
-              To prevent HMRC from reclassifying your tax-free redundancy compensation, experienced employment solicitors ensure that the settlement agreement includes a separate, nominal payment specifically allocated to the restrictive covenants.
+            <p className="guide-body mb-4">
+              To avoid HMRC reclassification, employment solicitors check that the agreement allocates a separate nominal sum specifically for the restrictive covenants.
             </p>
-            <p className="sc-body mb-4">
-              This clause typically allocates £100 to £500 as consideration for the post-termination restrictions, with full deduction of PAYE and National Insurance on that nominal sum alone. This creates a clean legal partition, ring-fencing the rest of your compensation under the £30,000 Section 403 tax exemption.
+            <p className="guide-body mb-4">
+              This is typically £100 to £500, with PAYE income tax and National Insurance deducted on that nominal amount alone. That ring-fences the rest of your compensation under the £30,000 Section 403 exemption.
             </p>
           </div>
         </section>
@@ -408,17 +422,17 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         {/* SECTION 5: NDAS AND WHISTLEBLOWING RESTRICTIONS */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Non-disclosure agreements (NDAs) and whistleblowing limits</h2>
-            <p className="sc-body mb-4">
-              Settlement agreements routinely contain strict confidentiality clauses and non-disparagement provisions. These prevent employees from discussing the terms of the settlement, the surrounding negotiations, or making negative comments about the company and its directors.
+            <h2 className="guide-h2 mb-4">Can an NDA stop me from whistleblowing?</h2>
+            <p className="guide-body mb-4">
+              Settlement agreements usually include confidentiality and non-disparagement clauses. These stop you from sharing the settlement terms or making negative statements about your employer.
             </p>
-            <p className="sc-body mb-4">
-              While genuine commercial confidentiality is lawful, employers cannot use a settlement agreement to silence employees regarding illegal acts or regulatory wrongdoing.
+            <p className="guide-body mb-4">
+              Commercial confidentiality is lawful, but an employer cannot use an NDA to stop you from reporting illegal acts or regulatory breaches.
             </p>
 
             <div className="p-4 rounded-xl border border-rule bg-paper mb-6">
               <h3 className="font-semibold text-ink text-sm mb-2">Section 43J of the Employment Rights Act 1996</h3>
-              <p className="sc-body text-muted mb-2">
+              <p className="text-[14px] text-muted leading-relaxed mb-2">
                 Under{' '}
                 <a
                   href="https://www.legislation.gov.uk/ukpga/1996/18/section/43J"
@@ -428,24 +442,24 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                 >
                   Section 43J of the Employment Rights Act 1996
                 </a>{' '}
-                and the Public Interest Disclosure Act 1998, any contractual provision that attempts to prevent a worker from making a protected disclosure is void as a matter of law.
+                and the Public Interest Disclosure Act 1998, any clause trying to prevent a protected disclosure is void by law.
               </p>
-              <p className="sc-body text-muted mb-0">
-                You can never be gagged from reporting criminal acts, failures to comply with legal obligations, miscarriages of justice, or health and safety dangers. You retain the right to speak to statutory regulators such as the Financial Conduct Authority (FCA), Solicitors Regulation Authority (SRA), Care Quality Commission (CQC), or HM Revenue and Customs (HMRC).
+              <p className="text-[14px] text-muted leading-relaxed mb-0">
+                You keep the legal right to report criminal acts, legal breaches, miscarriages of justice, or health and safety risks. You can also speak to regulators such as the FCA, SRA, CQC, or HMRC.
               </p>
             </div>
 
             <h3 className="font-semibold text-ink text-base mb-2">Standard permitted disclosures in settlement agreements</h3>
-            <p className="sc-body mb-4">
-              Your independent solicitor will check that the confidentiality clause explicitly permits you to discuss the settlement agreement with:
+            <p className="guide-body mb-4">
+              Your independent solicitor will check that the confidentiality clause lets you speak with:
             </p>
             <ul className="space-y-2 mb-4 pl-1">
               {[
-                'Your immediate family, such as your spouse or civil partner, provided they keep the details confidential.',
-                'Your professional advisers, including your solicitor, accountant, and tax advisers.',
-                'HM Revenue and Customs (HMRC) for statutory tax assessment purposes.',
+                'Your immediate family, such as your spouse or civil partner, provided they keep it confidential.',
+                'Your professional advisers, including your solicitor, accountant, and tax adviser.',
+                'HM Revenue and Customs (HMRC) for tax reporting.',
                 'Medical professionals or registered counsellors for health support.',
-                'Prospective employers, solely to the extent permitted by an agreed reference schedule.',
+                'Prospective employers, as far as needed to explain your departure within an agreed reference.',
               ].map((text) => (
                 <li key={text} className="flex items-start gap-2.5 text-sm text-ink/80">
                   <span className="text-coral font-bold">•</span>
@@ -459,9 +473,9 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         {/* SECTION 6: COMPARISON TABLE */}
         <section className="py-12 border-b border-rule bg-paper-2">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Employment contract vs settlement agreement covenants compared</h2>
-            <p className="sc-body mb-6">
-              This comparison shows the key differences between restrictive covenants in your original contract and those in a proposed settlement agreement:
+            <h2 className="guide-h2 mb-4">How do contract covenants compare to settlement clauses?</h2>
+            <p className="guide-body mb-6">
+              This table shows the key differences between restrictions in your original contract and those in a draft settlement agreement:
             </p>
 
             <div className="overflow-x-auto rounded-xl border border-rule bg-white shadow-sm mb-6">
@@ -471,45 +485,45 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                     <th className="p-3 font-semibold">Restriction Element</th>
                     <th className="p-3 font-semibold">Employment Contract</th>
                     <th className="p-3 font-semibold">Draft Settlement Agreement</th>
-                    <th className="p-3 font-semibold">Solicitor Negotiation Strategy</th>
+                    <th className="p-3 font-semibold">Solicitor Review Focus</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-rule text-ink/80">
                   <tr>
                     <td className="p-3 font-medium text-ink">Legal Status</td>
-                    <td className="p-3">Agreed upon joining company</td>
-                    <td className="p-3">Re-affirmed or newly introduced</td>
-                    <td className="p-3">Refuse new covenants or demand compensation</td>
+                    <td className="p-3">Agreed when joining</td>
+                    <td className="p-3">Re-affirmed or newly proposed</td>
+                    <td className="p-3">Keep existing terms or seek extra compensation</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-medium text-ink">Consideration</td>
-                    <td className="p-3">Salary and benefits package</td>
-                    <td className="p-3">Must have separate taxable consideration</td>
-                    <td className="p-3">Allocate nominal taxable sum under s.225</td>
+                    <td className="p-3">Salary and benefits</td>
+                    <td className="p-3">Requires separate taxable sum</td>
+                    <td className="p-3">Allocate nominal sum under s.225</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-medium text-ink">Duration</td>
-                    <td className="p-3">Fixed contractual term (e.g. 6m)</td>
-                    <td className="p-3">Often extended by employer</td>
-                    <td className="p-3">Negotiate reduction or garden leave offset</td>
+                    <td className="p-3">Fixed term (e.g. 6 months)</td>
+                    <td className="p-3">Sometimes extended</td>
+                    <td className="p-3">Shorten term or add garden leave offset</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-medium text-ink">Scope of Restraint</td>
-                    <td className="p-3">Subject to Tillman reasonableness</td>
-                    <td className="p-3">Often adds new competitors or sectors</td>
-                    <td className="p-3">Insert specific carve-outs for new roles</td>
+                    <td className="p-3">Subject to Tillman test</td>
+                    <td className="p-3">May list new sectors</td>
+                    <td className="p-3">Add carve-outs for next role</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-medium text-ink">HMRC Tax Rule</td>
-                    <td className="p-3">Not directly relevant on exit</td>
-                    <td className="p-3">Section 225 ITEPA taxable risk</td>
-                    <td className="p-3">Ring-fence £30,000 statutory tax exemption</td>
+                    <td className="p-3">Not triggered on exit</td>
+                    <td className="p-3">Section 225 PAYE risk</td>
+                    <td className="p-3">Ring-fence £30,000 s.403 exemption</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-medium text-ink">Independent Advice</td>
-                    <td className="p-3">Not legally mandatory</td>
-                    <td className="p-3">Mandatory under Section 203 ERA 1996</td>
-                    <td className="p-3">Capped employer contribution (typically £350–£500+ VAT) upon completion</td>
+                    <td className="p-3">Not mandatory</td>
+                    <td className="p-3">Mandatory under s.203 ERA 1996</td>
+                    <td className="p-3">£350 to £500+ plus VAT contribution on completion</td>
                   </tr>
                 </tbody>
               </table>
@@ -520,46 +534,46 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         {/* SECTION 7: HOW SOLICITORS NEGOTIATE RESTRICTIVE COVENANTS */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">How independent solicitors negotiate restrictive covenants</h2>
-            <p className="sc-body mb-4">
-              Under Section 203 of the Employment Rights Act 1996, you cannot sign a valid settlement agreement without independent legal advice from a qualified adviser, such as an SRA-regulated solicitor.
+            <h2 className="guide-h2 mb-4">How do solicitors negotiate restrictive covenants?</h2>
+            <p className="guide-body mb-4">
+              Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is not binding until an independent solicitor advises you on its terms.
             </p>
-            <p className="sc-body mb-4">
-              Your solicitor will examine every post-termination clause and execute tactical negotiations to protect your career:
+            <p className="guide-body mb-4">
+              During that review, your solicitor will examine each restriction and discuss practical amendments with your employer:
             </p>
 
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-paper">
                 <h3 className="font-semibold text-ink text-sm mb-1">1. Clause-by-clause contract comparison</h3>
-                <p className="sc-body text-muted mb-0">
-                  Your solicitor will compare the settlement agreement against your original employment contract. If your employer has added restrictions or widened their scope, your solicitor will flag this immediately and challenge the justification.
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  Your solicitor compares the draft against your original employment contract. If the settlement adds new restrictions or widens their scope, your solicitor will flag the change.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
-                <h3 className="font-semibold text-ink text-sm mb-1">2. Negotiating a garden leave offset</h3>
-                <p className="sc-body text-muted mb-0">
-                  If your employer placed you on garden leave prior to departure, your solicitor will ensure that the garden leave period is deducted from any post-termination non-compete. For instance, if you have a 6-month non-compete and spent 3 months on garden leave, your remaining restriction should be reduced to 3 months.
+                <h3 className="font-semibold text-ink text-sm mb-1">2. Garden leave offset</h3>
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  If you are placed on garden leave, your solicitor can ask for that time to be deducted from your non-compete period. A 6-month non-compete after 3 months on garden leave would leave 3 months remaining.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
-                <h3 className="font-semibold text-ink text-sm mb-1">3. Securing client and geography carve-outs</h3>
-                <p className="sc-body text-muted mb-0">
-                  If you have already identified a potential new job, your solicitor can negotiate specific wording confirming that taking that role will not breach the settlement agreement. This eliminates future legal threats and gives you complete peace of mind.
+                <h3 className="font-semibold text-ink text-sm mb-1">3. Client and role carve-outs</h3>
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  If you already have a new role lined up, your solicitor can request wording confirming that specific role will not breach the agreement. This removes ambiguity about your next move.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl border border-rule bg-paper">
-                <h3 className="font-semibold text-ink text-sm mb-1">4. Enforcing reciprocal non-disparagement</h3>
-                <p className="sc-body text-muted mb-0">
-                  While employers always include clauses forbidding you from criticising the company, solicitors ensure these obligations are strictly mutual. Your solicitor will add clauses binding the company, its directors, and senior managers from making disparaging remarks about you to prospective employers.
+                <h3 className="font-semibold text-ink text-sm mb-1">4. Mutual non-disparagement</h3>
+                <p className="text-[14px] text-muted leading-relaxed mb-0">
+                  Agreements routinely bar you from criticising your employer. Your solicitor can ask for a matching clause stopping the company and its senior managers from making disparaging remarks about you.
                 </p>
               </div>
             </div>
 
-            <p className="sc-body mb-4">
-              Remember that employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards your independent solicitor advice upon agreement completion.
+            <p className="guide-body mb-4">
+              Employers standardly contribute £350 to £500+ plus VAT toward your independent legal advice upon completion. Any excess or abortive work is subject to your solicitor engagement terms.
             </p>
           </div>
         </section>
@@ -567,24 +581,24 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         {/* SECTION 8: STEP BY STEP CHECKLIST */}
         <section className="py-12 border-b border-rule bg-paper-2">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Step-by-step checklist if your settlement agreement has restrictive covenants</h2>
-            <p className="sc-body mb-6">
-              Follow these practical steps when reviewing post-termination restrictions in a draft settlement agreement:
+            <h2 className="guide-h2 mb-4">What should I check before signing restrictive covenants?</h2>
+            <p className="guide-body mb-6">
+              Work through these practical checks when reviewing post-termination restrictions in a draft agreement:
             </p>
             <ol className="space-y-4">
               {[
-                'Locate your original employment contract and check what restrictive covenants you originally signed up to.',
-                'Compare the original restrictions against the clauses in the draft settlement agreement to identify any new or expanded terms.',
-                'Check whether the settlement allocates a separate, nominal taxable payment for restrictive undertakings under Section 225 of ITEPA 2003.',
-                'Ensure the confidentiality clause contains standard statutory exceptions for family, professional advisers, and whistleblowing under Section 43J.',
-                'Instruct an SRA-regulated employment solicitor to review the agreement. Employers standardly provide a capped commercial contribution upon agreement completion.',
-                'Use our free calculator to check that the overall settlement compensation adequately compensates you for any commercial restraints.',
+                'Find your original employment contract and check which restrictive covenants already apply.',
+                'Compare your contract against the draft settlement agreement to spot any new or wider terms.',
+                'Check whether the draft allocates a separate nominal sum for restrictive covenants under Section 225 of ITEPA 2003.',
+                'Confirm the confidentiality clause allows disclosures to family, professional advisers, and regulators under Section 43J.',
+                'Instruct an SRA-regulated employment solicitor to review the draft, using the standard employer fee contribution.',
+                'Use the free calculator to check your statutory baseline alongside any post-termination restrictions.',
               ].map((step, idx) => (
                 <li key={step} className="flex items-start gap-3 text-sm text-ink">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-coral/10 text-coral font-semibold text-xs flex items-center justify-center">
                     {idx + 1}
                   </span>
-                  <span className="sc-body text-sm pt-0.5">{step}</span>
+                  <span className="text-[15px] text-ink leading-relaxed pt-0.5">{step}</span>
                 </li>
               ))}
             </ol>
@@ -594,7 +608,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
         {/* SECTION 9: FAQS */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-6">Frequently asked questions</h2>
+            <h2 className="guide-h2 mb-6">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
           </div>
         </section>
@@ -626,7 +640,7 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                 {
                   href: '/guides/how-to-negotiate-a-settlement-agreement/',
                   title: 'How to Negotiate a Settlement Agreement',
-                  description: 'Tactics and counter-offer strategies to improve your financial exit terms.',
+                  description: 'How settlement talks work, without prejudice rules, and legal fee contributions.',
                   tag: 'Negotiation',
                 },
                 {
@@ -641,12 +655,6 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
                   description: 'HMRC rules governing tax exemptions on termination payments under s.403.',
                   tag: 'Tax Rules',
                 },
-                {
-                  href: '/guides/can-an-employer-withdraw-a-settlement-agreement/',
-                  title: 'Can an Employer Withdraw a Settlement Offer?',
-                  description: 'Contract rules, counter-offer risks under Hyde v Wrench, and ACAS 10-day limits.',
-                  tag: 'Legal Rights',
-                },
               ]}
             />
           </div>
@@ -658,17 +666,20 @@ export default function SettlementAgreementRestrictiveCovenantsGuide() {
             <h2 className="font-serif text-[24px] sm:text-[28px] font-[460] mb-3 text-white">
               Check where your settlement agreement clauses stand
             </h2>
-            <p className="sc-lead text-white/80 max-w-xl mx-auto mb-6 text-sm">
-              Calculate your statutory baseline, check your restrictive covenants, and get matched with an SRA-regulated solicitor. Employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
+            <p className="text-white/70 text-[15px] leading-relaxed max-w-xl mx-auto mb-6">
+              See your calculated statutory baseline, check your restrictive covenants, and prepare clear questions for an independent SRA-regulated solicitor.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/calculator/" className="btn-accent text-sm inline-block">
-                Calculate my estimate →
+                Check my offer now →
               </Link>
               <Link href="/settlement-agreement-review/" className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg border border-white/20 hover:bg-white/10 text-white font-semibold text-xs transition-colors">
                 Check my draft clauses →
               </Link>
             </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
       </main>

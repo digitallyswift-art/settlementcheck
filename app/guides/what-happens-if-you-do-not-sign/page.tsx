@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
@@ -10,14 +11,14 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 export const metadata: Metadata = {
   title: 'Refusing a Settlement Agreement: Rights | SettlementCheck',
   description:
-    'Understand what happens if you reject a settlement agreement in the UK. Learn about alternative workplace procedures, notice pay, and tribunal risks.',
+    'Understand what happens if you decline a settlement agreement in the UK. Learn about workplace procedures, notice pay, and tribunal time limits.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/what-happens-if-you-do-not-sign/',
   },
   openGraph: {
     title: 'Refusing a Settlement Agreement: Rights | SettlementCheck',
     description:
-      'Understand what happens if you reject a settlement agreement in the UK. Learn about alternative workplace procedures, notice pay, and tribunal risks.',
+      'Understand what happens if you decline a settlement agreement in the UK. Learn about workplace procedures, notice pay, and tribunal time limits.',
     url: 'https://settlementcheck.co.uk/guides/what-happens-if-you-do-not-sign/',
     type: 'website',
     locale: 'en_GB',
@@ -26,26 +27,26 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Refusing a Settlement Agreement: Rights | SettlementCheck',
-    description: 'Notice pay rights, tribunal options, and what your employer can and cannot do if you reject their offer. Free guide.',
+    description: 'Notice pay rights, tribunal options, and what happens if you decline an offer. Free guide.',
   },
 }
 
 const FAQS = [
   {
     q: 'Can my employer dismiss me for refusing to sign?',
-    a: 'No. Your employer cannot dismiss you simply for refusing to sign a settlement agreement. Refusal is not a lawful reason for dismissal. However, if you do not sign, your employer can proceed with their alternative workplace procedures. If they follow a fair process, they can legally dismiss you at the end of it.',
+    a: 'No. Refusing to sign a settlement agreement is not a lawful reason for dismissal on its own. However, your employer can proceed with formal workplace procedures such as redundancy or capability reviews. If they follow a fair process, they can legally dismiss you at the end of it.',
   },
   {
-    q: 'Can I ask for more money if I reject their initial offer?',
-    a: 'Yes. You are entitled to negotiate. Rejecting the initial offer allows you to submit a counter-offer with a higher settlement amount. Your employer is not obliged to accept your counter-proposal. They can negotiate, reiterate their original offer, or withdraw the settlement entirely. You should present a clear, fact-based business case to justify why a higher figure is appropriate.',
+    q: 'Can I ask for more money if I decline the initial offer?',
+    a: 'Yes. You can put forward a counter-proposal for a higher sum or revised terms. Under UK contract law (Hyde v Wrench), making a counter-offer legally rejects the original offer. Your employer can accept, negotiate, or withdraw the offer entirely, so employees often review objective figures like unpaid bonuses or notice pay with an independent solicitor first.',
   },
   {
     q: 'What happens to the deadline if I need more time?',
-    a: 'Your employer sets the deadline, though ACAS Code of Practice 4 (para 12) recommends at least 10 calendar days as general guidance to review the terms. Because an employer can withdraw an unaccepted offer at common law (Routledge v Grant), never let an employer\'s deadline expire without consulting an independent solicitor.',
+    a: 'Your employer sets the deadline, though ACAS Code of Practice 4 (para 12) recommends at least 10 calendar days as general guidance. This is guidance rather than a strict legal right. Because an employer can withdraw an unaccepted offer at common law (Routledge v Grant), taking independent legal advice before a deadline passes helps clarify your options.',
   },
   {
     q: 'Do I still get my notice pay if I do not sign?',
-    a: 'Where employment is terminated by reason of redundancy or ordinary dismissal, you remain entitled to your contractual or statutory notice pay, provided you are not summarily dismissed for gross misconduct (Boston Deep Sea Fishing v Ansell). If you do not sign the agreement and your employment continues, you receive your normal salary while employed.',
+    a: 'If your employment ends by redundancy or ordinary dismissal, you remain entitled to contractual or statutory notice pay unless summarily dismissed for gross misconduct (Boston Deep Sea Fishing v Ansell). If you do not sign and your employment continues, you receive your normal salary while employed.',
   },
 ]
 
@@ -62,7 +63,7 @@ const faqSchema = {
 function CheckIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-coral flex-shrink-0 mt-0.5" aria-hidden="true">
-      <path d="M4 10.5L8 14.5L16 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M4 10.5L8 14.5L16 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -86,11 +87,14 @@ export default function RejectSettlementAgreementGuide() {
               <span className="text-rule-strong text-xs">/</span>
               <span className="text-xs font-medium text-muted tracking-wide uppercase">Employee rights</span>
             </div>
-            <h1 className="sc-h1 mb-6">
+            <h1 className="sc-h1 mb-4">
               What happens if you do not sign a settlement agreement
             </h1>
-            <p className="sc-lead text-[17px] leading-relaxed">
-              If you do not sign a settlement agreement, your employment continues under your existing contract. Your employer cannot force you to sign, but they can resume alternative workplace procedures. In 2026, the statutory redundancy weekly pay cap is £751 in Great Britain⁷ (£783 in Northern Ireland).¹¹ You can reject the offer to negotiate for a higher settlement or start employment tribunal proceedings.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 &amp; ACAS Code 4
+            </p>
+            <p className="sc-lead leading-relaxed">
+              Holding an unsigned settlement agreement? If you decline to sign, your employment contract stays active and your employer cannot force you to accept. Check your calculated statutory baseline in 60 seconds with no email required, see what procedures may follow, and prepare clear questions for an independent solicitor.
             </p>
           </div>
         </section>
@@ -99,97 +103,114 @@ export default function RejectSettlementAgreementGuide() {
         <section className="bg-card py-14">
           <div className="max-w-2xl mx-auto px-5 space-y-12">
 
+            {/* Interactive Statutory Check */}
+            <section className="my-2">
+              <EmbeddedCalculatorCard
+                badge="April 2026 Statutory Check"
+                title="How does your offer compare to the statutory baseline?"
+                subtitle="Check your calculated statutory baseline, notice pay, and tax-free exit limits before deciding your next step."
+                disputeType="negotiation"
+                statutoryPills={[
+                  { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                  { label: 'Tax-Free Threshold', value: '£30,000', statute: 'ITEPA 2003 s.403' },
+                  { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+                ]}
+                initialSalary={45000}
+                initialYears={4}
+                initialAge={38}
+                ctaText="Check my offer now →"
+              />
+            </section>
+
             {/* Key Takeaways Callout */}
             <div className="bg-paper-2 border border-rule rounded-xl p-6 md:p-8">
               <h2 className="font-serif text-[19px] font-[460] text-ink mb-4">Core Facts</h2>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-[15px] text-ink leading-relaxed">Refusing to sign means your employment status does not change.</span>
+                  <span className="text-[15px] text-ink leading-relaxed">Declining to sign leaves your existing employment contract in place.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-[15px] text-ink leading-relaxed">Your employer can resume formal procedures, including redundancy or performance reviews.</span>
+                  <span className="text-[15px] text-ink leading-relaxed">Your employer can resume formal procedures, such as redundancy or capability reviews.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-[15px] text-ink leading-relaxed">You must receive independent legal advice from a qualified solicitor for an agreement to be binding.</span>
+                  <span className="text-[15px] text-ink leading-relaxed">Under Section 203(3) ERA 1996, an agreement is only binding after independent legal advice from a qualified solicitor.</span>
                 </li>
               </ul>
             </div>
 
             {/* Section 1 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">1. Your employment status remains unchanged</h2>
+              <h2 className="guide-h2">1. Does refusing to sign end your employment?</h2>
               <p className="guide-body">
-                If you do not sign a settlement agreement, your contract of employment remains active. You continue to perform your job, receive your normal pay, and accumulate annual leave. Rejecting the offer does not end your employment.
+                No. If you do not sign a settlement agreement, your contract of employment stays active. You continue in your role, receive your normal salary, and accrue annual leave.
               </p>
               <p className="guide-body">
-                Negotiations can continue after you reject an initial offer. Many employers expect a counter-offer. You can suggest a higher figure, request a different notice period, or negotiate non-financial terms.
+                Your existing contract terms also remain in force, including any notice period, garden leave provisions, or non-compete clauses.
               </p>
               <p className="guide-body">
-                To make a binding agreement, you must receive independent legal advice from a qualified solicitor.¹ Your employer usually pays a contribution to cover this cost,² and you have the right to choose your own adviser (see our guide on{' '}
+                For an agreement to be legally valid, you must receive independent legal advice from a qualified adviser.¹ Employers standardly contribute £350 to £500+ plus VAT upon completion.² You have the right to choose your own solicitor (see our guide on{' '}
                 <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink">
-                  do you have to use your employer's solicitor?
+                  do you have to use your employer&apos;s solicitor?
                 </Link>).
               </p>
             </div>
 
             {/* Section 2 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">2. Alternative workplace procedures</h2>
+              <h2 className="guide-h2">2. What workplace procedures can your employer start next?</h2>
               <p className="guide-body">
-                Employers offer settlement agreements to resolve situations quickly and avoid formal processes. If you do not sign, your employer will likely start or resume a formal workplace procedure.
+                Employers use settlement agreements to resolve exits quickly and avoid formal processes. If you do not sign, your employer will usually start or resume a formal workplace procedure.
               </p>
               <p className="guide-body">
-                The specific procedure depends on the reasons your employer offered the settlement. These formal routes can lead to dismissal if they are completed.
+                Under Section 111A ERA 1996, pre-termination settlement talks are generally inadmissible in ordinary unfair dismissal claims. However, Section 111A does not protect claims involving discrimination, whistleblowing, or improper behaviour.
               </p>
               <p className="guide-body">
                 Common procedures include:
               </p>
               <ul className="list-disc pl-5 text-[15px] text-muted leading-relaxed space-y-2">
                 <li>
-                  <strong className="text-ink">Redundancy consultation:</strong> Your employer must follow statutory consultation rules if they are reducing staff numbers.³ You can calculate your minimum entitlement using our{' '}
+                  <strong className="text-ink">Redundancy consultation:</strong> Your employer must follow statutory consultation rules if reducing headcount.³ Employees with two years&apos; continuous service qualify for statutory redundancy pay under Section 141 ERA 1996, subject to the 2026 weekly cap of £751 in Great Britain⁷ (£783 in Northern Ireland).¹¹ You can{' '}
                   <Link href="/redundancy-calculator/" className="text-coral underline underline-offset-2 hover:text-ink">
-                    Redundancy Calculator
-                  </Link>. If they do not follow a fair procedure, you can bring a case for unfair dismissal.⁴
+                    calculate your redundancy
+                  </Link>{' '}
+                  to check this figure.
                 </li>
                 <li>
-                  <strong className="text-ink">Performance improvement plans:</strong> Your employer sets targets to monitor your work over several weeks or months. Failure to meet these targets can lead to dismissal for capability.
+                  <strong className="text-ink">Performance improvement plans:</strong> Your employer sets targets to monitor your work over several weeks or months. Unmet targets can lead to dismissal for capability.
                 </li>
                 <li>
-                  <strong className="text-ink">Disciplinary procedures:</strong> Your employer investigates allegations of misconduct. They must follow the ACAS Code of Practice on disciplinary and grievance procedures.⁵
+                  <strong className="text-ink">Disciplinary procedures:</strong> Your employer investigates allegations of misconduct under the ACAS Code of Practice.⁵ Failure to follow a fair process may support an unfair dismissal claim.⁴
                 </li>
               </ul>
             </div>
 
             <ReviewCallout
               title="Weighing up whether to sign your agreement?"
-              description="Before you reject or sign, see how your draft terms compare against official Ministry of Justice tribunal payout tables and statutory compensation caps."
-              ctaText="Check your agreement risk & terms →"
-              badge="Objective Risk Assessment"
+              description="Compare your draft terms against April 2026 statutory limits, notice pay rules, and official employment tribunal payout data."
+              ctaText="Check my offer now →"
+              badge="April 2026 Statutory Check"
             />
 
             {/* Section 3 */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">3. Risk vs. reward</h2>
+              <h2 className="guide-h2">3. How does a settlement offer compare to an employment tribunal?</h2>
               <p className="guide-body">
-                Rejecting a settlement agreement to pursue an employment tribunal case involves substantial risk and reward. You must weigh the guaranteed value of the offer against the uncertainty of tribunal proceedings.
+                Declining an offer to pursue an employment tribunal claim involves clear trade-offs. You weigh a guaranteed payment now against the time, cost, and uncertainty of a hearing.
               </p>
               <p className="guide-body">
-                Tribunal cases are time-consuming and public. In the UK, hearing dates are often scheduled several months in advance. The process can cause significant personal stress.
+                Tribunal claims are public and hearings often take many months to reach a conclusion. If a claim fails, you receive nothing.
               </p>
               <p className="guide-body">
-                If you lose at a tribunal, you receive nothing. If you win, the tribunal awards compensation based on your actual financial loss and statutory caps.
-              </p>
-              <p className="guide-body">
-                In 2026, the maximum unfair dismissal compensation is £123,543, or one year of gross pay, whichever is lower.⁶ You can check your potential awards using our{' '}
+                If a claim succeeds, compensation is based on actual financial loss and statutory caps. In 2026, the unfair dismissal compensatory award is capped at £123,543 or one year&apos;s gross pay, whichever is lower.⁶ You can estimate potential awards using our{' '}
                 <Link href="/unfair-dismissal-calculator/" className="text-coral underline underline-offset-2 hover:text-ink">
                   Unfair Dismissal Calculator
-                </Link>. The basic award is calculated using your age and length of service, capped at a maximum of £22,530.⁷
+                </Link>. The basic award is capped at £22,530.⁷
               </p>
               <p className="guide-body">
-                Contrast these limits with the immediate payment offered in your settlement agreement. Up to £30,000 of a compensation payment can be paid tax-free under UK tax rules (ITEPA 2003 s.403).⁸
+                By contrast, up to £30,000 of genuine ex-gratia compensation in a settlement agreement can be paid tax-free under ITEPA 2003 s.403.⁸ Contractual notice, holiday pay, and garden leave are always taxed as wages.
               </p>
 
               {/* Comparison table */}
@@ -200,21 +221,21 @@ export default function RejectSettlementAgreementGuide() {
                       <th className="p-3 text-[13px] font-semibold text-ink uppercase tracking-wider">Action</th>
                       <th className="p-3 text-[13px] font-semibold text-ink uppercase tracking-wider">Financial Certainty</th>
                       <th className="p-3 text-[13px] font-semibold text-ink uppercase tracking-wider">Timeline</th>
-                      <th className="p-3 text-[13px] font-semibold text-ink uppercase tracking-wider">Privacy & Reference</th>
+                      <th className="p-3 text-[13px] font-semibold text-ink uppercase tracking-wider">Privacy &amp; Reference</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-rule text-[14px]">
                     <tr>
                       <td className="p-3 font-semibold text-ink">Accepting the Offer</td>
-                      <td className="p-3 text-muted">Legally binding contractual payment, including qualifying tax-free sums up to £30,000 under ITEPA s.403.⁸</td>
-                      <td className="p-3 text-muted">Typically resolved within 10 to 21 days.</td>
-                      <td className="p-3 text-muted">Private contract, with an agreed factual reference.</td>
+                      <td className="p-3 text-muted">Binding contractual payment, with qualifying ex-gratia sums tax-free up to £30,000 under ITEPA s.403.⁸</td>
+                      <td className="p-3 text-muted">Typically concluded within 10 to 21 days.</td>
+                      <td className="p-3 text-muted">Private agreement, often with an agreed factual reference.</td>
                     </tr>
                     <tr className="bg-paper-2/20">
-                      <td className="p-3 font-semibold text-ink">Refusing the Offer</td>
-                      <td className="p-3 text-muted">No guarantee of payment, capped by statutory limits.⁶</td>
-                      <td className="p-3 text-muted">Tribunal cases can take several months.</td>
-                      <td className="p-3 text-muted">Public hearings, with no guaranteed reference.</td>
+                      <td className="p-3 font-semibold text-ink">Declining the Offer</td>
+                      <td className="p-3 text-muted">No guaranteed payout; tribunal awards are subject to statutory caps.⁶</td>
+                      <td className="p-3 text-muted">Employment tribunal claims can take several months.</td>
+                      <td className="p-3 text-muted">Public tribunal judgments, with no agreed reference.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -223,38 +244,38 @@ export default function RejectSettlementAgreementGuide() {
 
             {/* Section 4 */}
             <div className="space-y-6">
-              <h2 className="guide-h2 text-[24px]">4. What to do next if you are rejecting the offer</h2>
-              
+              <h2 className="guide-h2">4. What steps follow if you decline the offer?</h2>
+
               <div className="relative border-l border-rule ml-3 space-y-8 pb-4">
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">1</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Gather your evidence</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">Collect copies of emails, performance reviews, and contract documents. Keep a diary of relevant events, conversations, and dates.</p>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Gather your key documents</h3>
+                  <p className="text-[15px] text-muted leading-relaxed">Keep copies of your employment contract, bonus terms, and recent performance reviews. Note down key dates and written communications.</p>
                 </div>
-                
+
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">2</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Calculate your entitlements</h3>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Check your calculated statutory baseline</h3>
                   <p className="text-[15px] text-muted leading-relaxed">
                     Use the{' '}
                     <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
                       SettlementCheck calculator
                     </Link>{' '}
-                    to verify your statutory redundancy minimums and notice pay. This establishes your baseline.
+                    to verify your statutory redundancy entitlement, notice pay, and tax split.
                   </p>
                 </div>
 
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">3</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Write down your reasoning</h3>
-                  <p className="text-[15px] text-muted leading-relaxed">Draft a clear statement explaining why the offer is insufficient. Use facts and figures to support your case.</p>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Identify any missing entitlements</h3>
+                  <p className="text-[15px] text-muted leading-relaxed">Check whether accrued holiday pay, commission, or contractual notice are accurately listed. Review non-compete restrictions and garden leave terms.</p>
                 </div>
 
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">4</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Submit a counter-proposal</h3>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Understand counter-proposal risks</h3>
                   <p className="text-[15px] text-muted leading-relaxed">
-                    Present your response to your employer in writing. Suggest a specific settlement amount, outline non-financial terms, and state your reasons. Follow the step-by-step framework in our guide on{' '}
+                    Under UK contract law (Hyde v Wrench), a counter-offer rejects the original offer. Read how talks typically progress in our guide on{' '}
                     <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
                       how to negotiate a settlement agreement
                     </Link>.
@@ -263,11 +284,11 @@ export default function RejectSettlementAgreementGuide() {
 
                 <div className="relative pl-8">
                   <div className="absolute w-6 h-6 bg-ink rounded-full text-white text-[12px] font-bold flex items-center justify-center -left-[12px] top-0 border-[3px] border-card">5</div>
-                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Instruct an independent solicitor</h3>
+                  <h3 className="text-[17px] font-serif font-[460] text-ink mb-1">Speak with an independent solicitor</h3>
                   <p className="text-[15px] text-muted leading-relaxed">
-                    Engage an SRA-regulated solicitor to review your draft counter-proposal. Make sure you select someone aligned with your interests rather than your employer's preference (read{' '}
+                    An SRA-regulated solicitor can advise on your draft terms and legal options. Employers standardly contribute £350 to £500+ plus VAT upon completion, though excess or abortive work is subject to your solicitor engagement terms (read{' '}
                     <Link href="/guides/employer-recommended-solicitor/" className="text-coral underline underline-offset-2 hover:text-ink">
-                      do you have to use your employer's solicitor?
+                      do you have to use your employer&apos;s solicitor?
                     </Link>).
                   </p>
                 </div>
@@ -277,24 +298,27 @@ export default function RejectSettlementAgreementGuide() {
             {/* CTA */}
             <div className="bg-ink rounded-2xl p-8 text-center mt-10">
               <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
-                Find out where you stand
+                Check where your offer stands
               </h2>
               <p className="text-white/70 text-[15px] leading-relaxed mb-6">
-                Calculate your statutory minimums instantly using 2026/2027 legal rates. No email required.
+                See your calculated statutory baseline, tax split, and notice pay using April 2026 rates.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <Link href="/calculator/" className="btn-accent">
-                  Calculate settlement →
+                  Check my offer now →
                 </Link>
                 <Link href="/redundancy-calculator/" className="btn-secondary">
-                  Redundancy calculator →
+                  Calculate my redundancy →
                 </Link>
               </div>
+              <p className="text-white/60 text-[12px] mt-4">
+                Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+              </p>
             </div>
 
             {/* FAQ */}
             <div className="space-y-4 pt-10">
-              <h2 className="guide-h2 text-[24px]">Frequently Asked Questions</h2>
+              <h2 className="guide-h2">Frequently Asked Questions</h2>
               <div className="mt-4">
                 <FaqAccordion faqs={FAQS} />
               </div>
@@ -302,36 +326,42 @@ export default function RejectSettlementAgreementGuide() {
 
             {/* Related Articles Component */}
             <RelatedArticles
-              title="Related Guides & Tools"
+              title="Related Guides & Calculators"
               items={[
                 {
                   href: '/guides/pressured-to-sign/',
                   title: 'Pressured to Sign Quickly? Your Rights',
-                  description: 'The ACAS 10-day rule and legal protection against improper employer conduct.',
-                  tag: 'Rights & Rules',
+                  description: 'ACAS Code 4 10-day guidance and how to handle employer deadlines.',
+                  tag: 'Employee Rights',
                 },
                 {
                   href: '/guides/can-an-employer-withdraw-a-settlement-agreement/',
                   title: 'Can an Employer Withdraw the Offer?',
-                  description: 'Learn UK contract rules, counter-offer risks, and how to safely protect your baseline.',
+                  description: 'UK contract rules under Hyde v Wrench and offer revocation risks.',
                   tag: 'Offer Protection',
                 },
                 {
                   href: '/guides/how-to-negotiate-a-settlement-agreement/',
                   title: 'How to Negotiate a Settlement Agreement',
-                  description: 'Step-by-step tactics to raise the opening figure and secure better terms.',
+                  description: 'How settlement talks work, tax splits, and legal fee contributions.',
                   tag: 'Negotiation',
                 },
                 {
                   href: '/guides/what-is-a-fair-settlement-agreement/',
                   title: 'What Is a Fair Settlement Agreement?',
-                  description: 'Benchmark your offer against statutory minimums and typical market multiples.',
+                  description: 'Compare your offer against calculated statutory baselines and UK ranges.',
                   tag: 'Valuation',
+                },
+                {
+                  href: '/guides/acas-statutory-timeline/',
+                  title: 'ACAS Statutory Timeline & 10-Day Rule',
+                  description: 'Check ACAS 10-calendar-day guidance and 3-month tribunal limitation dates.',
+                  tag: 'Deadlines',
                 },
                 {
                   href: '/unfair-dismissal-calculator/',
                   title: 'Unfair Dismissal Calculator',
-                  description: 'Calculate your potential basic award and compensatory award under 2026 statutory limits.',
+                  description: 'Estimate basic and compensatory awards under 2026 statutory limits.',
                   tag: 'Calculator',
                 },
               ]}
@@ -342,43 +372,43 @@ export default function RejectSettlementAgreementGuide() {
               <h2 className="text-[16px] font-semibold text-ink">Statutory Citations</h2>
               <ul className="space-y-2">
                 <li className="text-[13px] text-muted-2">
-                  ¹ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/203" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.203(3)</a> outlines the statutory requirements for a settlement agreement to be legally binding, including the requirement for independent legal advice.
+                  ¹ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/203" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.203(3)</a> outlines the statutory requirements for a settlement agreement to be legally binding, including independent legal advice.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ² Employer contributions to legal fees are a standard industry practice to ensure compliance with s.203 of the Employment Rights Act 1996.
+                  ² Employer contributions to legal fees are standard UK practice to satisfy s.203 of the Employment Rights Act 1996 upon completion.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ³ <a href="https://www.legislation.gov.uk/ukpga/1992/52/section/188" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Trade Union and Labour Relations (Consolidation) Act 1992, s.188</a> governs the duty of an employer to consult representatives on collective redundancies.
+                  ³ <a href="https://www.legislation.gov.uk/ukpga/1992/52/section/188" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Trade Union and Labour Relations (Consolidation) Act 1992, s.188</a> governs collective redundancy consultation duties.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ⁴ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/94" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.94</a> establishes the right of an employee not to be unfairly dismissed.
+                  ⁴ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/94" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.94</a> establishes the right not to be unfairly dismissed.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ⁵ <a href="https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">ACAS Code of Practice on Disciplinary and Grievance Procedures</a> provides the statutory standard for fair workplace procedures.
+                  ⁵ <a href="https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">ACAS Code of Practice on Disciplinary and Grievance Procedures</a> sets the statutory standard for fair workplace procedures.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ⁶ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/124" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.124</a>, as amended by the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310), caps the compensatory award for unfair dismissal at £123,543.
+                  ⁶ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/124" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.124</a>, as amended by the Employment Rights (Increase of Limits) Order 2026 (SI 2026/310), caps the unfair dismissal compensatory award at £123,543.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ⁷ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/162" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.162</a>, as amended by SI 2026/310, caps the weekly pay for statutory redundancy calculations at £751.
+                  ⁷ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/162" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.162</a>, as amended by SI 2026/310, caps weekly pay for statutory redundancy calculations at £751.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ⁸ <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/403" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Income Tax (Earnings and Pensions) Act 2003 (ITEPA 2003), s.403</a> exempts the first £30,000 of a termination payment from income tax.
+                  ⁸ <a href="https://www.legislation.gov.uk/ukpga/2003/1/section/403" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Income Tax (Earnings and Pensions) Act 2003 (ITEPA 2003), s.403</a> exempts the first £30,000 of qualifying termination payments from income tax.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ⁹ <a href="https://www.acas.org.uk/acas-code-of-practice-on-settlement-agreements" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">ACAS Code of Practice on Settlement Agreements</a> recommends a minimum of 10 calendar days for employees to consider an offer.
+                  ⁹ <a href="https://www.acas.org.uk/acas-code-of-practice-on-settlement-agreements" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">ACAS Code of Practice on Settlement Agreements (Code 4)</a> recommends a minimum of 10 calendar days as general guidance to consider an offer.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ¹⁰ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/86" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.86</a> establishes the statutory minimum notice periods based on length of service.
+                  ¹⁰ <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/86" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights Act 1996, s.86</a> sets statutory minimum notice periods based on length of service.
                 </li>
                 <li className="text-[13px] text-muted-2">
-                  ¹¹ <a href="https://www.legislation.gov.uk/nisr/2026/57/contents/made" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights (Increase of Limits) Order (Northern Ireland) 2026 (SR 2026/57)</a> sets the weekly pay cap for statutory redundancy in Northern Ireland at £783.
+                  ¹¹ <a href="https://www.legislation.gov.uk/nisr/2026/57/contents/made" target="_blank" rel="noopener noreferrer" className="underline hover:text-coral transition-colors">Employment Rights (Increase of Limits) Order (Northern Ireland) 2026 (SR 2026/57)</a> sets the Northern Ireland weekly pay cap at £783.
                 </li>
               </ul>
             </div>
 
             {/* Disclaimer */}
-            <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed">
+            <p className="text-[14px] text-muted border-t border-rule pt-6 leading-relaxed">
               Figures on this page reflect the Employment Rights (Increase of Limits) Order 2026, in force from 6 April 2026. Last reviewed: May 2026. SettlementCheck is an independent introduction service. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding the settlement process and does not constitute legal advice.
             </p>
 

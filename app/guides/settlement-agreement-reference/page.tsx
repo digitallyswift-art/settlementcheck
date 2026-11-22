@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import InteractiveToolHook from '@/components/InteractiveToolHook'
@@ -12,14 +13,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',
   description:
-    'Learn your agreed reference rights in a UK settlement agreement, standard clause wording, bad reference remedies, and how solicitors protect your role.',
+    'Understand agreed reference rights in a UK settlement agreement, standard factual wording, oral inquiry clauses, and how independent solicitors review terms.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-reference/',
   },
   openGraph: {
     title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',
     description:
-      'Learn your agreed reference rights in a UK settlement agreement, standard clause wording, bad reference remedies, and how solicitors protect your role.',
+      'Understand agreed reference rights in a UK settlement agreement, standard factual wording, oral inquiry clauses, and how independent solicitors review terms.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-reference/',
     type: 'article',
     locale: 'en_GB',
@@ -29,34 +30,34 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Settlement Agreement Reference: UK 2026 Rules & Clauses',
     description:
-      'Learn your agreed reference rights in a UK settlement agreement, standard clause wording, bad reference remedies, and how solicitors protect your role.',
+      'Agreed reference rights in UK settlement agreements, oral inquiry clauses, and Section 203 solicitor reviews.',
   },
 }
 
 const FAQS = [
   {
     q: 'Is an employer legally required to give a reference in the UK?',
-    a: 'No. Under UK common law, an employer has no statutory duty to provide a job reference for any employee. However, when you sign a settlement agreement, the agreed reference clause becomes a legally binding contract. Once signed, your employer is legally bound to provide the exact reference attached in the schedule upon request.',
+    a: 'No. Under UK common law, an employer has no general statutory duty to provide a job reference. However, once a settlement agreement is signed, the agreed reference schedule becomes a binding contract term.',
   },
   {
     q: 'Will a basic factual reference look suspicious to future employers?',
-    a: 'No. The vast majority of UK employers now maintain strict policies of providing only factual references. These confirm your job title, start date, and end date. Prospective employers and recruitment agencies are entirely accustomed to this practice. They treat a factual reference as standard corporate compliance, not as an indicator of poor performance or misconduct.',
+    a: 'No. Most large UK employers maintain policies of providing only factual references confirming your job title, start date, and end date. Recruiters and HR teams treat factual references as standard corporate compliance.',
   },
   {
     q: 'Can my employer give a bad oral reference after signing a settlement agreement?',
-    a: 'Not if your settlement agreement is drafted properly by an independent solicitor. Your agreement should include a specific clause requiring your employer to direct all reference inquiries exclusively to HR. It must also stipulate that any oral responses must conform strictly to the agreed written text, with no negative comments.',
+    a: 'An oral inquiry clause can restrict verbal commentary. Your solicitor can check that the draft directs all reference requests to HR and requires any oral response to match the agreed written schedule.',
   },
   {
     q: 'What happens if my employer breaches the agreed reference clause?',
-    a: 'If your employer gives a negative reference or refuses to provide the agreed text, they commit a breach of contract. Under English law, you can claim damages in court for financial losses. If a job offer is rescinded because of their breach, your former employer can be held liable for your lost earnings.',
+    a: 'If your employer refuses to provide the agreed text or gives a contradictory reference, they may commit a breach of contract. Remedies can include damages for proven financial loss if a job offer is withdrawn.',
   },
   {
-    q: 'What reason for leaving should be stated in my agreed reference?',
-    a: 'Your solicitor can negotiate an agreed reason for leaving. Common neutral options include "resignation by mutual agreement", "redundancy", or "resignation to pursue other opportunities". If your employer insists on a standard factual reference, the reason for leaving is simply omitted, which avoids any negative inference.',
+    q: 'What reason for leaving is usually stated in an agreed reference?',
+    a: 'Common neutral options include "resignation by mutual agreement" or "redundancy". Where a standard factual reference is used, the reason for leaving is often omitted altogether.',
   },
   {
-    q: 'Who pays the legal fees to negotiate my agreed reference clause?',
-    a: 'Employers standardly provide a capped commercial contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion. Under Section 203 of the Employment Rights Act 1996, independent legal advice is mandatory to validate a settlement waiver. Your solicitor will review and negotiate your reference terms and non-disparagement covenants directly with your employer.',
+    q: 'Who pays the legal fees to review my agreed reference clause?',
+    a: 'Employers standardly contribute £350 to £500+ plus VAT directly to your SRA-regulated solicitor upon completion of the agreement. Any excess or abortive work is subject to your solicitor engagement terms.',
   },
 ]
 
@@ -77,7 +78,7 @@ const articleSchema = {
   url: 'https://settlementcheck.co.uk/guides/settlement-agreement-reference/',
   image: ['https://settlementcheck.co.uk/og-image.png'],
   datePublished: '2026-10-23',
-  dateModified: '2026-10-23',
+  dateModified: '2026-11-22',
   author: {
     '@type': 'Organization',
     name: 'SettlementCheck Editorial Team',
@@ -146,158 +147,129 @@ export default function SettlementAgreementReferenceGuide() {
               <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
-              <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">Agreed References</span>
+              <span className="text-rule-strong text-xs">/</span>
+              <span className="text-xs font-medium text-muted tracking-wide uppercase">Agreed references</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>
-              Job References, Future Employment &amp; Section 203 Protection
-            </p>
-            <h1 className="sc-h1 mb-5">
-              Settlement Agreement Reference: UK 2026 Rules &amp; Clauses
+            <h1 className="sc-h1 mb-4">
+              Settlement Agreement Reference: UK Rules &amp; Clauses
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40" />
-              <span>Updated for 2026/27 UK Employment Law</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40" />
-              <span>Last reviewed: October 2026</span>
-            </div>
-            <p className="sc-lead">
-              When leaving your job under a settlement agreement, securing your financial payout is only half the battle. Protecting your future career is just as critical. Understanding how agreed references work under UK employment law ensures you leave with your reputation intact and no unpleasant surprises during your next job hunt.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against Common Law &amp; ERA 1996 s.203
             </p>
-          </div>
-        </section>
-
-        {/* STATUTORY QUICK ANSWER (AEO / FEATURED SNIPPET OPTIMISED) */}
-        <section className="py-8 bg-paper-2 border-b border-rule">
-          <div className="max-w-2xl mx-auto px-5">
-            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
-                  Statutory Quick Answer
-                </span>
-                <span className="text-[11px] font-semibold text-muted">
-                  Common Law &amp; ERA 1996 s.203
-                </span>
-              </div>
-              <h2 className="text-base font-bold text-ink mb-2">
-                Can an employer refuse to give a reference in a UK settlement agreement?
-              </h2>
-              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                Under UK common law, employers have no general legal duty to provide a job reference. However, in a settlement agreement under Section 203 of the Employment Rights Act 1996, the agreed reference schedule is a binding contractual term. Once executed, your employer is legally required to provide the agreed text upon request and cannot give a contradictory oral reference.
-              </p>
-
-              {/* Structured Metrics Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-rule text-xs">
-                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Legal Right to a Reference</span>
-                  <span className="font-bold text-ink text-sm">Contractual Only</span>
-                  <span className="text-muted text-[11px]">No general statutory duty under common law</span>
-                </div>
-                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Standard Format</span>
-                  <span className="font-bold text-ink text-sm">Factual Only</span>
-                  <span className="text-muted text-[11px]">Dates, role, and salary upon request</span>
-                </div>
-                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Oral Reference Protection</span>
-                  <span className="font-bold text-ink text-sm">Strict Wording Clause</span>
-                  <span className="text-muted text-[11px]">HR must not deviate from written schedule</span>
-                </div>
-                <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Independent Legal Advice</span>
-                  <span className="font-bold text-ink text-sm">Employer Covers Fees</span>
-                  <span className="text-muted text-[11px]">Typically £500 to £1,500 + VAT under s.203</span>
-                </div>
-              </div>
-
-              <div className="mt-4 pt-3 border-t border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <span className="text-xs text-muted">
-                  Primary statute: <strong>Employment Rights Act 1996 s.203(3)</strong>
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  <Link href="/settlement-agreement-review/" className="inline-flex items-center text-xs font-semibold px-2.5 py-1.5 rounded border border-rule hover:bg-paper text-ink transition-colors">
-                    Check my draft clauses →
-                  </Link>
-                  <Link href="/calculator/" className="text-xs font-bold text-coral hover:text-ink transition-colors flex items-center gap-1">
-                    Calculate my settlement baseline →
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CORE FACTS CALLOUT */}
-        <section className="py-10 border-b border-rule bg-white">
-          <div className="max-w-2xl mx-auto px-5">
-            <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-body font-semibold text-ink mb-3">Six critical facts about settlement agreement references</p>
-              <ul className="flex flex-col gap-3">
-                {[
-                  'Under UK law, employers have no general duty to provide a reference unless contractually agreed.',
-                  'An agreed reference in a settlement agreement creates a legally binding contractual duty.',
-                  'A standard factual reference is normal practice across 90% of UK employers and carries zero stigma.',
-                  'Your agreement must explicitly ban negative oral or telephone comments to prospective employers.',
-                  'Reciprocal non-disparagement clauses stop former managers from making derogatory remarks behind your back.',
-                  'Employers standardly provide a capped commercial contribution toward independent solicitor advice under Section 203 upon agreement completion.',
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <CheckIcon />
-                    <span className="sc-body text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="sc-lead leading-relaxed">
+              Got a draft settlement agreement with a brief factual reference attached? Once signed under Section 203, that schedule becomes a binding contract term. Check your calculated statutory baseline in 60 seconds with no email required, see how oral inquiry and non-disparagement clauses work, and prepare clear questions for an independent solicitor.
+            </p>
           </div>
         </section>
 
         {/* ARTICLE BODY */}
-        <div className="bg-card py-12">
+        <section className="bg-card py-14">
           <div className="max-w-2xl mx-auto px-5 space-y-12">
 
-            {/* SECTION 1: THE LEGAL REALITY OF JOB REFERENCES */}
+            {/* Embedded Calculator (Immediately after Hero) */}
+            <section className="my-2">
+              <EmbeddedCalculatorCard
+                badge="April 2026 Statutory Check"
+                title="How does your offer compare to the statutory baseline?"
+                subtitle="Check your calculated statutory baseline (£751/wk cap), notice pay, and tax-free allowances alongside your reference terms."
+                disputeType="reference"
+                statutoryPills={[
+                  { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                  { label: 'Tax-Free Exemption', value: 'First £30,000', statute: 'ITEPA 2003 s.403' },
+                  { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+                ]}
+                initialSalary={45000}
+                initialYears={4}
+                initialAge={38}
+                ctaText="Check my offer now →"
+              />
+            </section>
+
+            {/* STATUTORY QUICK ANSWER */}
+            <div className="bg-paper-2 border border-rule rounded-xl p-6 md:p-8">
+              <h2 className="font-serif text-[19px] font-[460] text-ink mb-3">
+                Can an employer refuse to give a reference in a settlement agreement?
+              </h2>
+              <p className="text-[15px] text-ink leading-relaxed mb-5">
+                Under UK common law, employers have no general duty to provide a job reference. However, in a Section 203 settlement agreement, the agreed reference schedule is a binding contractual term requiring the employer to issue the agreed text upon request.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px] block mb-1">Legal Right to a Reference</span>
+                  <span className="font-bold text-ink text-sm block mb-1">Contractual Only</span>
+                  <span className="text-muted text-[12px]">No general statutory duty under common law</span>
+                </div>
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px] block mb-1">Standard Format</span>
+                  <span className="font-bold text-ink text-sm block mb-1">Factual Only</span>
+                  <span className="text-muted text-[12px]">Dates, job title, and salary if requested</span>
+                </div>
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px] block mb-1">Oral Reference Protection</span>
+                  <span className="font-bold text-ink text-sm block mb-1">Strict Wording Clause</span>
+                  <span className="text-muted text-[12px]">HR must not deviate from written schedule</span>
+                </div>
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px] block mb-1">Legal Fee Contribution</span>
+                  <span className="font-bold text-ink text-sm block mb-1">£350 to £500+ plus VAT</span>
+                  <span className="text-muted text-[12px]">Standard employer contribution on completion</span>
+                </div>
+              </div>
+            </div>
+
+            {/* CORE FACTS CALLOUT */}
+            <div className="rounded-xl border border-rule bg-paper p-5">
+              <p className="text-[15px] font-semibold text-ink mb-3">Six key facts about settlement agreement references</p>
+              <ul className="flex flex-col gap-3">
+                {[
+                  'Under UK law, employers have no general duty to provide a reference unless contractually agreed.',
+                  'An agreed reference in a settlement agreement creates a legally binding contractual duty.',
+                  'A standard factual reference is normal practice across most UK corporate employers.',
+                  'An oral inquiry clause helps ensure telephone enquiries follow the written schedule.',
+                  'Reciprocal non-disparagement clauses restrict both sides from making derogatory remarks.',
+                  'Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion.',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckIcon />
+                    <span className="text-[15px] text-ink leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* SECTION 1 */}
             <section className="space-y-4">
-              <h2 className="sc-section-h2">1. The legal reality of job references in the UK</h2>
-              <p className="sc-body">
-                Many employees believe they have a statutory right to a job reference. Under UK employment law, this is a misconception. Under common law, an employer is under no obligation to provide a reference for a current or former employee, as confirmed by the landmark House of Lords case <em>Spring v Guardian Assurance plc [1995]</em>.
+              <h2 className="guide-h2">1. Are UK employers legally required to give a job reference?</h2>
+              <p className="guide-body">
+                Under UK common law, an employer has no general obligation to provide a reference for a current or former employee, as confirmed in <em>Spring v Guardian Assurance plc [1995]</em>.
               </p>
-              <p className="sc-body">
-                An employer can legally refuse to provide any reference at all. That refusal cannot be challenged unless you can prove it constitutes unlawful discrimination or victimisation under the Equality Act 2010.
-              </p>
-              <p className="sc-body">
-                This legal reality is why an agreed reference schedule is essential. When you sign a settlement agreement under Section 203 of the Employment Rights Act 1996, the reference clause turns a discretionary favour into a legally binding contractual duty. If your employer fails to provide the agreed reference, they are in direct breach of contract.
+              <p className="guide-body">
+                An employer can refuse to provide a reference unless that refusal amounts to unlawful discrimination or victimisation under the Equality Act 2010. That is why an agreed reference schedule in a Section 203 settlement agreement turns a discretionary favour into an enforceable contract term.
               </p>
             </section>
 
             {/* INTERACTIVE TOOL HOOK */}
             <InteractiveToolHook
-              badge="Draft Agreement Auditor"
-              title="Is your reference clause legally watertight?"
-              description="Most employer-drafted agreements contain weak reference clauses that permit negative oral remarks. Check your written terms with an SRA-regulated solicitor before signing. Employers standardly provide a capped fee contribution upon completion."
+              badge="Draft Agreement Review"
+              title="Check your reference and non-disparagement clauses"
+              description="Draft agreements often omit oral reference protections or reciprocal non-disparagement terms. Have an SRA-regulated solicitor review your draft before signing."
               ctaText="Check my draft clauses →"
               ctaHref="/settlement-agreement-review/"
               statutoryPills={[
                 { label: 'ERA 1996', value: 'Section 203(3)', citation: 'Mandatory independent legal advice' },
-                { label: 'Legal Fees', value: '£350 to £500+', citation: 'Customary employer contribution' },
+                { label: 'Legal Fees', value: '£350 to £500+ VAT', citation: 'Standard contribution on completion' },
                 { label: 'Contract Law', value: 'Binding Schedule', citation: 'Remedies for breach of contract' },
               ]}
             />
 
-            {/* SECTION 2: FACTUAL VS DETAILED REFERENCES */}
+            {/* SECTION 2 */}
             <section className="space-y-4">
-              <h2 className="sc-section-h2">2. Standard factual reference vs detailed character reference</h2>
-              <p className="sc-body">
-                When discussing references, employees often hope for a glowing letter of recommendation. In modern UK business practice, this is exceptionally rare.
-              </p>
-              <p className="sc-body">
-                Under <em>Bartholomew v London Borough of Hackney [1999]</em>, any employer providing a reference owes a duty of care to both the employee and the recipient. The reference must be true, accurate, and fair. Because detailed commentary introduces legal risk of defamation or negligent misstatement, almost all large UK employers enforce a strict factual-only reference policy.
-              </p>
-              <p className="sc-body">
-                The table below contrasts the three primary reference types in UK employment practice:
+              <h2 className="guide-h2">2. What is the difference between a factual and character reference?</h2>
+              <p className="guide-body">
+                Under <em>Bartholomew v London Borough of Hackney [1999]</em>, an employer providing a reference owes a duty of care to ensure it is true, accurate, and fair. Because detailed commentary creates legal risk, most large UK employers enforce a factual-only reference policy.
               </p>
 
-              {/* Comparison Table */}
               <div className="overflow-x-auto my-6">
                 <table className="w-full text-left text-xs border border-rule rounded-lg overflow-hidden">
                   <thead className="bg-paper-2 text-ink uppercase tracking-wider font-semibold border-b border-rule">
@@ -305,50 +277,46 @@ export default function SettlementAgreementReferenceGuide() {
                       <th className="p-3">Reference Type</th>
                       <th className="p-3">What It Contains</th>
                       <th className="p-3">Industry Perception</th>
-                      <th className="p-3">Employer Willingness</th>
+                      <th className="p-3">Employer Practice</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-rule bg-white">
                     <tr>
                       <td className="p-3 font-semibold text-ink">Standard Factual</td>
                       <td className="p-3 text-muted">Job title, start date, end date, and salary confirmation if requested.</td>
-                      <td className="p-3 text-muted">Standard corporate practice. Completely neutral. Zero stigma.</td>
-                      <td className="p-3 text-ink font-medium">Standard policy for over 90% of UK firms.</td>
+                      <td className="p-3 text-muted">Standard corporate practice. Neutral and widely accepted.</td>
+                      <td className="p-3 text-ink font-medium">Standard policy for most UK corporate firms.</td>
                     </tr>
                     <tr>
                       <td className="p-3 font-semibold text-ink">Detailed / Character</td>
-                      <td className="p-3 text-muted">Praise of achievements, work ethic, interpersonal skills, and contributions.</td>
-                      <td className="p-3 text-muted">Positive, but increasingly rare outside small businesses or creative sectors.</td>
-                      <td className="p-3 text-muted">Generally refused by corporate HR due to legal liability risks.</td>
+                      <td className="p-3 text-muted">Commentary on achievements, work ethic, and interpersonal skills.</td>
+                      <td className="p-3 text-muted">Positive, though increasingly rare outside smaller businesses.</td>
+                      <td className="p-3 text-muted">Often declined by corporate HR due to liability risk.</td>
                     </tr>
                     <tr>
                       <td className="p-3 font-semibold text-ink">Regulated Sector</td>
                       <td className="p-3 text-muted">Mandatory conduct disclosures under FCA/PRA rules (SM&amp;CR SYSC 22).</td>
-                      <td className="p-3 text-muted">Statutory requirement in financial services. Scrutinised by compliance teams.</td>
-                      <td className="p-3 text-ink font-medium">Compulsory by law. Cannot be waived by a settlement agreement.</td>
+                      <td className="p-3 text-muted">Statutory requirement in financial services.</td>
+                      <td className="p-3 text-ink font-medium">Compulsory by law; cannot be waived by agreement.</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
               <div className="bg-paper border-l-4 border-coral p-4 rounded-r-lg">
-                <p className="text-body text-ink font-medium leading-relaxed m-0">
-                  <strong>Important reassurance:</strong> A standard factual reference will not harm your job prospects. Recruitment consultants and HR directors see hundreds of factual references every month. They recognise it as standard corporate policy, not a hidden signal of performance concerns.
+                <p className="text-[14px] text-ink font-medium leading-relaxed m-0">
+                  <strong>Reassurance on factual references:</strong> Recruitment teams see factual references every day. They recognise them as standard corporate compliance rather than a signal of performance issues.
                 </p>
               </div>
             </section>
 
-            {/* SECTION 3: MODEL AGREED REFERENCE CLAUSE WORDING */}
+            {/* SECTION 3 */}
             <section className="space-y-4">
-              <h2 className="sc-section-h2">3. Model agreed reference wording (Schedule 1)</h2>
-              <p className="sc-body">
-                In a well-drafted settlement agreement, the reference text appears in an attached schedule, usually titled &quot;Schedule 1: Agreed Reference&quot;.
-              </p>
-              <p className="sc-body">
-                Below is the standard, battle-tested wording that UK employment solicitors routinely negotiate for corporate exits:
+              <h2 className="guide-h2">3. What does a standard agreed reference clause look like?</h2>
+              <p className="guide-body">
+                In a settlement agreement, the agreed wording usually sits in an attached schedule titled &quot;Schedule 1: Agreed Reference&quot;. Below is a typical UK corporate format:
               </p>
 
-              {/* Template Box */}
               <div className="bg-paper-2 border border-rule rounded-xl p-5 md:p-6 font-mono text-xs text-ink leading-relaxed space-y-3">
                 <div className="flex items-center justify-between border-b border-rule pb-2">
                   <span className="font-bold text-coral text-[11px] uppercase tracking-wider font-sans">
@@ -356,13 +324,13 @@ export default function SettlementAgreementReferenceGuide() {
                   </span>
                   <span className="text-[10px] text-muted font-sans">Standard UK Corporate Format</span>
                 </div>
-                <p className="font-sans text-body text-muted mb-2">
+                <p className="font-sans text-[14px] text-muted mb-2">
                   [Company Letterhead]
                 </p>
-                <p className="font-sans text-body text-muted mb-2">
+                <p className="font-sans text-[14px] text-muted mb-2">
                   To Whom It May Concern,
                 </p>
-                <p className="font-sans text-body text-ink font-medium">
+                <p className="font-sans text-[14px] text-ink font-medium">
                   Re: Reference for [Employee Full Name]
                 </p>
                 <p>
@@ -372,12 +340,12 @@ export default function SettlementAgreementReferenceGuide() {
                   During their employment, [Employee Name] held the position of [Job Title] within the [Department / Division] team.
                 </p>
                 <p>
-                  [Optional Reason for Leaving Sentence: [Employee Name] left their employment by mutual agreement following an internal company reorganisation.]
+                  [Optional Reason for Leaving: [Employee Name] left their employment by mutual agreement.]
                 </p>
                 <p>
                   It is company policy to provide only factual references confirming employment dates and position held.
                 </p>
-                <p className="font-sans text-body text-muted mt-3">
+                <p className="font-sans text-[14px] text-muted mt-3">
                   Yours faithfully,<br />
                   Human Resources Department<br />
                   [Employer Name]
@@ -385,143 +353,140 @@ export default function SettlementAgreementReferenceGuide() {
               </div>
             </section>
 
-            {/* SECTION 4: THE ORAL REFERENCE TRAP */}
+            {/* SECTION 4 */}
             <section className="space-y-4">
-              <h2 className="sc-section-h2">4. The oral reference trap and telephone inquiries</h2>
-              <p className="sc-body">
-                Having an agreed written reference is not enough on its own. Prospective employers frequently call former managers or HR departments for an &quot;informal chat&quot; or quick verbal confirmation.
+              <h2 className="guide-h2">4. How do oral references and telephone calls affect your agreement?</h2>
+              <p className="guide-body">
+                An agreed written schedule does not automatically cover informal telephone calls. Prospective employers sometimes ring former managers for a quick verbal confirmation.
               </p>
-              <p className="sc-body">
-                If your settlement agreement does not regulate oral communications, a former manager might say something damaging on the telephone, such as: &quot;I can only give the agreed reference, if you know what I mean.&quot; A comment like that immediately destroys a job offer.
+              <p className="guide-body">
+                To address this, solicitors commonly check for an <strong>oral inquiry clause</strong> in the main body of the agreement stating that:
               </p>
-              <p className="sc-body">
-                To prevent this, an experienced employment solicitor will insert an <strong>oral inquiry covenant</strong> into the main body of your agreement. This clause must state:
-              </p>
-              <ul className="list-disc pl-5 space-y-2 text-sm text-ink leading-relaxed">
-                <li>All requests for references must be directed exclusively to a named individual or central HR.</li>
-                <li>The employer covenants that any oral response will be strictly consistent with the written reference in Schedule 1.</li>
-                <li>The employer covenants that neither HR nor any manager will provide additional commentary, nuance, or informal opinions.</li>
+              <ul className="list-disc pl-5 space-y-2 text-[15px] text-ink leading-relaxed">
+                <li>All reference requests must be directed exclusively to a named contact or central HR.</li>
+                <li>Any oral response must remain strictly consistent with the written reference in Schedule 1.</li>
+                <li>Neither HR nor managers may provide additional informal commentary or opinions.</li>
               </ul>
             </section>
 
-            {/* SECTION 5: RECIPROCAL NON-DISPARAGEMENT */}
+            {/* SECTION 5 */}
             <section className="space-y-4">
-              <h2 className="sc-section-h2">5. Reciprocal non-disparagement covenants</h2>
-              <p className="sc-body">
-                Standard draft agreements provided by employers are one-sided. They contain strict clauses forbidding the employee from making derogatory comments about the employer, its brand, or its staff.
+              <h2 className="guide-h2">5. How do reciprocal non-disparagement clauses protect you?</h2>
+              <p className="guide-body">
+                Initial employer drafts often restrict the employee from making derogatory comments about the company, without placing a matching duty on the employer.
               </p>
-              <p className="sc-body">
-                However, they routinely omit any obligation on the employer. Without a reciprocal clause, your former employer and colleagues remain legally free to criticise you to industry peers or recruiters.
-              </p>
-              <p className="sc-body">
-                Your solicitor should always negotiate a <strong>reciprocal non-disparagement clause</strong>. This legally binds the employer, its board of directors, and your immediate managers from making any disparaging or derogatory remarks about you to any third party.
+              <p className="guide-body">
+                During a review, solicitors commonly request a <strong>reciprocal non-disparagement clause</strong>. This requires the employer to use reasonable endeavours to ensure its directors and key managers do not make derogatory remarks about you to third parties.
               </p>
             </section>
 
             {/* REVIEW CALLOUT */}
             <ReviewCallout
               title="Have you received a draft settlement agreement?"
-              description="Have your independent solicitor review your reference schedule, non-disparagement terms, and financial settlement before signing. Employers customarily contribute toward the legal fees."
-              ctaText="Check draft agreement clauses →"
-              badge="Confidential Clause Checker"
+              description="Have an independent solicitor review your reference schedule, non-disparagement terms, and financial breakdown before signing. Employers standardly contribute £350 to £500+ plus VAT upon completion."
+              ctaText="Check my draft clauses →"
+              badge="Confidential Clause Review"
             />
 
-            {/* SECTION 6: REASON FOR LEAVING */}
+            {/* SECTION 6 */}
             <section className="space-y-4">
-              <h2 className="sc-section-h2">6. What should your agreed reference say about why you left?</h2>
-              <p className="sc-body">
-                The reason for leaving is often an area of negotiation between solicitors. Depending on the background to your departure, several approaches can be taken:
+              <h2 className="guide-h2">6. What should your agreed reference say about why you left?</h2>
+              <p className="guide-body">
+                The reason for leaving is often adjusted during solicitor review. Three common neutral options are used in UK practice:
               </p>
               <div className="space-y-3">
-                <div className="p-4 rounded-xl border border-rule bg-paper">
+                <div className="p-4 rounded-xl border border-rule bg-paper-2/40">
                   <h3 className="font-semibold text-ink text-sm mb-1">Mutual Agreement</h3>
-                  <p className="sc-body text-muted mb-0">
-                    Stating that employment ended &quot;by mutual agreement&quot; is common and neutral. It accurately reflects that both parties agreed to part ways amicably under a settlement agreement.
+                  <p className="text-[14px] text-muted leading-relaxed mb-0">
+                    Stating that employment ended &quot;by mutual agreement&quot; is neutral and reflects an agreed departure under a settlement agreement.
                   </p>
                 </div>
-                <div className="p-4 rounded-xl border border-rule bg-paper">
+                <div className="p-4 rounded-xl border border-rule bg-paper-2/40">
                   <h3 className="font-semibold text-ink text-sm mb-1">Redundancy or Reorganisation</h3>
-                  <p className="sc-body text-muted mb-0">
-                    If your exit was initiated due to restructuring, stating &quot;reason for leaving: redundancy&quot; provides total clarity to future recruiters. It carries zero performance stigma.
+                  <p className="text-[14px] text-muted leading-relaxed mb-0">
+                    Where departure followed restructuring, stating &quot;redundancy&quot; gives clear context to future recruiters.
                   </p>
                 </div>
-                <div className="p-4 rounded-xl border border-rule bg-paper">
+                <div className="p-4 rounded-xl border border-rule bg-paper-2/40">
                   <h3 className="font-semibold text-ink text-sm mb-1">Omission (Silent Reason)</h3>
-                  <p className="sc-body text-muted mb-0">
-                    If your exit involved a workplace dispute, the safest option is to omit the reason for leaving entirely. The reference simply states that standard company policy is to confirm employment dates and role only.
+                  <p className="text-[14px] text-muted leading-relaxed mb-0">
+                    Where an exit followed a workplace dispute, omitting the reason entirely and confirming only dates and job title is often preferred.
                   </p>
                 </div>
               </div>
-              <p className="sc-body mt-2">
-                Under no circumstances should you agree to wording that mentions performance management, disciplinary proceedings, or capability reviews.
+              <p className="guide-body mt-2">
+                Employees and their solicitors typically avoid wording that mentions performance management, disciplinary proceedings, or capability reviews.
               </p>
             </section>
 
-            {/* SECTION 7: REGULATED SECTORS (FCA, PRA & SM&CR) */}
+            {/* SECTION 7 */}
             <section className="space-y-4">
-              <h2 className="sc-section-h2">7. Regulated sectors: FCA, PRA, and SM&amp;CR rules</h2>
-              <p className="sc-body">
-                If you work in financial services, insurance, or asset management regulated by the Financial Conduct Authority (FCA) or Prudential Regulation Authority (PRA), distinct statutory rules apply.
+              <h2 className="guide-h2">7. How do FCA, PRA, and SM&amp;CR rules affect regulated roles?</h2>
+              <p className="guide-body">
+                In financial services regulated by the Financial Conduct Authority (FCA) or Prudential Regulation Authority (PRA), statutory regulatory reference rules apply under SYSC 22.
               </p>
-              <p className="sc-body">
-                Under Chapter 22 of the Senior Management Arrangements, Systems and Controls sourcebook (SYSC 22), regulated firms have a mandatory duty to provide comprehensive regulatory references covering the past 6 years of employment. This includes disclosing findings of conduct rule breaches, internal disciplinary determinations, and fitness and propriety concerns.
-              </p>
-              <p className="sc-body">
-                A private settlement agreement <strong>cannot</strong> contract out of these statutory regulatory obligations. If an employer promised in a settlement agreement to conceal a proven conduct breach from the FCA, that clause would be legally void.
-              </p>
-              <p className="sc-body">
-                However, a specialist employment solicitor can negotiate the exact narrative descriptions within the regulatory reference template. They will ensure that unproven allegations, discontinued grievances, or disputed complaints are not recorded as established misconduct.
+              <p className="guide-body">
+                Regulated firms have a mandatory duty to disclose conduct rule breaches and fitness and propriety findings over the past 6 years. A settlement agreement cannot contract out of those statutory duties. However, a solicitor can review the wording to ensure unproven allegations or discontinued grievances are not presented as established misconduct.
               </p>
             </section>
 
-            {/* SECTION 8: BREACH OF AN AGREED REFERENCE */}
+            {/* SECTION 8 */}
             <section className="space-y-4">
-              <h2 className="sc-section-h2">8. What happens if your former employer breaches the agreed reference?</h2>
-              <p className="sc-body">
-                Once signed, a settlement agreement is an enforceable contract under English law. If your employer provides a reference that deviates from Schedule 1, or gives a negative oral reference, they commit a breach of contract.
-              </p>
-              <p className="sc-body">
-                In such circumstances, you have several legal remedies:
+              <h2 className="guide-h2">8. What happens if a former employer breaches the agreed reference?</h2>
+              <p className="guide-body">
+                Once signed, a settlement agreement is a binding contract. If your employer deviates from Schedule 1 or gives a damaging oral reference, potential legal remedies include:
               </p>
               <div className="space-y-3">
-                <div className="p-4 rounded-xl border border-rule bg-paper">
+                <div className="p-4 rounded-xl border border-rule bg-paper-2/40">
                   <h3 className="font-semibold text-ink text-sm mb-1">Damages for Lost Earnings</h3>
-                  <p className="sc-body text-muted mb-0">
-                    If a prospective employer rescinds a formal job offer as a direct result of the derogatory reference, you can sue your former employer for substantial breach of contract damages, including your lost salary.
+                  <p className="text-[14px] text-muted leading-relaxed mb-0">
+                    If a prospective employer withdraws a job offer because of a non-compliant reference, you can seek breach of contract damages for proven financial loss.
                   </p>
                 </div>
-                <div className="p-4 rounded-xl border border-rule bg-paper">
+                <div className="p-4 rounded-xl border border-rule bg-paper-2/40">
                   <h3 className="font-semibold text-ink text-sm mb-1">Negligent Misstatement</h3>
-                  <p className="sc-body text-muted mb-0">
-                    Under the doctrine in <em>Hedley Byrne &amp; Co Ltd v Heller &amp; Partners Ltd [1964]</em>, an employer who provides a misleading or inaccurate reference owes a tortious duty of care. You can bring a claim for financial detriment caused by their negligence.
+                  <p className="text-[14px] text-muted leading-relaxed mb-0">
+                    Under <em>Hedley Byrne &amp; Co Ltd v Heller &amp; Partners Ltd [1964]</em>, an employer providing a misleading reference may owe a duty of care for resulting financial loss.
                   </p>
                 </div>
-                <div className="p-4 rounded-xl border border-rule bg-paper">
+                <div className="p-4 rounded-xl border border-rule bg-paper-2/40">
                   <h3 className="font-semibold text-ink text-sm mb-1">Injunction</h3>
-                  <p className="sc-body text-muted mb-0">
-                    In urgent cases, a solicitor can apply to the County Court or High Court for an interim injunction restraining your former employer from issuing further non-compliant references.
+                  <p className="text-[14px] text-muted leading-relaxed mb-0">
+                    In urgent cases, a solicitor can advise on applying to court to restrain further non-compliant references.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* SECTION 9: HOW AN INDEPENDENT SOLICITOR PROTECTS YOU */}
+            {/* SECTION 9 */}
             <section className="space-y-4">
-              <h2 className="sc-section-h2">9. How an independent solicitor protects your reference</h2>
-              <p className="sc-body">
-                Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is legally invalid unless you receive advice from an independent, qualified legal adviser. That adviser must be an SRA-regulated solicitor, a qualified barrister, or an authorised trade union representative.
+              <h2 className="guide-h2">9. How do statutory negotiation rules and solicitor fees apply?</h2>
+              <p className="guide-body">
+                Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is valid only after you receive advice from an independent, qualified legal adviser such as an SRA-regulated solicitor. Employers standardly contribute £350 to £500+ plus VAT toward these legal fees upon completion, with any excess or abortive work subject to your solicitor engagement terms.
               </p>
-              <p className="sc-body">
-                The standard commercial convention is straightforward: <strong>employers standardly provide a capped contribution toward legal fees</strong>. Employers typically contribute between £350 and £500+ plus VAT towards your legal costs upon completion of the agreement. For a standard review and sign-off within the contribution cap, you will not face personal fee liability upon signed completion.
-              </p>
-              <p className="sc-body">
-                Your solicitor will not just verify your severance calculation and tax-free allowances under Section 403 of ITEPA 2003. They will also inspect the reference schedule, tighten oral inquiry covenants, and ensure robust non-disparagement protections are in place before you sign.
-              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Talks &amp; Eligibility</h3>
+                  <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
+                    <li><strong>Section 111A ERA 1996</strong> covers pre-termination talks for ordinary unfair dismissal only, not discrimination or whistleblowing.</li>
+                    <li><strong>Without Prejudice</strong> applies only where a genuine existing dispute exists.</li>
+                    <li><strong>Statutory redundancy</strong> requires 2 years&apos; service (s.155 ERA 1996; excluded categories apply under s.141).</li>
+                  </ul>
+                </div>
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Timelines &amp; Privilege</h3>
+                  <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
+                    <li><strong>ACAS Code 4</strong> recommends 10 calendar days to consider a written offer as guidance rather than a binding right.</li>
+                    <li><strong>Offer withdrawal:</strong> Under <em>Hyde v Wrench</em> and <em>Routledge v Grant</em>, a counter-offer rejects the original offer and an employer can withdraw before signing.</li>
+                    <li><strong>Legal privilege:</strong> Advice from an SRA-regulated solicitor is protected by legal professional privilege.</li>
+                  </ul>
+                </div>
+              </div>
             </section>
 
             {/* SECTION 10: FAQS */}
             <section className="space-y-6 pt-4 border-t border-rule">
-              <h2 className="sc-section-h2">Frequently asked questions</h2>
+              <h2 className="guide-h2">Frequently asked questions</h2>
               <FaqAccordion faqs={FAQS} />
             </section>
 
@@ -532,7 +497,7 @@ export default function SettlementAgreementReferenceGuide() {
                 {
                   href: '/settlement-agreement-review/',
                   title: 'Settlement Agreement Review',
-                  description: 'Check your written clauses for improper terms, restrictive covenants, and reference traps.',
+                  description: 'Check your written clauses for restrictive covenants, non-disparagement, and reference terms.',
                   tag: 'Review Tool',
                 },
                 {
@@ -544,13 +509,13 @@ export default function SettlementAgreementReferenceGuide() {
                 {
                   href: '/guides/settlement-agreement-restrictive-covenants/',
                   title: 'Restrictive Covenants & Non-Competes',
-                  description: 'Post-termination restrictions, non-compete enforceability, and Section 225 tax traps.',
+                  description: 'Post-termination restrictions, non-compete enforceability, and Section 225 tax rules.',
                   tag: 'Legal Guide',
                 },
                 {
                   href: '/guides/can-an-employer-withdraw-a-settlement-agreement/',
                   title: 'Can an Employer Withdraw a Settlement Offer?',
-                  description: 'Contract rules, counter-offer risks under Hyde v Wrench, and ACAS 10-day limits.',
+                  description: 'Contract rules, counter-offer risks under Hyde v Wrench, and ACAS 10-day guidance.',
                   tag: 'Legal Rights',
                 },
                 {
@@ -569,7 +534,7 @@ export default function SettlementAgreementReferenceGuide() {
             />
 
           </div>
-        </div>
+        </section>
 
         {/* BOTTOM CTA */}
         <section className="relative overflow-hidden py-14 bg-ink text-white">
@@ -577,17 +542,20 @@ export default function SettlementAgreementReferenceGuide() {
             <h2 className="font-serif text-[24px] sm:text-[28px] font-[460] mb-3 text-white">
               Check where your settlement agreement clauses stand
             </h2>
-            <p className="sc-lead text-white/80 max-w-xl mx-auto mb-6 text-sm">
-              Calculate your statutory baseline, check your agreed reference terms, and get matched with an SRA-regulated solicitor. Employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
+            <p className="text-white/70 text-[15px] leading-relaxed max-w-xl mx-auto mb-6">
+              See your calculated statutory baseline, check your agreed reference terms, and prepare for an independent solicitor review.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link href="/calculator/" className="btn-accent text-sm inline-block">
-                Calculate my estimate →
+              <Link href="/calculator/" className="btn-accent w-full sm:w-auto">
+                Check my offer now →
               </Link>
-              <Link href="/settlement-agreement-review/" className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg border border-white/20 hover:bg-white/10 text-white font-semibold text-xs transition-colors">
-                Check my draft clauses →
+              <Link href="/redundancy-calculator/" className="btn-secondary w-full sm:w-auto">
+                Calculate my redundancy →
               </Link>
             </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
       </main>

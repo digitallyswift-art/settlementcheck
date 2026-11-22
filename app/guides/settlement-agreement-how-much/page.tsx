@@ -3,24 +3,24 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
-import InlineEstimator from '@/components/InlineEstimator'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
-  title: 'How Much Settlement From Your Employer? | SettlementCheck',
+  title: 'How Much Is a Settlement Agreement Worth? | SettlementCheck',
   description:
-    'Find out how much settlement your employer should pay in 2026. Negotiation benchmarks, notice pay, £751 weekly cap, and tax-free rules. Free UK guide.',
+    'See how UK settlement agreement amounts are structured in 2026. Illustrative ranges, notice pay, £751 weekly cap, and £30,000 tax-free rules.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-how-much/',
   },
   openGraph: {
-    title: 'How Much Settlement From Your Employer? | SettlementCheck',
+    title: 'How Much Is a Settlement Agreement Worth? | SettlementCheck',
     description:
-      'Find out how much settlement your employer should pay in 2026. Negotiation benchmarks, notice pay, £751 weekly cap, and tax-free rules. Free UK guide.',
+      'See how UK settlement agreement amounts are structured in 2026. Illustrative ranges, notice pay, £751 weekly cap, and £30,000 tax-free rules.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-how-much/',
     type: 'article',
     locale: 'en_GB',
@@ -34,24 +34,24 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const FAQS = [
   {
-    q: 'How much should an employee settlement agreement be?',
-    a: 'A typical UK settlement agreement pays between one and three months of gross salary, plus notice pay and accrued holiday. Your total package should also include statutory redundancy pay, capped at £751 per week, with the first £30,000 paid tax-free.',
+    q: 'How much is a typical UK settlement agreement?',
+    a: 'In straightforward commercial exits, opening offers often include one to three months of gross salary as an ex-gratia payment, plus notice pay and accrued holiday. Statutory redundancy pay (for 2+ years of service) is capped at £751 per week in Great Britain, and the first £30,000 of genuine compensation is usually tax-free.',
   },
   {
     q: 'What is the difference between statutory pay and an ex-gratia payment?',
-    a: 'Statutory pay covers your legally protected redundancy entitlement, capped at £751 per week. An ex-gratia payment is additional compensation offered by your employer to settle all workplace claims. The first £30,000 of combined termination pay is free from tax.',
+    a: 'Statutory redundancy pay is your legal entitlement if you have at least two years of continuous service, capped at £751 per week. An ex-gratia payment is discretionary compensation offered to waive potential employment tribunal claims. Together, the first £30,000 is usually tax-free under Section 403 of ITEPA 2003.',
   },
   {
     q: 'How is notice pay taxed in a settlement agreement?',
-    a: 'Payment in lieu of notice (PILON) is always taxed as ordinary earnings under Section 402D of ITEPA 2003. You pay income tax and National Insurance on your notice pay. It cannot be included inside the £30,000 tax-free exemption.',
+    a: 'Payment in lieu of notice (PILON) and garden leave salary are always taxed as wages under Section 402D of ITEPA 2003. Both are subject to income tax and National Insurance, so they do not fall inside the £30,000 tax-free exemption.',
   },
   {
-    q: 'Can I negotiate a higher settlement amount?',
-    a: 'Yes. Most opening settlement offers have room to move. Employers often increase their initial offer when you show objective statutory entitlements or point out procedural defects. A specialist solicitor can conduct these negotiations for you.',
+    q: 'Can my employer withdraw the offer if I ask for more?',
+    a: 'Yes. Under UK contract law, making a counter-proposal rejects the original offer, so your employer can legally withdraw it before anything is signed. Section 111A ERA 1996 keeps pre-termination talks off the record for ordinary unfair dismissal, though not for discrimination or whistleblowing.',
   },
   {
     q: 'Who pays the solicitor legal fees for reviewing my agreement?',
-    a: 'Under Section 203(3) ERA 1996, independent legal advice is a statutory validity condition. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. For a standard review within this cap, the contribution covers your legal fees.',
+    a: 'Under Section 203(3) ERA 1996, independent legal advice is required for the waiver to bind. Employers standardly contribute £350 to £500+ plus VAT directly to your solicitor upon completion. Excess or abortive work is subject to your solicitor engagement terms.',
   },
 ]
 
@@ -68,10 +68,10 @@ const faqSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Settlement Agreement: How Much Should You Get? UK 2026 Guide',
+  headline: 'Settlement Agreement: How Much Is Your Offer Worth? (UK 2026 Guide)',
   url: 'https://settlementcheck.co.uk/guides/settlement-agreement-how-much/',
   datePublished: '2026-05-20',
-  dateModified: '2026-05-20',
+  dateModified: '2026-07-11',
   author: {
     '@type': 'Organization',
     name: 'SettlementCheck Editorial Team',
@@ -110,7 +110,7 @@ const articleSchema = {
     {
       '@type': 'Legislation',
       name: 'The Employment Rights (Increase of Limits) Order 2026',
-      url: 'https://www.legislation.gov.uk/uksi/2026/index',
+      url: 'https://www.legislation.gov.uk/uksi/2026/310/contents/made',
     },
   ],
 }
@@ -146,254 +146,119 @@ export default function HowMuchGuidePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(breadcrumbSchema) }} />
       <Nav />
       <main>
-        {/* Hero Section */}
+        {/* Hero */}
         <section className="bg-paper pt-14 pb-12 border-b border-rule">
-          <div className="max-w-3xl mx-auto px-5">
+          <div className="max-w-2xl mx-auto px-5">
             <div className="flex items-center gap-2 mb-6">
               <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
-              <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">Settlement Agreement Amount</span>
+              <span className="text-rule-strong text-xs">/</span>
+              <span className="text-xs font-medium text-muted tracking-wide uppercase">Settlement agreements</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>
-              Employment Settlement Guide
-            </p>
-            <h1 className="sc-h1 mb-5">
-              Employment Settlement Agreement: How Much Should You Get? (UK 2026 Guide)
+            <h1 className="sc-h1 mb-4">
+              Settlement Agreement: How Much Is Your Offer Worth?
             </h1>
-
-            {/* Editorial attribution strip */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Updated for 2026/27 tax year</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Statutory figures verified via legislation.gov.uk</span>
-            </div>
-
-            <p className="sc-lead">
-              If your employer handed you an employment settlement agreement today, you are probably feeling shocked, suspicious, and uncertain. You need to know if the money on the table is fair before you sign. This guide explains what UK employers typically pay, how the numbers break down, and how tax applies in 2026.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 &amp; ITEPA 2003
+            </p>
+            <p className="sc-lead leading-relaxed">
+              Got a draft settlement agreement in your inbox and wondering how much it is worth? Check your calculated statutory baseline in 60 seconds with no email required, see how notice pay and tax rules split your package, and prepare clear questions for an independent solicitor.
             </p>
           </div>
         </section>
 
-        {/* Answer-First Callout Box */}
-        <section className="py-10 border-b border-rule bg-paper-2">
-          <div className="max-w-3xl mx-auto px-5">
+        {/* Article Body */}
+        <section className="bg-card py-14">
+          <div className="max-w-2xl mx-auto px-5 space-y-12">
+
+            {/* Interactive Calculator Immediately Below Hero */}
+            <section className="my-2">
+              <EmbeddedCalculatorCard
+                badge="April 2026 Statutory Check"
+                title="How does your offer compare to the statutory baseline?"
+                subtitle="Enter your salary and service length to see your calculated statutory baseline and illustrative 1 to 3 months gross commercial ranges."
+                disputeType="how_much"
+                statutoryPills={[
+                  { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                  { label: 'Commercial Range', value: '1 to 3 Months Gross', statute: 'Observed Norm' },
+                  { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+                ]}
+                initialSalary={50000}
+                initialYears={4}
+                initialAge={38}
+                ctaText="Check my offer now →"
+              />
+            </section>
+
+            {/* Answer-First Callout Box */}
             <div
               itemScope
               itemType="https://schema.org/Question"
-              className="p-6 rounded-xl border border-rule-strong bg-card shadow-sm"
+              className="bg-paper-2 border border-rule rounded-xl p-6 md:p-8"
             >
               <span className="text-[11px] font-semibold uppercase tracking-wider text-coral mb-2 block">
                 Direct Answer
               </span>
-              <h2 itemProp="name" className="text-[20px] font-semibold text-ink leading-snug mb-3">
-                How much should an employee settlement agreement be?
+              <h2 itemProp="name" className="guide-h2 mb-3">
+                How much is a typical UK settlement agreement?
               </h2>
               <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                <p itemProp="text" className="sc-body text-[16px] leading-relaxed text-ink font-medium">
-                  In standard commercial redundancy or capability exits, employers often propose an ex-gratia starting point of one to three months of gross salary on top of contractual notice and accrued holiday. Statutory redundancy is capped at £751 per week under SI 2026/310. The first £30,000 of compensation is tax-free under Section 403 of ITEPA 2003.
+                <p itemProp="text" className="guide-body mb-4">
+                  In straightforward redundancy or capability exits, employers often propose an ex-gratia sum of one to three months of gross salary on top of notice and holiday pay. Statutory redundancy is capped at £751 per week under SI 2026/310. The first £30,000 of genuine compensation is usually tax-free under Section 403 of ITEPA 2003.
                 </p>
               </div>
 
-              {/* Attention Economy: Structured Metrics Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 pt-4 border-t border-rule text-xs">
-                <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Ex-Gratia Benchmark</span>
-                  <span className="font-bold text-ink text-sm">1 to 3 Months' Gross Pay</span>
-                  <span className="text-muted text-[11px]">Negotiated starting point above statutory floor</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-rule text-xs">
+                <div className="flex flex-col gap-0.5 p-3 rounded-lg border border-rule bg-card">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Ex-Gratia Range</span>
+                  <span className="font-bold text-ink text-sm">1 to 3 Months&apos; Gross Pay</span>
+                  <span className="text-muted text-[12px]">Illustrative commercial starting point</span>
                 </div>
-                <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
+                <div className="flex flex-col gap-0.5 p-3 rounded-lg border border-rule bg-card">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Statutory Weekly Cap</span>
                   <span className="font-bold text-ink text-sm">£751 / week (GB 2026)</span>
-                  <span className="text-muted text-[11px]">ERA 1996 s.227 (SI 2026/310)</span>
+                  <span className="text-muted text-[12px]">ERA 1996 s.227 (SI 2026/310)</span>
                 </div>
-                <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
+                <div className="flex flex-col gap-0.5 p-3 rounded-lg border border-rule bg-card">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Tax-Free Limit</span>
                   <span className="font-bold text-ink text-sm">First £30,000 Free of Tax</span>
-                  <span className="text-muted text-[11px]">ITEPA 2003 s.403 (excludes PILON)</span>
+                  <span className="text-muted text-[12px]">ITEPA 2003 s.403 (excludes PILON)</span>
                 </div>
-                <div className="flex flex-col gap-0.5 p-3 rounded bg-paper">
-                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Contribution</span>
-                  <span className="font-bold text-ink text-sm">£350 to £750+ VAT</span>
-                  <span className="text-muted text-[11px]">Your employer pays your solicitor fees</span>
-                </div>
-              </div>
-
-              <div className="mt-5 pt-4 border-t border-rule flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-                <span className="text-xs text-muted">Figures based on April 2026 rates. Zero email required.</span>
-                <div className="flex flex-wrap gap-2">
-                  <Link href="/settlement-agreement-review/" className="inline-flex items-center justify-center text-xs font-semibold px-3 py-2 rounded border border-rule hover:bg-paper text-ink transition-colors">
-                    Check my draft clauses →
-                  </Link>
-                  <Link href="/calculator/" className="btn-accent text-sm py-2 px-4 no-underline">
-                    Calculate my estimate →
-                  </Link>
+                <div className="flex flex-col gap-0.5 p-3 rounded-lg border border-rule bg-card">
+                  <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Legal Fee Contribution</span>
+                  <span className="font-bold text-ink text-sm">£350 to £500+ plus VAT</span>
+                  <span className="text-muted text-[12px]">Paid on completion (ERA 1996 s.203)</span>
                 </div>
               </div>
             </div>
 
-            {/* Interactive Inline Estimator */}
-            <InlineEstimator
-              initialSalary={50000}
-              initialYears={4}
-              reason="redundancy"
-              title="Interactive Settlement Payout Estimator"
-              subtitle="Enter your gross salary and years of service to calculate your statutory baseline and typical negotiated package."
-            />
-          </div>
-        </section>
-
-        {/* Section 1: The Three Parts of Every Settlement */}
-        <section className="py-12 border-b border-rule">
-          <div className="max-w-3xl mx-auto px-5">
-            <h2 className="sc-h2 mb-4">The Three Separate Pots Inside Your Offer</h2>
-            <p className="sc-body mb-6">
-              HR often presents your settlement as one single lump sum. In reality, a legally valid agreement always divides your payout into three separate pots. Knowing which pot is which matters, because HM Revenue and Customs taxes each part differently.
-            </p>
-
-            <div className="space-y-5">
-              <div className="p-5 rounded-lg border border-rule bg-card">
-                <h3 className="font-semibold text-ink text-[17px] mb-2">1. Notice Pay (PILON)</h3>
-                <p className="sc-body mb-2">
-                  This is the salary you would have earned during your contractual notice period. Under Section 402D of ITEPA 2003 (PENP rules), notice pay is always treated as taxable earnings. It is subject to income tax and National Insurance deductions.
-                </p>
-                <p className="text-body text-muted">
-                  Statutory minimum notice is 1 week per year of service, up to 12 weeks. Read our complete guide to{' '}
-                  <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-coral">
-                    PILON tax rules in 2026
-                  </Link>
-                  .
-                </p>
-              </div>
-
-              <div className="p-5 rounded-lg border border-rule bg-card">
-                <h3 className="font-semibold text-ink text-[17px] mb-2">2. Statutory Redundancy Pay</h3>
-                <p className="sc-body mb-2">
-                  If your role is redundant and you have worked for two or more years, you have a legal right to statutory redundancy pay under the Employment Rights Act 1996. For 2026/27, weekly pay is capped at £751 by{' '}
-                  <a
-                    href="https://www.legislation.gov.uk/uksi/2026/310/contents/made"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline hover:text-coral"
-                  >
-                    SI 2026/310
-                  </a>
-                  .
-                </p>
-                <p className="text-body text-muted">
-                  Statutory redundancy pay is completely tax-free under Section 403 of ITEPA 2003. Check the{' '}
-                  <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-coral">
-                    2026 statutory redundancy cap
-                  </Link>{' '}
-                  or estimate your entitlement with our{' '}
-                  <Link href="/redundancy-calculator/" className="underline hover:text-coral">
-                    redundancy pay calculator
-                  </Link>
-                  .
-                </p>
-              </div>
-
-              <div className="p-5 rounded-lg border border-rule bg-card">
-                <h3 className="font-semibold text-ink text-[17px] mb-2">3. Ex-Gratia Compensation Payment</h3>
-                <p className="sc-body mb-2">
-                  This is the discretionary compensation offered in exchange for signing away your right to take your employer to an employment tribunal. In straightforward exits, opening packages often benchmark around one to three months of gross salary, although disputed dismissals can secure substantially more.
-                </p>
-                <p className="text-body text-muted">
-                  The first £30,000 of compensation is tax-free under Section 403 of ITEPA 2003. Learn how HMRC handles the{' '}
-                  <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-coral">
-                    tax-free £30,000 settlement exemption
-                  </Link>
-                  .
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 2: Typical Payout Benchmarks Table */}
-        <section className="py-12 border-b border-rule bg-paper-2">
-          <div className="max-w-3xl mx-auto px-5">
-            <h2 className="sc-h2 mb-4">Settlement Payout Benchmarks by Scenario</h2>
-            <p className="sc-body mb-6">
-              How much you receive depends heavily on the reason for your departure and your legal standing. Below are illustrative commercial benchmarks observed across UK employment settlement discussions (these serve as negotiation starting points, not statutory guarantees):
-            </p>
-
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-sm bg-card rounded-lg border border-rule overflow-hidden" style={{ minWidth: 500 }}>
-                <thead>
-                  <tr className="border-b border-rule bg-paper">
-                    <th className="text-left py-3 px-4 font-semibold text-ink">Circumstance</th>
-                    <th className="text-left py-3 px-4 font-semibold text-ink">Typical Additional Ex-Gratia</th>
-                    <th className="text-left py-3 px-4 font-semibold text-ink">Notice & Redundancy</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-rule">
-                  <tr>
-                    <td className="py-3 px-4 text-ink font-medium">Standard Redundancy</td>
-                    <td className="py-3 px-4 text-muted">1 to 2 months salary</td>
-                    <td className="py-3 px-4 text-muted">Full notice + statutory redundancy</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-ink font-medium">
-                      <Link href="/guides/settlement-agreement-instead-of-pip/" className="hover:text-coral underline">
-                        Performance / PIP Exit
-                      </Link>
-                    </td>
-                    <td className="py-3 px-4 text-muted">2 to 3 months salary</td>
-                    <td className="py-3 px-4 text-muted">Full notice paid as PILON</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-ink font-medium">
-                      <Link href="/guides/protected-conversations-without-prejudice/" className="hover:text-coral underline">
-                        Workplace Dispute / Grievance
-                      </Link>
-                    </td>
-                    <td className="py-3 px-4 text-muted">3 to 6 months salary</td>
-                    <td className="py-3 px-4 text-muted">Full notice paid as PILON</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-ink font-medium">
-                      <Link href="/guides/discrimination-settlement-agreements/" className="hover:text-coral underline">
-                        Discrimination or Whistleblowing
-                      </Link>
-                    </td>
-                    <td className="py-3 px-4 text-muted">6+ months (or Vento bands)</td>
-                    <td className="py-3 px-4 text-muted">Full notice plus injury to feelings</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="mt-8 p-5 rounded-lg border border-rule bg-card">
-              <h3 className="font-semibold text-ink text-[17px] mb-2">Why does an employer offer extra ex-gratia pay?</h3>
-              <p className="sc-body mb-3">
-                Employers offer ex-gratia money to buy certainty and finality. Defending an ordinary claim at an employment tribunal costs an employer between £8,500 and £15,000 in legal fees alone, regardless of the outcome.
+            {/* Section 1: The Three Separate Pots */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">1. How is a settlement payout split into three pots?</h2>
+              <p className="guide-body">
+                HR often presents your settlement as a single headline figure. In practice, a draft agreement splits the payout into three separate pots, and HMRC taxes each one differently.
               </p>
-              <p className="sc-body">
-                Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering an ex-gratia payment of one to three months of gross pay is often cheaper and faster for the company than a protracted workplace dispute. Explore live regional delays in our <Link href="/tribunal-backlog-tracker/" className="text-coral underline hover:text-ink">UK Employment Tribunal backlog tracker</Link>, compare <Link href="/guides/average-settlement-agreement-payout-uk/" className="text-coral underline hover:text-ink">average UK settlement agreement payout amounts</Link>, or inspect sector multiples in the <Link href="/reports/uk-settlement-index-2026/" className="text-coral underline hover:text-ink">2026 UK Employment Settlement Index</Link>.
-              </p>
-            </div>
-          </div>
-        </section>
 
-        {/* Section 3: Statutory Rules and Tax Caps */}
-        <section className="py-12 border-b border-rule">
-          <div className="max-w-3xl mx-auto px-5">
-            <h2 className="sc-h2 mb-4">Official Statutory Rates for 2026/27</h2>
-            <p className="sc-body mb-6">
-              When calculating whether an offer is fair, you must benchmark it against the latest statutory limits set by UK Parliament:
-            </p>
+              <div className="space-y-4 mt-4">
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <h3 className="font-semibold text-ink text-[16px] mb-2">1. Notice Pay, PILON, and Garden Leave</h3>
+                  <p className="guide-body mb-2">
+                    Whether you serve your notice on garden leave or receive Payment in Lieu of Notice (PILON), it is always taxed as wages under Section 402D of ITEPA 2003. Income tax and National Insurance apply in full.
+                  </p>
+                  <p className="text-[14px] text-muted">
+                    Statutory minimum notice is 1 week per year of service, up to 12 weeks. Read our{' '}
+                    <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-coral">
+                      PILON tax rules guide
+                    </Link>
+                    .
+                  </p>
+                </div>
 
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <CheckIcon />
-                <div>
-                  <strong className="text-ink font-semibold">Weekly Statutory Pay Cap (£751):</strong>
-                  <p className="sc-body mt-0.5">
-                    Under Section 227 of the Employment Rights Act 1996 and{' '}
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <h3 className="font-semibold text-ink text-[16px] mb-2">2. Statutory Redundancy Pay</h3>
+                  <p className="guide-body mb-2">
+                    If your role is redundant and you have two or more years of continuous service, you qualify for statutory redundancy pay under the Employment Rights Act 1996. For 2026/27, weekly pay is capped at £751 in Great Britain under{' '}
                     <a
                       href="https://www.legislation.gov.uk/uksi/2026/310/contents/made"
                       target="_blank"
@@ -402,112 +267,254 @@ export default function HowMuchGuidePage() {
                     >
                       SI 2026/310
                     </a>
-                    , the statutory weekly cap increased to £751 on 6 April 2026. See how weekly caps have changed since 2000 in our <Link href="/statutory-rates-history/" className="underline hover:text-coral">statutory rates history archive</Link>.
+                    .
                   </p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckIcon />
-                <div>
-                  <strong className="text-ink font-semibold">The £30,000 Tax Exemption:</strong>
-                  <p className="sc-body mt-0.5">
-                    Under{' '}
-                    <a
-                      href="https://www.legislation.gov.uk/ukpga/2003/1/section/403"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline hover:text-coral"
-                    >
-                      Section 403 of ITEPA 2003
-                    </a>
-                    , genuine termination payments are tax-free up to £30,000. Anything above this threshold is taxed at your marginal rate.
-                  </p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckIcon />
-                <div>
-                  <strong className="text-ink font-semibold">Unfair Dismissal Compensatory Award (£123,543):</strong>
-                  <p className="sc-body mt-0.5">
-                    The statutory compensatory award limit for ordinary unfair dismissal is £123,543 (or 52 weeks of gross pay, whichever is lower). Employers consider this financial risk when negotiating settlements. See our guide to{' '}
-                    <Link href="/guides/unfair-dismissal-settlement-agreements/" className="underline hover:text-coral">
-                      unfair dismissal settlements
-                    </Link>{' '}
-                    or check your potential award with our{' '}
-                    <Link href="/unfair-dismissal-calculator/" className="underline hover:text-coral">
-                      unfair dismissal calculator
+                  <p className="text-[14px] text-muted">
+                    Statutory redundancy pay counts toward the £30,000 tax-free threshold. Check the{' '}
+                    <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-coral">
+                      2026 statutory redundancy cap
                     </Link>
                     .
                   </p>
                 </div>
-              </li>
-            </ul>
-          </div>
-        </section>
 
-        {/* Section 4: Legal Advice & Employer Fee Contribution */}
-        <section className="py-12 border-b border-rule bg-paper">
-          <div className="max-w-3xl mx-auto px-5">
-            <h2 className="sc-h2 mb-4">Independent Legal Advice: Employer Fee Contribution</h2>
-            <p className="sc-body mb-4">
-              Under{' '}
-              <a
-                href="https://www.legislation.gov.uk/ukpga/1996/18/section/203"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-coral"
-              >
-                Section 203 of the Employment Rights Act 1996
-              </a>
-              , a settlement agreement is not legally binding unless you receive advice from an independent, insured solicitor.
-            </p>
-            <p className="sc-body mb-4">
-              To obtain a binding waiver, employers customarily contribute toward the legal fees for this review. The typical commercial employer contribution is between £350 and £750 plus VAT, paid directly to your instructed solicitor upon completion. You also have the right to choose your own adviser rather than an{' '}
-              <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-coral">
-                employer-recommended solicitor
-              </Link>
-              .
-            </p>
-            <p className="sc-body mb-6">
-              Employers sometimes impose a tight deadline of 24 or 48 hours to create pressure. Under the official ACAS Code of Practice, you should receive a minimum of 10 calendar days to consider the terms and obtain independent advice. Learn your rights if you feel{' '}
-              <Link href="/guides/pressured-to-sign/" className="underline hover:text-coral">
-                pressured to sign quickly
-              </Link>
-              .
-            </p>
-
-            {/* Embedded CTA Banner */}
-            <div className="p-8 rounded-2xl text-center" style={{ background: '#0B1F3A' }}>
-              <h3 className="font-serif text-[24px] md:text-[28px] text-white font-normal mb-3">
-                Find out how much your settlement offer is worth
-              </h3>
-              <p className="text-white/80 max-w-lg mx-auto mb-6 text-body">
-                Enter your salary, notice period, and service length. Get an instant, independent breakdown of your net take-home pay in 60 seconds.
-              </p>
-              <Link href="/calculator/" className="sc-btn-primary inline-block py-3 px-7 text-base font-semibold">
-                Calculate my estimate →
-              </Link>
-              <p className="text-body text-white/60 mt-3">Free and completely confidential. No email required to see results.</p>
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <h3 className="font-semibold text-ink text-[16px] mb-2">3. Ex-Gratia Compensation Payment</h3>
+                  <p className="guide-body mb-2">
+                    This is the discretionary sum offered in exchange for waiving employment tribunal claims. In straightforward exits, opening figures often sit around one to three months of gross salary.
+                  </p>
+                  <p className="text-[14px] text-muted">
+                    The first £30,000 of combined redundancy and ex-gratia compensation is usually tax-free under Section 403 of ITEPA 2003. See how the{' '}
+                    <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-coral">
+                      £30,000 tax-free exemption
+                    </Link>{' '}
+                    works.
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
 
-        {/* FAQs */}
-        <section className="py-14 border-b border-rule">
-          <div className="max-w-3xl mx-auto px-5">
-            <span className="sc-eyebrow mb-2 block">Common Questions</span>
-            <h2 className="sc-h2 mb-6">Frequently Asked Questions About Settlement Amounts</h2>
-            <FaqAccordion faqs={FAQS} />
-            <DynamicFaqSection pathname="/guides/settlement-agreement-how-much/" />
-          </div>
-        </section>
+            {/* Section 2: Benchmarks by Scenario */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">2. How do settlement amounts vary by situation?</h2>
+              <p className="guide-body">
+                The figures below are illustrative commercial ranges observed across UK settlement discussions. They are not statutory guarantees and depend on your service length, notice period, and any potential legal claims.
+              </p>
 
-        {/* Related Articles */}
-        <section className="py-12 bg-paper-2">
-          <div className="max-w-3xl mx-auto px-5">
+              <div className="rounded-xl border border-rule overflow-hidden mt-4">
+                <table className="w-full text-sm">
+                  <caption className="sr-only">Illustrative settlement agreement ranges by circumstance</caption>
+                  <thead>
+                    <tr className="bg-ink text-white">
+                      <th className="text-left py-3 px-4 font-medium">Circumstance</th>
+                      <th className="text-left py-3 px-4 font-medium">Illustrative Ex-Gratia</th>
+                      <th className="text-left py-3 px-4 font-medium">Notice &amp; Redundancy</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="bg-paper">
+                      <td className="py-3 px-4 text-ink font-medium">Standard Redundancy</td>
+                      <td className="py-3 px-4 text-muted">1 to 2 months&apos; salary</td>
+                      <td className="py-3 px-4 text-muted">Full notice + statutory redundancy</td>
+                    </tr>
+                    <tr className="bg-white">
+                      <td className="py-3 px-4 text-ink font-medium">
+                        <Link href="/guides/settlement-agreement-instead-of-pip/" className="hover:text-coral underline">
+                          Performance / PIP Exit
+                        </Link>
+                      </td>
+                      <td className="py-3 px-4 text-muted">2 to 3 months&apos; salary</td>
+                      <td className="py-3 px-4 text-muted">Full notice paid as PILON</td>
+                    </tr>
+                    <tr className="bg-paper">
+                      <td className="py-3 px-4 text-ink font-medium">
+                        <Link href="/guides/protected-conversations-without-prejudice/" className="hover:text-coral underline">
+                          Workplace Dispute / Grievance
+                        </Link>
+                      </td>
+                      <td className="py-3 px-4 text-muted">3 to 6 months&apos; salary</td>
+                      <td className="py-3 px-4 text-muted">Full notice paid as PILON</td>
+                    </tr>
+                    <tr className="bg-white">
+                      <td className="py-3 px-4 text-ink font-medium">
+                        <Link href="/guides/discrimination-settlement-agreements/" className="hover:text-coral underline">
+                          Discrimination or Whistleblowing
+                        </Link>
+                      </td>
+                      <td className="py-3 px-4 text-muted">6+ months (or Vento bands)</td>
+                      <td className="py-3 px-4 text-muted">Full notice plus injury to feelings</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Why Employers Pay Ex-Gratia</h3>
+                  <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
+                    <li>Avoiding employment tribunal defence costs and management hours.</li>
+                    <li>Achieving certainty and a clean exit without a drawn-out process.</li>
+                    <li>Securing confidentiality and post-termination non-compete terms.</li>
+                  </ul>
+                </div>
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">What Affects the Figure</h3>
+                  <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
+                    <li>Whether you have 2+ years&apos; service for unfair dismissal rights.</li>
+                    <li>Notice length, bonus terms, and any garden leave period.</li>
+                    <li>Any discrimination or whistleblowing claims (uncapped at tribunal).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 3: Statutory Limits for 2026/27 */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">3. Which April 2026 statutory limits apply to your offer?</h2>
+              <p className="guide-body">
+                Checking your draft against current statutory rates gives you a clear calculated statutory baseline before speaking to a solicitor.
+              </p>
+
+              <ul className="space-y-4 mt-4">
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <div>
+                    <strong className="text-ink font-semibold">Weekly Statutory Pay Cap (£751):</strong>
+                    <p className="guide-body mt-0.5">
+                      Under Section 227 ERA 1996 and{' '}
+                      <a
+                        href="https://www.legislation.gov.uk/uksi/2026/310/contents/made"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline hover:text-coral"
+                      >
+                        SI 2026/310
+                      </a>
+                      , the weekly cap is £751 from 6 April 2026 (£783 in Northern Ireland). See past limits in our{' '}
+                      <Link href="/statutory-rates-history/" className="underline hover:text-coral">
+                        statutory rates history archive
+                      </Link>
+                      .
+                    </p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <div>
+                    <strong className="text-ink font-semibold">The £30,000 Tax Exemption:</strong>
+                    <p className="guide-body mt-0.5">
+                      Under{' '}
+                      <a
+                        href="https://www.legislation.gov.uk/ukpga/2003/1/section/403"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline hover:text-coral"
+                      >
+                        Section 403 of ITEPA 2003
+                      </a>
+                      , genuine termination payments are tax-free up to £30,000. Amounts above £30,000 are taxed at your marginal rate.
+                    </p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <div>
+                    <strong className="text-ink font-semibold">Unfair Dismissal Compensatory Cap (£123,543):</strong>
+                    <p className="guide-body mt-0.5">
+                      The statutory compensatory award cap for ordinary unfair dismissal is £123,543 or 52 weeks of gross pay, whichever is lower. Read more on{' '}
+                      <Link href="/guides/unfair-dismissal-settlement-agreements/" className="underline hover:text-coral">
+                        unfair dismissal settlements
+                      </Link>
+                      .
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Section 4: Legal Advice, Privilege & Deadlines */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">4. Who pays for legal advice and how long do you have?</h2>
+              <p className="guide-body">
+                Under{' '}
+                <a
+                  href="https://www.legislation.gov.uk/ukpga/1996/18/section/203"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-coral"
+                >
+                  Section 203(3) of the Employment Rights Act 1996
+                </a>
+                , a settlement agreement is only legally binding once an independent, insured solicitor advises you on its terms.
+              </p>
+              <p className="guide-body">
+                Employers standardly contribute £350 to £500+ plus VAT directly to your solicitor upon completion. That usually covers reviewing the draft, while excess or abortive work is subject to your solicitor engagement terms. You can choose your own adviser rather than an{' '}
+                <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-coral">
+                  employer-recommended solicitor
+                </Link>
+                , and your discussions remain covered by legal privilege.
+              </p>
+              <p className="guide-body">
+                ACAS Code of Practice 4 recommends 10 calendar days to consider an initial written offer, though this is guidance rather than a strict legal right. Also note that under Section 111A ERA 1996, pre-termination talks are only off the record for ordinary unfair dismissal, and a counter-offer rejects the original offer so an employer can legally withdraw it. Read more if you feel{' '}
+                <Link href="/guides/pressured-to-sign/" className="underline hover:text-coral">
+                  pressured to sign quickly
+                </Link>
+                .
+              </p>
+            </div>
+
+            {/* CTA */}
+            <div className="bg-ink rounded-2xl p-8 text-center mt-10">
+              <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+                Check where your offer stands
+              </h2>
+              <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+                See your calculated statutory baseline, tax split, and illustrative settlement range before speaking to a solicitor.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link href="/calculator/" className="btn-accent">
+                  Check my offer now →
+                </Link>
+                <Link href="/redundancy-calculator/" className="btn-secondary">
+                  Calculate my redundancy →
+                </Link>
+              </div>
+              <p className="text-white/60 text-[12px] mt-4">
+                Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+              </p>
+            </div>
+
+            {/* FAQs */}
+            <div className="space-y-4 pt-6">
+              <h2 className="guide-h2">Frequently Asked Questions</h2>
+              <div className="mt-4">
+                <FaqAccordion faqs={FAQS} />
+              </div>
+              <DynamicFaqSection pathname="/guides/settlement-agreement-how-much/" />
+            </div>
+
+            {/* Related Articles */}
             <RelatedArticles
               title="Related Guides & Tools"
               items={[
+                {
+                  href: '/guides/average-settlement-agreement-payout-uk/',
+                  title: 'Average Settlement Agreement Payout UK (2026)',
+                  description: 'Illustrative UK payout ranges and statutory caps explained.',
+                  tag: 'Guide',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'Understand without prejudice rules, counter-offers, and legal fee caps.',
+                  tag: 'Guide',
+                },
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Key checks to review how your employer’s offer compares to your entitlements.',
+                  tag: 'Guide',
+                },
                 {
                   href: '/guides/compromise-agreement-calculator-uk/',
                   title: 'Compromise Agreement Calculator UK',
@@ -515,27 +522,9 @@ export default function HowMuchGuidePage() {
                   tag: 'Calculator Guide',
                 },
                 {
-                  href: '/calculator/',
-                  title: 'Settlement Agreement Calculator',
-                  description: 'Calculate your estimated settlement payout and tax split in 60 seconds.',
-                  tag: 'Free Tool',
-                },
-                {
-                  href: '/guides/what-is-a-fair-settlement-agreement/',
-                  title: 'What Is a Fair Settlement Agreement?',
-                  description: 'Seven tests to determine if your employer’s offer reflects your true legal entitlements.',
-                  tag: 'Guide',
-                },
-                {
-                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
-                  title: 'How to Negotiate a Settlement Agreement',
-                  description: 'Step-by-step negotiation strategies to increase financial compensation.',
-                  tag: 'Guide',
-                },
-                {
                   href: '/guides/settlement-agreement-acas-calculations/',
                   title: 'ACAS-Based Settlement Calculations',
-                  description: 'How statutory rates and ACAS conciliation principles guide settlement values.',
+                  description: 'How statutory rates and ACAS principles guide settlement figures.',
                   tag: 'Guide',
                 },
               ]}

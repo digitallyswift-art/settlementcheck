@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
@@ -34,31 +35,31 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: 'Can my employer force me to attend a settlement meeting while I am off sick?',
-    a: 'No. Your employer cannot force you to attend meetings while signed off sick by your GP. If you are medically unfit, inform your employer in writing. You can ask for communications to remain in writing or instruct an independent solicitor to speak for you.',
+    a: 'No. Your employer cannot force you to attend meetings while signed off sick by your GP. If you are medically unfit, you can inform your employer in writing, request written communications, or instruct an independent solicitor to speak for you.',
   },
   {
     q: 'What happens if I reject a settlement agreement while on sick leave?',
-    a: 'If you reject the offer, your employment contract continues as normal. Your employer must continue paying any sick pay you are entitled to. They must follow formal capability procedures if they wish to manage your absence, and cannot dismiss you simply for declining an offer.',
+    a: 'If you decline the offer, your employment contract continues as normal. Your employer must continue paying any sick pay you are entitled to. They must follow formal capability procedures to manage absence and cannot dismiss you simply for declining an offer.',
   },
   {
     q: 'Am I entitled to full pay during my notice period if I am on Statutory Sick Pay?',
-    a: 'Under Sections 87 to 91 of the Employment Rights Act 1996, you are entitled to full normal pay during notice if your contractual notice is not at least one week longer than statutory notice. If your contract provides greater notice, pay depends on contractual terms, but your solicitor can negotiate full pay in the agreement.',
+    a: 'Under Sections 87 to 91 of the Employment Rights Act 1996, you are entitled to full normal pay during notice if your contractual notice is not at least one week longer than statutory notice. If your contract provides longer notice, pay depends on contractual terms, which your solicitor can review.',
   },
   {
     q: 'Does my employer pay for my solicitor while I am on sick leave?',
-    a: 'Yes. For any settlement agreement to be legally binding under Section 203(3) of the Employment Rights Act 1996, you must receive independent legal advice. Your employer covers this fee, typically contributing between £350 and £750 plus VAT directly to your solicitor.',
+    a: 'Employers standardly offer a capped fee contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion to satisfy Section 203(3) ERA 1996. There is no statutory obligation on an employer to fund it. If the agreement does not complete or work exceeds the cap, additional costs depend on your solicitor\'s engagement terms.',
   },
   {
     q: 'How does sickness affect the calculation of my accrued holiday pay?',
-    a: 'You continue to accrue statutory annual leave (5.6 weeks per year) throughout your sick leave under the Working Time Regulations 1998. If illness prevented you from taking your leave, your entitlement carries over. When your employment ends, all accrued, untaken holiday must be paid out in full at your normal pay rate.',
+    a: 'You continue to accrue statutory annual leave (5.6 weeks per year) throughout sick leave under the Working Time Regulations 1998. If illness prevented you from taking leave, your entitlement carries over and accrued untaken holiday is paid out on termination.',
   },
   {
     q: 'Can my employer dismiss me for capability while we are negotiating?',
-    a: 'An employer must follow a fair, documented procedure before any capability dismissal. This includes medical evidence, consultations, and exploring reasonable adjustments. Threatening immediate dismissal to force you to sign an agreement is improper behaviour under Section 111A(4) of the Employment Rights Act 1996 and removes confidentiality.',
+    a: 'An employer must follow a fair, documented procedure before any capability dismissal, including medical evidence and exploring reasonable adjustments. Threatening immediate dismissal to force a signature can amount to improper behaviour under Section 111A(4) ERA 1996 and remove confidentiality.',
   },
   {
-    q: 'How much compensation should I expect in a sick leave settlement?',
-    a: 'In ill-health capability disputes, an agreed settlement package standardly includes full notice pay, accrued untaken holiday pay, and an ex-gratia compensation sum representing one to six months of gross salary. If your illness qualifies as a disability under the Equality Act 2010, the settlement should also reflect potential tribunal awards under the Vento bands, which range from £1,300 to over £62,900.',
+    q: 'What does a sick leave settlement package usually include?',
+    a: 'An ill-health settlement package typically includes notice pay, accrued untaken holiday pay, and an ex-gratia sum (often one to six months of gross salary depending on circumstances). If your illness qualifies as a disability under the Equality Act 2010, solicitors also assess potential tribunal awards under the Vento bands (£1,300 to £62,900+).',
   },
 ]
 
@@ -138,19 +139,36 @@ export default function SettlementAgreementSickLeaveGuide() {
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>
               Sick Leave &amp; Health Guide
             </p>
-            <h1 className="sc-h1 mb-5">
+            <h1 className="sc-h1 mb-4">
               Settlement Agreement on Sick Leave: UK Employee Rights and Pay (2026 Guide)
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Updated for 2026/27 (SI 2026/310 &amp; ERA 1996)</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Last reviewed: October 2026</span>
-            </div>
-            <p className="sc-lead">
-              Under UK employment law, your employer can legally offer you a settlement agreement while you are on sick leave. You are under no obligation to accept the offer or leave your job. In 2026, a fair settlement should include full normal pay for your notice period under Sections 87 to 91 of the Employment Rights Act 1996. This applies even if you currently receive Statutory Sick Pay or nil pay. Genuine termination compensation is tax-free up to £30,000 under Section 403 of ITEPA 2003. Employers standardly provide a capped commercial contribution toward independent legal advice upon completion. You can check what your exit package should look like using our free <Link href="/calculator/" className="text-coral underline underline-offset-2 hover:text-ink font-semibold">Settlement Agreement Calculator UK</Link>.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 &amp; Equality Act 2010
             </p>
+            <p className="sc-lead leading-relaxed">
+              Offered a settlement agreement while signed off on sick leave? You do not have to accept, and statutory notice pay rules still protect your full pay. Check your statutory baseline in 60 seconds with no email required, see how the tax split works, and prepare clear questions for an independent solicitor.
+            </p>
+          </div>
+        </section>
+
+        {/* Interactive Calculator Card (Immediately below Hero) */}
+        <section className="py-8 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How does your sick leave offer compare to the statutory baseline?"
+              subtitle="Compare your employer's opening figure against your calculated statutory baseline, notice pay, and tax-free ex-gratia ranges."
+              disputeType="sick_leave"
+              statutoryPills={[
+                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Tax-Free Shield', value: '£30,000', statute: 'ITEPA 2003 s.403' },
+                { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+              ]}
+              initialSalary={45000}
+              initialYears={4}
+              initialAge={38}
+              ctaText="Check my offer now →"
+            />
           </div>
         </section>
 
@@ -158,16 +176,16 @@ export default function SettlementAgreementSickLeaveGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-body font-semibold text-ink mb-3">Key sick leave settlement facts for 2026</p>
+              <p className="text-[14px] font-semibold text-ink mb-3">Key sick leave settlement facts for 2026</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'Your employer can propose a settlement agreement during sick leave, but you do not have to accept.',
-                  'Under the statutory one-week rule in Sections 87 to 91 of the Employment Rights Act 1996, you are entitled to full normal notice pay, even on Statutory Sick Pay.',
-                  'Section 111A confidentiality does not apply to discrimination claims. If your illness qualifies as a disability, pre-termination talks are not secret.',
-                  'Ex-gratia termination payments are tax-free up to £30,000 under Section 403 of ITEPA 2003.',
-                  'Notice pay (PILON) is fully taxable as earnings under Section 402D of ITEPA 2003.',
-                  'You continue to accrue statutory holiday entitlement while on sick leave, which must be paid out in full upon exit.',
-                  'Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards independent solicitor advice upon completion.',
+                  'Under the statutory one-week rule (Sections 87 to 91 ERA 1996), you may be entitled to full normal notice pay even on Statutory Sick Pay.',
+                  'Section 111A confidentiality covers ordinary unfair dismissal only. It does not apply to disability discrimination or whistleblowing.',
+                  'ACAS Code 4 recommends 10 calendar days as guidance to consider terms, though an employer can withdraw an unaccepted offer before signature.',
+                  'Ex-gratia termination payments are tax-free up to £30,000 under Section 403 ITEPA 2003, while notice pay is taxed as wages under Section 402D.',
+                  'Statutory holiday continues to accrue during sick leave and must be paid out in full upon termination.',
+                  'Employers standardly provide a capped contribution (£350 to £500+ plus VAT) toward independent legal advice upon completion; excess or abortive fees depend on your solicitor\'s terms.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
@@ -179,34 +197,31 @@ export default function SettlementAgreementSickLeaveGuide() {
           </div>
         </section>
 
-        {/* Section: Can an employer offer a settlement agreement while on sick leave? */}
+        {/* Section 1 */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Can an employer offer a settlement agreement while on sick leave?</h2>
+            <h2 className="guide-h2 mb-4">1. Can an employer offer a settlement agreement while you are off sick?</h2>
             <p className="sc-body mb-4">
-              Yes, an employer can legally propose a settlement agreement while you are on sick leave. They can contact you in writing or hold a meeting. However, you do not have to accept the offer, sign the document, or agree to leave. Sickness does not remove your statutory employment rights.
+              Yes, an employer can legally propose a settlement agreement while you are on sick leave. They can contact you in writing or invite you to a meeting. However, you do not have to accept the offer or agree to leave.
             </p>
             <p className="sc-body mb-4">
-              Receiving an exit proposal while dealing with a health condition can feel overwhelming. Many employees are signed off work with stress, depression, anxiety, physical injury, or a long-term condition.
+              Many employees receive an exit proposal while signed off with stress, anxiety, depression, injury, or a long-term condition. Sickness does not remove your statutory employment rights.
             </p>
             <p className="sc-body">
-              Your employer cannot penalise you for refusing the proposal. You remain an employee with all contractual rights intact.
+              Your employer cannot penalise you for declining the offer. Your employment contract and sick pay rights remain intact.
             </p>
           </div>
         </section>
 
-        {/* Section: Why employers propose settlement agreements during sick leave */}
+        {/* Section 2 */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Why employers propose settlement agreements during sick leave</h2>
+            <h2 className="guide-h2 mb-4">2. Why do employers propose settlement agreements during sick leave?</h2>
             <p className="sc-body mb-4">
-              Employers often prefer a settlement agreement because managing long-term sickness absence is legally complex and time-consuming.
-            </p>
-            <p className="sc-body mb-4">
-              To dismiss an employee fairly on grounds of ill health, an employer must follow a rigorous capability procedure under Section 98 of the Employment Rights Act 1996 <sup>1</sup>. This process typically takes between three and nine months.
+              Managing long-term sickness absence is legally complex and time-consuming for employers. To dismiss fairly for ill-health capability under Section 98 ERA 1996 <sup>1</sup>, an employer must follow a documented process that often takes three to nine months.
             </p>
             <p className="sc-body mb-6">
-              During a capability procedure, your employer must:
+              During a formal capability procedure, your employer is expected to:
             </p>
 
             <div className="grid grid-cols-1 gap-3 mb-6">
@@ -225,86 +240,80 @@ export default function SettlementAgreementSickLeaveGuide() {
             </div>
 
             <p className="sc-body mb-4">
-              If an employer rushes this process, they face significant employment tribunal risks. Ordinary unfair dismissal compensatory awards are capped at £123,543 or 52 weeks of gross pay under SI 2026/310 <sup>2</sup>. You can explore how tribunals assess these claims in our guide to <Link href="/guides/unfair-dismissal-settlement-agreements/" className="underline hover:text-ink">unfair dismissal settlement agreements</Link> or estimate potential awards with the <Link href="/unfair-dismissal-calculator/" className="underline hover:text-ink">unfair dismissal calculator</Link>.
+              Ordinary unfair dismissal compensatory awards are capped at £123,543 or 52 weeks of gross pay under SI 2026/310 <sup>2</sup>. See our guide to <Link href="/guides/unfair-dismissal-settlement-agreements/" className="underline hover:text-ink">unfair dismissal settlement agreements</Link> or check the <Link href="/unfair-dismissal-calculator/" className="underline hover:text-ink">unfair dismissal calculator</Link>.
             </p>
             <p className="sc-body">
-              Disability discrimination claims are completely uncapped under Section 124 of the Equality Act 2010 <sup>3</sup>. By offering a settlement agreement, your employer seeks to avoid procedural delays, legal uncertainty, and tribunal risk. You can compare both pathways in our detailed comparison of <Link href="/guides/settlement-agreement-vs-tribunal-claim/" className="underline hover:text-ink">settlement agreements versus employment tribunal claims</Link>.
+              Disability discrimination awards are uncapped under Section 124 Equality Act 2010 <sup>3</sup>. Offering a settlement lets an employer seek closure and avoid tribunal risk. Compare both routes in our guide to <Link href="/guides/settlement-agreement-vs-tribunal-claim/" className="underline hover:text-ink">settlement agreements versus tribunal claims</Link>.
             </p>
           </div>
         </section>
 
-        {/* Section: Notice pay on sick leave - The one-week rule */}
+        {/* Section 3 */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Notice pay on sick leave: the statutory one-week rule</h2>
+            <h2 className="guide-h2 mb-4">3. How is notice pay calculated during sick leave?</h2>
             <p className="sc-body mb-4">
-              Notice pay is one of the most contentious elements of a sick leave settlement. Employers often calculate notice pay using your current sick pay rate, such as Statutory Sick Pay (SSP) or nil pay. In many cases, this calculation is legally incorrect.
-            </p>
-            <p className="sc-body mb-4">
-              Sections 87 to 91 of the Employment Rights Act 1996 establish statutory pay protections during notice periods <sup>4</sup>.
+              Notice pay is often the most contested part of a sick leave settlement. Draft offers sometimes calculate notice using Statutory Sick Pay (SSP) or nil pay, which can conflict with statutory notice rules.
             </p>
             <p className="sc-body mb-6">
-              The crucial legal test is the statutory &quot;one-week rule&quot; set out in Section 87(4) of the Employment Rights Act 1996:
+              Sections 87 to 91 of the Employment Rights Act 1996 set out the statutory &quot;one-week rule&quot; under Section 87(4) <sup>4</sup>:
             </p>
 
             <div className="rounded-xl border border-rule bg-white p-5 mb-6">
               <h3 className="text-base font-semibold text-ink mb-2">How Section 87(4) protects your notice pay</h3>
               <p className="sc-body mb-3">
-                Section 86 sets statutory minimum notice: one week for service between one month and two years, plus one additional week for each complete year of service up to twelve weeks <sup>5</sup>.
+                Section 86 sets statutory minimum notice: one week for service between one month and two years, plus one week per complete year of service up to twelve weeks <sup>5</sup>.
               </p>
               <p className="sc-body mb-3">
-                Under Section 87(4), statutory pay protections apply if your contractual notice is <strong>not at least one week longer</strong> than your statutory notice entitlement.
+                Under Section 87(4), statutory pay protection applies if your contractual notice is <strong>not at least one week longer</strong> than your statutory notice entitlement.
               </p>
               <p className="sc-body">
-                When this condition is met, Section 88(1)(b) states that an employee incapable of work due to sickness is entitled to <strong>full normal contractual pay</strong> for their notice period. This applies even if you have exhausted contractual sick pay and receive only SSP or zero pay.
+                When this applies, Section 88(1)(b) entitles an employee off sick to <strong>full normal contractual pay</strong> during notice, even if sick pay is exhausted.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="rounded-xl border border-rule bg-paper p-5">
-                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage block w-fit mb-2">Full Statutory Notice Protection</span>
-                <h4 className="text-sm font-semibold text-ink mb-2">Scenario A: Contractual notice matches statutory notice</h4>
-                <p className="sc-body text-muted mb-2">
-                  You have five years of service (five weeks statutory notice). Your contract requires five weeks or one month of notice.
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-[#FBF0EE] text-[#A8341F] block w-fit mb-2">Full Statutory Protection</span>
+                <h4 className="text-sm font-semibold text-ink mb-2">Scenario A: Contractual notice matches statutory</h4>
+                <p className="text-[14px] text-muted leading-relaxed mb-2">
+                  You have five years of service (five weeks statutory notice). Your contract gives five weeks or one month of notice.
                 </p>
-                <p className="sc-body text-ink font-medium">
-                  Your contractual notice is not at least one week longer than statutory notice. You are legally entitled to 100% full pay for all five weeks of notice.
+                <p className="text-[14px] text-ink font-medium leading-relaxed">
+                  Your contractual notice is not at least one week longer than statutory notice. You are entitled to 100% full pay for all five weeks.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-rule bg-paper p-5">
-                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber block w-fit mb-2">Negotiation Required</span>
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-paper border border-rule text-ink block w-fit mb-2">Contractual Terms Apply</span>
                 <h4 className="text-sm font-semibold text-ink mb-2">Scenario B: Contractual notice exceeds statutory by 1+ weeks</h4>
-                <p className="sc-body text-muted mb-2">
-                  You have two years of service (two weeks statutory notice). Your contract requires three months of notice.
+                <p className="text-[14px] text-muted leading-relaxed mb-2">
+                  You have two years of service (two weeks statutory notice). Your contract gives three months of notice.
                 </p>
-                <p className="sc-body text-ink font-medium">
-                  Section 87(4) excludes you from statutory full pay. Notice follows your contract, but your solicitor will negotiate full pay in the settlement agreement.
+                <p className="text-[14px] text-ink font-medium leading-relaxed">
+                  Section 87(4) does not apply. Notice pay follows your contract unless your solicitor negotiates full notice pay in the agreement.
                 </p>
               </div>
             </div>
 
             <div className="rounded-xl border border-rule bg-white p-5 flex gap-3">
               <InfoIcon />
-              <p className="sc-body">
-                If your employer calculates your Pay in Lieu of Notice (PILON) using SSP or nil pay, point out Sections 87 and 88 of the Employment Rights Act 1996. Your independent solicitor will ensure your notice pay reflects your true legal entitlement. Read our guide to <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax treatment in 2026</Link> to understand how notice pay is taxed.
+              <p className="text-[14px] text-muted leading-relaxed">
+                Sections 87 and 88 ERA 1996 set out when full normal pay applies. An independent solicitor can check whether a PILON calculation reflects your statutory entitlement. Read our guide to <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink text-ink">PILON tax treatment in 2026</Link>.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Section: Disability discrimination protections */}
+        {/* Section 4 */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Disability discrimination protections under the Equality Act 2010</h2>
+            <h2 className="guide-h2 mb-4">4. When does sick leave trigger Equality Act 2010 protections?</h2>
             <p className="sc-body mb-4">
-              Many health conditions that cause long-term sick leave meet the legal definition of a disability under UK law.
-            </p>
-            <p className="sc-body mb-4">
-              Under Section 6 of the Equality Act 2010, a disability is defined as a physical or mental impairment that has a substantial and long-term adverse effect on your ability to carry out normal day-to-day activities <sup>6</sup>.
+              Many conditions causing long-term sick leave meet the legal definition of a disability. Under Section 6 Equality Act 2010, a disability is a physical or mental impairment with a substantial, long-term adverse effect on day-to-day activities <sup>6</sup>.
             </p>
             <p className="sc-body mb-6">
-              An effect is considered &quot;long-term&quot; if it has lasted for at least 12 months, is likely to last for at least 12 months, or is recurring. Conditions that frequently qualify include:
+              &quot;Long-term&quot; means it has lasted or is likely to last at least 12 months, or is recurring. Qualifying conditions often include:
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
@@ -325,65 +334,56 @@ export default function SettlementAgreementSickLeaveGuide() {
 
             <h3 className="text-base font-semibold text-ink mt-6 mb-2">Section 15: Discrimination arising from disability</h3>
             <p className="sc-body mb-4">
-              Under Section 15 of the Equality Act 2010, your employer cannot treat you unfavourably because of something arising in consequence of your disability <sup>7</sup>. Sickness absence is a direct consequence of your illness.
+              Under Section 15 Equality Act 2010, an employer cannot treat you unfavourably because of something arising from your disability, such as sickness absence <sup>7</sup>.
             </p>
             <p className="sc-body mb-6">
-              If your employer initiates dismissal proceedings or pressures you to resign because of your absence, this can constitute unlawful discrimination. The employer can only defend this if they demonstrate that their action is an objective, proportionate means of achieving a legitimate aim.
+              Dismissing or pressuring an employee because of disability-related absence can be unlawful unless the employer shows it is a proportionate means of achieving a legitimate aim.
             </p>
 
             <h3 className="text-base font-semibold text-ink mt-6 mb-2">Section 20: Duty to make reasonable adjustments</h3>
             <p className="sc-body mb-4">
-              Under Section 20 of the Equality Act 2010, employers have an active legal duty to make reasonable adjustments <sup>8</sup>. This duty arises before considering an employee for capability dismissal.
+              Under Section 20 Equality Act 2010, employers have a legal duty to consider reasonable adjustments before moving toward capability dismissal <sup>8</sup>.
             </p>
             <p className="sc-body mb-6">
-              Adjustments may include a phased return to work, reduced hours, adjusted duties, working from home, or transferring to an open role. If your employer proposes a settlement without exploring adjustments, their legal exposure increases significantly.
+              Adjustments can include a phased return, reduced hours, amended duties, or redeployment. Proposing an exit without exploring adjustments increases an employer&apos;s tribunal risk.
             </p>
 
             <h3 className="text-base font-semibold text-ink mt-6 mb-2">Uncapped compensation and Vento bands</h3>
             <p className="sc-body mb-4">
-              Unlike ordinary unfair dismissal, compensation for disability discrimination under Section 124 of the Equality Act 2010 is uncapped.
-            </p>
-            <p className="sc-body mb-4">
-              Tribunals also award compensation for injury to feelings based on the Ninth Addendum Vento bands (applicable from 6 April 2026): Lower Band (£1,300 to £12,600), Middle Band (£12,600 to £37,700), Upper Band (£37,700 to £62,900), and Exceptional Cases (exceeding £62,900) <sup>9</sup>.
+              Compensation for disability discrimination under Section 124 Equality Act 2010 is uncapped. Tribunals also award injury to feelings under the Ninth Addendum Vento bands (from 6 April 2026): Lower (£1,300 to £12,600), Middle (£12,600 to £37,700), Upper (£37,700 to £62,900), and Exceptional (over £62,900) <sup>9</sup>.
             </p>
             <p className="sc-body">
-              This potential uncapped exposure provides strong justification for an enhanced financial settlement. Read our comprehensive guide on <Link href="/guides/discrimination-settlement-agreements/" className="underline hover:text-ink">discrimination settlement agreements</Link> for further detail.
+              Solicitors factor this exposure when assessing an offer. Read more in our guide to <Link href="/guides/discrimination-settlement-agreements/" className="underline hover:text-ink">discrimination settlement agreements</Link>.
             </p>
           </div>
         </section>
 
-        {/* Section: Why Section 111A protected conversations do not protect employers */}
+        {/* Section 5 */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Why Section 111A protected conversations do not protect employers during sick leave</h2>
+            <h2 className="guide-h2 mb-4">5. Is a sick leave settlement talk really off the record?</h2>
             <p className="sc-body mb-4">
-              When proposing an exit, employers often label discussions as a &quot;protected conversation&quot; under Section 111A of the Employment Rights Act 1996 <sup>10</sup>.
-            </p>
-            <p className="sc-body mb-4">
-              Many employers believe this label guarantees total confidentiality. Under UK law, Section 111A confidentiality has strict limits.
+              Employers often label exit talks as a &quot;protected conversation&quot; under Section 111A ERA 1996 <sup>10</sup>. Under UK law, Section 111A confidentiality has strict boundaries.
             </p>
 
-            <h3 className="text-sm font-semibold text-ink mt-6 mb-2">1. Section 111A does not apply to discrimination claims</h3>
+            <h3 className="text-sm font-semibold text-ink mt-6 mb-2">1. Section 111A excludes discrimination and whistleblowing</h3>
             <p className="sc-body mb-4">
-              Section 111A confidentiality applies solely to ordinary unfair dismissal claims. Under Section 111A(4), it does not apply to claims brought under the Equality Act 2010, whistleblowing disclosures, or breach of contract.
+              Section 111A(1) applies strictly to ordinary unfair dismissal claims. Under Section 111A(3), it does not cover Equality Act 2010 discrimination, whistleblowing (s.43B/s.103A ERA 1996), or breach of contract.
             </p>
             <p className="sc-body mb-6">
-              If your health condition is a qualifying disability, the settlement meeting is not protected. You can refer to everything your employer said or proposed in an employment tribunal claim.
+              If your condition qualifies as a disability, pre-termination talks may be admissible in a discrimination claim unless common law Without Prejudice privilege applies.
             </p>
 
-            <h3 className="text-sm font-semibold text-ink mt-6 mb-2">2. Improper behaviour removes all confidentiality</h3>
+            <h3 className="text-sm font-semibold text-ink mt-6 mb-2">2. Improper behaviour and deadline rules</h3>
             <p className="sc-body mb-4">
-              Under Section 111A(4), confidentiality is void if an employer engages in &quot;improper behaviour&quot;.
-            </p>
-            <p className="sc-body mb-4">
-              Examples of improper behaviour during sick leave include:
+              Under Section 111A(4), confidentiality is lost if an employer engages in &quot;improper behaviour&quot;, such as:
             </p>
             <ul className="flex flex-col gap-2 mb-6">
               {[
-                'Pressuring you to sign while you are medically unfit or heavily medicated.',
-                'Giving you an unreasonably short deadline, such as 24 or 48 hours. The ACAS Code of Practice recommends a minimum of 10 calendar days.',
-                'Threatening to stop your sick pay or fire you immediately if you decline the offer.',
-                'Contacting you repeatedly despite medical notes stating you are unfit for work-related contact.',
+                'Pressuring you to sign while medically unfit or heavily medicated.',
+                'Setting an unreasonable deadline, such as 24 or 48 hours (ACAS Code 4 recommends 10 calendar days as general guidance).',
+                'Threatening to stop sick pay or dismiss you immediately if you decline.',
+                'Contacting you repeatedly despite fit notes advising against work contact.',
               ].map((behaviour) => (
                 <li key={behaviour} className="flex items-start gap-2 text-sm text-ink">
                   <span className="w-1.5 h-1.5 rounded-full bg-coral mt-2 flex-shrink-0"></span>
@@ -391,31 +391,31 @@ export default function SettlementAgreementSickLeaveGuide() {
                 </li>
               ))}
             </ul>
+            <p className="sc-body mb-4">
+              Note that while ACAS Code 4 recommends 10 calendar days as guidance, under English contract law (<em>Routledge v Grant</em>) an employer can withdraw an unaccepted offer before signature, and a counter-offer can extinguish the original offer (<em>Hyde v Wrench</em>). Avoid sending unreviewed financial proposals directly to HR, as unreviewed emails can waive legal privilege.
+            </p>
             <p className="sc-body">
-              If your employer acts improperly or pressures you to accept without adequate time, their confidentiality disappears. You can learn more in our guides to <Link href="/guides/pressured-to-sign/" className="underline hover:text-ink">employer pressure and the ACAS 10-day rule</Link> and <Link href="/guides/protected-conversations-without-prejudice/" className="underline hover:text-ink">protected conversations and without prejudice rules</Link>.
+              Read more in our guides to <Link href="/guides/pressured-to-sign/" className="underline hover:text-ink">employer pressure and the ACAS 10-day rule</Link> and <Link href="/guides/protected-conversations-without-prejudice/" className="underline hover:text-ink">protected conversations and without prejudice rules</Link>.
             </p>
           </div>
         </section>
 
-        {/* Section: Medical reports and AMRA 1988 */}
+        {/* Section 6 */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Medical reports and the Access to Medical Reports Act 1988</h2>
+            <h2 className="guide-h2 mb-4">6. What rights do you have over medical reports (AMRA 1988)?</h2>
             <p className="sc-body mb-4">
-              During sickness absence, employers frequently ask to contact your GP or send you to an occupational health doctor.
-            </p>
-            <p className="sc-body mb-6">
-              You have clear statutory rights regarding your private medical information under the Access to Medical Reports Act 1988 (AMRA) <sup>11</sup>:
+              During sick leave, employers often ask to contact your GP or arrange an occupational health assessment. You have clear statutory rights under the Access to Medical Reports Act 1988 (AMRA) <sup>11</sup>:
             </p>
 
             <div className="rounded-xl border border-rule bg-paper p-5 mb-6">
               <h3 className="text-base font-semibold text-ink mb-3">Your legal rights under AMRA 1988</h3>
               <ul className="flex flex-col gap-3">
                 {[
-                  'Your employer cannot contact your GP or medical specialist without your explicit written consent.',
-                  'You have the legal right to inspect the medical report before it is sent to your employer.',
-                  'You can request that your doctor amend or delete any information you consider incorrect or misleading.',
-                  'You have the right to withdraw your consent at any time before the report is supplied to your employer.',
+                  'Your employer cannot contact your GP or specialist without your explicit written consent.',
+                  'You have the right to inspect the medical report before it is sent to your employer.',
+                  'You can ask your doctor to amend or delete information you consider incorrect.',
+                  'You can withdraw consent at any time before the report is supplied.',
                 ].map((right) => (
                   <li key={right} className="flex items-start gap-3">
                     <CheckIcon />
@@ -425,21 +425,18 @@ export default function SettlementAgreementSickLeaveGuide() {
               </ul>
             </div>
 
-            <p className="sc-body mb-4">
-              An employer can ask you to attend an occupational health assessment. While they can request this, they cannot force you to attend if your doctor advises that doing so would harm your health.
-            </p>
             <p className="sc-body">
-              One advantage of negotiating a settlement agreement is that it removes the need for stressful medical examinations. Once financial terms are agreed, further medical investigations cease.
+              An employer can request an occupational health assessment, though they cannot force attendance if your doctor advises it would harm your health. Agreeing an exit also removes the need for further medical reviews.
             </p>
           </div>
         </section>
 
-        {/* Comparison table: Settlement vs Capability Dismissal */}
+        {/* Section 7 */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Settlement Agreement vs Capability Dismissal on Sick Leave</h2>
+            <h2 className="guide-h2 mb-4">7. How does a settlement compare with capability dismissal?</h2>
             <p className="sc-body mb-6">
-              Compare the two primary routes an employer can take when an employee is on prolonged sick leave:
+              Compare how each route affects your pay, timeline, and tribunal rights:
             </p>
 
             <div className="rounded-xl border border-rule overflow-hidden">
@@ -456,12 +453,11 @@ export default function SettlementAgreementSickLeaveGuide() {
                   {[
                     ['Outcome', 'Mutually agreed exit package', 'Unilateral dismissal by employer'],
                     ['Timeline', 'Typically 1 to 3 weeks', '3 to 9 months of capability hearings'],
-                    ['Financial package', 'Enhanced ex-gratia compensation + full notice pay', 'Contractual or statutory notice pay only'],
+                    ['Financial package', 'Ex-gratia compensation + notice pay (or garden leave)', 'Contractual or statutory notice pay only'],
                     ['Tax advantages', 'Up to £30,000 tax-free under ITEPA s.403', 'No tax-free compensation package'],
-                    ['Future reference', 'Agreed, binding written reference clause', 'Standard factual reference noting dismissal'],
-                    ['Legal fees', 'Capped employer contribution (typically £350–£500+ VAT upon completion)', 'You pay own legal costs if appealing'],
-                    ['Stress level', 'Immediate closure, focus on health recovery', 'Prolonged meetings, warnings, and uncertainty'],
-                    ['Tribunal claims', 'All legal claims waived upon signing', 'You can lodge tribunal claims within 3 months less 1 day'],
+                    ['Future reference', 'Agreed written reference schedule', 'Standard factual reference'],
+                    ['Legal fees', 'Capped employer contribution (£350 to £500+ plus VAT upon completion)', 'You pay own legal costs if appealing'],
+                    ['Tribunal claims', 'Legal claims waived upon signing', 'Claims possible within 3 months less 1 day'],
                   ].map(([feature, settlement, capability], i) => (
                     <tr key={feature} className={i % 2 === 0 ? 'bg-paper' : 'bg-white'}>
                       <td className="px-4 py-3 text-ink font-medium">{feature}</td>
@@ -476,46 +472,43 @@ export default function SettlementAgreementSickLeaveGuide() {
             <div className="rounded-xl border border-rule bg-white p-5 mt-6">
               <h3 className="text-base font-semibold text-ink mb-2">Unsure whether to accept or decline?</h3>
               <p className="sc-body mb-3">
-                Declining a settlement offer does not mean immediate termination. Your employer must continue your contractual sick pay and follow a fair capability investigation.
+                Declining a settlement offer does not mean immediate dismissal. Your employer must continue your contractual sick pay and follow a fair capability process.
               </p>
               <p className="sc-body">
-                Explore your strategic choices in our guides on <Link href="/guides/what-happens-if-you-do-not-sign/" className="underline hover:text-ink">what happens if you do not sign a settlement agreement</Link> and <Link href="/guides/is-my-settlement-offer-fair/" className="underline hover:text-ink">how to tell if your settlement offer is fair</Link>.
+                Read more in our guides on <Link href="/guides/what-happens-if-you-do-not-sign/" className="underline hover:text-ink">what happens if you do not sign</Link> and <Link href="/guides/is-my-settlement-offer-fair/" className="underline hover:text-ink">how to tell if your offer is fair</Link>.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Section: Tax treatment of sick leave settlements */}
+        {/* Section 8 */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Tax treatment of sick leave settlement payments</h2>
-            <p className="sc-body mb-4">
-              Settlement payments consist of different financial components. Each component is treated differently for tax and National Insurance purposes.
-            </p>
+            <h2 className="guide-h2 mb-4">8. How are sick leave settlement payments taxed?</h2>
             <p className="sc-body mb-6">
-              A well-drafted settlement agreement clearly separates these elements:
+              Each part of a settlement package is taxed differently. A clear draft agreement separates tax-free compensation from sums taxed as wages:
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="rounded-xl border border-rule bg-paper p-5">
-                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage block w-fit mb-2">Tax-Free up to £30,000</span>
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-[#FBF0EE] text-[#A8341F] block w-fit mb-2">Tax-Free up to £30,000</span>
                 <h3 className="text-sm font-semibold text-ink mb-2">Ex-Gratia Termination Payment</h3>
-                <p className="sc-body text-muted mb-2">
-                  Under Section 403 of ITEPA 2003, genuine compensation for loss of employment is exempt from income tax and National Insurance up to £30,000 <sup>12</sup>.
+                <p className="text-[14px] text-muted leading-relaxed mb-2">
+                  Under Section 403 ITEPA 2003, genuine compensation for loss of employment (combined with any eligible statutory redundancy pay under s.141 ERA 1996) is tax-free up to £30,000 <sup>12</sup>.
                 </p>
-                <p className="sc-body text-muted">
-                  Any excess above £30,000 is subject to income tax and employer National Insurance.
+                <p className="text-[14px] text-muted leading-relaxed">
+                  Amounts above £30,000 are subject to Income Tax and Employer Class 1A NIC.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-rule bg-paper p-5">
-                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber block w-fit mb-2">Fully Taxable</span>
-                <h3 className="text-sm font-semibold text-ink mb-2">Notice Pay (PILON)</h3>
-                <p className="sc-body text-muted mb-2">
-                  Under Section 402D of ITEPA 2003, Pay in Lieu of Notice is classified as Post-Employment Notice Pay (PENP) <sup>13</sup>.
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-paper border border-rule text-ink block w-fit mb-2">Taxed as Wages</span>
+                <h3 className="text-sm font-semibold text-ink mb-2">Notice Pay (PILON / Garden Leave)</h3>
+                <p className="text-[14px] text-muted leading-relaxed mb-2">
+                  Under Section 402D ITEPA 2003, Pay in Lieu of Notice is Post-Employment Notice Pay (PENP) <sup>13</sup>.
                 </p>
-                <p className="sc-body text-muted">
-                  Your employer must deduct standard income tax and Class 1 National Insurance from all notice pay.
+                <p className="text-[14px] text-muted leading-relaxed">
+                  Unworked notice pay is always taxed as wages with Income Tax and Class 1 National Insurance deducted.
                 </p>
               </div>
             </div>
@@ -523,31 +516,28 @@ export default function SettlementAgreementSickLeaveGuide() {
             <div className="rounded-xl border border-rule bg-paper p-5 mb-6">
               <h3 className="text-sm font-semibold text-ink mb-2">Accrued Holiday Pay and Sick Pay Arrears</h3>
               <p className="sc-body mb-2">
-                Under Regulation 13 and 13A of the Working Time Regulations 1998, workers are entitled to 5.6 weeks of paid annual leave per year <sup>14</sup>.
-              </p>
-              <p className="sc-body mb-2">
-                You continue to accrue statutory holiday while off sick. If your illness prevented you from taking holiday, it carries forward under retained case law (such as <em>Stringer v HM Revenue and Customs</em>) <sup>15</sup>.
+                Under Regulations 13 and 13A Working Time Regulations 1998, workers accrue 5.6 weeks of paid annual leave per year, even while off sick (<em>Stringer v HMRC</em>) <sup>14</sup><sup>,</sup><sup>15</sup>.
               </p>
               <p className="sc-body">
-                All outstanding holiday pay and sick pay arrears must be paid in full upon departure. These sums are treated as normal earnings and taxed under PAYE.
+                All outstanding holiday pay and sick pay arrears are paid on exit and taxed as wages under PAYE.
               </p>
             </div>
 
             <div className="rounded-xl border border-rule bg-white p-5 flex gap-3">
               <InfoIcon />
-              <p className="sc-body">
-                If your settlement includes compensation for pre-termination disability discrimination, that portion is 100% tax-free under Section 406 of ITEPA 2003, outside the £30,000 limit. Learn more in our complete guide to the <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink">£30,000 settlement tax exemption</Link> and read our benchmark analysis of <Link href="/guides/average-settlement-agreement-payout-uk/" className="underline hover:text-ink">average UK settlement agreement payouts</Link>.
+              <p className="text-[14px] text-muted leading-relaxed">
+                Compensation paid solely for pre-termination disability discrimination (wholly unconnected with the exit) falls outside s.401 ITEPA 2003 and is tax-free outside the £30,000 limit. Termination-related injury to feelings counts toward the £30,000 limit, and s.406(2) excludes non-psychiatric injury. Read our guide to the <Link href="/guides/tax-free-settlement-30000/" className="underline hover:text-ink text-ink">£30,000 settlement tax exemption</Link>.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Section: Process snippet (Numbered list) */}
+        {/* Section 9 */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What to do if you are offered a settlement agreement while off sick</h2>
+            <h2 className="guide-h2 mb-4">9. What are the practical steps if you are offered a settlement off sick?</h2>
             <p className="sc-body mb-6">
-              Follow this step-by-step process to protect your rights, verify your pay, and achieve fair exit terms:
+              This sequence outlines how employees typically prepare for an independent solicitor review:
             </p>
 
             <ol className="relative border-l-2 border-rule ml-4 pl-6 flex flex-col gap-6">
@@ -555,45 +545,45 @@ export default function SettlementAgreementSickLeaveGuide() {
                 {
                   step: '1',
                   title: 'Request the proposal in writing',
-                  desc: 'Avoid committing to terms verbally during an unexpected phone call or meeting. Request that your employer emails the complete written draft agreement and financial breakdown.',
+                  desc: 'Avoid committing to terms verbally on a phone call. Ask HR to email the draft agreement and financial breakdown.',
                 },
                 {
                   step: '2',
                   title: 'Confirm your sick pay and accrued holiday',
-                  desc: 'Check your payslips. Calculate your outstanding statutory holiday balance and any unpaid sick pay owed to your termination date.',
+                  desc: 'Check recent payslips and calculate any unpaid sick pay and accrued statutory holiday owed up to your exit date.',
                 },
                 {
                   step: '3',
-                  title: 'Check your statutory notice rights under the one-week rule',
-                  desc: 'Review your continuous service and contract length. Determine whether Sections 87 to 91 of the Employment Rights Act 1996 entitle you to full normal pay for your notice period.',
+                  title: 'Check your notice rights under the one-week rule',
+                  desc: 'Compare your contractual notice with statutory notice to see if Sections 87 to 91 ERA 1996 entitle you to full normal pay.',
                 },
                 {
                   step: '4',
                   title: 'Assess whether your condition qualifies as a disability',
-                  desc: 'Review whether your condition meets the Section 6 Equality Act 2010 definition. A potential disability discrimination claim gives you substantial negotiating strength.',
+                  desc: 'Consider whether your condition meets the Section 6 Equality Act 2010 definition, as this affects tribunal risk.',
                 },
                 {
                   step: '5',
-                  title: 'Appoint an independent employment solicitor',
+                  title: 'Instruct an independent employment solicitor',
                   desc: (
                     <>
-                      Under Section 203(3) of the Employment Rights Act 1996, independent legal advice is mandatory. Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) paid directly to your solicitor upon completion. Remember that you <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-ink">do not have to use your employer's recommended solicitor</Link>. You can <Link href="/get-matched/" className="underline hover:text-ink">get matched with an independent SRA-regulated solicitor</Link> through our panel.
+                      Under Section 203(3) ERA 1996, independent advice is mandatory. Employers standardly contribute £350 to £500+ plus VAT upon completion; excess or abortive costs depend on your solicitor&apos;s engagement terms. You <Link href="/guides/employer-recommended-solicitor/" className="underline hover:text-ink">do not have to use your employer&apos;s recommended solicitor</Link>, and you can <Link href="/get-matched/" className="underline hover:text-ink">get matched with an SRA-regulated solicitor</Link> via our panel.
                     </>
                   ),
                 },
                 {
                   step: '6',
-                  title: 'Negotiate enhanced compensation and an agreed reference',
+                  title: 'Review ex-gratia pay, non-compete clauses, and reference wording',
                   desc: (
                     <>
-                      Your solicitor will negotiate improved ex-gratia compensation, full notice pay, an agreed reference, and appropriate non-derogatory clauses. Follow our proven strategies in <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">how to negotiate a settlement agreement</Link>.
+                      Your solicitor can review notice pay, ex-gratia compensation, any non-compete restrictions, and an agreed reference schedule. See <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">how settlement talks work</Link>.
                     </>
                   ),
                 },
                 {
                   step: '7',
-                  title: 'Sign only when satisfied and medically ready',
-                  desc: 'Take the necessary time to review the final document. Sign only once your solicitor confirms that all tax terms and payment dates are fully protected.',
+                  title: 'Complete only once your solicitor certifies the agreement',
+                  desc: 'Sign only once your solicitor confirms the tax split, payment dates, and adviser certificate under s.203(3) ERA 1996.',
                 },
               ].map(({ step, title, desc }) => (
                 <li key={step} className="relative">
@@ -608,10 +598,10 @@ export default function SettlementAgreementSickLeaveGuide() {
           </div>
         </section>
 
-        {/* Section: Official independent resources */}
+        {/* Section 10: Official independent resources */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Official independent resources</h2>
+            <h2 className="guide-h2 mb-4">Official independent resources</h2>
             <p className="sc-body mb-6">
               Access free, impartial guidance on sick leave and employment rights from official UK statutory bodies:
             </p>
@@ -648,7 +638,7 @@ export default function SettlementAgreementSickLeaveGuide() {
                 >
                   <div>
                     <h3 className="text-sm font-semibold text-ink mb-1">{name}</h3>
-                    <p className="sc-body text-muted mb-3">{desc}</p>
+                    <p className="text-[14px] text-muted mb-3">{desc}</p>
                   </div>
                   <span className="text-xs font-semibold text-coral-ink">Visit official site &rarr;</span>
                 </a>
@@ -660,20 +650,30 @@ export default function SettlementAgreementSickLeaveGuide() {
         {/* CTA Banner */}
         <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">Check your settlement offer now</h2>
-            <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              Evaluate your offer against 2026 statutory caps (£751 weekly cap), calculate your notice pay, and verify your tax-free allowance.
+            <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+              Check where your offer stands
+            </h2>
+            <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+              See your calculated statutory baseline, notice pay entitlement, and tax-free allowance before speaking to a solicitor.
             </p>
-            <Link href="/calculator/?reason=mutual" className="btn-accent">
-              Check my offer now →
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/calculator/?reason=mutual" className="btn-accent">
+                Check my offer now →
+              </Link>
+              <Link href="/redundancy-calculator/" className="btn-secondary">
+                Calculate my redundancy →
+              </Link>
+            </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
 
         {/* FAQs */}
         <section className="py-12 border-b border-rule bg-paper">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
+            <h2 className="guide-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
           </div>
         </section>
@@ -706,12 +706,12 @@ export default function SettlementAgreementSickLeaveGuide() {
                   href: '/guides/what-happens-if-you-do-not-sign/',
                   title: 'What Happens If You Do Not Sign?',
                   description: 'Evaluate your options if you decline an offer, including capability procedure rights.',
-                  tag: 'Strategy',
+                  tag: 'Options',
                 },
                 {
                   href: '/guides/how-to-negotiate-a-settlement-agreement/',
                   title: 'How to Negotiate a Settlement Agreement',
-                  description: 'Proven negotiation strategies, counter-offer tactics, and non-financial clauses.',
+                  description: 'How UK settlement talks work, tax splits, and legal fee contributions.',
                   tag: 'Negotiation',
                 },
                 {
@@ -810,8 +810,8 @@ export default function SettlementAgreementSickLeaveGuide() {
         </section>
 
         {/* Disclaimer */}
-        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
-          Disclaimer: SettlementCheck is an independent information service and calculator platform, not a law firm. The content on this page is for general information only and does not constitute formal legal counsel. Use our free calculator to evaluate your settlement offer.
+        <p className="text-[14px] text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+          Disclaimer: SettlementCheck is an independent information service and calculator platform, not a law firm. The content on this page is for general information only and does not constitute formal legal counsel.
         </p>
       </main>
       <Footer />

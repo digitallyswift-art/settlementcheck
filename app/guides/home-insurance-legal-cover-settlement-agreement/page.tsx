@@ -5,6 +5,8 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
 import type { FaqItem } from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
+import RelatedArticles from '@/components/RelatedArticles'
 import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers'
 import HomeInsuranceEligibilityClient from './HomeInsuranceEligibilityClient'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: 'Home Insurance Legal Cover & Settlements | SettlementCheck',
   description:
-    'Why home insurance legal cover excludes voluntary settlement agreements and how the employer customary contribution funds independent SRA solicitor advice.',
+    'Why home insurance legal cover excludes voluntary settlement agreements and how standard employer fee contributions (£350 to £500+ plus VAT) fund independent advice.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/home-insurance-legal-cover-settlement-agreement/',
   },
@@ -31,42 +33,42 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Home Insurance Legal Expenses Cover & Settlement Agreements',
     description:
-      'Examine why insurers decline voluntary settlement reviews, and how customary employer contributions ensure independent legal advice at £0 employee cost.',
+      'Why insurers decline voluntary settlement reviews, and how standard employer fee contributions (£350 to £500+ plus VAT) fund independent legal advice.',
   },
 }
 
 const FAQS: FaqItem[] = [
   {
     q: 'Does home insurance legal expenses cover pay for a settlement agreement review?',
-    a: 'In almost all cases, no. Standard home insurance Legal Expenses Insurance (LEI) policies - administered by underwriters such as DAS, ARAG, Arc Legal, or Legal Protection Group - explicitly exclude voluntary pre-termination negotiations and non-contentious commercial settlement reviews. Insurers only fund active disputes with a reasonable prospect of success (greater than 51%) at an Employment Tribunal.',
+    a: 'In almost all cases, no. Standard Legal Expenses Insurance (LEI) policies exclude voluntary pre-termination negotiations and non-contentious settlement reviews. Insurers usually only fund active disputes with a reasonable prospect of success (over 51%) at an employment tribunal.',
   },
   {
     q: 'Why did my legal expenses insurer reject my settlement agreement claim?',
-    a: 'Insurers require an actionable legal wrong (such as an actual unfair dismissal, unlawful deduction of wages, or breach of the Equality Act 2010) where litigation is contemplated or underway. A settlement agreement under Section 111A or Section 203 ERA 1996 is a consensual commercial negotiation. Because no formal tribunal claim is being litigated, insurers categorize the review as routine contractual advice, which is excluded from standard policy terms.',
+    a: 'Insurers require an actionable legal wrong, such as an unfair dismissal or breach of contract, where litigation is underway or contemplated. A settlement agreement under Section 111A or Section 203 ERA 1996 is a voluntary commercial discussion. Because no tribunal claim is being litigated, insurers categorise the review as routine contractual advice.',
   },
   {
     q: 'If insurance will not pay, how do I afford independent legal advice?',
-    a: 'You do not need insurance to pay for independent legal advice on a settlement agreement. Under standard UK commercial practice, the employer offering the settlement agreement customarily provides a capped legal fee contribution (typically £350 to £500+ plus VAT for standard agreements, and £750 to £1,500+ for complex or senior exits). This sum is paid directly to your chosen SRA-regulated solicitor upon completion.',
+    a: 'You do not need insurance to fund a settlement agreement review. Employers standardly contribute £350 to £500+ plus VAT directly to your SRA-regulated solicitor upon completion. Any excess or abortive work if the agreement does not complete is subject to your solicitor engagement terms.',
   },
   {
     q: 'Is the employer legally required to pay for my solicitor?',
-    a: 'While Section 203(3) of the Employment Rights Act 1996 makes independent legal advice a mandatory condition for a valid waiver, the employer payment itself is a commercial convention rather than a direct statutory obligation. Employers pay this contribution because without an independent solicitor signing the adviser certificate, the agreement is legally void and the employer remains vulnerable to tribunal claims.',
+    a: 'Section 203(3) of the Employment Rights Act 1996 makes independent legal advice mandatory for a valid waiver, though the employer fee contribution is a commercial norm rather than a statutory duty. Employers offer it because an unadvised agreement is legally void and leaves them open to employment tribunal claims.',
   },
   {
     q: 'Can my home insurer force me to use their panel solicitors if a claim does arise?',
-    a: 'No. Under Regulation 6 of the Insurance Companies (Legal Expenses Insurance) Regulations 1990, an insured person has the legal right to choose their own independent solicitor once formal legal proceedings have commenced or where a conflict of interest arises. You are never obligated to accept an insurer volume claims handler.',
+    a: 'No. Under Regulation 6 of the Insurance Companies (Legal Expenses Insurance) Regulations 1990, you have the right to choose your own independent solicitor once formal legal proceedings begin or a conflict of interest arises.',
   },
   {
     q: 'What happens if my legal fees exceed the employer contribution?',
-    a: 'For a standard settlement agreement review where the financial terms are accepted, specialist employment solicitors frequently agree to cap their fees to match the employer contribution, resulting in no out-of-pocket expense for you. If you instruct the solicitor to conduct detailed negotiations or draft complex counter-proposals, solicitors will discuss whether to ask the employer to increase their contribution or agree on additional fees in advance.',
+    a: 'For a straightforward review where terms are accepted, solicitors often cap fees within the employer contribution upon completion. If you instruct a solicitor to negotiate changes, any excess fees or abortive work costs are subject to your solicitor engagement terms unless the employer raises the cap.',
   },
   {
     q: 'Can I use home legal expenses insurance if settlement negotiations break down?',
-    a: 'Yes. If settlement negotiations collapse and your employer subsequently dismisses you unfairly or unlawfully, you can reactivate your legal expenses policy. The insurer will assess the merits of the case, and if they determine there is a 51% or higher chance of success at tribunal, they may grant indemnity funding for your tribunal claim.',
+    a: 'Yes. If talks collapse and your employer dismisses you unfairly or unlawfully, you can ask your insurer to assess a tribunal claim. If they confirm a 51% or higher prospect of success, they may grant indemnity funding.',
   },
   {
     q: 'Should I notify my legal expenses insurer anyway?',
-    a: 'It is often sensible to notify your insurer of circumstances that could give rise to a dispute, particularly if your employment is at imminent risk. Most policies require prompt notification. Logging the potential dispute preserves your rights to legal funding if talks break down and you are forced to bring an Employment Tribunal claim.',
+    a: 'Many policies require prompt notification of circumstances that could lead to a dispute. Logging a potential employment issue early can help preserve your right to funding if negotiations fail and a tribunal claim becomes necessary.',
   },
 ]
 
@@ -114,12 +116,12 @@ export default function HomeInsuranceLegalCoverPage() {
       {
         '@type': 'Article',
         '@id': 'https://settlementcheck.co.uk/guides/home-insurance-legal-cover-settlement-agreement/#article',
-        headline: 'Why Home Insurance Legal Expenses Cover Excludes Settlement Agreements (And Why It Does Not Matter)',
+        headline: 'Home Insurance Legal Cover & Settlement Agreements: Why Insurers Reject Claims',
         description:
-          'Detailed guide examining why home insurance legal expenses policies reject settlement agreement reviews, the reasonable prospects test, customary employer fee contributions, and Freedom of Choice regulations.',
+          'Guide examining why home insurance legal expenses policies reject settlement agreement reviews, the reasonable prospects test, employer fee contributions, and Freedom of Choice regulations.',
         url: 'https://settlementcheck.co.uk/guides/home-insurance-legal-cover-settlement-agreement/',
         datePublished: '2026-06-20',
-        dateModified: '2026-11-15',
+        dateModified: '2026-11-22',
         publisher: SETTLEMENT_CHECK_PUBLISHER,
         author: SETTLEMENT_CHECK_LEGAL_DESK,
       },
@@ -146,205 +148,280 @@ export default function HomeInsuranceLegalCoverPage() {
         dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLdData) }}
       />
       <Nav />
-      <main className="min-h-screen bg-paper text-ink pt-8 pb-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="text-xs text-muted font-sans">
-            <ol className="flex items-center gap-1.5 flex-wrap">
-              <li>
-                <Link href="/" className="hover:text-coral transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li>
-                <Link href="/guides/" className="hover:text-coral transition-colors">
-                  Guides
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li className="text-ink font-medium" aria-current="page">
-                Home Insurance Legal Cover
-              </li>
-            </ol>
-          </nav>
-
-          {/* Editorial Header */}
-          <header className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-coral/10 text-coral border border-coral/20">
-              <span>Legal Expenses Insurance (LEI) &amp; Fee Funding Guide</span>
+      <main>
+        {/* Hero */}
+        <section className="bg-paper pt-14 pb-12 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <div className="flex items-center gap-2 mb-6">
+              <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
+                Guides
+              </Link>
+              <span className="text-rule-strong text-xs">/</span>
+              <span className="text-xs font-medium text-muted tracking-wide uppercase">Legal fees</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-ink tracking-tight leading-tight">
-              Home Insurance Legal Cover &amp; Settlement Agreements: Why Insurers Reject Claims
+            <h1 className="sc-h1 mb-4">
+              Home Insurance Legal Cover &amp; Settlement Agreements
             </h1>
-            <p className="text-base sm:text-lg text-muted font-sans leading-relaxed max-w-3xl">
-              Has your home insurer rejected your settlement agreement claim? Discover why standard Legal Expenses Insurance policies decline pre-termination negotiations, and why customary employer fee contributions mean you still receive specialist independent legal advice.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 s.203 &amp; LEI Regulations 1990
             </p>
-          </header>
+            <p className="sc-lead leading-relaxed">
+              Got a settlement agreement and a rejection letter from your home insurer? Standard Legal Expenses Insurance excludes voluntary settlement reviews, and that is normal. Check your statutory baseline in 60 seconds with no email required, see how the £350 to £500+ plus VAT employer contribution works, and review your options.
+            </p>
+          </div>
+        </section>
 
-          {/* Interactive Diagnostic Component */}
-          <HomeInsuranceEligibilityClient />
+        {/* Article body */}
+        <section className="bg-card py-14">
+          <div className="max-w-2xl mx-auto px-5 space-y-12">
 
-          {/* Detailed Editorial Guide */}
-          <article className="prose prose-slate max-w-none space-y-10 text-ink leading-relaxed">
-            <section className="bg-card p-6 sm:p-8 rounded-2xl border border-rule space-y-4">
-              <h2 className="text-2xl font-serif font-bold text-ink">
-                1. The Shock of the Insurer Rejection
+            {/* Interactive Statutory Baseline Check */}
+            <section className="my-2">
+              <EmbeddedCalculatorCard
+                badge="April 2026 Statutory Check"
+                title="How does your offer compare to the statutory baseline?"
+                subtitle="Compare your settlement figure against your calculated statutory baseline and standard employer legal fee contributions before instructing a solicitor."
+                disputeType="general"
+                statutoryPills={[
+                  { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                  { label: 'Independent Advice', value: 'Mandatory', statute: 'ERA 1996 s.203(3)' },
+                  { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+                ]}
+                initialSalary={45000}
+                initialYears={4}
+                initialAge={38}
+                ctaText="Check my offer now →"
+              />
+            </section>
+
+            {/* Interactive LEI Eligibility Diagnostic */}
+            <HomeInsuranceEligibilityClient />
+
+            {/* Section 1 */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">
+                1. Why did your home insurer reject your settlement agreement claim?
               </h2>
-              <p className="text-body text-muted leading-relaxed">
-                When presented with a formal settlement agreement, many UK employees remember that their home contents or buildings insurance policy includes an add-on called &quot;Family Legal Protection&quot; or &quot;Legal Expenses Insurance&quot; (LEI).
+              <p className="guide-body">
+                Many UK employees check their home insurance &quot;Family Legal Protection&quot; or Legal Expenses Insurance (LEI) add-on when handed a settlement agreement. Insurers such as DAS, ARAG, or Arc Legal routinely decline these requests within 48 hours.
               </p>
-              <p className="text-body text-muted leading-relaxed">
-                Employees contact their insurer (such as DAS, ARAG, Arc Legal, Aviva, Direct Line, or Churchill) expecting them to appoint a solicitor to sign off the agreement. Within 48 hours, they receive a formal rejection letter stating that the policy does not cover the matter because there is no &quot;dispute with reasonable prospects of success.&quot;
+              <p className="guide-body">
+                A rejection letter simply reflects how insurance policies are written. It does not mean your case is weak, and you do not need insurance to fund independent legal advice on a settlement agreement.
               </p>
-              <div className="p-4 bg-paper rounded-xl border border-rule text-xs space-y-1.5 text-muted">
+              <div className="p-5 bg-paper-2 border border-rule rounded-xl text-[14px] space-y-1.5 text-muted">
                 <span className="font-semibold text-ink block">
-                  The Reassurance: Rejection Is Normal and Completely Harmless
+                  Why this rejection is normal
                 </span>
                 <p className="m-0 leading-relaxed">
-                  An insurer rejection does not mean you have done anything wrong, nor does it mean you have a weak negotiating position. It is simply a reflection of how standard insurance contracts are drafted. You do not need insurance because your employer customarily funds your legal advice.
+                  Insurers cover contested litigation. Employers standardly fund voluntary settlement reviews instead, typically contributing £350 to £500+ plus VAT upon completion.
                 </p>
               </div>
-            </section>
+            </div>
 
-            <section className="bg-card p-6 sm:p-8 rounded-2xl border border-rule space-y-4">
-              <h2 className="text-2xl font-serif font-bold text-ink">
-                2. Why LEI Policies Exclude Pre-Termination Settlement Agreements
+            {/* Section 2 */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">
+                2. Why do Legal Expenses Insurance policies exclude voluntary agreements?
               </h2>
-              <p className="text-body text-muted leading-relaxed">
-                Legal Expenses Insurance is an indemnity product engineered to fund contentious courtroom or tribunal litigation. Understanding why it excludes voluntary settlement agreements comes down to two legal concepts:
+              <p className="guide-body">
+                Legal Expenses Insurance is designed to fund contentious courtroom or employment tribunal litigation. Two standard policy rules exclude voluntary settlement reviews:
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                <div className="p-4 bg-paper rounded-xl border border-rule space-y-2">
-                  <span className="font-semibold text-ink block text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40 space-y-2">
+                  <span className="font-semibold text-ink block text-[14px]">
                     The &quot;Contentious Dispute&quot; Requirement
                   </span>
-                  <p className="text-muted leading-relaxed">
-                    LEI policies only activate when an insured person has suffered an unlawful legal wrong - such as an actual breach of contract, constructive dismissal, or unfair dismissal. Pre-termination negotiations conducted under Section 111A ERA 1996 are consensual commercial discussions. At this stage, you have not been unlawfully dismissed, and no formal legal cause of action exists.
+                  <p className="text-[14px] text-muted leading-relaxed">
+                    LEI policies activate only when an unlawful wrong has occurred, such as unfair dismissal or breach of contract. Pre-termination talks under Section 111A ERA 1996 are consensual discussions, though Section 111A does not shield discrimination, whistleblowing, or improper behaviour.
                   </p>
                 </div>
-                <div className="p-4 bg-paper rounded-xl border border-rule space-y-2">
-                  <span className="font-semibold text-ink block text-sm">
-                    The &quot;Reasonable Prospects of Success&quot; Barrier (&gt;51%)
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40 space-y-2">
+                  <span className="font-semibold text-ink block text-[14px]">
+                    The &quot;Reasonable Prospects&quot; Test (&gt;51%)
                   </span>
-                  <p className="text-muted leading-relaxed">
-                    Under standard policy terms, an insurer will only authorize funding if a qualified barrister or panel solicitor confirms that the claim has at least a 51% chance of winning at an Employment Tribunal. Because a settlement agreement is a commercial compromise rather than a contested trial, there is no &quot;win or loss&quot; verdict for an insurer to evaluate.
+                  <p className="text-[14px] text-muted leading-relaxed">
+                    Insurers usually authorise funding only if a claim has at least a 51% chance of winning at an employment tribunal. A settlement agreement is a commercial compromise, so there is no trial verdict for an insurer to assess.
                   </p>
                 </div>
               </div>
-            </section>
+            </div>
 
-            <section className="bg-card p-6 sm:p-8 rounded-2xl border border-rule space-y-4">
-              <h2 className="text-2xl font-serif font-bold text-ink">
-                3. The Employer Legal Fee Contribution Explained
+            {/* Section 3 */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">
+                3. Who pays for your solicitor if home insurance will not?
               </h2>
-              <p className="text-body text-muted leading-relaxed">
-                Under Section 203(3) of the Employment Rights Act 1996, an employee cannot legally waive their statutory employment rights without first receiving advice from an independent relevant adviser - specifically, an SRA-regulated solicitor.
+              <p className="guide-body">
+                Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is not binding until an independent SRA-regulated solicitor advises you on it. Your adviser checks your calculated statutory baseline, garden leave, non-compete clauses, and whether notice pay is taxed as wages.
               </p>
-              <p className="text-body text-muted leading-relaxed">
-                Because an unadvised agreement is legally void and leaves the employer vulnerable to immediate Employment Tribunal claims, UK employers standardly include a dedicated legal fee clause in the settlement agreement:
+              <p className="guide-body">
+                Because an unadvised agreement is void, employers standardly contribute £350 to £500+ plus VAT toward your legal fees upon completion. Any excess or abortive work if the agreement does not complete is subject to your solicitor engagement terms.
               </p>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border border-rule rounded-lg">
-                  <thead className="bg-paper text-ink font-semibold border-b border-rule">
+                  <thead className="bg-paper-2 text-ink font-semibold border-b border-rule">
                     <tr>
                       <th className="p-3">Exit Level &amp; Circumstances</th>
-                      <th className="p-3">Customary Fee Contribution</th>
-                      <th className="p-3">What the Contribution Typically Covers</th>
+                      <th className="p-3">Typical Employer Contribution</th>
+                      <th className="p-3">What the Contribution Usually Covers</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-rule">
                     <tr>
                       <td className="p-3 font-semibold text-ink">Standard Redundancy / Mutual Exit</td>
-                      <td className="p-3 font-mono text-coral font-bold">£350 to £500 + VAT</td>
-                      <td className="p-3 text-muted">Statutory review of clauses, tax status, and adviser certificate sign-off.</td>
+                      <td className="p-3 font-mono text-coral font-bold">£350 to £500+ plus VAT</td>
+                      <td className="p-3 text-muted">Review of draft clauses, tax split, and adviser certificate sign-off upon completion.</td>
                     </tr>
                     <tr>
                       <td className="p-3 font-semibold text-ink">Complex Grievance / PIP Exit</td>
-                      <td className="p-3 font-mono text-coral font-bold">£500 to £850 + VAT</td>
-                      <td className="p-3 text-muted">Review of dispute history, restrictive covenants, and negotiation of reference.</td>
+                      <td className="p-3 font-mono text-coral font-bold">£500 to £850+ plus VAT</td>
+                      <td className="p-3 text-muted">Review of dispute history, restrictive covenants, and agreed reference wording.</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-semibold text-ink">Senior Executive / City Director</td>
-                      <td className="p-3 font-mono text-coral font-bold">£1,000 to £2,500+ + VAT</td>
-                      <td className="p-3 text-muted">Deferred compensation, share options, bad leaver clauses, and non-competes.</td>
+                      <td className="p-3 font-semibold text-ink">Senior Executive / Director</td>
+                      <td className="p-3 font-mono text-coral font-bold">£1,000 to £2,500+ plus VAT</td>
+                      <td className="p-3 text-muted">Deferred pay, share options, bad leaver terms, and non-compete restrictions.</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </section>
+            </div>
 
             {/* Mandatory Regulatory Disclaimers */}
             <MandatoryLegalDisclaimers />
 
-            <section className="bg-card p-6 sm:p-8 rounded-2xl border border-rule space-y-4">
-              <h2 className="text-2xl font-serif font-bold text-ink">
-                4. Freedom of Solicitor Choice (Regulation 6)
+            {/* Section 4 */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">
+                4. What happens if settlement talks break down and a dispute begins?
               </h2>
-              <p className="text-body text-muted leading-relaxed">
-                If your negotiations do collapse and you find yourself in an active tribunal dispute where your home insurance LEI policy does grant indemnity funding, remember your statutory rights regarding solicitor representation:
+              <p className="guide-body">
+                ACAS Code of Practice 4 recommends giving you 10 calendar days to consider a written offer, though this is guidance rather than a strict legal right. Under UK contract law, making a counter-offer rejects the original offer, meaning the employer can withdraw it before acceptance.
               </p>
-              <div className="p-4 bg-paper rounded-xl border border-rule text-xs space-y-2 text-muted leading-relaxed">
+              <p className="guide-body">
+                If talks collapse and you are dismissed, your home insurance LEI policy may become relevant for an employment tribunal claim. Keep these legal protections in mind:
+              </p>
+              <div className="p-5 bg-paper-2 border border-rule rounded-xl text-[14px] space-y-2 text-muted leading-relaxed">
                 <p className="m-0 font-semibold text-ink">
-                  The Insurance Companies (Legal Expenses Insurance) Regulations 1990 (Regulation 6)
+                  Freedom of Solicitor Choice (Regulation 6, LEI Regulations 1990)
                 </p>
                 <p className="m-0">
-                  Under Regulation 6, an insured individual has the right to instruct an independent solicitor of their own choice whenever formal legal proceedings are commenced. Insurers frequently attempt to route claims to volume panel firms with high case loads. You are legally entitled to nominate your own qualified specialist employment solicitor.
+                  Once formal legal proceedings begin, Regulation 6 gives you the right to choose your own independent solicitor rather than accepting an insurer&apos;s panel firm.
                 </p>
-                <p className="m-0 font-semibold text-ink pt-1">
-                  SRA Standards &amp; Regulations Rule 5.1
+                <p className="m-0 font-semibold text-ink pt-2">
+                  SRA Duty of Care &amp; Legal Privilege
                 </p>
                 <p className="m-0">
-                  Whether funded by an employer contribution or insurance indemnity, your instructed solicitor owes their duty of care exclusively to you. They are prohibited by the Solicitors Regulation Authority from having any conflict of interest with your employer.
+                  Whether funded by an employer contribution or insurance indemnity, your solicitor owes their duty of care and legal privilege exclusively to you.
                 </p>
               </div>
-            </section>
-
-            <section className="bg-card p-6 sm:p-8 rounded-2xl border border-rule space-y-4">
-              <h2 className="text-2xl font-serif font-bold text-ink">
-                5. Frequently Asked Questions
-              </h2>
-              <FaqAccordion faqs={FAQS} />
-            </section>
-          </article>
-
-          {/* Related Tools Navigation */}
-          <nav aria-label="Related guides and tools" className="bg-card p-6 sm:p-8 rounded-2xl border border-rule space-y-4">
-            <h3 className="text-base font-serif font-bold text-ink">
-              Related Settlement Agreement Resources
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-              <Link
-                href="/settlement-agreement-review/"
-                className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
-              >
-                <span className="font-semibold block">Solicitor Matching Service</span>
-                <span className="text-muted text-[11px]">Employer-funded SRA legal advice</span>
-              </Link>
-              <Link
-                href="/guides/employer-recommended-solicitor/"
-                className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
-              >
-                <span className="font-semibold block">Employer Recommended Solicitor</span>
-                <span className="text-muted text-[11px]">Why you should choose your own solicitor</span>
-              </Link>
-              <Link
-                href="/calculator/"
-                className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
-              >
-                <span className="font-semibold block">Settlement Calculator</span>
-                <span className="text-muted text-[11px]">Instant compensation estimation</span>
-              </Link>
-              <Link
-                href="/guides/settlement-agreement-how-much/"
-                className="p-3 bg-paper rounded-lg border border-rule text-ink hover:text-coral transition-colors"
-              >
-                <span className="font-semibold block">Settlement Payout Averages</span>
-                <span className="text-muted text-[11px]">Realistic UK exit compensation brackets</span>
-              </Link>
             </div>
-          </nav>
-        </div>
+
+            {/* CTA */}
+            <div className="bg-ink rounded-2xl p-8 text-center mt-10">
+              <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+                Check where your offer stands
+              </h2>
+              <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+                See your calculated statutory baseline, tax split, and commercial settlement range before speaking to a solicitor.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link href="/calculator/" className="btn-accent">
+                  Check my offer now →
+                </Link>
+                <Link href="/redundancy-calculator/" className="btn-secondary">
+                  Calculate my redundancy →
+                </Link>
+              </div>
+              <p className="text-white/60 text-[12px] mt-4">
+                Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+              </p>
+            </div>
+
+            {/* FAQ */}
+            <div className="space-y-4 pt-2">
+              <h2 className="guide-h2">Frequently asked questions</h2>
+              <div className="mt-4">
+                <FaqAccordion faqs={FAQS} />
+              </div>
+            </div>
+
+            {/* Related Articles Component */}
+            <RelatedArticles
+              title="Related Guides & Resources"
+              items={[
+                {
+                  href: '/guides/employer-recommended-solicitor/',
+                  title: 'Do You Have to Use Their Solicitor?',
+                  description: 'Your right to appoint your own independent solicitor with a standard employer fee contribution.',
+                  tag: 'Legal Advice',
+                },
+                {
+                  href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                  title: 'How to Negotiate a Settlement Agreement',
+                  description: 'Step-by-step guide to without prejudice talks, tax splits, and legal fee contributions.',
+                  tag: 'Negotiation',
+                },
+                {
+                  href: '/guides/what-is-a-fair-settlement-agreement/',
+                  title: 'What Is a Fair Settlement Agreement?',
+                  description: 'Compare your settlement offer against commercial UK ranges and statutory baselines.',
+                  tag: 'Valuation',
+                },
+                {
+                  href: '/guides/pressured-to-sign/',
+                  title: 'Pressured to Sign Quickly? Your Rights',
+                  description: 'ACAS Code 4 guidance and how to handle artificial employer deadlines.',
+                  tag: 'Employee Rights',
+                },
+                {
+                  href: '/guides/can-an-employer-withdraw-a-settlement-agreement/',
+                  title: 'Can an Employer Withdraw the Offer?',
+                  description: 'Contract law rules under Hyde v Wrench and offer revocation risks.',
+                  tag: 'Offer Protection',
+                },
+                {
+                  href: '/guides/what-happens-if-you-do-not-sign/',
+                  title: 'What Happens if You Do Not Sign?',
+                  description: 'Your options and risks if you decline the agreement or talks end without a deal.',
+                  tag: 'Risks & Alternatives',
+                },
+              ]}
+            />
+          </div>
+        </section>
+
+        {/* References */}
+        <section className="py-12 bg-paper">
+          <div className="max-w-2xl mx-auto px-5">
+            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Statutory Authorities &amp; Official References</h3>
+            <ol className="list-decimal pl-4 text-xs text-muted flex flex-col gap-2">
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/203" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 203(3) (Mandatory independent legal advice requirement)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/ukpga/1996/18/section/111A" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Employment Rights Act 1996, Section 111A (Pre-termination negotiations &amp; improper behaviour)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.legislation.gov.uk/uksi/1990/1159/regulation/6/made" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  The Insurance Companies (Legal Expenses Insurance) Regulations 1990, Regulation 6
+                </a>
+              </li>
+              <li>
+                <a href="https://www.acas.org.uk/code-of-practice-settlement-agreements" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline">
+                  Acas Code of Practice on Settlement Agreements (Code of Practice 4)
+                </a>
+              </li>
+            </ol>
+            <div className="mt-8 pt-6 border-t border-rule text-xs text-muted leading-relaxed">
+              <strong>Disclaimer:</strong> SettlementCheck is an independent introduction service and informational resource. We are not a law firm and we do not provide legal advice. All solicitors on our panel are independently SRA-regulated. This guide provides factual information regarding Legal Expenses Insurance and settlement fee contributions and does not constitute legal or financial advice.
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </>

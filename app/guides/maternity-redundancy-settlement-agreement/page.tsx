@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import ReviewCallout from '@/components/ReviewCallout'
 import RelatedArticles from '@/components/RelatedArticles'
@@ -61,7 +62,7 @@ const FAQS = [
   },
   {
     q: 'Who pays the solicitor fees for reviewing my maternity settlement agreement?',
-    a: 'Employers standardly provide a capped commercial contribution (typically £500 to £1,500 plus VAT for complex maternity matters) paid directly to your solicitor upon agreement completion. Under Section 203(3) of the Employment Rights Act 1996, a settlement agreement is only legally valid if you receive advice from an independent qualified solicitor.',
+    a: 'Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT, and sometimes higher for complex maternity matters) paid directly to your solicitor upon completion. That covers reviewing and advising on the draft. Excess negotiation or abortive work is subject to your solicitor engagement terms unless your employer raises the cap.',
   },
 ]
 
@@ -204,19 +205,36 @@ export default function MaternityRedundancySettlementGuide() {
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>
               Equality Act 2010 &amp; Family Leave Protection
             </p>
-            <h1 className="sc-h1 mb-5">
+            <h1 className="sc-h1 mb-4">
               Maternity Redundancy Settlement Agreement UK (2026): Rights, Rules &amp; Payouts
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Updated for 2026/27 (SI 2026/310 &amp; Ninth Addendum)</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Last reviewed: October 2026</span>
-            </div>
-            <p className="sc-lead">
-              Facing redundancy during pregnancy or maternity leave is one of the most stressful experiences in professional life. UK employment law provides powerful protections that make maternity dismissals exceptionally risky for employers. If your employer proposes an agreed exit, you hold substantial statutory advantages to secure a fair settlement package.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996, Equality Act 2010 &amp; SI 2026/310
             </p>
+            <p className="sc-lead leading-relaxed">
+              Received a redundancy notice or draft settlement agreement during pregnancy or maternity leave? UK law gives you 18 months of redundancy protection, Regulation 10 vacancy priority, and ring-fenced Statutory Maternity Pay. Check your statutory baseline in 60 seconds with no email required, and prepare clear questions for an independent solicitor.
+            </p>
+          </div>
+        </section>
+
+        {/* Embedded Calculator Card (Immediately below Hero) */}
+        <section className="pt-8 pb-4 bg-white">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How does your maternity offer compare to the statutory baseline?"
+              subtitle="Compare your employer's opening figure against your calculated statutory baseline and typical commercial ranges."
+              disputeType="maternity"
+              statutoryPills={[
+                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Protected Window', value: '18 Months', statute: '2023 Act & 2024 Regs' },
+                { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+              ]}
+              initialSalary={52000}
+              initialYears={4}
+              initialAge={34}
+              ctaText="Check my offer now →"
+            />
           </div>
         </section>
 
@@ -229,7 +247,7 @@ export default function MaternityRedundancySettlementGuide() {
                 Statutory Summary: Maternity Redundancy Rights 2026
               </p>
               <p className="sc-body text-ink font-medium leading-relaxed">
-                In the UK, making an employee redundant during pregnancy or maternity leave is subject to strict statutory protections. Under the Protection from Redundancy Act 2023 and Regulation 10, employers must offer any suitable alternative vacancy without competition. Failure to do so makes dismissal automatically unfair. Settlement payouts must pay remaining Statutory Maternity Pay on top of uncapped compensation.
+                In the UK, redundancy during pregnancy or maternity leave triggers strict statutory protections. Under the Protection from Redundancy Act 2023 and Regulation 10, employers must offer any suitable alternative vacancy without competition. Failure to do so makes dismissal automatically unfair. Remaining Statutory Maternity Pay must be paid on top of any settlement sum.
               </p>
             </div>
 
@@ -259,8 +277,8 @@ export default function MaternityRedundancySettlementGuide() {
 
             <ReviewCallout
               title="Offered a settlement agreement while on maternity leave?"
-              description="Check your statutory protections before signing. Verify your ring-fenced Statutory Maternity Pay, £751 weekly redundancy baseline, and customary legal fee contribution."
-              ctaText="Check draft agreement terms →"
+              description="Check your calculated statutory baseline before signing. Verify your ring-fenced Statutory Maternity Pay, £751 weekly redundancy cap, and standard legal fee contribution."
+              ctaText="Check my offer now →"
               badge="Maternity Clause Checker"
             />
           </div>
@@ -269,7 +287,7 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section 1: The 18-month redundancy protection window and Regulation 10 */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">The 18-month redundancy protection window and Regulation 10</h2>
+            <h2 className="guide-h2 mb-4">How does the 18-month maternity redundancy protection window work?</h2>
             <p className="sc-body mb-4">
               The Protection from Redundancy (Pregnancy and Family Leave) Act 2023 expanded maternity rights across the UK. Supported by the 2024 Amendment Regulations, the law establishes an extended 18-month protected window.
             </p>
@@ -305,15 +323,15 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section 2: Why pregnancy dismissals are automatically unfair */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Why pregnancy and maternity dismissals are automatically unfair</h2>
+            <h2 className="guide-h2 mb-4">Why are pregnancy and maternity dismissals automatically unfair?</h2>
             <p className="sc-body mb-4">
-              UK employment law treats pregnancy and maternity dismissals with absolute seriousness. Under Section 99 of the Employment Rights Act 1996, selecting an employee for redundancy because of pregnancy, childbirth, or maternity leave is automatically unfair.
+              UK employment law treats pregnancy and maternity dismissals strictly. Under Section 99 of the Employment Rights Act 1996, selecting an employee for redundancy because of pregnancy, childbirth, or maternity leave is automatically unfair.
             </p>
             <p className="sc-body mb-4">
-              In addition, Section 18 of the Equality Act 2010 makes it unlawful to treat an employee unfavourably because of pregnancy or maternity. You do not need two years of continuous service to bring this claim. It is a Day-One statutory right.
+              Under Section 18 of the Equality Act 2010, it is unlawful to treat an employee unfavourably because of pregnancy or maternity. You do not need two years of continuous service to bring this claim. It is a day-one statutory right.
             </p>
             <p className="sc-body mb-6">
-              Unlike ordinary unfair dismissal, compensation for unlawful discrimination under Section 124 of the Equality Act 2010 is completely uncapped. The standard statutory compensatory award cap of £123,543 does not apply.
+              Unlike ordinary unfair dismissal, compensation for unlawful discrimination under Section 124 of the Equality Act 2010 is uncapped. The standard statutory compensatory award cap of £123,543 does not apply.
             </p>
 
             {/* Comparison Table */}
@@ -390,9 +408,9 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section 3: The SMP Ring-Fencing Rule */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">The Statutory Maternity Pay (SMP) ring-fencing rule</h2>
+            <h2 className="guide-h2 mb-4">Can my employer roll Statutory Maternity Pay into a settlement sum?</h2>
             <p className="sc-body mb-4">
-              Employers often attempt to roll remaining SMP into a generic settlement figure. This practice is unlawful.
+              Sometimes a draft agreement rolls remaining SMP into a single termination figure. Under UK law, contracting out of SMP is void.
             </p>
             <p className="sc-body mb-4">
               Under Section 164 SSCBA 1992 and Regulation 21 SMP Regs 1986, contracting out of SMP is void. Any clause attempting to waive your statutory maternity pay is legally invalid.
@@ -424,9 +442,9 @@ export default function MaternityRedundancySettlementGuide() {
             <div className="p-4 rounded-xl bg-paper border border-rule flex items-start gap-3">
               <AlertIcon />
               <div>
-                <p className="text-body font-semibold text-ink mb-1">Employers Reclaim SMP from HMRC</p>
+                <p className="text-[15px] font-semibold text-ink mb-1">Employers Reclaim SMP from HMRC</p>
                 <p className="sc-body text-muted">
-                  Your employer can reclaim 92% of your SMP from HMRC, or 103% if they qualify for Small Employers Relief. Because the government reimburses this cost, there is no justification for an employer to deduct or offset SMP against your redundancy compensation.
+                  Your employer can reclaim 92% of your SMP from HMRC, or 103% if they qualify for Small Employers Relief. Because HMRC reimburses most or all of this cost, SMP sits separately from your redundancy compensation.
                 </p>
               </div>
             </div>
@@ -436,12 +454,12 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section 4: How maternity settlement payouts are calculated */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">How maternity settlement payouts are calculated in 2026</h2>
+            <h2 className="guide-h2 mb-4">How are maternity settlement payouts calculated in 2026?</h2>
             <p className="sc-body mb-4">
-              A comprehensive maternity redundancy settlement agreement is made up of four distinct financial components. Understanding each part ensures you can verify whether an offer sits below statutory baselines and typical benchmark ranges.
+              A maternity redundancy settlement agreement is made up of four distinct financial components. Checking each part helps you see whether an offer sits below your calculated statutory baseline and typical benchmark ranges.
             </p>
             <p className="sc-body mb-6">
-              Your instructed solicitor will ensure every element is calculated separately in the written agreement:
+              Your instructed solicitor checks that every element is calculated separately in the written agreement:
             </p>
 
             <div className="flex flex-col gap-4 mb-8">
@@ -477,10 +495,10 @@ export default function MaternityRedundancySettlementGuide() {
                   <span className="text-xs font-mono font-bold text-coral-ink">Contractual Notice</span>
                 </div>
                 <p className="sc-body mb-2">
-                  Payment in Lieu of Notice (PILON) based on your full normal contractual salary, not reduced maternity pay. Under Section 402D of ITEPA 2003, notice pay is taxable under PAYE as Post-Employment Notice Pay.
+                  Payment in Lieu of Notice (PILON) or garden leave is based on your full normal contractual salary, not reduced maternity pay. Under Section 402D of ITEPA 2003, notice pay is taxed as wages through PAYE as Post-Employment Notice Pay.
                 </p>
                 <p className="sc-body text-muted">
-                  You should also receive accrued, untaken annual leave paid in full.
+                  Accrued, untaken annual leave is also paid in full and taxed as wages.
                 </p>
               </div>
 
@@ -500,11 +518,11 @@ export default function MaternityRedundancySettlementGuide() {
 
             <div className="p-5 rounded-xl bg-ink text-white">
               <h3 className="text-base font-semibold mb-2">Benchmark your settlement value</h3>
-              <p className="sc-lead text-sm mb-4" style={{ color: 'rgba(247,244,238,0.85)' }}>
-                Use our independent calculator to benchmark your statutory redundancy, remaining SMP, notice entitlement, and ex-gratia compensation range.
+              <p className="text-white/80 text-[15px] leading-relaxed mb-4">
+                Check your statutory redundancy baseline, remaining SMP, notice entitlement, and commercial compensation range in 60 seconds.
               </p>
               <Link href="/calculator/?maternity=yes" className="btn-accent inline-block text-xs py-2.5 px-4">
-                Calculate my settlement estimate →
+                Check my offer now →
               </Link>
             </div>
           </div>
@@ -513,7 +531,7 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section 5: Worked case study */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Worked case study: Senior Product Manager on maternity leave</h2>
+            <h2 className="guide-h2 mb-4">What does a maternity settlement look like in practice?</h2>
             <p className="sc-body mb-4">
               To understand how statutory protections translate into financial figures, consider this realistic 2026 example of an employee facing redundancy while on maternity leave.
             </p>
@@ -548,7 +566,7 @@ export default function MaternityRedundancySettlementGuide() {
                 <tbody>
                   {[
                     ['Statutory Redundancy Pay', '£3,004 (4 yrs × £751 cap)', '£3,004 (Tax-free under s.403)'],
-                    ['Remaining SMP (22 weeks)', '£0 (Attempted waiver)', '£4,117.96 (Ring-fenced &amp; paid in full)'],
+                    ['Remaining SMP (22 weeks)', '£0 (Attempted waiver)', '£4,117.96 (Ring-fenced and paid in full)'],
                     ['Contractual Notice Pay (PILON)', '£4,333 (1 month only)', '£13,000 (Full 3 months contractual notice)'],
                     ['Ex-Gratia Loss of Office', '£2,000 token offer', '£26,996 (Tax-free under s.403 cap)'],
                     ['Pre-Termination Injury to Feelings', '£0', '£15,000 (100% tax-free under s.406)'],
@@ -571,7 +589,7 @@ export default function MaternityRedundancySettlementGuide() {
                 By instructing an independent SRA-regulated solicitor, Sarah challenged her employer on the Regulation 10 breach, uncapped discrimination exposure, and invalid SMP waiver.
               </p>
               <p className="sc-body mb-3">
-                Her final settlement increased from £9,337 to £62,117.96. Furthermore, £45,000 of the final settlement was structured completely tax-free (£30,000 under s.403 and £15,000 under s.406).
+                Her final settlement increased from £9,337 to £62,117.96. Of that total, £45,000 was structured tax-free (£30,000 under s.403 and £15,000 under s.406).
               </p>
               <p className="sc-body text-muted">
                 Her employer paid the £1,000 legal fee contribution directly to her solicitor under Section 203(3). Sarah paid nothing out of pocket for her legal representation.
@@ -583,16 +601,16 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section 6: Tax treatment breakdown */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Tax treatment breakdown: Tax-free £30,000 vs taxable SMP</h2>
+            <h2 className="guide-h2 mb-4">How is a maternity settlement taxed under HMRC rules?</h2>
             <p className="sc-body mb-4">
-              Structuring your settlement agreement correctly can save thousands of pounds in income tax. Under UK tax law, different elements of your package receive completely different tax treatments.
+              Structuring a settlement agreement correctly can save thousands of pounds in income tax. Under UK tax law, different elements of your package receive different tax treatments.
             </p>
             <p className="sc-body mb-6">
               HMRC applies strict rules under the Income Tax (Earnings and Pensions) Act 2003 (ITEPA 2003). Your agreement must separate each payment clearly:
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="rounded-xl border border-rule bg-white p-5">
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage">Tax-Free</span>
                   <h3 className="text-sm font-semibold text-ink">£30,000 Exemption (s.403)</h3>
@@ -605,33 +623,33 @@ export default function MaternityRedundancySettlementGuide() {
                 </p>
               </div>
 
-              <div className="rounded-xl border border-rule bg-white p-5">
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage">100% Tax-Free</span>
                   <h3 className="text-sm font-semibold text-ink">Injury to Feelings (s.406)</h3>
                 </div>
                 <p className="sc-body mb-2">
-                  Under Section 406 of ITEPA 2003, compensation for injury to feelings related to discrimination occurring before termination is completely tax-free.
+                  Under Section 406 of ITEPA 2003, compensation for injury to feelings related to discrimination occurring before termination is tax-free.
                 </p>
                 <p className="sc-body text-muted">
                   This sum sits outside the standard £30,000 limit with no ceiling on its tax exemption.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-rule bg-white p-5">
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber">Taxable as Earnings</span>
                   <h3 className="text-sm font-semibold text-ink">Notice Pay (PENP s.402D)</h3>
                 </div>
                 <p className="sc-body mb-2">
-                  Payment in Lieu of Notice is classified as Post-Employment Notice Pay. It must be taxed via PAYE with normal income tax and National Insurance deductions.
+                  Payment in Lieu of Notice (PILON) or garden leave is classified as Post-Employment Notice Pay. It is taxed as wages via PAYE with income tax and National Insurance deductions.
                 </p>
                 <p className="sc-body text-muted">
                   Notice pay cannot be disguised as tax-free compensation.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-rule bg-white p-5">
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber">Taxable as Statutory Pay</span>
                   <h3 className="text-sm font-semibold text-ink">Statutory Maternity Pay</h3>
@@ -654,25 +672,25 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section 7: Negotiation strategy and Section 111A */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Negotiation strategy and Section 111A loss of confidentiality</h2>
+            <h2 className="guide-h2 mb-4">Are maternity settlement discussions confidential under Section 111A?</h2>
             <p className="sc-body mb-4">
-              Employers often attempt to shield settlement proposals by labelling letters as &quot;Section 111A protected conversations&quot; or &quot;without prejudice&quot;.
+              Employers sometimes label settlement proposals as &quot;Section 111A protected conversations&quot; or &quot;without prejudice&quot;.
             </p>
             <p className="sc-body mb-4">
-              Under UK law, this protection does not apply to maternity disputes. Section 111A(4) of the Employment Rights Act 1996 expressly states that protected conversation rules apply solely to ordinary unfair dismissal claims.
+              Under UK law, Section 111A(4) of the Employment Rights Act 1996 limits protected conversation rules solely to ordinary unfair dismissal claims. It does not cover pregnancy discrimination or automatically unfair dismissal under Section 99.
             </p>
             <p className="sc-body mb-6">
-              Section 111A does not protect discussions involving pregnancy discrimination or automatically unfair dismissal under Section 99. If your employer tries to push you out during maternity leave, those communications can be cited in open tribunal proceedings.
+              Common law without prejudice privilege also requires an existing, genuine dispute and never protects unambiguous impropriety. Discussions falling outside those rules can be cited in open tribunal proceedings.
             </p>
 
             <div className="rounded-xl border border-rule bg-paper p-5 mb-8">
               <h3 className="text-sm font-semibold text-ink mb-3">5 Key Points to Review with Your Independent Solicitor</h3>
               <ol className="list-decimal pl-5 flex flex-col gap-2.5 text-sm sc-body">
                 <li>
-                  <strong>Request all terms in writing:</strong> Ask for any verbal proposal to be provided in a formal draft settlement agreement.
+                  <strong>Get all terms in writing:</strong> Verbal proposals can be recorded in a formal draft settlement agreement for your solicitor to review.
                 </li>
                 <li>
-                  <strong>Note the ACAS 10-day guideline:</strong> ACAS Code of Practice 4 (para 12) recommends a minimum of 10 calendar days as general guidance to consider a settlement proposal, though an employer may set binding deadlines or withdraw an unaccepted offer under English contract law (<em>Routledge v Grant</em>). Consult a solicitor promptly before any deadline expires.
+                  <strong>Note the ACAS 10-day guideline:</strong> ACAS Code of Practice 4 (para 12) recommends 10 calendar days as general guidance, not a binding legal right. Under English contract law, a counter-offer rejects the original offer (<em>Hyde v Wrench</em>) and an unaccepted offer can be withdrawn before signing (<em>Routledge v Grant</em>).
                 </li>
                 <li>
                   <strong>Review internal vacancies:</strong> Check your employer&apos;s careers portal and listings for open roles to discuss Regulation 10 priority suitability with your solicitor.
@@ -681,7 +699,7 @@ export default function MaternityRedundancySettlementGuide() {
                   <strong>Confirm ring-fenced SMP:</strong> Verify with your solicitor that remaining SMP is explicitly itemised alongside your statutory redundancy and ex-gratia termination compensation.
                 </li>
                 <li>
-                  <strong>Confirm an agreed reference:</strong> Discuss attaching an agreed factual written reference schedule and mutual non-derogatory clauses with your solicitor.
+                  <strong>Review references and non-compete clauses:</strong> Discuss attaching an agreed factual written reference, mutual non-derogatory clauses, and any non-compete restrictions with your solicitor.
                 </li>
               </ol>
             </div>
@@ -695,26 +713,26 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section 8: Independent legal advice and fee coverage */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Independent legal advice: Employer fee contribution</h2>
+            <h2 className="guide-h2 mb-4">Who pays the solicitor fees for a maternity settlement agreement?</h2>
             <p className="sc-body mb-4">
-              Under Section 203(3) ERA 1996, waiving statutory rights requires independent legal advice. You must receive advice from an independent, insured solicitor.
+              Under Section 203(3) ERA 1996, waiving statutory rights requires independent legal advice from a qualified, insured solicitor.
             </p>
             <p className="sc-body mb-4">
-              Employers standardly provide a capped contribution (typically £500 to £1,500 plus VAT) towards your independent legal advice upon completion.
+              Employers standardly contribute £350 to £500+ plus VAT directly to your solicitor upon completion (and sometimes higher for complex maternity matters).
             </p>
             <p className="sc-body mb-6">
-              Your solicitor invoices your employer directly. They can request higher fee contributions if negotiations are required to resolve Regulation 10 breaches or SMP disputes.
+              That contribution covers reviewing and advising on the draft. Any extra negotiation or abortive work is subject to your solicitor&apos;s engagement terms unless the employer raises the cap.
             </p>
 
             <div className="rounded-xl border border-rule bg-white p-5 mb-6">
-              <h3 className="text-sm font-semibold text-ink mb-2">What Your Solicitor Protects</h3>
+              <h3 className="text-sm font-semibold text-ink mb-2">What Your Solicitor Checks</h3>
               <ul className="flex flex-col gap-2.5">
                 {[
                   'Verifies that remaining Statutory Maternity Pay is paid in full on top of the settlement sum.',
                   'Checks that your redundancy calculation accurately reflects the £751 weekly statutory cap for 2026.',
                   'Ensures ex-gratia compensation and pre-termination injury to feelings are properly structured for tax relief.',
-                  'Inserts comprehensive agreed reference clauses and mutual non-derogation commitments.',
-                  'Protects you against aggressive warranties, clawback clauses, or unworkable restrictive covenants.',
+                  'Reviews agreed reference clauses and mutual non-derogation commitments.',
+                  'Checks warranties, clawback clauses, and any post-termination non-compete covenants.',
                 ].map((protection) => (
                   <li key={protection} className="flex items-start gap-3">
                     <CheckIcon />
@@ -733,7 +751,7 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section: Official independent resources */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Official independent resources</h2>
+            <h2 className="guide-h2 mb-4">Where can I get free official guidance?</h2>
             <p className="sc-body mb-6">
               If you are facing redundancy during pregnancy or maternity leave, you can access free guidance from official UK statutory organisations and charities:
             </p>
@@ -782,25 +800,30 @@ export default function MaternityRedundancySettlementGuide() {
         {/* Section: CTA Banner */}
         <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">Check your maternity settlement offer today</h2>
-            <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              Calculate your statutory redundancy baseline, check your ring-fenced SMP, and connect with an SRA-regulated solicitor. Employers standardly provide a capped commercial contribution toward legal advice fees upon agreement completion.
+            <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+              Check where your maternity offer stands
+            </h2>
+            <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+              See your calculated statutory baseline, ring-fenced SMP, and commercial settlement range before speaking to a solicitor.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link href="/calculator/?maternity=yes" className="btn-accent w-full sm:w-auto">
-                Check my settlement offer →
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/calculator/?maternity=yes" className="btn-accent">
+                Check my offer now →
               </Link>
-              <Link href="/redundancy-calculator/" className="btn-secondary w-full sm:w-auto text-white border-white/20 hover:border-white">
-                Calculate redundancy pay →
+              <Link href="/redundancy-calculator/" className="btn-secondary">
+                Calculate my redundancy →
               </Link>
             </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
 
         {/* Section: FAQs */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
+            <h2 className="guide-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
             <DynamicFaqSection pathname="/guides/maternity-redundancy-settlement-agreement/" />
           </div>
@@ -906,7 +929,7 @@ export default function MaternityRedundancySettlementGuide() {
         </section>
 
         {/* SRA Regulatory Boundary & Disclaimer */}
-        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+        <p className="text-[13px] text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
           Disclaimer: SettlementCheck is an independent information service and calculator platform, not a law firm. The content on this page is for general information only and does not constitute formal legal advice. Independent legal advice on settlement agreements is reserved for instructed SRA-regulated solicitors. Use our free calculator to evaluate your settlement offer.
         </p>
       </main>

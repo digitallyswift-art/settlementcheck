@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
+import RelatedArticles from '@/components/RelatedArticles'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
@@ -40,23 +41,23 @@ export async function generateMetadata(): Promise<Metadata> {
 const FAQS: FaqItem[] = [
   {
     q: 'Do I need to file a Self Assessment tax return if my settlement agreement was under £30,000?',
-    a: 'If your total termination package was entirely below the £30,000 threshold under Section 403 of ITEPA 2003, and all notice pay was taxed via PAYE with no other untaxed income, you generally do not need to register for Self Assessment solely because of the settlement. However, if you are already registered for Self Assessment, HMRC requires you to report termination awards on your SA102 return.',
+    a: 'If your termination compensation was entirely below the £30,000 threshold under Section 403 of ITEPA 2003 and notice pay was taxed via PAYE, you generally do not need to register for Self Assessment solely for the settlement. However, if you already file Self Assessment, HMRC requires termination awards to be reported on SA102.',
   },
   {
     q: 'Which boxes on the SA102 Self Assessment form do I use for a settlement agreement?',
-    a: 'On supplementary page SA102 (or the "Additional information" section Ai 2 online), enter qualifying non-taxable termination payments up to £30,000 in Box 5. Enter any taxable compensation exceeding £30,000 in Box 9, and record the PAYE tax already deducted by your employer in Box 10.',
+    a: 'On supplementary page SA102 (or the "Additional information" section online), enter qualifying non-taxable termination payments up to £30,000 in Box 5. Enter any taxable compensation exceeding £30,000 in Box 9, and record the PAYE tax already deducted by your employer in Box 10.',
   },
   {
-    q: 'Why does my employer insist on a tax indemnity clause in the settlement agreement?',
-    a: 'Under UK tax rules, the employer is legally responsible for operating PAYE correctly. If HMRC subsequently challenges the tax-free status of any payment, HMRC can issue an assessment against the employer. The tax indemnity clause enables the employer to reclaim any unpaid income tax and interest directly from you.',
+    q: 'Why does my employer include a tax indemnity clause in the settlement agreement?',
+    a: 'Under UK tax rules, the employer is primarily responsible for operating PAYE correctly. If HMRC later challenges the tax-free status of any payment, HMRC can assess the employer. The tax indemnity clause lets the employer reclaim unpaid income tax and interest from you.',
   },
   {
-    q: 'How should my solicitor amend the employer tax indemnity clause?',
-    a: 'Your solicitor should ensure the indemnity covers only income tax (not employer Class 1A National Insurance contributions), excludes penalties resulting from employer payroll delays, requires the employer to give you written notice before settling with HMRC, and gives you the right to dispute unreasonable HMRC assessments.',
+    q: 'What do solicitors commonly check in a tax indemnity clause?',
+    a: 'Independent solicitors commonly check that the indemnity covers only income tax (excluding employer Class 1A National Insurance), excludes penalties caused by employer payroll delays, requires written notice before settling with HMRC, and preserves your right to dispute an assessment.',
   },
   {
     q: 'Does an employer contribution to my legal fees count towards the £30,000 exemption limit?',
-    a: 'No. Under HMRC Extra-Statutory Concession A81 and Section 413A of ITEPA 2003, payments made directly by an employer to your solicitor for independent legal advice under Section 203(3) ERA 1996 upon agreement completion are completely tax-exempt and do not consume any part of your £30,000 threshold.',
+    a: 'No. Under ITEPA 2003 s.413A, contributions paid directly by an employer to your solicitor for advice under Section 203(3) ERA 1996 upon completion are tax-exempt and do not use up your £30,000 threshold.',
   },
 ]
 
@@ -152,19 +153,36 @@ export default function HmrctaxReturnDeclarationGuide() {
               <span className="text-xs text-ink truncate">HMRC Tax Return Declaration</span>
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Self Assessment &amp; HMRC Reporting</p>
-            <h1 className="sc-h1 mb-5">
+            <h1 className="sc-h1 mb-4">
               How to Declare a Settlement Agreement on Your UK Tax Return (SA100 / SA102)
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Updated for 2026/27 Tax Year</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>HMRC Manual Guidance (EIM13750)</span>
-            </div>
-            <p className="sc-lead">
-              If your employment settlement agreement includes compensation exceeding the £30,000 threshold under Section 403 of ITEPA 2003, or if you already file a UK Self Assessment tax return, you must declare your settlement correctly. This guide provides a box-by-box breakdown of forms SA100 and SA102, and explains how to handle the employer tax indemnity clause.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for 2026/27 UK tax year · Checked against ITEPA 2003 &amp; HMRC EIM13750
             </p>
+            <p className="sc-lead leading-relaxed">
+              Received a settlement agreement over £30,000, or already file a Self Assessment tax return? Termination awards are reported separately from notice pay taxed as wages. Check your tax split in 60 seconds with no email required, see which SA102 boxes apply, and review indemnity terms with an independent solicitor.
+            </p>
+          </div>
+        </section>
+
+        {/* Embedded Reactive Calculator Micro-Tool (Immediately below Hero) */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How much of your settlement is tax-free versus taxable?"
+              subtitle="Split your package into SA102 Box 5 (£30,000 exempt), Box 9 (taxable excess), and notice pay taxed as wages."
+              disputeType="tax_split"
+              statutoryPills={[
+                { label: 'Exemption Limit', value: '£30,000 Shield', statute: 'ITEPA 2003 s.403' },
+                { label: 'Notice Pay (PENP)', value: '100% Taxable', statute: 'ITEPA 2003 s.402D' },
+                { label: 'Employee NI', value: '0% on Compensation', statute: 'SSCBA 1992' },
+              ]}
+              initialSalary={60000}
+              initialYears={5}
+              initialAge={40}
+              ctaText="Check my offer now →"
+            />
           </div>
         </section>
 
@@ -184,7 +202,7 @@ export default function HmrctaxReturnDeclarationGuide() {
                 Where do I declare settlement agreement payments on my tax return?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                Termination payments are declared on supplementary page <strong>SA102 (Employment)</strong> or the "Additional Information" page online. The tax-free element up to £30,000 goes into <strong>Box 5</strong>. The taxable excess exceeding £30,000 goes into <strong>Box 9</strong>, and any PAYE tax deducted by your employer is recorded in <strong>Box 10</strong>.
+                Termination payments go on supplementary page <strong>SA102 (Employment)</strong> or the &quot;Additional Information&quot; page online. Enter the tax-free sum up to £30,000 in <strong>Box 5</strong>. Enter any taxable excess over £30,000 in <strong>Box 9</strong>, and record PAYE tax deducted in <strong>Box 10</strong>.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -207,40 +225,19 @@ export default function HmrctaxReturnDeclarationGuide() {
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Notice Pay (PENP)</span>
                   <span className="font-bold text-ink text-sm">Normal Salary Box</span>
-                  <span className="text-muted text-[11px]">Taxed as general employment income</span>
+                  <span className="text-muted text-[11px]">Taxed as wages (general earnings)</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Embedded Reactive Calculator Micro-Tool */}
-        <section className="py-6 bg-paper-2 border-b border-rule">
-          <div className="max-w-2xl mx-auto px-5">
-            <EmbeddedCalculatorCard
-              badge="HMRC Tax Split Engine"
-              title="Calculate Your Settlement Tax Split: Exemption vs Taxable Excess"
-              subtitle="Determine your exact SA102 Box 5 (£30k exempt) and Box 9 (taxable excess) figures before submitting your return."
-              disputeType="tax_split"
-              statutoryPills={[
-                { label: 'Exemption Limit', value: '£30,000 Shield', statute: 'ITEPA 2003 s.403' },
-                { label: 'Notice Pay (PENP)', value: '100% Taxable', statute: 'ITEPA 2003 s.402D' },
-                { label: 'Employee NI', value: '0% on Compensation', statute: 'SSCBA 1992' },
-              ]}
-              initialSalary={60000}
-              initialYears={5}
-              initialAge={40}
-              ctaText="Calculate My SA102 Tax Split →"
-            />
-          </div>
-        </section>
-
         {/* Section 1: Box-by-Box Guide */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">1. Box-by-Box SA100 / SA102 Breakdown</h2>
+            <h2 className="guide-h2 mb-4">1. Which SA100 and SA102 boxes cover a settlement agreement?</h2>
             <p className="sc-body mb-4">
-              When filing your Self Assessment return online or on paper, termination payments must not be lumped into ordinary salary. Entering termination awards into Box 1 will result in HMRC calculating employee National Insurance contributions, which do not apply to genuine compensation for loss of office.
+              Termination payments must be kept separate from ordinary salary on your Self Assessment return. Entering compensation into Box 1 can trigger employee National Insurance charges that do not apply to genuine loss-of-office awards.
             </p>
 
             <div className="space-y-4 my-6">
@@ -248,8 +245,8 @@ export default function HmrctaxReturnDeclarationGuide() {
                 <h3 className="font-sans text-sm font-bold text-ink uppercase tracking-wide">
                   Box 5: Lump sums or other benefits up to £30,000
                 </h3>
-                <p className="text-body text-muted mt-1 leading-relaxed">
-                  Enter the genuine compensation amount that qualifies for the £30,000 exemption under Section 403 of ITEPA 2003. This includes statutory redundancy pay, enhanced severance, and non-contractual ex-gratia sums. If your total compensation was £25,000, enter £25,000 here.
+                <p className="text-[14px] text-muted mt-1 leading-relaxed">
+                  Enter the compensation qualifying for the £30,000 exemption under Section 403 of ITEPA 2003. This includes statutory redundancy pay and non-contractual ex-gratia sums. If your qualifying compensation was £25,000, enter £25,000 here.
                 </p>
               </div>
 
@@ -257,8 +254,8 @@ export default function HmrctaxReturnDeclarationGuide() {
                 <h3 className="font-sans text-sm font-bold text-ink uppercase tracking-wide">
                   Box 9: Compensation and lump sums exceeding £30,000
                 </h3>
-                <p className="text-body text-muted mt-1 leading-relaxed">
-                  If your total qualifying compensation was £50,000, the first £30,000 is exempt (Box 5) and the remaining £20,000 is entered in Box 9. This amount is subject to income tax at your marginal rate (20%, 40%, or 45%) but remains free of employee National Insurance.
+                <p className="text-[14px] text-muted mt-1 leading-relaxed">
+                  If qualifying compensation was £50,000, the first £30,000 goes in Box 5 and the remaining £20,000 goes in Box 9. That excess is taxed at your marginal income tax rate (20%, 40%, or 45%) with 0% employee National Insurance.
                 </p>
               </div>
 
@@ -266,8 +263,8 @@ export default function HmrctaxReturnDeclarationGuide() {
                 <h3 className="font-sans text-sm font-bold text-ink uppercase tracking-wide">
                   Box 10: Tax taken off box 9
                 </h3>
-                <p className="text-body text-muted mt-1 leading-relaxed">
-                  Record the PAYE tax already deducted by your employer on the payment entered in Box 9. Employers typically apply an emergency tax code or 0T code. Recording this prevents double taxation.
+                <p className="text-[14px] text-muted mt-1 leading-relaxed">
+                  Record the PAYE income tax already deducted by your employer on the Box 9 amount. Employers often apply an emergency or 0T tax code. Recording this figure prevents double taxation.
                 </p>
               </div>
             </div>
@@ -277,27 +274,27 @@ export default function HmrctaxReturnDeclarationGuide() {
         {/* Section 2: Employer Tax Indemnity Clause */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">2. The Employer Tax Indemnity Clause Explained</h2>
+            <h2 className="guide-h2 mb-4">2. How does the employer tax indemnity clause work?</h2>
             <p className="sc-body mb-4">
-              Virtually all UK settlement agreements contain a <strong>tax indemnity clause</strong>. This clause requires you to reimburse your employer if HMRC concludes that additional tax or National Insurance is due on your severance package.
+              Most UK settlement agreements include a <strong>tax indemnity clause</strong>. It requires you to reimburse your employer if HMRC later decides extra tax or National Insurance is due on your payout.
             </p>
             <p className="sc-body mb-4">
-              Employers insert this clause because PAYE regulations place primary liability on the employer for under-deducted tax. However, unrepresented employees often accept aggressive indemnity clauses that leave them exposed to unfair liabilities.
+              Employers include this clause because PAYE rules place primary liability on the employer for under-deducted tax. Standard drafts can be broad, so independent solicitors routinely review the wording to clarify where responsibility sits.
             </p>
             <div className="rounded-xl border border-rule bg-paper p-5 mb-4">
-              <h3 className="text-sm font-semibold text-ink uppercase tracking-wider mb-2">Essential Solicitor Protective Amendments:</h3>
+              <h3 className="text-sm font-semibold text-ink uppercase tracking-wider mb-2">Common Points Solicitors Review:</h3>
               <ul className="flex flex-col gap-2.5 text-sm text-ink">
                 <li className="flex items-start gap-2.5">
                   <CheckIcon />
-                  <span><strong>Exclude Employer NICs:</strong> Confirm you only indemnify standard income tax, never employer Class 1A NICs (15.0%).</span>
+                  <span><strong>Employer NICs:</strong> Clarifying that the indemnity covers income tax only, not employer Class 1A NICs (15.0%).</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckIcon />
-                  <span><strong>Exclude Employer Penalties:</strong> Ensure you are not liable for interest or penalties caused by your employer's payroll delay.</span>
+                  <span><strong>Payroll Penalties:</strong> Excluding interest or penalties caused by your employer&apos;s own payroll delay.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckIcon />
-                  <span><strong>Advance Written Notice:</strong> Require the employer to give you at least 21 days notice before responding or settling with HMRC.</span>
+                  <span><strong>Written Notice:</strong> Requiring advance written notice before your employer responds to or settles with HMRC.</span>
                 </li>
               </ul>
             </div>
@@ -307,9 +304,9 @@ export default function HmrctaxReturnDeclarationGuide() {
         {/* Section 3: Worked Case Study */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Worked Case Study: £65,000 Settlement Tax Reconciliation</h2>
+            <h2 className="guide-h2 mb-4">3. How does a £65,000 settlement look on a tax return?</h2>
             <p className="sc-body mb-6">
-              Employee exiting with £65,000 total compensation (excluding worked notice), with £30,000 tax-free and £35,000 subject to higher rate (40%) income tax:
+              Suppose an employee exits with £65,000 total compensation (excluding worked notice), with £30,000 tax-free and £35,000 taxed at the higher rate (40%):
             </p>
 
             <div className="rounded-xl border border-rule overflow-x-auto mb-6">
@@ -357,7 +354,30 @@ export default function HmrctaxReturnDeclarationGuide() {
         <section className="py-8 bg-paper border-b border-rule">
           <div className="max-w-2xl mx-auto px-5 text-xs text-muted leading-relaxed">
             <p className="mb-2">
-              <strong>HMRC &amp; Regulatory Notice:</strong> SettlementCheck provides general guidance based on HMRC Employment Income Manual (EIM13750) and ITEPA 2003 statutory rules. We are an independent technology platform and introducer, not chartered tax advisers or a law firm. Under Section 203(3) ERA 1996, independent legal advice from an SRA-regulated solicitor is required to execute a valid settlement. Legal fee contributions are a commercial custom paid upon completion; abortive costs or work exceeding the agreed cap remain subject to your solicitor&apos;s engagement terms.
+              <strong>HMRC &amp; Regulatory Notice:</strong> SettlementCheck provides general guidance based on HMRC Employment Income Manual (EIM13750) and ITEPA 2003 statutory rules. We are an independent technology platform and introducer, not chartered tax advisers or a law firm. Under Section 203(3) ERA 1996, independent legal advice from an SRA-regulated solicitor is required to execute a valid settlement. Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion; abortive costs or work exceeding the agreed cap remain subject to your solicitor&apos;s engagement terms.
+            </p>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-12 border-b border-rule bg-ink">
+          <div className="max-w-2xl mx-auto px-5 text-center">
+            <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+              Check where your offer stands
+            </h2>
+            <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+              See your statutory baseline, £30,000 tax-free split, and taxable excess before speaking to a solicitor.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/calculator/" className="btn-accent">
+                Check my offer now →
+              </Link>
+              <Link href="/redundancy-calculator/" className="btn-secondary">
+                Calculate my redundancy →
+              </Link>
+            </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
             </p>
           </div>
         </section>
@@ -365,8 +385,51 @@ export default function HmrctaxReturnDeclarationGuide() {
         {/* FAQ Accordion */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-6">Frequently Asked Questions: Tax Return Reporting</h2>
+            <h2 className="guide-h2 mb-6">Frequently Asked Questions: Tax Return Reporting</h2>
             <FaqAccordion faqs={FAQS} />
+            <div className="pt-8">
+              <RelatedArticles
+                title="Related Guides & Calculations"
+                items={[
+                  {
+                    href: '/guides/tax-free-settlement-30000/',
+                    title: 'The £30,000 Tax-Free Settlement Rule',
+                    description: 'Learn how redundancy pay, PILON, and ex-gratia sums are taxed under ITEPA 2003 s.403.',
+                    tag: 'Tax Guide',
+                  },
+                  {
+                    href: '/guides/pilon-tax-treatment-2026/',
+                    title: 'PILON Tax Treatment UK 2026',
+                    description: 'Why notice pay is taxed as wages under ITEPA 2003 s.402D and how PENP works.',
+                    tag: 'Tax Guide',
+                  },
+                  {
+                    href: '/settlement-agreement-tax-calculator/',
+                    title: 'Settlement Agreement Tax Calculator',
+                    description: 'Split your settlement offer into taxable wages and tax-free compensation.',
+                    tag: 'Calculator',
+                  },
+                  {
+                    href: '/penp-calculator/',
+                    title: 'PENP Calculator UK',
+                    description: 'Calculate your Post-Employment Notice Pay under ITEPA 2003 s.402D.',
+                    tag: 'Calculator',
+                  },
+                  {
+                    href: '/guides/employer-recommended-solicitor/',
+                    title: 'Do You Have to Use Their Solicitor?',
+                    description: 'Your right to appoint your own independent solicitor with a standard employer fee contribution.',
+                    tag: 'Legal Advice',
+                  },
+                  {
+                    href: '/guides/how-to-negotiate-a-settlement-agreement/',
+                    title: 'How to Negotiate a Settlement Agreement',
+                    description: 'Without prejudice rules, tax splits, and what to check with an independent solicitor.',
+                    tag: 'Guide',
+                  },
+                ]}
+              />
+            </div>
           </div>
         </section>
 

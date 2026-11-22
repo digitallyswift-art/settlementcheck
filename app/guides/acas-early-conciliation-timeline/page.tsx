@@ -41,23 +41,23 @@ export async function generateMetadata(): Promise<Metadata> {
 const FAQS: FaqItem[] = [
   {
     q: 'Does negotiating a settlement agreement pause the 3-month tribunal deadline?',
-    a: 'No. Settlement negotiations under Section 111A of the Employment Rights Act 1996 or "without prejudice" discussions do not automatically pause the statutory 3-month-less-one-day tribunal limitation period. To freeze the clock, you must formally contact ACAS to initiate Early Conciliation under Section 18A of the Employment Tribunals Act 1996.',
+    a: 'No. Discussions under Section 111A ERA 1996 or without prejudice rules do not pause the 3-month-less-one-day deadline. To freeze the clock, an employee must notify ACAS for Early Conciliation under Section 18A ETA 1996.',
   },
   {
     q: 'What is the ACAS 10 calendar day rule for settlement agreements?',
-    a: 'Under ACAS Code of Practice 4, employers are advised as statutory guidance to allow a minimum of 10 calendar days for employees to consider written terms and seek independent legal advice. However, under English contract law (Routledge v Grant, Hyde v Wrench), an employer can technically withdraw an unaccepted offer before acceptance, and a counter-proposal can extinguish the original offer. If an employer applies undue pressure, an employment tribunal may determine this constitutes improper behaviour under Section 111A(4) ERA 1996, removing confidentiality protection.',
+    a: 'ACAS Code of Practice 4 recommends allowing at least 10 calendar days to consider written terms and seek legal advice. This is guidance rather than a binding legal right. Under English contract law (Routledge v Grant, Hyde v Wrench), an employer can withdraw an unaccepted offer, and a counter-offer extinguishes the original offer. Undue pressure can amount to improper behaviour under Section 111A(4) ERA 1996.',
   },
   {
     q: 'How does ACAS Early Conciliation pause the tribunal limitation clock?',
-    a: 'Under Section 18A of the Employment Tribunals Act 1996, the clock pauses on "Day A" (the day you contact ACAS) and resumes on "Day B" (the day you receive your Early Conciliation certificate). In addition, if the limitation period would have expired during conciliation or within one month of Day B, you receive a full month from Day B to submit your ET1 claim.',
+    a: 'Under Section 18A ETA 1996, the clock pauses on Day A (notification date) and resumes on Day B (certificate date). If the deadline would expire during conciliation or within one month of Day B, you receive a full month from Day B to submit an ET1 claim.',
   },
   {
     q: 'Can a settlement agreement be reached through an ACAS COT3 instead of a standard agreement?',
-    a: 'Yes. An employment dispute can be settled either via an ACAS COT3 agreement (facilitated directly by an ACAS conciliation officer under Section 18(1) ETA 1996) or via a private settlement agreement under Section 203(3) ERA 1996. Both forms are legally binding waivers of tribunal claims.',
+    a: 'Yes. A dispute can settle via an ACAS COT3 facilitated by a conciliation officer under Section 18(1) ETA 1996, or via a private settlement agreement under Section 203(3) ERA 1996. Both are legally binding waivers.',
   },
   {
-    q: 'What should I do if my employer is stalling negotiations as the tribunal deadline approaches?',
-    a: 'Contact ACAS immediately to lodge an Early Conciliation notification before your primary limitation period expires. This freezes the legal deadline and prevents your employer from running down the clock to eliminate your statutory tribunal rights.',
+    q: 'What happens if negotiations continue close to the tribunal deadline?',
+    a: 'Registering for ACAS Early Conciliation before the primary limitation period expires freezes the statutory clock. An SRA-regulated solicitor can confirm your exact deadline and advise on how to protect your position.',
   },
 ]
 
@@ -121,14 +121,6 @@ const articleSchema = {
   ],
 }
 
-function CheckIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-coral flex-shrink-0 mt-0.5">
-      <path d="M4 10.5L8 14.5L16 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 export default function AcasEarlyConciliationTimelineGuide() {
   return (
     <>
@@ -149,43 +141,59 @@ export default function AcasEarlyConciliationTimelineGuide() {
               <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
-              <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">ACAS Early Conciliation Timeline</span>
+              <span className="text-rule-strong text-xs">/</span>
+              <span className="text-xs font-medium text-muted tracking-wide uppercase">Tribunal deadlines</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Tribunal Deadlines &amp; Negotiations</p>
-            <h1 className="sc-h1 mb-5">
-              ACAS Early Conciliation &amp; Settlement Agreement Timeline: How to Stop the Tribunal Clock
+            <h1 className="sc-h1 mb-4">
+              ACAS Early Conciliation &amp; Settlement Agreement Timeline
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Updated for 2026/27 Limitation Rules</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Statute: ETA 1996 s.18A &amp; ERA 1996 s.111</span>
-            </div>
-            <p className="sc-lead">
-              Negotiating an employment settlement agreement does not automatically pause your statutory deadline to bring an employment tribunal claim. Under UK law, you have exactly three months less one day from your dismissal or detriment to initiate legal action. This guide explains how ACAS Early Conciliation under Section 18A pauses the limitation clock and protects your legal position.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ETA 1996 s.18A &amp; ACAS Code 4
+            </p>
+            <p className="sc-lead leading-relaxed">
+              Holding a draft settlement agreement while a tribunal deadline approaches? Settlement talks do not pause the three-month-less-one-day clock. Check your statutory baseline in 60 seconds with no email required, see how ACAS Early Conciliation pauses the deadline, and prepare clear questions for an independent solicitor.
             </p>
           </div>
         </section>
 
-        {/* Statutory Quick Answer Callout */}
-        <section className="py-8 bg-paper-2 border-b border-rule">
-          <div className="max-w-2xl mx-auto px-5">
-            <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
+        {/* Article Body */}
+        <section className="bg-card py-14">
+          <div className="max-w-2xl mx-auto px-5 space-y-12">
+
+            {/* Embedded Reactive Calculator Micro-Tool (Immediately below Hero) */}
+            <section className="my-2">
+              <EmbeddedCalculatorCard
+                badge="April 2026 Statutory Check"
+                title="How does your offer compare to the statutory baseline?"
+                subtitle="Check your calculated statutory baseline (£751/wk cap) and notice pay while ACAS Early Conciliation proceeds."
+                disputeType="acas_timeline"
+                statutoryPills={[
+                  { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                  { label: 'ACAS Consideration', value: '10 Calendar Days', statute: 'Code 4 Guidance' },
+                  { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+                ]}
+                initialSalary={46000}
+                initialYears={4}
+                initialAge={37}
+                ctaText="Check my offer now →"
+              />
+            </section>
+
+            {/* Statutory Quick Answer Callout */}
+            <div className="bg-paper-2 border border-rule rounded-xl p-6 md:p-8">
               <div className="flex items-center justify-between gap-2 mb-3">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#FBF0EE] text-[#A8341F]">
                   Limitation Period Rule
                 </span>
                 <span className="text-[11px] font-semibold text-muted">
-                  Strict Statutory Deadline
+                  ETA 1996 s.18A &amp; ERA 1996 s.111
                 </span>
               </div>
-              <h2 className="text-base font-bold text-ink mb-2">
-                How does ACAS Early Conciliation affect settlement agreement deadlines?
+              <h2 className="font-serif text-[19px] font-[460] text-ink mb-3">
+                How does ACAS Early Conciliation affect settlement deadlines?
               </h2>
-              <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                Under Section 111(2) ERA 1996, the tribunal deadline is <strong>3 months less one day</strong> from the effective date of termination. Entering settlement discussions does not pause this clock. Contacting ACAS under Section 18A ETA 1996 stops the clock between Day A (notification) and Day B (certificate issue), plus provides at least one additional month from Day B to submit an ET1 claim.
+              <p className="text-[15px] text-ink mb-4 leading-relaxed">
+                Under Section 111(2) ERA 1996, the employment tribunal deadline is <strong>3 months less one day</strong> from termination. Entering settlement talks does not pause this clock. Contacting ACAS under Section 18A ETA 1996 stops the clock between Day A and Day B, and guarantees at least one month from Day B to file an ET1 claim.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -212,139 +220,160 @@ export default function AcasEarlyConciliationTimelineGuide() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Embedded Reactive Calculator Micro-Tool */}
-        <section className="py-6 bg-paper-2 border-b border-rule">
-          <div className="max-w-2xl mx-auto px-5">
-            <EmbeddedCalculatorCard
-              badge="ACAS Timeline Engine"
-              title="Calculate Your Statutory Entitlement While The Clock Is Paused"
-              subtitle="Calculate your calculated statutory redundancy baseline (£751/wk cap) and notice pay to protect your financial position while ACAS conciliation proceeds."
-              disputeType="acas_timeline"
-              statutoryPills={[
-                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
-                { label: 'Consideration Period', value: '10 Days Min', statute: 'ACAS Code 4' },
-                { label: 'Independent Advice', value: 'Capped Contribution', statute: 'Commercial Standard' },
-              ]}
-              initialSalary={46000}
-              initialYears={4}
-              initialAge={37}
-              ctaText="Check My ACAS Negotiation Baseline →"
-            />
-          </div>
-        </section>
+            {/* Section 1 */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">1. Why do settlement talks not pause the tribunal deadline?</h2>
+              <p className="guide-body">
+                Many employees assume that active settlement discussions freeze their employment tribunal time limit. Under UK law, they do not.
+              </p>
+              <p className="guide-body">
+                While you review garden leave terms, non-compete clauses, or whether notice pay is taxed as wages, the three-month-less-one-day clock keeps running. If negotiations pass that date without an ACAS notification, you lose the right to bring a claim.
+              </p>
+              <p className="guide-body">
+                Note also that Section 111A ERA 1996 confidentiality applies only to ordinary unfair dismissal claims, not discrimination or whistleblowing. Unreviewed correspondence can also waive common law privilege if no genuine dispute yet exists.
+              </p>
 
-        {/* Section 1: The Employer Stalling Trap */}
-        <section className="py-12 border-b border-rule bg-white">
-          <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">1. The Employer Stalling Trap</h2>
-            <p className="sc-body mb-4">
-              One of the most dangerous traps for unrepresented UK employees is the "slow-walk" negotiation. An employer initiates protected conversations under Section 111A of the Employment Rights Act 1996, sends draft heads of terms, and then takes weeks to respond to counter-proposals.
-            </p>
-            <p className="sc-body mb-4">
-              If negotiations drag on past the 3-month-less-one-day mark from your dismissal date without an ACAS notification having been filed, you lose the right to bring an employment tribunal claim. Once your tribunal deadline has expired, the employer holds all the negotiating power and can withdraw or reduce the settlement offer with complete impunity.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 2: How Section 18A Pauses the Clock */}
-        <section className="py-12 border-b border-rule">
-          <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">2. The Section 18A Extension Mechanism (Day A to Day B)</h2>
-            <p className="sc-body mb-4">
-              To prevent employees from being timed out during negotiations, Parliament enacted Section 18A of the Employment Tribunals Act 1996. The extension mechanism works as follows:
-            </p>
-            <div className="rounded-xl border border-rule bg-paper p-5 my-6 space-y-3">
-              <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center shrink-0">1</span>
-                <div>
-                  <strong className="text-ink text-sm">Day A (Contact Date):</strong>
-                  <p className="text-body text-muted mt-0.5">The calendar day you submit your online Early Conciliation form to ACAS. The limitation clock stops immediately.</p>
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Informal Settlement Talks</h3>
+                  <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
+                    <li>Do not pause the 3-month-less-1-day tribunal clock.</li>
+                    <li>Offer remains revocable before acceptance (Routledge v Grant).</li>
+                    <li>A counter-proposal extinguishes the opening offer (Hyde v Wrench).</li>
+                  </ul>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center shrink-0">2</span>
-                <div>
-                  <strong className="text-ink text-sm">Conciliation Window:</strong>
-                  <p className="text-body text-muted mt-0.5">ACAS conciliation lasts up to 6 calendar weeks. All calendar days spent in conciliation are added to your original limitation date.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center shrink-0">3</span>
-                <div>
-                  <strong className="text-ink text-sm">Day B (Certificate Issued):</strong>
-                  <p className="text-body text-muted mt-0.5">The day ACAS issues your Early Conciliation certificate. You always receive at least one calendar month from Day B to submit your claim.</p>
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                  <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">ACAS Early Conciliation (s.18A)</h3>
+                  <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
+                    <li>Freezes the statutory limitation clock from Day A to Day B.</li>
+                    <li>Preserves your right to file an ET1 claim if talks fail.</li>
+                    <li>Provides at least one calendar month from Day B.</li>
+                  </ul>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Section 3: Worked Calendar Example */}
-        <section className="py-12 border-b border-rule bg-white">
-          <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Worked Example: Limitation Clock Calculation</h2>
-            <p className="sc-body mb-6">
-              Step-by-step calendar breakdown for an employee dismissed on 15 May:
-            </p>
-
-            <div className="rounded-xl border border-rule overflow-x-auto mb-6">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-ink text-white">
-                    <th className="text-left px-4 py-3 font-medium">Milestone</th>
-                    <th className="text-left px-4 py-3 font-medium">Date</th>
-                    <th className="text-left px-4 py-3 font-medium">Statutory Rule</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-rule bg-white">
-                  <tr>
-                    <td className="px-4 py-3 font-medium text-ink">Effective Date of Termination (EDT)</td>
-                    <td className="px-4 py-3 text-ink">15 May</td>
-                    <td className="px-4 py-3 text-muted">Clock starts ticking</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-medium text-ink">Primary Limitation Deadline</td>
-                    <td className="px-4 py-3 text-ink">14 August</td>
-                    <td className="px-4 py-3 text-muted">3 months less 1 day (ERA s.111)</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-medium text-ink">Day A: Contact ACAS</td>
-                    <td className="px-4 py-3 text-coral font-semibold">1 August</td>
-                    <td className="px-4 py-3 text-muted">Clock pauses with 13 days remaining</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-medium text-ink">Day B: ACAS Certificate Issued</td>
-                    <td className="px-4 py-3 text-coral font-semibold">22 August</td>
-                    <td className="px-4 py-3 text-muted">Conciliation concludes (21 days paused)</td>
-                  </tr>
-                  <tr className="bg-paper font-bold">
-                    <td className="px-4 py-3 text-ink">Final Tribunal ET1 Deadline</td>
-                    <td className="px-4 py-3 text-coral font-bold">22 September</td>
-                    <td className="px-4 py-3 text-ink">Full 1 month extension from Day B granted</td>
-                  </tr>
-                </tbody>
-              </table>
+            {/* Section 2 */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">2. How does ACAS Early Conciliation pause the clock?</h2>
+              <p className="guide-body">
+                Parliament enacted Section 18A of the Employment Tribunals Act 1996 so employees are not timed out during negotiations. The pause works in three steps.
+              </p>
+              <div className="rounded-xl border border-rule bg-paper p-5 my-6 space-y-4">
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center shrink-0">1</span>
+                  <div>
+                    <strong className="text-ink text-sm">Day A (Contact Date)</strong>
+                    <p className="text-[14px] text-muted mt-0.5 leading-relaxed">The day you submit your online Early Conciliation form to ACAS. The limitation clock stops immediately.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center shrink-0">2</span>
+                  <div>
+                    <strong className="text-ink text-sm">Conciliation Window</strong>
+                    <p className="text-[14px] text-muted mt-0.5 leading-relaxed">ACAS conciliation lasts up to 6 calendar weeks. Days spent in conciliation do not count toward your limitation limit.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center shrink-0">3</span>
+                  <div>
+                    <strong className="text-ink text-sm">Day B (Certificate Issued)</strong>
+                    <p className="text-[14px] text-muted mt-0.5 leading-relaxed">The day ACAS issues your certificate. You receive at least one calendar month from Day B to submit your ET1 claim.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
 
-        {/* Regulatory Disclaimers */}
-        <section className="py-8 bg-paper border-b border-rule">
-          <div className="max-w-2xl mx-auto px-5 text-xs text-muted leading-relaxed">
-            <p className="mb-2">
-              <strong>Tribunal Limitation Notice:</strong> Limitation periods in UK Employment Tribunals are strictly enforced. SettlementCheck is an independent technology platform and introducer, not a law firm. Always confirm your exact limitation dates with an SRA-regulated solicitor before letting statutory deadlines elapse.
-            </p>
-          </div>
-        </section>
+            {/* Section 3 */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">3. How is the Day A to Day B extension calculated?</h2>
+              <p className="guide-body">
+                The table below shows a step-by-step calendar breakdown for an employee dismissed on 15 May.
+              </p>
 
-        {/* FAQ Accordion */}
-        <section className="py-12 border-b border-rule bg-white">
-          <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-6">Frequently Asked Questions: ACAS Timelines</h2>
-            <FaqAccordion faqs={FAQS} />
+              <div className="rounded-xl border border-rule overflow-x-auto my-6">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-ink text-white">
+                      <th className="text-left px-4 py-3 font-medium">Milestone</th>
+                      <th className="text-left px-4 py-3 font-medium">Date</th>
+                      <th className="text-left px-4 py-3 font-medium">Statutory Rule</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-rule bg-white">
+                    <tr>
+                      <td className="px-4 py-3 font-medium text-ink">Effective Date of Termination (EDT)</td>
+                      <td className="px-4 py-3 text-ink">15 May</td>
+                      <td className="px-4 py-3 text-muted">Clock starts ticking</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 font-medium text-ink">Primary Limitation Deadline</td>
+                      <td className="px-4 py-3 text-ink">14 August</td>
+                      <td className="px-4 py-3 text-muted">3 months less 1 day (ERA s.111)</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 font-medium text-ink">Day A: Contact ACAS</td>
+                      <td className="px-4 py-3 text-coral font-semibold">1 August</td>
+                      <td className="px-4 py-3 text-muted">Clock pauses with 13 days remaining</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 font-medium text-ink">Day B: ACAS Certificate Issued</td>
+                      <td className="px-4 py-3 text-coral font-semibold">22 August</td>
+                      <td className="px-4 py-3 text-muted">Conciliation concludes (21 days paused)</td>
+                    </tr>
+                    <tr className="bg-paper font-bold">
+                      <td className="px-4 py-3 text-ink">Final Tribunal ET1 Deadline</td>
+                      <td className="px-4 py-3 text-coral font-bold">22 September</td>
+                      <td className="px-4 py-3 text-ink">Full 1 month extension from Day B granted</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Section 4: Legal Safeguards & Fee Contribution */}
+            <div className="space-y-4">
+              <h2 className="guide-h2">4. What should you check with an independent solicitor?</h2>
+              <p className="guide-body">
+                Under Section 203(3) ERA 1996, a settlement agreement is not binding until an independent solicitor advises you on its terms. Employers standardly contribute £350 to £500+ plus VAT toward that review upon completion.
+              </p>
+              <p className="guide-body">
+                If your solicitor carries out extra negotiation or the agreement does not complete, excess or abortive work remains subject to your solicitor engagement terms. Always confirm your exact limitation dates with an SRA-regulated solicitor before letting statutory deadlines pass.
+              </p>
+            </div>
+
+            {/* Bottom CTA */}
+            <div className="bg-ink rounded-2xl p-8 text-center mt-10">
+              <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+                Check where your offer stands
+              </h2>
+              <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+                See your calculated statutory baseline, tax split, and commercial settlement range before speaking to a solicitor.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link href="/calculator/" className="btn-accent">
+                  Check my offer now →
+                </Link>
+                <Link href="/redundancy-calculator/" className="btn-secondary">
+                  Calculate my redundancy →
+                </Link>
+              </div>
+              <p className="text-white/60 text-[12px] mt-4">
+                Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+              </p>
+            </div>
+
+            {/* FAQ */}
+            <div className="space-y-4 pt-10">
+              <h2 className="guide-h2">Frequently Asked Questions</h2>
+              <div className="mt-4">
+                <FaqAccordion faqs={FAQS} />
+              </div>
+              <DynamicFaqSection pathname="/guides/acas-early-conciliation-timeline/" suppressSchema />
+            </div>
+
+            {/* Related Articles */}
             <RelatedArticles
               title="Related ACAS & Tribunal Guides"
               items={[
@@ -369,7 +398,7 @@ export default function AcasEarlyConciliationTimelineGuide() {
                 {
                   href: '/guides/settlement-agreement-time-limits/',
                   title: 'Settlement Agreement Time Limits (3-Month Rule)',
-                  description: 'Full breakdown of statutory tribunal deadlines, employer ultimatums, and urgent solicitor advice.',
+                  description: 'Full breakdown of statutory tribunal deadlines, employer ultimatums, and independent solicitor advice.',
                   tag: 'Deadlines Guide',
                 },
               ]}
@@ -377,7 +406,14 @@ export default function AcasEarlyConciliationTimelineGuide() {
           </div>
         </section>
 
-        <DynamicFaqSection pathname="/guides/acas-early-conciliation-timeline/" suppressSchema />
+        {/* Regulatory Disclaimers */}
+        <section className="py-8 bg-paper border-t border-rule">
+          <div className="max-w-2xl mx-auto px-5 text-xs text-muted leading-relaxed">
+            <p className="mb-0">
+              <strong>Tribunal Limitation Notice:</strong> Limitation periods in UK Employment Tribunals are strictly enforced. SettlementCheck is an independent technology platform and introducer, not a law firm. Always confirm your exact limitation dates with an SRA-regulated solicitor before letting statutory deadlines elapse.
+            </p>
+          </div>
+        </section>
       </main>
       <Footer />
     </>

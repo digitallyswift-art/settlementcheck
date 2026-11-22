@@ -6,8 +6,6 @@ import FaqAccordion from '@/components/FaqAccordion'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
-import InlineEstimator from '@/components/InlineEstimator'
-import InteractiveToolHook from '@/components/InteractiveToolHook'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
@@ -45,19 +43,19 @@ export async function generateMetadata(): Promise<Metadata> {
 const FAQS = [
   {
     q: 'Is a settlement agreement always tax-free up to £30,000?',
-    a: 'No. The £30,000 exemption only applies to genuine compensation for losing your job, such as redundancy pay or ex-gratia payments. Notice pay, holiday pay, and salary are always taxable.',
+    a: 'No. The £30,000 exemption only applies to genuine compensation for losing your job, such as statutory redundancy pay or ex-gratia payments. Notice pay, holiday pay, and garden leave are taxed as wages.',
   },
   {
     q: 'Do I pay National Insurance on settlement payments over £30,000?',
-    a: 'No. You do not pay employee National Insurance contributions on any part of your termination payment, even if it exceeds £30,000. You only pay income tax on the amount above £30,000. Your employer, however, must pay Class 1A National Insurance on the excess.',
+    a: 'No. You do not pay employee National Insurance contributions on termination compensation, even if it exceeds £30,000. You only pay Income Tax on the excess, while your employer pays Class 1A National Insurance on sums over £30,000.',
   },
   {
     q: 'Is my employer\'s contribution to my legal fees tax-free?',
-    a: 'Yes. Your employer can pay your legal fees directly to your solicitor tax-free under HMRC rules. This payment does not count towards your £30,000 exemption limit.',
+    a: 'Yes. Under HMRC rules, an employer contribution paid directly to your solicitor upon completion (standardly £350 to £500+ plus VAT) is tax-free and does not count toward your £30,000 limit. Excess or abortive work is subject to solicitor engagement terms.',
   },
   {
     q: 'Can I pay my settlement into my pension to avoid tax?',
-    a: 'Yes. You can request that your employer pays some or all of your settlement directly into your pension scheme. This payment is tax-free and does not use up your £30,000 exemption, provided it stays within your annual pension allowance.',
+    a: 'Often yes, if your employer agrees to pay part of the ex-gratia sum directly into a registered pension scheme. This is normally tax-free within your annual pension allowance and does not use up your £30,000 exemption.',
   },
 ]
 
@@ -154,26 +152,43 @@ export default function TaxFreeSettlementGuide() {
                 Guides
               </Link>
               <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">Tax-Free Settlement 30000</span>
+              <span className="text-xs text-ink truncate">Tax-Free Settlement £30,000</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Tax Guide</p>
-            <h1 className="sc-h1 mb-5">
+            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Tax &amp; redundancy</p>
+            <h1 className="sc-h1 mb-4">
               £30,000 Tax-Free Settlement Agreement Exemption (2026)
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Figures in force from 6 April 2026 (SI 2026/310)</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Last reviewed: July 2026</span>
-            </div>
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ITEPA 2003 &amp; HMRC EIM
+            </p>
             <p className="sc-lead">
-              From 6 April 2026, the first £30,000 of a settlement agreement is tax-free in the UK. This rule comes from Section 403 of the Income Tax (Earnings and Pensions) Act 2003 ¹. The exemption applies to statutory redundancy pay, ex-gratia compensation, and occupational redundancy. Notice pay, holiday pay, and salary are fully taxable. Use this guide to see how the limit applies to your offer.
+              Checking how much of your settlement agreement you will actually keep? Under Section 403 of ITEPA 2003, up to £30,000 of genuine termination compensation is tax-free, while notice pay and holiday pay are taxed as wages. Check your tax split in 60 seconds with no email required before speaking to a solicitor.
             </p>
           </div>
         </section>
 
-        {/* Statutory Quick Answer Callout (GEO / AI Overview Optimised) */}
+        {/* Interactive Statutory Check */}
+        <section className="py-6 bg-paper-2 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How does your offer split between tax-free and taxable pay?"
+              subtitle="Separate tax-free ex-gratia compensation under ITEPA 2003 s.403 from taxable notice pay (PILON) and holiday pay."
+              disputeType="tax_30000"
+              statutoryPills={[
+                { label: 'Ex-Gratia Shield', value: 'First £30,000 Free', statute: 'ITEPA 2003 s.403' },
+                { label: 'Notice Pay (PENP)', value: '100% Taxable', statute: 'ITEPA 2003 s.402D' },
+                { label: 'Employee NICs', value: '0% Exemption', statute: 'SSCBA 1992' },
+              ]}
+              initialSalary={55000}
+              initialYears={5}
+              initialAge={40}
+              ctaText="Check my offer now →"
+            />
+          </div>
+        </section>
+
+        {/* Statutory Quick Answer Callout */}
         <section className="py-8 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <div className="bg-white border-2 border-coral/30 rounded-xl p-5 md:p-6 shadow-sm">
@@ -189,7 +204,7 @@ export default function TaxFreeSettlementGuide() {
                 How is a settlement agreement taxed in the UK?
               </h2>
               <p className="sc-body text-[14px] text-ink mb-4 leading-relaxed">
-                Under Section 403 of ITEPA 2003, the first £30,000 of compensation is completely tax-free. You pay no income tax and no employee National Insurance on this portion. However, notice pay (PILON) and holiday pay are taxable as earnings under Section 402D. Your employer&apos;s contribution to your legal fees is also 100% tax-free under Section 413A.
+                Under Section 403 of ITEPA 2003, the first £30,000 of genuine compensation is tax-free with zero employee National Insurance. Notice pay (PILON), holiday pay, and garden leave are taxed as wages under Section 402D. Your employer&apos;s legal fee contribution is also tax-free under HMRC rules.
               </p>
 
               {/* Structured Metrics Grid */}
@@ -201,18 +216,18 @@ export default function TaxFreeSettlementGuide() {
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Notice Pay (PILON)</span>
-                  <span className="font-bold text-ink text-sm">Fully Taxable as Earnings</span>
+                  <span className="font-bold text-ink text-sm">Taxed as Wages</span>
                   <span className="text-muted text-[11px]">Subject to PENP formula (s.402D)</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employee National Insurance</span>
                   <span className="font-bold text-ink text-sm">0% NI on Compensation</span>
-                  <span className="text-muted text-[11px]">No employee NI even on sums above £30k</span>
+                  <span className="text-muted text-[11px]">No employee NI even above £30k</span>
                 </div>
                 <div className="flex flex-col gap-0.5 p-2.5 rounded bg-paper">
                   <span className="text-muted uppercase font-bold tracking-wider text-[10px]">Employer Legal Contribution</span>
                   <span className="font-bold text-ink text-sm">100% Tax-Exempt</span>
-                  <span className="text-muted text-[11px]">Capped commercial contribution upon completion</span>
+                  <span className="text-muted text-[11px]">£350 to £500+ plus VAT upon completion</span>
                 </div>
               </div>
 
@@ -233,39 +248,18 @@ export default function TaxFreeSettlementGuide() {
           </div>
         </section>
 
-        {/* Interactive Tool Hook & Live Calculation Engine (AEO Zero-Click Defense) */}
-        <section className="py-6 bg-paper-2 border-b border-rule">
-          <div className="max-w-2xl mx-auto px-5">
-            <EmbeddedCalculatorCard
-              badge="£30,000 Tax-Free Settlement Engine"
-              title="Calculate Your £30,000 Tax Exemption Split & Net Take-Home"
-              subtitle="Accurately separate tax-free compensation from taxable notice pay (PILON) under Section 403 of ITEPA 2003."
-              disputeType="tax_30000"
-              statutoryPills={[
-                { label: 'Ex-Gratia Shield', value: 'First £30,000 Free', statute: 'ITEPA 2003 s.403' },
-                { label: 'Notice Pay (PENP)', value: '100% Taxable', statute: 'ITEPA 2003 s.402D' },
-                { label: 'Employee NICs', value: '0% Exemption', statute: 'SSCBA 1992' },
-              ]}
-              initialSalary={55000}
-              initialYears={5}
-              initialAge={40}
-              ctaText="Check My Tax-Free Settlement Split →"
-            />
-          </div>
-        </section>
-
         {/* What the £30,000 rule is */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What is the £30,000 tax-free settlement rule?</h2>
+            <h2 className="guide-h2 mb-4">What is the £30,000 tax-free settlement rule?</h2>
             <p className="sc-body mb-4">
-              The £30,000 rule is a statutory tax exemption. It allows employers to pay termination payments up to £30,000 without deducting income tax. This limit applies to all payments related to the loss of your employment.
+              The £30,000 rule is a statutory tax exemption under Section 403 of ITEPA 2003. It lets employers pay genuine termination compensation up to £30,000 without deducting Income Tax.
             </p>
             <p className="sc-body mb-4">
-              If your package is under £30,000, you will pay no income tax on qualifying components. If your package exceeds £30,000, you pay tax only on the portion above this limit.
+              If qualifying payments stay under £30,000, no Income Tax applies. If they exceed £30,000, Income Tax applies only to the excess above that limit.
             </p>
             <p className="sc-body">
-              This exemption is a lifetime limit for one employment. It applies to the total of all termination payments from the same employer. It also applies to payments from connected employers.
+              This is a single £30,000 limit per employment. It covers all termination payments from the same employer or connected employers.
             </p>
           </div>
         </section>
@@ -273,12 +267,32 @@ export default function TaxFreeSettlementGuide() {
         {/* What qualifies */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What qualifies for the £30,000 tax-free exemption?</h2>
+            <h2 className="guide-h2 mb-4">What qualifies for the £30,000 tax-free exemption?</h2>
             <p className="sc-body mb-6">
-              Only specific parts of your settlement agreement qualify for the £30,000 tax-free limit. Other components are always fully taxable.
+              Only payments made strictly for losing your job qualify for the £30,000 shield. Contractual pay and benefits are always taxed as wages.
             </p>
-            <div className="rounded-xl border border-rule bg-paper p-5 mb-8">
-              <p className="text-body font-semibold text-ink mb-4">Qualifying tax-free payments</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Tax-Free Up to £30,000</h3>
+                <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
+                  <li>Statutory redundancy pay (capped at £22,530 in GB).</li>
+                  <li>Genuine ex-gratia termination payments.</li>
+                  <li>Damages for unfair dismissal or wrongful dismissal.</li>
+                </ul>
+              </div>
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
+                <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-2">Taxed as Wages</h3>
+                <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
+                  <li>Notice pay (PILON) and garden leave salary.</li>
+                  <li>Accrued holiday pay and contractual bonuses.</li>
+                  <li>Payments tied to new non-compete restrictions.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-rule bg-paper p-5">
+              <p className="font-serif text-[19px] font-[460] text-ink mb-4">Qualifying statutory categories</p>
               <ul className="flex flex-col gap-3">
                 <li className="flex items-start gap-3">
                   <CheckIcon />
@@ -289,7 +303,7 @@ export default function TaxFreeSettlementGuide() {
                 <li className="flex items-start gap-3">
                   <CheckIcon />
                   <span className="sc-body text-sm">
-                    Ex-gratia payments, which are discretionary payments to compensate for losing your job.
+                    Ex-gratia payments made as discretionary compensation for loss of employment.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -301,23 +315,20 @@ export default function TaxFreeSettlementGuide() {
                 <li className="flex items-start gap-3">
                   <CheckIcon />
                   <span className="sc-body text-sm">
-                    Injury to feelings payments, provided the discrimination occurred before your termination ³.
+                    Pre-termination injury to feelings payments linked to unlawful discrimination ³.
                   </span>
                 </li>
               </ul>
             </div>
-            <p className="sc-body mb-4">
-              Payments that are not linked to losing your job do not qualify. Holiday pay, accrued salary, and contractual bonuses are fully taxable.
-            </p>
           </div>
         </section>
 
         {/* Table of components */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Tax Treatment of Settlement Agreement Components</h2>
+            <h2 className="guide-h2 mb-4">How is each part of a settlement agreement taxed?</h2>
             <p className="sc-body mb-6">
-              Each component of your settlement agreement has its own statutory tax rules. Below is how each payment type is treated.
+              Each element of a settlement agreement follows its own statutory rule under UK tax law.
             </p>
             <div className="rounded-xl border border-rule overflow-hidden">
               <table className="w-full text-sm">
@@ -333,7 +344,7 @@ export default function TaxFreeSettlementGuide() {
                 <tbody>
                   {[
                     [
-                      <Link href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">Statutory Redundancy</Link>,
+                      <Link key="srp" href="/guides/redundancy-pay-cap-2026/" className="underline hover:text-ink">Statutory Redundancy</Link>,
                       'Tax-free up to £30,000',
                       'No employee NICs. Employer Class 1A on excess over £30,000.',
                       'ITEPA 2003 s.403 ¹',
@@ -345,33 +356,33 @@ export default function TaxFreeSettlementGuide() {
                       'ITEPA 2003 s.403 ¹',
                     ],
                     [
-                      <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON (Notice Pay)</Link>,
-                      'Fully taxable as earnings',
-                      'Fully taxable for both employee and employer.',
+                      <Link key="pilon" href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON (Notice Pay)</Link>,
+                      'Taxed as wages',
+                      'Full employee and employer Class 1 NICs.',
                       'ITEPA 2003 s.402D ⁴',
                     ],
                     [
-                      'Holiday Pay',
-                      'Fully taxable as salary',
-                      'Fully taxable for both employee and employer.',
+                      'Holiday Pay & Garden Leave',
+                      'Taxed as wages',
+                      'Full employee and employer Class 1 NICs.',
                       'Normal payroll rules',
                     ],
                     [
                       'Legal Fees Contribution',
-                      'Fully tax-free',
-                      'Tax-free (exempt from all taxes).',
+                      'Tax-free',
+                      'Exempt from NICs.',
                       'HMRC ESC A81 ⁵',
                     ],
                     [
                       'Pension Contribution',
-                      'Fully tax-free',
-                      'Tax-free (exempt from all taxes).',
+                      'Tax-free (within allowance)',
+                      'Exempt from NICs.',
                       'Registered pension rules',
                     ],
                     [
                       'Injury to Feelings (Pre-termination)',
-                      'Fully tax-free',
-                      'Tax-free (exempt from all taxes).',
+                      'Tax-free up to £30,000',
+                      'Exempt under s.406 rules.',
                       'ITEPA 2003 s.406 ⁶',
                     ],
                   ].map(([component, tax, ni, basis], i) => (
@@ -386,7 +397,7 @@ export default function TaxFreeSettlementGuide() {
               </table>
             </div>
             <p className="sc-body text-muted mt-3">
-              Figures and rules reflect current UK employment tax legislation for the 2026/27 tax year.
+              Figures reflect UK employment tax legislation for the 2026/27 tax year.
             </p>
           </div>
         </section>
@@ -394,41 +405,39 @@ export default function TaxFreeSettlementGuide() {
         {/* Worked Examples */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Worked Examples: How the £30,000 Tax Limit Works</h2>
+            <h2 className="guide-h2 mb-4">How does the £30,000 limit work in practice?</h2>
             <p className="sc-body mb-6">
-              These three examples show how the tax-free limit applies to different settlement agreement values.
+              These three worked examples show how HMRC rules apply to different settlement totals.
             </p>
             <div className="flex flex-col gap-6">
               {[
                 {
                   title: 'Example 1: Redundancy package under £30,000',
                   points: [
-                    'You receive a statutory redundancy payment of £6,000 and an ex-gratia payment of £15,000. You work your notice period.',
-                    'The total termination package is £21,000. Because this is below the £30,000 limit, the entire £21,000 is paid tax-free.',
-                    'You pay no income tax and no National Insurance on this amount.',
+                    'You receive £6,000 statutory redundancy and a £15,000 ex-gratia sum, while working your notice period.',
+                    'The £21,000 termination total sits below £30,000, so it is paid tax-free with zero employee National Insurance.',
                   ],
                 },
                 {
                   title: 'Example 2: Redundancy package exceeding £30,000',
                   points: [
-                    'You receive a statutory redundancy payment of £12,000 and an ex-gratia payment of £25,000. The total is £37,000.',
-                    'The first £30,000 is paid tax-free. The remaining £7,000 is subject to income tax.',
-                    'Your employer deducts income tax from the £7,000 excess. You pay no employee National Insurance on the £37,000.',
-                    'Your employer must pay Class 1A National Insurance on the £7,000 excess.',
+                    'You receive £12,000 statutory redundancy and a £25,000 ex-gratia sum, totalling £37,000.',
+                    'The first £30,000 is tax-free. Income Tax applies only to the £7,000 excess, with zero employee National Insurance.',
+                    'Your employer pays Class 1A National Insurance on that £7,000 excess.',
                   ],
                 },
                 {
                   title: 'Example 3: Settlement with notice pay (PILON)',
                   points: [
-                    'You receive a £5,000 PILON payment and an ex-gratia payment of £28,000. The total package is £33,000.',
-                    'The £5,000 PILON is fully taxable. Your employer deducts income tax and National Insurance from it.',
-                    'The £28,000 ex-gratia payment is separate. It is below the £30,000 limit, so it is paid tax-free.',
+                    'You receive £5,000 PILON and a £28,000 ex-gratia payment, totalling £33,000.',
+                    'The £5,000 PILON is taxed as wages with Income Tax and National Insurance deducted.',
+                    'The £28,000 ex-gratia sum is separate and sits below £30,000, so it is paid tax-free.',
                   ],
                 },
               ].map(({ title, points }) => (
                 <div key={title} className="rounded-xl border border-rule overflow-hidden">
                   <div className="bg-ink px-4 py-3">
-                    <p className="text-white text-body font-medium">{title}</p>
+                    <p className="text-white text-[15px] font-medium">{title}</p>
                   </div>
                   <div className="p-4 bg-paper flex flex-col gap-2">
                     {points.map((point, index) => (
@@ -444,66 +453,57 @@ export default function TaxFreeSettlementGuide() {
         {/* The tax indemnity clause */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">The tax indemnity clause: What you need to know</h2>
+            <h2 className="guide-h2 mb-4">What is a tax indemnity clause?</h2>
             <p className="sc-body mb-4">
-              Every settlement agreement contains a tax indemnity clause. This clause is standard in UK employment law.
+              Almost every UK settlement agreement includes a tax indemnity clause. It states that you remain responsible for any extra Income Tax HMRC later decides is owed on the payment.
             </p>
             <p className="sc-body mb-4">
-              The clause states that you are responsible for any unpaid tax on your settlement. If HMRC decides that more tax is due, you must pay it.
-            </p>
-            <p className="sc-body mb-4">
-              This includes any interest or penalties. It also means you must refund your employer if HMRC bills them.
-            </p>
-            <p className="sc-body mb-4">
-              This indemnity shows why correct tax structure is vital. If your employer gets the tax wrong, you carry the financial risk.
-            </p>
-            <p className="sc-body">
-              Your solicitor will check the tax wording to ensure it is standard. They will make sure you only pay what you legally owe.
+              That is why separating tax-free ex-gratia sums from notice pay, holiday pay, and non-compete payments matters before signature. An independent solicitor checks that the wording matches HMRC rules under Section 203(3) ERA 1996.
             </p>
 
             <ReviewCallout
-              title="Concerned about your tax indemnity clause?"
-              description="Before signing a broad tax indemnity, check how the numbers are structured. Paste your agreement draft to verify that ex-gratia payments and PILON are separated under ITEPA 2003 s.403."
-              ctaText="Verify your agreement tax wording →"
-              badge="Tax Risk Audit"
+              title="Want to check your tax split before speaking to a solicitor?"
+              description="Compare your draft figures to see how ex-gratia compensation and PILON separate under ITEPA 2003 s.403 and s.402D."
+              ctaText="Check my offer now →"
+              badge="April 2026 Statutory Check"
             />
           </div>
         </section>
 
-        {/* What to do if wrong */}
+        {/* What if wrong */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">What to do if your employer structures the tax incorrectly</h2>
+            <h2 className="guide-h2 mb-4">What if your draft separates tax incorrectly?</h2>
             <p className="sc-body mb-6">
-              If your employer gets the tax structure wrong, you may pay too much tax. You might also face an HMRC bill later. Here is what to do:
+              If notice pay and compensation are lumped together, payroll may deduct too much tax or leave an HMRC liability later. These four checks help spot issues early:
             </p>
             <ol className="flex flex-col gap-6">
               {[
                 {
                   n: 1,
-                  title: 'Ask payroll for a detailed tax breakdown',
-                  body: 'They must show how they calculated the tax on your payments.',
+                  title: 'Itemised payroll breakdown',
+                  body: 'A clear breakdown shows how notice pay, holiday pay, and ex-gratia sums were calculated.',
                 },
                 {
                   n: 2,
-                  title: 'Verify the notice pay portion',
-                  body: 'Ensure they did not lump notice pay and ex-gratia compensation together.',
+                  title: 'Post-Employment Notice Pay (PENP) check',
+                  body: 'Under ITEPA 2003 s.402D, any unworked notice period is calculated and taxed as wages before the £30,000 shield applies.',
                 },
                 {
                   n: 3,
-                  title: 'Request amendments before you sign',
-                  body: 'Ask your employer to separate the tax-free ex-gratia sum from the taxable notice pay.',
+                  title: 'Separate contractual and ex-gratia clauses',
+                  body: 'Drafts normally list taxable notice, holiday, and non-compete payments in distinct clauses from tax-free termination compensation.',
                 },
                 {
                   n: 4,
-                  title: 'Have your solicitor review the tax indemnity',
-                  body: 'Your solicitor will verify the tax structure before signing the agreement.',
+                  title: 'Independent solicitor review',
+                  body: 'Your solicitor reviews the tax indemnity and payment schedule before signing the adviser&apos;s certificate.',
                 },
               ].map(({ n, title, body }) => (
                 <li key={n} className="flex gap-4">
                   <span className="w-7 h-7 rounded-full bg-ink text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{n}</span>
                   <div>
-                    <p className="text-body font-semibold text-ink mb-1">{title}</p>
+                    <p className="text-[15px] font-semibold text-ink mb-1">{title}</p>
                     <p className="sc-body">{body}</p>
                   </div>
                 </li>
@@ -512,7 +512,7 @@ export default function TaxFreeSettlementGuide() {
             <div className="rounded-xl border border-rule bg-white p-4 flex gap-3 mt-8">
               <InfoIcon />
               <p className="sc-body">
-                Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards your solicitor fees upon completion of the agreement. Independent legal advice protects you from costly tax calculation errors.
+                Employers standardly contribute £350 to £500+ plus VAT toward your independent legal advice upon completion. Excess or abortive work is subject to your solicitor&apos;s engagement terms.
               </p>
             </div>
           </div>
@@ -521,25 +521,36 @@ export default function TaxFreeSettlementGuide() {
         {/* CTA */}
         <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">Check your settlement offer now</h2>
-            <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              Verify your statutory redundancy entitlement and calculate how much of your settlement is tax-free.
+            <h2 className="font-serif text-[24px] sm:text-[28px] font-[460] text-white mb-3">
+              Check where your offer stands
+            </h2>
+            <p className="text-white/75 text-[15px] leading-relaxed mb-6">
+              See your calculated statutory baseline, tax-free split, and commercial settlement range before speaking to a solicitor.
             </p>
-            <Link href="/redundancy-calculator/" className="btn-accent">
-              Check my offer
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/calculator/" className="btn-accent">
+                Check my offer now →
+              </Link>
+              <Link href="/redundancy-calculator/" className="btn-secondary">
+                Calculate my redundancy →
+              </Link>
+            </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
 
         {/* FAQs */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
+            <h2 className="guide-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
             <DynamicFaqSection pathname="/guides/tax-free-settlement-30000/" />
 
             <div className="pt-8">
               <RelatedArticles
+                title="Related Guides &amp; Tools"
                 items={[
                   {
                     href: '/guides/nhs-settlement-agreements/',
@@ -550,31 +561,31 @@ export default function TaxFreeSettlementGuide() {
                   {
                     href: '/guides/redundancy-pay-cap-2026/',
                     title: 'Redundancy Pay Cap 2026 Explained',
-                    description: 'Understand the statutory weekly pay cap of £751 and how it applies to your statutory floor.',
+                    description: 'Understand the statutory weekly pay cap of £751 and your calculated statutory baseline.',
                     tag: 'Guide',
                   },
                   {
                     href: '/guides/pilon-tax-treatment-2026/',
                     title: 'PILON Tax Treatment 2026',
-                    description: 'Notice pay is taxable as earnings under Section 402D. Learn how PILON is separated from redundancy.',
+                    description: 'Notice pay is taxed as wages under Section 402D. Learn how PILON separates from redundancy.',
                     tag: 'Tax Guide',
                   },
                   {
                     href: '/redundancy-calculator/',
                     title: 'Statutory Redundancy Calculator',
-                    description: 'Calculate your statutory redundancy pay floor under the 2026 weekly cap of £751.',
+                    description: 'Calculate your statutory redundancy entitlement under the 2026 weekly cap of £751.',
                     tag: 'Calculator',
                   },
                   {
                     href: '/penp-calculator/',
                     title: 'Post-Employment Notice Pay (PENP) Calculator',
-                    description: 'Run the statutory ITEPA 2003 s.402D formula ((BP x D) / P) - T to separate taxable notice pay from your £30,000 allowance.',
+                    description: 'Run the statutory ITEPA 2003 s.402D formula ((BP x D) / P) - T to separate taxable notice pay.',
                     tag: 'Tax Calculator',
                   },
                   {
                     href: '/guides/hmrc-tax-return-declaration/',
                     title: 'How to Declare a Settlement Agreement on Your UK Tax Return',
-                    description: 'Step-by-step SA100 and SA102 Self Assessment guide for termination payments above £30,000.',
+                    description: 'Self Assessment guide for termination payments above £30,000.',
                     tag: 'HMRC Guide',
                   },
                 ]}

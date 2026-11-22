@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
-import ReviewCallout from '@/components/ReviewCallout'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
@@ -206,36 +206,39 @@ export default function SettlementAgreementTimeLimitsGuide() {
               <Link href="/guides/" className="text-xs font-medium text-muted hover:text-ink transition-colors tracking-wide uppercase">
                 Guides
               </Link>
-              <span className="text-muted text-xs">/</span>
-              <span className="text-xs text-ink truncate">Settlement Agreement Time Limits</span>
+              <span className="text-rule-strong text-xs">/</span>
+              <span className="text-xs font-medium text-muted tracking-wide uppercase">Settlement agreements</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>
-              Statutory Deadlines &amp; Tribunal Limitation Rules
-            </p>
-            <h1 className="sc-h1 mb-5">
+            <h1 className="sc-h1 mb-4">
               Settlement Agreement Time Limits: 3-Month Tribunal Rule (2026)
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-4 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40" />
-              <span>Updated for 2026/27 (SI 2026/310 &amp; ACAS Code 4)</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40" />
-              <span>Last reviewed: November 2026</span>
-            </div>
-            <div className="flex flex-wrap items-center gap-2 mb-5">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-paper-2 text-muted border border-rule">
-                ⏱️ 7 min read
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-paper-2 text-muted border border-rule">
-                ⚖️ UK Employment Rights Act 1996
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FBF0EE] text-[#A8341F] border border-coral/20">
-                🔒 Independent &amp; Free Check
-              </span>
-            </div>
-            <p className="sc-lead">
-              Receiving a settlement agreement triggers several overlapping legal deadlines. Knowing these time limits protects your statutory claims if negotiations stall.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 &amp; ACAS Code 4
             </p>
+            <p className="sc-lead leading-relaxed">
+              Holding a draft settlement agreement with a response deadline? Overlapping time limits govern how long you have to review terms, pause the tribunal clock, and receive payment. Check your statutory baseline in 60 seconds with no email required, see which deadlines matter, and prepare clear questions for an independent solicitor.
+            </p>
+          </div>
+        </section>
+
+        {/* EMBEDDED CALCULATOR CARD (Immediately below Hero) */}
+        <section className="bg-card pt-12 pb-6">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How does your offer compare to the statutory baseline?"
+              subtitle="Compare your employer's opening figure against your calculated statutory baseline (£751/wk cap) and notice pay before your deadline."
+              disputeType="time_limits"
+              statutoryPills={[
+                { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                { label: 'Tribunal Deadline', value: '3 Months - 1 Day', statute: 'ERA 1996 s.111' },
+                { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+              ]}
+              initialSalary={48000}
+              initialYears={4}
+              initialAge={38}
+              ctaText="Check my offer now →"
+            />
           </div>
         </section>
 
@@ -291,7 +294,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                     Check my offer now →
                   </Link>
                   <Link href="/calculator/" className="inline-flex items-center text-xs font-bold text-coral hover:text-ink transition-colors gap-1">
-                    Calculate my estimate →
+                    Calculate my redundancy →
                   </Link>
                 </div>
               </div>
@@ -359,7 +362,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 Statutory Limitation
               </span>
             </div>
-            <h2 className="sc-section-h2 mb-4">The strict 3-month employment tribunal limitation rule</h2>
+            <h2 className="guide-h2 mb-4">1. How does the 3-month employment tribunal time limit work?</h2>
             <p className="sc-body mb-4">
               UK employment law enforces strict deadlines to bring workplace claims. You must understand your limitation deadline before beginning settlement discussions.
             </p>
@@ -455,12 +458,12 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 Procedural Risk
               </span>
             </div>
-            <h2 className="sc-section-h2 mb-4">The negotiation trap: Why discussions do not stop the clock</h2>
+            <h2 className="guide-h2 mb-4">2. Why do settlement talks not stop the tribunal clock?</h2>
             <p className="sc-body mb-4">
-              A dangerous misconception is that settlement negotiations freeze the limitation clock. Employees often assume discussions prevent deadlines from running.
+              A common misconception is that settlement talks freeze the limitation clock. They do not.
             </p>
             <p className="sc-body mb-4">
-              Without Prejudice talks under{' '}
+              Discussions under{' '}
               <a
                 href="https://www.legislation.gov.uk/ukpga/1996/18/section/111A"
                 target="_blank"
@@ -469,10 +472,10 @@ export default function SettlementAgreementTimeLimitsGuide() {
               >
                 Section 111A ERA 1996
               </a>{' '}
-              do not pause the statutory limitation clock.
+              do not pause the statutory deadline. Note also that Section 111A confidentiality applies only to ordinary unfair dismissal claims, not discrimination or whistleblowing.
             </p>
             <p className="sc-body mb-4">
-              If negotiations drag on for 10 or 12 weeks, your limitation deadline approaches quickly. If talks break down after three months, you lose your right to claim.
+              If talks drag on for 10 or 12 weeks while you review garden leave or non-compete terms, the deadline approaches quickly. If discussions fail after three months, you lose your right to claim.
             </p>
 
             <div className="bg-white p-5 rounded-xl border border-rule mb-5 shadow-sm">
@@ -482,8 +485,8 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <strong className="text-ink text-sm block mb-1">
                     Privilege Notice for Settlement Discussions
                   </strong>
-                  <p className="text-body text-muted leading-relaxed m-0">
-                    Important Privilege Notice: Do not send unreviewed proposals to HR. Unreviewed correspondence can waive legal privilege or compromise your position. Common law Without Prejudice privilege applies only where a genuine dispute exists. Instruct an SRA-regulated solicitor to manage written negotiations securely.
+                  <p className="text-[14px] text-muted leading-relaxed m-0">
+                    Many employees instruct an SRA-regulated solicitor before sending formal proposals, as unreviewed correspondence can waive legal privilege or compromise their position. Common law Without Prejudice privilege applies only where a genuine dispute exists.
                   </p>
                 </div>
               </div>
@@ -506,7 +509,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 Timeline Comparison
               </span>
             </div>
-            <h2 className="sc-section-h2 mb-4">The four critical settlement agreement time limits</h2>
+            <h2 className="guide-h2 mb-4">3. What are the four settlement agreement time limits?</h2>
             <p className="sc-body mb-4">
               Workplace dispute resolution involves four separate time limits. Each deadline serves a distinct legal and practical function.
             </p>
@@ -567,7 +570,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 ACAS Code 4
               </span>
             </div>
-            <h2 className="sc-section-h2 mb-4">ACAS 10-day consideration rule: Guidance vs legal right</h2>
+            <h2 className="guide-h2 mb-4">4. Is the ACAS 10-day consideration rule a legal right?</h2>
             <p className="sc-body mb-4">
               When an employer presents a settlement agreement, they often request a prompt reply. Understanding what ACAS requires provides practical clarity.
             </p>
@@ -617,7 +620,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 <strong className="text-base text-ink block mb-1">
                   Calculate your full settlement entitlement
                 </strong>
-                <p className="text-body text-muted m-0">
+                <p className="text-[14px] text-muted m-0">
                   Compare your offer against statutory redundancy caps, notice pay, and commercial benchmarks.
                 </p>
               </div>
@@ -625,7 +628,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 href="/calculator/"
                 className="px-4 py-2.5 bg-coral hover:bg-coral-ink text-white font-semibold text-xs rounded-lg transition-colors whitespace-nowrap shadow-sm text-center cursor-pointer"
               >
-                Calculate my estimate →
+                Check my offer now →
               </Link>
             </div>
           </div>
@@ -642,7 +645,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 Statutory Clock Pause
               </span>
             </div>
-            <h2 className="sc-section-h2 mb-4">Stopping the clock with ACAS Early Conciliation (ETA 1996 s.18A)</h2>
+            <h2 className="guide-h2 mb-4">5. How does ACAS Early Conciliation pause the clock?</h2>
             <p className="sc-body mb-4">
               Only one formal step pauses your statutory limitation period: contacting ACAS. Understanding how Early Conciliation pauses the clock protects your position.
             </p>
@@ -712,7 +715,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 Payout &amp; Enforcement
               </span>
             </div>
-            <h2 className="sc-section-h2 mb-4">Settlement payout timelines and late payment remedies</h2>
+            <h2 className="guide-h2 mb-4">6. When do you get paid after signing?</h2>
             <p className="sc-body mb-4">
               Once both parties sign and your solicitor issues the adviser certificate, the settlement agreement becomes legally binding. You then await agreed funds.
             </p>
@@ -725,7 +728,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
               Under Section 403 ITEPA 2003, qualifying compensation up to £30,000 is tax-free. This includes redundancy and ex-gratia sums.
             </p>
             <p className="sc-body mb-4">
-              Notice pay and Post-Employment Notice Pay (PENP) are taxable under Section 402D ITEPA 2003. Notice pay is subject to income tax and employee National Insurance.
+              Notice pay and Post-Employment Notice Pay (PENP) are taxed as wages under Section 402D ITEPA 2003. Notice pay is subject to income tax and employee National Insurance.
             </p>
             <p className="sc-body mb-4">
               For payments over £30,000, your employer pays Class 1A employer NICs at 15.0%. Employees pay no employee National Insurance on amounts exceeding £30,000.
@@ -754,7 +757,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 Statutory Baselines (2026/27)
               </span>
             </div>
-            <h2 className="sc-section-h2 mb-4">UK statutory baselines and compensation limits (2026/27)</h2>
+            <h2 className="guide-h2 mb-4">7. What are the 2026/27 statutory compensation baselines?</h2>
             <p className="sc-body mb-4">
               Before agreeing to any settlement deadline, compare the offer against your statutory entitlements. These statutory baselines establish your minimum position.
             </p>
@@ -789,7 +792,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted block mb-1">Lower Band</span>
                   <span className="text-base font-bold font-mono text-ink block mb-1">£1,300 to £12,600</span>
                 </div>
-                <p className="text-body text-muted m-0 leading-relaxed">
+                <p className="text-[14px] text-muted m-0 leading-relaxed">
                   For isolated or less serious incidents of unlawful discrimination.
                 </p>
               </div>
@@ -798,7 +801,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted block mb-1">Middle Band</span>
                   <span className="text-base font-bold font-mono text-ink block mb-1">£12,600 to £37,700</span>
                 </div>
-                <p className="text-body text-muted m-0 leading-relaxed">
+                <p className="text-[14px] text-muted m-0 leading-relaxed">
                   For serious cases that do not merit an award in the highest band.
                 </p>
               </div>
@@ -807,7 +810,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted block mb-1">Upper Band</span>
                   <span className="text-base font-bold font-mono text-coral block mb-1">£37,700 to £62,900</span>
                 </div>
-                <p className="text-body text-muted m-0 leading-relaxed">
+                <p className="text-[14px] text-muted m-0 leading-relaxed">
                   For the most serious and prolonged campaigns of unlawful discrimination.
                 </p>
               </div>
@@ -816,7 +819,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted block mb-1">Exceptional Band</span>
                   <span className="text-base font-bold font-mono text-coral block mb-1">£62,900+</span>
                 </div>
-                <p className="text-body text-muted m-0 leading-relaxed">
+                <p className="text-[14px] text-muted m-0 leading-relaxed">
                   Reserved exclusively for the most egregious and severe discrimination cases.
                 </p>
               </div>
@@ -839,9 +842,9 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 Action Protocol
               </span>
             </div>
-            <h2 className="sc-section-h2 mb-4">Action plan when facing a tight settlement deadline</h2>
+            <h2 className="guide-h2 mb-4">8. What steps protect your position under a tight deadline?</h2>
             <p className="sc-body mb-4">
-              If your employer imposes a tight deadline, following a clear sequence of steps protects your statutory rights.
+              When an employer sets a short deadline, employees typically follow a clear sequence to keep their options open.
             </p>
 
             <div className="space-y-4 mb-6">
@@ -851,9 +854,9 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   1
                 </span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-ink text-sm mb-1">Note your termination date and calculate your deadline</h3>
+                  <h3 className="font-semibold text-ink text-sm mb-1">Identify your termination date and statutory deadline</h3>
                   <p className="sc-body text-muted mb-0 leading-relaxed">
-                    Identify your Effective Date of Termination. Calculate three calendar months minus one day. Record this date immediately in your calendar.
+                    Confirm your Effective Date of Termination and count three calendar months minus one day to find your primary tribunal cut-off.
                   </p>
                 </div>
               </div>
@@ -864,9 +867,9 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   2
                 </span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-ink text-sm mb-1">Request 10 calendar days under ACAS Code 4</h3>
+                  <h3 className="font-semibold text-ink text-sm mb-1">Consider requesting 10 calendar days under ACAS Code 4</h3>
                   <p className="sc-body text-muted mb-0 leading-relaxed">
-                    Reply calmly in writing. Reference paragraph 12 of ACAS Code of Practice 4. State that you need reasonable time to obtain independent legal advice.
+                    Employees often respond in writing, referencing paragraph 12 of ACAS Code 4, to request reasonable time for independent legal advice.
                   </p>
                 </div>
               </div>
@@ -879,7 +882,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                     Critical Contract Rule (Hyde v Wrench &amp; Routledge v Grant):
                   </strong>
                   <p className="m-0 text-amber-900 leading-relaxed text-[12px]">
-                    Under English contract law, proposing a counter-offer legally terminates your employer&apos;s existing offer. An employer is also entitled to withdraw an unaccepted offer at any time prior to execution. Never reject an offer or submit counter-demands without prior advice from your instructed solicitor.
+                    Under English contract law, proposing a counter-offer legally terminates your employer&apos;s existing offer. An employer can also withdraw an unaccepted offer at any time prior to execution. Proposing a counter-offer or rejecting terms without prior solicitor advice carries the risk of losing the opening offer entirely.
                   </p>
                 </div>
               </div>
@@ -890,9 +893,9 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   3
                 </span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-ink text-sm mb-1">Check your figures using an independent calculator</h3>
+                  <h3 className="font-semibold text-ink text-sm mb-1">Check your figures against your calculated statutory baseline</h3>
                   <p className="sc-body text-muted mb-0 leading-relaxed">
-                    Verify your statutory redundancy floor, accrued holiday pay, and notice pay. This clarifies whether the settlement sum meets commercial standards.
+                    Check your calculated statutory baseline, accrued holiday pay, and notice pay to see how the offer compares to commercial ranges.
                   </p>
                 </div>
               </div>
@@ -905,7 +908,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                 <div className="flex-1">
                   <h3 className="font-semibold text-ink text-sm mb-1">Instruct an SRA-regulated solicitor</h3>
                   <p className="sc-body text-muted mb-0 leading-relaxed">
-                    Employers standardly provide a capped fee contribution upon completion (typically £350 to £500+ plus VAT). A specialist solicitor will review the draft and certify the agreement.
+                    Employers standardly provide a capped fee contribution upon completion (typically £350 to £500+ plus VAT). Excess or abortive work remains subject to your solicitor engagement terms.
                   </p>
                 </div>
               </div>
@@ -916,9 +919,9 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   5
                 </span>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-ink text-sm mb-1">Notify ACAS if your limitation deadline approaches</h3>
+                  <h3 className="font-semibold text-ink text-sm mb-1">ACAS Early Conciliation before the limitation deadline</h3>
                   <p className="sc-body text-muted mb-0 leading-relaxed">
-                    If discussions extend past week eight or nine, submit an ACAS Early Conciliation form. This stops the limitation clock while talks proceed.
+                    If discussions extend past week eight or nine, submitting an ACAS Early Conciliation form stops the limitation clock while talks proceed.
                   </p>
                 </div>
               </div>
@@ -932,7 +935,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
               <h3 className="font-serif text-lg font-bold text-ink mb-2">
                 Need an independent solicitor to review your agreement?
               </h3>
-              <p className="text-body text-muted max-w-md mx-auto mb-4 leading-relaxed">
+              <p className="text-[14px] text-muted max-w-md mx-auto mb-4 leading-relaxed">
                 Connect with an SRA-regulated employment solicitor from our panel. Employers standardly provide a capped legal fee contribution upon completion.
               </p>
               <div className="mb-4">
@@ -940,7 +943,7 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   href="/get-matched/"
                   className="btn-accent inline-flex items-center justify-center text-xs font-semibold px-5 py-3 rounded-lg shadow-sm"
                 >
-                  Connect with specialist solicitor →
+                  Connect with a solicitor →
                 </Link>
               </div>
               <p className="text-[11px] text-muted max-w-lg mx-auto m-0 leading-relaxed">
@@ -950,20 +953,35 @@ export default function SettlementAgreementTimeLimitsGuide() {
           </div>
         </section>
 
-        {/* REVIEW CALLOUT COMPONENT */}
-        <div className="max-w-2xl mx-auto px-5">
-          <ReviewCallout
-            title="Holding a draft settlement agreement with a tight deadline?"
-            description="Verify your statutory redundancy baselines, check tax calculations under Section 403 ITEPA 2003, and confirm employer fee contribution terms before signing."
-            ctaText="Check my offer now →"
-            badge="Confidential Deadline Review"
-          />
-        </div>
+        {/* BOTTOM CTA */}
+        <section className="py-10 bg-white border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <div className="bg-ink rounded-2xl p-8 text-center">
+              <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+                Check where your offer stands
+              </h2>
+              <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+                See your calculated statutory baseline, tax split, and commercial settlement range before speaking to a solicitor.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link href="/calculator/" className="btn-accent">
+                  Check my offer now →
+                </Link>
+                <Link href="/redundancy-calculator/" className="btn-secondary">
+                  Calculate my redundancy →
+                </Link>
+              </div>
+              <p className="text-white/60 text-[12px] mt-4">
+                Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* FAQS ACCORDION SECTION */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-6">Frequently asked questions about settlement time limits</h2>
+            <h2 className="guide-h2 mb-6">Frequently asked questions about settlement time limits</h2>
             <FaqAccordion faqs={FAQS} />
           </div>
         </section>
@@ -1009,12 +1027,6 @@ export default function SettlementAgreementTimeLimitsGuide() {
                   title: 'ACAS Statutory Timeline & 10-Day Rule Calculator',
                   description: 'Calculate your ACAS Code 4 10-calendar-day consideration window and primary limitation dates.',
                   tag: 'Interactive Tool',
-                },
-                {
-                  href: '/tribunal-backlog-tracker/',
-                  title: 'UK Employment Tribunal Backlog Tracker',
-                  description: 'Check live regional MoJ waiting times to preliminary and final hearings.',
-                  tag: 'Data Tracker',
                 },
               ]}
             />

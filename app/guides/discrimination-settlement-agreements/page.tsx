@@ -4,6 +4,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import RelatedArticles from '@/components/RelatedArticles'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import DynamicFaqSection from '@/components/seo/DynamicFaqSection'
 import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
@@ -56,7 +57,7 @@ const FAQS = [
   },
   {
     q: 'Does my employer pay for my independent legal advice?',
-    a: 'Employers standardly provide a capped commercial contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion. Under Section 203 of the Employment Rights Act 1996 and Section 144 of the Equality Act 2010, you must receive independent legal advice for any statutory waiver to be legally valid.',
+    a: 'Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. That covers reviewing and advising on the draft; excess negotiation or abortive work is subject to your solicitor engagement terms. Under Section 203 of the Employment Rights Act 1996 and Section 144 of the Equality Act 2010, independent legal advice is required for a valid waiver.',
   },
   {
     q: 'Can a settlement agreement waive unknown future discrimination claims?',
@@ -138,19 +139,36 @@ export default function DiscriminationSettlementAgreementsGuide() {
               <span className="text-xs text-ink truncate">Discrimination Settlements</span>
             </div>
             <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Equality Act 2010 &amp; Employment Law Guide</p>
-            <h1 className="sc-h1 mb-5">
+            <h1 className="sc-h1 mb-4">
               Discrimination Settlement Agreements UK: Compensation, Vento Bands &amp; Tax Rules (2026)
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>Written by SettlementCheck Editorial Team</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Updated for 2026/27 (SI 2026/310 &amp; Ninth Addendum)</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Last reviewed: September 2026</span>
-            </div>
-            <p className="sc-lead">
-              Unlike ordinary unfair dismissal awards, which are strictly capped at £123,543, compensation for unlawful discrimination under Section 124 of the Equality Act 2010 is completely uncapped. In 2026, discrimination settlements combine past and future financial loss with injury to feelings awards assessed under the Ninth Addendum Vento bands, which range from £1,300 to over £62,900. Furthermore, under Section 406 of the Income Tax (Earnings and Pensions) Act 2003, payments for injury to feelings arising before dismissal are 100% tax-free with no £30,000 ceiling.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against Equality Act 2010 &amp; Ninth Addendum Vento Bands
             </p>
+            <p className="sc-lead leading-relaxed">
+              Received a settlement agreement after facing discrimination at work? Unlike ordinary unfair dismissal, Equality Act 2010 compensation is uncapped and includes Ninth Addendum Vento injury to feelings awards. Check your statutory baseline in 60 seconds with no email required, and prepare clear questions for an independent solicitor.
+            </p>
+          </div>
+        </section>
+
+        {/* Embedded Calculator Card (Immediately below Hero) */}
+        <section className="pt-8 pb-4 bg-white">
+          <div className="max-w-2xl mx-auto px-5">
+            <EmbeddedCalculatorCard
+              badge="April 2026 Statutory Check"
+              title="How does your offer compare to the statutory baseline?"
+              subtitle="Compare your employer's opening figure against your calculated statutory baseline and typical commercial settlement ranges."
+              disputeType="discrimination"
+              statutoryPills={[
+                { label: 'Equality Act Cap', value: 'Uncapped', statute: 'EqA 2010 s.124' },
+                { label: '2026 Vento Bands', value: '£1,300 to £62,900+', statute: 'Ninth Addendum' },
+                { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+              ]}
+              initialSalary={45000}
+              initialYears={4}
+              initialAge={38}
+              ctaText="Check my offer now →"
+            />
           </div>
         </section>
 
@@ -158,7 +176,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
         <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-body font-semibold text-ink mb-3">Key discrimination settlement facts for 2026</p>
+              <p className="text-[15px] font-semibold text-ink mb-3">Key discrimination settlement facts for 2026</p>
               <ul className="flex flex-col gap-3">
                 {[
                   'Discrimination compensation is completely uncapped under Section 124 of the Equality Act 2010.',
@@ -166,7 +184,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
                   'Injury to feelings compensation follows the Ninth Addendum Vento bands, ranging from £1,300 to more than £62,900.',
                   'Section 111A protected conversation rules do not apply to discrimination. Employers cannot keep discriminatory discussions confidential.',
                   'Pre-termination injury to feelings awards are 100% tax-free under ITEPA 2003 s.406, outside the standard £30,000 limit.',
-                  'Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) towards independent legal advice upon completion.',
+                  'Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) towards independent legal advice upon completion.',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckIcon />
@@ -181,15 +199,15 @@ export default function DiscriminationSettlementAgreementsGuide() {
         {/* Section: Uncapped compensation under the Equality Act 2010 */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Uncapped compensation under the Equality Act 2010</h2>
+            <h2 className="guide-h2 mb-4">Why is discrimination compensation uncapped under the Equality Act 2010?</h2>
             <p className="sc-body mb-4">
               In UK employment law, discrimination claims carry significant financial exposure for employers. Under Section 124 of the Equality Act 2010, an employment tribunal can award financial compensation without any statutory ceiling <sup>1</sup>.
             </p>
             <p className="sc-body mb-4">
-              This stands in direct contrast to standard unfair dismissal. For ordinary unfair dismissal, compensatory awards are capped at the lower of £123,543 or 52 weeks of gross pay under SI 2026/310 <sup>2</sup>.
+              This contrasts with standard unfair dismissal. For ordinary unfair dismissal, compensatory awards are capped at the lower of £123,543 or 52 weeks of gross pay under SI 2026/310 <sup>2</sup>.
             </p>
             <p className="sc-body mb-6">
-              You also enjoy day-one protection. You do not need two years of continuous service to bring a discrimination claim or negotiate a departure package based on discriminatory treatment. Protection extends across all nine protected characteristics:
+              You also enjoy day-one protection. You do not need two years of continuous service to bring a discrimination claim. Protection extends across all nine protected characteristics:
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
@@ -212,7 +230,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
             </div>
 
             <p className="sc-body mb-6">
-              Because tribunal compensation is uncapped, initial settlement offers that only match statutory redundancy or basic notice pay are well below the typical range for discrimination cases. Employers settle to avoid public tribunal findings, substantial reputational damage, and uncapped financial liability.
+              Because tribunal compensation is uncapped, opening offers that only match your calculated statutory baseline (subject to Section 141 ERA 1996 eligibility) or basic notice pay often sit below typical discrimination ranges. Employers settle to avoid public tribunal findings, reputational damage, and uncapped financial liability.
             </p>
 
             <div className="rounded-xl border border-rule overflow-hidden mt-6">
@@ -248,12 +266,12 @@ export default function DiscriminationSettlementAgreementsGuide() {
         {/* Section: Vento Bands 2026 */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Vento Bands 2026: Injury to feelings calculations</h2>
+            <h2 className="guide-h2 mb-4">How do the 2026 Vento bands value injury to feelings?</h2>
             <p className="sc-body mb-4">
-              When an employer discriminates against you, compensation is not limited to lost salary. You are entitled to an award for injury to feelings.
+              When an employer discriminates against you, compensation is not limited to lost salary. You can also seek an award for injury to feelings.
             </p>
             <p className="sc-body mb-4">
-              Employment tribunals calculate injury to feelings using brackets known as Vento bands. These bands originate from the landmark case <em>Vento v Chief Constable of West Yorkshire Police [2002]</em> and are updated annually.
+              Employment tribunals calculate injury to feelings using brackets known as Vento bands. These bands originate from <em>Vento v Chief Constable of West Yorkshire Police [2002]</em> and are updated annually.
             </p>
             <p className="sc-body mb-6">
               For claims and settlements presented on or after 6 April 2026, the Ninth Addendum to the Presidential Guidance sets the following rates <sup>3</sup>:
@@ -301,10 +319,10 @@ export default function DiscriminationSettlementAgreementsGuide() {
             </div>
 
             <p className="sc-body mb-4">
-              When negotiating a settlement agreement, your solicitor uses these bands to benchmark the injury to feelings element of your payment.
+              When reviewing a settlement agreement, your solicitor uses these bands to benchmark the injury to feelings element of your payment.
             </p>
             <p className="sc-body">
-              A solid medical report, witness statements, or a written grievance trail will support placement in the middle or upper Vento band.
+              A medical report, witness statements, or a written grievance trail helps support placement in the middle or upper Vento band.
             </p>
           </div>
         </section>
@@ -312,29 +330,29 @@ export default function DiscriminationSettlementAgreementsGuide() {
         {/* Section: Tax rules for discrimination settlements */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Tax rules for discrimination settlements: Section 403 vs Section 406</h2>
+            <h2 className="guide-h2 mb-4">How are discrimination settlements taxed under Section 403 and Section 406?</h2>
             <p className="sc-body mb-4">
-              Tax treatment is one of the most critical elements of any discrimination settlement agreement. Structuring the payment correctly can save thousands of pounds in tax.
+              Tax treatment is one of the most important elements of any discrimination settlement agreement. Structuring the payment clearly can save thousands of pounds in tax.
             </p>
             <p className="sc-body mb-6">
-              UK tax law draws a sharp legal distinction between termination payments and compensation for pre-termination discrimination:
+              UK tax law draws a sharp distinction between termination payments and compensation for pre-termination discrimination:
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="rounded-xl border border-rule bg-white p-5">
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-sage-tint text-sage">Exempt from Tax</span>
                   <h3 className="text-sm font-semibold text-ink">Pre-Termination Injury to Feelings</h3>
                 </div>
                 <p className="sc-body mb-3">
-                  Under Section 406 of the Income Tax (Earnings and Pensions) Act 2003, compensation for injury to feelings related to discrimination occurring <em>before</em> and distinct from dismissal is 100% tax-free <sup>4</sup>.
+                  Under Section 406 of ITEPA 2003, compensation for injury to feelings related to discrimination occurring <em>before</em> and distinct from dismissal is 100% tax-free <sup>4</sup>.
                 </p>
                 <p className="sc-body text-muted">
-                  There is no £30,000 threshold. It is completely exempt from income tax and National Insurance contributions.
+                  There is no £30,000 threshold. It is exempt from income tax and National Insurance contributions.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-rule bg-white p-5">
+              <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-tint text-amber">£30,000 Cap Applies</span>
                   <h3 className="text-sm font-semibold text-ink">Termination Compensation</h3>
@@ -349,12 +367,12 @@ export default function DiscriminationSettlementAgreementsGuide() {
             </div>
 
             <div className="rounded-xl border border-rule bg-paper p-5 mb-6">
-              <h3 className="text-sm font-semibold text-ink mb-2">Notice Pay (PILON) Is Always Taxable</h3>
+              <h3 className="text-sm font-semibold text-ink mb-2">Notice Pay (PILON) Is Always Taxed as Wages</h3>
               <p className="sc-body mb-2">
-                Under Section 402D of ITEPA 2003, Payment in Lieu of Notice (PILON) is classified as Post-Employment Notice Pay (PENP) <sup>6</sup>.
+                Under Section 402D of ITEPA 2003, Payment in Lieu of Notice (PILON) or garden leave is classified as Post-Employment Notice Pay (PENP) <sup>6</sup>.
               </p>
               <p className="sc-body">
-                Your employer must deduct income tax and Class 1 National Insurance from all notice pay. It cannot be disguised as tax-free compensation. For a detailed calculation breakdown, consult our guide on <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax treatment</Link>.
+                It is taxed as wages through PAYE and Class 1 National Insurance, and cannot be disguised as tax-free compensation. See our guide on <Link href="/guides/pilon-tax-treatment-2026/" className="underline hover:text-ink">PILON tax treatment</Link>.
               </p>
             </div>
 
@@ -370,12 +388,12 @@ export default function DiscriminationSettlementAgreementsGuide() {
         {/* Section: Section 111A and Without Prejudice exceptions */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Section 111A and Without Prejudice exceptions: Employers cannot hide</h2>
+            <h2 className="guide-h2 mb-4">Are discrimination settlement talks confidential under Section 111A?</h2>
             <p className="sc-body mb-4">
-              When an employer opens settlement discussions, they often label communications as a &quot;protected conversation&quot; under Section 111A of the Employment Rights Act 1996, or as &quot;without prejudice&quot;.
+              Employers sometimes label settlement discussions as a &quot;protected conversation&quot; under Section 111A of the Employment Rights Act 1996, or as &quot;without prejudice&quot;.
             </p>
             <p className="sc-body mb-4">
-              Many employers wrongly believe this shields them from liability. Under UK law, these protections have strict legal boundaries.
+              Under UK law, these confidentiality rules have strict statutory boundaries.
             </p>
 
             <h3 className="text-sm font-semibold text-ink mt-6 mb-2">1. Section 111A Does Not Apply to Discrimination</h3>
@@ -394,10 +412,10 @@ export default function DiscriminationSettlementAgreementsGuide() {
               Common law without prejudice privilege only applies if there is already an existing, genuine dispute between you and your employer.
             </p>
             <p className="sc-body mb-4">
-              Furthermore, the privilege does not protect unlawful acts or &quot;unambiguous impropriety&quot;. An employer cannot use without prejudice discussions to deliver discriminatory ultimatums.
+              The privilege does not protect unlawful acts or &quot;unambiguous impropriety&quot;. An employer cannot use without prejudice discussions to deliver discriminatory ultimatums.
             </p>
             <p className="sc-body">
-              This gives you substantial negotiation strength. Because the employer cannot hide their conduct behind statutory confidentiality, they are far more motivated to reach an agreed settlement outside of public court proceedings.
+              Because discussions outside these rules may be disclosable in an employment tribunal, employers often prefer to reach an agreed settlement out of tribunal.
             </p>
           </div>
         </section>
@@ -405,7 +423,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
         {/* Section: Legal validity and Bathgate v Technip */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Legal validity and the Bathgate v Technip rule</h2>
+            <h2 className="guide-h2 mb-4">What makes a discrimination settlement legally valid?</h2>
             <p className="sc-body mb-4">
               Under Section 203(3) of the Employment Rights Act 1996 and Section 144 of the Equality Act 2010, you cannot waive your statutory rights in a private document unless strict formal requirements are met <sup>8</sup>.
             </p>
@@ -429,22 +447,22 @@ export default function DiscriminationSettlementAgreementsGuide() {
 
             <h3 className="text-sm font-semibold text-ink mt-6 mb-2">Waiving Unknown Future Claims: Bathgate v Technip</h3>
             <p className="sc-body mb-4">
-              Employers often attempt to include broad waivers stating that you give up &quot;all claims of any nature, whether known or unknown, arising in the past, present, or future&quot;.
+              Employers often include broad waivers stating that you give up &quot;all claims of any nature, whether known or unknown, arising in the past, present, or future&quot;.
             </p>
             <p className="sc-body mb-4">
-              The landmark appellate decision in <em>Bathgate v Technip Singapore PTE Ltd [2023] CSIH 48</em> clarified this practice <sup>9</sup>. The court held that a settlement agreement can settle future claims, but only if the wording is clear and refers to the specific category of claim contemplated by the parties.
+              The appellate decision in <em>Bathgate v Technip Singapore PTE Ltd [2023] CSIH 48</em> clarified this practice <sup>9</sup>. A settlement agreement can settle future claims only if the wording is clear and refers to the specific category of claim contemplated by the parties.
             </p>
             <p className="sc-body mb-6">
-              Blanket boilerplate clauses cannot extinguish rights that the parties could not reasonably have foreseen. Your solicitor will review the waiver terms carefully to protect you from unintended forfeitures.
+              Blanket boilerplate clauses cannot extinguish rights that the parties could not reasonably have contemplated. Your solicitor reviews the waiver wording, confidentiality clauses, and any post-termination non-compete restrictions before you sign.
             </p>
 
             <div className="rounded-xl border border-rule bg-paper p-5">
-              <p className="text-body font-semibold text-ink mb-2">Employer Legal Fee Contribution</p>
+              <p className="text-[15px] font-semibold text-ink mb-2">Employer Legal Fee Contribution</p>
               <p className="sc-body mb-2">
                 Under Section 203(3) ERA 1996, independent legal advice is a statutory validity condition. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.
               </p>
               <p className="sc-body">
-                For a standard review within this cap, the contribution covers the solicitor&apos;s fee upon completion. If negotiations require extended work, your solicitor will agree any scope adjustments in advance.
+                That contribution covers reviewing and advising on the draft. Any extra negotiation or abortive work is subject to your solicitor&apos;s engagement terms unless the employer raises the cap.
               </p>
             </div>
           </div>
@@ -453,32 +471,32 @@ export default function DiscriminationSettlementAgreementsGuide() {
         {/* Section: 4-step negotiation timeline */}
         <section className="py-12 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">4-step negotiation process for discrimination settlements</h2>
+            <h2 className="guide-h2 mb-4">How does the discrimination settlement process work?</h2>
             <p className="sc-body mb-6">
-              Negotiating a fair settlement requires a structured approach. Follow these four practical steps to protect your position:
+              Here is how employees and their solicitors typically approach a discrimination settlement:
             </p>
 
             <div className="relative border-l-2 border-rule ml-4 pl-6 flex flex-col gap-8">
               {[
                 {
                   step: '01',
-                  title: 'Document all discriminatory conduct',
-                  desc: 'Keep a private, contemporaneous timeline of incidents. Save relevant emails, chat logs, performance appraisals, and records of meetings. If you experienced stress or health effects, obtain medical notes from your GP.',
+                  title: 'Keep a contemporaneous record',
+                  desc: 'Note dates, meetings, emails, and performance reviews. If discrimination affected your health, GP records can also be relevant.',
                 },
                 {
                   step: '02',
-                  title: 'Quantify your true financial and emotional loss',
-                  desc: 'Calculate your actual financial losses, including lost salary, pension, and benefits while seeking comparable employment. Benchmark your injury to feelings under the 2026 Ninth Addendum Vento bands.',
+                  title: 'Check your statutory baseline and Vento range',
+                  desc: 'Calculate your notice pay, holiday pay, and statutory redundancy baseline alongside lost earnings and the 2026 Ninth Addendum Vento bands.',
                 },
                 {
                   step: '03',
-                  title: 'Submit a detailed grievance or without-prejudice response',
-                  desc: 'Respond to the employer\'s initial proposal with a clear counteroffer. Outline the uncapped nature of the tribunal risk they face and the inapplicability of Section 111A confidentiality.',
+                  title: 'Understand offer revocation and the ACAS 10-day guideline',
+                  desc: 'ACAS Code of Practice 4 recommends 10 calendar days as general guidance to consider an offer, though it is not a binding legal right. Under English contract law, a counter-offer rejects the original offer (Hyde v Wrench) and an unaccepted offer can be withdrawn before signing (Routledge v Grant).',
                 },
                 {
                   step: '04',
-                  title: 'Finalise terms with your independent solicitor',
-                  desc: 'Your solicitor checks the agreement, negotiates an agreed job reference, confidentiality wording, and tax indemnities. Employers standardly provide a capped commercial contribution paid directly to your solicitor upon completion.',
+                  title: 'Review the draft with an independent solicitor',
+                  desc: 'Your solicitor checks the waiver wording, tax split (s.403 vs s.406), agreed reference, and any non-compete clauses. Employers standardly contribute £350 to £500+ plus VAT upon completion.',
                 },
               ].map(({ step, title, desc }) => (
                 <div key={step} className="relative">
@@ -492,7 +510,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
             </div>
 
             <p className="sc-body mt-8">
-              To learn more about negotiation tactics, read our detailed guide on <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">how to negotiate a settlement agreement</Link> or evaluate <Link href="/guides/settlement-agreement-vs-tribunal-claim/" className="underline hover:text-ink">settlement agreements versus employment tribunals</Link>.
+              To learn more about how talks work, read our guide on <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="underline hover:text-ink">how to negotiate a settlement agreement</Link> or compare <Link href="/guides/settlement-agreement-vs-tribunal-claim/" className="underline hover:text-ink">settlement agreements versus employment tribunals</Link>.
             </p>
           </div>
         </section>
@@ -500,7 +518,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
         {/* Section: Official independent resources */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">Official independent resources</h2>
+            <h2 className="guide-h2 mb-4">Where can I get free official guidance?</h2>
             <p className="sc-body mb-6">
               If you are facing discrimination at work, you can access free, confidential guidance from official UK statutory bodies:
             </p>
@@ -549,49 +567,61 @@ export default function DiscriminationSettlementAgreementsGuide() {
         {/* Section: CTA Banner */}
         <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">Check your settlement offer now</h2>
-            <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              Evaluate your compensation against 2026 statutory caps, calculate your tax-free allowance, and check if your offer is fair.
+            <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+              Check where your offer stands
+            </h2>
+            <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+              See your calculated statutory baseline, tax split, and commercial settlement range before speaking to a solicitor.
             </p>
-            <Link href="/calculator/?discrimination=yes" className="btn-accent">
-              Check my offer now →
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/calculator/?discrimination=yes" className="btn-accent">
+                Check my offer now →
+              </Link>
+              <Link href="/redundancy-calculator/" className="btn-secondary">
+                Calculate my redundancy →
+              </Link>
+            </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
 
         {/* Section: FAQs */}
-                <section className="py-10 border-b border-rule bg-white">
+        <section className="py-12 border-b border-rule">
+          <div className="max-w-2xl mx-auto px-5">
+            <h2 className="guide-h2 mb-8">Frequently asked questions</h2>
+            <FaqAccordion faqs={FAQS} />
+            <DynamicFaqSection pathname="/guides/discrimination-settlement-agreements/" />
+          </div>
+        </section>
+
+        {/* Section: Related Articles */}
+        <section className="py-10 border-b border-rule bg-white">
           <div className="max-w-2xl mx-auto px-5">
             <RelatedArticles
               title="Related Tribunal Data & Guides"
               items={[
-              {
-                href: '/guides/employment-tribunal-average-awards-uk/',
-                title: 'Average Employment Tribunal Awards UK (MoJ Tables)',
-                description: 'Official Ministry of Justice median and mean discrimination, sex, race, and disability tribunal awards alongside 2026 Vento bands.',
-                tag: 'MoJ Statistics',
-              },
-              {
-                href: '/tribunal-backlog-tracker/',
-                title: 'UK Employment Tribunal Backlog Tracker',
-                description: 'Compare regional hearing delays (up to 540 days in London) and employer defence cost exposure when negotiating a discrimination exit.',
-                tag: 'Data Tracker',
-              },
-              {
-                href: '/reports/uk-settlement-index-2026/',
-                title: 'UK Employment Settlement Index 2026',
-                description: 'Sector-by-sector UK settlement multiples and statutory cap benchmarks for 2026.',
-                tag: '2026 Report',
-              },
+                {
+                  href: '/guides/employment-tribunal-average-awards-uk/',
+                  title: 'Average Employment Tribunal Awards UK (MoJ Tables)',
+                  description: 'Official Ministry of Justice median and mean discrimination, sex, race, and disability tribunal awards alongside 2026 Vento bands.',
+                  tag: 'MoJ Statistics',
+                },
+                {
+                  href: '/tribunal-backlog-tracker/',
+                  title: 'UK Employment Tribunal Backlog Tracker',
+                  description: 'Compare regional hearing delays (up to 540 days in London) and employer defence cost exposure when reviewing a discrimination exit.',
+                  tag: 'Data Tracker',
+                },
+                {
+                  href: '/reports/uk-settlement-index-2026/',
+                  title: 'UK Employment Settlement Index 2026',
+                  description: 'Sector-by-sector UK settlement multiples and statutory cap benchmarks for 2026.',
+                  tag: '2026 Report',
+                },
               ]}
             />
-          </div>
-        </section>
-<section className="py-12 border-b border-rule">
-          <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
-            <FaqAccordion faqs={FAQS} />
-            <DynamicFaqSection pathname="/guides/discrimination-settlement-agreements/" />
           </div>
         </section>
 
@@ -650,7 +680,7 @@ export default function DiscriminationSettlementAgreementsGuide() {
         </section>
 
         {/* Disclaimer */}
-        <p className="text-body text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
+        <p className="text-[13px] text-muted-2 border-t border-rule pt-6 leading-relaxed max-w-2xl mx-auto px-5 mb-8">
           Disclaimer: SettlementCheck is an independent information service and calculator platform, not a law firm. The content on this page is for general information only and does not constitute formal legal counsel. Use our free calculator to evaluate your settlement offer.
         </p>
       </main>

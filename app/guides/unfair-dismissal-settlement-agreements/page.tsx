@@ -43,19 +43,23 @@ const FAQS = [
   },
   {
     q: 'Who pays for my legal advice on the settlement agreement?',
-    a: 'Employers standardly provide a capped commercial contribution (typically between £350 and £500+ plus VAT) directly to your solicitor upon completion. Under ERA 1996 s.203(3), independent legal advice from a qualified solicitor is mandatory for the settlement waiver to become legally binding.',
+    a: 'Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. Any excess or abortive work is subject to your solicitor engagement terms. Under ERA 1996 s.203(3), independent legal advice is mandatory for the waiver to bind.',
+  },
+  {
+    q: 'Can my employer withdraw the offer if I ask for more?',
+    a: 'Yes. Under UK contract law, making a counter-proposal rejects the original offer, so your employer can withdraw it before signature. ACAS Code 4 recommends 10 calendar days to consider an initial written offer, though this is guidance rather than a strict legal right.',
   },
   {
     q: 'Is my unfair dismissal settlement payment taxable?',
-    a: 'The first £30,000 of compensation for loss of office is exempt from income tax and National Insurance under ITEPA 2003 s.403. Any contractual earnings, accrued holiday pay, and Pay in Lieu of Notice (PILON) under ITEPA 2003 s.402D remain fully subject to income tax and National Insurance.',
+    a: 'The first £30,000 of compensation for loss of office is exempt from income tax and National Insurance under ITEPA 2003 s.403. Any contractual earnings, accrued holiday pay, garden leave salary, and Pay in Lieu of Notice (PILON) under ITEPA 2003 s.402D are taxed as wages.',
   },
   {
     q: 'What is a Polkey reduction and how does it affect my settlement value?',
-    a: 'A Polkey reduction comes from the case of Polkey v AE Dayton Services Ltd. If an employer dismissed you unfairly on procedural grounds, an employment tribunal can reduce your compensatory award. The reduction reflects the percentage chance that a fair procedure would still have resulted in your dismissal. Employers use this principle during negotiations to lower their opening settlement figures.',
+    a: 'A Polkey reduction comes from Polkey v AE Dayton Services Ltd. If an employer dismissed you unfairly on procedural grounds, an employment tribunal can reduce your compensatory award by the percentage chance a fair procedure would still have led to dismissal.',
   },
   {
     q: 'What happens if I refuse to sign an unfair dismissal settlement agreement?',
-    a: 'If you refuse the offer, you keep your right to bring an employment tribunal claim. You must notify ACAS to begin Early Conciliation before your tribunal deadline expires. The standard time limit to lodge a claim is three months minus one day from your effective date of termination.',
+    a: 'If you decline the offer, you keep your right to bring an employment tribunal claim. You must notify ACAS to begin Early Conciliation before the standard time limit of three months minus one day from your effective date of termination.',
   },
 ]
 
@@ -132,35 +136,14 @@ export default function UnfairDismissalSettlementAgreementGuide() {
               <span className="text-muted text-xs">/</span>
               <span className="text-xs text-ink truncate">Unfair Dismissal Settlement Agreements</span>
             </div>
-            <p className="sc-eyebrow mb-4" style={{ letterSpacing: '0.10em' }}>Employment Law Guide</p>
-            <h1 className="sc-h1 mb-5">
+            <h1 className="sc-h1 mb-4">
               Unfair Dismissal Settlement Agreements UK (2026 Rules)
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted mb-6 border-b border-rule pb-4">
-              <span>SettlementCheck Legal Analysis</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Statutory baseline: SI 2026/310</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-muted/40"></span>
-              <span>Updated October 2026</span>
-            </div>
-            <p className="sc-lead">
-              An unfair dismissal settlement agreement is a legally binding contract that resolves an employment dispute out of court. Your employer pays you a financial settlement. In exchange, you agree not to take your unfair dismissal claim to an employment tribunal.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 &amp; SI 2026/310
             </p>
-          </div>
-        </section>
-
-        {/* Answer-First Section */}
-        <section className="py-10 border-b border-rule bg-white">
-          <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">How unfair dismissal settlements work out of court</h2>
-            <p className="sc-body mb-4">
-              Under UK employment law, settling an unfair dismissal case out of court depends on statutory caps and realistic financial loss. Tribunals calculate awards in two parts: a basic award and a compensatory award.
-            </p>
-            <p className="sc-body mb-4">
-              From 6 April 2026, the statutory weekly pay cap is £751 (SI 2026/310). The maximum basic award is £22,530. The statutory compensatory award cap is £123,543 or 52 weeks of gross pay, whichever is lower.
-            </p>
-            <p className="sc-body">
-              A fair settlement offer reflects these caps. It also factors in notice pay, realistic time to secure a new job, and the legal costs both sides avoid by not going to a hearing.
+            <p className="sc-lead leading-relaxed">
+              Handed a settlement agreement after a dismissal or capability process? Check how your employer&apos;s offer compares against the April 2026 statutory caps. Calculate your baseline in 60 seconds with no email required, see what is taxed as wages, and prepare clear questions for an independent solicitor.
             </p>
           </div>
         </section>
@@ -169,8 +152,8 @@ export default function UnfairDismissalSettlementAgreementGuide() {
         <section className="py-6 bg-paper-2 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
             <EmbeddedCalculatorCard
-              badge="Unfair Dismissal Settlement Engine"
-              title="Calculate Your Unfair Dismissal Settlement Compensation Baseline"
+              badge="April 2026 Statutory Check"
+              title="How does your offer compare to the statutory baseline?"
               subtitle="Evaluate the statutory basic award (£751/wk cap) and compensatory award limit (£123,543 or 52 weeks salary)."
               disputeType="unfair_dismissal"
               statutoryPills={[
@@ -181,8 +164,24 @@ export default function UnfairDismissalSettlementAgreementGuide() {
               initialSalary={48000}
               initialYears={4}
               initialAge={41}
-              ctaText="Check My Unfair Dismissal Baseline →"
+              ctaText="Check my offer now →"
             />
+          </div>
+        </section>
+
+        {/* Answer-First Section */}
+        <section className="py-10 border-b border-rule bg-white">
+          <div className="max-w-2xl mx-auto px-5">
+            <h2 className="guide-h2 mb-4">How do unfair dismissal settlements work out of court?</h2>
+            <p className="sc-body mb-4">
+              Settling an unfair dismissal dispute out of court depends on statutory caps and realistic financial loss. Tribunals calculate awards in two parts: a basic award and a compensatory award.
+            </p>
+            <p className="sc-body mb-4">
+              From 6 April 2026, the statutory weekly pay cap is £751 (SI 2026/310), giving a maximum basic award of £22,530. The compensatory award cap is £123,543 or 52 weeks of gross pay, whichever is lower.
+            </p>
+            <p className="sc-body">
+              A commercial settlement reflects these caps alongside notice pay, job-search time, and avoided tribunal defence costs.
+            </p>
           </div>
         </section>
 
@@ -213,13 +212,13 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 <li className="flex items-start gap-3">
                   <CheckIcon />
                   <span className="sc-body text-sm">
-                    <strong>Tax exemption:</strong> The first £30,000 of compensation for loss of employment is tax-free under ITEPA 2003 s.403. Notice pay remains fully taxable.
+                    <strong>Tax exemption:</strong> The first £30,000 of genuine compensation is tax-free under ITEPA 2003 s.403. Notice pay and garden leave are taxed as wages.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon />
                   <span className="sc-body text-sm">
-                    <strong>Employer legal fee contribution:</strong> Independent legal advice is mandatory under ERA 1996 s.203(3). Employers standardly provide a capped commercial contribution, typically £350 to £500+ plus VAT upon completion.
+                    <strong>Employer legal fee contribution:</strong> Independent legal advice is mandatory under ERA 1996 s.203(3). Employers standardly contribute £350 to £500+ plus VAT upon completion, with any excess or abortive work subject to your solicitor engagement terms.
                   </span>
                 </li>
               </ul>
@@ -230,18 +229,15 @@ export default function UnfairDismissalSettlementAgreementGuide() {
         {/* Section 1: What is Unfair Dismissal */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">1. What is unfair dismissal under UK employment law?</h2>
+            <h2 className="guide-h2 mb-4">1. What is unfair dismissal under UK employment law?</h2>
             <p className="sc-body mb-4">
-              Under Section 94 of the Employment Rights Act 1996, every qualifying employee has the right not to be unfairly dismissed. For a dismissal to be fair, your employer must satisfy two distinct tests under Section 98.
+              Under Section 94 of the Employment Rights Act 1996, qualifying employees have the right not to be unfairly dismissed. For a dismissal to be fair, your employer must satisfy two tests under Section 98.
             </p>
             <p className="sc-body mb-4">
-              First, the employer must establish a potentially fair statutory reason. Section 98(2) specifies five valid grounds: capability or qualifications, conduct, redundancy, statutory restriction, or some other substantial reason (SOSR).
-            </p>
-            <p className="sc-body mb-4">
-              Second, the employer must act reasonably in treating that reason as sufficient to dismiss you (Section 98(4)). The employer must follow a fair, balanced procedure before making the decision.
+              First, the employer must show a potentially fair reason under Section 98(2): capability, conduct, redundancy, statutory restriction, or some other substantial reason (SOSR).
             </p>
             <p className="sc-body">
-              If your employer fails to follow fair procedures or lacks genuine grounds, the dismissal is legally unfair. Employers often propose a settlement agreement to resolve the dispute quietly without a public tribunal hearing.
+              Second, under Section 98(4), the employer must act reasonably and follow a fair procedure. When either test is in doubt, employers often propose a settlement agreement to avoid a public tribunal hearing.
             </p>
           </div>
         </section>
@@ -249,18 +245,18 @@ export default function UnfairDismissalSettlementAgreementGuide() {
         {/* Section 2: Two-Year Rule & Day-One Exceptions */}
         <section className="py-12 border-b border-rule bg-paper">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">2. The two-year service rule and day-one exceptions</h2>
+            <h2 className="guide-h2 mb-4">2. Do I need two years of service to claim?</h2>
             <p className="sc-body mb-4">
-              To bring a claim for ordinary unfair dismissal, you must have at least two years of continuous service under ERA 1996 s.108(1). If you have less than two years, you generally cannot claim ordinary unfair dismissal.
+              Ordinary unfair dismissal requires at least two years of continuous service under ERA 1996 s.108(1). With less than two years, you generally cannot bring an ordinary unfair dismissal claim.
             </p>
             <p className="sc-body mb-4">
-              However, the law grants day-one protection for automatic unfair dismissal. You do not need two years of continuous service if your dismissal falls into any of these statutory categories:
+              Day-one protection applies to automatic unfair dismissal. You do not need two years of service if your dismissal falls into these statutory categories:
             </p>
             <div className="space-y-3 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-body mb-1">Whistleblowing (ERA 1996 s.103A)</p>
+                <p className="font-semibold text-ink text-[15px] mb-1">Whistleblowing (ERA 1996 s.103A)</p>
                 <p className="sc-body">
-                  Dismissals caused by making a protected disclosure about wrongdoing, legal breaches, or regulatory failures. Compensation for whistleblowing dismissal has no statutory financial cap. Read our full guide on{' '}
+                  Dismissals caused by making a protected disclosure about wrongdoing or regulatory breaches. Compensation has no statutory cap. Read our guide on{' '}
                   <Link href="/guides/whistleblowing-settlement-agreements/" className="text-coral underline hover:text-ink">
                     whistleblowing settlement agreements
                   </Link>
@@ -268,26 +264,26 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-body mb-1">Pregnancy and Maternity (ERA 1996 s.99)</p>
+                <p className="font-semibold text-ink text-[15px] mb-1">Pregnancy and Maternity (ERA 1996 s.99)</p>
                 <p className="sc-body">
-                  Dismissals linked to pregnancy, childbirth, maternity leave, or related family leave rights. These claims often include unlawful sex discrimination under the Equality Act 2010.
+                  Dismissals linked to pregnancy, childbirth, maternity leave, or family leave rights. These claims often sit alongside sex discrimination under the Equality Act 2010.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-body mb-1">Health and Safety Activities (ERA 1996 s.100)</p>
+                <p className="font-semibold text-ink text-[15px] mb-1">Health and Safety Activities (ERA 1996 s.100)</p>
                 <p className="sc-body">
-                  Dismissals for raising workplace safety hazards, acting as a safety representative, or refusing to work in conditions of serious and imminent danger.
+                  Dismissals for raising workplace safety hazards, acting as a safety representative, or refusing work in serious and imminent danger.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
-                <p className="font-semibold text-ink text-body mb-1">Asserting Statutory Rights (ERA 1996 s.104)</p>
+                <p className="font-semibold text-ink text-[15px] mb-1">Asserting Statutory Rights (ERA 1996 s.104)</p>
                 <p className="sc-body">
-                  Dismissals for claiming statutory entitlements, such as the National Minimum Wage, statutory annual leave, or correct working time limits.
+                  Dismissals for claiming statutory entitlements such as the National Minimum Wage, statutory annual leave, or working time limits.
                 </p>
               </div>
             </div>
             <p className="sc-body">
-              When an employer faces an automatic unfair dismissal risk, your settlement bargaining position improves significantly. In uncapped claims, settlement figures often exceed standard statutory formulas.
+              Where automatic unfair dismissal or discrimination applies, Section 111A confidentiality does not shield pre-termination talks and compensation can be uncapped.
             </p>
           </div>
         </section>
@@ -295,9 +291,9 @@ export default function UnfairDismissalSettlementAgreementGuide() {
         {/* Section 3: Compensation Caps Comparison Table */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">3. Statutory compensation caps for 2026/27</h2>
+            <h2 className="guide-h2 mb-4">3. What are the 2026/27 statutory compensation caps?</h2>
             <p className="sc-body mb-4">
-              Tribunals calculate unfair dismissal payouts using statutory limits set by the annual Employment Rights (Increase of Limits) Order. For dismissals taking place on or after 6 April 2026, SI 2026/310 governs all caps.
+              Tribunals calculate unfair dismissal payouts using statutory limits updated each April. For dismissals on or after 6 April 2026, SI 2026/310 governs all caps.
             </p>
             <div className="overflow-x-auto my-6">
               <table className="w-full text-left text-sm border-collapse border border-rule rounded-xl">
@@ -333,10 +329,10 @@ export default function UnfairDismissalSettlementAgreementGuide() {
               </table>
             </div>
             <p className="sc-body mb-4">
-              The basic award mirrors statutory redundancy pay. It uses a formula based on your age, completed years of service (up to 20 years), and your capped weekly gross pay of £751.
+              The basic award mirrors statutory redundancy pay. It uses your age, completed years of service (up to 20 years), and capped weekly gross pay of £751.
             </p>
             <p className="sc-body">
-              The compensatory award covers net financial losses resulting directly from the dismissal. This includes lost salary, lost pension contributions, and lost employment benefits while searching for equivalent work.
+              The compensatory award covers net financial losses caused by the dismissal, including lost salary, pension contributions, and benefits while seeking new work.
             </p>
           </div>
         </section>
@@ -344,38 +340,38 @@ export default function UnfairDismissalSettlementAgreementGuide() {
         {/* Section 4: How Employers Value Settlements */}
         <section className="py-12 border-b border-rule bg-paper">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">4. How employers value an unfair dismissal settlement</h2>
+            <h2 className="guide-h2 mb-4">4. How do employers value an unfair dismissal settlement?</h2>
             <p className="sc-body mb-4">
-              Employers do not choose settlement numbers at random. Their legal advisers evaluate four key financial and procedural factors before deciding what to offer:
+              Employers and their legal advisers weigh four practical factors when setting an opening figure:
             </p>
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-xl border border-rule bg-white">
                 <h3 className="text-sm font-semibold text-ink mb-1">Actual Financial Loss and Mitigation</h3>
                 <p className="sc-body">
-                  Tribunals require employees to mitigate their loss by looking for work. If your industry has high vacancies, employers argue you will find work within three months. If your sector has few openings, your realistic loss may span six to twelve months.
+                  Tribunals expect employees to mitigate loss by looking for new work. Employers model how many months it is likely to take to replace your salary in your sector.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
                 <h3 className="text-sm font-semibold text-ink mb-1">Notice Pay and Benefits</h3>
                 <p className="sc-body">
-                  You are legally entitled to your contractual notice period or statutory notice, whichever is greater. A settlement offer must provide for your notice alongside additional compensation.
+                  You remain entitled to contractual or statutory notice, whichever is greater. A settlement offer sets out how notice or garden leave is handled alongside compensation.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
                 <h3 className="text-sm font-semibold text-ink mb-1">The Polkey Reduction Risk</h3>
                 <p className="sc-body">
-                  Under the legal principle from Polkey v AE Dayton Services Ltd, an employer may argue that a fair procedure would have led to your dismissal anyway. If a tribunal agrees, it reduces compensatory awards by a percentage. Employers cite Polkey arguments to justify opening offers below your full claim value.
+                  Under Polkey v AE Dayton Services Ltd, a tribunal can reduce compensatory awards if a fair procedure would still have led to dismissal. Employers often cite Polkey when pricing opening offers.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-rule bg-white">
                 <h3 className="text-sm font-semibold text-ink mb-1">ACAS Code 1 Procedural Uplift</h3>
                 <p className="sc-body">
-                  Under Section 207A of the Trade Union and Labour Relations (Consolidation) Act 1992, tribunals can increase awards by up to 25% if an employer unreasonably failed to follow the ACAS Code of Practice on disciplinary and grievance procedures. This potential 25% uplift increases your negotiation settlement figure.
+                  Under Section 207A of TULRCA 1992, tribunals can uplift awards by up to 25% for unreasonable breaches of the ACAS Code of Practice on disciplinary and grievance procedures.
                 </p>
               </div>
             </div>
             <p className="sc-body">
-              An employer also factors in their own legal defence costs. Defending a multi-day unfair dismissal tribunal hearing typically costs an organisation £10,000 to £25,000 plus VAT in legal representation.
+              Employers also factor in their own legal defence costs and management time for a multi-day employment tribunal hearing.
             </p>
           </div>
         </section>
@@ -383,21 +379,21 @@ export default function UnfairDismissalSettlementAgreementGuide() {
         {/* Section 5: Tax Treatment & PILON */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">5. The £30,000 tax-free exemption and PILON rules</h2>
+            <h2 className="guide-h2 mb-4">5. How are unfair dismissal settlements taxed?</h2>
             <p className="sc-body mb-4">
-              Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003 (ITEPA), the first £30,000 of compensation for termination of employment is free of income tax and employee National Insurance contributions.
+              Under Section 403 of the Income Tax (Earnings and Pensions) Act 2003 (ITEPA), the first £30,000 of genuine termination compensation is free of income tax and employee National Insurance.
             </p>
             <p className="sc-body mb-4">
-              However, tax rules strictly separate genuine termination compensation from contractual earnings. Pay in Lieu of Notice (PILON) is treated as taxable earnings under Section 402D of ITEPA 2003. Even if your contract has no PILON clause, the Post-Employment Notice Pay (PENP) statutory formula taxes notice pay as general income.
+              Notice pay, garden leave salary, and Pay in Lieu of Notice (PILON) are taxed as wages under Section 402D of ITEPA 2003. Even without a PILON clause, the Post-Employment Notice Pay (PENP) formula taxes unworked notice as regular earnings.
             </p>
             <div className="rounded-xl border border-rule bg-paper p-4 flex gap-3 my-6">
               <InfoIcon />
               <p className="sc-body">
-                Holiday pay, contractual bonuses, and salary arrears are also subject to ordinary deductions for income tax and National Insurance. Only the ex-gratia compensation element qualifies for the £30,000 exemption.
+                Holiday pay, contractual bonuses, and salary arrears are also taxed as wages. Only the genuine ex-gratia compensation element qualifies for the £30,000 exemption.
               </p>
             </div>
             <p className="sc-body">
-              Structuring your settlement agreement correctly ensures you receive the full tax benefit permitted by law. Your independent legal adviser will check the tax indemnity clauses before you sign.
+              Your independent solicitor will check the tax indemnity wording before you sign.
             </p>
           </div>
         </section>
@@ -405,18 +401,15 @@ export default function UnfairDismissalSettlementAgreementGuide() {
         {/* Section 6: Independent Legal Advice */}
         <section className="py-12 border-b border-rule bg-paper">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-4">6. Independent legal advice and employer fee contributions</h2>
+            <h2 className="guide-h2 mb-4">6. Who pays for independent legal advice?</h2>
             <p className="sc-body mb-4">
-              A settlement agreement is only legally valid if you receive advice from an independent legal adviser (ERA 1996 s.203(3)). The adviser must be an SRA-regulated solicitor, a trade union official, or an advice centre worker holding valid professional indemnity insurance.
+              A settlement agreement is only legally binding if you receive advice from an independent legal adviser (ERA 1996 s.203(3)). Your adviser must be an SRA-regulated solicitor, a certified trade union official, or an insured advice centre worker.
             </p>
             <p className="sc-body mb-4">
-              Your adviser explains the terms of the agreement and their effect on your ability to pursue employment rights in a tribunal. Without their formal sign-off certificate, the agreement has no legal force.
-            </p>
-            <p className="sc-body mb-4">
-              Because legal advice is a statutory condition, employers contribute towards your legal costs. Standard employer fee contributions range from £350 to £750 plus VAT. For complex negotiations, solicitors often ask the employer to increase this contribution.
+              Your adviser explains the terms, including any non-compete clauses, confidentiality terms, and your waiver of tribunal claims. Without their formal adviser certificate, the agreement has no legal force.
             </p>
             <p className="sc-body">
-              Your solicitor invoices your employer directly for this agreed sum. You should not have to pay these legal fees yourself when the adviser works within the employer fee allowance.
+              Employers standardly provide a capped contribution of £350 to £500+ plus VAT directly to your solicitor upon completion. Any excess or abortive work is subject to your solicitor engagement terms.
             </p>
           </div>
         </section>
@@ -424,16 +417,16 @@ export default function UnfairDismissalSettlementAgreementGuide() {
         {/* Section 7: Step-by-Step Roadmap */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-6">7. Step-by-step roadmap to settle an unfair dismissal</h2>
+            <h2 className="guide-h2 mb-6">7. How does the settlement process work step by step?</h2>
             <div className="space-y-6">
               <div className="flex gap-4">
                 <span className="flex-shrink-0 w-8 h-8 rounded-full bg-coral/10 text-coral font-bold flex items-center justify-center text-sm">
                   1
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-ink mb-1">Evaluate the initial offer against statutory caps</h3>
+                  <h3 className="text-base font-semibold text-ink mb-1">Compare the initial offer against statutory caps</h3>
                   <p className="sc-body">
-                    Calculate your basic award using the 2026 cap of £751 per week. Estimate your realistic loss of earnings up to the compensatory limit of £123,543. Compare this total to your employer opening figure.
+                    Calculate your basic award using the 2026 cap of £751 per week. Estimate your realistic loss of earnings up to the £123,543 compensatory limit to benchmark the opening figure.
                   </p>
                 </div>
               </div>
@@ -442,9 +435,9 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                   2
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-ink mb-1">Assess procedural flaws and ACAS Code breaches</h3>
+                  <h3 className="text-base font-semibold text-ink mb-1">Review procedural steps and ACAS Code compliance</h3>
                   <p className="sc-body">
-                    Identify where your employer cut corners. Did they fail to provide evidence? Did they deny you the right to be accompanied? Document these points to support a request for an uplift.
+                    Review the procedure your employer followed. Note any missing investigation steps, unshared evidence, or denied accompaniment rights to discuss with your solicitor.
                   </p>
                 </div>
               </div>
@@ -453,9 +446,9 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                   3
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-ink mb-1">Conduct without prejudice discussions</h3>
+                  <h3 className="text-base font-semibold text-ink mb-1">Check without prejudice status and timelines</h3>
                   <p className="sc-body">
-                    Negotiate under Section 111A of ERA 1996 or common-law without prejudice rules. Propose a realistic counter-offer supported by evidence of your ongoing losses and job market realities.
+                    Section 111A shields ordinary unfair dismissal talks, not discrimination, whistleblowing, or improper behaviour. Under contract law, a counter-proposal rejects the original offer, and ACAS Code 4 recommends 10 calendar days as guidance rather than a strict legal right.
                   </p>
                 </div>
               </div>
@@ -464,9 +457,9 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                   4
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-ink mb-1">Instruct an independent solicitor</h3>
+                  <h3 className="text-base font-semibold text-ink mb-1">Take independent legal advice</h3>
                   <p className="sc-body">
-                    Send the draft agreement to your chosen legal adviser. They will review non-financial clauses, including agreed job references, confidentiality wording, and mutual non-derogatory covenants.
+                    Share the draft with an independent solicitor. They review non-financial clauses such as agreed references, non-compete restrictions, and mutual non-derogatory wording.
                   </p>
                 </div>
               </div>
@@ -477,7 +470,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 <div>
                   <h3 className="text-base font-semibold text-ink mb-1">Sign the agreement and receive payment</h3>
                   <p className="sc-body">
-                    Both parties execute the agreement, and your solicitor signs the adviser certificate. Settlement payments are usually transferred to your bank account within 14 to 28 days of completion.
+                    Both parties sign the agreement and your solicitor completes the adviser certificate. Settlement sums are typically paid within 14 to 28 days of completion.
                   </p>
                 </div>
               </div>
@@ -488,25 +481,30 @@ export default function UnfairDismissalSettlementAgreementGuide() {
         {/* Calculator Callout Box */}
         <section className="py-12 border-b border-rule bg-ink">
           <div className="max-w-2xl mx-auto px-5 text-center">
-            <h2 className="sc-section-h2 text-white mb-4">Calculate your unfair dismissal settlement value</h2>
-            <p className="sc-lead mb-6" style={{ color: 'rgba(247,244,238,0.78)' }}>
-              Use our free calculator to model your statutory basic award, compensatory award limits, and tax-free sums in 60 seconds.
+            <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
+              Check where your offer stands
+            </h2>
+            <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+              See your statutory baseline, tax split, and commercial settlement range before speaking to a solicitor.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-wrap justify-center gap-3">
               <Link href="/unfair-dismissal-calculator/" className="btn-accent">
-                Unfair Dismissal Calculator →
+                Check my offer now →
               </Link>
-              <Link href="/calculator/?reason=performance" className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-rule text-white hover:bg-white/10 transition-colors font-medium text-sm">
-                Standard Settlement Calculator
+              <Link href="/redundancy-calculator/" className="btn-secondary">
+                Calculate my redundancy →
               </Link>
             </div>
+            <p className="text-white/60 text-[12px] mt-4">
+              Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+            </p>
           </div>
         </section>
 
         {/* FAQs */}
         <section className="py-12 border-b border-rule">
           <div className="max-w-2xl mx-auto px-5">
-            <h2 className="sc-section-h2 mb-8">Frequently asked questions</h2>
+            <h2 className="guide-h2 mb-8">Frequently asked questions</h2>
             <FaqAccordion faqs={FAQS} />
           </div>
         </section>
@@ -532,7 +530,7 @@ export default function UnfairDismissalSettlementAgreementGuide() {
                 {
                   href: '/guides/settlement-agreement-vs-tribunal-claim/',
                   title: 'Settlement Agreement vs Tribunal Claim',
-                  description: 'Compare financial outcomes, legal costs, and stress levels between settling and filing a claim.',
+                  description: 'Compare financial outcomes, legal costs, and timelines between settling and filing a claim.',
                   tag: 'Comparison',
                 },
                 {

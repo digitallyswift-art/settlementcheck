@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import FaqAccordion from '@/components/FaqAccordion'
+import EmbeddedCalculatorCard from '@/components/EmbeddedCalculatorCard'
 import RelatedArticles from '@/components/RelatedArticles'
 import ReviewCallout from '@/components/ReviewCallout'
 import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
@@ -50,7 +51,7 @@ const FAQS = [
   },
   {
     q: 'How much will a solicitor cost me?',
-    a: "Employers standardly provide a capped commercial contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. For standard advice within the employer's contribution cap, you should not face personal fee liabilities unless work exceeds the agreed cap or the agreement aborts.",
+    a: "Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement. For standard advice within that cap, you should not face personal fees. Any excess or abortive work if the agreement does not complete is subject to your solicitor's engagement terms.",
   },
 ]
 
@@ -111,11 +112,14 @@ export default function EmployerRecommendedSolicitor() {
               <span className="text-rule-strong text-xs">/</span>
               <span className="text-xs font-medium text-muted tracking-wide uppercase">Legal advice</span>
             </div>
-            <h1 className="sc-h1 mb-6">
+            <h1 className="sc-h1 mb-4">
               Do I have to use the solicitor my employer recommends?
             </h1>
-            <p className="sc-lead">
-              No. You are not required to use the solicitor your employer suggests. You have the right to choose any solicitor you want for independent legal advice. This is not a courtesy. It is built into the legal process.
+            <p className="text-[14px] text-muted mb-5">
+              Updated for April 2026 UK statutory rates · Checked against ERA 1996 s.203 &amp; SRA Rules
+            </p>
+            <p className="sc-lead leading-relaxed">
+              Got a draft settlement agreement with a solicitor name attached? You have the legal right to choose any independent SRA-regulated solicitor instead. Check your statutory baseline in 60 seconds with no email required, see how the £350 to £500+ plus VAT employer fee contribution works, and prepare clear questions before you instruct anyone.
             </p>
           </div>
         </section>
@@ -123,6 +127,25 @@ export default function EmployerRecommendedSolicitor() {
         {/* Article body */}
         <section className="bg-card py-14">
           <div className="max-w-2xl mx-auto px-5 space-y-12">
+
+            {/* Interactive Statutory Baseline Check */}
+            <section className="my-2">
+              <EmbeddedCalculatorCard
+                badge="April 2026 Statutory Check"
+                title="How does your offer compare to the statutory baseline?"
+                subtitle="Compare your settlement figure against your calculated statutory baseline and standard legal fee contributions before instructing a solicitor."
+                disputeType="general"
+                statutoryPills={[
+                  { label: 'Weekly Pay Cap', value: '£751/week', statute: 'SI 2026/310' },
+                  { label: 'Independent Advice', value: 'Mandatory', statute: 'ERA 1996 s.203(3)' },
+                  { label: 'Legal Fee Contribution', value: '£350 to £500+ plus VAT', statute: 'Paid on Completion' },
+                ]}
+                initialSalary={45000}
+                initialYears={4}
+                initialAge={38}
+                ctaText="Check my offer now →"
+              />
+            </section>
 
             {/* Key Takeaways */}
             <div className="bg-paper-2 border border-rule rounded-xl p-6 md:p-8">
@@ -138,42 +161,42 @@ export default function EmployerRecommendedSolicitor() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-[15px] text-ink leading-relaxed">The employer&apos;s customary legal fee contribution (£350 to £750 + VAT) ordinarily applies regardless of which independent SRA-regulated solicitor you choose.</span>
+                  <span className="text-[15px] text-ink leading-relaxed">Employers standardly contribute £350 to £500+ plus VAT upon completion, regardless of which independent SRA-regulated solicitor you choose. Excess or abortive work is subject to your solicitor engagement terms.</span>
                 </li>
               </ul>
             </div>
 
             {/* Section 1: What the law says */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">1. What the law actually requires</h2>
+              <h2 className="guide-h2">1. What does the law actually require for independent advice?</h2>
               <p className="guide-body">
-                Before a settlement agreement is legally binding, you must receive independent legal advice from a qualified solicitor or other relevant adviser. This is set out in Section 203 of the Employment Rights Act 1996.
+                Before a settlement agreement is legally binding, you must receive independent legal advice from a qualified solicitor or other relevant adviser. This is set out in Section 203(3) of the Employment Rights Act 1996.
               </p>
 
               <div className="bg-[#FFF8F6] border border-coral/20 rounded-lg p-5 mt-2 flex items-start gap-3">
                 <InfoIcon />
                 <p className="text-[14px] text-ink leading-relaxed">
-                  <strong>The key word is independent.</strong> The advice must come from someone who is not connected to your employer or acting in their interests. It must be advice given on your behalf, about your situation. Your employer cannot tell you which solicitor to use.
+                  <strong>The key word is independent.</strong> The advice must come from someone not connected to your employer or acting in their interests. Your employer cannot tell you which solicitor to use.
                 </p>
               </div>
             </div>
 
             <ReviewCallout
               title="Want an objective clause check first?"
-              description="Before you speak to any solicitor, run your draft terms through our confidential review tool. Know whether your employer legal fee offer covers realistic costs and if your package is fair."
-              ctaText="Check my legal fee contribution →"
-              badge="Independent Analysis"
+              description="Before speaking to a solicitor, run your draft terms through our confidential review tool. Check your calculated statutory baseline, tax split, and legal fee contribution."
+              ctaText="Check my offer now →"
+              badge="April 2026 Statutory Check"
             />
 
             {/* Section 2: Why employers recommend */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">2. Why employers recommend a specific solicitor</h2>
+              <h2 className="guide-h2">2. Why do employers recommend a specific solicitor?</h2>
               <p className="guide-body">
-                Many employers suggest a solicitor as a practical convenience. In straightforward cases, the recommended solicitor may be competent and fair. But the relationship they have is with your employer, not with you.
+                Many employers suggest a solicitor as a practical convenience. In straightforward cases, the recommended solicitor may be competent and fair. However, their commercial relationship is with your employer, not with you.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                <div className="border border-rule rounded-lg p-5">
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
                   <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-3">What they may have done before</h3>
                   <ul className="space-y-2">
                     <li className="text-[14px] text-muted flex items-start gap-2">
@@ -187,14 +210,14 @@ export default function EmployerRecommendedSolicitor() {
                     </li>
                   </ul>
                 </div>
-                <div className="border border-rule rounded-lg p-5">
+                <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
                   <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-3">What that means for you</h3>
                   <ul className="space-y-2">
                     <li className="text-[14px] text-muted flex items-start gap-2">
                       <span className="text-coral mt-1">•</span> They have an incentive to complete the process smoothly
                     </li>
                     <li className="text-[14px] text-muted flex items-start gap-2">
-                      <span className="text-coral mt-1">•</span> They may be less likely to push back on unfair terms
+                      <span className="text-coral mt-1">•</span> They may be less likely to challenge restrictive terms like a non-compete
                     </li>
                     <li className="text-[14px] text-muted flex items-start gap-2">
                       <span className="text-coral mt-1">•</span> They are not obligated to flag whether you could negotiate more
@@ -206,55 +229,55 @@ export default function EmployerRecommendedSolicitor() {
 
             {/* Section 3: What independent means */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">3. What "independent" actually means</h2>
+              <h2 className="guide-h2">3. What does &ldquo;independent&rdquo; actually mean?</h2>
               <p className="guide-body">
-                Independent legal advice means the solicitor is acting solely in your interests. They have no connection to your employer and are not looking to maintain a relationship with their HR department for future work.
+                Independent legal advice means the solicitor acts solely in your interests. They owe a strict duty of care and legal privilege to you, with no commercial tie to your employer&apos;s HR team.
               </p>
 
               <div className="space-y-4 mt-2">
                 <div className="border-l-2 border-coral pl-4 py-1">
                   <strong className="text-ink block text-[16px]">Honest assessment of the offer</strong>
-                  <span className="text-muted text-[15px]">A genuinely independent solicitor will tell you whether your offer is fair against the statutory minimums and typical market rates for your circumstances.</span>
+                  <span className="text-muted text-[15px]">An independent solicitor checks your offer against your calculated statutory baseline, garden leave terms, and whether notice pay is taxed as wages.</span>
                 </div>
                 <div className="border-l-2 border-coral pl-4 py-1">
-                  <strong className="text-ink block text-[16px]">Willingness to negotiate</strong>
-                  <span className="text-muted text-[15px]">They will advise on whether a counter-offer is worth pursuing and, if so, how to frame it. An independent solicitor has no reason to rush you towards signing.</span>
+                  <strong className="text-ink block text-[16px]">Clear advice on negotiation risks</strong>
+                  <span className="text-muted text-[15px]">They explain whether a counter-proposal is worth pursuing and warn you of contract law risks, such as the employer withdrawing the offer.</span>
                 </div>
                 <div className="border-l-2 border-coral pl-4 py-1">
                   <strong className="text-ink block text-[16px]">No conflict of interest</strong>
-                  <span className="text-muted text-[15px]">Their only obligation is to you. They are not weighing your case against their future commercial relationship with your employer.</span>
+                  <span className="text-muted text-[15px]">Their only obligation is to you. They are not weighing your case against future work from your employer.</span>
                 </div>
               </div>
             </div>
 
             {/* Section 4: Fees */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">4. Customary employer legal fee contribution</h2>
+              <h2 className="guide-h2">4. Who pays the solicitor&apos;s fees if you choose your own?</h2>
               <p className="guide-body">
-                Whichever independent SRA-regulated solicitor you choose, employers customarily contribute toward the cost of your legal advice (£350 to £750 + VAT for a straightforward review) as a standard commercial term of the agreement.
+                Employers standardly contribute £350 to £500+ plus VAT toward your independent legal advice upon completion of the agreement. This commercial contribution applies whichever SRA-regulated solicitor you choose.
               </p>
 
               <ul className="space-y-3 bg-paper-2 border border-rule rounded-xl p-6">
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
-                  <span className="text-[15px] text-ink"><strong>You are not penalised financially</strong> for choosing your own solicitor. The contribution stays the same.</span>
+                  <span className="text-[15px] text-ink"><strong>Same contribution applies:</strong> You are not penalised financially for choosing your own SRA-regulated solicitor.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
-                  <span className="text-[15px] text-ink"><strong>For standard reviews within the employer&apos;s cap</strong>, you should not face personal fee liability upon signed completion.</span>
+                  <span className="text-[15px] text-ink"><strong>Standard review within the cap:</strong> For straightforward reviews upon completion, you should not face personal fee liability.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-coral flex-shrink-0" />
-                  <span className="text-[15px] text-ink"><strong>If negotiation extends the scope</strong>, some solicitors will seek to recover additional fees from your employer as part of the settlement.</span>
+                  <span className="text-[15px] text-ink"><strong>Excess or abortive work:</strong> If negotiations extend beyond the cap or the agreement does not complete, fees depend on your solicitor engagement terms.</span>
                 </li>
               </ul>
             </div>
 
             {/* Section 5: When to choose your own */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">5. When to choose your own solicitor</h2>
+              <h2 className="guide-h2">5. When does choosing your own solicitor matter most?</h2>
               <p className="guide-body">
-                Choosing your own solicitor is a right, not an obligation. The recommended solicitor may be perfectly adequate in many situations. But certain circumstances make independent advice more important.
+                Choosing your own solicitor is your legal right. While a recommended firm may be adequate in simple exits, certain situations make independent representation especially important.
               </p>
 
               <div className="space-y-3 mt-2">
@@ -262,21 +285,21 @@ export default function EmployerRecommendedSolicitor() {
                   <div className="w-8 h-8 rounded-full bg-paper-2 border border-rule flex items-center justify-center font-sans text-[13px] font-semibold text-ink flex-shrink-0">A</div>
                   <div>
                     <strong className="text-ink block text-[15px] mb-1">Long-term employer relationship with the firm</strong>
-                    <span className="text-muted text-[14px] leading-relaxed">If the recommended firm has handled multiple agreements for your employer, their incentive is to keep the process frictionless, not to maximise your outcome.</span>
+                    <span className="text-muted text-[14px] leading-relaxed">If the recommended firm handles regular work for your employer, their priority may be a frictionless sign-off rather than challenging restrictive terms.</span>
                   </div>
                 </div>
                 <div className="flex gap-4 p-4 border border-rule rounded-lg">
                   <div className="w-8 h-8 rounded-full bg-paper-2 border border-rule flex items-center justify-center font-sans text-[13px] font-semibold text-ink flex-shrink-0">B</div>
                   <div>
                     <strong className="text-ink block text-[15px] mb-1">You feel rushed or under-advised</strong>
-                    <span className="text-muted text-[14px] leading-relaxed">If the solicitor seems reluctant to discuss negotiation, dismisses your questions, or is pushing you to sign quickly, those are signs the advice may not be fully independent.</span>
+                    <span className="text-muted text-[14px] leading-relaxed">ACAS Code of Practice 4 recommends 10 calendar days to consider a written offer, though this is guidance rather than a strict legal right. Feeling rushed is a clear signal to seek your own adviser.</span>
                   </div>
                 </div>
                 <div className="flex gap-4 p-4 border border-rule rounded-lg">
                   <div className="w-8 h-8 rounded-full bg-paper-2 border border-rule flex items-center justify-center font-sans text-[13px] font-semibold text-ink flex-shrink-0">C</div>
                   <div>
                     <strong className="text-ink block text-[15px] mb-1">Discrimination, whistleblowing, or disputed facts</strong>
-                    <span className="text-muted text-[14px] leading-relaxed">If your case involves potential discrimination claims or protected disclosures, you need a solicitor with no reason to downplay those claims.</span>
+                    <span className="text-muted text-[14px] leading-relaxed">Section 111A confidentiality only covers ordinary unfair dismissal. It does not shield discrimination, whistleblowing, or improper behaviour, which an independent solicitor can assess.</span>
                   </div>
                 </div>
                 <div className="flex gap-4 p-4 border border-rule rounded-lg">
@@ -284,9 +307,9 @@ export default function EmployerRecommendedSolicitor() {
                   <div>
                     <strong className="text-ink block text-[15px] mb-1">You want to know if the offer could be higher</strong>
                     <span className="text-muted text-[14px] leading-relaxed">
-                      An independent solicitor will give you an honest assessment of whether negotiation is realistic in your situation, what a reasonable counter-offer might look like, and{' '}
+                      An independent solicitor can explain whether negotiation is realistic, noting that under UK contract law a counter-proposal rejects the original offer. See{' '}
                       <Link href="/guides/what-is-a-fair-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
-                        what a genuinely fair settlement looks like
+                        what a fair settlement looks like
                       </Link>.
                     </span>
                   </div>
@@ -296,16 +319,16 @@ export default function EmployerRecommendedSolicitor() {
 
             {/* Section 6: Communicating your choice */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">6. Communicating your choice of solicitor to your employer</h2>
+              <h2 className="guide-h2">6. How do you tell your employer you are using your own solicitor?</h2>
               <p className="guide-body">
-                You do not need to explain or justify your choice of solicitor. A brief, factual response is all that is needed. Learn more in our full guide on{' '}
+                You do not need to explain or justify your choice of solicitor. A brief, factual reply is enough. Read more in our guide on{' '}
                 <Link href="/guides/how-to-negotiate-a-settlement-agreement/" className="text-coral underline underline-offset-2 hover:text-ink">
                   how to negotiate a settlement agreement
                 </Link>.
               </p>
 
               <div className="bg-paper-2 border border-rule rounded-xl p-6">
-                <p className="text-[13px] font-medium text-muted uppercase tracking-wider mb-3">Example wording</p>
+                <p className="text-[13px] font-medium text-muted uppercase tracking-wider mb-3">Example wording employees often use</p>
                 <p className="text-[16px] text-ink leading-relaxed font-serif italic">
                   &ldquo;Thank you for the recommendation. I will be arranging my own independent legal advice.&rdquo;
                 </p>
@@ -314,7 +337,7 @@ export default function EmployerRecommendedSolicitor() {
               <div className="bg-[#FFF8F6] border border-coral/20 rounded-lg p-5 flex items-start gap-3">
                 <AlertIcon />
                 <p className="text-[14px] text-ink leading-relaxed">
-                  <strong>If your employer objects or applies pressure</strong> to use their recommended solicitor, make a note of it. An independent solicitor can advise on whether that constitutes undue pressure under Section 111A. Read our guide on{' '}
+                  <strong>If your employer applies pressure</strong> to use their recommended firm, keep a written note of it. An independent solicitor can assess whether this amounts to improper behaviour under Section 111A. See our guide on{' '}
                   <Link href="/guides/pressured-to-sign/" className="text-coral underline underline-offset-2 hover:text-ink font-medium">
                     your rights when pressured to sign quickly
                   </Link>.
@@ -324,21 +347,21 @@ export default function EmployerRecommendedSolicitor() {
 
             {/* Section 7: How to find */}
             <div className="space-y-4">
-              <h2 className="guide-h2 text-[24px]">7. How to find an independent solicitor</h2>
+              <h2 className="guide-h2">7. How do you find an independent SRA-regulated solicitor?</h2>
               <p className="guide-body">
-                You can search for employment solicitors in your area through the{' '}
+                You can search for employment solicitors through the{' '}
                 <a
                   href="https://www.sra.org.uk/consumers/register/"
                   className="text-ink underline underline-offset-2 hover:text-coral transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Solicitors Regulation Authority&apos;s website
+                  Solicitors Regulation Authority&apos;s register
                 </a>
-                , which lists all SRA-regulated solicitors in England and Wales.
+                , which lists all authorised solicitors in England and Wales.
               </p>
               <p className="guide-body">
-                When you contact a solicitor, ask two questions directly: do they specialise in settlement agreements, and do they have any existing relationship with your employer or their legal team? A good solicitor will answer both without hesitation.
+                Check two things before instructing anyone: whether they regularly handle settlement agreements, and whether they have any conflict of interest with your employer.
               </p>
 
               <ul className="space-y-3 bg-paper-2 border border-rule rounded-xl p-5 mt-2">
@@ -366,19 +389,27 @@ export default function EmployerRecommendedSolicitor() {
             {/* CTA */}
             <div className="bg-ink rounded-2xl p-8 text-center">
               <h2 className="font-serif text-white text-[22px] font-[460] tracking-[-0.012em] leading-snug mb-2">
-                Find out where your offer stands
+                Check where your offer stands
               </h2>
-              <p className="text-white/70 text-body leading-relaxed mb-6">
-                Free calculator. Vetted solicitor matched within 24 hours. Standard employer fee contributions apply upon completion.
+              <p className="text-white/70 text-[15px] leading-relaxed mb-6">
+                See your calculated statutory baseline, tax split, and commercial settlement range before speaking to a solicitor.
               </p>
-              <Link href="/calculator/" className="btn-accent">
-                Check my offer →
-              </Link>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link href="/calculator/" className="btn-accent">
+                  Check my offer now →
+                </Link>
+                <Link href="/redundancy-calculator/" className="btn-secondary">
+                  Calculate my redundancy →
+                </Link>
+              </div>
+              <p className="text-white/60 text-[12px] mt-4">
+                Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+              </p>
             </div>
 
             {/* FAQ */}
             <div className="space-y-4 pt-2">
-              <h2 className="guide-h2 text-[24px]">Frequently asked questions</h2>
+              <h2 className="guide-h2">Frequently asked questions</h2>
               <div className="mt-4">
                 <FaqAccordion faqs={FAQS} />
               </div>
@@ -391,43 +422,37 @@ export default function EmployerRecommendedSolicitor() {
                 {
                   href: '/guides/pressured-to-sign/',
                   title: 'Pressured to Sign Quickly? Your Rights',
-                  description: 'Understand the ACAS 10-day rule and how to handle artificial employer deadlines.',
+                  description: 'Understand ACAS Code 4 guidance and how to handle artificial employer deadlines.',
                   tag: 'Employee Rights',
                 },
                 {
                   href: '/guides/how-to-negotiate-a-settlement-agreement/',
                   title: 'How to Negotiate a Settlement Agreement',
-                  description: 'A complete step-by-step walkthrough of negotiating terms, counter-offers, and legal fees.',
+                  description: 'A step-by-step walkthrough of settlement talks, counter-proposals, and legal fees.',
                   tag: 'Negotiation',
                 },
                 {
                   href: '/guides/what-is-a-fair-settlement-agreement/',
                   title: 'What Is a Fair Settlement Agreement?',
-                  description: 'Learn the typical multipliers and how to spot when an offer is unreasonably low.',
+                  description: 'Compare your settlement offer against commercial UK ranges and statutory baselines.',
                   tag: 'Valuation',
                 },
                 {
                   href: '/guides/nhs-settlement-agreements/',
                   title: 'NHS Settlement Agreements & MARS Calculator 2026',
-                  description: 'Learn why NHS trusts suggest panel solicitors and how independent advice protects whistleblowing and pension rights.',
+                  description: 'Why NHS trusts suggest panel solicitors and how independent advice protects pension rights.',
                   tag: 'Public Sector',
-                },
-                {
-                  href: '/for-solicitors/',
-                  title: 'For Employment Solicitors',
-                  description: 'Are you an SRA-regulated employment solicitor? Learn how our independent panel works.',
-                  tag: 'Panel',
                 },
                 {
                   href: '/guides/home-insurance-legal-cover-settlement-agreement/',
                   title: 'Home Insurance Legal Cover & Settlement Agreements',
-                  description: 'Why Legal Expenses Insurance (LEI) excludes voluntary settlement reviews and how employer contributions fund your solicitor.',
+                  description: 'Why Legal Expenses Insurance excludes voluntary settlement reviews and how employer contributions fund your solicitor.',
                   tag: 'Legal Fees',
                 },
                 {
                   href: '/guides/executive-settlement-agreements/',
                   title: 'Executive Settlement Agreements UK (2026)',
-                  description: 'Senior director exits, Companies Act s.217 rules, equity vesting, and higher employer legal fee contributions.',
+                  description: 'Senior director exits, Companies Act s.217 rules, equity vesting, and employer legal fee contributions.',
                   tag: 'Executive Guide',
                 },
               ]}
