@@ -131,19 +131,19 @@ export default function HomeClient({
       <main>
         <section
           id="calculator"
-          className="relative overflow-hidden pt-5 pb-10 sm:pt-8 sm:pb-12 md:py-[72px]"
+          className="relative overflow-hidden pt-7 pb-12 sm:pt-9 sm:pb-12 md:py-[72px]"
           style={{ background: '#F7F4EE' }}
         >
           <div className="sc-container relative">
             {alertBanner && (
-              <div className="mb-5 md:mb-8">
+              <div className="mb-6 md:mb-8">
                 {alertBanner}
               </div>
             )}
-            <div className="hero-grid grid gap-5 sm:gap-7 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
+            <div className="hero-grid grid gap-6 sm:gap-8 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
               <div className="flex flex-col min-w-0">
                 {/* Hero Pill / Statutory Rates & SRA Network Badge */}
-                <div className="flex flex-wrap items-center gap-2.5 mb-3.5 sm:mb-5">
+                <div className="flex flex-wrap items-center gap-2.5 mb-5">
                   <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-3 py-1 sm:px-3.5 sm:py-1.5 text-[12px] font-medium text-ink bg-white/75 shadow-sm backdrop-blur-sm">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
@@ -179,7 +179,7 @@ export default function HomeClient({
                   </Link>
                 </p>
 
-                <h1 className="sc-h1 max-sm:text-[31px] max-sm:leading-[1.08] mb-3 sm:mb-4 md:mb-5">
+                <h1 className="sc-h1 max-sm:text-[31px] max-sm:leading-[1.08] mb-4 md:mb-5">
                   {title || (
                     <>
                       How much should your<br />
@@ -289,7 +289,7 @@ export default function HomeClient({
                   </div>
 
                   {/* Mobile compact single-line trust points (before CTA for natural read-to-action flow) */}
-                  <div className="order-1 lg:hidden flex flex-col gap-2.5 mb-5">
+                  <div className="order-1 lg:hidden flex flex-col gap-3 mb-6">
                     {[
                       'No email required · check privately in 60s',
                       'Independent · no law firm behind the maths',
@@ -308,7 +308,7 @@ export default function HomeClient({
                   </div>
 
                   {/* Primary CTA (after ticks on both mobile and desktop) */}
-                  <div id="hero-primary-cta" className="order-2 mb-4 lg:mb-3">
+                  <div id="hero-primary-cta" className="order-2 mb-5 lg:mb-3">
                     <Link
                       href={ctaHref}
                       className="btn-accent w-full min-h-[52px] py-3.5 px-6 rounded-[10px] text-[16px] font-bold shadow-sm"
@@ -318,7 +318,7 @@ export default function HomeClient({
                   </div>
 
                   {/* Secondary path (now cleanly visible above the fold on mobile) */}
-                  <div className="order-3 pt-3 border-t border-[#0B1F3A]/[0.08] lg:mb-3 text-center">
+                  <div className="order-3 pt-4 border-t border-[#0B1F3A]/[0.08] lg:pt-3 lg:mb-3 text-center">
                     <span className="text-[14.5px] lg:text-[14px] text-muted lg:block lg:mb-1 mr-1.5 lg:mr-0">
                       Have a written draft?
                     </span>
