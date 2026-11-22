@@ -118,6 +118,12 @@ function cleanCurrencyInput(val: string): string {
   return intPart.replace(/^0+(?=\d)/, '')
 }
 
+function formatCurrencyInput(val: string): string {
+  if (!val) return ''
+  const num = parseInt(val, 10)
+  return isNaN(num) ? '' : num.toLocaleString('en-GB')
+}
+
 export default function SteppedCalculator({ onCalculate, initialValues }: Props) {
   const router = useRouter()
   const [phase, setPhase] = useState<Phase>('steps')
@@ -127,10 +133,12 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
 
   // Form values
   const [salary, setSalary] = useState(initialValues?.salary || '')
+  const [salaryError, setSalaryError] = useState('')
   const [age, setAge] = useState(initialValues?.age || '')
   const [ageError, setAgeError] = useState('')
   const [yearsNum, setYearsNum] = useState(initialValues?.yearsNum || '')
   const [monthsNum, setMonthsNum] = useState(initialValues?.monthsNum || '')
+  const [serviceError, setServiceError] = useState('')
   const [offer, setOffer] = useState(initialValues?.offer || '')
   const [offerIncludesNotice, setOfferIncludesNotice] = useState<boolean>(() => {
     if (initialValues?.offerIncludesNotice !== undefined) {
@@ -144,6 +152,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     if (!initialValues?.contractualNotice) return null
     return WEEKS_TO_OPTION[initialValues.contractualNotice] || initialValues.contractualNotice
   })
+  const [noticeError, setNoticeError] = useState('')
   const [reason, setReason] = useState<string | null>(() => {
     if (!initialValues?.reason) return null
     if (initialValues.reason === 'redundancy') return 'redundancy_individual'
@@ -151,8 +160,10 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     if (initialValues.reason === 'other') return 'unsure'
     return initialValues.reason
   })
+  const [reasonError, setReasonError] = useState('')
   const [collectiveVisible, setCollectiveVisible] = useState(false)
   const [discrimination, setDiscrimination] = useState<string | null>(initialValues?.discrimination || null)
+  const [discriminationError, setDiscriminationError] = useState('')
   // Jurisdiction: default to GB (~96% of users) with explicit Northern Ireland toggle
   const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>(() => {
     if (initialValues?.jurisdiction === 'NI' || initialValues?.jurisdiction === 'GB') {
@@ -223,14 +234,22 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     if (initialValues.jurisdiction && (initialValues.jurisdiction === 'GB' || initialValues.jurisdiction === 'NI')) setJurisdiction(initialValues.jurisdiction)
   }, [initialValues])
 
-  // Loading animation state
-  const [loadState, setLoadState] = useState<LoadState>(1)
-  const [progressComplete, setProgressComplete] = useState(false) // bar has reached 100%
-  const [readyToReveal, setReadyToReveal] = useState(false)       // "Your results are ready."
-  const [fadeOut, setFadeOut] = useState(false)                    // crossfade to results
-  const pendingPayload = useRef<CalcPayload | null>(null)
+  // Submitting state (avoids jarring 150ms full-screen loading flash)
+  const [isCalculating, setIsCalculating] = useState(false)
   const onCalculateRef = useRef(onCalculate)
   useEffect(() => { onCalculateRef.current = onCalculate }, [onCalculate])
+
+  // Close Constructive Dismissal safeguard modal on Escape
+  useEffect(() => {
+    if (!showConstructiveModal) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowConstructiveModal(false)
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [showConstructiveModal])
 
 
 
@@ -310,20 +329,6 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     return () => clearTimeout(t)
   }, [step, phase])
 
-  // Immediate navigation upon calculation completion (under 180ms transition feedback; no 5.3s artificial delay)
-  useEffect(() => {
-    if (phase !== 'loading') return
-    setLoadState(3)
-    setProgressComplete(true)
-    setReadyToReveal(true)
-
-    const t = setTimeout(() => {
-      if (pendingPayload.current) onCalculateRef.current(pendingPayload.current)
-    }, 150)
-
-    return () => clearTimeout(t)
-  }, [phase])
-
   /* ── Helpers ──────────────────────────────────────────────────── */
 
   function goToStep(next: number) {
@@ -341,7 +346,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   function getAdvanceCopy(): string {
     if (step === 1) return 'That is my salary'
     if (step === 2) return 'That is my age'
-    if (step === 3) return 'That is how long I have worked there'
+    if (step === 3) return 'Confirm length of service'
     if (step === 4) {
       const o = parseFloat(offer)
       return (!offer || isNaN(o) || o === 0) ? 'No offer made yet' : 'That is what they have offered'
@@ -349,24 +354,38 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     if (step === 5) return 'That is my notice period'
     if (step === 6) return 'That is my situation'
     if (step === 7) return 'Review calculations'
-    return 'That is my situation'
+    return 'Continue'
   }
 
   function advance() {
     if (step === 1) {
       const s = parseFloat(salary)
-      if (!salary || isNaN(s) || s <= 0) { triggerShake(); return }
+      if (!salary || isNaN(s) || s <= 0) {
+        setSalaryError('Please enter your annual basic salary to continue.')
+        triggerShake()
+        return
+      }
+      setSalaryError('')
       goToStep(2)
     } else if (step === 2) {
       const a = parseInt(age, 10)
       if (!age || isNaN(a) || a < 16 || a > 100) {
-        setAgeError('Please verify the age you have entered (must be 16 or older).')
+        setAgeError('Please verify your age (must be between 16 and 100).')
         triggerShake()
         return
       }
       setAgeError('')
       goToStep(3)
     } else if (step === 3) {
+      const hasAny = yearsNum !== '' || monthsNum !== ''
+      const y = yearsNum === '' ? 0 : parseInt(yearsNum, 10)
+      const m = monthsNum === '' ? 0 : parseInt(monthsNum, 10)
+      if (!hasAny || isNaN(y) || isNaN(m) || y < 0 || y > 60 || m < 0 || m > 11) {
+        setServiceError('Please enter valid years (0 to 60) and additional months (0 to 11).')
+        triggerShake()
+        return
+      }
+      setServiceError('')
       goToStep(4)
     } else if (step === 4) {
       // Monthly salary detection warning
@@ -383,35 +402,49 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
       setOfferWarning('')
       goToStep(5)
     } else if (step === 5) {
-      if (!noticeOption) { triggerShake(); return }
+      if (!noticeOption) {
+        setNoticeError('Please select the option that best matches your notice period.')
+        triggerShake()
+        return
+      }
+      setNoticeError('')
       goToStep(6)
     } else if (step === 6) {
-      if (!reason) { triggerShake(); return }
+      if (!reason) {
+        setReasonError('Please select why your employment is ending.')
+        triggerShake()
+        return
+      }
+      setReasonError('')
       goToStep(7)
     } else if (step === 7) {
-      if (!discrimination) { triggerShake(); return }
+      if (!discrimination) {
+        setDiscriminationError('Please select an option (choose "Not sure" if uncertain).')
+        triggerShake()
+        return
+      }
+      setDiscriminationError('')
       startLoading()
     }
   }
 
-  // Step 5: notice selection with 300ms auto-advance
+  // Step 5: notice selection (user confirms with docked CTA for control & zero mis-tap skips)
   function handleNoticeSelect(val: string) {
     setNoticeOption(val)
-    setTimeout(() => goToStep(6), 300)
+    setNoticeError('')
   }
 
-  // Step 6: reason selection with 300ms auto-advance (or safeguard modal for constructive dismissal)
+  // Step 6: reason selection (preserves readable Collective Redundancy note and Constructive safeguard modal)
   function handleReasonSelect(val: string) {
     setReason(val)
+    setReasonError('')
     if (val === 'constructive') {
       setCollectiveVisible(false)
       setShowConstructiveModal(true)
     } else if (val === 'redundancy_collective') {
-      setTimeout(() => setCollectiveVisible(true), 50)
-      setTimeout(() => goToStep(7), 300)
+      setCollectiveVisible(true)
     } else {
       setCollectiveVisible(false)
-      setTimeout(() => goToStep(7), 300)
     }
   }
 
@@ -430,7 +463,8 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
 
     Ga4TelemetryClient.trackCalcCompleted(String(o), result.verdict === 'BELOW_MINIMUM', calcReason)
     Ga4TelemetryClient.trackVerdictViewed(result.verdict, String(o))
-    pendingPayload.current = {
+    setIsCalculating(true)
+    onCalculateRef.current({
       inputs: {
         salary: String(s),
         yearsNum: String(y),
@@ -444,8 +478,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         jurisdiction,
       },
       result,
-    }
-    setPhase('loading')
+    })
   }
 
   /* ── Shared inline styles ─────────────────────────────────────── */
@@ -462,8 +495,8 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
 
   const helperSt: React.CSSProperties = {
     fontSize: vp.keyboardOpen ? 14 : 16,
-    color: '#5B6577',
-    lineHeight: 1.5,
+    color: '#525D70',
+    lineHeight: 1.55,
     margin: vp.keyboardOpen ? '0 0 12px' : '0 0 16px',
   }
 
@@ -477,6 +510,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
     color: '#0B1F3A',
     padding: vp.keyboardOpen ? '13px 12px' : '16px 14px',
     minWidth: 0,
+    fontVariantNumeric: 'tabular-nums',
     MozAppearance: 'textfield' as React.CSSProperties['MozAppearance'],
     WebkitAppearance: 'none',
   }
@@ -484,8 +518,8 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   const prefixSt: React.CSSProperties = {
     padding: '0 2px 0 16px',
     fontSize: 22,
-    fontWeight: 400,
-    color: '#9AA3AE',
+    fontWeight: 500,
+    color: '#525D70',
     flexShrink: 0,
     fontFamily: 'var(--font-mono)',
   }
@@ -493,14 +527,15 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   const suffixSt: React.CSSProperties = {
     padding: '0 16px 0 4px',
     fontSize: 16,
-    color: '#9AA3AE',
+    color: '#525D70',
     flexShrink: 0,
     whiteSpace: 'nowrap',
   }
 
   const errSt: React.CSSProperties = {
     fontSize: 14,
-    color: '#C0392B',
+    fontWeight: 500,
+    color: '#A8341F',
     margin: '8px 0 0',
     display: 'block',
   }
@@ -524,84 +559,6 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
   }
 
   const progressPct = (step / 7) * 100
-  const yearsDisplay = parseInt(yearsNum || '0', 10)
-  const offerNum = parseFloat(offer) || 0
-
-  /* ── LOADING PHASE ───────────────────────────────────────────── */
-
-  if (phase === 'loading') {
-    const copyCycles: Record<LoadState, string> = {
-      1: `Checking your ${yearsDisplay} ${yearsDisplay === 1 ? 'year' : 'years'} of service against 2026 statutory rates…`,
-      2: `Calculating your redundancy entitlement at £${weeklyCapAmount.toLocaleString('en-GB')} per week…`,
-      3: offerNum > 0
-        ? `Comparing your offer of £${offerNum.toLocaleString('en-GB')} against typical outcomes…`
-        : 'Establishing your minimum entitlement…',
-    }
-
-    // aria-valuenow steps with each visible milestone
-    const progressNow = progressComplete ? 100 : loadState === 3 ? 70 : loadState === 2 ? 35 : 5
-
-    return (
-      <div
-        style={{
-          position: 'fixed', inset: 0, zIndex: 100, background: '#F7F4EE',
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', gap: 28, padding: '24px',
-          // Crossfade: fade to 0 over 400ms when fadeOut triggers (t=4.9s)
-          opacity: fadeOut ? 0 : 1,
-          transition: 'opacity 400ms ease',
-        }}
-        aria-label="Calculating your settlement results"
-      >
-        {/* Static logo mark: no animation */}
-        <LogoMark onClick={() => router.push('/')} />
-
-        {/* Cycling text: React key causes remount -> sc-fade-in animation fires on each change */}
-        <p
-          key={readyToReveal ? 'ready' : loadState}
-          aria-live="polite"
-          style={{
-            fontFamily: 'var(--font-serif)',
-            // "Your results are ready." is larger/bolder — headline style per spec
-            fontSize: readyToReveal ? 22 : 18,
-            fontWeight: readyToReveal ? 460 : 420,
-            lineHeight: 1.45,
-            color: '#0B1F3A',
-            textAlign: 'center',
-            maxWidth: 340,
-            margin: 0,
-            minHeight: '2.8em',
-            animation: 'sc-fade-in 200ms ease forwards',
-          }}
-        >
-          {readyToReveal ? 'Your results are ready.' : copyCycles[loadState]}
-        </p>
-
-        {/* Progress line: 200px mobile, 280px desktop (CSS override in globals.css)
-            Fills left to right over 4 seconds, ease-in-out: CSS animation only, no JS library */}
-        <div
-          style={{ height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden', width: 200 }}
-          className="sc-progress-wrap"
-          role="progressbar"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={progressNow}
-        >
-          <div style={{
-            height: '100%',
-            background: '#D9603B',
-            borderRadius: 999,
-            animation: 'sc-loading-bar 4s ease-in-out forwards',
-          }} />
-        </div>
-
-        {/* Static trust line: always visible, never animated */}
-        <p style={{ fontSize: 13, color: '#8A93A3', textAlign: 'center', margin: 0 }}>
-          Your result is calculated using verified 2026 UK statutory rates.
-        </p>
-      </div>
-    )
-  }
 
   /* ── STEPS PHASE ─────────────────────────────────────────────── */
 
@@ -636,8 +593,9 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
           <LogoMark onClick={() => router.push('/')} />
           <button
+            type="button"
             onClick={() => router.push('/')}
-            style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'none', border: 'none', padding: '4px 0', cursor: 'pointer', fontSize: 13, color: '#5B6577', fontFamily: 'var(--font-sans)', letterSpacing: '-0.005em', flexShrink: 0 }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'none', border: 'none', padding: '10px 8px', minHeight: 44, cursor: 'pointer', fontSize: 14, fontWeight: 500, color: '#525D70', fontFamily: 'var(--font-sans)', letterSpacing: '-0.005em', flexShrink: 0 }}
           >
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M10 13L5 8L10 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -646,7 +604,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           </button>
         </div>
         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-          <div style={{ fontSize: 12, fontWeight: 500, color: '#5B6577', letterSpacing: '-0.005em', marginBottom: 5 }}>
+          <div style={{ fontSize: 12, fontWeight: 600, color: '#525D70', letterSpacing: '-0.005em', marginBottom: 5 }}>
             Question {step} of 7
           </div>
           <div style={{ width: 96, height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden', marginLeft: 'auto' }}>
@@ -674,75 +632,81 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           {/* ── STEP 1: Annual salary ── */}
           {step === 1 && (
             <div>
-              <h2 style={qSt}>What is your annual salary?</h2>
+              <h2 id="step-heading-1" style={qSt}>What is your annual salary?</h2>
               <p style={helperSt}>
                 Use your basic salary before tax. Bonus and commission are not included in the statutory calculation.
               </p>
-              <div className={`step-input-wrap${shake ? ' sc-shake' : ''}`}>
+              <div className={`step-input-wrap${shake && salaryError ? ' sc-shake' : ''}`}>
                 <span style={prefixSt}>£</span>
                 <input
                   ref={salaryRef}
                   id="step-input-1"
+                  aria-labelledby="step-heading-1"
+                  aria-invalid={!!salaryError}
+                  aria-describedby={salaryError ? 'step-error-1' : undefined}
                   type="text"
                   inputMode="numeric"
-                  pattern="[0-9]*"
                   enterKeyHint="done"
                   placeholder="42,000"
-                  value={salary}
+                  value={formatCurrencyInput(salary)}
                   autoComplete="off"
                   autoCorrect="off"
-                  onChange={e => setSalary(cleanCurrencyInput(e.target.value))}
+                  onChange={e => { setSalary(cleanCurrencyInput(e.target.value)); setSalaryError('') }}
                   onKeyDown={e => e.key === 'Enter' && advance()}
                   style={numInputSt}
                 />
               </div>
-              {shake && (!salary || parseFloat(salary) <= 0) && (
-                <span style={errSt}>Please enter your salary to continue.</span>
+              {salaryError && (
+                <span id="step-error-1" role="alert" style={errSt}>{salaryError}</span>
               )}
               <div style={{ marginTop: vp.keyboardOpen ? 14 : 22, paddingTop: vp.keyboardOpen ? 12 : 16, borderTop: '1px solid #E2DCCE' }}>
-                <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#0B1F3A', marginBottom: 8 }}>
+                <label style={{ display: 'block', fontSize: 14, fontWeight: 600, color: '#0B1F3A', marginBottom: 8 }}>
                   Statutory Jurisdiction
                 </label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                   <button
                     type="button"
+                    aria-pressed={jurisdiction === 'GB'}
                     onClick={() => setJurisdiction('GB')}
                     style={{
-                      padding: '10px 12px',
+                      padding: '12px',
+                      minHeight: 56,
                       borderRadius: 8,
                       border: `1.5px solid ${jurisdiction === 'GB' ? '#0B1F3A' : '#E2DCCE'}`,
                       background: jurisdiction === 'GB' ? '#0B1F3A' : '#ffffff',
                       color: jurisdiction === 'GB' ? '#ffffff' : '#0B1F3A',
-                      fontSize: 13,
+                      fontSize: 14,
                       fontWeight: 500,
                       cursor: 'pointer',
                       textAlign: 'left',
                       transition: 'all 150ms ease',
                     }}
                   >
-                    <div style={{ fontWeight: 600, fontSize: 13 }}>England, Scotland &amp; Wales</div>
-                    <div style={{ fontSize: 11, opacity: jurisdiction === 'GB' ? 0.85 : 0.65, marginTop: 2 }}>
+                    <div style={{ fontWeight: 600, fontSize: 14, lineHeight: 1.3 }}>England, Scotland &amp; Wales</div>
+                    <div style={{ fontSize: 12, opacity: jurisdiction === 'GB' ? 0.9 : 0.78, marginTop: 3 }}>
                       £751/wk statutory cap
                     </div>
                   </button>
                   <button
                     type="button"
+                    aria-pressed={jurisdiction === 'NI'}
                     onClick={() => setJurisdiction('NI')}
                     style={{
-                      padding: '10px 12px',
+                      padding: '12px',
+                      minHeight: 56,
                       borderRadius: 8,
                       border: `1.5px solid ${jurisdiction === 'NI' ? '#0B1F3A' : '#E2DCCE'}`,
                       background: jurisdiction === 'NI' ? '#0B1F3A' : '#ffffff',
                       color: jurisdiction === 'NI' ? '#ffffff' : '#0B1F3A',
-                      fontSize: 13,
+                      fontSize: 14,
                       fontWeight: 500,
                       cursor: 'pointer',
                       textAlign: 'left',
                       transition: 'all 150ms ease',
                     }}
                   >
-                    <div style={{ fontWeight: 600, fontSize: 13 }}>Northern Ireland</div>
-                    <div style={{ fontSize: 11, opacity: jurisdiction === 'NI' ? 0.85 : 0.65, marginTop: 2 }}>
+                    <div style={{ fontWeight: 600, fontSize: 14, lineHeight: 1.3 }}>Northern Ireland</div>
+                    <div style={{ fontSize: 12, opacity: jurisdiction === 'NI' ? 0.9 : 0.78, marginTop: 3 }}>
                       £783/wk statutory cap
                     </div>
                   </button>
@@ -754,7 +718,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           {/* ── STEP 2: Age ── */}
           {step === 2 && (
             <div>
-              <h2 style={qSt}>How old are you?</h2>
+              <h2 id="step-heading-2" style={qSt}>How old are you?</h2>
               <p style={helperSt}>
                 Your age determines which statutory multiplier applies to your calculation.
               </p>
@@ -762,9 +726,13 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 <input
                   ref={ageRef}
                   id="step-input-2"
+                  aria-labelledby="step-heading-2"
+                  aria-invalid={!!ageError}
+                  aria-describedby={ageError ? 'step-error-2' : undefined}
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
+                  maxLength={3}
                   enterKeyHint="done"
                   placeholder="38"
                   value={age}
@@ -778,25 +746,29 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 />
                 <span style={suffixSt}>years old</span>
               </div>
-              {ageError && <span style={errSt}>{ageError}</span>}
+              {ageError && <span id="step-error-2" role="alert" style={errSt}>{ageError}</span>}
             </div>
           )}
 
           {/* ── STEP 3: Length of service ── */}
           {step === 3 && (
             <div>
-              <h2 style={qSt}>How long have you worked there?</h2>
+              <h2 id="step-heading-3" style={qSt}>How long have you worked there?</h2>
               <p style={helperSt}>
                 Count from your contract start date. Complete years and months both factor into your estimate.
               </p>
-              <div style={{ display: 'flex', gap: 12 }}>
+              <div className={shake && serviceError ? 'sc-shake' : ''} style={{ display: 'flex', gap: 12 }}>
                 <div className="step-input-wrap" style={{ flex: 1 }}>
                   <input
                     ref={yearsRef}
                     id="step-input-3"
+                    aria-label="Years of service"
+                    aria-invalid={!!serviceError}
+                    aria-describedby={serviceError ? 'step-error-3' : undefined}
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
+                    maxLength={2}
                     enterKeyHint="next"
                     placeholder="6"
                     value={yearsNum}
@@ -804,7 +776,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                     autoCorrect="off"
                     autoCapitalize="none"
                     spellCheck={false}
-                    onChange={e => setYearsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                    onChange={e => { setYearsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')); setServiceError('') }}
                     onKeyDown={e => {
                       if (e.key === 'Enter') { e.preventDefault(); monthsRef.current?.focus() }
                     }}
@@ -816,9 +788,13 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   <input
                     ref={monthsRef}
                     id="step-input-3b"
+                    aria-label="Additional months of service"
+                    aria-invalid={!!serviceError}
+                    aria-describedby={serviceError ? 'step-error-3' : undefined}
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
+                    maxLength={2}
                     enterKeyHint="done"
                     placeholder="4"
                     value={monthsNum}
@@ -826,20 +802,21 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                     autoCorrect="off"
                     autoCapitalize="none"
                     spellCheck={false}
-                    onChange={e => setMonthsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
+                    onChange={e => { setMonthsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')); setServiceError('') }}
                     onKeyDown={e => e.key === 'Enter' && advance()}
                     style={{ ...numInputSt, paddingLeft: 16 }}
                   />
                   <span style={suffixSt}>months</span>
                 </div>
               </div>
+              {serviceError && <span id="step-error-3" role="alert" style={errSt}>{serviceError}</span>}
             </div>
           )}
 
           {/* ── STEP 4: Settlement offered ── */}
           {step === 4 && (
             <div>
-              <h2 style={qSt}>What has your employer offered?</h2>
+              <h2 id="step-heading-4" style={qSt}>What has your employer offered?</h2>
               <p style={helperSt}>
                 Enter the total figure from your letter or email.
               </p>
@@ -848,12 +825,12 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 <input
                   ref={offerRef}
                   id="step-input-4"
+                  aria-labelledby="step-heading-4"
                   type="text"
                   inputMode="numeric"
-                  pattern="[0-9]*"
                   enterKeyHint="done"
                   placeholder="18,000"
-                  value={offer}
+                  value={formatCurrencyInput(offer)}
                   autoComplete="off"
                   autoCorrect="off"
                   autoCapitalize="none"
@@ -864,7 +841,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 />
               </div>
               {offerWarning && (
-                <span style={{ ...errSt, color: '#B5802A' }}>{offerWarning}</span>
+                <span role="alert" style={{ ...errSt, color: '#9A6B16' }}>{offerWarning}</span>
               )}
 
               <button
@@ -877,13 +854,14 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 style={{
                   marginTop: 12,
                   width: '100%',
+                  minHeight: 48,
                   padding: '13px 16px',
                   background: '#ffffff',
                   border: '1.5px solid #E2DCCE',
                   borderRadius: 10,
                   color: '#0B1F3A',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: 14,
+                  fontSize: 15,
                   fontWeight: 600,
                   cursor: 'pointer',
                   display: 'flex',
@@ -892,7 +870,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 }}
               >
                 <span>I haven&apos;t received an offer yet</span>
-                <span style={{ color: '#D9603B', fontSize: 16 }} aria-hidden="true">→</span>
+                <span style={{ color: '#C24D29', fontSize: 16 }} aria-hidden="true">→</span>
               </button>
 
               {/* SC-B-020: Notice pay inclusion toggle */}
@@ -901,38 +879,42 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   <label style={{ display: 'block', fontSize: 14, fontWeight: 600, color: '#0B1F3A', marginBottom: 4 }}>
                     Does this £{Number(offer).toLocaleString('en-GB')} include your notice pay?
                   </label>
-                  <p style={{ fontSize: 13, color: '#5B6577', margin: '0 0 12px', lineHeight: 1.45 }}>
+                  <p style={{ fontSize: 14, color: '#525D70', margin: '0 0 12px', lineHeight: 1.5 }}>
                     Notice pay is taxed differently from compensation, so this helps us estimate your take-home pay.
                   </p>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                     <button
                       type="button"
+                      aria-pressed={offerIncludesNotice}
                       onClick={() => setOfferIncludesNotice(true)}
                       style={{
                         ...optionSt(offerIncludesNotice),
-                        padding: '11px 12px',
+                        minHeight: 48,
+                        padding: '12px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         gap: 6,
                       }}
                     >
-                      <span style={{ fontSize: 13.5, fontWeight: 600 }}>Yes, included</span>
+                      <span style={{ fontSize: 14, fontWeight: 600 }}>Yes, included</span>
                       {offerIncludesNotice && <Tick />}
                     </button>
                     <button
                       type="button"
+                      aria-pressed={!offerIncludesNotice}
                       onClick={() => setOfferIncludesNotice(false)}
                       style={{
                         ...optionSt(!offerIncludesNotice),
-                        padding: '11px 12px',
+                        minHeight: 48,
+                        padding: '12px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         gap: 6,
                       }}
                     >
-                      <span style={{ fontSize: 13.5, fontWeight: 600 }}>No, paid on top</span>
+                      <span style={{ fontSize: 14, fontWeight: 600 }}>No, paid on top</span>
                       {!offerIncludesNotice && <Tick />}
                     </button>
                   </div>
@@ -957,11 +939,12 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   { value: '6plus',     label: 'More than 6 months' },
                   { value: 'unsure',    label: 'I am not sure' },
                 ] as const).map(opt => (
-                  <button key={opt.value} type="button" onClick={() => handleNoticeSelect(opt.value)} style={optionSt(noticeOption === opt.value)}>
+                  <button key={opt.value} type="button" aria-pressed={noticeOption === opt.value} onClick={() => handleNoticeSelect(opt.value)} style={optionSt(noticeOption === opt.value)}>
                     {opt.label}
                   </button>
                 ))}
               </div>
+              {noticeError && <span role="alert" style={errSt}>{noticeError}</span>}
             </div>
           )}
 
@@ -979,20 +962,21 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   { value: 'mutual', label: 'Mutual agreement' },
                   { value: 'unsure', label: 'I am not sure' },
                 ] as const).map(opt => (
-                  <button key={opt.value} type="button" onClick={() => handleReasonSelect(opt.value)} style={optionSt(reason === opt.value)}>
+                  <button key={opt.value} type="button" aria-pressed={reason === opt.value} onClick={() => handleReasonSelect(opt.value)} style={optionSt(reason === opt.value)}>
                     {opt.label}
                   </button>
                 ))}
               </div>
-              {/* Collective redundancy note: fades in before advancing */}
+              {reasonError && <span role="alert" style={errSt}>{reasonError}</span>}
+              {/* Collective redundancy note: stays visible until user taps Continue */}
               <div style={{
-                maxHeight: collectiveVisible ? 100 : 0,
+                maxHeight: collectiveVisible ? 140 : 0,
                 overflow: 'hidden',
                 opacity: collectiveVisible ? 1 : 0,
-                transition: 'max-height 400ms ease, opacity 300ms ease',
+                transition: 'max-height 300ms ease, opacity 250ms ease',
               }}>
-                <div style={{ marginTop: 12, padding: '12px 16px', background: 'rgba(217,96,59,0.07)', borderRadius: 8, border: '1px solid rgba(217,96,59,0.2)' }}>
-                  <p style={{ fontSize: 13, color: '#5B6577', margin: 0, lineHeight: 1.55 }}>
+                <div style={{ marginTop: 12, padding: '12px 16px', background: 'rgba(217,96,59,0.08)', borderRadius: 8, border: '1px solid rgba(217,96,59,0.25)' }}>
+                  <p style={{ fontSize: 14, color: '#0B1F3A', margin: 0, lineHeight: 1.5 }}>
                     You may be entitled to a Protective Award of up to 90 days pay if your employer failed to consult properly. We will show this in your results.
                   </p>
                 </div>
@@ -1017,13 +1001,15 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                   <button
                     key={opt.value}
                     type="button"
-                    onClick={() => setDiscrimination(opt.value)}
+                    aria-pressed={discrimination === opt.value}
+                    onClick={() => { setDiscrimination(opt.value); setDiscriminationError('') }}
                     style={{ ...optionSt(discrimination === opt.value), minHeight: 56 }}
                   >
                     {opt.label}
                   </button>
                 ))}
               </div>
+              {discriminationError && <span role="alert" style={errSt}>{discriminationError}</span>}
             </div>
           )}
 
@@ -1049,27 +1035,29 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
           zIndex: 10,
         }}
       >
-        <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center' }}>
+        <div style={{ maxWidth: 480, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'center' }}>
           <button
+            type="button"
+            disabled={isCalculating}
             onClick={advance}
             style={{
-              width: '100%', background: '#D9603B', border: 'none', color: '#fff',
+              width: '100%', background: isCalculating ? '#525D70' : '#C24D29', border: 'none', color: '#fff',
               fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 16,
-              letterSpacing: '-0.005em', padding: vp.keyboardOpen ? '13px 20px' : '15px 24px', borderRadius: 10,
-              cursor: 'pointer', marginBottom: step === 4 ? 6 : (step > 1 ? 8 : 0),
+              letterSpacing: '-0.005em', minHeight: 50, padding: vp.keyboardOpen ? '13px 20px' : '15px 24px', borderRadius: 10,
+              cursor: isCalculating ? 'wait' : 'pointer', marginBottom: step === 4 ? 4 : (step > 1 ? 2 : 0),
             }}
           >
-            {getAdvanceCopy()}
+            {isCalculating ? 'Calculating your estimate…' : getAdvanceCopy()}
           </button>
 
           {/* Step 4 midpoint copy: position below advance button */}
           {step === 4 && !vp.keyboardOpen && (
-            <p style={{ fontSize: 13, color: '#8A93A3', textAlign: 'center', margin: '0 0 8px' }}>
+            <p style={{ fontSize: 14, color: '#525D70', textAlign: 'center', margin: '0 0 2px' }}>
               You are nearly there. Three more questions.
             </p>
           )}
 
-          {/* Back link: text link (not a button visually), from Step 2 onwards */}
+          {/* Back link: 44px minimum mobile tap target from Step 2 onwards */}
           {step > 1 && (
             <button
               type="button"
@@ -1078,9 +1066,9 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 goToStep(step - 1)
               }}
               style={{
-                background: 'none', border: 'none', color: '#8A93A3',
-                fontSize: 14, cursor: 'pointer', padding: '4px 8px',
-                fontFamily: 'var(--font-sans)', display: 'inline-flex',
+                background: 'none', border: 'none', color: '#525D70',
+                fontSize: 14, fontWeight: 500, cursor: 'pointer', padding: '10px 16px',
+                minHeight: 44, fontFamily: 'var(--font-sans)', display: 'inline-flex',
                 alignItems: 'center', gap: 4,
               }}
             >
@@ -1092,7 +1080,11 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
 
       {/* SC-B-009: Constructive Dismissal Safeguard Modal */}
       {showConstructiveModal && (
-        <div style={{
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="constructive-modal-title"
+          style={{
           position: 'fixed',
           inset: 0,
           zIndex: 100,
@@ -1118,8 +1110,8 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
               <span style={{
                 background: 'rgba(217, 96, 59, 0.12)',
-                color: '#D9603B',
-                fontSize: 11,
+                color: '#A8341F',
+                fontSize: 12,
                 fontFamily: 'var(--font-mono)',
                 fontWeight: 700,
                 letterSpacing: '0.08em',
@@ -1131,7 +1123,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
               </span>
             </div>
 
-            <h3 style={{
+            <h3 id="constructive-modal-title" style={{
               fontFamily: 'var(--font-serif)',
               fontSize: 22,
               fontWeight: 600,
@@ -1142,7 +1134,7 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
               Important statutory context before resigning
             </h3>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, color: '#5B6577', lineHeight: 1.55, marginBottom: 20 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, color: '#525D70', lineHeight: 1.55, marginBottom: 20 }}>
               <p style={{ margin: 0 }}>
                 Ministry of Justice employment tribunal data shows <strong style={{ color: '#0B1F3A' }}>over 95% of constructive dismissal claims fail</strong> when employees resign prematurely without specialist legal advice.
               </p>
@@ -1163,12 +1155,13 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 }}
                 style={{
                   width: '100%',
-                  background: '#D9603B',
+                  background: '#C24D29',
                   color: '#ffffff',
                   border: 'none',
                   borderRadius: 10,
+                  minHeight: 48,
                   padding: '14px 18px',
-                  fontSize: 15,
+                  fontSize: 16,
                   fontWeight: 600,
                   cursor: 'pointer',
                   fontFamily: 'var(--font-sans)',
@@ -1183,8 +1176,11 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  display: 'block',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   width: '100%',
+                  minHeight: 44,
                   background: 'transparent',
                   color: '#0B1F3A',
                   border: '1.5px solid #E2DCCE',
@@ -1210,10 +1206,12 @@ export default function SteppedCalculator({ onCalculate, initialValues }: Props)
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: '#8A93A3',
-                  fontSize: 13,
+                  color: '#525D70',
+                  fontSize: 14,
+                  fontWeight: 500,
                   cursor: 'pointer',
-                  padding: 4,
+                  minHeight: 44,
+                  padding: '10px',
                   textAlign: 'center',
                 }}
               >

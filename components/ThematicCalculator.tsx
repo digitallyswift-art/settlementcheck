@@ -115,38 +115,45 @@ function Tick() {
 function InfoPill({ label, children }: { label: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   return (
-    <div style={{ margin: '8px 0 16px' }}>
+    <div style={{ margin: '6px 0 14px' }}>
       <button
         type="button"
+        aria-expanded={open}
         onClick={() => setOpen(!open)}
         style={{
           background: 'none',
           border: 'none',
-          padding: 0,
-          color: '#5B6577',
-          fontSize: 12,
+          padding: '10px 0',
+          minHeight: 44,
+          color: '#525D70',
+          fontSize: 14,
           fontWeight: 500,
           display: 'inline-flex',
           alignItems: 'center',
-          gap: 5,
+          gap: 6,
           cursor: 'pointer',
           textDecoration: 'underline',
           textUnderlineOffset: 3,
         }}
       >
-        <span>ℹ️</span> {label} {open ? '▲' : '▼'}
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.4" />
+          <path d="M8 7.2V11.2M8 5V5.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+        <span>{label}</span>
+        <span aria-hidden="true" style={{ fontSize: 11 }}>{open ? '▲' : '▼'}</span>
       </button>
       {open && (
         <div
           style={{
-            marginTop: 8,
-            padding: '10px 14px',
+            marginTop: 4,
+            padding: '12px 14px',
             background: 'rgba(11, 31, 58, 0.04)',
             borderRadius: 8,
-            fontSize: 12,
+            fontSize: 14,
             lineHeight: 1.55,
-            color: '#4A5568',
-            border: '1px solid rgba(11, 31, 58, 0.08)',
+            color: '#243247',
+            border: '1px solid rgba(11, 31, 58, 0.1)',
           }}
         >
           {children}
@@ -162,16 +169,22 @@ function cleanCurrencyInput(val: string): string {
   return intPart.replace(/^0+(?=\d)/, '')
 }
 
+function formatCurrencyInput(val: string): string {
+  if (!val) return ''
+  const num = parseInt(val, 10)
+  return isNaN(num) ? '' : num.toLocaleString('en-GB')
+}
+
 export default function ThematicCalculator({ onCalculate, initialValues }: Props) {
   const router = useRouter()
   const [stage, setStage] = useState(1)
   const [stageVisible, setStageVisible] = useState(true)
   const [shake, setShake] = useState(false)
-  const [phase, setPhase] = useState<'stages' | 'loading'>('stages')
-  const [loadStep, setLoadStep] = useState(1)
+  const [isCalculating, setIsCalculating] = useState(false)
 
   // Form State
   const [rawSalary, setRawSalary] = useState(initialValues?.salary || '')
+  const [salaryError, setSalaryError] = useState('')
   const [salaryPeriod, setSalaryPeriod] = useState<'annual' | 'monthly' | 'weekly'>('annual')
   const [age, setAge] = useState(initialValues?.age || '')
   const [ageError, setAgeError] = useState('')
@@ -185,6 +198,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     return true
   })
   const [offer, setOffer] = useState(initialValues?.offer || '')
+  const [offerError, setOfferError] = useState('')
   const [offerIncludesNotice, setOfferIncludesNotice] = useState<boolean>(() => {
     return initialValues?.offerIncludesNotice !== 'false'
   })
@@ -193,6 +207,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     if (!initialValues?.contractualNotice) return null
     return WEEKS_TO_OPTION[initialValues.contractualNotice] || initialValues.contractualNotice
   })
+  const [noticeError, setNoticeError] = useState('')
   const [reason, setReason] = useState<string | null>(() => {
     if (!initialValues?.reason) return null
     if (initialValues.reason === 'redundancy') return 'redundancy_individual'
@@ -200,7 +215,9 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     if (initialValues.reason === 'other') return 'unsure'
     return initialValues.reason
   })
+  const [reasonError, setReasonError] = useState('')
   const [discrimination, setDiscrimination] = useState<string | null>(initialValues?.discrimination || null)
+  const [discriminationError, setDiscriminationError] = useState('')
   const [jurisdiction, setJurisdiction] = useState<'GB' | 'NI'>(() => {
     if (initialValues?.jurisdiction === 'NI' || initialValues?.jurisdiction === 'GB') {
       return initialValues.jurisdiction
@@ -230,7 +247,6 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
 
   // Sync outer flex shell to actual visualViewport on iOS & Android
   useEffect(() => {
-    if (phase !== 'stages') return
     if (typeof window === 'undefined' || !window.visualViewport) return
     const vv = window.visualViewport
     const syncViewport = () => {
@@ -248,7 +264,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
       vv.removeEventListener('resize', syncViewport)
       vv.removeEventListener('scroll', syncViewport)
     }
-  }, [phase])
+  }, [])
 
   // Reset scroll to top on stage change
   useEffect(() => {
@@ -420,39 +436,49 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     if (stage === 1) {
       const s = getAnnualizedSalary()
       if (!rawSalary || isNaN(s) || s <= 0) {
+        setSalaryError('Please enter your gross basic salary to continue.')
         triggerShake()
         return
       }
+      setSalaryError('')
       goToStage(2)
     } else if (stage === 2) {
       const a = parseInt(age, 10)
       if (!age || isNaN(a) || a < 16 || a > 100) {
-        setAgeError('Please verify the age entered (must be 16 or older).')
-        triggerShake()
-        return
-      }
-      if (!noticeOption) {
+        setAgeError('Please verify your age (must be between 16 and 100).')
         triggerShake()
         return
       }
       setAgeError('')
-      goToStage(3)
-    } else if (stage === 3) {
-      if (!reason) {
+      if (!noticeOption) {
+        setNoticeError('Please select your contractual notice period.')
         triggerShake()
         return
       }
+      setNoticeError('')
+      goToStage(3)
+    } else if (stage === 3) {
+      if (!reason) {
+        setReasonError('Please select the reason your employment is ending.')
+        triggerShake()
+        return
+      }
+      setReasonError('')
       if (hasOffer && (!offer || parseFloat(offer) <= 0)) {
+        setOfferError('Please enter the proposed settlement sum, or select "No offer made yet".')
         triggerShake()
         scrollToOfferField(true)
         return
       }
+      setOfferError('')
       goToStage(4)
     } else if (stage === 4) {
       if (!discrimination) {
+        setDiscriminationError('Please select an option to calculate your estimate.')
         triggerShake()
         return
       }
+      setDiscriminationError('')
       startLoading()
     }
   }
@@ -472,7 +498,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     const effectiveIncludesNotice = hasOffer ? offerIncludesNotice : true
     const result = getVerdict(s, totalMonths, a, o, calcReason, disc, noticeWeeks, jurisdiction, effectiveIncludesNotice)
 
-    pendingPayload.current = {
+    const payload: CalcPayload = {
       inputs: {
         salary: String(s),
         yearsNum: String(y),
@@ -488,7 +514,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
       result,
     }
 
-    setPhase('loading')
+    setIsCalculating(true)
 
     // Track completion telemetry (gated by UK PECR analytics consent)
     if (hasAnalyticsConsent()) {
@@ -504,15 +530,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
       }).catch(() => {})
     }
 
-    loadingTimers.current.forEach(clearTimeout)
-    setLoadStep(3)
-    loadingTimers.current = [
-      setTimeout(() => {
-        if (pendingPayload.current) {
-          onCalculateRef.current(pendingPayload.current)
-        }
-      }, 150),
-    ]
+    onCalculateRef.current(payload)
   }
 
   // Inline styling tokens
@@ -527,18 +545,26 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
   }
 
   const helperSt: React.CSSProperties = {
-    fontSize: 13.5,
-    color: '#5B6577',
-    lineHeight: 1.5,
+    fontSize: 15,
+    color: '#525D70',
+    lineHeight: 1.55,
     margin: '0 0 16px',
   }
 
   const labelSt: React.CSSProperties = {
     display: 'block',
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 600,
     color: '#0B1F3A',
     marginBottom: 6,
+  }
+
+  const errSt: React.CSSProperties = {
+    display: 'block',
+    fontSize: 14,
+    fontWeight: 500,
+    color: '#A8341F',
+    marginTop: 6,
   }
 
   const numInputSt: React.CSSProperties = {
@@ -551,6 +577,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
     color: '#0B1F3A',
     padding: '12px 14px',
     minWidth: 0,
+    fontVariantNumeric: 'tabular-nums',
   }
 
   function optionTileSt(selected: boolean): React.CSSProperties {
@@ -571,61 +598,6 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
       alignItems: 'center',
       justifyContent: 'space-between',
     }
-  }
-
-  // ── LOADING TRANSITION PHASE (2.4s) ─────────────────────────────
-  if (phase === 'loading') {
-    const statusMessages = {
-      1: 'Checking statutory rates (£751/week cap under ERA 1996 s.227)…',
-      2: 'Partitioning Post-Employment Notice Pay (PENP) under ITEPA 2003 s.402D…',
-      3: 'Auditing compensation against April 2026 statutory limits…',
-    }
-
-    return (
-      <div
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 100,
-          background: '#F7F4EE',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 24,
-          padding: '24px',
-        }}
-      >
-        <LogoMark onClick={() => router.push('/')} />
-        <p
-          style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 20,
-            color: '#0B1F3A',
-            textAlign: 'center',
-            maxWidth: 360,
-            margin: 0,
-            minHeight: '2.4em',
-          }}
-        >
-          {statusMessages[loadStep as 1 | 2 | 3]}
-        </p>
-        <div style={{ width: 220, height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden' }}>
-          <div
-            style={{
-              height: '100%',
-              background: '#D9603B',
-              borderRadius: 999,
-              transition: 'width 800ms ease',
-              width: loadStep === 1 ? '35%' : loadStep === 2 ? '75%' : '100%',
-            }}
-          />
-        </div>
-        <p style={{ fontSize: 13, color: '#8A93A3', margin: 0 }}>
-          Calculating verified 2026 statutory baseline…
-        </p>
-      </div>
-    )
   }
 
   // ── THEMATIC STAGES PHASE ───────────────────────────────────────
@@ -668,14 +640,15 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
           <LogoMark onClick={() => router.push('/')} />
           <button
+            type="button"
             onClick={() => router.push('/')}
-            style={{ background: 'none', border: 'none', padding: '4px 0', cursor: 'pointer', fontSize: 13, color: '#8A93A3', display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}
+            style={{ background: 'none', border: 'none', padding: '10px 8px', minHeight: 44, cursor: 'pointer', fontSize: 14, fontWeight: 500, color: '#525D70', display: 'inline-flex', alignItems: 'center', gap: 4, flexShrink: 0 }}
           >
             <BackIcon /> Exit
           </button>
         </div>
         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-          <div style={{ fontSize: 12, fontWeight: 600, color: '#5B6577', marginBottom: 4 }}>
+          <div style={{ fontSize: 12, fontWeight: 600, color: '#525D70', marginBottom: 4 }}>
             Stage {stage} of 4
           </div>
           <div style={{ width: 96, height: 3, background: '#E2DCCE', borderRadius: 999, overflow: 'hidden', marginLeft: 'auto' }}>
@@ -714,18 +687,20 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                     <button
                       key={p}
                       type="button"
+                      aria-pressed={salaryPeriod === p}
                       onClick={() => setSalaryPeriod(p)}
                       style={{
                         flex: 1,
-                        padding: '6px 10px',
-                        fontSize: 12,
-                        borderRadius: 6,
-                        border: '1px solid #E2DCCE',
+                        minHeight: 44,
+                        padding: '10px',
+                        fontSize: 14,
+                        borderRadius: 8,
+                        border: `1.5px solid ${salaryPeriod === p ? '#0B1F3A' : '#E2DCCE'}`,
                         background: salaryPeriod === p ? '#0B1F3A' : '#ffffff',
-                        color: salaryPeriod === p ? '#ffffff' : '#5B6577',
+                        color: salaryPeriod === p ? '#ffffff' : '#525D70',
                         cursor: 'pointer',
                         textTransform: 'capitalize',
-                        fontWeight: 500,
+                        fontWeight: 600,
                       }}
                     >
                       {p}
@@ -733,34 +708,37 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                   ))}
                 </div>
 
-                <div className={`step-input-wrap${shake && !rawSalary ? ' sc-shake' : ''}`}>
-                  <span style={{ padding: '0 4px 0 14px', fontSize: 18, color: '#9AA3AE', fontFamily: 'var(--font-mono)' }}>£</span>
+                <div className={`step-input-wrap${shake && salaryError ? ' sc-shake' : ''}`}>
+                  <span style={{ padding: '0 4px 0 14px', fontSize: 18, color: '#525D70', fontFamily: 'var(--font-mono)' }}>£</span>
                   <input
                     type="text"
                     inputMode="numeric"
                     placeholder={salaryPeriod === 'annual' ? '45,000' : salaryPeriod === 'monthly' ? '3,750' : '865'}
-                    value={rawSalary}
-                    onChange={e => setRawSalary(cleanCurrencyInput(e.target.value))}
+                    value={formatCurrencyInput(rawSalary)}
+                    onChange={e => { setRawSalary(cleanCurrencyInput(e.target.value)); setSalaryError('') }}
                     onKeyDown={e => e.key === 'Enter' && advance()}
                     style={numInputSt}
                   />
                 </div>
+                {salaryError && <span role="alert" style={errSt}>{salaryError}</span>}
                 <InfoPill label="Legal basis for basic pay">
-                  Section 221 of the Employment Rights Act 1996 defines 'a week's pay' for statutory redundancy and notice calculations. Variable or discretionary bonuses are excluded from statutory baselines.
+                  Section 221 of the Employment Rights Act 1996 defines &apos;a week&apos;s pay&apos; for statutory redundancy and notice calculations. Variable or discretionary bonuses are excluded from statutory baselines.
                 </InfoPill>
                 {/* Statutory Jurisdiction Toggle */}
                 <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid #E2DCCE' }}>
-                  <label style={{ ...labelSt, fontSize: 12, marginBottom: 6 }}>
+                  <label style={{ ...labelSt, marginBottom: 8 }}>
                     Statutory Jurisdiction
                   </label>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                     <button
                       type="button"
+                      aria-pressed={jurisdiction === 'GB'}
                       onClick={() => setJurisdiction('GB')}
                       style={{
-                        padding: '8px 10px',
-                        fontSize: 12,
-                        borderRadius: 6,
+                        padding: '12px',
+                        minHeight: 56,
+                        fontSize: 14,
+                        borderRadius: 8,
                         border: `1.5px solid ${jurisdiction === 'GB' ? '#0B1F3A' : '#E2DCCE'}`,
                         background: jurisdiction === 'GB' ? '#0B1F3A' : '#ffffff',
                         color: jurisdiction === 'GB' ? '#ffffff' : '#0B1F3A',
@@ -769,16 +747,18 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                         fontWeight: 500,
                       }}
                     >
-                      <div style={{ fontWeight: 600 }}>England, Wales &amp; Scot</div>
-                      <div style={{ fontSize: 10, opacity: jurisdiction === 'GB' ? 0.85 : 0.65, marginTop: 1 }}>£751/wk cap</div>
+                      <div style={{ fontWeight: 600, lineHeight: 1.3 }}>England, Scotland &amp; Wales</div>
+                      <div style={{ fontSize: 12, opacity: jurisdiction === 'GB' ? 0.9 : 0.78, marginTop: 2 }}>£751/wk cap</div>
                     </button>
                     <button
                       type="button"
+                      aria-pressed={jurisdiction === 'NI'}
                       onClick={() => setJurisdiction('NI')}
                       style={{
-                        padding: '8px 10px',
-                        fontSize: 12,
-                        borderRadius: 6,
+                        padding: '12px',
+                        minHeight: 56,
+                        fontSize: 14,
+                        borderRadius: 8,
                         border: `1.5px solid ${jurisdiction === 'NI' ? '#0B1F3A' : '#E2DCCE'}`,
                         background: jurisdiction === 'NI' ? '#0B1F3A' : '#ffffff',
                         color: jurisdiction === 'NI' ? '#ffffff' : '#0B1F3A',
@@ -787,8 +767,8 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                         fontWeight: 500,
                       }}
                     >
-                      <div style={{ fontWeight: 600 }}>Northern Ireland</div>
-                      <div style={{ fontSize: 10, opacity: jurisdiction === 'NI' ? 0.85 : 0.65, marginTop: 1 }}>£783/wk cap</div>
+                      <div style={{ fontWeight: 600, lineHeight: 1.3 }}>Northern Ireland</div>
+                      <div style={{ fontSize: 12, opacity: jurisdiction === 'NI' ? 0.9 : 0.78, marginTop: 2 }}>£783/wk cap</div>
                     </button>
                   </div>
                 </div>
@@ -801,32 +781,34 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                   <input
                     type="text"
                     inputMode="numeric"
+                    maxLength={2}
                     placeholder="5"
                     value={yearsNum}
                     onChange={e => setYearsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                     onKeyDown={e => e.key === 'Enter' && advance()}
                     style={{ ...numInputSt, paddingLeft: 14 }}
                   />
-                  <span style={{ paddingRight: 14, fontSize: 14, color: '#9AA3AE' }}>years</span>
+                  <span style={{ paddingRight: 14, fontSize: 14, color: '#525D70' }}>years</span>
                 </div>
 
                 {/* Sub-2-year conditional disclosure */}
                 {isSubTwoYears && (
                   <div style={{ marginTop: 12, padding: '12px', background: '#ffffff', borderRadius: 8, border: '1px solid #E2DCCE' }}>
-                    <label style={{ ...labelSt, fontSize: 12 }}>Additional completed months (if under 2 years)</label>
-                    <div className="step-input-wrap" style={{ height: 42 }}>
+                    <label style={{ ...labelSt, fontSize: 14 }}>Additional completed months (if under 2 years)</label>
+                    <div className="step-input-wrap" style={{ minHeight: 44 }}>
                       <input
                         type="text"
                         inputMode="numeric"
+                        maxLength={2}
                         placeholder="8"
                         value={monthsNum}
                         onChange={e => setMonthsNum(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                         onKeyDown={e => e.key === 'Enter' && advance()}
-                        style={{ ...numInputSt, fontSize: 16, padding: '8px 12px' }}
+                        style={{ ...numInputSt, fontSize: 16, padding: '10px 12px' }}
                       />
-                      <span style={{ paddingRight: 12, fontSize: 13, color: '#9AA3AE' }}>months</span>
+                      <span style={{ paddingRight: 12, fontSize: 14, color: '#525D70' }}>months</span>
                     </div>
-                    <span style={{ display: 'block', fontSize: 11.5, color: '#5B6577', marginTop: 6, lineHeight: 1.4 }}>
+                    <span style={{ display: 'block', fontSize: 13, color: '#525D70', marginTop: 6, lineHeight: 1.45 }}>
                       Continuous service near the two-year mark determines ordinary unfair dismissal rights under Section 108 ERA 1996 via Section 97(2) statutory notice extensions.
                     </span>
                   </div>
@@ -852,15 +834,16 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                   <input
                     type="text"
                     inputMode="numeric"
+                    maxLength={3}
                     placeholder="38"
                     value={age}
                     onChange={e => { setAge(e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '')); setAgeError('') }}
                     onKeyDown={e => e.key === 'Enter' && advance()}
                     style={{ ...numInputSt, paddingLeft: 14 }}
                   />
-                  <span style={{ paddingRight: 14, fontSize: 14, color: '#9AA3AE' }}>years old</span>
+                  <span style={{ paddingRight: 14, fontSize: 14, color: '#525D70' }}>years old</span>
                 </div>
-                {ageError && <span style={{ fontSize: 12, color: '#C0392B', marginTop: 4, display: 'block' }}>{ageError}</span>}
+                {ageError && <span role="alert" style={errSt}>{ageError}</span>}
                 <InfoPill label="Legal basis for age multiplier">
                   Under Section 162 ERA 1996, statutory redundancy rates apply age tiers: 0.5 week per year under 22; 1.0 week per year between 22 and 40; and 1.5 weeks per year from age 41.
                 </InfoPill>
@@ -869,7 +852,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
               {/* Notice Period */}
               <div style={{ marginBottom: 20 }}>
                 <label style={labelSt}>Contractual notice period</label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div className={shake && noticeError ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {[
                     { value: 'statutory', label: 'Statutory minimum (1 wk per year, max 12)' },
                     { value: '1m_or_less', label: '1 month' },
@@ -881,14 +864,16 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                     <button
                       key={opt.value}
                       type="button"
-                      onClick={() => setNoticeOption(opt.value)}
-                      style={optionTileSt(noticeOption === opt.value)}
+                      aria-pressed={noticeOption === opt.value}
+                      onClick={() => { setNoticeOption(opt.value); setNoticeError('') }}
+                      style={{ ...optionTileSt(noticeOption === opt.value), minHeight: 48 }}
                     >
                       <span>{opt.label}</span>
                       {noticeOption === opt.value && <Tick />}
                     </button>
                   ))}
                 </div>
+                {noticeError && <span role="alert" style={errSt}>{noticeError}</span>}
                 <InfoPill label="Legal basis for notice pay (PENP)">
                   Section 86 ERA 1996 sets statutory minimum notice. Where contract terms specify a longer period, contractual notice determines Post-Employment Notice Pay (PENP) calculations under ITEPA 2003 s.402D.
                 </InfoPill>
@@ -905,7 +890,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
               {/* Reason */}
               <div style={{ marginBottom: 22 }}>
                 <label style={labelSt}>Reason for departure or dispute</label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div className={shake && reasonError ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {[
                     { value: 'redundancy_individual', label: 'Redundancy (Individual)' },
                     { value: 'redundancy_collective', label: 'Group Redundancy (20+ roles)' },
@@ -917,14 +902,16 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                     <button
                       key={opt.value}
                       type="button"
-                      onClick={() => setReason(opt.value)}
-                      style={optionTileSt(reason === opt.value)}
+                      aria-pressed={reason === opt.value}
+                      onClick={() => { setReason(opt.value); setReasonError('') }}
+                      style={{ ...optionTileSt(reason === opt.value), minHeight: 48 }}
                     >
                       <span>{opt.label}</span>
                       {reason === opt.value && <Tick />}
                     </button>
                   ))}
                 </div>
+                {reasonError && <span role="alert" style={errSt}>{reasonError}</span>}
 
                 {/* In-flow Constructive Dismissal Safeguard (Zero Outbound Links) */}
                 {reason === 'constructive' && (
@@ -952,16 +939,18 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                 <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
                   <button
                     type="button"
-                    onClick={handleSelectFormalOffer}
+                    aria-pressed={hasOffer}
+                    onClick={() => { setOfferError(''); handleSelectFormalOffer() }}
                     style={{
                       flex: 1,
-                      padding: '10px 12px',
+                      minHeight: 48,
+                      padding: '12px',
                       borderRadius: 8,
                       border: `1.5px solid ${hasOffer ? '#0B1F3A' : '#E2DCCE'}`,
                       background: hasOffer ? '#0B1F3A' : '#ffffff',
                       color: hasOffer ? '#ffffff' : '#0B1F3A',
-                      fontSize: 13,
-                      fontWeight: 500,
+                      fontSize: 14,
+                      fontWeight: 600,
                       cursor: 'pointer',
                     }}
                   >
@@ -969,16 +958,18 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                   </button>
                   <button
                     type="button"
-                    onClick={() => setHasOffer(false)}
+                    aria-pressed={!hasOffer}
+                    onClick={() => { setHasOffer(false); setOfferError('') }}
                     style={{
                       flex: 1,
-                      padding: '10px 12px',
+                      minHeight: 48,
+                      padding: '12px',
                       borderRadius: 8,
                       border: `1.5px solid ${!hasOffer ? '#0B1F3A' : '#E2DCCE'}`,
                       background: !hasOffer ? '#0B1F3A' : '#ffffff',
                       color: !hasOffer ? '#ffffff' : '#0B1F3A',
-                      fontSize: 13,
-                      fontWeight: 500,
+                      fontSize: 14,
+                      fontWeight: 600,
                       cursor: 'pointer',
                     }}
                   >
@@ -988,37 +979,40 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
 
                 {hasOffer && (
                   <div ref={offerSectionRef}>
-                    <label htmlFor="sc-offer-input" style={{ ...labelSt, fontSize: 12 }}>Proposed settlement sum</label>
+                    <label htmlFor="sc-offer-input" style={labelSt}>Proposed settlement sum</label>
                     <div
-                      className={`step-input-wrap${shake && (!offer || parseFloat(offer) <= 0) ? ' sc-shake' : ''}`}
+                      className={`step-input-wrap${shake && offerError ? ' sc-shake' : ''}`}
                       style={{ marginBottom: 10 }}
                     >
-                      <span style={{ padding: '0 4px 0 14px', fontSize: 18, color: '#9AA3AE', fontFamily: 'var(--font-mono)' }}>£</span>
+                      <span style={{ padding: '0 4px 0 14px', fontSize: 18, color: '#525D70', fontFamily: 'var(--font-mono)' }}>£</span>
                       <input
                         id="sc-offer-input"
                         ref={offerInputRef}
                         type="text"
                         inputMode="numeric"
                         placeholder="15,000"
-                        value={offer}
-                        onChange={e => setOffer(cleanCurrencyInput(e.target.value))}
+                        value={formatCurrencyInput(offer)}
+                        onChange={e => { setOffer(cleanCurrencyInput(e.target.value)); setOfferError('') }}
                         onKeyDown={e => e.key === 'Enter' && advance()}
                         style={numInputSt}
                       />
                     </div>
+                    {offerError && <span role="alert" style={{ ...errSt, marginBottom: 10 }}>{offerError}</span>}
 
                     <div style={{ padding: '12px', background: '#ffffff', borderRadius: 8, border: '1px solid #E2DCCE', marginTop: 10 }}>
-                      <span style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#0B1F3A', marginBottom: 6 }}>
+                      <span style={{ display: 'block', fontSize: 14, fontWeight: 600, color: '#0B1F3A', marginBottom: 8 }}>
                         Notice pay allocation in this sum
                       </span>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                         <button
                           type="button"
+                          aria-pressed={offerIncludesNotice}
                           onClick={() => setOfferIncludesNotice(true)}
                           style={{
                             ...optionTileSt(offerIncludesNotice),
-                            padding: '8px 12px',
-                            fontSize: 12.5,
+                            minHeight: 48,
+                            padding: '10px 12px',
+                            fontSize: 14,
                           }}
                         >
                           <span>Proposed sum includes notice pay (PILON)</span>
@@ -1026,11 +1020,13 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                         </button>
                         <button
                           type="button"
+                          aria-pressed={!offerIncludesNotice}
                           onClick={() => setOfferIncludesNotice(false)}
                           style={{
                             ...optionTileSt(!offerIncludesNotice),
-                            padding: '8px 12px',
-                            fontSize: 12.5,
+                            minHeight: 48,
+                            padding: '10px 12px',
+                            fontSize: 14,
                           }}
                         >
                           <span>Notice pay is payable in addition (on top)</span>
@@ -1055,7 +1051,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                 Treatment connected to race, gender, disability, age, pregnancy, or another protected factor.
               </p>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
+              <div className={shake && discriminationError ? 'sc-shake' : ''} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
                 {[
                   { value: 'no', label: 'No protected characteristic involved' },
                   { value: 'not_sure', label: 'Uncertain / Potential differential treatment' },
@@ -1064,9 +1060,11 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                   <button
                     key={opt.value}
                     type="button"
-                    onClick={() => setDiscrimination(opt.value)}
+                    aria-pressed={discrimination === opt.value}
+                    onClick={() => { setDiscrimination(opt.value); setDiscriminationError('') }}
                     style={{
                       ...optionTileSt(discrimination === opt.value),
+                      minHeight: 56,
                       padding: '16px 14px',
                       fontSize: 15,
                     }}
@@ -1076,6 +1074,7 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
                   </button>
                 ))}
               </div>
+              {discriminationError && <span role="alert" style={errSt}>{discriminationError}</span>}
 
               <InfoPill label="Protected characteristics under Equality Act 2010">
                 Equality Act 2010 characteristics: age, disability, gender reassignment, marriage/civil partnership, pregnancy/maternity, race, religion/belief, sex, sexual orientation. Discrimination claims carry uncapped compensation under Section 124 and incorporate Presidential Guidance Vento injury-to-feelings bands.
@@ -1104,22 +1103,27 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
       >
         <div style={{ maxWidth: 460, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <button
+            type="button"
+            disabled={isCalculating}
             onClick={advance}
             style={{
               width: '100%',
-              background: '#D9603B',
+              background: isCalculating ? '#525D70' : '#C24D29',
               border: 'none',
               color: '#ffffff',
               fontFamily: 'var(--font-sans)',
               fontWeight: 600,
               fontSize: 16,
+              minHeight: 50,
               padding: vp.keyboardOpen ? '13px 20px' : '14px 20px',
               borderRadius: 10,
-              cursor: 'pointer',
-              marginBottom: stage > 1 ? 8 : 0,
+              cursor: isCalculating ? 'wait' : 'pointer',
+              marginBottom: stage > 1 ? 4 : 0,
             }}
           >
-            {stage === 1
+            {isCalculating
+              ? 'Calculating your estimate…'
+              : stage === 1
               ? 'Continue to statutory multipliers →'
               : stage === 2
               ? 'Continue to settlement proposal →'
@@ -1137,8 +1141,11 @@ export default function ThematicCalculator({ onCalculate, initialValues }: Props
               style={{
                 background: 'none',
                 border: 'none',
-                color: '#8A93A3',
-                fontSize: 13,
+                color: '#525D70',
+                fontSize: 14,
+                fontWeight: 500,
+                minHeight: 44,
+                padding: '10px 16px',
                 cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',

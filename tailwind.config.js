@@ -46,9 +46,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        serif: ['"Source Serif 4"', '"Source Serif Pro"', 'Georgia', 'serif'],
+        serif: ['var(--font-serif)', '"Source Serif 4"', '"Source Serif Pro"', 'Georgia', 'serif'],
         sans:  ['var(--font-sans)', 'Inter', '-apple-system', '"Helvetica Neue"', 'Arial', 'sans-serif'],
-        mono:  ['"JetBrains Mono"', 'ui-monospace', '"SF Mono"', 'Menlo', 'monospace'],
+        mono:  ['var(--font-mono)', '"JetBrains Mono"', 'ui-monospace', '"SF Mono"', 'Menlo', 'monospace'],
       },
       spacing: {
         section:    '96px',

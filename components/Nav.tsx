@@ -308,9 +308,9 @@ export default function Nav() {
           {isResultsPage ? (
             <a
               href="#solicitor-intake-card"
-              className="btn-accent text-[14px] xl:text-[15px] px-4 py-2.5 xl:px-5 font-bold whitespace-nowrap shrink-0"
+              className="btn-ghost text-[14px] px-4 py-2 font-semibold whitespace-nowrap shrink-0"
             >
-              Get solicitor review →
+              Solicitor review ↓
             </a>
           ) : (
             <Link

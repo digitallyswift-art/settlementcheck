@@ -46,15 +46,15 @@ export function LegalFeeAnnouncementBar() {
 
 export function LegalFeeShieldBadge({ className = '' }: { className?: string }) {
   return (
-    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 text-[#0B1F3A] text-xs font-medium ${className}`}>
-      <span className="text-[#D9603B] flex-shrink-0" aria-hidden="true">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <div className={`inline-flex items-start gap-2.5 px-3.5 py-2.5 rounded-lg bg-[#0B1F3A]/5 border border-[#0B1F3A]/10 text-[#0B1F3A] text-[14px] leading-[1.45] font-medium ${className}`}>
+      <span className="text-[#C24D29] flex-shrink-0 mt-0.5" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           <path d="m9 12 2 2 4-4"/>
         </svg>
       </span>
       <span>
-        <strong>Employer Fee Contribution:</strong> Capped contribution upon agreement completion (s.203(3) ERA 1996 advice requirement)
+        <strong>Employer fee contribution:</strong> Employers standardly contribute £350 to £500+ plus VAT toward your solicitor&apos;s fee upon completion (extra or abortive work depends on solicitor terms).
       </span>
     </div>
   )

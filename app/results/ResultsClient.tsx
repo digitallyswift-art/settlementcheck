@@ -129,32 +129,35 @@ function InputsSummaryPanel({
 
   return (
     <div className="mb-4 sm:mb-5">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-[#E2DCCE]">
+      <div className="flex items-center justify-between gap-2 pb-1 border-b border-[#E2DCCE]">
         <button
           type="button"
           onClick={togglePanel}
-          className="inline-flex items-center gap-1.5 text-[14px] font-medium text-[#0B1F3A] hover:text-[#D9603B] transition-colors bg-transparent border-0 cursor-pointer p-0"
+          className="inline-flex items-center gap-1.5 min-h-[44px] py-2 pr-2 text-[14px] font-semibold text-[#0B1F3A] hover:text-[#C24D29] transition-colors bg-transparent border-0 cursor-pointer shrink-0"
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M10 13L5 8L10 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          {open ? 'Close inputs' : 'Edit my numbers'}
+          {open ? 'Close inputs' : 'Edit numbers'}
         </button>
 
-        <div className="flex flex-wrap items-center gap-2 text-[13px] text-[#5B6577]">
-          <span>
+        <div className="flex items-center gap-1.5 text-[13px] text-[#525D70] min-w-0">
+          <span className="sm:hidden truncate">
+            {jurisdiction} · £{jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB}/wk cap
+          </span>
+          <span className="hidden sm:inline">
             2026/27 rates · {jurisdiction === 'NI' ? 'Northern Ireland' : 'England, Scotland & Wales'} (£{jurisdiction === 'NI' ? WEEKLY_CAP_NI : WEEKLY_CAP_GB}/wk cap)
           </span>
           {!showJurisdiction ? (
             <button
               type="button"
               onClick={() => setShowJurisdiction(true)}
-              className="underline underline-offset-2 text-[#0B1F3A] hover:text-[#D9603B] bg-transparent border-0 cursor-pointer p-0 text-[13px]"
+              className="inline-flex items-center min-h-[44px] px-1.5 underline underline-offset-2 text-[#0B1F3A] hover:text-[#C24D29] bg-transparent border-0 cursor-pointer text-[13px] font-medium shrink-0"
             >
               Change
             </button>
           ) : (
-            <div className="inline-flex gap-1.5">
+            <div className="inline-flex gap-1.5 shrink-0">
               {(['GB', 'NI'] as const).map((j) => (
                 <button
                   key={j}
@@ -163,7 +166,7 @@ function InputsSummaryPanel({
                     onJurisdictionChange(j)
                     setShowJurisdiction(false)
                   }}
-                  className="px-2.5 py-0.5 rounded-full text-[12px] font-semibold border cursor-pointer"
+                  className="min-h-[44px] min-w-[44px] px-3 py-1 rounded-full text-[13px] font-semibold border cursor-pointer"
                   style={{
                     background: jurisdiction === j ? '#0B1F3A' : '#fff',
                     color: jurisdiction === j ? '#fff' : '#0B1F3A',
@@ -181,11 +184,11 @@ function InputsSummaryPanel({
       {open && (
         <div className="bg-white border border-[#E2DCCE] rounded-xl p-5 mt-3 shadow-sm flex flex-col gap-4">
           <div className="flex items-center justify-between">
-            <h3 className="font-serif text-[17px] font-bold text-[#0B1F3A] m-0">Your details</h3>
+            <h3 className="font-serif text-[18px] font-bold text-[#0B1F3A] m-0">Your details</h3>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="text-[20px] text-[#5B6577] hover:text-[#0B1F3A] leading-none bg-transparent border-0 cursor-pointer"
+              className="min-h-[44px] min-w-[44px] -mr-2 inline-flex items-center justify-center text-[22px] text-[#525D70] hover:text-[#0B1F3A] leading-none bg-transparent border-0 cursor-pointer"
               aria-label="Close inputs"
             >
               &times;
@@ -194,24 +197,24 @@ function InputsSummaryPanel({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 divide-y sm:divide-y-0 divide-[#EFEAE0]">
             {fields.map((f) => (
-              <div key={f.key} className="py-2.5 flex items-start justify-between gap-2 border-b border-[#EFEAE0]">
+              <div key={f.key} className="py-2.5 flex items-center justify-between gap-2 border-b border-[#EFEAE0]">
                 <div className="flex-1 min-w-0">
-                  <div className="text-[11px] text-[#5B6577] mb-0.5">{f.label}</div>
+                  <div className="text-[12px] text-[#525D70] mb-0.5">{f.label}</div>
                   {editingField === f.key ? (
                     <div className="mt-1">
                       {f.type === 'number' && (
                         <input
-                          type="number"
+                          type="text"
                           inputMode="numeric"
-                          className="w-full max-w-[180px] border border-[#0B1F3A] rounded-md py-1.5 px-2.5 text-[16px] text-[#0B1F3A] bg-white outline-none"
+                          className="w-full max-w-[180px] border border-[#0B1F3A] rounded-md py-2 px-2.5 text-[16px] text-[#0B1F3A] bg-white outline-none tabular-nums"
                           value={draft[f.key]}
-                          onChange={(e) => set(f.key, e.target.value.replace(/^0+(?=\d)/, ''))}
+                          onChange={(e) => set(f.key, e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, ''))}
                           autoFocus
                         />
                       )}
                       {f.type === 'select' && f.options && (
                         <select
-                          className="w-full py-1.5 px-2.5 text-[16px] text-[#0B1F3A] bg-white border border-[#0B1F3A] rounded-md outline-none"
+                          className="w-full py-2 px-2.5 text-[16px] text-[#0B1F3A] bg-white border border-[#0B1F3A] rounded-md outline-none"
                           value={draft[f.key]}
                           onChange={(e) => set(f.key, e.target.value)}
                           autoFocus
@@ -230,7 +233,7 @@ function InputsSummaryPanel({
                               key={o.value}
                               type="button"
                               onClick={() => set(f.key, o.value)}
-                              className="px-2.5 py-1 rounded-full text-[12px] font-medium border cursor-pointer"
+                              className="min-h-[44px] px-3 py-1.5 rounded-full text-[13px] font-medium border cursor-pointer"
                               style={{
                                 background: draft[f.key] === o.value ? '#0B1F3A' : '#fff',
                                 color: draft[f.key] === o.value ? '#fff' : '#0B1F3A',
@@ -244,14 +247,14 @@ function InputsSummaryPanel({
                       )}
                     </div>
                   ) : (
-                    <div className="text-[14px] text-[#0B1F3A] font-semibold">{f.display(inputs[f.key])}</div>
+                    <div className="text-[15px] text-[#0B1F3A] font-semibold tabular-nums">{f.display(draft[f.key])}</div>
                   )}
                 </div>
 
                 <button
                   type="button"
                   onClick={() => setEditingField(editingField === f.key ? null : f.key)}
-                  className="text-[12px] font-semibold text-[#D9603B] hover:underline bg-transparent border-0 cursor-pointer flex-shrink-0 mt-2 p-0"
+                  className="min-h-[44px] min-w-[44px] inline-flex items-center justify-end text-[14px] font-semibold text-[#C24D29] hover:underline bg-transparent border-0 cursor-pointer flex-shrink-0 px-1"
                 >
                   {editingField === f.key ? 'Done' : 'Edit'}
                 </button>
@@ -259,7 +262,7 @@ function InputsSummaryPanel({
             ))}
           </div>
 
-          <button type="button" onClick={apply} className="btn-primary self-start cursor-pointer">
+          <button type="button" onClick={apply} className="btn-primary self-start min-h-[44px] cursor-pointer">
             Recalculate
           </button>
         </div>
@@ -326,10 +329,11 @@ function EstimateReportCard({
     summary = `Typical settlements for ${yearsNum} ${yearsNum === 1 ? 'year' : 'years'} of service sit around ${typicalRangeText}. First offers are often a starting point, and a solicitor can check if there is room to negotiate.`
   }
 
-  const totalBar = Math.max(offer, result.pilon + result.taxFreeAmount + result.taxableTermination) || 1
+  const totalBar = Math.max(result.effectiveOffer, result.pilon + result.taxFreeAmount + result.taxableTermination) || 1
   const taxFreePct = Math.min(100, Math.max(0, (result.taxFreeAmount / totalBar) * 100))
   const taxablePct = Math.min(100, Math.max(0, (result.taxableTermination / totalBar) * 100))
   const pilonPct = Math.min(100, Math.max(0, (result.pilon / totalBar) * 100))
+  const exGratiaAmount = offer > 0 ? Math.max(0, result.effectiveOffer - result.minimum) : 0
 
   const hasAlerts =
     result.taxableTermination > 0 ||
@@ -339,7 +343,7 @@ function EstimateReportCard({
   return (
     <section
       aria-label="Your settlement estimate and breakdown"
-      className="bg-white border border-[#E2DCCE] rounded-2xl overflow-hidden shadow-sm"
+      className="bg-white border border-[#E2DCCE] rounded-xl overflow-hidden shadow-sm"
     >
       {/* Top Tinted Verdict Header */}
       <div
@@ -364,28 +368,33 @@ function EstimateReportCard({
           {offer > 0 ? (
             <>
               <div>
-                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
-                  Your offer
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#525D70] mb-1">
+                  {result.offerIncludesNotice ? 'Your offer' : 'Total package'}
                 </div>
-                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight">
-                  {formatCurrency(offer)}
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight tabular-nums">
+                  {formatCurrency(result.effectiveOffer)}
                 </div>
+                {!result.offerIncludesNotice && result.pilon > 0 && (
+                  <div className="text-[12px] text-[#525D70] mt-0.5 leading-snug tabular-nums">
+                    {formatCurrency(offer)} offer + {formatCurrency(result.pilon)} notice
+                  </div>
+                )}
               </div>
 
               <div className="border-l border-[#0B1F3A]/10 pl-3.5 sm:pl-4">
-                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#525D70] mb-1">
                   Legal minimum
                 </div>
-                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight">
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight tabular-nums">
                   {formatCurrency(result.minimum)}
                 </div>
               </div>
 
               <div className="col-span-2 sm:col-span-1 pt-3 sm:pt-0 border-t sm:border-t-0 sm:border-l border-[#0B1F3A]/10 sm:pl-4">
-                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#525D70] mb-1">
                   What you keep (est.)
                 </div>
-                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#D9603B] leading-tight">
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#C24D29] leading-tight tabular-nums">
                   {formatCurrency(result.estimatedNet)}
                 </div>
               </div>
@@ -393,28 +402,28 @@ function EstimateReportCard({
           ) : (
             <>
               <div>
-                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#525D70] mb-1">
                   Legal minimum
                 </div>
-                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight">
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight tabular-nums">
                   {formatCurrency(result.minimum)}
                 </div>
               </div>
 
               <div className="border-l border-[#0B1F3A]/10 pl-3.5 sm:pl-4">
-                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#525D70] mb-1">
                   Notice pay ({result.noticeWeeksUsed} wk{result.noticeWeeksUsed !== 1 ? 's' : ''})
                 </div>
-                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight">
+                <div className="font-serif text-[24px] sm:text-[27px] font-bold text-[#0B1F3A] leading-tight tabular-nums">
                   {formatCurrency(result.pilon)}
                 </div>
               </div>
 
               <div className="col-span-2 sm:col-span-1 pt-3 sm:pt-0 border-t sm:border-t-0 sm:border-l border-[#0B1F3A]/10 sm:pl-4">
-                <div className="text-[12px] font-mono uppercase tracking-wider text-[#5B6577] mb-1">
+                <div className="text-[12px] font-mono uppercase tracking-wider text-[#525D70] mb-1">
                   Typical range
                 </div>
-                <div className="font-serif text-[22px] sm:text-[24px] font-bold text-[#0B1F3A] leading-tight">
+                <div className="font-serif text-[22px] sm:text-[24px] font-bold text-[#0B1F3A] leading-tight tabular-nums">
                   {typicalRangeText}
                 </div>
               </div>
@@ -422,19 +431,14 @@ function EstimateReportCard({
           )}
         </div>
 
-        <p className="text-[16px] text-[#2B3445] leading-[1.65] m-0">{summary}</p>
-        {offer > 0 && (
-          <p className="text-[14px] text-[#5B6577] leading-[1.55] m-0 mt-2">
-            ACAS guidance recommends 10 calendar days to consider a written offer, though employers can set shorter deadlines.
-          </p>
-        )}
+        <p className="text-body text-[#243247] max-w-[65ch] m-0">{summary}</p>
 
         {/* Above-the-fold Mobile Intake Jump CTA */}
         <div id="results-primary-cta" className="mt-4 lg:hidden no-print">
           <button
             type="button"
             onClick={onJumpToIntake}
-            className="w-full py-3.5 px-4 rounded-xl bg-[#D9603B] hover:bg-[#B14A28] text-white font-bold text-base flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(217,96,59,0.26)] border-0 cursor-pointer transition-colors"
+            className="w-full min-h-[50px] py-3.5 px-4 rounded-xl bg-[#C24D29] hover:bg-[#A83E1E] text-white font-bold text-[16px] flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(194,77,41,0.26)] border-0 cursor-pointer transition-colors"
           >
             <span>
               {offer <= 0
@@ -446,10 +450,16 @@ function EstimateReportCard({
                 : 'Check my terms & sign off →'}
             </span>
           </button>
-          <p className="text-[12.5px] text-[#5B6577] text-center m-0 mt-1.5">
+          <p className="text-[13px] text-[#525D70] text-center m-0 mt-1.5">
             Takes 20 seconds · Phone optional · 1 SRA firm match
           </p>
         </div>
+
+        {offer > 0 && (
+          <p className="text-[14px] text-[#525D70] leading-[1.55] max-w-[65ch] m-0 mt-3">
+            ACAS guidance recommends 10 calendar days to consider a written offer, though employers can set shorter deadlines.
+          </p>
+        )}
 
         {/* Contextual 1-Line High-Value Flags (only when triggered) */}
         {hasAlerts && (
@@ -481,7 +491,7 @@ function EstimateReportCard({
             How do these numbers break down?
           </h2>
           {offer > 0 && (
-            <span className="text-[13px] font-mono text-[#5B6577] shrink-0">
+            <span className="text-[13px] font-mono text-[#525D70] shrink-0">
               Est. {taxRatePct}% tax band
             </span>
           )}
@@ -492,13 +502,13 @@ function EstimateReportCard({
             <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3">
               <div>
                 <span className="text-[#0B1F3A] block">{srpLabel}</span>
-                <span className="text-[13.5px] text-[#5B6577]">Usually tax-free up to £30,000</span>
+                <span className="text-[14px] text-[#525D70]">Usually tax-free up to £30,000</span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-[12px] font-semibold px-2.5 py-0.5 rounded-full bg-[#0B1F3A]/8 text-[#0B1F3A]">
                   Tax-free
                 </span>
-                <span className="font-mono font-semibold text-[#0B1F3A]">{formatCurrency(srpValue)}</span>
+                <span className="font-mono font-semibold text-[#0B1F3A] tabular-nums">{formatCurrency(srpValue)}</span>
               </div>
             </div>
           )}
@@ -508,37 +518,73 @@ function EstimateReportCard({
               <span className="text-[#0B1F3A] block">
                 Notice pay ({result.noticeWeeksUsed} week{result.noticeWeeksUsed !== 1 ? 's' : ''})
               </span>
-              <span className="text-[13.5px] text-[#5B6577]">Taxed like normal wages</span>
+              <span className="text-[14px] text-[#525D70]">
+                {result.offerIncludesNotice ? 'Included in offer · taxed like normal wages' : 'Paid on top of offer · taxed like normal wages'}
+              </span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <span className="text-[12px] font-semibold px-2.5 py-0.5 rounded-full bg-[#A8341F]/10 text-[#A8341F]">
                 Taxable
               </span>
-              <span className="font-mono font-semibold text-[#0B1F3A]">{formatCurrency(result.pilon)}</span>
+              <span className="font-mono font-semibold text-[#0B1F3A] tabular-nums">{formatCurrency(result.pilon)}</span>
             </div>
           </div>
 
           <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3 bg-[#FAF8F5]">
             <div>
               <span className="font-semibold text-[#0B1F3A] block">Your legal minimum</span>
-              <span className="text-[13.5px] text-[#5B6577]">Notice pay plus statutory redundancy before any extra compensation</span>
+              <span className="text-[14px] text-[#525D70]">Notice pay plus statutory redundancy before any extra compensation</span>
             </div>
-            <span className="font-mono font-bold text-[#0B1F3A] shrink-0">{formatCurrency(result.minimum)}</span>
+            <span className="font-mono font-bold text-[#0B1F3A] shrink-0 tabular-nums">{formatCurrency(result.minimum)}</span>
           </div>
+
+          {offer > 0 && exGratiaAmount > 0 && (
+            <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3">
+              <div>
+                <span className="text-[#0B1F3A] block">Extra compensation (ex-gratia)</span>
+                <span className="text-[14px] text-[#525D70]">
+                  {result.taxableTermination > 0
+                    ? 'First £30,000 tax-free; excess taxed'
+                    : 'Usually tax-free within the £30,000 limit'}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <span
+                  className={`text-[12px] font-semibold px-2.5 py-0.5 rounded-full ${
+                    result.taxableTermination > 0
+                      ? 'bg-[#9A6B16]/12 text-[#9A6B16]'
+                      : 'bg-[#0B1F3A]/8 text-[#0B1F3A]'
+                  }`}
+                >
+                  {result.taxableTermination > 0 ? 'Partly taxable' : 'Tax-free'}
+                </span>
+                <span className="font-mono font-semibold text-[#0B1F3A] tabular-nums">{formatCurrency(exGratiaAmount)}</span>
+              </div>
+            </div>
+          )}
 
           {offer > 0 && (
             <>
+              <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3 bg-[#FAF8F5]">
+                <div>
+                  <span className="font-semibold text-[#0B1F3A] block">
+                    {result.offerIncludesNotice ? 'Total offer evaluated' : 'Total package (offer + notice)'}
+                  </span>
+                </div>
+                <span className="font-mono font-bold text-[#0B1F3A] shrink-0 tabular-nums">{formatCurrency(result.effectiveOffer)}</span>
+              </div>
+
               <div className="px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3">
-                <span className="text-[#5B6577]">Estimated income tax on offer ({taxRatePct}%)</span>
-                <span className="font-mono font-semibold text-[#A8341F]">-{formatCurrency(result.estimatedTax)}</span>
+                <span className="text-[#525D70]">Estimated income tax on taxable parts ({taxRatePct}%)</span>
+                <span className="font-mono font-semibold text-[#A8341F] shrink-0 tabular-nums">-{formatCurrency(result.estimatedTax)}</span>
               </div>
 
               <div className="px-5 sm:px-6 py-4 flex items-center justify-between gap-3 bg-[#F7F4EE]">
                 <div>
                   <span className="font-bold text-[#0B1F3A] block">What you actually keep (estimated)</span>
-                  <span className="text-[13.5px] text-[#5B6577]">Estimated take-home cash after income tax</span>
+                  <span className="text-[14px] text-[#525D70]">Estimated take-home cash after income tax</span>
                 </div>
-                <span className="font-serif text-[24px] font-bold text-[#0B1F3A] shrink-0">{formatCurrency(result.estimatedNet)}</span>
+                <span className="font-serif text-[24px] font-bold text-[#0B1F3A] shrink-0 tabular-nums">{formatCurrency(result.estimatedNet)}</span>
               </div>
             </>
           )}
@@ -571,20 +617,20 @@ function EstimateReportCard({
               )}
             </div>
 
-            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[13.5px] text-[#5B6577]">
+            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[14px] text-[#525D70] tabular-nums">
               <span className="inline-flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-sm bg-[#0B1F3A] inline-block" />
-                Tax-free: <strong className="text-[#0B1F3A]">{formatCurrency(result.taxFreeAmount)}</strong>
+                <span className="w-2.5 h-2.5 rounded-sm bg-[#0B1F3A] inline-block" aria-hidden="true" />
+                Tax-free: <strong className="text-[#0B1F3A]">{formatCurrency(result.taxFreeAmount)}</strong> ({Math.round(taxFreePct)}%)
               </span>
               {result.taxableTermination > 0 && (
                 <span className="inline-flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-sm bg-[#E0CB94] inline-block" />
-                  Over £30k (taxed): <strong className="text-[#0B1F3A]">{formatCurrency(result.taxableTermination)}</strong>
+                  <span className="w-2.5 h-2.5 rounded-sm bg-[#E0CB94] inline-block" aria-hidden="true" />
+                  Over £30k (taxed): <strong className="text-[#0B1F3A]">{formatCurrency(result.taxableTermination)}</strong> ({Math.round(taxablePct)}%)
                 </span>
               )}
               <span className="inline-flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-sm bg-[#D9603B] inline-block" />
-                Notice pay: <strong className="text-[#0B1F3A]">{formatCurrency(result.pilon)}</strong>
+                <span className="w-2.5 h-2.5 rounded-sm bg-[#D9603B] inline-block" aria-hidden="true" />
+                Notice pay (taxed): <strong className="text-[#0B1F3A]">{formatCurrency(result.pilon)}</strong> ({Math.round(pilonPct)}%)
               </span>
             </div>
           </div>
@@ -594,15 +640,16 @@ function EstimateReportCard({
         <div className="border-t border-[#EFEAE0] no-print">
           <button
             type="button"
+            aria-expanded={detailsOpen}
             onClick={() => setDetailsOpen((o) => !o)}
-            className="w-full px-5 sm:px-6 py-3.5 text-left flex items-center justify-between text-[14px] font-medium text-[#5B6577] hover:text-[#0B1F3A] bg-[#FAF8F5] border-0 cursor-pointer"
+            className="w-full min-h-[48px] px-5 sm:px-6 py-3.5 text-left flex items-center justify-between text-[14px] font-medium text-[#525D70] hover:text-[#0B1F3A] bg-[#FAF8F5] border-0 cursor-pointer"
           >
             <span>How are these figures calculated and taxed?</span>
-            <span style={{ transform: detailsOpen ? 'rotate(180deg)' : 'none', transition: 'transform 180ms' }}>▾</span>
+            <span aria-hidden="true" style={{ transform: detailsOpen ? 'rotate(180deg)' : 'none', transition: 'transform 180ms' }}>▾</span>
           </button>
 
           {detailsOpen && (
-            <div className="px-5 sm:px-6 py-4 bg-[#FAF8F5] border-t border-[#EFEAE0] text-[14px] text-[#5B6577] leading-[1.65] space-y-2.5">
+            <div className="px-5 sm:px-6 py-4 bg-[#FAF8F5] border-t border-[#EFEAE0] text-[14px] text-[#525D70] leading-[1.65] space-y-2.5">
               <p className="m-0">
                 <strong>Method:</strong> The legal minimum combines statutory notice pay (ERA 1996 s.86) and statutory redundancy pay (s.162, subject to s.141 eligibility). Typical ranges add an illustrative negotiation allowance based on UK settlement practice. Actual outcomes depend on your contract and facts.
               </p>
@@ -674,7 +721,7 @@ function WhatHappensNextStrip({ hasOffer }: { hasOffer: boolean }) {
   return (
     <section
       aria-label="What happens next"
-      className="bg-white border border-[#E2DCCE] rounded-2xl p-5 no-print"
+      className="bg-white border border-[#E2DCCE] rounded-xl p-5 shadow-sm no-print"
     >
       <h2 className="font-serif text-[20px] font-bold text-[#0B1F3A] m-0 mb-3.5">
         What happens next
@@ -686,8 +733,8 @@ function WhatHappensNextStrip({ hasOffer }: { hasOffer: boolean }) {
               {s.num}
             </span>
             <div>
-              <div className="text-[15.5px] font-bold text-[#0B1F3A] mb-1">{s.title}</div>
-              <p className="text-[14.5px] text-[#5B6577] leading-[1.55] m-0">{s.desc}</p>
+              <div className="text-[16px] font-bold text-[#0B1F3A] mb-1">{s.title}</div>
+              <p className="text-[14px] text-[#525D70] leading-[1.55] m-0">{s.desc}</p>
             </div>
           </div>
         ))}
@@ -794,18 +841,18 @@ function SmartMobileStickyBar({
     >
       <div className="flex items-center justify-between gap-2.5 max-w-lg mx-auto">
         <div className="min-w-0 flex-1">
-          <p className="text-[13px] font-bold text-[#0B1F3A] leading-snug m-0 truncate">
+          <p className="text-[14px] font-bold text-[#0B1F3A] leading-snug m-0 truncate">
             Private Solicitor Review
           </p>
-          <p className="text-[11px] text-[#5B6577] leading-tight m-0 mt-0.5 truncate">
-            100% private · Standard capped employer contribution on completion
+          <p className="text-[12px] text-[#525D70] leading-tight m-0 mt-0.5 truncate">
+            100% private · Capped employer fee contribution
           </p>
         </div>
         <button
           type="button"
           tabIndex={visible ? 0 : -1}
           onClick={onScrollToIntake}
-          className="inline-flex items-center justify-center px-3.5 py-2.5 text-[13px] font-bold text-white bg-[#D9603B] hover:bg-[#B14A28] rounded-lg border-0 cursor-pointer flex-shrink-0 whitespace-nowrap shadow-sm"
+          className="inline-flex items-center justify-center min-h-[44px] px-4 py-2.5 text-[14px] font-bold text-white bg-[#C24D29] hover:bg-[#A83E1E] rounded-lg border-0 cursor-pointer flex-shrink-0 whitespace-nowrap shadow-sm"
         >
           {ctaLabel}
         </button>
@@ -1024,7 +1071,7 @@ export default function ResultsClient() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-paper-2 flex items-center justify-center">
-          <p className="text-[#5B6577] text-[15px]">Calculating your estimate</p>
+          <p className="text-[#525D70] text-[15px]">Calculating your estimate…</p>
         </div>
       }
     >

@@ -146,6 +146,7 @@ export default function InlineSolicitorIntakeCard({
     if (!name.trim()) {
       setError('Please enter your first name.')
       trackClientEvent('intake_validation_error', { field: 'firstName' })
+      document.getElementById('sc-first-name')?.focus()
       return
     }
 
@@ -153,6 +154,7 @@ export default function InlineSolicitorIntakeCard({
     if (!email.trim() || !emailRegex.test(email.trim())) {
       setError('Please enter a valid personal email address.')
       trackClientEvent('intake_validation_error', { field: 'email' })
+      document.getElementById('sc-personal-email')?.focus()
       return
     }
 
@@ -161,12 +163,14 @@ export default function InlineSolicitorIntakeCard({
     if (cleanedPhone.length > 0 && cleanedPhone.length < 7) {
       setError('Please enter a valid UK telephone number, or leave the phone field blank.')
       trackClientEvent('intake_validation_error', { field: 'phone' })
+      document.getElementById('sc-phone')?.focus()
       return
     }
 
     if (!consent) {
       setError('Please tick the box so an available SRA-regulated solicitor can review your figures.')
       trackClientEvent('intake_validation_error', { field: 'consent' })
+      document.getElementById('sc-consent')?.focus()
       return
     }
 
@@ -257,7 +261,7 @@ export default function InlineSolicitorIntakeCard({
       <div className={className}>
         <div
           id="solicitor-intake-card"
-          className="bg-white border border-[#0B1F3A] rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(11,31,58,0.08)] text-[#0B1F3A]"
+          className="bg-white border border-[#0B1F3A] rounded-xl overflow-hidden shadow-md text-[#0B1F3A]"
         >
           <div className="h-1.5 bg-[#0B1F3A]" />
           <div className="p-5 sm:p-6">
@@ -316,11 +320,11 @@ export default function InlineSolicitorIntakeCard({
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="text-[14px] font-semibold text-[#0B1F3A] underline underline-offset-2 hover:text-[#D9603B] bg-transparent border-0 p-0 cursor-pointer"
+                className="min-h-[44px] inline-flex items-center text-[14px] font-semibold text-[#0B1F3A] underline underline-offset-2 hover:text-[#C24D29] bg-transparent border-0 p-0 cursor-pointer"
               >
                 Print or save PDF copy
               </button>
-              <span className="text-[13px] text-[#5B6577]">No obligation</span>
+              <span className="text-[14px] text-[#525D70]">No obligation</span>
             </div>
           </div>
         </div>
@@ -333,7 +337,7 @@ export default function InlineSolicitorIntakeCard({
       <div
         ref={cardRef}
         id="solicitor-intake-card"
-        className="bg-white border border-[#D8D2C6] rounded-2xl overflow-hidden shadow-[0_12px_32px_rgba(11,31,58,0.08)]"
+        className="bg-white border border-[#E2DCCE] rounded-xl overflow-hidden shadow-md"
       >
         <div className="h-1.5 bg-[#0B1F3A]" />
 
@@ -342,30 +346,30 @@ export default function InlineSolicitorIntakeCard({
             {framing.heading}
           </h2>
 
-          <p className="text-[15px] text-[#5B6577] leading-[1.55] m-0 mb-3.5">
+          <p className="text-[15px] text-[#525D70] leading-[1.55] m-0 mb-3.5">
             {framing.subtext}
           </p>
 
           {/* 3 Scannable Single-Line Checkmark Bullets */}
-          <ul className="m-0 mb-3.5 p-0 list-none space-y-1.5 text-[14px] text-[#0B1F3A] leading-[1.45]">
+          <ul className="m-0 mb-3.5 p-0 list-none space-y-2 text-[14px] text-[#0B1F3A] leading-[1.45]">
             <li className="flex items-start gap-2">
-              <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
+              <span className="text-[#C24D29] font-bold shrink-0" aria-hidden="true">✓</span>
               <span>{framing.benefit1}</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
+              <span className="text-[#C24D29] font-bold shrink-0" aria-hidden="true">✓</span>
               <span>100% private (your employer is never told)</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#D9603B] font-bold shrink-0" aria-hidden="true">✓</span>
-              <span>Standard capped employer contribution (£350 to £500+ plus VAT) on completion</span>
+              <span className="text-[#C24D29] font-bold shrink-0" aria-hidden="true">✓</span>
+              <span>Employers standardly contribute £350 to £500+ plus VAT toward your solicitor&apos;s fee upon completion</span>
             </li>
           </ul>
 
           {/* Compact 1-Line Attached Summary Pill */}
           {attachedSummaryParts.length > 0 && (
-            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 px-3 py-2 rounded-xl bg-[#FAF8F5] border border-[#E2DCCE] mb-4 text-[13px] text-[#0B1F3A]">
-              <span className="font-bold text-[#D9603B] shrink-0">Attached:</span>
+            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 px-3 py-2 rounded-xl bg-[#FAF8F5] border border-[#E2DCCE] mb-4 text-[14px] text-[#0B1F3A] tabular-nums">
+              <span className="font-bold text-[#C24D29] shrink-0">Attached:</span>
               <span className="font-semibold">{attachedSummaryParts.join(' · ')}</span>
             </div>
           )}
@@ -383,58 +387,63 @@ export default function InlineSolicitorIntakeCard({
             />
 
             <div>
-              <label htmlFor="sc-first-name" className="block text-[14.5px] font-semibold text-[#0B1F3A] mb-1">
-                First name <span className="text-[#D9603B]">*</span>
+              <label htmlFor="sc-first-name" className="block text-[14px] font-semibold text-[#0B1F3A] mb-1">
+                First name <span className="text-[#C24D29]">*</span>
               </label>
               <input
                 id="sc-first-name"
                 type="text"
                 required
                 autoComplete="given-name"
+                enterKeyHint="next"
                 placeholder="e.g. Sarah"
                 value={name}
                 onFocus={handleFormFocus}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
+                className="w-full min-h-[46px] px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#6B7485] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
               />
             </div>
 
             <div>
-              <label htmlFor="sc-personal-email" className="block text-[14.5px] font-semibold text-[#0B1F3A] mb-1">
-                Personal email <span className="text-[#D9603B]">*</span>
+              <label htmlFor="sc-personal-email" className="block text-[14px] font-semibold text-[#0B1F3A] mb-1">
+                Personal email <span className="text-[#C24D29]">*</span>
               </label>
               <input
                 id="sc-personal-email"
                 type="email"
+                inputMode="email"
                 required
                 autoComplete="email"
+                enterKeyHint="next"
                 placeholder="e.g. sarah@gmail.com (not work email)"
                 value={email}
                 onFocus={handleFormFocus}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
+                className="w-full min-h-[46px] px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#6B7485] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
               />
             </div>
 
             <div>
               <label
                 htmlFor="sc-phone"
-                className="flex items-baseline justify-between gap-2 text-[14.5px] font-semibold text-[#0B1F3A] mb-1"
+                className="flex items-baseline justify-between gap-2 text-[14px] font-semibold text-[#0B1F3A] mb-1"
               >
                 <span>UK mobile or telephone</span>
-                <span className="text-[12.5px] text-[#5B6577] font-normal">Optional · faster callback</span>
+                <span className="text-[13px] text-[#525D70] font-normal">Optional · faster callback</span>
               </label>
               <input
                 id="sc-phone"
                 type="tel"
+                inputMode="tel"
                 autoComplete="tel"
+                enterKeyHint="done"
                 placeholder="e.g. 07700 900123"
                 value={phone}
                 onFocus={handleFormFocus}
                 onChange={(e) => handlePhoneChange(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#8A93A3] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
+                className="w-full min-h-[46px] px-3.5 py-2.5 rounded-xl border border-[#D8D2C6] text-base text-[#0B1F3A] placeholder-[#6B7485] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] focus:border-transparent transition bg-white"
               />
-              <p className="m-0 mt-1 text-[12px] text-[#5B6577] leading-[1.4]">
+              <p className="m-0 mt-1 text-[13px] text-[#525D70] leading-[1.45]">
                 Never shared with your employer. Used only by your 1 matched solicitor.
               </p>
             </div>
@@ -442,15 +451,16 @@ export default function InlineSolicitorIntakeCard({
             {hasPhoneInput && (
               <div className="pt-0.5">
                 <span className="block text-[14px] font-semibold text-[#0B1F3A] mb-1.5">
-                  Best time to call <span className="text-[#5B6577] font-normal">(optional)</span>
+                  Best time to call <span className="text-[#525D70] font-normal">(optional)</span>
                 </span>
                 <div className="grid grid-cols-3 gap-2">
                   {(['Morning', 'Afternoon', 'Evening'] as const).map((slot) => (
                     <button
                       key={slot}
                       type="button"
+                      aria-pressed={contactTime === slot}
                       onClick={() => setContactTime(contactTime === slot ? null : slot)}
-                      className={`py-2.5 px-2 text-center text-[14px] font-semibold rounded-xl border transition cursor-pointer ${
+                      className={`min-h-[44px] py-2.5 px-2 text-center text-[14px] font-semibold rounded-xl border transition cursor-pointer ${
                         contactTime === slot
                           ? 'bg-[#0B1F3A] text-white border-[#0B1F3A]'
                           : 'bg-white text-[#0B1F3A] border-[#D8D2C6] hover:bg-[#F7F4EE]'
@@ -464,28 +474,25 @@ export default function InlineSolicitorIntakeCard({
             )}
 
             <div className="pt-0.5 space-y-2">
-              <p className="m-0 text-[12.5px] text-[#5B6577] leading-[1.45]">
-                Shared with 1 SRA-regulated solicitor only. Extra or abortive work depends on their terms. No obligation to instruct.
-              </p>
               <label
                 htmlFor="sc-consent"
-                className="flex items-start gap-2.5 cursor-pointer select-none py-0.5"
+                className="flex items-start gap-2.5 cursor-pointer select-none py-1"
               >
                 <input
                   id="sc-consent"
                   type="checkbox"
                   checked={consent}
                   onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-0.5 h-5 w-5 rounded border-[#D8D2C6] accent-[#D9603B] text-[#D9603B] focus:ring-[#D9603B] cursor-pointer shrink-0"
+                  className="mt-0.5 h-5 w-5 rounded border-[#D8D2C6] accent-[#C24D29] text-[#C24D29] focus:ring-[#C24D29] cursor-pointer shrink-0"
                 />
-                <span className="text-[13.5px] text-[#2B3445] leading-[1.5]">
-                  Share my figures with <strong>one</strong> available SRA-regulated employment solicitor so they can review them and get in touch.
+                <span className="text-[14px] text-[#243247] leading-[1.5]">
+                  Share my figures with <strong>one</strong> available SRA-regulated employment solicitor so they can review them and get in touch. Extra or abortive work depends on their terms. No obligation to instruct.
                 </span>
               </label>
             </div>
 
             {error && (
-              <div className="p-3 bg-[#FBF0EE] border border-[#D9A99E] rounded-xl text-[14px] text-[#A8341F]">
+              <div role="alert" className="p-3 bg-[#FBF0EE] border border-[#D9A99E] rounded-xl text-[14px] font-medium text-[#A8341F]">
                 {error}
               </div>
             )}
@@ -493,10 +500,10 @@ export default function InlineSolicitorIntakeCard({
             <button
               type="submit"
               disabled={submitting}
-              className={`w-full py-3.5 px-5 rounded-xl text-white font-bold text-base flex items-center justify-center gap-2 transition-all cursor-pointer border-0 ${
+              className={`w-full min-h-[50px] py-3.5 px-5 rounded-xl text-white font-bold text-[16px] flex items-center justify-center gap-2 transition-all cursor-pointer border-0 ${
                 submitting
-                  ? 'bg-[#E2DCCE] text-[#5B6577] cursor-not-allowed'
-                  : 'bg-[#D9603B] hover:bg-[#B14A28] shadow-[0_4px_16px_rgba(217,96,59,0.28)]'
+                  ? 'bg-[#E2DCCE] text-[#525D70] cursor-not-allowed'
+                  : 'bg-[#C24D29] hover:bg-[#A83E1E] shadow-[0_4px_16px_rgba(194,77,41,0.28)]'
               }`}
             >
               <span>{submitting ? 'Sending your figures...' : framing.ctaLabel}</span>

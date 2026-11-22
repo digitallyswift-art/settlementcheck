@@ -26,6 +26,7 @@ export default function CookieConsentBanner() {
   const [marketingEnabled, setMarketingEnabled] = useState(false)
 
   const isInternalAdminRoute = pathname?.startsWith('/cockpit')
+  const isCalculatorOverlayRoute = pathname?.startsWith('/calculator')
 
   useEffect(() => {
     setMounted(true)
@@ -35,10 +36,12 @@ export default function CookieConsentBanner() {
       setAnalyticsEnabled(existing.analytics)
       setMarketingEnabled(existing.marketing)
       setShowBanner(false)
-    } else if (!isInternalAdminRoute) {
+    } else if (!isInternalAdminRoute && !isCalculatorOverlayRoute) {
       setShowBanner(true)
+    } else {
+      setShowBanner(false)
     }
-  }, [isInternalAdminRoute])
+  }, [isInternalAdminRoute, isCalculatorOverlayRoute])
 
   useEffect(() => {
     function handleOpenSettings() {
