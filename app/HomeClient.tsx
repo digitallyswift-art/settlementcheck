@@ -288,18 +288,8 @@ export default function HomeClient({
                     ))}
                   </div>
 
-                  {/* Primary CTA (thumb-zone on mobile, bottom of card on desktop) */}
-                  <div id="hero-primary-cta" className="order-1 lg:order-2 mb-4 lg:mb-3">
-                    <Link
-                      href={ctaHref}
-                      className="btn-accent w-full min-h-[52px] py-3.5 px-6 rounded-[10px] text-[16px] font-bold shadow-sm"
-                    >
-                      {ctaLabel}
-                    </Link>
-                  </div>
-
-                  {/* Mobile compact single-line trust points (zero duplication of April 2026 pill) */}
-                  <div className="order-2 lg:hidden flex flex-col gap-2.5 mb-4">
+                  {/* Mobile compact single-line trust points (before CTA for natural read-to-action flow) */}
+                  <div className="order-1 lg:hidden flex flex-col gap-2.5 mb-5">
                     {[
                       'No email required · check privately in 60s',
                       'Independent · no law firm behind the maths',
@@ -315,6 +305,16 @@ export default function HomeClient({
                         <span className="text-[15px] text-ink-2 leading-snug">{label}</span>
                       </div>
                     ))}
+                  </div>
+
+                  {/* Primary CTA (after ticks on both mobile and desktop) */}
+                  <div id="hero-primary-cta" className="order-2 mb-4 lg:mb-3">
+                    <Link
+                      href={ctaHref}
+                      className="btn-accent w-full min-h-[52px] py-3.5 px-6 rounded-[10px] text-[16px] font-bold shadow-sm"
+                    >
+                      {ctaLabel}
+                    </Link>
                   </div>
 
                   {/* Secondary path (now cleanly visible above the fold on mobile) */}
