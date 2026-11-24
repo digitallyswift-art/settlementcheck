@@ -32,10 +32,11 @@ export async function fetchSettlementBenchmarks(): Promise<SettlementBenchmark[]
 export function trackClientEvent(name: string, params?: Record<string, unknown>): void {
   if (typeof window === 'undefined') return;
   const w = window as any;
+  // app/layout.tsx's gtag shim pushes both the gtag command and a GTM Custom Event
+  // object onto window.dataLayer; only push directly if gtag is unavailable.
   if (typeof w.gtag === 'function') {
     w.gtag('event', name, params);
-  }
-  if (Array.isArray(w.dataLayer)) {
+  } else if (Array.isArray(w.dataLayer)) {
     w.dataLayer.push({ event: name, ...params });
   }
 }

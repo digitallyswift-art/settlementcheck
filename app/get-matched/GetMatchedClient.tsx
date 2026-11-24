@@ -424,8 +424,7 @@ export default function GetMatchedClient() {
         w.gtag('event', 'lead_submitted', { event_category: 'employee_lead', verdict })
         w.gtag('event', 'generate_lead', { event_category: 'employee_lead', verdict, currency: 'GBP', value: 150 })
         w.gtag('event', 'qualify_lead', { event_category: 'employee_lead', verdict, currency: 'GBP', value: 150 })
-      }
-      if (Array.isArray(w.dataLayer)) {
+      } else if (Array.isArray(w.dataLayer)) {
         w.dataLayer.push({ event: 'lead_submitted', verdict })
         w.dataLayer.push({ event: 'generate_lead', verdict, currency: 'GBP', value: 150 })
         w.dataLayer.push({ event: 'qualify_lead', verdict, currency: 'GBP', value: 150 })

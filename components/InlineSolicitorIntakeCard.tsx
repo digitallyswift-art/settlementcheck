@@ -211,27 +211,16 @@ export default function InlineSolicitorIntakeCard({
       setTriageId(assignedTriageId)
       setSubmitted(true)
 
-      Ga4TelemetryClient.trackLeadCompleted(true)
-      trackClientEvent('generate_lead', {
+      const contactMethod = trimmedPhone ? 'phone' : 'email_only'
+      Ga4TelemetryClient.trackLeadCompleted(true, {
         event_category: 'employee_lead',
         verdict,
-        contact_method: trimmedPhone ? 'phone' : 'email_only',
-        currency: 'GBP',
-        value: 150,
+        contact_method: contactMethod,
       })
-      if (trimmedPhone) {
-        trackClientEvent('qualify_lead', {
-          event_category: 'employee_lead',
-          verdict,
-          contact_method: 'phone',
-          currency: 'GBP',
-          value: 150,
-        })
-      }
       trackClientEvent('lead_submitted', {
         event_category: 'employee_lead',
         verdict,
-        contact_method: trimmedPhone ? 'phone' : 'email_only',
+        contact_method: contactMethod,
       })
     } catch (err: unknown) {
       const message =

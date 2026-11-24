@@ -126,9 +126,11 @@ export class Ga4TelemetryClient {
     sanitizedParams.transport = 'sanitized_gtag';
 
     try {
+      // app/layout.tsx's gtag shim pushes both the gtag command and a GTM Custom Event
+      // object onto window.dataLayer; only push directly if gtag is unavailable.
       if (typeof window.gtag === 'function') {
         window.gtag('event', eventName, sanitizedParams);
-      } else if (Array.isArray(window.dataLayer)) {
+      } else if (typeof window !== 'undefined' && Array.isArray(window.dataLayer)) {
         window.dataLayer.push({
           event: eventName,
           ...sanitizedParams,
@@ -216,13 +218,24 @@ export class Ga4TelemetryClient {
   /**
    * Triggered when lead is successfully matched with SRA panel solicitor
    */
-  public static trackLeadCompleted(referralAssigned: boolean = true) {
-    this.emit('lead_completed', {
+  public static trackLeadCompleted(
+    referralAssigned: boolean = true,
+    extraParams?: Record<string, string | number | boolean | undefined>
+  ) {
+    const baseParams = {
+      ...extraParams,
       referral_assigned: referralAssigned ? 1 : 0,
-    });
+    };
+    this.emit('lead_completed', baseParams);
     // Google Analytics 4 standard recommended event for lead generation
     this.emit('generate_lead', {
-      referral_assigned: referralAssigned ? 1 : 0,
+      ...baseParams,
+      currency: 'GBP',
+      value: 150,
+    });
+    // Direct match for GA4 Key Event configured in property settings
+    this.emit('qualify_lead', {
+      ...baseParams,
       currency: 'GBP',
       value: 150,
     });
