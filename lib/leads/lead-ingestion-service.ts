@@ -448,11 +448,46 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
   // ── Confirmation to employee (Non-fatal) ──────────────────────────────────
   if (resend) {
     try {
+      const baseAppUrl = 'https://settlementcheck.co.uk'
+      const hasCalcParams = Boolean(
+        (sourceUrl && sourceUrl.includes('/results/?')) ||
+        (salaryNum != null && salaryNum > 0 && offerNum != null && offerNum > 0)
+      )
+
+      const calculationUrl = (() => {
+        if (sourceUrl && sourceUrl.includes('/results/?')) {
+          if (sourceUrl.startsWith('https://settlementcheck.co.uk')) return sourceUrl
+          if (sourceUrl.startsWith('/')) return `${baseAppUrl}${sourceUrl}`
+        }
+        if (salaryNum != null && salaryNum > 0 && offerNum != null && offerNum > 0) {
+          const params = new URLSearchParams()
+          params.set('salary', String(salaryNum))
+          if (monthsNum != null && monthsNum >= 0) {
+            params.set('yearsNum', String(Math.floor(monthsNum / 12)))
+            params.set('monthsNum', String(monthsNum % 12))
+          }
+          params.set('offer', String(offerNum))
+          if (input.disputeReason) params.set('reason', String(input.disputeReason))
+          return `${baseAppUrl}/results/?${params.toString()}`
+        }
+        return `${baseAppUrl}/calculator/`
+      })()
+
+      const ctaLabel = hasCalcParams
+        ? 'Revisit your calculation'
+        : 'Run a settlement calculation'
+
+      const safeFirstName = escapeHtml(firstName)
+      const safeContactLabel = escapeHtml(safeContactTime.toLowerCase())
+      const safeCalcUrl = escapeHtml(calculationUrl)
+
       const employeeText = [
         `Hi ${firstName},`,
         '',
         'Your details are with us.',
         `We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (${safeContactTime.toLowerCase()}).`,
+        '',
+        `${ctaLabel}: ${calculationUrl}`,
         '',
         'Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor\'s terms.',
         '',
@@ -468,19 +503,35 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
         subject: 'We have received your details - SettlementCheck',
         text: employeeText,
         html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 40px 24px;">
-            <div style="margin-bottom: 32px;">
-              <span style="font-size: 18px; font-weight: 700; color: #111827; letter-spacing: -0.015em;">SettlementCheck</span>
+          <!-- Hidden Preheader -->
+          <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+            We are matching you with an SRA-regulated employment solicitor. Expect a call within 24 hours (${safeContactLabel}).
+          </div>
+
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 520px; margin: 0 auto; padding: 36px 24px; background-color: #ffffff; color: #0B1F3A;">
+            <div style="margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid #E2DCCE;">
+              <span style="font-size: 18px; font-weight: 700; color: #0B1F3A; letter-spacing: -0.015em;">SettlementCheck</span>
             </div>
-            <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0 0 16px; letter-spacing: -0.02em;">Your details are with us</h1>
-            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">Hi ${firstName},</p>
-            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (${safeContactTime.toLowerCase()}).</p>
-            <p style="color: #374151; font-size: 15px; line-height: 1.6; margin: 0 0 32px;">Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor's terms.</p>
-            <div style="background: #f9fafb; border-radius: 8px; padding: 16px;">
-              <p style="color: #6b7280; font-size: 13px; margin: 0; line-height: 1.6;">SettlementCheck is an introduction service, not a law firm. We connect you with SRA-regulated solicitors. We do not provide legal advice.</p>
+
+            <h1 style="font-size: 24px; font-weight: 700; color: #0B1F3A; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.25;">Your details are with us</h1>
+            <p style="color: #1A2F4E; font-size: 15px; line-height: 1.6; margin: 0 0 14px;">Hi ${safeFirstName},</p>
+            <p style="color: #1A2F4E; font-size: 15px; line-height: 1.6; margin: 0 0 24px;">We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (<strong>${safeContactLabel}</strong>).</p>
+
+            <div style="background-color: #F7F4EE; border: 1px solid #E2DCCE; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
+              <p style="font-size: 13px; font-weight: 600; color: #0B1F3A; margin: 0 0 12px; line-height: 1.5;">Want to review or adjust your figures before your call?</p>
+              <a href="${safeCalcUrl}"
+                 style="display: inline-block; background-color: #D9603B; color: #ffffff; font-size: 15px; font-weight: 700; padding: 13px 22px; border-radius: 8px; text-decoration: none; letter-spacing: -0.01em;">
+                ${ctaLabel} &rarr;
+              </a>
             </div>
-            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
-              <p style="font-size: 11px; color: #9ca3af; margin: 0;">SettlementCheck &bull; United Kingdom &bull; team@settlementcheck.co.uk</p>
+
+            <p style="color: #5B6577; font-size: 14px; line-height: 1.6; margin: 0 0 24px;">Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor&apos;s terms.</p>
+
+            <div style="background-color: #F7F4EE; border-radius: 8px; padding: 14px 16px;">
+              <p style="color: #5B6577; font-size: 12px; margin: 0; line-height: 1.6;">SettlementCheck is an introduction service, not a law firm. We connect you with SRA-regulated solicitors. We do not provide legal advice.</p>
+            </div>
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #E2DCCE;">
+              <p style="font-size: 11px; color: #8A93A3; margin: 0;">SettlementCheck &bull; United Kingdom &bull; team@settlementcheck.co.uk</p>
             </div>
           </div>
         `,

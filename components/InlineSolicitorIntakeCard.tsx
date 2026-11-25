@@ -78,6 +78,7 @@ export default function InlineSolicitorIntakeCard({
   sourceUrl = '/results/',
   initialEmail = '',
   className = '',
+  saveParams,
   resultSummary,
 }: Props) {
   const [name, setName] = useState('')
@@ -177,6 +178,20 @@ export default function InlineSolicitorIntakeCard({
     setSubmitting(true)
 
     try {
+      const effectiveSourceUrl = (() => {
+        if (saveParams && Object.keys(saveParams).length > 0) {
+          const qs = new URLSearchParams()
+          for (const [key, val] of Object.entries(saveParams)) {
+            if (val !== undefined && val !== null && String(val) !== '') {
+              qs.set(key, String(val))
+            }
+          }
+          const query = qs.toString()
+          if (query) return `/results/?${query}`
+        }
+        return sourceUrl
+      })()
+
       const payload: Record<string, unknown> = {
         firstName: name.trim(),
         email: email.trim().toLowerCase(),
@@ -188,7 +203,7 @@ export default function InlineSolicitorIntakeCard({
         disputeReason,
         consent: true,
         gdpr_consent: true,
-        sourceUrl,
+        sourceUrl: effectiveSourceUrl,
       }
 
       if (trimmedPhone.length > 0 && contactTime) {
