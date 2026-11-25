@@ -12,6 +12,167 @@ import { SafeFs } from '@/lib/agentic-engine/services/safe-fs';
 
 export const dynamic = 'force-dynamic';
 
+const cleanEnv = (val?: string) => (val || '').replace(/['"]/g, '').trim();
+
+function constantTimeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i++) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return mismatch === 0;
+}
+
+function getAdminEmailAllowlist(): Set<string> {
+  const raw = cleanEnv(process.env.ADMIN_EMAILS) || cleanEnv(process.env.COCKPIT_ADMIN_EMAILS);
+  if (!raw) {
+    return new Set(['admin@settlementcheck.co.uk']);
+  }
+  return new Set(
+    raw
+      .split(',')
+      .map(e => e.trim().toLowerCase())
+      .filter(Boolean)
+  );
+}
+
+function isAdminClaims(
+  email: string | undefined,
+  emailVerified: boolean,
+  claims: Record<string, any> | null | undefined
+): boolean {
+  if (claims) {
+    if (claims.admin === true || claims.role === 'admin' || claims.role === 'superadmin') {
+      return true;
+    }
+    if (
+      claims.app_metadata &&
+      (claims.app_metadata.admin === true ||
+        claims.app_metadata.role === 'admin' ||
+        (Array.isArray(claims.app_metadata.roles) && claims.app_metadata.roles.includes('admin')))
+    ) {
+      return true;
+    }
+  }
+  if (email && emailVerified) {
+    return getAdminEmailAllowlist().has(email.trim().toLowerCase());
+  }
+  return false;
+}
+
+async function verifyAdminRequest(req: NextRequest): Promise<NextResponse | null> {
+  let token = '';
+  const authHeader = req.headers.get('authorization');
+  if (authHeader?.startsWith('Bearer ')) {
+    token = authHeader.slice(7).trim();
+  }
+  if (!token) {
+    token =
+      req.cookies.get('sc_cockpit_auth')?.value?.trim() ||
+      req.cookies.get('sb-access-token')?.value?.trim() ||
+      req.cookies.get('supabase-auth-token')?.value?.trim() ||
+      '';
+  }
+
+  if (!token) {
+    return NextResponse.json(
+      { success: false, error: 'Unauthorized: Valid authentication token required.' },
+      { status: 401 }
+    );
+  }
+
+  // 1. Worker / Cron / Dev passkey
+  const cronSecret = cleanEnv(process.env.CRON_SECRET) || cleanEnv(process.env.INTERNAL_WORKER_KEY);
+  if (cronSecret && constantTimeEqual(token, cronSecret)) {
+    return null;
+  }
+  if (process.env.NODE_ENV === 'development') {
+    const devPass = cleanEnv(process.env.DEV_PASSKEY);
+    if (devPass && constantTimeEqual(token, devPass)) {
+      return null;
+    }
+  }
+
+  let isAuthenticated = false;
+  let isAdmin = false;
+
+  // 2. Firebase ID token verification
+  const firebaseApiKey = cleanEnv(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
+  if (token.split('.').length === 3 && firebaseApiKey && !firebaseApiKey.includes('placeholder')) {
+    try {
+      const origin = req.headers.get('origin') || req.nextUrl.origin || 'https://settlementcheck.co.uk';
+      const referer = req.headers.get('referer') || `${origin}/cockpit/`;
+      const lookupRes = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${encodeURIComponent(firebaseApiKey)}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Origin: origin,
+            Referer: referer,
+          },
+          body: JSON.stringify({ idToken: token }),
+        }
+      );
+      if (lookupRes.ok) {
+        const data = await lookupRes.json();
+        const fbUser = Array.isArray(data?.users) && data.users.length > 0 ? data.users[0] : null;
+        if (fbUser?.localId) {
+          isAuthenticated = true;
+          let customClaims: Record<string, any> | null = null;
+          if (typeof fbUser.customAttributes === 'string') {
+            try {
+              customClaims = JSON.parse(fbUser.customAttributes);
+            } catch {
+              customClaims = null;
+            }
+          }
+          isAdmin = isAdminClaims(fbUser.email, Boolean(fbUser.emailVerified), customClaims);
+        }
+      }
+    } catch {
+      // Fall through
+    }
+  }
+
+  // 3. Supabase Auth JWT verification
+  if (!isAuthenticated && process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    try {
+      const userRes = await fetch(`${cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_URL)}/auth/v1/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          apikey: cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+        },
+      });
+      if (userRes.ok) {
+        const sbUser = await userRes.json();
+        isAuthenticated = true;
+        isAdmin = isAdminClaims(
+          sbUser?.email,
+          Boolean(sbUser?.email_confirmed_at || sbUser?.confirmed_at),
+          sbUser
+        );
+      }
+    } catch {
+      // Fall through
+    }
+  }
+
+  if (!isAuthenticated) {
+    return NextResponse.json(
+      { success: false, error: 'Unauthorized: Valid authentication token required.' },
+      { status: 401 }
+    );
+  }
+  if (!isAdmin) {
+    return NextResponse.json(
+      { success: false, error: 'Forbidden: Administrator privileges required.' },
+      { status: 403 }
+    );
+  }
+  return null;
+}
+
 function revalidateSeoRouteAndTag(urlOrPath: string) {
   const pathName = SeoActuatorService.normalizePath(urlOrPath);
   const tag = SeoActuatorService.getCacheTagForPath(pathName);
@@ -27,6 +188,9 @@ function revalidateSeoRouteAndTag(urlOrPath: string) {
 }
 
 export async function GET(req: NextRequest) {
+  const authError = await verifyAdminRequest(req);
+  if (authError) return authError;
+
   try {
     const { searchParams } = new URL(req.url);
     const limit = Math.min(50, Number(searchParams.get('limit') || 20));
@@ -107,14 +271,18 @@ export async function GET(req: NextRequest) {
       changeLogPreview,
     });
   } catch (error: any) {
+    console.error('[seo-actions GET] Error:', error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Failed to fetch SEO actions' },
+      { success: false, error: 'Failed to fetch SEO actions' },
       { status: 500 }
     );
   }
 }
 
 export async function POST(req: NextRequest) {
+  const authError = await verifyAdminRequest(req);
+  if (authError) return authError;
+
   try {
     const body = await req.json();
     const { action, packageId, url } = body;
@@ -297,8 +465,9 @@ export async function POST(req: NextRequest) {
             metrics: digest.metrics,
           });
         } catch (err: any) {
+          console.error('[seo-actions TRIGGER_RUN] Error:', err);
           return NextResponse.json(
-            { success: false, error: `Fleet scan execution failed: ${err.message}` },
+            { success: false, error: 'Fleet scan execution failed' },
             { status: 500 }
           );
         }
@@ -357,8 +526,9 @@ export async function POST(req: NextRequest) {
             packages: allPackages,
           });
         } catch (err: any) {
+          console.error('[seo-actions AUDIT_OUTCOMES] Error:', err);
           return NextResponse.json(
-            { success: false, error: `Audit outcomes failed: ${err.message}` },
+            { success: false, error: 'Audit outcomes failed' },
             { status: 500 }
           );
         }
@@ -377,21 +547,37 @@ export async function POST(req: NextRequest) {
             report,
           });
         } catch (err: any) {
+          console.error('[seo-actions RUN_DEGRADATION_WATCHDOG] Error:', err);
           return NextResponse.json(
-            { success: false, error: `Degradation watchdog failed: ${err.message}` },
+            { success: false, error: 'Degradation watchdog failed' },
             { status: 500 }
           );
         }
       }
 
       case 'REINDEX': {
-        if (!url) {
+        if (!url || typeof url !== 'string') {
           return NextResponse.json(
             { success: false, error: 'url is required for REINDEX' },
             { status: 400 }
           );
         }
-        const indexingResult = await GoogleIndexingClient.notifyUrlUpdated(url);
+        let parsedUrl: URL;
+        try {
+          parsedUrl = new URL(url.trim());
+        } catch {
+          return NextResponse.json(
+            { success: false, error: 'Invalid URL format for REINDEX' },
+            { status: 400 }
+          );
+        }
+        if (parsedUrl.origin !== 'https://settlementcheck.co.uk') {
+          return NextResponse.json(
+            { success: false, error: 'Forbidden: URL must belong to https://settlementcheck.co.uk' },
+            { status: 400 }
+          );
+        }
+        const indexingResult = await GoogleIndexingClient.notifyUrlUpdated(parsedUrl.toString());
         return NextResponse.json({
           success: indexingResult.success,
           indexingResult,
@@ -400,13 +586,14 @@ export async function POST(req: NextRequest) {
 
       default:
         return NextResponse.json(
-          { success: false, error: `Unsupported action: ${action}` },
+          { success: false, error: 'Unsupported action' },
           { status: 400 }
         );
     }
   } catch (error: any) {
+    console.error('[seo-actions POST] Error:', error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Actuation operation failed' },
+      { success: false, error: 'Actuation operation failed' },
       { status: 500 }
     );
   }

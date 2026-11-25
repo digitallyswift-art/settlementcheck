@@ -2,12 +2,50 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { logSecurityEvent } from '@/lib/security/security-logger';
 
 const PROTECTED_API_PREFIXES = ['/api/portal', '/api/cockpit'];
+const ADMIN_API_PREFIXES = ['/api/portal/seo-actions', '/api/cockpit'];
 const PROTECTED_PAGE_PREFIXES = ['/cockpit', '/portal'];
 const PUBLIC_API_ALLOWLIST = ['/api/portal/health'];
 // Dossier reading and claiming endpoints enforce their own mandatory cryptographic claim_token validation
 const CLAIM_TOKEN_API_PREFIXES = ['/api/portal/dossier', '/api/portal/claim'];
 
 const cleanEnv = (val?: string) => (val || '').replace(/['"]/g, '').trim();
+
+function getAdminEmailAllowlist(): Set<string> {
+  const raw = cleanEnv(process.env.ADMIN_EMAILS) || cleanEnv(process.env.COCKPIT_ADMIN_EMAILS);
+  if (!raw) {
+    return new Set(['admin@settlementcheck.co.uk']);
+  }
+  return new Set(
+    raw
+      .split(',')
+      .map(e => e.trim().toLowerCase())
+      .filter(Boolean)
+  );
+}
+
+function isAdminUserClaims(
+  email: string | undefined,
+  emailVerified: boolean,
+  claims: Record<string, any> | null | undefined
+): boolean {
+  if (claims) {
+    if (claims.admin === true || claims.role === 'admin' || claims.role === 'superadmin') {
+      return true;
+    }
+    if (
+      claims.app_metadata &&
+      (claims.app_metadata.admin === true ||
+        claims.app_metadata.role === 'admin' ||
+        (Array.isArray(claims.app_metadata.roles) && claims.app_metadata.roles.includes('admin')))
+    ) {
+      return true;
+    }
+  }
+  if (email && emailVerified) {
+    return getAdminEmailAllowlist().has(email.trim().toLowerCase());
+  }
+  return false;
+}
 
 /**
  * Constant-time string comparison to neutralize timing attacks.
@@ -47,14 +85,19 @@ function decodeBase64UrlJson(segment: string): any | null {
   }
 }
 
+interface AuthVerificationResult {
+  authenticated: boolean;
+  isAdmin: boolean;
+}
+
 /**
  * Verifies a Firebase Auth ID Token in Next.js Edge Runtime:
  * 1. Validates token via Google Identity Toolkit `accounts:lookup` REST endpoint.
  * 2. Verifies Firebase SecureToken JWT claims + Google public JWK RS256 signature if API key has referrer restrictions.
  */
-async function verifyFirebaseToken(token: string, req: NextRequest): Promise<boolean> {
+async function verifyFirebaseToken(token: string, req: NextRequest): Promise<AuthVerificationResult> {
   const parts = token.split('.');
-  if (parts.length !== 3) return false;
+  if (parts.length !== 3) return { authenticated: false, isAdmin: false };
 
   const firebaseApiKey = cleanEnv(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
   const firebaseProjectId = cleanEnv(process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
@@ -78,8 +121,22 @@ async function verifyFirebaseToken(token: string, req: NextRequest): Promise<boo
       );
       if (lookupRes.ok) {
         const data = await lookupRes.json();
-        if (Array.isArray(data?.users) && data.users.length > 0 && data.users[0]?.localId) {
-          return true;
+        const fbUser = Array.isArray(data?.users) && data.users.length > 0 ? data.users[0] : null;
+        if (fbUser?.localId) {
+          let customClaims: Record<string, any> | null = null;
+          if (typeof fbUser.customAttributes === 'string') {
+            try {
+              customClaims = JSON.parse(fbUser.customAttributes);
+            } catch {
+              customClaims = null;
+            }
+          }
+          const isAdmin = isAdminUserClaims(
+            fbUser.email,
+            Boolean(fbUser.emailVerified),
+            customClaims
+          );
+          return { authenticated: true, isAdmin };
         }
       }
     } catch {
@@ -90,20 +147,22 @@ async function verifyFirebaseToken(token: string, req: NextRequest): Promise<boo
   // 2. Fallback check: Verify Firebase SecureToken JWT claims and Google JWK RS256 signature
   const header = decodeBase64UrlJson(parts[0]);
   const payload = decodeBase64UrlJson(parts[1]);
-  if (!header || !payload) return false;
+  if (!header || !payload) return { authenticated: false, isAdmin: false };
 
   const nowSeconds = Math.floor(Date.now() / 1000);
-  if (header.alg !== 'RS256' || !header.kid) return false;
-  if (typeof payload.exp !== 'number' || payload.exp <= nowSeconds) return false;
-  if (typeof payload.iat !== 'number' || payload.iat > nowSeconds + 300) return false;
-  if (typeof payload.sub !== 'string' || !payload.sub.trim()) return false;
+  if (header.alg !== 'RS256' || !header.kid) return { authenticated: false, isAdmin: false };
+  if (typeof payload.exp !== 'number' || payload.exp <= nowSeconds) return { authenticated: false, isAdmin: false };
+  if (typeof payload.iat !== 'number' || payload.iat > nowSeconds + 300) return { authenticated: false, isAdmin: false };
+  if (typeof payload.sub !== 'string' || !payload.sub.trim()) return { authenticated: false, isAdmin: false };
 
   if (firebaseProjectId) {
-    if (payload.aud !== firebaseProjectId) return false;
-    if (payload.iss !== `https://securetoken.google.com/${firebaseProjectId}`) return false;
+    if (payload.aud !== firebaseProjectId) return { authenticated: false, isAdmin: false };
+    if (payload.iss !== `https://securetoken.google.com/${firebaseProjectId}`) {
+      return { authenticated: false, isAdmin: false };
+    }
   } else {
     if (typeof payload.iss !== 'string' || !payload.iss.startsWith('https://securetoken.google.com/')) {
-      return false;
+      return { authenticated: false, isAdmin: false };
     }
   }
 
@@ -131,14 +190,21 @@ async function verifyFirebaseToken(token: string, req: NextRequest): Promise<boo
         }
         const dataBytes = new TextEncoder().encode(`${parts[0]}.${parts[1]}`);
         const isValidSig = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, sigBytes, dataBytes);
-        return isValidSig;
+        if (isValidSig) {
+          const isAdmin = isAdminUserClaims(
+            payload.email,
+            Boolean(payload.email_verified),
+            payload
+          );
+          return { authenticated: true, isAdmin };
+        }
       }
     }
   } catch {
     // If JWK endpoint is unreachable in restricted edge environment, refuse unverified signature
   }
 
-  return false;
+  return { authenticated: false, isAdmin: false };
 }
 
 export async function middleware(req: NextRequest) {
@@ -153,6 +219,7 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const isProtectedApi = PROTECTED_API_PREFIXES.some(prefix => pathname.startsWith(prefix));
+  const isAdminApi = ADMIN_API_PREFIXES.some(prefix => pathname.startsWith(prefix));
   const isProtectedPage = PROTECTED_PAGE_PREFIXES.some(prefix => pathname.startsWith(prefix));
 
   // 1. If not a protected page or protected API, pass through
@@ -191,16 +258,20 @@ export async function middleware(req: NextRequest) {
   }
 
   let isAuthenticated = false;
+  let isAdmin = false;
 
   if (token) {
-    // 3a. Check worker token or dev passkey first
+    // 3a. Check worker token or dev passkey first (always admin-scoped)
     if (verifyDevOrWorkerToken(token)) {
       isAuthenticated = true;
+      isAdmin = true;
     }
 
     // 3b. Check Firebase Auth ID token
     if (!isAuthenticated) {
-      isAuthenticated = await verifyFirebaseToken(token, req);
+      const fbAuth = await verifyFirebaseToken(token, req);
+      isAuthenticated = fbAuth.authenticated;
+      isAdmin = fbAuth.isAdmin;
     }
 
     // 3c. Check Supabase Auth JWT if still not authenticated
@@ -213,7 +284,13 @@ export async function middleware(req: NextRequest) {
           },
         });
         if (userRes.ok) {
+          const sbUser = await userRes.json();
           isAuthenticated = true;
+          isAdmin = isAdminUserClaims(
+            sbUser?.email,
+            Boolean(sbUser?.email_confirmed_at || sbUser?.confirmed_at),
+            sbUser
+          );
         }
       } catch {
         // Fall through
@@ -221,7 +298,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // 4. API Endpoints: Strictly reject unauthenticated requests
+  // 4. API Endpoints: Strictly reject unauthenticated or unauthorized requests
   if (isProtectedApi) {
     if (!isAuthenticated) {
       logSecurityEvent({
@@ -234,6 +311,21 @@ export async function middleware(req: NextRequest) {
       const errRes = NextResponse.json(
         { success: false, error: 'Unauthorized: Valid authentication token required.' },
         { status: 401 }
+      );
+      errRes.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+      return errRes;
+    }
+    if (isAdminApi && !isAdmin) {
+      logSecurityEvent({
+        type: 'UNAUTHORIZED_ACCESS',
+        path: pathname,
+        method: req.method,
+        ip: req.headers.get('x-forwarded-for') || undefined,
+        reason: 'Attempted access to admin API without admin role/claim',
+      });
+      const errRes = NextResponse.json(
+        { success: false, error: 'Forbidden: Administrator privileges required.' },
+        { status: 403 }
       );
       errRes.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
       return errRes;

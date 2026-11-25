@@ -6,11 +6,21 @@ import { trackClientEvent } from '@/lib/telemetry';
 import { calcNotice, getVerdict } from '@/lib/calculations';
 import { STATUTORY_RATES_2026_27, VENTO_BANDS_2026_27 } from '@/lib/statutory-rates';
 import {
+  SANDBOX_DEMO_TOKEN,
   SANDBOX_DOSSIERS,
   getSandboxMatterOverrides,
   setSandboxMatterOverride,
   MatterStage,
 } from '@/lib/portal-sandbox';
+
+export interface PortalInitialSession {
+  authenticated: boolean;
+  isDemo: boolean;
+  firmName?: string;
+  sraNumber?: string;
+  email?: string;
+  territoryLabel?: string;
+}
 
 interface PortalMatter {
   id: string;
@@ -220,11 +230,21 @@ const BTN_SECONDARY =
 const BTN_GHOST_RELEASE =
   'inline-flex items-center justify-center gap-1.5 h-11 px-3 rounded-lg bg-transparent hover:bg-[#D9603B]/10 text-[#0B1F3A]/75 hover:text-[#D9603B] text-sm font-medium transition-colors cursor-pointer';
 
-export default function PortalClient() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isDemoMode, setIsDemoMode] = useState<boolean>(false);
+export default function PortalClient({
+  initialSession,
+}: {
+  initialSession?: PortalInitialSession;
+}) {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+    Boolean(initialSession?.authenticated)
+  );
+  const [isDemoMode, setIsDemoMode] = useState<boolean>(
+    Boolean(initialSession?.isDemo)
+  );
   const [authStep, setAuthStep] = useState<'credentials' | 'totp'>('credentials');
-  const [workEmail, setWorkEmail] = useState('partner@bristolemploymentlaw.co.uk');
+  const [workEmail, setWorkEmail] = useState(
+    initialSession?.email || 'partner@bristolemploymentlaw.co.uk'
+  );
   const [password, setPassword] = useState('••••••••••••');
   const [totpCode, setTotpCode] = useState('');
   const [authError, setAuthError] = useState<string | null>(null);
@@ -248,31 +268,28 @@ export default function PortalClient() {
       if (params.get('demo') === 'true') {
         setIsDemoMode(true);
         setIsAuthenticated(true);
-      } else {
-        const auth = sessionStorage.getItem('sc_partner_mfa_auth');
-        if (auth === 'true') {
-          setIsAuthenticated(true);
-        }
       }
 
-      const overrides = getSandboxMatterOverrides();
-      if (Object.keys(overrides).length > 0) {
-        setMatters(prev =>
-          prev.map(m => {
-            const ov = overrides[m.id];
-            if (!ov) return m;
-            return {
-              ...m,
-              status: ov.status ?? m.status,
-              releaseReason: ov.releaseReason ?? m.releaseReason,
-              stage: ov.stage ?? m.stage,
-              timeRemainingSec: ov.status && ov.status !== 'locked' ? undefined : m.timeRemainingSec,
-            };
-          })
-        );
+      if (params.get('demo') === 'true' || initialSession?.isDemo) {
+        const overrides = getSandboxMatterOverrides();
+        if (Object.keys(overrides).length > 0) {
+          setMatters(prev =>
+            prev.map(m => {
+              const ov = overrides[m.id];
+              if (!ov) return m;
+              return {
+                ...m,
+                status: ov.status ?? m.status,
+                releaseReason: ov.releaseReason ?? m.releaseReason,
+                stage: ov.stage ?? m.stage,
+                timeRemainingSec: ov.status && ov.status !== 'locked' ? undefined : m.timeRemainingSec,
+              };
+            })
+          );
+        }
       }
     }
-  }, []);
+  }, [initialSession?.isDemo]);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -294,18 +311,12 @@ export default function PortalClient() {
     setAuthError(null);
     setTimeout(() => {
       const cleanCode = totpCode.trim().replace(/\s/g, '');
-      if (process.env.NODE_ENV === 'development' && (cleanCode === '568912' || cleanCode.length === 6)) {
+      if (process.env.NODE_ENV === 'development' && cleanCode === '568912') {
+        setIsDemoMode(true);
         setIsAuthenticated(true);
-        if (typeof window !== 'undefined') {
-          sessionStorage.setItem('sc_partner_mfa_auth', 'true');
-        }
-      } else if (process.env.NODE_ENV !== 'development') {
-        setAuthError(
-          'Live partner accounts sign in via direct encrypted dossier links sent to your firm email. To preview the full workspace now, use the Interactive Partner Sandbox below.'
-        );
       } else {
         setAuthError(
-          'Invalid 6-digit authenticator code. Enter the code from your authenticator app or use dev demo code: 568912.'
+          'Live partner accounts sign in via direct encrypted dossier links or server-verified partner sessions. To preview the full workspace now, use the Interactive Partner Sandbox below.'
         );
       }
       setIsVerifying(false);
@@ -317,9 +328,6 @@ export default function PortalClient() {
     setIsDemoMode(false);
     setAuthStep('credentials');
     setTotpCode('');
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem('sc_partner_mfa_auth');
-    }
   };
 
   const handleQuickClaim = async (matterId: string) => {
@@ -327,10 +335,13 @@ export default function PortalClient() {
     try {
       const res = await fetch('/api/portal/claim/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-claim-token': SANDBOX_DEMO_TOKEN,
+        },
         body: JSON.stringify({
           dossierId: matterId,
-          claimToken: 'demo_partner_token',
+          claimToken: SANDBOX_DEMO_TOKEN,
         }),
       });
       const data = await res.json();
@@ -633,12 +644,20 @@ export default function PortalClient() {
               <span className="text-xs font-mono uppercase tracking-wider text-[#D9603B] font-semibold">
                 {isDemoMode ? 'Sandbox Firm' : 'Charter Panel'}
               </span>
-              <span className="text-xs font-mono text-white/60">SRA-649201</span>
+              <span className="text-xs font-mono text-white/60">
+                {isDemoMode ? 'SRA-649201' : (initialSession?.sraNumber || 'SRA Verified')}
+              </span>
             </div>
             <p className="text-sm font-semibold text-white leading-snug">
-              Bristol Employment Law Specialists LLP
+              {isDemoMode
+                ? 'Bristol Employment Law Specialists LLP'
+                : (initialSession?.firmName || 'Verified Panel Firm')}
             </p>
-            <p className="text-xs text-white/65">Exclusive BS Cluster · 30 mi</p>
+            <p className="text-xs text-white/65">
+              {isDemoMode
+                ? 'Exclusive BS Cluster · 30 mi'
+                : (initialSession?.territoryLabel || 'Exclusive Territorial Cluster')}
+            </p>
           </div>
         </div>
 
@@ -1115,7 +1134,7 @@ export default function PortalClient() {
                                   </button>
                                 )}
                                 <Link
-                                  href={`/dossier/review/${m.id}/?token=demo_partner_token`}
+                                  href={`/dossier/review/${m.id}/`}
                                   className={m.status === 'locked' ? BTN_PRIMARY_CORAL : BTN_PRIMARY_NAVY}
                                 >
                                   {m.status === 'locked' ? 'Review Dossier →' : 'Open Dossier →'}

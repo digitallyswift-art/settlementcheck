@@ -3,21 +3,33 @@ import { supabase } from '@/lib/supabase';
 import { AgenticOrchestrator } from '@/lib/agentic-engine';
 import { getSandboxDossierFixture, SANDBOX_DEMO_TOKEN } from '@/lib/portal-sandbox';
 
+const ALLOWED_CLAIM_STATUSES = new Set(['locked', 'claimed', 'dispatched_pms', 'contacted']);
+
+function extractClaimToken(req: NextRequest): string {
+  const authHeader = req.headers.get('authorization');
+  if (authHeader?.startsWith('Bearer ')) {
+    const bearer = authHeader.slice(7).trim();
+    if (bearer) return bearer;
+  }
+  const headerToken = req.headers.get('x-claim-token')?.trim();
+  if (headerToken) return headerToken;
+  return '';
+}
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const dossierId = params.id;
-    const { searchParams } = new URL(req.url);
-    const token = searchParams.get('token')?.trim() || '';
+    const token = extractClaimToken(req);
 
-    // SC-B-002 / SC-E-SEC-004: Enforce mandatory claimToken validation to eliminate BOLA
+    // SC-B-002 / SC-E-SEC-004: Enforce mandatory header-based claimToken validation to eliminate BOLA & URL token leakage
     if (!token) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Unauthorized: A valid claim token is required to view case dossiers under SRA client confidentiality rules.',
+          error: 'Unauthorized: A valid claim token header is required to view case dossiers under SRA client confidentiality rules.',
         },
         { status: 401 }
       );
@@ -49,19 +61,21 @@ export async function GET(
       });
     }
 
-    // 1. Live Production Mode: require a matching claim record in Supabase
-    let claimRecord: any = null;
-    try {
-      const { data } = await supabase
-        .from('lead_claims')
-        .select('*, solicitor_panel(*)')
-        .eq('dossier_id', dossierId)
-        .eq('claim_token', token)
-        .limit(1)
-        .maybeSingle();
-      claimRecord = data;
-    } catch (e) {
-      // Non-fatal
+    // 1. Live Production Mode: require a matching active claim record in Supabase
+    const { data: claimRecord, error: claimError } = await supabase
+      .from('lead_claims')
+      .select('*, solicitor_panel(*)')
+      .eq('dossier_id', dossierId)
+      .eq('claim_token', token)
+      .limit(1)
+      .maybeSingle();
+
+    if (claimError) {
+      console.error('Failed to query lead_claims for dossier:', claimError);
+      return NextResponse.json(
+        { success: false, error: 'Failed to verify matter claim.' },
+        { status: 500 }
+      );
     }
 
     // Reject unauthorized requests where no matching claim exists
@@ -75,54 +89,89 @@ export async function GET(
       );
     }
 
-    // 2. Check if linked to an existing lead in the database
-    let leadRecord: any = null;
-    if (claimRecord?.lead_id) {
-      try {
-        const { data } = await supabase.from('leads').select('*').eq('id', claimRecord.lead_id).maybeSingle();
-        leadRecord = data;
-      } catch (e) {
-        // Non-fatal
+    // Enforce active claim lifecycle status
+    if (!ALLOWED_CLAIM_STATUSES.has(claimRecord.status)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Forbidden: This matter reservation is no longer active.',
+        },
+        { status: 403 }
+      );
+    }
+
+    // Enforce 15-minute SLA expiry when status is still locked
+    if (claimRecord.status === 'locked') {
+      const expiresAtMs = claimRecord.expires_at ? new Date(claimRecord.expires_at).getTime() : NaN;
+      if (!Number.isFinite(expiresAtMs) || expiresAtMs <= Date.now()) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'EXPIRED: The 15-minute exclusive reservation for this matter has expired.',
+          },
+          { status: 410 }
+        );
       }
     }
 
-    // 3. Generate high-fidelity dossier using Agentic Engine
-    const salary = leadRecord?.salary ? Number(leadRecord.salary) : 58000;
-    const years = leadRecord?.months_service ? Math.floor(leadRecord.months_service / 12) : 5;
-    const offer = leadRecord?.offer_amount ? Number(leadRecord.offer_amount) : 6500;
-    const postcode = leadRecord?.postcode || 'SW1A 1AA';
-    const disputeReason = (leadRecord?.dispute_category as any) || 'redundancy';
+    // 2. Fail closed if linked lead record is missing or lookup fails
+    if (!claimRecord.lead_id) {
+      return NextResponse.json(
+        { success: false, error: 'Matter lead record not found.' },
+        { status: 404 }
+      );
+    }
+
+    const { data: leadRecord, error: leadError } = await supabase
+      .from('leads')
+      .select('*')
+      .eq('id', claimRecord.lead_id)
+      .maybeSingle();
+
+    if (leadError) {
+      console.error('Failed to load lead for dossier:', leadError);
+      return NextResponse.json(
+        { success: false, error: 'Failed to retrieve matter lead record.' },
+        { status: 500 }
+      );
+    }
+
+    if (!leadRecord) {
+      return NextResponse.json(
+        { success: false, error: 'Matter lead record not found.' },
+        { status: 404 }
+      );
+    }
+
+    // 3. Generate high-fidelity dossier using Agentic Engine from verified lead fields only
+    const salary = Number(leadRecord.salary || 0);
+    const years = leadRecord.months_service ? Math.floor(Number(leadRecord.months_service) / 12) : 0;
+    const offer = Number(leadRecord.offer_amount || 0);
+    const postcode = leadRecord.postcode || undefined;
+    const disputeReason = (leadRecord.dispute_category as any) || 'redundancy';
 
     const dossier = await AgenticOrchestrator.executeCaseDossier({
       matterId: dossierId,
-      firstName: leadRecord?.first_name || 'Sarah',
-      lastName: leadRecord?.last_name || 'Jenkins',
-      email: leadRecord?.email || 's.jenkins@example.co.uk',
-      phone: leadRecord?.phone || '07700 900342',
+      firstName: leadRecord.first_name || undefined,
+      lastName: leadRecord.last_name || undefined,
+      email: leadRecord.email || undefined,
+      phone: leadRecord.phone || undefined,
       postcode,
       salary,
       yearsOfService: years,
-      age: 44,
+      age: leadRecord.age ? Number(leadRecord.age) : 40,
       employerOffer: offer,
       disputeReason,
-      isDiscrimination: false,
-      employerOfferedLegalFee: 500,
-      rawAgreementText: `SETTLEMENT AGREEMENT (WITHOUT PREJUDICE & SUBJECT TO CONTRACT)
-BETWEEN:
-(1) Apex Technology UK Limited ("the Employer")
-(2) Sarah Jenkins ("the Employee")
-
-1. The Employment will terminate on the Termination Date by reason of redundancy.
-2. The Company will pay the Employee a total ex-gratia compensation payment of £${offer.toLocaleString('en-GB')}.
-3. The Company will contribute up to £500 plus VAT towards the legal fees incurred by the Employee in obtaining independent advice ONLY IF the Employee instructs our preferred panel solicitor Firm XYZ. If the Employee uses an independent solicitor, the contribution will be capped at £200 plus VAT.
-4. The Employee waives all statutory and contractual claims against the Company, including claims relating to accrued pension entitlements and personal injury.`,
+      isDiscrimination: Boolean(leadRecord.is_discrimination || leadRecord.dispute_category === 'discrimination'),
+      employerOfferedLegalFee: leadRecord.employer_legal_fee ? Number(leadRecord.employer_legal_fee) : undefined,
+      rawAgreementText: leadRecord.raw_agreement_text || leadRecord.benchmark_data?.raw_agreement_text || undefined,
     });
 
-    const isLocked = claimRecord ? claimRecord.status === 'locked' : true;
-    const isClaimed = claimRecord ? claimRecord.status === 'claimed' : false;
-    const expiresAt = claimRecord?.expires_at || new Date(Date.now() + 12 * 60 * 1000).toISOString();
+    const isLocked = claimRecord.status === 'locked';
+    const isClaimed = ['claimed', 'dispatched_pms', 'contacted'].includes(claimRecord.status);
+    const expiresAt = claimRecord.expires_at;
 
-    const leadConflict = leadRecord?.benchmark_data?.conflict_check;
+    const leadConflict = leadRecord.benchmark_data?.conflict_check;
     return NextResponse.json({
       success: true,
       isDemo: false,
@@ -131,7 +180,7 @@ BETWEEN:
       conflictCheck: {
         employerName: leadConflict?.employer_name || null,
         employerNameSource: leadConflict?.employer_name ? 'employee_provided' : null,
-        signingDeadlineLabel: leadConflict?.signing_deadline || leadRecord?.benchmark_data?.signing_urgency || null,
+        signingDeadlineLabel: leadConflict?.signing_deadline || leadRecord.benchmark_data?.signing_urgency || null,
         hasDraftAgreement: Boolean(leadConflict?.has_draft_agreement),
         clientGoal: null,
       },
@@ -139,8 +188,7 @@ BETWEEN:
         isLocked,
         isClaimed,
         expiresAt,
-        token: token || claimRecord?.claim_token,
-        panelFirm: claimRecord?.solicitor_panel?.firm_name || dossier.territorialRouting?.matchedFirmName,
+        panelFirm: claimRecord.solicitor_panel?.firm_name || dossier.territorialRouting?.matchedFirmName,
       },
     });
   } catch (error: any) {

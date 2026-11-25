@@ -14,7 +14,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const token = typeof claimToken === 'string' ? claimToken.trim() : '';
+    const authHeader = req.headers.get('authorization');
+    const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7).trim() : '';
+    const headerToken = req.headers.get('x-claim-token')?.trim() || '';
+    const token = bearerToken || headerToken || (typeof claimToken === 'string' ? claimToken.trim() : '');
     if (!token) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized: A valid claim token is required.' },
@@ -35,21 +38,21 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 1. Verify claim from database
-    let existingClaim = null;
-    try {
-      const { data, error } = await supabase
-        .from('lead_claims')
-        .select('*')
-        .eq('dossier_id', dossierId)
-        .eq('claim_token', token)
-        .limit(1)
-        .maybeSingle();
-      if (!error && data) {
-        existingClaim = data;
-      }
-    } catch (dbErr) {
-      console.warn('Database lead_claims query non-fatal fallback:', dbErr);
+    // 1. Verify claim from database (fail closed on DB errors)
+    const { data: existingClaim, error: lookupError } = await supabase
+      .from('lead_claims')
+      .select('*')
+      .eq('dossier_id', dossierId)
+      .eq('claim_token', token)
+      .limit(1)
+      .maybeSingle();
+
+    if (lookupError) {
+      console.error('Database lead_claims query failed:', lookupError);
+      return NextResponse.json(
+        { success: false, error: 'Failed to verify matter claim.' },
+        { status: 500 }
+      );
     }
 
     // Reject unauthorized requests where no matching claim exists
@@ -64,49 +67,110 @@ export async function POST(req: NextRequest) {
     }
 
     const now = new Date();
+    const nowIso = now.toISOString();
 
-    // Check if reservation has expired
-    if (existingClaim && existingClaim.status === 'locked' && new Date(existingClaim.expires_at) < now) {
-      try {
-        await supabase
-          .from('lead_claims')
-          .update({ status: 'expired' })
-          .eq('id', existingClaim.id);
-      } catch {
-        // ignore
+    // Reject non-locked claims (already claimed, expired, released, etc.)
+    if (existingClaim.status !== 'locked') {
+      if (existingClaim.status === 'expired') {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'EXPIRED',
+            message: 'The 15-minute exclusive territorial reservation for this matter has expired.',
+          },
+          { status: 410 }
+        );
       }
-
-      return NextResponse.json({
-        success: false,
-        error: 'EXPIRED',
-        message: 'The 15-minute exclusive territorial reservation for this matter has expired.',
-      }, { status: 410 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'CONFLICT',
+          message: `This matter is already ${existingClaim.status} and cannot be claimed.`,
+        },
+        { status: 409 }
+      );
     }
 
-    // 2. Mark as claimed
-    const claimedTimestamp = now.toISOString();
+    // Check if reservation has expired
+    const expiresAtMs = existingClaim.expires_at ? new Date(existingClaim.expires_at).getTime() : NaN;
+    if (!Number.isFinite(expiresAtMs) || expiresAtMs <= now.getTime()) {
+      const { error: expireError } = await supabase
+        .from('lead_claims')
+        .update({ status: 'expired' })
+        .eq('id', existingClaim.id)
+        .eq('status', 'locked');
 
-    if (existingClaim) {
-      try {
-        await supabase
-          .from('lead_claims')
-          .update({
-            status: 'claimed',
-            claimed_at: claimedTimestamp,
-            notes: solicitorEmail ? `Claimed by ${solicitorEmail}` : undefined,
-          })
-          .eq('id', existingClaim.id);
+      if (expireError) {
+        console.error('Failed to mark expired claim:', expireError);
+      }
 
-        if (existingClaim.panel_firm_id) {
-          // Increment firm claimed count (best-effort)
-          try {
-            await supabase.rpc('increment_panel_claimed_count', { firm_id: existingClaim.panel_firm_id });
-          } catch {
-            // Non-fatal if RPC function is not present in local dev
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'EXPIRED',
+          message: 'The 15-minute exclusive territorial reservation for this matter has expired.',
+        },
+        { status: 410 }
+      );
+    }
+
+    // 2. Atomically mark as claimed only if still locked and unexpired
+    const sanitizedNotes =
+      typeof solicitorEmail === 'string' && solicitorEmail.trim()
+        ? `Claimed by ${solicitorEmail.trim().slice(0, 200)}`
+        : undefined;
+
+    const { data: updatedRows, error: updateError } = await supabase
+      .from('lead_claims')
+      .update({
+        status: 'claimed',
+        claimed_at: nowIso,
+        notes: sanitizedNotes,
+      })
+      .eq('id', existingClaim.id)
+      .eq('status', 'locked')
+      .gt('expires_at', nowIso)
+      .select('id, status, claimed_at');
+
+    if (updateError) {
+      console.error('Claim update DB error:', updateError);
+      return NextResponse.json(
+        { success: false, error: 'Failed to process matter claim.' },
+        { status: 500 }
+      );
+    }
+
+    if (!updatedRows || updatedRows.length === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'EXPIRED_OR_CLAIMED',
+          message: 'This matter reservation has expired or was already claimed.',
+        },
+        { status: 409 }
+      );
+    }
+
+    if (existingClaim.panel_firm_id) {
+      // Increment firm claimed count safely (RPC if present, otherwise read-and-update fallback)
+      const { error: rpcError } = await supabase.rpc('increment_panel_claimed_count', {
+        firm_id: existingClaim.panel_firm_id,
+      });
+      if (rpcError) {
+        const { data: panelRow, error: panelFetchError } = await supabase
+          .from('solicitor_panel')
+          .select('leads_claimed_count')
+          .eq('id', existingClaim.panel_firm_id)
+          .maybeSingle();
+        if (!panelFetchError && panelRow) {
+          const { error: panelUpdateError } = await supabase
+            .from('solicitor_panel')
+            .update({ leads_claimed_count: (panelRow.leads_claimed_count ?? 0) + 1 })
+            .eq('id', existingClaim.panel_firm_id);
+          if (panelUpdateError) {
+            console.warn('Panel claimed count fallback update failed:', panelUpdateError);
           }
         }
-      } catch (updateErr) {
-        console.warn('Claim update non-fatal error:', updateErr);
       }
     }
 
@@ -114,7 +178,7 @@ export async function POST(req: NextRequest) {
       success: true,
       dossierId,
       status: 'claimed',
-      claimedAt: claimedTimestamp,
+      claimedAt: nowIso,
       message: 'Instruction successfully claimed and locked to your firm.',
     });
   } catch (error: any) {
