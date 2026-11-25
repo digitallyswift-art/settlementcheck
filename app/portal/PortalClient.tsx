@@ -3,8 +3,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { trackClientEvent } from '@/lib/telemetry';
+import { calcNotice, getVerdict } from '@/lib/calculations';
 import { STATUTORY_RATES_2026_27, VENTO_BANDS_2026_27 } from '@/lib/statutory-rates';
 import {
+  SANDBOX_DOSSIERS,
   getSandboxMatterOverrides,
   setSandboxMatterOverride,
   MatterStage,
@@ -22,13 +24,15 @@ interface PortalMatter {
   isUrgentDeadline: boolean;
   hasDraftAgreement: boolean;
   clientGoal: 'Negotiate Higher' | 'Fast s.203 Sign-Off';
-  disputeReason: string;
+  disputeReasonLabel: string;
   salary: number;
+  yearsOfService: number;
+  age: number;
   employerOffer: number;
   statutoryFloor: number;
-  targetSettlement: number;
+  taxFreeAmount: number;
+  taxableExcess: number;
   employerLegalFee: number;
-  recommendedLegalFee: number;
   captiveSteering: boolean;
   status: 'locked' | 'claimed' | 'released' | 'completed';
   releaseReason?: string;
@@ -37,80 +41,107 @@ interface PortalMatter {
   receivedAt: string;
 }
 
-const INITIAL_MATTERS: PortalMatter[] = [
-  {
-    id: 'dossier_live_bristol_01',
-    clientName: 'Sarah Jenkins',
-    phone: '07700 900342',
-    postcode: 'BS8 1TH',
-    cityArea: 'Clifton, Bristol',
-    employerName: 'Apex Technology UK Limited',
-    employerNameSource: 'draft_extracted',
-    signingDeadlineLabel: '4 days left (ACAS 10-day)',
-    isUrgentDeadline: true,
-    hasDraftAgreement: true,
-    clientGoal: 'Negotiate Higher',
-    disputeReason: 'Redundancy with Nominated Firm Fee Penalty',
-    salary: 58000,
-    employerOffer: 6500,
-    statutoryFloor: 11402,
-    targetSettlement: 19500,
-    employerLegalFee: 500,
-    recommendedLegalFee: 1250,
-    captiveSteering: true,
-    status: 'locked',
-    timeRemainingSec: 742,
-    receivedAt: '8 mins ago',
-  },
-  {
-    id: 'dossier_live_london_02',
-    clientName: 'Marcus Vance',
-    phone: '07700 900418',
-    postcode: 'BS1 4PB',
-    cityArea: 'Harbourside, Bristol',
-    employerName: undefined,
-    employerNameSource: undefined,
-    signingDeadlineLabel: '48 hrs urgent',
-    isUrgentDeadline: true,
-    hasDraftAgreement: false,
-    clientGoal: 'Negotiate Higher',
-    disputeReason: 'Unfair Dismissal / PIP Exit',
-    salary: 72000,
-    employerOffer: 12000,
-    statutoryFloor: 8400,
-    targetSettlement: 24000,
-    employerLegalFee: 500,
-    recommendedLegalFee: 1000,
-    captiveSteering: false,
-    status: 'claimed',
-    stage: 'conflict_cleared',
-    receivedAt: '2 hours ago',
-  },
-  {
-    id: 'dossier_live_clifton_03',
-    clientName: 'David H. Miller',
-    phone: '07700 900519',
-    postcode: 'BS6 6TP',
-    cityArea: 'Redland, Bristol',
-    employerName: 'Severn Engineering Group PLC',
-    employerNameSource: 'employee_provided',
-    signingDeadlineLabel: 'Signed',
-    isUrgentDeadline: false,
-    hasDraftAgreement: true,
-    clientGoal: 'Fast s.203 Sign-Off',
-    disputeReason: 'Senior Redundancy Compromise',
-    salary: 95000,
-    employerOffer: 32000,
-    statutoryFloor: 28500,
-    targetSettlement: 48000,
-    employerLegalFee: 750,
-    recommendedLegalFee: 1500,
-    captiveSteering: false,
-    status: 'completed',
-    stage: 'signed_billed',
-    receivedAt: 'Yesterday',
-  },
-];
+/**
+ * Deterministically computes Portal matter financials directly from lib/calculations.ts
+ * (exact same statutory engine as /calculator/, /results/, and /dossier/review/[id]/).
+ * Zero hardcoded statutory floors or fabricated counter-targets.
+ */
+function buildInitialMatters(): PortalMatter[] {
+  const configs: Array<{
+    id: keyof typeof SANDBOX_DOSSIERS;
+    cityArea: string;
+    disputeReasonLabel: string;
+    isUrgentDeadline: boolean;
+    captiveSteering: boolean;
+    initialStatus: 'locked' | 'claimed' | 'completed';
+    stage?: MatterStage;
+    timeRemainingSec?: number;
+    receivedAt: string;
+  }> = [
+    {
+      id: 'dossier_live_bristol_01',
+      cityArea: 'Clifton, Bristol',
+      disputeReasonLabel: 'Redundancy (Nominated Firm Steering)',
+      isUrgentDeadline: true,
+      captiveSteering: true,
+      initialStatus: 'locked',
+      timeRemainingSec: 742,
+      receivedAt: '8 mins ago',
+    },
+    {
+      id: 'dossier_live_london_02',
+      cityArea: 'Harbourside, Bristol',
+      disputeReasonLabel: 'Unfair Dismissal / PIP Exit',
+      isUrgentDeadline: true,
+      captiveSteering: false,
+      initialStatus: 'claimed',
+      stage: 'conflict_cleared',
+      receivedAt: '2 hours ago',
+    },
+    {
+      id: 'dossier_live_clifton_03',
+      cityArea: 'Redland, Bristol',
+      disputeReasonLabel: 'Senior Redundancy Compromise',
+      isUrgentDeadline: false,
+      captiveSteering: false,
+      initialStatus: 'completed',
+      stage: 'signed_billed',
+      receivedAt: 'Yesterday',
+    },
+  ];
+
+  return configs.map(cfg => {
+    const fixture = SANDBOX_DOSSIERS[cfg.id];
+    const ctx = fixture.matterContext;
+    const months = Math.floor(ctx.yearsOfService * 12);
+    const reason = ctx.disputeReason || 'redundancy';
+    const notice = calcNotice(ctx.salary, months, ctx.noticeWeeks ?? 0);
+    const verdict = getVerdict(
+      ctx.salary,
+      months,
+      ctx.age,
+      ctx.employerOffer,
+      reason,
+      ctx.isDiscrimination ? 'yes' : 'no',
+      notice.weeksUsed,
+      'GB'
+    );
+
+    const isRedundancy = reason === 'redundancy' || reason === 'redundancy_collective';
+    const srp = isRedundancy && ctx.yearsOfService >= 2 ? verdict.redundancy : 0;
+    const statutoryFloor = srp + (verdict.basicAward || 0) + verdict.pilon;
+
+    return {
+      id: fixture.dossierId,
+      clientName: `${ctx.firstName || ''} ${ctx.lastName || ''}`.trim(),
+      phone: ctx.phone || '',
+      postcode: ctx.postcode || '',
+      cityArea: cfg.cityArea,
+      employerName: fixture.employerName,
+      employerNameSource: fixture.employerNameSource,
+      signingDeadlineLabel: fixture.signingDeadlineLabel,
+      isUrgentDeadline: cfg.isUrgentDeadline,
+      hasDraftAgreement: fixture.hasDraftAgreement,
+      clientGoal: fixture.clientGoal,
+      disputeReasonLabel: cfg.disputeReasonLabel,
+      salary: ctx.salary,
+      yearsOfService: ctx.yearsOfService,
+      age: ctx.age,
+      employerOffer: ctx.employerOffer,
+      statutoryFloor,
+      taxFreeAmount: verdict.taxFreeAmount,
+      taxableExcess: verdict.taxableTermination,
+      employerLegalFee: ctx.employerOfferedLegalFee || 500,
+      captiveSteering: cfg.captiveSteering,
+      status: cfg.initialStatus,
+      stage: cfg.stage,
+      timeRemainingSec: cfg.timeRemainingSec,
+      receivedAt: cfg.receivedAt,
+    };
+  });
+}
+
+const INITIAL_MATTERS: PortalMatter[] = buildInitialMatters();
 
 const STAGE_OPTIONS: Array<{ id: MatterStage; label: string }> = [
   { id: 'conflict_cleared', label: '1. Conflict Cleared' },
@@ -119,10 +150,10 @@ const STAGE_OPTIONS: Array<{ id: MatterStage; label: string }> = [
   { id: 'signed_billed', label: '4. Signed & Billed' },
 ];
 
-const RELEASE_REASONS = [
-  'SRA Conflict of Interest',
-  'At Capacity Today',
-  'Outside Specialism',
+const RELEASE_REASONS: Array<{ label: string; detail: string }> = [
+  { label: 'SRA Conflict of Interest', detail: 'Counterparty is an existing or former firm client (0% SLA impact)' },
+  { label: 'At Capacity Today', detail: 'Unable to meet the client signing deadline right now' },
+  { label: 'Outside Specialism', detail: 'Matter requires a different employment sub-specialism' },
 ];
 
 const STATUTORY_WP_CARDS = [
@@ -179,6 +210,16 @@ const STATUTORY_WP_CARDS = [
 type PortalTab = 'pipeline' | 'territory' | 'telemetry' | 'settings';
 type StatusFilter = 'all' | 'locked' | 'claimed' | 'completed';
 
+// Unified button classes across the entire Portal (consistent height, radius, font weight)
+const BTN_PRIMARY_CORAL =
+  'inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-[#D9603B] hover:bg-[#C24D29] text-white text-sm font-semibold shadow-sm transition-colors cursor-pointer';
+const BTN_PRIMARY_NAVY =
+  'inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white text-sm font-semibold shadow-sm transition-colors cursor-pointer';
+const BTN_SECONDARY =
+  'inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-white hover:bg-[#F7F4EE] border border-[#0B1F3A]/20 text-[#0B1F3A] text-sm font-semibold shadow-sm transition-colors cursor-pointer';
+const BTN_GHOST_RELEASE =
+  'inline-flex items-center justify-center gap-1.5 h-11 px-3 rounded-lg bg-transparent hover:bg-[#D9603B]/10 text-[#0B1F3A]/75 hover:text-[#D9603B] text-sm font-medium transition-colors cursor-pointer';
+
 export default function PortalClient() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isDemoMode, setIsDemoMode] = useState<boolean>(false);
@@ -214,7 +255,6 @@ export default function PortalClient() {
         }
       }
 
-      // Sync sandbox overrides (claimed / released / stage) across Portal & Dossier
       const overrides = getSandboxMatterOverrides();
       if (Object.keys(overrides).length > 0) {
         setMatters(prev =>
@@ -234,7 +274,6 @@ export default function PortalClient() {
     }
   }, []);
 
-  // Live 1-second SLA countdown ticker for locked matters
   useEffect(() => {
     if (!isAuthenticated) return;
     const interval = setInterval(() => {
@@ -355,11 +394,11 @@ export default function PortalClient() {
   const lockedCount = useMemo(() => matters.filter(m => m.status === 'locked').length, [matters]);
   const claimedCount = useMemo(() => matters.filter(m => m.status === 'claimed').length, [matters]);
   const completedCount = useMemo(() => matters.filter(m => m.status === 'completed').length, [matters]);
-  const activeFeePotential = useMemo(
+  const employerFeesOfferedTotal = useMemo(
     () =>
       matters
         .filter(m => m.status === 'locked' || m.status === 'claimed')
-        .reduce((sum, m) => sum + m.recommendedLegalFee, 0),
+        .reduce((sum, m) => sum + m.employerLegalFee, 0),
     [matters]
   );
   const urgentDeadlineCount = useMemo(
@@ -377,7 +416,7 @@ export default function PortalClient() {
         m.clientName.toLowerCase().includes(q) ||
         (m.employerName || '').toLowerCase().includes(q) ||
         m.postcode.toLowerCase().includes(q) ||
-        m.disputeReason.toLowerCase().includes(q) ||
+        m.disputeReasonLabel.toLowerCase().includes(q) ||
         m.cityArea.toLowerCase().includes(q)
       );
     });
@@ -470,7 +509,7 @@ export default function PortalClient() {
                   required
                   value={workEmail}
                   onChange={e => setWorkEmail(e.target.value)}
-                  className="w-full min-h-[48px] px-3.5 py-3 border border-[#E2DCCE] rounded-xl text-base text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                  className="w-full h-12 px-3.5 border border-[#E2DCCE] rounded-lg text-base text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
                 />
               </div>
 
@@ -481,14 +520,11 @@ export default function PortalClient() {
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full min-h-[48px] px-3.5 py-3 border border-[#E2DCCE] rounded-xl text-base text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                  className="w-full h-12 px-3.5 border border-[#E2DCCE] rounded-lg text-base text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full min-h-[48px] px-4 py-3 bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white font-semibold text-base rounded-xl transition-colors cursor-pointer shadow-sm"
-              >
+              <button type="submit" className={`${BTN_PRIMARY_NAVY} w-full h-12 text-base`}>
                 Continue to Authenticator →
               </button>
 
@@ -500,7 +536,7 @@ export default function PortalClient() {
                     setIsDemoMode(true);
                     setIsAuthenticated(true);
                   }}
-                  className="w-full min-h-[48px] px-4 py-3 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white font-semibold text-base rounded-xl transition-colors cursor-pointer shadow-sm"
+                  className={`${BTN_PRIMARY_CORAL} w-full h-12 text-base`}
                 >
                   Launch Interactive Partner Sandbox →
                 </button>
@@ -508,7 +544,7 @@ export default function PortalClient() {
             </form>
           ) : (
             <form onSubmit={handleVerifyTotp} className="space-y-5">
-              <div className="text-center p-3.5 bg-[#F7F4EE] rounded-xl border border-[#E2DCCE]">
+              <div className="text-center p-3.5 bg-[#F7F4EE] rounded-lg border border-[#E2DCCE]">
                 <span className="text-xs uppercase tracking-wider font-semibold text-[#0B1F3A]/70 block mb-1">Partner Account</span>
                 <span className="text-sm font-mono font-bold text-[#0B1F3A] break-all">{workEmail}</span>
               </div>
@@ -532,12 +568,12 @@ export default function PortalClient() {
                   autoFocus
                   value={totpCode}
                   onChange={e => setTotpCode(e.target.value.replace(/[^0-9]/g, ''))}
-                  className="w-full min-h-[52px] p-3.5 border border-[#E2DCCE] rounded-xl text-center font-mono text-2xl tracking-[0.3em] font-bold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                  className="w-full h-13 p-3.5 border border-[#E2DCCE] rounded-lg text-center font-mono text-2xl tracking-[0.3em] font-bold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
                 />
               </div>
 
               {authError && (
-                <div role="alert" className="p-3.5 bg-[#FEF5F3] border border-[#F3C4B8] rounded-xl text-sm text-[#D9603B] font-medium leading-relaxed space-y-2">
+                <div role="alert" className="p-3.5 bg-[#FEF5F3] border border-[#F3C4B8] rounded-lg text-sm text-[#D9603B] font-medium leading-relaxed space-y-2">
                   <p className="m-0">{authError}</p>
                   <button
                     type="button"
@@ -555,7 +591,7 @@ export default function PortalClient() {
               <button
                 type="submit"
                 disabled={isVerifying || totpCode.trim().length === 0}
-                className="w-full min-h-[48px] px-4 py-3 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white font-semibold text-base rounded-xl transition-colors cursor-pointer shadow-sm disabled:opacity-50"
+                className={`${BTN_PRIMARY_CORAL} w-full h-12 text-base disabled:opacity-50`}
               >
                 {isVerifying ? 'Verifying TOTP Code...' : 'Verify & Open Command Centre →'}
               </button>
@@ -564,7 +600,7 @@ export default function PortalClient() {
                 <button
                   type="button"
                   onClick={() => setAuthStep('credentials')}
-                  className="min-h-[44px] px-3 text-sm font-medium text-[#0B1F3A]/80 hover:text-[#0B1F3A] underline cursor-pointer"
+                  className="h-11 px-3 text-sm font-medium text-[#0B1F3A]/80 hover:text-[#0B1F3A] underline cursor-pointer"
                 >
                   ← Back to Credentials
                 </button>
@@ -591,7 +627,6 @@ export default function PortalClient() {
           </span>
         </div>
 
-        {/* Firm Identity Card */}
         <div className="px-4 py-4 border-b border-white/10">
           <div className="rounded-xl bg-white/5 border border-white/10 p-3.5 space-y-1.5">
             <div className="flex items-center justify-between gap-2">
@@ -607,7 +642,6 @@ export default function PortalClient() {
           </div>
         </div>
 
-        {/* Primary Navigation */}
         <nav aria-label="Partner portal sections" className="flex-1 px-3 py-4 space-y-1.5">
           {navItems.map(item => {
             const isActive = activeTab === item.id;
@@ -615,7 +649,7 @@ export default function PortalClient() {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full min-h-[46px] px-3.5 py-2.5 rounded-xl flex items-center justify-between text-sm font-medium transition-colors ${
+                className={`w-full h-11 px-3.5 rounded-lg flex items-center justify-between text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-white/15 text-white font-semibold'
                     : 'text-white/75 hover:bg-white/5 hover:text-white'
@@ -635,20 +669,19 @@ export default function PortalClient() {
           })}
         </nav>
 
-        {/* Bottom Demo CTA + Sign Out */}
         <div className="p-4 border-t border-white/10 space-y-2.5">
           {isDemoMode && (
             <Link
               href="/for-solicitors/?from=portal-demo"
               onClick={() => trackClientEvent('solicitor_demo_to_apply', { source: 'portal_sidebar_cta' })}
-              className="flex items-center justify-center w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-sm font-semibold transition-colors text-center"
+              className={`${BTN_PRIMARY_CORAL} w-full`}
             >
               Apply to Join Panel →
             </Link>
           )}
           <button
             onClick={handleSignOut}
-            className="w-full min-h-[42px] px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-sm font-medium transition-colors"
+            className="w-full h-10 px-3.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-sm font-medium transition-colors"
           >
             {isDemoMode ? 'Exit Sandbox' : 'Sign Out'}
           </button>
@@ -675,14 +708,14 @@ export default function PortalClient() {
               <Link
                 href="/for-solicitors/?from=portal-demo"
                 onClick={() => trackClientEvent('solicitor_demo_to_apply', { source: 'portal_mobile_topbar' })}
-                className="inline-flex items-center justify-center min-h-[36px] px-3 py-1.5 rounded-lg bg-[#D9603B] text-white text-xs font-semibold"
+                className="inline-flex items-center justify-center h-9 px-3 rounded-lg bg-[#D9603B] text-white text-xs font-semibold"
               >
                 Join Panel
               </Link>
             )}
             <button
               onClick={handleSignOut}
-              className="inline-flex items-center justify-center min-h-[36px] px-2.5 py-1.5 rounded-lg bg-white/10 text-white text-xs font-medium"
+              className="inline-flex items-center justify-center h-9 px-2.5 rounded-lg bg-white/10 text-white text-xs font-medium"
             >
               {isDemoMode ? 'Exit' : 'Lock'}
             </button>
@@ -696,12 +729,11 @@ export default function PortalClient() {
           {/* ── TAB 1: INSTRUCTION QUEUE ─────────────────────────────────── */}
           {activeTab === 'pipeline' && (
             <div className="space-y-5">
-              {/* Compact Workspace Header */}
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
                 <div>
                   <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#0B1F3A]/70">
                     <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse" />
-                    <span>BS Postcode Cluster · SRA Conflict Ready</span>
+                    <span>BS Postcode Cluster · April 2026 Statutory Engine</span>
                   </div>
                   <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] mt-1">
                     Instruction Queue
@@ -710,7 +742,7 @@ export default function PortalClient() {
 
                 <div className="hidden sm:flex items-center gap-3 text-sm text-[#0B1F3A]/75">
                   <span>
-                    Exclusivity Window: <strong className="text-[#0B1F3A]">15m</strong>
+                    Exclusivity Hold: <strong className="text-[#0B1F3A]">15m</strong>
                   </span>
                   <span aria-hidden="true">·</span>
                   <span>
@@ -719,17 +751,17 @@ export default function PortalClient() {
                 </div>
               </div>
 
-              {/* Honest Operational 4-Stat Strip (2x2 on mobile, 4-col on desktop) */}
+              {/* 100% Verifiable Operational 4-Stat Strip */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 <div className="bg-white px-4 py-3.5 rounded-xl border border-[#E2DCCE] shadow-sm">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#D9603B] block">
-                    Priority Lock
+                    Priority Hold
                   </span>
                   <div className="flex items-baseline justify-between mt-1">
                     <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
                       {lockedCount}
                     </span>
-                    <span className="text-xs text-[#0B1F3A]/70 font-medium">15m hold</span>
+                    <span className="text-xs text-[#0B1F3A]/70 font-medium">15m SLA</span>
                   </div>
                 </div>
 
@@ -747,11 +779,11 @@ export default function PortalClient() {
 
                 <div className="bg-white px-4 py-3.5 rounded-xl border border-[#E2DCCE] shadow-sm">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/70 block">
-                    Active Fee Pool
+                    Employer Fees Offered
                   </span>
                   <div className="flex items-baseline justify-between mt-1">
                     <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
-                      £{activeFeePotential.toLocaleString('en-GB')}
+                      £{employerFeesOfferedTotal.toLocaleString('en-GB')}
                     </span>
                     <span className="text-xs text-[#0B1F3A]/70 font-medium">+ VAT</span>
                   </div>
@@ -772,7 +804,7 @@ export default function PortalClient() {
 
               {/* Filter Bar + Instant Search */}
               <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
-                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                <div className="grid grid-cols-2 sm:flex items-center gap-1.5">
                   {[
                     { id: 'all' as const, label: `All (${matters.length})` },
                     { id: 'locked' as const, label: `Urgent (${lockedCount})` },
@@ -782,10 +814,10 @@ export default function PortalClient() {
                     <button
                       key={f.id}
                       onClick={() => setStatusFilter(f.id)}
-                      className={`min-h-[40px] px-3.5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-colors ${
+                      className={`h-10 px-3.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors ${
                         statusFilter === f.id
                           ? 'bg-[#0B1F3A] text-white'
-                          : 'bg-white text-[#0B1F3A]/80 border border-[#E2DCCE] hover:border-[#0B1F3A]/30'
+                          : 'bg-white text-[#0B1F3A]/80 border border-[#E2DCCE] hover:border-[#0B1F3A]/35'
                       }`}
                     >
                       {f.label}
@@ -800,12 +832,12 @@ export default function PortalClient() {
                     onChange={e => setSearchQuery(e.target.value)}
                     placeholder="Filter client, employer, postcode..."
                     aria-label="Filter matters by client, employer, or postcode"
-                    className="w-full min-h-[44px] pl-3.5 pr-3 py-2 rounded-xl bg-white border border-[#E2DCCE] text-base sm:text-sm text-[#0B1F3A] placeholder:text-[#0B1F3A]/50 focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                    className="w-full h-11 pl-3.5 pr-3 rounded-lg bg-white border border-[#E2DCCE] text-base sm:text-sm text-[#0B1F3A] placeholder:text-[#0B1F3A]/50 focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
                   />
                 </div>
               </div>
 
-              {/* Actionable Matter Cards */}
+              {/* Structured Actionable Matter Cards */}
               <div className="space-y-4">
                 {filteredMatters.length === 0 ? (
                   <div className="bg-white rounded-2xl border border-[#E2DCCE] p-8 text-center">
@@ -815,9 +847,7 @@ export default function PortalClient() {
                 ) : (
                   filteredMatters.map(m => {
                     const isBelowFloor = m.employerOffer < m.statutoryFloor;
-                    const shortfall = Math.max(0, m.statutoryFloor - m.employerOffer);
-                    const offerPct = Math.min(100, Math.round((m.employerOffer / m.targetSettlement) * 100));
-                    const floorPct = Math.min(100, Math.round((m.statutoryFloor / m.targetSettlement) * 100));
+                    const delta = Math.abs(m.employerOffer - m.statutoryFloor);
 
                     return (
                       <article
@@ -851,194 +881,223 @@ export default function PortalClient() {
                           </div>
                         )}
 
-                        <div className="p-4 sm:p-6 space-y-4">
-                          {/* Row 1: Client Identity + Status + Time */}
-                          <div className="flex flex-wrap items-start justify-between gap-3">
-                            <div className="space-y-1.5">
-                              <div className="flex flex-wrap items-center gap-2">
-                                <h2 className="font-serif font-bold text-xl text-[#0B1F3A]">{m.clientName}</h2>
-                                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]">
-                                  {m.postcode}
-                                </span>
-                                {m.captiveSteering && (
-                                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/25">
-                                    Captive Steering
-                                  </span>
-                                )}
-                              </div>
-                              <p className="text-sm sm:text-base text-[#0B1F3A]/80 m-0">
-                                {m.disputeReason} <span className="text-[#0B1F3A]/40">·</span>{' '}
-                                <span className="text-sm text-[#0B1F3A]/70">{m.cityArea}</span>
-                              </p>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                              {m.status === 'claimed' && (
-                                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#0B1F3A] text-white">
-                                  ✓ Claimed
+                        {/* Card Header */}
+                        <div className="p-4 sm:px-6 sm:pt-5 sm:pb-4 flex flex-wrap items-start justify-between gap-3 border-b border-[#E2DCCE]">
+                          <div className="space-y-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <h2 className="font-serif font-bold text-xl text-[#0B1F3A] m-0">{m.clientName}</h2>
+                              <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]">
+                                {m.postcode}
+                              </span>
+                              {m.captiveSteering && (
+                                <span className="text-xs font-semibold px-2.5 py-0.5 rounded bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/25">
+                                  Captive Steering
                                 </span>
                               )}
-                              {m.status === 'completed' && (
-                                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/75">
-                                  Signed &amp; Billed
-                                </span>
-                              )}
-                              <span className="text-xs text-[#0B1F3A]/65">{m.receivedAt}</span>
                             </div>
+                            <p className="text-sm text-[#0B1F3A]/75 m-0">
+                              {m.disputeReasonLabel} · {m.cityArea} · {m.yearsOfService} yrs service
+                            </p>
                           </div>
 
-                          {/* Row 1.5: SRA Conflict Check + Solicitor Triage Pills */}
-                          <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
-                            {m.employerName ? (
-                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1F3A]/5 border border-[#0B1F3A]/15 text-[#0B1F3A] font-medium">
-                                <span className="font-semibold">Counterparty:</span> {m.employerName}
-                                <span className="text-xs font-mono text-[#0B1F3A]/65">
-                                  ({m.employerNameSource === 'draft_extracted' ? 'Draft' : 'Pre-disclosed'})
-                                </span>
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
-                                <span className="font-semibold">Conflict Check:</span> Confirm on first call
+                          <div className="flex items-center gap-2">
+                            {m.status === 'claimed' && (
+                              <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-[#0B1F3A] text-white">
+                                Claimed
                               </span>
                             )}
+                            {m.status === 'completed' && (
+                              <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/75">
+                                Signed &amp; Billed
+                              </span>
+                            )}
+                            <span className="text-xs text-[#0B1F3A]/65">{m.receivedAt}</span>
+                          </div>
+                        </div>
 
-                            <span
-                              className={`inline-flex items-center px-3 py-1.5 rounded-lg font-medium border ${
-                                m.isUrgentDeadline && m.status !== 'completed'
-                                  ? 'bg-[#D9603B]/10 border-[#D9603B]/25 text-[#D9603B]'
-                                  : 'bg-[#F7F4EE] border-[#E2DCCE] text-[#0B1F3A]/80'
-                              }`}
-                            >
-                              Deadline: {m.signingDeadlineLabel}
+                        {/* Uniform 2x2 / 4-Col Structured Triage Grid (Matches Dossier Sheet) */}
+                        <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-[#E2DCCE] bg-[#F7F4EE]/60 border-b border-[#E2DCCE]">
+                          <div className="px-4 py-3">
+                            <span className="block text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/60">
+                              Counterparty (SRA 6.2)
                             </span>
-
-                            <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
-                              {m.hasDraftAgreement ? 'Draft Agreement Ready' : 'Offer Only (No Draft)'}
-                            </span>
-
-                            <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
-                              Goal: {m.clientGoal}
+                            <span className="block text-sm font-semibold text-[#0B1F3A] mt-0.5 leading-snug">
+                              {m.employerName || 'Confirm on first call'}
                             </span>
                           </div>
+                          <div className="px-4 py-3">
+                            <span className="block text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/60">
+                              Signing Deadline
+                            </span>
+                            <span className={`block text-sm font-semibold mt-0.5 leading-snug ${m.isUrgentDeadline && m.status !== 'completed' ? 'text-[#D9603B]' : 'text-[#0B1F3A]'}`}>
+                              {m.signingDeadlineLabel}
+                            </span>
+                          </div>
+                          <div className="px-4 py-3">
+                            <span className="block text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/60">
+                              Document Status
+                            </span>
+                            <span className="block text-sm font-semibold text-[#0B1F3A] mt-0.5 leading-snug">
+                              {m.hasDraftAgreement ? 'Draft Ready' : 'Offer Only'}
+                            </span>
+                          </div>
+                          <div className="px-4 py-3">
+                            <span className="block text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/60">
+                              Client Goal
+                            </span>
+                            <span className="block text-sm font-semibold text-[#0B1F3A] mt-0.5 leading-snug">
+                              {m.clientGoal}
+                            </span>
+                          </div>
+                        </div>
 
-                          {/* Row 2: Visual Offer vs Statutory Floor vs Target Meter */}
-                          <div className="rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]/80 p-3.5 sm:p-4 space-y-3">
-                            <div className="grid grid-cols-3 gap-2 sm:gap-4">
-                              <div>
-                                <span className="block text-xs font-medium text-[#0B1F3A]/70">Employer Offer</span>
-                                <span className={`block text-lg sm:text-xl font-serif font-bold tabular-nums ${isBelowFloor ? 'text-[#D9603B]' : 'text-[#0B1F3A]'}`}>
-                                  £{m.employerOffer.toLocaleString('en-GB')}
-                                </span>
-                              </div>
-                              <div>
-                                <span className="block text-xs font-medium text-[#0B1F3A]/70">Statutory Floor</span>
-                                <span className="block text-lg sm:text-xl font-serif font-bold text-[#0B1F3A] tabular-nums">
-                                  £{m.statutoryFloor.toLocaleString('en-GB')}
-                                </span>
-                              </div>
-                              <div>
-                                <span className="block text-xs font-medium text-[#0B1F3A]/70">Counter Target</span>
-                                <span className="block text-lg sm:text-xl font-serif font-bold text-[#0B1F3A] tabular-nums">
-                                  £{m.targetSettlement.toLocaleString('en-GB')}
-                                </span>
-                              </div>
+                        {/* Deterministic Statutory Financial Strip (Zero Fabricated Targets) */}
+                        <div className="p-4 sm:px-6 sm:py-4 space-y-4">
+                          <div className="grid grid-cols-3 gap-3 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE] p-3.5">
+                            <div>
+                              <span className="block text-xs font-medium text-[#0B1F3A]/65">Employer Offer</span>
+                              <span className={`block text-lg sm:text-xl font-serif font-bold tabular-nums mt-0.5 ${isBelowFloor ? 'text-[#D9603B]' : 'text-[#0B1F3A]'}`}>
+                                £{m.employerOffer.toLocaleString('en-GB')}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="block text-xs font-medium text-[#0B1F3A]/65">ERA 1996 Floor</span>
+                              <span className="block text-lg sm:text-xl font-serif font-bold text-[#0B1F3A] tabular-nums mt-0.5">
+                                £{m.statutoryFloor.toLocaleString('en-GB')}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="block text-xs font-medium text-[#0B1F3A]/65">Tax-Free (s.403)</span>
+                              <span className="block text-lg sm:text-xl font-serif font-bold text-[#0B1F3A] tabular-nums mt-0.5">
+                                £{m.taxFreeAmount.toLocaleString('en-GB')}
+                              </span>
                             </div>
 
-                            <div className="space-y-1.5">
-                              <div className="relative h-2.5 w-full rounded-full bg-[#E2DCCE] overflow-hidden">
-                                <div
-                                  className={`h-full rounded-full ${isBelowFloor ? 'bg-[#D9603B]' : 'bg-[#0B1F3A]'}`}
-                                  style={{ width: `${offerPct}%` }}
-                                />
-                                <div
-                                  className="absolute top-0 bottom-0 w-0.5 bg-[#0B1F3A]"
-                                  style={{ left: `${floorPct}%` }}
-                                  title="ERA 1996 Statutory Floor"
-                                />
-                              </div>
-                              <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-[#0B1F3A]/75">
-                                <span>
-                                  {isBelowFloor ? (
-                                    <strong className="text-[#D9603B]">
-                                      £{shortfall.toLocaleString('en-GB')} below statutory floor
-                                    </strong>
-                                  ) : (
-                                    <span>Clears statutory floor · Salary £{m.salary.toLocaleString('en-GB')}</span>
-                                  )}
-                                </span>
-                                <span className="font-medium text-[#0B1F3A]">
-                                  Legal Fee: £{m.employerLegalFee} → <strong>£{m.recommendedLegalFee} + VAT</strong>
-                                </span>
-                              </div>
+                            <div className="col-span-3 pt-2.5 border-t border-[#E2DCCE] flex flex-wrap items-center justify-between gap-2 text-xs text-[#0B1F3A]/75">
+                              <span>
+                                {isBelowFloor ? (
+                                  <strong className="text-[#D9603B]">
+                                    £{delta.toLocaleString('en-GB')} below ERA 1996 statutory baseline
+                                  </strong>
+                                ) : (
+                                  <span>
+                                    +£{delta.toLocaleString('en-GB')} above statutory baseline · Salary £{m.salary.toLocaleString('en-GB')}
+                                  </span>
+                                )}
+                              </span>
+                              <span className="font-medium text-[#0B1F3A]">
+                                Employer Legal Fee Offered: <strong>£{m.employerLegalFee} + VAT</strong>
+                              </span>
                             </div>
                           </div>
 
-                          {/* Inline Release Reason Picker (Zero SLA Penalty) */}
+                          {/* Clear, Unmistakably Interactive Release Panel */}
                           {releasingId === m.id && (
-                            <div className="rounded-xl bg-[#FEF5F3] border border-[#D9603B]/30 p-4 space-y-3">
+                            <div className="rounded-xl bg-[#FEF5F3] border border-[#D9603B]/35 p-4 space-y-3">
                               <div className="flex items-center justify-between gap-2">
-                                <span className="text-sm font-bold text-[#0B1F3A]">
-                                  Release matter back to panel pool (Zero SLA penalty for conflicts)
-                                </span>
+                                <div>
+                                  <span className="text-sm font-bold text-[#0B1F3A] block">
+                                    Select a reason to release back to the panel pool
+                                  </span>
+                                  <span className="text-xs text-[#0B1F3A]/70 block">
+                                    SRA conflict releases carry zero SLA penalty.
+                                  </span>
+                                </div>
                                 <button
                                   type="button"
                                   onClick={() => setReleasingId(null)}
-                                  className="text-xs font-semibold text-[#0B1F3A]/70 hover:text-[#0B1F3A] underline cursor-pointer"
+                                  className="h-9 px-3 rounded-lg bg-white border border-[#E2DCCE] text-xs font-semibold text-[#0B1F3A] hover:bg-[#F7F4EE] cursor-pointer shrink-0"
                                 >
                                   Cancel
                                 </button>
                               </div>
-                              <div className="flex flex-wrap gap-2">
+
+                              <div className="space-y-2">
                                 {RELEASE_REASONS.map(reason => (
                                   <button
-                                    key={reason}
+                                    key={reason.label}
                                     type="button"
-                                    onClick={() => handleReleaseMatter(m.id, reason)}
-                                    className="min-h-[40px] px-3.5 py-2 rounded-lg bg-white border border-[#D9603B]/35 hover:bg-[#D9603B] hover:text-white text-sm font-semibold text-[#0B1F3A] transition-colors cursor-pointer"
+                                    onClick={() => handleReleaseMatter(m.id, reason.label)}
+                                    className="w-full text-left px-4 py-3 rounded-lg bg-white border border-[#E2DCCE] hover:border-[#D9603B] hover:bg-[#D9603B]/5 shadow-sm transition-colors cursor-pointer flex items-center justify-between gap-3 group"
                                   >
-                                    {reason}
+                                    <div>
+                                      <span className="block text-sm font-semibold text-[#0B1F3A] group-hover:text-[#D9603B]">
+                                        {reason.label}
+                                      </span>
+                                      <span className="block text-xs text-[#0B1F3A]/65 mt-0.5">
+                                        {reason.detail}
+                                      </span>
+                                    </div>
+                                    <svg
+                                      className="w-4 h-4 text-[#0B1F3A]/45 group-hover:text-[#D9603B] shrink-0 transition-colors"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2.2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      aria-hidden="true"
+                                    >
+                                      <path d="M5 12h14" />
+                                      <path d="m12 5 7 7-7 7" />
+                                    </svg>
                                   </button>
                                 ))}
                               </div>
                             </div>
                           )}
 
-                          {/* Row 3: Action Strip (Different for Locked vs Claimed vs Completed) */}
+                          {/* Unified Action Bar (Consistent Height h-11, Consistent Radius rounded-lg) */}
                           {m.status !== 'released' && (
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                               <div className="flex flex-wrap items-center gap-2">
+                                {m.status === 'claimed' && (
+                                  <div className="relative flex-1 sm:flex-none">
+                                    <select
+                                      aria-label={`Matter stage for ${m.clientName}`}
+                                      value={m.stage || 'conflict_cleared'}
+                                      onChange={e => handleStageChange(m.id, e.target.value as MatterStage)}
+                                      className="w-full sm:w-auto appearance-none h-11 pl-3.5 pr-9 rounded-lg bg-white border border-[#0B1F3A]/20 hover:border-[#0B1F3A]/40 text-sm font-semibold text-[#0B1F3A] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0B1F3A] cursor-pointer"
+                                    >
+                                      {STAGE_OPTIONS.map(opt => (
+                                        <option key={opt.id} value={opt.id}>
+                                          Stage: {opt.label}
+                                        </option>
+                                      ))}
+                                    </select>
+                                    <svg
+                                      className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0B1F3A]/70"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      aria-hidden="true"
+                                    >
+                                      <path d="m6 9 6 6 6-6" />
+                                    </svg>
+                                  </div>
+                                )}
+
                                 {(m.status === 'locked' || m.status === 'claimed') && releasingId !== m.id && (
                                   <button
                                     type="button"
                                     onClick={() => setReleasingId(m.id)}
-                                    className="min-h-[44px] px-3.5 py-2 rounded-xl bg-white border border-[#E2DCCE] hover:border-[#D9603B] text-sm font-medium text-[#0B1F3A]/80 hover:text-[#D9603B] transition-colors cursor-pointer"
+                                    className={BTN_GHOST_RELEASE}
                                   >
-                                    Release (Conflict / Capacity)
+                                    <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                      <path d="M18 6 6 18" />
+                                      <path d="m6 6 12 12" />
+                                    </svg>
+                                    Release Matter
                                   </button>
-                                )}
-
-                                {m.status === 'claimed' && (
-                                  <select
-                                    aria-label={`Matter stage for ${m.clientName}`}
-                                    value={m.stage || 'conflict_cleared'}
-                                    onChange={e => handleStageChange(m.id, e.target.value as MatterStage)}
-                                    className="min-h-[44px] px-3 py-2 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE] text-sm font-semibold text-[#0B1F3A] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
-                                  >
-                                    {STAGE_OPTIONS.map(opt => (
-                                      <option key={opt.id} value={opt.id}>
-                                        {opt.label}
-                                      </option>
-                                    ))}
-                                  </select>
                                 )}
                               </div>
 
-                              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                              <div className="grid grid-cols-1 sm:flex items-center gap-2">
                                 {m.status === 'claimed' && (
-                                  <a
-                                    href={`tel:${m.phone}`}
-                                    className="inline-flex items-center justify-center gap-2 min-h-[46px] px-4 py-2.5 rounded-xl bg-white border border-[#D9603B]/40 text-[#D9603B] hover:bg-[#D9603B]/10 text-sm sm:text-base font-semibold transition-colors"
-                                  >
+                                  <a href={`tel:${m.phone}`} className={BTN_SECONDARY}>
                                     <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                                     </svg>
@@ -1050,20 +1109,16 @@ export default function PortalClient() {
                                     type="button"
                                     onClick={() => handleQuickClaim(m.id)}
                                     disabled={claimingId === m.id}
-                                    className="min-h-[46px] px-4 py-2.5 rounded-xl bg-white border border-[#0B1F3A]/20 hover:border-[#0B1F3A] text-[#0B1F3A] text-sm sm:text-base font-semibold transition-colors cursor-pointer"
+                                    className={BTN_SECONDARY}
                                   >
-                                    {claimingId === m.id ? 'Holding Matter...' : 'Hold & Run Conflict Check'}
+                                    {claimingId === m.id ? 'Holding Matter...' : 'Hold & Conflict Check'}
                                   </button>
                                 )}
                                 <Link
                                   href={`/dossier/review/${m.id}/?token=demo_partner_token`}
-                                  className={`inline-flex items-center justify-center min-h-[46px] px-5 py-2.5 rounded-xl text-sm sm:text-base font-semibold transition-colors text-center ${
-                                    m.status === 'locked'
-                                      ? 'bg-[#D9603B] hover:bg-[#D9603B]/90 text-white shadow-sm'
-                                      : 'bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white'
-                                  }`}
+                                  className={m.status === 'locked' ? BTN_PRIMARY_CORAL : BTN_PRIMARY_NAVY}
                                 >
-                                  {m.status === 'locked' ? 'Review Pre-Flight Dossier →' : 'Open Dossier →'}
+                                  {m.status === 'locked' ? 'Review Dossier →' : 'Open Dossier →'}
                                 </Link>
                               </div>
                             </div>
@@ -1097,7 +1152,7 @@ export default function PortalClient() {
                     {['BS8', 'BS1', 'BS2', 'BS3', 'BS6', 'BS7', 'BS9', 'BS10', 'BS16', 'BS20'].map(code => (
                       <span
                         key={code}
-                        className="px-3.5 py-2 bg-[#F7F4EE] border border-[#E2DCCE] rounded-xl text-sm font-mono font-bold text-[#0B1F3A]"
+                        className="px-3.5 py-2 bg-[#F7F4EE] border border-[#E2DCCE] rounded-lg text-sm font-mono font-bold text-[#0B1F3A]"
                       >
                         {code}
                       </span>
@@ -1147,7 +1202,7 @@ export default function PortalClient() {
                       </div>
                       <div className="grid grid-cols-2 gap-2.5">
                         {card.metrics.map(metric => (
-                          <div key={metric.label} className="rounded-xl bg-[#F7F4EE] p-3">
+                          <div key={metric.label} className="rounded-lg bg-[#F7F4EE] p-3">
                             <span className="text-xs text-[#0B1F3A]/70 block">{metric.label}</span>
                             <span className="text-sm sm:text-base font-bold text-[#0B1F3A] tabular-nums block mt-0.5">
                               {metric.value}
@@ -1160,9 +1215,9 @@ export default function PortalClient() {
                     <button
                       type="button"
                       onClick={() => handleCopyClause(card.id, card.wpClause)}
-                      className="w-full min-h-[44px] px-4 py-2.5 rounded-xl bg-[#F7F4EE] hover:bg-[#0B1F3A] hover:text-white text-[#0B1F3A] border border-[#E2DCCE] text-sm font-semibold transition-colors cursor-pointer"
+                      className={`${BTN_SECONDARY} w-full`}
                     >
-                      {copiedClauseId === card.id ? '✓ Copied Statutory WP Clause' : 'Copy Without Prejudice Clause'}
+                      {copiedClauseId === card.id ? 'Copied Statutory WP Clause' : 'Copy Without Prejudice Clause'}
                     </button>
                   </div>
                 ))}
@@ -1190,7 +1245,7 @@ export default function PortalClient() {
                       type="url"
                       value={webhookUrl}
                       onChange={e => setWebhookUrl(e.target.value)}
-                      className="w-full min-h-[48px] px-3.5 py-3 rounded-xl border border-[#E2DCCE] bg-[#F7F4EE] focus:bg-white text-base font-mono text-[#0B1F3A] focus:outline-none focus:ring-2 focus:ring-[#D9603B]"
+                      className="w-full h-12 px-3.5 rounded-lg border border-[#E2DCCE] bg-[#F7F4EE] focus:bg-white text-base font-mono text-[#0B1F3A] focus:outline-none focus:ring-2 focus:ring-[#D9603B]"
                       placeholder="https://app.clio.com/api/v4/webhooks/..."
                       required
                     />
@@ -1223,13 +1278,10 @@ export default function PortalClient() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-4">
-                    <button
-                      type="submit"
-                      className="min-h-[48px] px-6 py-3 bg-[#0B1F3A] text-white text-base font-semibold rounded-xl hover:bg-[#0B1F3A]/90 transition-colors cursor-pointer"
-                    >
+                    <button type="submit" className={BTN_PRIMARY_NAVY}>
                       Save Configuration
                     </button>
-                    {isSaved && <span className="text-sm sm:text-base text-[#0B1F3A] font-semibold">✓ Saved successfully</span>}
+                    {isSaved && <span className="text-sm sm:text-base text-[#0B1F3A] font-semibold">Saved successfully</span>}
                   </div>
                 </form>
               </div>
