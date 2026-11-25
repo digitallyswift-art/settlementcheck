@@ -31,7 +31,12 @@ create table if not exists solicitor_applications (
   email                         text not null,
   phone                         text,
   coverage                      text,
-  sra_number                    text,
+  office_postcode               text,
+  office_lat                    numeric,
+  office_lng                    numeric,
+  office_region                 text,
+  coverage_radius_miles         integer,
+  sra_number                    text check (sra_number is null or sra_number ~ '^\d{5,7}$'),
   sra_confirmed                 boolean not null default false,
   fee_shield_agreed             boolean not null default false,
   email_verified                boolean not null default false,
@@ -47,6 +52,10 @@ create index if not exists solicitor_applications_email_idx
 create unique index if not exists solicitor_applications_pending_email_uidx
   on solicitor_applications (lower(email))
   where status = 'pending';
+
+create unique index if not exists solicitor_applications_pending_sra_uidx
+  on solicitor_applications (sra_number)
+  where status = 'pending' and sra_number is not null;
 
 create index if not exists solicitor_applications_verification_token_hash_idx
   on solicitor_applications (verification_token_hash)
@@ -84,6 +93,10 @@ create table if not exists leads (
   offer_amount      numeric(12,2),
   salary            numeric(12,2),
   months_service    integer,
+  postcode          text,
+  postcode_region   text,
+  postcode_lat      numeric,
+  postcode_lng      numeric,
   consent           boolean not null default false,
   status            text not null default 'new' check (status in ('new', 'contacted', 'matched', 'closed')),
   created_at        timestamptz not null default now()
@@ -98,8 +111,9 @@ create index if not exists leads_created_at_idx
 -- ─── Solicitor Panel (Phase 2 Territorial Lock) ───────────────────────────────
 create table if not exists solicitor_panel (
   id                          uuid primary key default gen_random_uuid(),
+  auth_user_id                uuid unique,
   firm_name                   text not null,
-  sra_number                  text not null,
+  sra_number                  text not null check (sra_number ~ '^(SRA-)?\d{5,7}$'),
   contact_name                text not null,
   email                       text not null unique,
   phone                       text not null,
@@ -124,12 +138,16 @@ create index if not exists idx_solicitor_panel_email
 create index if not exists idx_solicitor_panel_status
   on solicitor_panel (status);
 
+create unique index if not exists idx_solicitor_panel_active_sra_uidx
+  on solicitor_panel (regexp_replace(sra_number, '^SRA-', ''))
+  where status in ('active', 'pending_verification');
+
 -- ─── Territorial Lead Claims & 15-Minute Exclusivity Watchdog ─────────────────
 create table if not exists lead_claims (
   id                          uuid primary key default gen_random_uuid(),
   dossier_id                  text not null,
   lead_id                     uuid references leads(id) on delete set null,
-  panel_firm_id               uuid references solicitor_panel(id) on delete cascade,
+  panel_firm_id               uuid references solicitor_panel(id) on delete restrict,
   status                      text not null default 'locked' check (status in ('locked', 'claimed', 'dispatched_pms', 'contacted', 'expired', 'released')),
   claim_token                 text not null unique,
   locked_at                   timestamptz not null default now(),
@@ -138,6 +156,24 @@ create table if not exists lead_claims (
   notes                       text,
   created_at                  timestamptz not null default now()
 );
+
+-- Atomic counter RPC for claimed matters
+create or replace function increment_panel_claimed_count(firm_id uuid)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  update solicitor_panel
+  set leads_claimed_count = leads_claimed_count + 1,
+      updated_at = now()
+  where id = firm_id;
+end;
+$$;
+
+revoke all on function increment_panel_claimed_count(uuid) from public, anon, authenticated;
+grant execute on function increment_panel_claimed_count(uuid) to service_role;
 
 create index if not exists idx_lead_claims_dossier_id
   on lead_claims (dossier_id);

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import PostcodeInput from '@/components/PostcodeInput'
-import { isPlausibleUkPostcode, PostcodeLookup } from '@/lib/postcodes'
+import { isPlausibleUkPostcode, normalisePostcode, PostcodeLookup } from '@/lib/postcodes'
 import { trackClientEvent } from '@/lib/telemetry'
 
 // ── Brand tokens (matches SettlementCheck design system) ─────────────────────
@@ -137,11 +137,13 @@ export default function ForSolicitorsClient() {
     fee_shield_agreed:     false,
   })
   const [officePostcodeValid, setOfficePostcodeValid] = useState(false)
+  const [nonEwCountry, setNonEwCountry] = useState('')
   const [fieldError, setFieldError] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [entrySource, setEntrySource] = useState<'direct' | 'portal_demo'>('direct')
 
   const advancingRef = useRef(false)
+  const submittingRef = useRef(false)
 
   // Fast-path partners arriving from /portal/?demo=true straight into Step 1
   useEffect(() => {
@@ -157,14 +159,21 @@ export default function ForSolicitorsClient() {
 
   const currentSlide = SLIDES[slideIndex]
 
+  const completedRequiredFields =
+    (officePostcodeValid && form.office_postcode.trim() ? 1 : 0) +
+    (form.coverage_radius_miles !== undefined ? 1 : 0) +
+    (form.firmName.trim() ? 1 : 0) +
+    (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()) ? 1 : 0) +
+    (form.contactName.trim() ? 1 : 0) +
+    (/^\d{5,7}$/.test(form.sra_number.trim()) ? 1 : 0) +
+    (form.fee_shield_agreed ? 1 : 0)
+
   const progressPct =
     currentSlide.id === 'welcome'
       ? 0
       : currentSlide.id === 'success'
       ? 100
-      : currentSlide.stepNumber === 1
-      ? 50
-      : 90
+      : Math.min(95, Math.round((completedRequiredFields / 7) * 100))
 
   const showProgress = !['welcome', 'success'].includes(currentSlide.id)
   const showBack = slideIndex > 0 && currentSlide.id !== 'success'
@@ -195,15 +204,31 @@ export default function ForSolicitorsClient() {
   const startApplicationFromHero = useCallback((initialPostcode?: string, lookup?: PostcodeLookup | null) => {
     advancingRef.current = false
     setFieldError('')
+    setNonEwCountry('')
     if (initialPostcode && lookup) {
-      setForm((f) => ({
-        ...f,
-        office_postcode: lookup.postcode,
-        office_lat: lookup.latitude,
-        office_lng: lookup.longitude,
-        office_region: lookup.admin_district,
-      }))
-      setOfficePostcodeValid(true)
+      if (lookup.country && !['England', 'Wales'].includes(lookup.country)) {
+        setNonEwCountry(lookup.country)
+        setOfficePostcodeValid(false)
+        setForm((f) => ({
+          ...f,
+          office_postcode: lookup.postcode,
+          office_lat: null,
+          office_lng: null,
+          office_region: '',
+        }))
+        setFieldError(
+          `Our SRA solicitor panel currently covers England & Wales only (${lookup.country} postcodes are not eligible).`
+        )
+      } else {
+        setForm((f) => ({
+          ...f,
+          office_postcode: lookup.postcode,
+          office_lat: lookup.latitude,
+          office_lng: lookup.longitude,
+          office_region: lookup.admin_district,
+        }))
+        setOfficePostcodeValid(true)
+      }
     }
     setDir(1)
     setSlideIndex(1)
@@ -216,10 +241,23 @@ export default function ForSolicitorsClient() {
     advancingRef.current = true
     setFieldError('')
 
-    if (!officePostcodeValid || !form.office_postcode.trim()) {
+    if (nonEwCountry) {
+      advancingRef.current = false
+      setFieldError(
+        `Our SRA solicitor panel currently covers England & Wales only (${nonEwCountry} postcodes are not eligible).`
+      )
+      return
+    }
+
+    const postcodeNormed = normalisePostcode(form.office_postcode)
+    const canUsePlausiblePostcode = isPlausibleUkPostcode(postcodeNormed)
+    if ((!officePostcodeValid && !canUsePlausiblePostcode) || !form.office_postcode.trim()) {
       advancingRef.current = false
       setFieldError('Please enter a valid UK office postcode to continue.')
       return
+    }
+    if (!officePostcodeValid && canUsePlausiblePostcode && postcodeNormed !== form.office_postcode) {
+      setForm((f) => ({ ...f, office_postcode: postcodeNormed }))
     }
     if (form.coverage_radius_miles === undefined) {
       advancingRef.current = false
@@ -231,27 +269,34 @@ export default function ForSolicitorsClient() {
       setFieldError('Please enter your firm name.')
       return
     }
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+    const trimmedEmail = form.email.trim()
+    if (!trimmedEmail || trimmedEmail.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
       advancingRef.current = false
       setFieldError('Please enter a valid work email address.')
       return
     }
 
     advance()
-  }, [form, officePostcodeValid, advance])
+  }, [form, officePostcodeValid, nonEwCountry, advance])
 
   // ── Step 2 Submission ──────────────────────────────────────────────────────
   const submitApplication = useCallback(async () => {
+    if (submittingRef.current) return
+    submittingRef.current = true
     setFieldError('')
+
     if (!form.contactName.trim()) {
+      submittingRef.current = false
       setFieldError('Please enter the partner or designated fee earner name.')
       return
     }
     if (!/^\d{5,7}$/.test(form.sra_number.trim())) {
+      submittingRef.current = false
       setFieldError('Please enter a valid 5 to 7 digit SRA firm number.')
       return
     }
     if (!form.fee_shield_agreed) {
+      submittingRef.current = false
       setFieldError('Please confirm the SC-B-024 Fee Shield and SRA Rule 5.1 partner terms.')
       return
     }
@@ -288,11 +333,16 @@ export default function ForSolicitorsClient() {
       })
       advance()
     } catch (err: unknown) {
-      const detail = err instanceof Error && err.message ? ` (${err.message})` : ''
-      setFieldError(
-        `Something went wrong${detail}. Please try again or email us directly at team@settlementcheck.co.uk`
-      )
+      const message = err instanceof Error && err.message ? err.message.trim() : ''
+      if (message) {
+        setFieldError(message)
+      } else {
+        setFieldError(
+          'Something went wrong. Please try again or email us directly at team@settlementcheck.co.uk'
+        )
+      }
     } finally {
+      submittingRef.current = false
       setSubmitting(false)
     }
   }, [form, entrySource, advance])
@@ -492,11 +542,28 @@ export default function ForSolicitorsClient() {
                     error={fieldError}
                     onPostcodeChange={(v) => {
                       setFieldError('')
+                      setNonEwCountry('')
                       setOfficePostcodeValid(false)
                       setForm((f) => ({ ...f, office_postcode: v, office_lat: null, office_lng: null, office_region: '' }))
                     }}
                     onPostcodeValidated={(lookup: PostcodeLookup | null) => {
                       if (lookup) {
+                        if (lookup.country && !['England', 'Wales'].includes(lookup.country)) {
+                          setNonEwCountry(lookup.country)
+                          setOfficePostcodeValid(false)
+                          setForm((f) => ({
+                            ...f,
+                            office_postcode: lookup.postcode,
+                            office_lat: null,
+                            office_lng: null,
+                            office_region: '',
+                          }))
+                          setFieldError(
+                            `Our SRA solicitor panel currently covers England & Wales only (${lookup.country} postcodes are not eligible).`
+                          )
+                          return
+                        }
+                        setNonEwCountry('')
                         setForm((f) => ({
                           ...f,
                           office_postcode: lookup.postcode,
@@ -506,8 +573,21 @@ export default function ForSolicitorsClient() {
                         }))
                         setOfficePostcodeValid(true)
                       } else {
+                        setNonEwCountry('')
                         setOfficePostcodeValid(false)
                       }
+                      setFieldError('')
+                    }}
+                    onPostcodeFallbackValid={(normed) => {
+                      setNonEwCountry('')
+                      setForm((f) => ({
+                        ...f,
+                        office_postcode: normed,
+                        office_lat: null,
+                        office_lng: null,
+                        office_region: '',
+                      }))
+                      setOfficePostcodeValid(true)
                       setFieldError('')
                     }}
                     onSelectRadius={(radius) => updateField('coverage_radius_miles', radius)}
@@ -547,6 +627,7 @@ interface SolicitorDemandResult {
   postcode: string
   admin_district: string
   region: string | null
+  country?: string
   latitude: number
   longitude: number
   radiusMiles: number
@@ -561,6 +642,13 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
   const [checkingPostcode, setCheckingPostcode] = useState(false)
   const [postcodeStatus, setPostcodeStatus] = useState<'idle' | 'available' | 'invalid'>('idle')
   const [postcodeError, setPostcodeError] = useState('')
+  const postcodeAbortRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    return () => {
+      postcodeAbortRef.current?.abort()
+    }
+  }, [])
 
   // Lead Dossier interactive inspector state
   const [activeDossierTab, setActiveDossierTab] = useState<'director' | 'manager' | 'redundancy'>('director')
@@ -569,19 +657,32 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
   const [monthlyIntros, setMonthlyIntros] = useState<number>(10)
 
   const handleQuickPostcodeCheck = async () => {
+    if (checkingPostcode) return
     if (!isPlausibleUkPostcode(postcodeCheck)) {
       setPostcodeError('Please enter a valid UK postcode format (e.g. SW1A 1AA or M1 1AE).')
       setPostcodeStatus('invalid')
       return
     }
+    postcodeAbortRef.current?.abort()
+    const controller = new AbortController()
+    postcodeAbortRef.current = controller
     setCheckingPostcode(true)
     setPostcodeError('')
     try {
       const res = await fetch(
-        `/api/solicitor-demand/?postcode=${encodeURIComponent(postcodeCheck.trim())}`
+        `/api/solicitor-demand/?postcode=${encodeURIComponent(postcodeCheck.trim())}`,
+        { signal: controller.signal }
       )
       const data = await res.json().catch(() => null)
       if (res.ok && data) {
+        if (data.country && !['England', 'Wales'].includes(data.country)) {
+          setDemandResult(null)
+          setPostcodeError(
+            `Our SRA solicitor panel currently covers England & Wales only (${data.country} postcodes are not eligible).`
+          )
+          setPostcodeStatus('invalid')
+          return
+        }
         setDemandResult(data as SolicitorDemandResult)
         setPostcodeStatus('available')
         trackEvent('solicitor_postcode_checked', {
@@ -596,7 +697,8 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
         )
         setPostcodeStatus('invalid')
       }
-    } catch {
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') return
       setDemandResult(null)
       setPostcodeError('Unable to check postcode availability right now. Please try again.')
       setPostcodeStatus('invalid')
@@ -605,20 +707,20 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
     }
   }
 
-  // Pre-calculated dossier mock records
+  // Pre-calculated dossier mock records (April 2026 statutory cap £751/week, ERA 1996 s.162 & ITEPA 2003 s.402D/s.403)
   const dossiers = {
     director: {
       title: 'Commercial Director Reorganisation',
       tenure: '7 years 4 months',
       age: 44,
       salary: '£78,000 / year (£1,500/week)',
-      statutoryRedundancy: '£5,257',
-      statutoryRedundancyCapNote: 'Calculated under April 2026 statutory cap of £751/week (ERA 1996 s.162)',
+      statutoryRedundancy: '£6,383.50',
+      statutoryRedundancyCapNote: 'Calculated under April 2026 statutory cap of £751/week (8.5 weeks: 3 yrs × 1.5 + 4 yrs × 1.0, ERA 1996 s.162)',
       pilon: '£19,500 (3 months gross contractual notice)',
       employerExGratia: '£29,000',
       totalOffer: '£48,500',
-      taxFreeAmount: '£30,000 (ITEPA 2003 s.403 exempt threshold)',
-      taxableAmount: '£18,500 (subject to PAYE/NICs)',
+      taxFreeAmount: '£29,000 (ex-gratia within £30,000 ITEPA 2003 s.403 threshold)',
+      taxableAmount: '£19,500 (PILON taxed as earnings under s.402D)',
       employerLegalFeeContribution: '£750 + VAT',
       urgency: 'Employer signing deadline: 10 business days',
       readiness: 'High · Has draft settlement agreement PDF ready',
@@ -627,14 +729,14 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
       title: 'Protected Conversation Exit',
       tenure: '3 years 8 months',
       age: 38,
-      salary: '£46,000 / year (£884/week)',
+      salary: '£46,000 / year (£885/week)',
       statutoryRedundancy: '£2,253',
-      statutoryRedundancyCapNote: 'Calculated at £751/week cap (3 years × 1.0 multiplier)',
+      statutoryRedundancyCapNote: 'Calculated at £751/week cap (3 years × 1.0 multiplier, ERA 1996 s.162)',
       pilon: '£3,833 (1 month gross contractual notice)',
       employerExGratia: '£16,000',
       totalOffer: '£19,833',
-      taxFreeAmount: '£16,000 (within £30,000 tax-free boundary)',
-      taxableAmount: '£3,833 (PILON taxed as earnings)',
+      taxFreeAmount: '£16,000 (within £30,000 ITEPA 2003 s.403 threshold)',
+      taxableAmount: '£3,833 (PILON taxed as earnings under s.402D)',
       employerLegalFeeContribution: '£600 + VAT',
       urgency: 'Formal offer letter issued yesterday',
       readiness: 'Awaiting independent legal advice certificate',
@@ -644,13 +746,13 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
       tenure: '11 years 2 months',
       age: 52,
       salary: '£54,000 / year (£1,038/week)',
-      statutoryRedundancy: '£11,265',
-      statutoryRedundancyCapNote: 'Calculated using 1.5x factor for service over age 41 (ERA 1996 s.162)',
+      statutoryRedundancy: '£12,391.50',
+      statutoryRedundancyCapNote: 'Calculated at £751/week cap (11 years × 1.5 multiplier = 16.5 weeks, ERA 1996 s.162)',
       pilon: '£9,000 (2 months contractual notice)',
       employerExGratia: '£22,000',
       totalOffer: '£31,000',
-      taxFreeAmount: '£30,000 (maximum statutory termination exemption)',
-      taxableAmount: '£1,000',
+      taxFreeAmount: '£22,000 (ex-gratia within £30,000 ITEPA 2003 s.403 threshold)',
+      taxableAmount: '£9,000 (PILON taxed as earnings under s.402D)',
       employerLegalFeeContribution: '£650 + VAT',
       urgency: 'Consultation ended; agreement issued for sign-off',
       readiness: 'Employee checked offer against statutory entitlement',
@@ -763,7 +865,9 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault()
-                  handleQuickPostcodeCheck()
+                  if (!checkingPostcode && postcodeCheck.trim()) {
+                    handleQuickPostcodeCheck()
+                  }
                 }
               }}
               placeholder="Office postcode (e.g. M2 5PF)"
@@ -869,7 +973,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
                       longitude: demandResult.longitude,
                       region: demandResult.region,
                       admin_district: demandResult.admin_district,
-                      country: 'United Kingdom',
+                      country: demandResult.country ?? '',
                     })
                   }
                   style={{
@@ -893,7 +997,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
           })()}
 
           {postcodeStatus === 'invalid' && (
-            <div style={{ color: C.error, fontSize: 12, textAlign: 'left', padding: '4px 16px' }}>
+            <div role="alert" style={{ color: C.error, fontSize: 12, textAlign: 'left', padding: '4px 16px' }}>
               {postcodeError || 'Please enter a valid UK postcode format (e.g. SW1A 1AA or M1 1AE).'}
             </div>
           )}
@@ -973,7 +1077,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             },
             {
               title: 'Employer Fee Contributions',
-              desc: 'Capped employer commercial contributions (typically £350 to £750+ + VAT, higher for senior exits) paid direct to you upon completion.',
+              desc: 'Capped employer commercial contributions (typically £350 to £750 + VAT, higher for senior exits) paid direct to you upon completion.',
             },
             {
               title: 'Complete Statutory Dossier',
@@ -1444,7 +1548,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             Partner Capacity &amp; Revenue Modelling
           </h2>
           <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.6, margin: '0 0 20px', fontFamily: SANS }}>
-            While Section 203(3) ERA 1996 requires independent legal advice for a valid waiver, UK employers standardly provide a capped commercial contribution (typically £350 to £750+ + VAT, and higher for senior exits) paid directly to your firm upon completion of the agreement. Model your firm&apos;s monthly instruction capacity with zero software fees or upfront retainers.
+            While Section 203(3) ERA 1996 requires independent legal advice for a valid waiver, UK employers standardly provide a capped commercial contribution (typically £350 to £750 + VAT, and higher for senior exits) paid directly to your firm upon completion of the agreement. Model your firm&apos;s monthly instruction capacity with zero software fees or upfront retainers.
           </p>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#F0F5FA', border: '1px solid #C4D8EC', padding: '6px 14px', borderRadius: 999, fontSize: 12, color: C.navy, fontWeight: 600, fontFamily: SANS }}>
             <span style={{ color: C.accent }}>✓</span> Zero Employee Fee Standard: Applies to completed standard Section 203(3) statutory reviews where the employer contribution is £500 + VAT or higher.
@@ -1727,7 +1831,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             {
               tag: 'Matter Filtering',
               title: 'Configurable Minimum Fee & Tier Preferences',
-              desc: 'During onboarding, your practice can set preferred matter tiers, including minimum employer legal fee contributions (such as £500+ + VAT) and senior or director-level exit instructions.',
+              desc: 'During onboarding, your practice can set preferred matter tiers, including minimum employer legal fee contributions (such as £500 + VAT or higher) and senior or director-level exit instructions.',
             },
           ].map((card) => (
             <div
@@ -1803,7 +1907,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
           {[
             {
               q: 'How do employer legal fee contributions work under Section 203(3)?',
-              a: 'While Section 203(3) ERA 1996 requires independent legal advice for a valid waiver, UK employers standardly provide a capped commercial contribution (typically £350 to £750+ + VAT, and higher for senior exits) paid directly to your firm upon completion of the agreement. For completed standard Section 203(3) statutory reviews where the employer contribution is £500 + VAT or higher, partner firms covenant not to bill the employee for any shortfall; abortive costs (if an employee declines to sign) or extended negotiation work remain governed by your firm\u2019s engagement terms.',
+              a: 'While Section 203(3) ERA 1996 requires independent legal advice for a valid waiver, UK employers standardly provide a capped commercial contribution (typically £350 to £750 + VAT, and higher for senior exits) paid directly to your firm upon completion of the agreement. For completed standard Section 203(3) statutory reviews where the employer contribution is £500 + VAT or higher, partner firms covenant not to bill the employee for any shortfall; abortive costs (if an employee declines to sign) or extended negotiation work remain governed by your firm\u2019s engagement terms.',
             },
             {
               q: 'Are introductions strictly exclusive to our firm?',
@@ -1979,6 +2083,7 @@ interface Step1Props {
   error: string
   onPostcodeChange: (v: string) => void
   onPostcodeValidated: (lookup: PostcodeLookup | null) => void
+  onPostcodeFallbackValid: (postcode: string) => void
   onSelectRadius: (radius: number | null) => void
   onUpdateField: <K extends keyof FormData>(field: K, val: FormData[K]) => void
   onNext: () => void
@@ -1990,12 +2095,18 @@ function Step1TerritorySlide({
   error,
   onPostcodeChange,
   onPostcodeValidated,
+  onPostcodeFallbackValid,
   onSelectRadius,
   onUpdateField,
   onNext,
 }: Step1Props) {
   return (
-    <div
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        onNext()
+      }}
+      noValidate
       style={{
         background: C.bgCard,
         border: `1.5px solid ${C.border}`,
@@ -2061,19 +2172,25 @@ function Step1TerritorySlide({
       )}
 
       {/* 1. Office Postcode */}
-      <div style={{ marginBottom: 22 }}>
-        <label style={labelStyle}>Office Postcode</label>
+      <div style={{ marginBottom: 14 }}>
+        <label htmlFor="sc-office-postcode" style={labelStyle}>
+          Office Postcode
+        </label>
         <PostcodeInput
+          id="sc-office-postcode"
+          variant="boxed"
           value={form.office_postcode}
           onChange={onPostcodeChange}
           onValidated={onPostcodeValidated}
+          onFallbackValid={onPostcodeFallbackValid}
           placeholder="e.g. M2 5PF"
+          initialValidLabel={officePostcodeValid && form.office_region ? form.office_region : undefined}
         />
       </div>
 
       {/* 2. Coverage Radius */}
-      <div style={{ marginBottom: 22 }}>
-        <label style={labelStyle}>Coverage Radius</label>
+      <fieldset style={{ border: 'none', padding: 0, margin: '0 0 22px' }}>
+        <legend style={labelStyle}>Coverage Radius</legend>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {COVERAGE_OPTIONS.map((opt) => {
             const selected = form.coverage_radius_miles === opt.value
@@ -2081,6 +2198,7 @@ function Step1TerritorySlide({
               <button
                 key={opt.label}
                 type="button"
+                aria-pressed={selected}
                 onClick={() => onSelectRadius(opt.value)}
                 style={{
                   width: '100%',
@@ -2110,7 +2228,7 @@ function Step1TerritorySlide({
             )
           })}
         </div>
-      </div>
+      </fieldset>
 
       {/* 3. Firm Name */}
       <div style={{ marginBottom: 18 }}>
@@ -2120,6 +2238,7 @@ function Step1TerritorySlide({
         <input
           id="sc-firm-name"
           type="text"
+          maxLength={200}
           value={form.firmName}
           onChange={(e) => onUpdateField('firmName', e.target.value)}
           placeholder="e.g. Apex Employment Law LLP"
@@ -2136,6 +2255,7 @@ function Step1TerritorySlide({
         <input
           id="sc-work-email"
           type="email"
+          maxLength={254}
           value={form.email}
           onChange={(e) => onUpdateField('email', e.target.value)}
           placeholder="e.g. eleanor@apexlaw.co.uk"
@@ -2149,6 +2269,7 @@ function Step1TerritorySlide({
 
       {error && (
         <div
+          role="alert"
           style={{
             background: '#FEF2F2',
             border: '1px solid #FECACA',
@@ -2162,8 +2283,7 @@ function Step1TerritorySlide({
       )}
 
       <button
-        type="button"
-        onClick={onNext}
+        type="submit"
         style={{
           width: '100%',
           minHeight: 48,
@@ -2184,7 +2304,7 @@ function Step1TerritorySlide({
       >
         Continue to Contact &amp; SRA Details →
       </button>
-    </div>
+    </form>
   )
 }
 
@@ -2200,7 +2320,12 @@ function Step2ComplianceSlide({ form, submitting, error, onUpdateField, onSubmit
   const isSraFormatValid = /^\d{5,7}$/.test(form.sra_number.trim())
 
   return (
-    <div
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        if (!submitting) onSubmit()
+      }}
+      noValidate
       style={{
         background: C.bgCard,
         border: `1.5px solid ${C.border}`,
@@ -2255,6 +2380,7 @@ function Step2ComplianceSlide({ form, submitting, error, onUpdateField, onSubmit
         <input
           id="sc-contact-name"
           type="text"
+          maxLength={200}
           value={form.contactName}
           onChange={(e) => onUpdateField('contactName', e.target.value)}
           placeholder="e.g. Eleanor Vance"
@@ -2271,6 +2397,7 @@ function Step2ComplianceSlide({ form, submitting, error, onUpdateField, onSubmit
         <input
           id="sc-direct-phone"
           type="tel"
+          maxLength={40}
           value={form.phone}
           onChange={(e) => onUpdateField('phone', e.target.value)}
           placeholder="e.g. 020 7946 0192"
@@ -2361,6 +2488,7 @@ function Step2ComplianceSlide({ form, submitting, error, onUpdateField, onSubmit
 
       {error && (
         <div
+          role="alert"
           style={{
             background: '#FEF2F2',
             border: '1px solid #FECACA',
@@ -2374,8 +2502,7 @@ function Step2ComplianceSlide({ form, submitting, error, onUpdateField, onSubmit
       )}
 
       <button
-        type="button"
-        onClick={onSubmit}
+        type="submit"
         disabled={submitting}
         style={{
           width: '100%',
@@ -2398,7 +2525,7 @@ function Step2ComplianceSlide({ form, submitting, error, onUpdateField, onSubmit
       >
         {submitting ? 'Submitting Application...' : 'Complete SRA Partner Registration →'}
       </button>
-    </div>
+    </form>
   )
 }
 
