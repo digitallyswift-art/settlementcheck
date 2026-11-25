@@ -301,6 +301,13 @@ export default function Nav() {
           >
             How it works
           </Link>
+
+          <Link
+            href="/for-solicitors/"
+            className="text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
+          >
+            For Solicitors
+          </Link>
         </nav>
 
         {/* Desktop Primary CTA */}
@@ -448,6 +455,13 @@ export default function Nav() {
             onClick={() => setMobileOpen(false)}
           >
             Check my offer →
+          </Link>
+          <Link
+            href="/for-solicitors/"
+            className="min-h-[44px] flex items-center justify-center text-[14px] text-muted hover:text-ink py-2 mt-1 border-t border-rule/60"
+            onClick={() => setMobileOpen(false)}
+          >
+            For Solicitors
           </Link>
         </div>
       )}

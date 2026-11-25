@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import PostcodeInput from '@/components/PostcodeInput'
-import { lookupPostcode, isPlausibleUkPostcode, normalisePostcode, PostcodeLookup } from '@/lib/postcodes'
+import { isPlausibleUkPostcode, PostcodeLookup } from '@/lib/postcodes'
+import { trackClientEvent } from '@/lib/telemetry'
 
 // ── Brand tokens (matches SettlementCheck design system) ─────────────────────
 const C = {
@@ -42,38 +44,19 @@ function trackFormStep(stepId: string, stepNumber: number) {
     }
     window.history.replaceState(null, '', url.toString())
   } catch {}
-  const w = window as any
-  if (typeof w.gtag === 'function') {
-    w.gtag('event', 'solicitor_form_step', {
-      event_category: 'solicitor_application',
-      step_id: stepId,
-      step_number: stepNumber,
-    })
-  }
-  if (Array.isArray(w.dataLayer)) {
-    w.dataLayer.push({ event: 'solicitor_form_step', stepId, stepNumber })
-  }
+  trackClientEvent('solicitor_form_step', {
+    event_category: 'solicitor_application',
+    step_id: stepId,
+    step_number: stepNumber,
+  })
 }
 
 function trackEvent(name: string, params?: Record<string, unknown>) {
-  if (typeof window === 'undefined') return
-  const w = window as any
-  if (typeof w.gtag === 'function') w.gtag('event', name, params)
-  if (Array.isArray(w.dataLayer)) w.dataLayer.push({ event: name, ...params })
+  trackClientEvent(name, params)
 }
 
 // ── Slide Types ───────────────────────────────────────────────────────────────
-type SlideId =
-  | 'welcome'
-  | 'firmName'
-  | 'contactName'
-  | 'email'
-  | 'otp'
-  | 'phone'
-  | 'officePostcode'
-  | 'coverageRadius'
-  | 'sra'
-  | 'success'
+type SlideId = 'welcome' | 'step1' | 'step2' | 'success'
 
 interface FormData {
   firmName:              string
@@ -84,67 +67,24 @@ interface FormData {
   office_lat:            number | null
   office_lng:            number | null
   office_region:         string
-  coverage_radius_miles: number | null
+  coverage_radius_miles: number | null | undefined
+  sra_number:            string
+  fee_shield_agreed:     boolean
 }
-
-type StringFields = { [K in keyof FormData]: FormData[K] extends string ? K : never }[keyof FormData]
 
 interface SlideConfig {
   id: SlideId
-  inputField?: StringFields
-  question?: string
-  hint?: string
-  placeholder?: string
-  type?: string
-  optional?: boolean
   stepNumber?: number
 }
 
 const SLIDES: SlideConfig[] = [
   { id: 'welcome' },
-  {
-    id: 'firmName',
-    inputField: 'firmName',
-    question: "What is your firm's name?",
-    placeholder: 'e.g. Apex Employment Law LLP',
-    hint: 'Must be an SRA-regulated practice in England & Wales',
-    stepNumber: 1,
-  },
-  {
-    id: 'contactName',
-    inputField: 'contactName',
-    question: 'And your name?',
-    placeholder: 'e.g. Eleanor Vance',
-    hint: 'Partner or designated fee earner managing settlement instructions',
-    stepNumber: 2,
-  },
-  {
-    id: 'email',
-    inputField: 'email',
-    question: "What is your work email?",
-    hint: "We will send a 6-digit verification code to confirm your firm domain",
-    placeholder: 'eleanor@apexlaw.co.uk',
-    type: 'email',
-    stepNumber: 3,
-  },
-  { id: 'otp', stepNumber: 4 },
-  {
-    id: 'phone',
-    inputField: 'phone',
-    question: 'Direct telephone number for introductions?',
-    hint: 'Used exclusively for high-intent client callbacks within your agreed SLA',
-    placeholder: '020 7946 0192',
-    type: 'tel',
-    optional: true,
-    stepNumber: 5,
-  },
-  { id: 'officePostcode', stepNumber: 6 },
-  { id: 'coverageRadius', stepNumber: 7 },
-  { id: 'sra', stepNumber: 8 },
+  { id: 'step1', stepNumber: 1 },
+  { id: 'step2', stepNumber: 2 },
   { id: 'success' },
 ]
 
-const TOTAL_STEPS = 8
+const TOTAL_STEPS = 2
 
 // ── Slide Animation Variants ──────────────────────────────────────────────────
 const slideVariants = {
@@ -164,7 +104,7 @@ function ProgressBar({ pct, stepNumber }: { pct: number; stepNumber?: number }) 
     <div style={{ padding: '12px 24px', maxWidth: 640, margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 }}>
         <span style={{ fontFamily: SANS, fontSize: 12, fontWeight: 600, color: C.navy, letterSpacing: '0.02em' }}>
-          {stepNumber ? `Application Step ${stepNumber} of ${TOTAL_STEPS}` : ''}
+          {stepNumber ? `Step ${stepNumber} of ${TOTAL_STEPS}` : ''}
         </span>
         <span style={{ fontFamily: SANS, fontSize: 12, fontWeight: 600, color: C.accent }}>{pct}% complete</span>
       </div>
@@ -192,20 +132,28 @@ export default function ForSolicitorsClient() {
     office_lat:            null,
     office_lng:            null,
     office_region:         '',
-    coverage_radius_miles: null,
+    coverage_radius_miles: undefined,
+    sra_number:            '',
+    fee_shield_agreed:     false,
   })
   const [officePostcodeValid, setOfficePostcodeValid] = useState(false)
   const [fieldError, setFieldError] = useState('')
-  const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', ''])
-  const [otpError, setOtpError] = useState('')
-  const [otpSending, setOtpSending] = useState(false)
-  const [otpVerifying, setOtpVerifying] = useState(false)
-  const [resendCooldown, setResendCooldown] = useState(0)
   const [submitting, setSubmitting] = useState(false)
+  const [entrySource, setEntrySource] = useState<'direct' | 'portal_demo'>('direct')
 
-  const inputRef     = useRef<HTMLInputElement>(null)
-  const otpRefs      = useRef<(HTMLInputElement | null)[]>([null, null, null, null, null, null])
   const advancingRef = useRef(false)
+
+  // Fast-path partners arriving from /portal/?demo=true straight into Step 1
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const from = new URLSearchParams(window.location.search).get('from')
+      if (from === 'portal-demo') {
+        setEntrySource('portal_demo')
+        setSlideIndex(1)
+      }
+    } catch {}
+  }, [])
 
   const currentSlide = SLIDES[slideIndex]
 
@@ -214,7 +162,9 @@ export default function ForSolicitorsClient() {
       ? 0
       : currentSlide.id === 'success'
       ? 100
-      : Math.round(((currentSlide.stepNumber ?? 0) / (TOTAL_STEPS + 1)) * 100)
+      : currentSlide.stepNumber === 1
+      ? 50
+      : 90
 
   const showProgress = !['welcome', 'success'].includes(currentSlide.id)
   const showBack = slideIndex > 0 && currentSlide.id !== 'success'
@@ -223,25 +173,6 @@ export default function ForSolicitorsClient() {
   useEffect(() => {
     trackFormStep(currentSlide.id, currentSlide.stepNumber ?? 0)
   }, [slideIndex]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Auto-focus logic
-  useEffect(() => {
-    const t = setTimeout(() => {
-      if (currentSlide.id === 'otp') {
-        otpRefs.current[0]?.focus()
-      } else if (!['welcome', 'sra', 'success', 'coverageRadius'].includes(currentSlide.id)) {
-        inputRef.current?.focus()
-      }
-    }, 320)
-    return () => clearTimeout(t)
-  }, [slideIndex, currentSlide.id])
-
-  // Resend cooldown timer
-  useEffect(() => {
-    if (resendCooldown <= 0) return
-    const t = setTimeout(() => setResendCooldown((c) => c - 1), 1000)
-    return () => clearTimeout(t)
-  }, [resendCooldown])
 
   // ── Navigation ─────────────────────────────────────────────────────────────
   const advance = useCallback(() => {
@@ -254,6 +185,7 @@ export default function ForSolicitorsClient() {
 
   const goBack = useCallback(() => {
     if (slideIndex === 0) return
+    advancingRef.current = false
     setDir(-1)
     setFieldError('')
     setSlideIndex((i) => i - 1)
@@ -261,6 +193,8 @@ export default function ForSolicitorsClient() {
   }, [slideIndex])
 
   const startApplicationFromHero = useCallback((initialPostcode?: string, lookup?: PostcodeLookup | null) => {
+    advancingRef.current = false
+    setFieldError('')
     if (initialPostcode && lookup) {
       setForm((f) => ({
         ...f,
@@ -276,155 +210,70 @@ export default function ForSolicitorsClient() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
-  // ── OTP Handlers ───────────────────────────────────────────────────────────
-  const sendOtp = useCallback(async (emailAddr: string) => {
-    setOtpSending(true)
-    try {
-      const res = await fetch('/api/otp/send/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: emailAddr, form_type: 'solicitor' }),
-      })
-      if (!res.ok) throw new Error()
-      setResendCooldown(30)
-      return true
-    } catch {
-      setFieldError('Failed to send verification code. Please check the address and try again.')
-      return false
-    } finally {
-      setOtpSending(false)
-    }
-  }, [])
-
-  const verifyOtp = useCallback(
-    async (digits?: string[]) => {
-      const d = digits ?? otpDigits
-      const code = d.join('')
-      if (code.length < 6) {
-        setOtpError('Please enter all 6 digits')
-        return
-      }
-      setOtpVerifying(true)
-      setOtpError('')
-      try {
-        const res = await fetch('/api/otp/verify/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: form.email, code, form_type: 'solicitor' }),
-        })
-        const data = await res.json()
-        if (data.success) {
-          trackEvent('solicitor_email_verified')
-          advance()
-        } else {
-          setOtpError(data.message || 'Incorrect code. Please try again.')
-          setOtpDigits(['', '', '', '', '', ''])
-          otpRefs.current[0]?.focus()
-        }
-      } catch {
-        setOtpError('Verification failed. Please check your network and try again.')
-      } finally {
-        setOtpVerifying(false)
-      }
-    },
-    [otpDigits, form.email, advance]
-  )
-
-  const resendOtp = useCallback(async () => {
-    if (resendCooldown > 0) return
-    setOtpError('')
-    setOtpDigits(['', '', '', '', '', ''])
-    await sendOtp(form.email)
-    otpRefs.current[0]?.focus()
-  }, [resendCooldown, form.email, sendOtp])
-
-  const handleOtpChange = useCallback(
-    (index: number, value: string) => {
-      const digit = value.replace(/\D/g, '').slice(-1)
-      const next = [...otpDigits]
-      next[index] = digit
-      setOtpDigits(next)
-      setOtpError('')
-      if (digit && index < 5) otpRefs.current[index + 1]?.focus()
-      if (digit && index === 5 && next.every((d) => d)) setTimeout(() => verifyOtp(next), 80)
-    },
-    [otpDigits, verifyOtp]
-  )
-
-  const handleOtpKeyDown = useCallback(
-    (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Backspace' && !otpDigits[index] && index > 0)
-        otpRefs.current[index - 1]?.focus()
-      if (e.key === 'Enter' && otpDigits.join('').length === 6) verifyOtp()
-    },
-    [otpDigits, verifyOtp]
-  )
-
-  const handleOtpPaste = useCallback(
-    (e: React.ClipboardEvent<HTMLDivElement>) => {
-      e.preventDefault()
-      const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6)
-      const next = ['', '', '', '', '', '']
-      pasted.split('').forEach((d, i) => {
-        next[i] = d
-      })
-      setOtpDigits(next)
-      otpRefs.current[Math.min(pasted.length, 5)]?.focus()
-      if (pasted.length === 6) setTimeout(() => verifyOtp(next), 80)
-    },
-    [verifyOtp]
-  )
-
-  // ── Per-Slide Validation & Advancement ────────────────────────────────────
-  const handleNext = useCallback(async () => {
+  // ── Step 1 Validation & Advancement ────────────────────────────────────────
+  const handleStep1Next = useCallback(() => {
     if (advancingRef.current) return
     advancingRef.current = true
     setFieldError('')
-    const id = currentSlide.id
-    if (id === 'firmName') {
-      if (!form.firmName.trim()) { advancingRef.current = false; setFieldError('Please enter your firm name'); return }
-      advance()
-    } else if (id === 'contactName') {
-      if (!form.contactName.trim()) { advancingRef.current = false; setFieldError('Please enter your name'); return }
-      advance()
-    } else if (id === 'email') {
-      if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-        advancingRef.current = false; setFieldError('Please enter a valid work email address'); return
-      }
-      const ok = await sendOtp(form.email)
-      if (ok) advance()
-      else advancingRef.current = false
-    } else if (id === 'phone') {
-      advance()
-    } else if (id === 'officePostcode') {
-      if (!officePostcodeValid || !form.office_postcode.trim()) {
-        advancingRef.current = false; setFieldError('Please enter a valid UK postcode to continue')
-        return
-      }
-      advance()
-    } else {
-      advancingRef.current = false
-    }
-  }, [currentSlide.id, form, advance, sendOtp, officePostcodeValid])
 
+    if (!officePostcodeValid || !form.office_postcode.trim()) {
+      advancingRef.current = false
+      setFieldError('Please enter a valid UK office postcode to continue.')
+      return
+    }
+    if (form.coverage_radius_miles === undefined) {
+      advancingRef.current = false
+      setFieldError('Please select your preferred coverage radius.')
+      return
+    }
+    if (!form.firmName.trim()) {
+      advancingRef.current = false
+      setFieldError('Please enter your firm name.')
+      return
+    }
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      advancingRef.current = false
+      setFieldError('Please enter a valid work email address.')
+      return
+    }
+
+    advance()
+  }, [form, officePostcodeValid, advance])
+
+  // ── Step 2 Submission ──────────────────────────────────────────────────────
   const submitApplication = useCallback(async () => {
-    setSubmitting(true)
     setFieldError('')
+    if (!form.contactName.trim()) {
+      setFieldError('Please enter the partner or designated fee earner name.')
+      return
+    }
+    if (!/^\d{5,7}$/.test(form.sra_number.trim())) {
+      setFieldError('Please enter a valid 5 to 7 digit SRA firm number.')
+      return
+    }
+    if (!form.fee_shield_agreed) {
+      setFieldError('Please confirm the SC-B-024 Fee Shield and SRA Rule 5.1 partner terms.')
+      return
+    }
+
+    setSubmitting(true)
     try {
       const res = await fetch('/api/solicitor-application/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firm_name:             form.firmName,
-          contact_name:          form.contactName,
-          email:                 form.email,
-          phone:                 form.phone || null,
+          firm_name:             form.firmName.trim(),
+          contact_name:          form.contactName.trim(),
+          email:                 form.email.trim(),
+          phone:                 form.phone.trim() || null,
           office_postcode:       form.office_postcode,
           office_lat:            form.office_lat,
           office_lng:            form.office_lng,
           office_region:         form.office_region,
-          coverage_radius_miles: form.coverage_radius_miles,
+          coverage_radius_miles: form.coverage_radius_miles ?? null,
+          sra_number:            form.sra_number.trim(),
           sra_confirmed:         true,
+          fee_shield_agreed:     form.fee_shield_agreed,
         }),
       })
       if (!res.ok) {
@@ -432,7 +281,11 @@ export default function ForSolicitorsClient() {
         try { const d = await res.json(); detail = d.detail || d.error || '' } catch {}
         throw new Error(detail)
       }
-      trackEvent('solicitor_application_submitted', { firm: form.firmName })
+      trackEvent('solicitor_application_submitted', {
+        coverage_radius: form.coverage_radius_miles ?? 'national',
+        has_district: Boolean(form.office_region),
+        source: entrySource,
+      })
       advance()
     } catch (err: unknown) {
       const detail = err instanceof Error && err.message ? ` (${err.message})` : ''
@@ -442,30 +295,16 @@ export default function ForSolicitorsClient() {
     } finally {
       setSubmitting(false)
     }
-  }, [form, advance])
+  }, [form, entrySource, advance])
 
-  const updateField = useCallback((field: keyof FormData, value: string) => {
+  const updateField = useCallback(<K extends keyof FormData>(field: K, value: FormData[K]) => {
     setFieldError('')
     setForm((f) => ({ ...f, [field]: value }))
   }, [])
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (
-        e.key === 'Enter' &&
-        !['otp', 'sra', 'welcome', 'success', 'officePostcode', 'coverageRadius'].includes(currentSlide.id)
-      ) {
-        e.preventDefault()
-        handleNext()
-      }
-    },
-    [currentSlide.id, handleNext]
-  )
-
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
     <div
-      onKeyDown={handleKeyDown}
       style={{
         background: C.bg,
         minHeight: '100vh',
@@ -478,6 +317,7 @@ export default function ForSolicitorsClient() {
     >
       {/* ── Top Header Navigation ────────────────────────────────────────── */}
       <header
+        className="px-4 sm:px-6"
         style={{
           position: 'sticky',
           top: 0,
@@ -491,14 +331,14 @@ export default function ForSolicitorsClient() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '0 24px',
+          gap: 12,
           zIndex: 200,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <a
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
+          <Link
             href="/"
-            style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none', flexShrink: 0 }}
           >
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <rect x="1" y="1" width="20" height="20" rx="4" stroke="#D9603B" strokeWidth="1.6" />
@@ -514,9 +354,10 @@ export default function ForSolicitorsClient() {
               <span style={{ color: '#D9603B' }}>Settlement</span>
               <span style={{ color: '#0B1F3A' }}>Check</span>
             </span>
-          </a>
+          </Link>
 
           <span
+            className="hidden sm:inline-block"
             style={{
               fontSize: 12,
               fontWeight: 600,
@@ -527,6 +368,7 @@ export default function ForSolicitorsClient() {
               padding: '3px 9px',
               borderRadius: 4,
               border: `1px solid ${C.border}`,
+              whiteSpace: 'nowrap',
             }}
           >
             Solicitor Panel Portal
@@ -535,16 +377,16 @@ export default function ForSolicitorsClient() {
 
         {/* Header Right Action */}
         {slideIndex === 0 ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
             <button
               onClick={() => startApplicationFromHero()}
+              className="px-3 py-2 text-xs sm:px-4 sm:py-2.5 sm:text-[13px] whitespace-nowrap"
               style={{
                 background: C.navy,
                 color: '#fff',
                 border: 'none',
                 borderRadius: 7,
-                padding: '9px 18px',
-                fontSize: 13,
+                minHeight: 44,
                 fontWeight: 600,
                 fontFamily: SANS,
                 cursor: 'pointer',
@@ -566,7 +408,8 @@ export default function ForSolicitorsClient() {
               background: C.bgCard,
               border: `1px solid ${C.border}`,
               borderRadius: 6,
-              padding: '7px 14px',
+              padding: '8px 14px',
+              minHeight: 44,
               color: C.navy,
               cursor: 'pointer',
               fontSize: 13,
@@ -576,6 +419,7 @@ export default function ForSolicitorsClient() {
               gap: 6,
               fontFamily: SANS,
               transition: 'border-color 0.15s ease',
+              flexShrink: 0,
             }}
           >
             <svg
@@ -619,17 +463,17 @@ export default function ForSolicitorsClient() {
         /* Full-Width Attention Economy Sales Page */
         <SolicitorSalesPage onStartApplication={startApplicationFromHero} />
       ) : (
-        /* Multi-Step Application Wizard */
+        /* 2-Step Progressive Application Wizard */
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'center',
             minHeight: 'calc(100vh - 120px)',
-            padding: '50px 24px 80px',
+            padding: '32px 16px 72px',
           }}
         >
-          <div style={{ width: '100%', maxWidth: 580, position: 'relative' }}>
+          <div style={{ width: '100%', maxWidth: 600, position: 'relative' }}>
             <AnimatePresence mode="wait" custom={dir}>
               <motion.div
                 key={currentSlide.id}
@@ -641,204 +485,49 @@ export default function ForSolicitorsClient() {
                 transition={slideTrans}
                 style={{ width: '100%' }}
               >
-                {currentSlide.inputField && (
-                  <TextInputSlide
-                    question={currentSlide.question!}
-                    hint={currentSlide.hint}
-                    value={form[currentSlide.inputField]}
-                    type={currentSlide.type || 'text'}
-                    placeholder={currentSlide.placeholder}
-                    optional={currentSlide.optional}
-                    onChange={(v) => updateField(currentSlide.inputField!, v)}
-                    onNext={handleNext}
+                {currentSlide.id === 'step1' && (
+                  <Step1TerritorySlide
+                    form={form}
+                    officePostcodeValid={officePostcodeValid}
                     error={fieldError}
-                    inputRef={inputRef}
-                    loading={otpSending}
-                  />
-                )}
-                {currentSlide.id === 'otp' && (
-                  <OtpSlide
-                    email={form.email}
-                    digits={otpDigits}
-                    error={otpError}
-                    verifying={otpVerifying}
-                    resendCooldown={resendCooldown}
-                    resending={otpSending}
-                    onDigitChange={handleOtpChange}
-                    onKeyDown={handleOtpKeyDown}
-                    onPaste={handleOtpPaste}
-                    onVerify={() => verifyOtp()}
-                    onResend={resendOtp}
-                    otpRefs={otpRefs}
-                  />
-                )}
-                {currentSlide.id === 'officePostcode' && (
-                  <div>
-                    <h2
-                      style={{
-                        color: C.navy,
-                        fontSize: 'clamp(26px, 4.5vw, 36px)',
-                        fontWeight: 700,
-                        letterSpacing: '-0.025em',
-                        lineHeight: 1.2,
-                        margin: '0 0 8px',
-                        fontFamily: SERIF,
-                      }}
-                    >
-                      What is your office postcode?
-                    </h2>
-                    <p
-                      style={{
-                        color: C.muted,
-                        fontSize: 15,
-                        margin: '0 0 28px',
-                        lineHeight: 1.55,
-                        fontFamily: SANS,
-                      }}
-                    >
-                      We use your registered office location to route local employee instructions to your fee earners.
-                    </p>
-                    <PostcodeInput
-                      value={form.office_postcode}
-                      onChange={(v) => {
-                        setFieldError('')
+                    onPostcodeChange={(v) => {
+                      setFieldError('')
+                      setOfficePostcodeValid(false)
+                      setForm((f) => ({ ...f, office_postcode: v, office_lat: null, office_lng: null, office_region: '' }))
+                    }}
+                    onPostcodeValidated={(lookup: PostcodeLookup | null) => {
+                      if (lookup) {
+                        setForm((f) => ({
+                          ...f,
+                          office_postcode: lookup.postcode,
+                          office_lat:      lookup.latitude,
+                          office_lng:      lookup.longitude,
+                          office_region:   lookup.admin_district,
+                        }))
+                        setOfficePostcodeValid(true)
+                      } else {
                         setOfficePostcodeValid(false)
-                        setForm((f) => ({ ...f, office_postcode: v, office_lat: null, office_lng: null, office_region: '' }))
-                      }}
-                      onValidated={(lookup: PostcodeLookup | null) => {
-                        if (lookup) {
-                          setForm((f) => ({
-                            ...f,
-                            office_postcode: lookup.postcode,
-                            office_lat:      lookup.latitude,
-                            office_lng:      lookup.longitude,
-                            office_region:   lookup.admin_district,
-                          }))
-                          setOfficePostcodeValid(true)
-                        } else {
-                          setOfficePostcodeValid(false)
-                        }
-                        setFieldError('')
-                      }}
-                      inputRef={inputRef}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') { e.preventDefault(); handleNext() }
-                      }}
-                    />
-                    {fieldError && (
-                      <p style={{ color: C.error, fontSize: 13, margin: '6px 0 0', fontFamily: SANS }}>{fieldError}</p>
-                    )}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 24 }}>
-                      <button
-                        onClick={handleNext}
-                        disabled={!officePostcodeValid}
-                        style={{
-                          background: C.accent,
-                          border: 'none',
-                          borderRadius: 8,
-                          padding: '13px 28px',
-                          color: '#fff',
-                          fontSize: 15,
-                          fontWeight: 600,
-                          cursor: officePostcodeValid ? 'pointer' : 'not-allowed',
-                          opacity: officePostcodeValid ? 1 : 0.45,
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 8,
-                          fontFamily: SANS,
-                          boxShadow: officePostcodeValid ? '0 2px 8px rgba(217,96,59,0.25)' : 'none',
-                        }}
-                        onMouseEnter={(e) => { if (officePostcodeValid) e.currentTarget.style.background = C.accentHover }}
-                        onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
-                      >
-                        Continue
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                      </button>
-                      <span style={{ color: C.borderStrong, fontSize: 12, fontFamily: SANS }}>
-                        press{' '}
-                        <kbd style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 4, padding: '2px 6px', fontFamily: SANS, fontSize: 11, color: C.muted }}>
-                          Enter
-                        </kbd>
-                      </span>
-                    </div>
-                  </div>
+                      }
+                      setFieldError('')
+                    }}
+                    onSelectRadius={(radius) => updateField('coverage_radius_miles', radius)}
+                    onUpdateField={(field, val) => updateField(field, val)}
+                    onNext={handleStep1Next}
+                  />
                 )}
 
-                {currentSlide.id === 'coverageRadius' && (
-                  <div>
-                    <h2
-                      style={{
-                        color: C.navy,
-                        fontSize: 'clamp(26px, 4.5vw, 36px)',
-                        fontWeight: 700,
-                        letterSpacing: '-0.025em',
-                        lineHeight: 1.2,
-                        margin: '0 0 8px',
-                        fontFamily: SERIF,
-                      }}
-                    >
-                      Select your exclusive coverage area
-                    </h2>
-                    <p style={{ color: C.muted, fontSize: 15, margin: '0 0 28px', lineHeight: 1.55, fontFamily: SANS }}>
-                      Radius measured from {form.office_postcode}. You receive exclusive routing for matters originating within this territory.
-                    </p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                      {[
-                        { label: 'Within 25 miles (Local city / county)', value: 25 },
-                        { label: 'Within 50 miles (Regional hub)', value: 50 },
-                        { label: 'Within 100 miles (Multi-county practice)', value: 100 },
-                        { label: 'National (England & Wales remote sign-off capability)', value: null },
-                      ].map((opt) => {
-                        const selected = form.coverage_radius_miles === opt.value && opt.value !== null
-                        return (
-                          <button
-                            key={opt.label}
-                            type="button"
-                            onClick={() => {
-                              setForm((f) => ({ ...f, coverage_radius_miles: opt.value }))
-                              setTimeout(() => advance(), 220)
-                            }}
-                            style={{
-                              width: '100%',
-                              minHeight: 52,
-                              padding: '14px 20px',
-                              textAlign: 'left',
-                              border: `1.5px solid ${selected ? C.navy : C.border}`,
-                              borderRadius: 10,
-                              fontSize: 15,
-                              fontFamily: SANS,
-                              fontWeight: selected ? 600 : 400,
-                              cursor: 'pointer',
-                              background: selected ? C.navy : C.bgCard,
-                              color: selected ? '#fff' : C.navy,
-                              transition: 'all 120ms ease',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'space-between',
-                            }}
-                          >
-                            <span>{opt.label}</span>
-                            <span style={{ fontSize: 18, color: selected ? '#fff' : C.muted }}>→</span>
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {currentSlide.id === 'sra' && (
-                  <SraSlide
-                    firmName={form.firmName}
+                {currentSlide.id === 'step2' && (
+                  <Step2ComplianceSlide
+                    form={form}
                     submitting={submitting}
                     error={fieldError}
-                    onConfirm={submitApplication}
+                    onUpdateField={(field, val) => updateField(field, val)}
+                    onSubmit={submitApplication}
                   />
                 )}
 
                 {currentSlide.id === 'success' && (
-                  <SuccessSlide name={form.contactName} />
+                  <SuccessSlide name={form.contactName} email={form.email} />
                 )}
               </motion.div>
             </AnimatePresence>
@@ -854,11 +543,24 @@ interface SalesPageProps {
   onStartApplication: (postcode?: string, lookup?: PostcodeLookup | null) => void
 }
 
+interface SolicitorDemandResult {
+  postcode: string
+  admin_district: string
+  region: string | null
+  latitude: number
+  longitude: number
+  radiusMiles: number
+  territoryAvailable: boolean
+  statusMessage: string
+  activeDemandCount?: number
+}
+
 function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
   const [postcodeCheck, setPostcodeCheck] = useState('')
-  const [lookupResult, setLookupResult] = useState<PostcodeLookup | null>(null)
+  const [demandResult, setDemandResult] = useState<SolicitorDemandResult | null>(null)
   const [checkingPostcode, setCheckingPostcode] = useState(false)
   const [postcodeStatus, setPostcodeStatus] = useState<'idle' | 'available' | 'invalid'>('idle')
+  const [postcodeError, setPostcodeError] = useState('')
 
   // Lead Dossier interactive inspector state
   const [activeDossierTab, setActiveDossierTab] = useState<'director' | 'manager' | 'redundancy'>('director')
@@ -868,17 +570,38 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
 
   const handleQuickPostcodeCheck = async () => {
     if (!isPlausibleUkPostcode(postcodeCheck)) {
+      setPostcodeError('Please enter a valid UK postcode format (e.g. SW1A 1AA or M1 1AE).')
       setPostcodeStatus('invalid')
       return
     }
     setCheckingPostcode(true)
-    const res = await lookupPostcode(postcodeCheck)
-    setCheckingPostcode(false)
-    if (res) {
-      setLookupResult(res)
-      setPostcodeStatus('available')
-    } else {
+    setPostcodeError('')
+    try {
+      const res = await fetch(
+        `/api/solicitor-demand/?postcode=${encodeURIComponent(postcodeCheck.trim())}`
+      )
+      const data = await res.json().catch(() => null)
+      if (res.ok && data) {
+        setDemandResult(data as SolicitorDemandResult)
+        setPostcodeStatus('available')
+        trackEvent('solicitor_postcode_checked', {
+          district: data.admin_district || 'unknown',
+          territory_available: Boolean(data.territoryAvailable),
+          has_k_anon_demand: typeof data.activeDemandCount === 'number',
+        })
+      } else {
+        setDemandResult(null)
+        setPostcodeError(
+          data?.error || 'Please enter a valid UK postcode format (e.g. SW1A 1AA or M1 1AE).'
+        )
+        setPostcodeStatus('invalid')
+      }
+    } catch {
+      setDemandResult(null)
+      setPostcodeError('Unable to check postcode availability right now. Please try again.')
       setPostcodeStatus('invalid')
+    } finally {
+      setCheckingPostcode(false)
     }
   }
 
@@ -940,7 +663,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
   const baselineEmployerFee = monthlyIntros * 500
 
   return (
-    <div style={{ maxWidth: 1160, margin: '0 auto', padding: '40px 24px 100px' }}>
+    <div className="px-4 sm:px-6" style={{ maxWidth: 1160, margin: '0 auto', paddingTop: 40, paddingBottom: 100 }}>
 
       {/* ── 1. ATTENTION HOOK HERO SECTION ───────────────────────────────── */}
       <section id="contact" style={{ textAlign: 'center', padding: '36px 0 56px', borderBottom: `1px solid ${C.border}` }}>
@@ -953,8 +676,11 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             background: C.bgTint,
             border: `1px solid ${C.borderStrong}`,
             borderRadius: 30,
-            padding: '6px 16px',
+            padding: '6px 14px',
             marginBottom: 24,
+            maxWidth: '100%',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
           }}
         >
           <span
@@ -1026,7 +752,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             gap: 8,
           }}
         >
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             <input
               type="text"
               value={postcodeCheck}
@@ -1040,12 +766,13 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
                   handleQuickPostcodeCheck()
                 }
               }}
-              placeholder="Enter your office postcode (e.g. M2 5PF, EC2M 4PL)"
+              placeholder="Office postcode (e.g. M2 5PF)"
               style={{
-                flex: 1,
+                flex: '1 1 200px',
+                minWidth: 0,
                 border: 'none',
                 outline: 'none',
-                padding: '12px 16px',
+                padding: '12px 14px',
                 fontSize: 15,
                 fontFamily: SANS,
                 color: C.navy,
@@ -1057,6 +784,8 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               onClick={handleQuickPostcodeCheck}
               disabled={checkingPostcode || !postcodeCheck.trim()}
               style={{
+                flex: '1 1 auto',
+                minHeight: 44,
                 background: C.navy,
                 color: '#fff',
                 border: 'none',
@@ -1076,94 +805,142 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             </button>
           </div>
 
-          {postcodeStatus === 'available' && lookupResult && (
-            <motion.div
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              style={{
-                background: C.successLight,
-                border: `1px solid ${C.success}40`,
-                borderRadius: 8,
-                padding: '12px 16px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: 12,
-              }}
-            >
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ color: C.success, fontSize: 13, fontWeight: 700, fontFamily: SANS }}>
-                  ✓ Territory Open for {lookupResult.admin_district || lookupResult.postcode}
-                </div>
-                <div style={{ color: C.muted, fontSize: 12, fontFamily: SANS }}>
-                  Exclusive panel allocation available for SRA-regulated employment solicitors in this sector.
-                </div>
-              </div>
-              <button
-                onClick={() => onStartApplication(lookupResult.postcode, lookupResult)}
+          {postcodeStatus === 'available' && demandResult && (() => {
+            const districtLabel = demandResult.admin_district || demandResult.postcode
+            const hasKAnonDemand =
+              typeof demandResult.activeDemandCount === 'number' &&
+              demandResult.activeDemandCount >= 3
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
                 style={{
-                  background: C.accent,
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: 6,
-                  padding: '8px 16px',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  fontFamily: SANS,
+                  background: C.successLight,
+                  border: `1px solid ${C.success}30`,
+                  borderRadius: 8,
+                  padding: '14px 16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: 12,
                 }}
               >
-                Claim Territory →
-              </button>
-            </motion.div>
-          )}
+                <div style={{ textAlign: 'left', flex: '1 1 240px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 4 }}>
+                    <span style={{ color: C.navy, fontSize: 14, fontWeight: 700, fontFamily: SANS }}>
+                      ✓ {demandResult.territoryAvailable ? `Territory Open for ${districtLabel}` : `Panel Active in ${districtLabel}`}
+                    </span>
+                    {demandResult.region && (
+                      <span
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 600,
+                          color: C.navy,
+                          background: '#fff',
+                          border: `1px solid ${C.border}`,
+                          borderRadius: 999,
+                          padding: '2px 8px',
+                          fontFamily: SANS,
+                        }}
+                      >
+                        {demandResult.region}
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ color: C.muted, fontSize: 12, fontFamily: SANS, lineHeight: 1.5 }}>
+                    {hasKAnonDemand ? (
+                      <>
+                        <strong style={{ color: C.navy }}>{demandResult.activeDemandCount} verified employee enquiries</strong>{' '}
+                        within {demandResult.radiusMiles} miles (last 30 days) · {demandResult.statusMessage}.
+                      </>
+                    ) : (
+                      <>
+                        {demandResult.statusMessage} · SRA-regulated employment firms.
+                      </>
+                    )}
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    onStartApplication(demandResult.postcode, {
+                      postcode: demandResult.postcode,
+                      latitude: demandResult.latitude,
+                      longitude: demandResult.longitude,
+                      region: demandResult.region,
+                      admin_district: demandResult.admin_district,
+                      country: 'United Kingdom',
+                    })
+                  }
+                  style={{
+                    minHeight: 44,
+                    background: C.accent,
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: 8,
+                    padding: '10px 18px',
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    fontFamily: SANS,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  Claim {districtLabel} Territory →
+                </button>
+              </motion.div>
+            )
+          })()}
 
           {postcodeStatus === 'invalid' && (
             <div style={{ color: C.error, fontSize: 12, textAlign: 'left', padding: '4px 16px' }}>
-              Please enter a valid UK postcode format (e.g. SW1A 1AA or M1 1AE).
+              {postcodeError || 'Please enter a valid UK postcode format (e.g. SW1A 1AA or M1 1AE).'}
             </div>
           )}
         </div>
 
-        {/* Hero CTAs */}
+        {/* Hero CTAs — hide generic Coral CTA once postcode result shows its own primary Coral CTA */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: 14, flexWrap: 'wrap', marginBottom: 28 }}>
-          <button
-            onClick={() => onStartApplication()}
-            style={{
-              background: C.accent,
-              color: '#fff',
-              border: 'none',
-              borderRadius: 8,
-              padding: '16px 36px',
-              fontSize: 16,
-              fontWeight: 600,
-              cursor: 'pointer',
-              letterSpacing: '-0.01em',
-              fontFamily: SANS,
-              boxShadow: '0 4px 18px rgba(217,96,59,0.3)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-              transition: 'background 0.15s ease',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = C.accentHover }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
-          >
-            Apply for Panel Exclusivity
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
+          {postcodeStatus !== 'available' && (
+            <button
+              onClick={() => onStartApplication()}
+              style={{
+                minHeight: 48,
+                background: C.accent,
+                color: '#fff',
+                border: 'none',
+                borderRadius: 8,
+                padding: '16px 36px',
+                fontSize: 16,
+                fontWeight: 600,
+                cursor: 'pointer',
+                letterSpacing: '-0.01em',
+                fontFamily: SANS,
+                boxShadow: '0 4px 18px rgba(217,96,59,0.3)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 10,
+                transition: 'background 0.15s ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = C.accentHover }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
+            >
+              Apply for Panel Exclusivity
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
 
           <a
             href="#lead-dossier"
             style={{
+              minHeight: 44,
               background: C.bgCard,
               color: C.navy,
               border: `1.5px solid ${C.borderStrong}`,
               borderRadius: 8,
-              padding: '16px 28px',
+              padding: '14px 24px',
               fontSize: 15,
               fontWeight: 600,
               textDecoration: 'none',
@@ -1196,7 +973,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             },
             {
               title: 'Employer Fee Contributions',
-              desc: 'Section 203 ERA 1996 legal fee contributions (£500–£1,500+ VAT) paid direct to you upon completion.',
+              desc: 'Capped employer commercial contributions (typically £350 to £750+ + VAT, higher for senior exits) paid direct to you upon completion.',
             },
             {
               title: 'Complete Statutory Dossier',
@@ -1418,6 +1195,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
                 key={tab.id}
                 onClick={() => setActiveDossierTab(tab.id as any)}
                 style={{
+                  minHeight: 44,
                   background: isActive ? C.navy : C.bgCard,
                   color: isActive ? '#fff' : C.navy,
                   border: `1.5px solid ${isActive ? C.navy : C.borderStrong}`,
@@ -1594,14 +1372,17 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
                 <span style={{ fontSize: 12, color: C.muted }}>{currentDossier.urgency} · {currentDossier.readiness}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                <a
+                <Link
                   href="/portal/?demo=true"
                   style={{
+                    minHeight: 44,
+                    display: 'inline-flex',
+                    alignItems: 'center',
                     background: C.bgCard,
                     color: C.navy,
                     border: `1.5px solid ${C.borderStrong}`,
                     borderRadius: 6,
-                    padding: '8px 14px',
+                    padding: '10px 14px',
                     fontSize: 13,
                     fontWeight: 600,
                     textDecoration: 'none',
@@ -1609,15 +1390,18 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
                   }}
                 >
                   Preview Live Partner Portal →
-                </a>
+                </Link>
                 <button
                   onClick={() => onStartApplication()}
                   style={{
+                    minHeight: 44,
+                    display: 'inline-flex',
+                    alignItems: 'center',
                     background: C.navy,
                     color: '#fff',
                     border: 'none',
                     borderRadius: 6,
-                    padding: '9px 18px',
+                    padding: '10px 18px',
                     fontSize: 13,
                     fontWeight: 600,
                     cursor: 'pointer',
@@ -1660,19 +1444,19 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
             Partner Capacity &amp; Revenue Modelling
           </h2>
           <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.6, margin: '0 0 20px', fontFamily: SANS }}>
-            To ensure an enforceable waiver under Section 203(3) ERA 1996, employers standardly fund independent advice (£500 to £1,500 + VAT). Model your firm&apos;s monthly instruction capacity with zero software fees or upfront retainers.
+            While Section 203(3) ERA 1996 requires independent legal advice for a valid waiver, UK employers standardly provide a capped commercial contribution (typically £350 to £750+ + VAT, and higher for senior exits) paid directly to your firm upon completion of the agreement. Model your firm&apos;s monthly instruction capacity with zero software fees or upfront retainers.
           </p>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#F0F5FA', border: '1px solid #C4D8EC', padding: '6px 14px', borderRadius: 999, fontSize: 12, color: C.navy, fontWeight: 600, fontFamily: SANS }}>
-            <span style={{ color: C.accent }}>✓</span> Zero Employee Fee Standard: Partner firms agree to zero out-of-pocket charges to employees for standard statutory sign-offs.
+            <span style={{ color: C.accent }}>✓</span> Zero Employee Fee Standard: Applies to completed standard Section 203(3) statutory reviews where the employer contribution is £500 + VAT or higher.
           </div>
         </div>
 
         <div
+          className="px-5 py-7 sm:p-9"
           style={{
             background: C.bgCard,
             border: `1.5px solid ${C.border}`,
             borderRadius: 14,
-            padding: '36px 32px',
             maxWidth: 880,
             margin: '0 auto',
             boxShadow: '0 8px 24px rgba(11,31,58,0.04)',
@@ -1751,7 +1535,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
           </div>
 
           <p style={{ fontSize: 12, color: C.muted, lineHeight: 1.5, margin: '0 0 28px', textAlign: 'center', fontFamily: SANS }}>
-            * Models a standard Section 203 review and adviser certificate execution at the customary £500 + VAT employer contribution floor. Any fee uplift negotiated with the employer or extended representation agreed with the client represents additional billable income for your firm. Bespoke commercial arrangements and volume allocations are confirmed during onboarding based on practice capacity.
+            * Models a completed standard Section 203(3) review and adviser certificate execution at a £500 + VAT employer contribution floor. Any fee uplift negotiated with the employer, abortive work if an agreement does not complete, or extended representation agreed with the client remains governed by your firm&apos;s engagement terms. Bespoke commercial arrangements and volume allocations are confirmed during onboarding based on practice capacity.
           </p>
 
           <div style={{ textAlign: 'center' }}>
@@ -1781,7 +1565,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
             gap: 40,
             alignItems: 'center',
           }}
@@ -1888,6 +1672,102 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
         </div>
       </section>
 
+      {/* ── 5B. SRA COMPLIANCE & CONFLICT GUARANTEE ─────────────────────── */}
+      <section id="sra-compliance" style={{ padding: '64px 0', borderBottom: `1px solid ${C.border}` }}>
+        <div style={{ textAlign: 'center', maxWidth: 740, margin: '0 auto 40px' }}>
+          <span
+            style={{
+              color: C.accent,
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              fontFamily: SANS,
+            }}
+          >
+            COLP &amp; Regulatory Assurance
+          </span>
+          <h2
+            style={{
+              fontFamily: SERIF,
+              fontSize: 'clamp(28px, 4vw, 38px)',
+              fontWeight: 700,
+              lineHeight: 1.2,
+              color: C.navy,
+              margin: '8px 0 14px',
+            }}
+          >
+            SRA Compliance &amp; Conflict Guarantee
+          </h2>
+          <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.6, margin: 0, fontFamily: SANS }}>
+            Built for Compliance Officers for Legal Practice (COLPs) and employment partners requiring strict SRA Standards and Regulations alignment.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+            gap: 20,
+            maxWidth: 1020,
+            margin: '0 auto 24px',
+          }}
+        >
+          {[
+            {
+              tag: 'SRA Rule 5.1 & LASPO 2012',
+              title: 'Transparent Introducer Model',
+              desc: 'SettlementCheck operates strictly as an independent statutory calculator and transparent introducer platform. There is zero prohibited fee-sharing on client damages, and your instructed solicitor retains full professional independence under Section 203(3) ERA 1996.',
+            },
+            {
+              tag: 'Conflict Protection',
+              title: 'Zero-Penalty Conflict Re-Routing',
+              desc: 'If your firm\u2019s conflict check identifies an existing relationship with the employer, you can decline the instruction immediately with zero penalty. The matter is re-routed cleanly without affecting your territorial allocation.',
+            },
+            {
+              tag: 'Matter Filtering',
+              title: 'Configurable Minimum Fee & Tier Preferences',
+              desc: 'During onboarding, your practice can set preferred matter tiers, including minimum employer legal fee contributions (such as £500+ + VAT) and senior or director-level exit instructions.',
+            },
+          ].map((card) => (
+            <div
+              key={card.title}
+              style={{
+                background: C.bgCard,
+                border: `1px solid ${C.border}`,
+                borderRadius: 12,
+                padding: '24px 22px',
+              }}
+            >
+              <span
+                style={{
+                  display: 'inline-block',
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: C.accent,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  marginBottom: 8,
+                  fontFamily: SANS,
+                }}
+              >
+                {card.tag}
+              </span>
+              <h3 style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, color: C.navy, margin: '0 0 10px' }}>
+                {card.title}
+              </h3>
+              <p style={{ margin: 0, fontSize: 13.5, color: C.muted, lineHeight: 1.6, fontFamily: SANS }}>
+                {card.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p style={{ textAlign: 'center', fontSize: 12, color: C.muted, margin: 0, fontFamily: SANS }}>
+          UK GDPR Notice: Applicant firm and contact details are processed solely for SRA Digital Register verification, panel onboarding, and territorial routing.
+        </p>
+      </section>
+
       {/* ── 6. SOLICITOR FAQS (ACCORDION) ────────────────────────────────── */}
       <section style={{ padding: '64px 0', borderBottom: `1px solid ${C.border}` }}>
         <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 40px' }}>
@@ -1922,8 +1802,8 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
         <div style={{ maxWidth: 820, margin: '0 auto' }}>
           {[
             {
-              q: 'How does legal fee settlement work under Section 203?',
-              a: 'Under Section 203 of the Employment Rights Act 1996, an employee settlement agreement is only legally binding if the employee receives advice from an independent qualified adviser. UK employers universally cover this cost, typically contributing between £500 and £1,500 + VAT directly to your firm upon receipt of your adviser certificate and invoice.',
+              q: 'How do employer legal fee contributions work under Section 203(3)?',
+              a: 'While Section 203(3) ERA 1996 requires independent legal advice for a valid waiver, UK employers standardly provide a capped commercial contribution (typically £350 to £750+ + VAT, and higher for senior exits) paid directly to your firm upon completion of the agreement. For completed standard Section 203(3) statutory reviews where the employer contribution is £500 + VAT or higher, partner firms covenant not to bill the employee for any shortfall; abortive costs (if an employee declines to sign) or extended negotiation work remain governed by your firm\u2019s engagement terms.',
             },
             {
               q: 'Are introductions strictly exclusive to our firm?',
@@ -1988,11 +1868,11 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
       {/* ── 7. FINAL CONVERSION BANNER ───────────────────────────────────── */}
       <section style={{ textAlign: 'center', padding: '64px 0 20px' }}>
         <div
+          className="px-5 py-9 sm:px-8 sm:py-12"
           style={{
             background: C.bgCard,
             border: `2px solid ${C.borderStrong}`,
             borderRadius: 16,
-            padding: '48px 32px',
             maxWidth: 780,
             margin: '0 auto',
             boxShadow: '0 12px 36px rgba(11,31,58,0.06)',
@@ -2019,7 +1899,7 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
               fontFamily: SANS,
             }}
           >
-            Application takes under 3 minutes. Zero setup fees, zero monthly retainers, and full SRA compliance verification.
+            Register your practice in under 60 seconds. Zero setup fees, zero monthly retainers, and full SRA compliance verification.
           </p>
 
           <button
@@ -2061,41 +1941,94 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
 }
 
 // ── Application Form Sub-Components ───────────────────────────────────────────
-interface TextInputSlideProps {
-  question: string
-  hint?: string
-  value: string
-  type: string
-  placeholder?: string
-  optional?: boolean
-  onChange: (v: string) => void
-  onNext: () => void
-  error?: string
-  inputRef: React.RefObject<HTMLInputElement | null>
-  loading?: boolean
+const COVERAGE_OPTIONS: { label: string; value: number | null }[] = [
+  { label: 'Within 25 miles (Local city / county)', value: 25 },
+  { label: 'Within 50 miles (Regional hub)', value: 50 },
+  { label: 'Within 100 miles (Multi-county practice)', value: 100 },
+  { label: 'National (England & Wales remote sign-off capability)', value: null },
+]
+
+const inputStyle: React.CSSProperties = {
+  display: 'block',
+  width: '100%',
+  minHeight: 48,
+  padding: '11px 14px',
+  border: `1.5px solid ${C.borderStrong}`,
+  borderRadius: 8,
+  fontSize: 16,
+  color: C.navy,
+  background: C.bg,
+  outline: 'none',
+  fontFamily: SANS,
+  boxSizing: 'border-box',
+  transition: 'border-color 0.15s ease',
 }
 
-function TextInputSlide({
-  question,
-  hint,
-  value,
-  type,
-  placeholder,
-  optional,
-  onChange,
-  onNext,
-  error,
-  inputRef,
-  loading,
-}: TextInputSlideProps) {
-  const showSkip = optional && !value
+const labelStyle: React.CSSProperties = {
+  display: 'block',
+  fontSize: 13,
+  fontWeight: 700,
+  color: C.navy,
+  marginBottom: 6,
+  fontFamily: SANS,
+}
 
+interface Step1Props {
+  form: FormData
+  officePostcodeValid: boolean
+  error: string
+  onPostcodeChange: (v: string) => void
+  onPostcodeValidated: (lookup: PostcodeLookup | null) => void
+  onSelectRadius: (radius: number | null) => void
+  onUpdateField: <K extends keyof FormData>(field: K, val: FormData[K]) => void
+  onNext: () => void
+}
+
+function Step1TerritorySlide({
+  form,
+  officePostcodeValid,
+  error,
+  onPostcodeChange,
+  onPostcodeValidated,
+  onSelectRadius,
+  onUpdateField,
+  onNext,
+}: Step1Props) {
   return (
-    <div>
+    <div
+      style={{
+        background: C.bgCard,
+        border: `1.5px solid ${C.border}`,
+        borderRadius: 14,
+        padding: '28px 24px',
+        boxShadow: '0 8px 24px rgba(11,31,58,0.05)',
+      }}
+    >
+      <div
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 6,
+          background: C.bgTint,
+          border: `1px solid ${C.borderStrong}`,
+          borderRadius: 20,
+          padding: '4px 12px',
+          color: C.navy,
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: '0.05em',
+          textTransform: 'uppercase',
+          marginBottom: 14,
+          fontFamily: SANS,
+        }}
+      >
+        Step 1 · Territory &amp; Firm
+      </div>
+
       <h2
         style={{
           color: C.navy,
-          fontSize: 'clamp(26px, 4.5vw, 36px)',
+          fontSize: 'clamp(24px, 4.5vw, 32px)',
           fontWeight: 700,
           letterSpacing: '-0.025em',
           lineHeight: 1.2,
@@ -2103,300 +2036,179 @@ function TextInputSlide({
           fontFamily: SERIF,
         }}
       >
-        {question}
+        Claim your exclusive practice area
       </h2>
-      {hint && (
-        <p
-          style={{
-            color: C.muted,
-            fontSize: 15,
-            margin: '0 0 28px',
-            lineHeight: 1.55,
-            fontFamily: SANS,
-          }}
-        >
-          {hint}
-        </p>
-      )}
-      {!hint && <div style={{ height: 28 }} />}
-
-      <input
-        ref={inputRef}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault()
-            e.stopPropagation()
-            onNext()
-          }
-        }}
-        autoComplete="off"
-        spellCheck={false}
-        style={{
-          display: 'block',
-          width: '100%',
-          background: 'transparent',
-          border: 'none',
-          borderBottom: `2.5px solid ${value ? C.accent : C.borderStrong}`,
-          padding: '10px 0 14px',
-          fontSize: 'clamp(20px, 3.5vw, 28px)',
-          color: C.navy,
-          outline: 'none',
-          caretColor: C.accent,
-          letterSpacing: '-0.01em',
-          marginBottom: 8,
-          boxSizing: 'border-box',
-          transition: 'border-color 0.2s ease',
-          fontFamily: SANS,
-        }}
-        onFocus={(e) => { e.currentTarget.style.borderBottomColor = C.accent }}
-        onBlur={(e) => { e.currentTarget.style.borderBottomColor = value ? C.accent : C.borderStrong }}
-      />
-
-      {error && (
-        <p
-          style={{
-            color: C.error,
-            fontSize: 13,
-            margin: '0 0 16px',
-            fontFamily: SANS,
-            letterSpacing: '-0.01em',
-          }}
-        >
-          {error}
-        </p>
-      )}
-      {!error && <div style={{ height: 20 }} />}
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-        <button
-          onClick={onNext}
-          disabled={loading}
-          style={{
-            background: C.accent,
-            border: 'none',
-            borderRadius: 8,
-            padding: '13px 28px',
-            color: '#fff',
-            fontSize: 15,
-            fontWeight: 600,
-            cursor: loading ? 'not-allowed' : 'pointer',
-            opacity: loading ? 0.7 : 1,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            fontFamily: SANS,
-            letterSpacing: '-0.01em',
-            boxShadow: loading ? 'none' : '0 2px 8px rgba(217,96,59,0.25)',
-            transition: 'background 0.15s ease',
-          }}
-          onMouseEnter={(e) => { if (!loading) e.currentTarget.style.background = C.accentHover }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
-        >
-          {loading ? (
-            'Sending code...'
-          ) : showSkip ? (
-            'Skip'
-          ) : (
-            <>
-              OK
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </>
-          )}
-        </button>
-        <span style={{ color: C.borderStrong, fontSize: 12, fontFamily: SANS }}>
-          press{' '}
-          <kbd
-            style={{
-              background: C.bg,
-              border: `1px solid ${C.border}`,
-              borderRadius: 4,
-              padding: '2px 6px',
-              fontFamily: SANS,
-              fontSize: 11,
-              color: C.muted,
-            }}
-          >
-            Enter
-          </kbd>
-        </span>
-      </div>
-    </div>
-  )
-}
-
-interface OtpSlideProps {
-  email: string
-  digits: string[]
-  error: string
-  verifying: boolean
-  resendCooldown: number
-  resending: boolean
-  onDigitChange: (i: number, v: string) => void
-  onKeyDown: (i: number, e: React.KeyboardEvent<HTMLInputElement>) => void
-  onPaste: (e: React.ClipboardEvent<HTMLDivElement>) => void
-  onVerify: () => void
-  onResend: () => void
-  otpRefs: React.MutableRefObject<(HTMLInputElement | null)[]>
-}
-
-function OtpSlide({
-  email,
-  digits,
-  error,
-  verifying,
-  resendCooldown,
-  resending,
-  onDigitChange,
-  onKeyDown,
-  onPaste,
-  onVerify,
-  onResend,
-  otpRefs,
-}: OtpSlideProps) {
-  const filled = digits.every((d) => d !== '')
-
-  return (
-    <div>
-      <h2
-        style={{
-          color: C.navy,
-          fontSize: 'clamp(26px, 4.5vw, 36px)',
-          fontWeight: 700,
-          letterSpacing: '-0.025em',
-          lineHeight: 1.2,
-          margin: '0 0 10px',
-          fontFamily: SERIF,
-        }}
-      >
-        Check your work inbox
-      </h2>
-      <p
-        style={{
-          color: C.muted,
-          fontSize: 15,
-          margin: '0 0 32px',
-          lineHeight: 1.55,
-          fontFamily: SANS,
-        }}
-      >
-        We sent a 6-digit verification code to{' '}
-        <strong style={{ color: C.navy, fontWeight: 600 }}>{email}</strong>
+      <p style={{ color: C.muted, fontSize: 14, margin: '0 0 24px', lineHeight: 1.55, fontFamily: SANS }}>
+        Select your office location and coverage radius so we can route local employee instructions exclusively to your firm.
       </p>
 
-      <div onPaste={onPaste} style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
-        {digits.map((digit, i) => (
-          <input
-            key={i}
-            ref={(el) => { otpRefs.current[i] = el }}
-            type="text"
-            inputMode="numeric"
-            maxLength={1}
-            value={digit}
-            onChange={(e) => onDigitChange(i, e.target.value)}
-            onKeyDown={(e) => onKeyDown(i, e)}
-            aria-label={`Digit ${i + 1}`}
-            style={{
-              width: 'clamp(44px, 11vw, 56px)',
-              height: 'clamp(54px, 13vw, 66px)',
-              textAlign: 'center',
-              fontSize: 'clamp(22px, 5vw, 30px)',
-              fontWeight: 700,
-              color: C.navy,
-              background: digit ? C.accentLight : C.bgCard,
-              border: `2px solid ${digit ? C.accent : C.border}`,
-              borderRadius: 10,
-              outline: 'none',
-              caretColor: C.accent,
-              transition: 'all 0.15s ease',
-              fontVariantNumeric: 'tabular-nums',
-              fontFamily: SANS,
-              boxShadow: digit ? `0 0 0 3px ${C.accent}20` : 'none',
-            }}
-          />
-        ))}
+      {officePostcodeValid && form.office_region && (
+        <div
+          style={{
+            background: C.successLight,
+            border: '1px solid #C4D8EC',
+            borderRadius: 8,
+            padding: '10px 14px',
+            marginBottom: 20,
+            fontSize: 13,
+            fontWeight: 600,
+            color: C.navy,
+            fontFamily: SANS,
+          }}
+        >
+          ✓ Territory pre-selected: {form.office_region} ({form.office_postcode})
+        </div>
+      )}
+
+      {/* 1. Office Postcode */}
+      <div style={{ marginBottom: 22 }}>
+        <label style={labelStyle}>Office Postcode</label>
+        <PostcodeInput
+          value={form.office_postcode}
+          onChange={onPostcodeChange}
+          onValidated={onPostcodeValidated}
+          placeholder="e.g. M2 5PF"
+        />
+      </div>
+
+      {/* 2. Coverage Radius */}
+      <div style={{ marginBottom: 22 }}>
+        <label style={labelStyle}>Coverage Radius</label>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {COVERAGE_OPTIONS.map((opt) => {
+            const selected = form.coverage_radius_miles === opt.value
+            return (
+              <button
+                key={opt.label}
+                type="button"
+                onClick={() => onSelectRadius(opt.value)}
+                style={{
+                  width: '100%',
+                  minHeight: 48,
+                  padding: '12px 16px',
+                  textAlign: 'left',
+                  border: `1.5px solid ${selected ? C.navy : C.border}`,
+                  borderRadius: 8,
+                  fontSize: 14,
+                  fontFamily: SANS,
+                  fontWeight: selected ? 600 : 400,
+                  cursor: 'pointer',
+                  background: selected ? C.navy : C.bg,
+                  color: selected ? '#fff' : C.navy,
+                  transition: 'all 120ms ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: 10,
+                }}
+              >
+                <span>{opt.label}</span>
+                <span style={{ fontSize: 14, color: selected ? '#fff' : C.muted, flexShrink: 0 }}>
+                  {selected ? '✓' : ''}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* 3. Firm Name */}
+      <div style={{ marginBottom: 18 }}>
+        <label htmlFor="sc-firm-name" style={labelStyle}>
+          Firm Name
+        </label>
+        <input
+          id="sc-firm-name"
+          type="text"
+          value={form.firmName}
+          onChange={(e) => onUpdateField('firmName', e.target.value)}
+          placeholder="e.g. Apex Employment Law LLP"
+          autoComplete="organization"
+          style={inputStyle}
+        />
+      </div>
+
+      {/* 4. Work Email */}
+      <div style={{ marginBottom: 22 }}>
+        <label htmlFor="sc-work-email" style={labelStyle}>
+          Work Email
+        </label>
+        <input
+          id="sc-work-email"
+          type="email"
+          value={form.email}
+          onChange={(e) => onUpdateField('email', e.target.value)}
+          placeholder="e.g. eleanor@apexlaw.co.uk"
+          autoComplete="email"
+          style={inputStyle}
+        />
+        <p style={{ margin: '6px 0 0', fontSize: 12, color: C.muted, fontFamily: SANS }}>
+          We will send a one-click confirmation link after you submit, with no OTP code needed now.
+        </p>
       </div>
 
       {error && (
-        <p style={{ color: C.error, fontSize: 13, margin: '0 0 16px', fontFamily: SANS }}>
-          {error}
-        </p>
+        <div
+          style={{
+            background: '#FEF2F2',
+            border: '1px solid #FECACA',
+            borderRadius: 8,
+            padding: '10px 14px',
+            marginBottom: 18,
+          }}
+        >
+          <p style={{ color: C.error, fontSize: 13, margin: 0, fontFamily: SANS }}>{error}</p>
+        </div>
       )}
 
       <button
-        onClick={onVerify}
-        disabled={verifying || !filled}
+        type="button"
+        onClick={onNext}
         style={{
+          width: '100%',
+          minHeight: 48,
           background: C.accent,
           border: 'none',
           borderRadius: 8,
-          padding: '12px 26px',
+          padding: '14px 24px',
           color: '#fff',
           fontSize: 15,
           fontWeight: 600,
-          cursor: verifying || !filled ? 'not-allowed' : 'pointer',
-          opacity: verifying || !filled ? 0.5 : 1,
-          marginBottom: 20,
+          cursor: 'pointer',
           fontFamily: SANS,
-          letterSpacing: '-0.01em',
-          boxShadow: verifying || !filled ? 'none' : '0 2px 8px rgba(217,96,59,0.25)',
+          boxShadow: '0 4px 14px rgba(217,96,59,0.25)',
+          transition: 'background 0.15s ease',
         }}
+        onMouseEnter={(e) => { e.currentTarget.style.background = C.accentHover }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
       >
-        {verifying ? 'Verifying...' : 'Verify Email'}
+        Continue to Contact &amp; SRA Details →
       </button>
-
-      <div style={{ color: C.muted, fontSize: 13, fontFamily: SANS }}>
-        Didn&apos;t receive it?{' '}
-        <button
-          onClick={onResend}
-          disabled={resendCooldown > 0 || resending}
-          style={{
-            background: 'none',
-            border: 'none',
-            padding: 0,
-            color: resendCooldown > 0 ? C.borderStrong : C.accent,
-            cursor: resendCooldown > 0 ? 'default' : 'pointer',
-            fontSize: 13,
-            textDecoration: 'underline',
-            fontFamily: SANS,
-          }}
-        >
-          {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend code'}
-        </button>
-      </div>
     </div>
   )
 }
 
-interface SraSlideProps {
-  firmName: string
+interface Step2Props {
+  form: FormData
   submitting: boolean
   error: string
-  onConfirm: () => void
+  onUpdateField: <K extends keyof FormData>(field: K, val: FormData[K]) => void
+  onSubmit: () => void
 }
 
-function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
-  const [sraId, setSraId] = useState('568912')
-  const [feeShieldAgreed, setFeeShieldAgreed] = useState(true)
-
-  const isSraFormatValid = /^\d{5,7}$/.test(sraId.trim())
+function Step2ComplianceSlide({ form, submitting, error, onUpdateField, onSubmit }: Step2Props) {
+  const isSraFormatValid = /^\d{5,7}$/.test(form.sra_number.trim())
 
   return (
-    <div>
+    <div
+      style={{
+        background: C.bgCard,
+        border: `1.5px solid ${C.border}`,
+        borderRadius: 14,
+        padding: '28px 24px',
+        boxShadow: '0 8px 24px rgba(11,31,58,0.05)',
+      }}
+    >
       <div
         style={{
           display: 'inline-flex',
@@ -2407,127 +2219,144 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
           borderRadius: 20,
           padding: '4px 12px',
           color: C.navy,
-          fontSize: 12,
-          fontWeight: 600,
+          fontSize: 11,
+          fontWeight: 700,
           letterSpacing: '0.05em',
           textTransform: 'uppercase',
-          marginBottom: 20,
+          marginBottom: 14,
           fontFamily: SANS,
         }}
       >
-        Regulatory Verification &amp; Fee Shield
+        Step 2 · Contact &amp; SRA Compliance
       </div>
+
       <h2
         style={{
           color: C.navy,
-          fontSize: 'clamp(26px, 4.5vw, 36px)',
+          fontSize: 'clamp(24px, 4.5vw, 32px)',
           fontWeight: 700,
           letterSpacing: '-0.025em',
           lineHeight: 1.2,
-          margin: '0 0 16px',
+          margin: '0 0 8px',
           fontFamily: SERIF,
         }}
       >
-        SRA Register &amp; Fee Shield Commitment
+        Designated contact &amp; SRA registration
       </h2>
+      <p style={{ color: C.muted, fontSize: 14, margin: '0 0 24px', lineHeight: 1.55, fontFamily: SANS }}>
+        Final step for <strong>{form.firmName}</strong>. Confirm your SRA firm number and partner terms.
+      </p>
 
-      {/* SRA Register Lookup Box */}
-      <div
-        style={{
-          background: C.bgCard,
-          border: `1.5px solid ${C.border}`,
-          borderRadius: 12,
-          padding: '20px',
-          marginBottom: 20,
-          fontFamily: SANS,
-        }}
-      >
-        <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: C.navy, marginBottom: 8 }}>
-          SRA Digital Register ID / Firm Number
+      {/* 1. Contact Name */}
+      <div style={{ marginBottom: 18 }}>
+        <label htmlFor="sc-contact-name" style={labelStyle}>
+          Contact Name (Partner / Designated Fee Earner)
         </label>
-        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <input
+          id="sc-contact-name"
+          type="text"
+          value={form.contactName}
+          onChange={(e) => onUpdateField('contactName', e.target.value)}
+          placeholder="e.g. Eleanor Vance"
+          autoComplete="name"
+          style={inputStyle}
+        />
+      </div>
+
+      {/* 2. Direct Phone (optional) */}
+      <div style={{ marginBottom: 18 }}>
+        <label htmlFor="sc-direct-phone" style={labelStyle}>
+          Direct Telephone <span style={{ fontWeight: 400, color: C.muted }}>(optional)</span>
+        </label>
+        <input
+          id="sc-direct-phone"
+          type="tel"
+          value={form.phone}
+          onChange={(e) => onUpdateField('phone', e.target.value)}
+          placeholder="e.g. 020 7946 0192"
+          autoComplete="tel"
+          style={inputStyle}
+        />
+      </div>
+
+      {/* 3. SRA Firm Number */}
+      <div style={{ marginBottom: 20 }}>
+        <label htmlFor="sc-sra-number" style={labelStyle}>
+          SRA Firm Number
+        </label>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
           <input
+            id="sc-sra-number"
             type="text"
-            value={sraId}
-            onChange={(e) => setSraId(e.target.value)}
+            inputMode="numeric"
+            maxLength={7}
+            value={form.sra_number}
+            onChange={(e) => onUpdateField('sra_number', e.target.value.replace(/\D/g, '').slice(0, 7))}
             placeholder="e.g. 568912"
             style={{
-              flex: 1,
-              padding: '10px 14px',
-              border: `1px solid ${isSraFormatValid ? C.navy : C.border}`,
-              borderRadius: 8,
-              fontSize: 14,
+              ...inputStyle,
+              flex: '1 1 160px',
+              minWidth: 0,
               fontFamily: MONO,
-              color: C.navy,
-              background: C.bg,
+              borderColor: isSraFormatValid ? C.navy : C.borderStrong,
             }}
           />
           <div
             style={{
-              padding: '8px 12px',
-              borderRadius: 6,
-              background: isSraFormatValid ? '#F0F5FA' : '#FEF5F3',
+              padding: '10px 12px',
+              borderRadius: 8,
+              background: isSraFormatValid ? C.successLight : C.accentLight,
               border: `1px solid ${isSraFormatValid ? '#C4D8EC' : '#F3C4B8'}`,
-              fontSize: 11,
+              fontSize: 12,
               fontWeight: 600,
-              color: isSraFormatValid ? C.navy : C.accent,
+              color: isSraFormatValid ? C.navy : C.accentHover,
               whiteSpace: 'nowrap',
+              fontFamily: SANS,
             }}
           >
-            {isSraFormatValid ? '✓ SRA Register Format Verified' : 'Enter 5-7 digit SRA ID'}
+            {isSraFormatValid ? '✓ Valid 5–7 digit SRA format' : 'Enter 5–7 digit SRA number'}
           </div>
         </div>
-        <p style={{ margin: '8px 0 0', fontSize: 11, color: C.muted }}>
-          Validates against the Solicitors Regulation Authority Digital Register for England &amp; Wales.
+        <p style={{ margin: '6px 0 0', fontSize: 12, color: C.muted, fontFamily: SANS }}>
+          Checked manually against the SRA Digital Register within 1 business day.
         </p>
       </div>
 
-      {/* Guaranteed £0 Employee Fee Shield Covenant */}
+      {/* 4. Explicit Unchecked SC-B-024 Fee Shield + SRA 5.1 Consent */}
       <div
         style={{
-          background: '#F0F5FA',
+          background: C.successLight,
           border: '1.5px solid #C4D8EC',
-          borderRadius: 12,
-          padding: '20px',
-          marginBottom: 20,
+          borderRadius: 10,
+          padding: '16px',
+          marginBottom: 22,
           fontFamily: SANS,
         }}
       >
-        <label style={{ display: 'flex', alignItems: 'flex-start', gap: 12, cursor: 'pointer' }}>
+        <label
+          style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 12,
+            cursor: 'pointer',
+            minHeight: 44,
+          }}
+        >
           <input
             type="checkbox"
-            checked={feeShieldAgreed}
-            onChange={(e) => setFeeShieldAgreed(e.target.checked)}
-            style={{ marginTop: 3, accentColor: C.accent, width: 16, height: 16 }}
+            checked={form.fee_shield_agreed}
+            onChange={(e) => onUpdateField('fee_shield_agreed', e.target.checked)}
+            style={{ marginTop: 3, accentColor: C.accent, width: 18, height: 18, flexShrink: 0 }}
           />
           <div>
-            <span style={{ fontSize: 14, fontWeight: 700, color: C.navy, display: 'block', marginBottom: 4 }}>
-              Binding Covenant: Zero Employee Fee Standard (SC-B-024)
+            <span style={{ fontSize: 13, fontWeight: 700, color: C.navy, display: 'block', marginBottom: 4 }}>
+              Binding Covenant: Zero Employee Fee Standard (SC-B-024) &amp; SRA Rule 5.1 Partner Terms
             </span>
             <p style={{ margin: 0, fontSize: 12, color: C.muted, lineHeight: 1.55 }}>
-              We contractually covenant that for standard Section 203(3) Employment Rights Act 1996 statutory reviews where the employer provides a legal advice contribution of £500 + VAT or higher, our firm will never bill the employee for any fee shortfall or invoice them out-of-pocket.
+              We confirm our practice is SRA-regulated in England &amp; Wales, accepts SRA Rule 5.1 / LASPO 2012 transparency terms, and covenants that for completed standard Section 203(3) ERA 1996 statutory reviews where the employer contribution is £500 + VAT or higher, our firm will not bill the employee for any fee shortfall. Abortive fees (if an employee aborts or declines to sign) or extended negotiation work remain governed by our firm&apos;s engagement terms.
             </p>
           </div>
         </label>
-      </div>
-
-      {/* Zero Retainer & Commercial Onboarding Commitment */}
-      <div
-        style={{
-          background: C.bgCard,
-          border: `1.5px solid ${C.border}`,
-          borderRadius: 12,
-          padding: '20px',
-          marginBottom: 24,
-          fontFamily: SANS,
-        }}
-      >
-        <span style={{ fontSize: 13, fontWeight: 700, color: C.navy, display: 'block', marginBottom: 6 }}>
-          Zero Retainer &amp; Onboarding Review
-        </span>
-        <p style={{ margin: 0, fontSize: 12, color: C.muted, lineHeight: 1.55 }}>
-          There are zero upfront joining fees, setup costs, or monthly retainers. Our partner onboarding team will verify your SRA credentials and contact you within 1 business day to confirm territorial exclusivity and agree tailored commercial terms before routing begins.
-        </p>
       </div>
 
       {error && (
@@ -2536,53 +2365,44 @@ function SraSlide({ firmName, submitting, error, onConfirm }: SraSlideProps) {
             background: '#FEF2F2',
             border: '1px solid #FECACA',
             borderRadius: 8,
-            padding: '12px 16px',
-            marginBottom: 20,
+            padding: '10px 14px',
+            marginBottom: 18,
           }}
         >
-          <p style={{ color: C.error, fontSize: 13, margin: 0, fontFamily: SANS }}>
-            {error}
-          </p>
+          <p style={{ color: C.error, fontSize: 13, margin: 0, fontFamily: SANS }}>{error}</p>
         </div>
       )}
 
       <button
-        onClick={onConfirm}
-        disabled={submitting || !feeShieldAgreed || !isSraFormatValid}
+        type="button"
+        onClick={onSubmit}
+        disabled={submitting}
         style={{
+          width: '100%',
+          minHeight: 48,
           background: C.accent,
           border: 'none',
           borderRadius: 8,
-          padding: '15px 34px',
+          padding: '14px 24px',
           color: '#fff',
-          fontSize: 16,
+          fontSize: 15,
           fontWeight: 600,
-          cursor: submitting || !feeShieldAgreed || !isSraFormatValid ? 'not-allowed' : 'pointer',
-          opacity: submitting || !feeShieldAgreed || !isSraFormatValid ? 0.5 : 1,
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 10,
+          cursor: submitting ? 'not-allowed' : 'pointer',
+          opacity: submitting ? 0.7 : 1,
           fontFamily: SANS,
-          letterSpacing: '-0.01em',
           boxShadow: submitting ? 'none' : '0 4px 16px rgba(217,96,59,0.3)',
           transition: 'background 0.15s ease',
         }}
-        onMouseEnter={(e) => { if (!submitting && feeShieldAgreed && isSraFormatValid) e.currentTarget.style.background = C.accentHover }}
+        onMouseEnter={(e) => { if (!submitting) e.currentTarget.style.background = C.accentHover }}
         onMouseLeave={(e) => { e.currentTarget.style.background = C.accent }}
       >
-        {submitting ? (
-          'Submitting Application...'
-        ) : (
-          <>
-            Complete SRA Partner Registration →
-          </>
-        )}
+        {submitting ? 'Submitting Application...' : 'Complete SRA Partner Registration →'}
       </button>
     </div>
   )
 }
 
-function SuccessSlide({ name }: { name: string }) {
+function SuccessSlide({ name, email }: { name: string; email: string }) {
   return (
     <div style={{ textAlign: 'center' }}>
       <motion.div
@@ -2590,20 +2410,20 @@ function SuccessSlide({ name }: { name: string }) {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.1, type: 'spring', stiffness: 240, damping: 18 }}
         style={{
-          width: 80,
-          height: 80,
+          width: 72,
+          height: 72,
           borderRadius: '50%',
           background: C.successLight,
           border: '2px solid #C4D8EC',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          margin: '0 auto 28px',
+          margin: '0 auto 24px',
         }}
       >
         <svg
-          width="34"
-          height="34"
+          width="32"
+          height="32"
           viewBox="0 0 24 24"
           fill="none"
           stroke={C.success}
@@ -2618,10 +2438,10 @@ function SuccessSlide({ name }: { name: string }) {
       <h1
         style={{
           color: C.navy,
-          fontSize: 'clamp(26px, 4.5vw, 40px)',
+          fontSize: 'clamp(26px, 4.5vw, 38px)',
           fontWeight: 700,
           letterSpacing: '-0.025em',
-          margin: '0 0 14px',
+          margin: '0 0 12px',
           fontFamily: SERIF,
         }}
       >
@@ -2630,22 +2450,84 @@ function SuccessSlide({ name }: { name: string }) {
       <p
         style={{
           color: C.muted,
-          fontSize: 16,
-          lineHeight: 1.65,
-          maxWidth: 460,
-          margin: '0 auto 32px',
+          fontSize: 15,
+          lineHeight: 1.6,
+          maxWidth: 480,
+          margin: '0 auto 28px',
           fontFamily: SANS,
         }}
       >
-        We have received your firm&apos;s details. Our team will verify your SRA registration and configure your exclusive territorial routing within 1 business day.
+        Your firm&apos;s panel application has been received. Complete the steps below to activate your territorial routing:
       </p>
+
+      {/* 3-Step Next-Action Checklist */}
+      <div
+        style={{
+          background: C.bgCard,
+          border: `1.5px solid ${C.border}`,
+          borderRadius: 12,
+          padding: '20px 22px',
+          textAlign: 'left',
+          marginBottom: 28,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 14,
+          fontFamily: SANS,
+        }}
+      >
+        {[
+          {
+            num: '1',
+            title: 'Confirm your work email',
+            desc: `Click the verification link we just sent to ${email || 'your work inbox'} (valid for 48 hours).`,
+          },
+          {
+            num: '2',
+            title: 'SRA Register check within 1 business day',
+            desc: 'Our onboarding team verifies your SRA firm number and confirms your exclusive territory.',
+          },
+          {
+            num: '3',
+            title: 'Explore the Partner Portal demo now',
+            desc: 'Inspect a live sample statutory dossier and matter workflow while your application is reviewed.',
+          },
+        ].map((step) => (
+          <div key={step.num} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+            <span
+              style={{
+                width: 24,
+                height: 24,
+                borderRadius: '50%',
+                background: C.accentLight,
+                border: `1px solid ${C.accent}`,
+                color: C.accentHover,
+                fontSize: 12,
+                fontWeight: 700,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                marginTop: 2,
+              }}
+            >
+              {step.num}
+            </span>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>{step.title}</div>
+              <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.5, marginTop: 2 }}>{step.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
-        <a
+        <Link
           href="/portal/?demo=true"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
+            minHeight: 44,
             background: C.accent,
             color: '#fff',
             borderRadius: 8,
@@ -2658,13 +2540,14 @@ function SuccessSlide({ name }: { name: string }) {
           }}
         >
           Preview Your Partner Portal Demo →
-        </a>
-        <a
+        </Link>
+        <Link
           href="/"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
+            minHeight: 44,
             background: C.navy,
             color: '#fff',
             borderRadius: 8,
@@ -2677,7 +2560,7 @@ function SuccessSlide({ name }: { name: string }) {
           }}
         >
           Return to Homepage
-        </a>
+        </Link>
       </div>
     </div>
   )

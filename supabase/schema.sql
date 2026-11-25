@@ -21,23 +21,36 @@ create index if not exists otp_codes_email_form_type_idx
   on otp_codes (email, form_type);
 
 -- ─── Solicitor Applications ───────────────────────────────────────────────────
--- Stores panel applications submitted through the /for-solicitors Typeform flow.
--- Email is verified via OTP before the application is accepted.
+-- Stores panel applications submitted through the /for-solicitors onboarding flow.
+-- Email is verified post-submission via single-use SHA-256 verification link.
 
 create table if not exists solicitor_applications (
-  id           uuid primary key default gen_random_uuid(),
-  firm_name    text not null,
-  contact_name text not null,
-  email        text not null,
-  phone        text,
-  coverage     text,
-  sra_confirmed boolean not null default false,
-  status       text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
-  created_at   timestamptz not null default now()
+  id                            uuid primary key default gen_random_uuid(),
+  firm_name                     text not null,
+  contact_name                  text not null,
+  email                         text not null,
+  phone                         text,
+  coverage                      text,
+  sra_number                    text,
+  sra_confirmed                 boolean not null default false,
+  fee_shield_agreed             boolean not null default false,
+  email_verified                boolean not null default false,
+  verification_token_hash       text,
+  verification_token_expires_at timestamptz,
+  status                        text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
+  created_at                    timestamptz not null default now()
 );
 
 create index if not exists solicitor_applications_email_idx
   on solicitor_applications (email);
+
+create unique index if not exists solicitor_applications_pending_email_uidx
+  on solicitor_applications (lower(email))
+  where status = 'pending';
+
+create index if not exists solicitor_applications_verification_token_hash_idx
+  on solicitor_applications (verification_token_hash)
+  where verification_token_hash is not null;
 
 create index if not exists solicitor_applications_status_idx
   on solicitor_applications (status);

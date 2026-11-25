@@ -691,6 +691,10 @@ function EstimateReportCard({
           )}
         </div>
       </div>
+
+      <div className="hidden print:block px-5 sm:px-6 py-3 border-t border-[#EFEAE0] text-[12px] text-[#525D70]">
+        Calculated via SettlementCheck.co.uk · April 2026 UK statutory rates
+      </div>
     </section>
   )
 }

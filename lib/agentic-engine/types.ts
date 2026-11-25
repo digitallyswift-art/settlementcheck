@@ -243,6 +243,22 @@ export interface SlaWatchdogReport {
   summary: string;
 }
 
+export interface UnclaimedMatterAlert {
+  region: string;
+  offerBand: string;
+  createdDate: string;
+  alertBrief: string;
+}
+
+export interface UnclaimedMatterAlertReport {
+  runId: string;
+  timestamp: string;
+  leadsInspected: number;
+  uncoveredCount: number;
+  alerts: UnclaimedMatterAlert[];
+  summary: string;
+}
+
 // ── Track 2: Dual-Agent SEO & Conversion Workflow Types ───────────────────────
 
 export type SeoSearchIntent =

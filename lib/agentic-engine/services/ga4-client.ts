@@ -603,7 +603,14 @@ export class GoogleAnalytics4Client {
           filter: {
             fieldName: 'pagePath',
             inListFilter: {
-              values: ['/calculator/', '/results/', '/get-matched/', '/settlement-agreement-review/'],
+              values: [
+                '/calculator/',
+                '/results/',
+                '/get-matched/',
+                '/settlement-agreement-review/',
+                '/for-solicitors/',
+                '/portal/',
+              ],
             },
           },
         },

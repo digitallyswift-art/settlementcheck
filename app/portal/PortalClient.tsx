@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { trackClientEvent } from '@/lib/telemetry';
 
 interface MockMatter {
   id: string;
@@ -284,7 +285,8 @@ export default function PortalClient() {
               </span>
             </div>
             <Link
-              href="/for-solicitors/"
+              href="/for-solicitors/?from=portal-demo"
+              onClick={() => trackClientEvent('solicitor_demo_to_apply', { source: 'portal_demo_banner' })}
               className="px-3 py-1 rounded bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white font-semibold text-[11px] transition-colors shrink-0"
             >
               Apply to Join the Panel →

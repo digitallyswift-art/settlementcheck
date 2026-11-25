@@ -17,6 +17,7 @@ export * from './workers/clause-risk-worker';
 export * from './workers/benchmark-worker';
 export * from './workers/crm-dispatch-worker';
 export * from './workers/sla-watchdog-worker';
+export * from './workers/unclaimed-matter-alert-worker';
 
 // Autonomous SEO & Actuation Workers (Phase 4)
 export * from './workers/seo-opportunity-worker';
