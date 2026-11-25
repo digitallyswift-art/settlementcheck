@@ -19,6 +19,12 @@ In your chat canvas:
   - `@refactoring-ui` — Invokes visual hierarchy, spacing, elevation, and Tailwind UI polish rules (within SettlementCheck brand tokens).
   - `@web-typography` — Invokes typographic scale, line-height rhythm, readable measure, and responsive text legibility rules.
   - `@ux-heuristics` — Invokes Nielsen's 10 heuristics, Krug's usability laws, cognitive load reduction, and WCAG accessibility audits.
+  - `@journey-architect` — Invokes end-to-end funnel continuity, context preservation, and personalised form journey rules.
+  - `@cro-methodology` — Invokes the scientific CRE conversion audit methodology (`wondelai/skills`).
+  - `@conversion-optimization` — Invokes the 7-phase leaking-funnel orchestrator (`wondelai/skills`).
+  - `@cro` — Invokes page & lead-form CRO (`coreyhaines31/marketingskills`, including `references/form.md`).
+  - `@onboarding` — Invokes Minimum Path to Value (MPTV) and activation/momentum CRO (`coreyhaines31/marketingskills`).
+  - `@skill-creator` — Invokes the Antigravity Skill Creator to create, skillify, or audit skills in `.agents/skills/`.
   - Any file or directory (e.g., `@app/sitemap.ts`, `@components/Nav.tsx`).
 - **Trigger Actions with `/`**: Type `/` to run built-in actions:
   - `/plan` — Create a structured step-by-step roadmap before executing large SEO or feature migrations.
@@ -174,6 +180,21 @@ Specialist in heading-to-body type scales, line-height rhythm, readable line len
 
 ### P. `ux-heuristics`
 Specialist in Nielsen's 10 usability heuristics, Steve Krug's "Don't Make Me Think" principles, form usability, single-CTA viewport discipline, and WCAG accessibility audits.
+
+### Q. `journey-architect` (paired with `cro-methodology`, `conversion-optimization`, `cro`, `onboarding`)
+End-to-end funnel and personalised form journey orchestrator across `/guides/*`, `/calculator/`, `/results/`, `/get-matched/`, and `/settlement-agreement-review/`. Combines `wondelai/skills` (`cro-methodology`, `conversion-optimization`) and `coreyhaines31/marketingskills` (`cro` + `references/form.md`, `onboarding`) under SettlementCheck's SRA/FCA/DMCC/UK GDPR/EBIAP guardrails.
+
+**Key Commands to prompt the agent with:**
+- `audit journey [route|slug]` — Audits cross-route state continuity, mobile ergonomics (`375×812`), and form friction.
+- `personalise form [topic]` — Designs or audits `(guideTopic × verdict)` personalised form framing.
+
+### R. `skill-creator`
+Creates, audits, or refactors Antigravity Agent Skills in `.agents/skills/` with strict progressive disclosure, overlap checks, and SRA/FCA/brand-standards preservation.
+
+**Key Commands to prompt the agent with:**
+- `create skill [purpose]` — Designs a lean, non-overlapping skill after checking `.agents/skills/` and `.agents/rules/`.
+- `skillify` — Extracts a repeatable skill from the current session's tools, steps, and user corrections.
+- `audit skill [name]` — Trims bloated `SKILL.md` files into `references/`/`resources/` without weakening compliance guardrails.
 
 ---
 

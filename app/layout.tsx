@@ -77,7 +77,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `(function(){
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){
+    dataLayer.push(arguments);
+    if (arguments[0] === 'event' && typeof arguments[1] === 'string') {
+      var evObj = { event: arguments[1] };
+      if (arguments[2] && typeof arguments[2] === 'object') {
+        for (var k in arguments[2]) {
+          if (Object.prototype.hasOwnProperty.call(arguments[2], k)) {
+            evObj[k] = arguments[2][k];
+          }
+        }
+      }
+      dataLayer.push(evObj);
+    }
+  }
   window.gtag = gtag;
   var analytics = 'denied';
   var marketing = 'denied';

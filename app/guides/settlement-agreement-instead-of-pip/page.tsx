@@ -9,7 +9,9 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
+  title: {
+    absolute: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
+  },
   description:
     'Offered a settlement instead of a PIP? Check April 2026 rates (£751/wk), Section 111A limits, tax splits, and employer legal fee contributions.',
   alternates: {

@@ -1,10 +1,11 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { logSecurityEvent } from '@/lib/security/security-logger';
 
 const PROTECTED_API_PREFIXES = ['/api/portal', '/api/cockpit'];
-const COCKPIT_PAGE_PREFIX = '/cockpit';
+const PROTECTED_PAGE_PREFIXES = ['/cockpit', '/portal'];
 const PUBLIC_API_ALLOWLIST = ['/api/portal/health'];
-
-const VALID_DEV_PASSKEYS = ['dev-passkey-admin2026', 'admin2026', '568912', 'settlementcheck'];
+// Dossier reading and claiming endpoints enforce their own mandatory cryptographic claim_token validation
+const CLAIM_TOKEN_API_PREFIXES = ['/api/portal/dossier', '/api/portal/claim'];
 
 const cleanEnv = (val?: string) => (val || '').replace(/['"]/g, '').trim();
 
@@ -25,8 +26,12 @@ function verifyDevOrWorkerToken(token: string): boolean {
   if (cronSecret && constantTimeEqual(token, cronSecret)) {
     return true;
   }
+  // Dev passkey is strictly gated to development mode and must be explicitly provided in environment
   if (process.env.NODE_ENV === 'development') {
-    return VALID_DEV_PASSKEYS.some(pass => constantTimeEqual(token, pass));
+    const devPass = cleanEnv(process.env.DEV_PASSKEY);
+    if (devPass && constantTimeEqual(token, devPass)) {
+      return true;
+    }
   }
   return false;
 }
@@ -137,18 +142,33 @@ async function verifyFirebaseToken(token: string, req: NextRequest): Promise<boo
 }
 
 export async function middleware(req: NextRequest) {
+  // 0. Enforce HTTPS across all traffic in production
+  const proto = req.headers.get('x-forwarded-proto');
+  if (process.env.NODE_ENV === 'production' && proto === 'http') {
+    const httpsUrl = req.nextUrl.clone();
+    httpsUrl.protocol = 'https:';
+    return NextResponse.redirect(httpsUrl, 301);
+  }
+
   const { pathname } = req.nextUrl;
 
   const isProtectedApi = PROTECTED_API_PREFIXES.some(prefix => pathname.startsWith(prefix));
-  const isCockpitPage = pathname.startsWith(COCKPIT_PAGE_PREFIX);
+  const isProtectedPage = PROTECTED_PAGE_PREFIXES.some(prefix => pathname.startsWith(prefix));
 
-  // 1. If not a cockpit page or protected API, pass through
-  if (!isProtectedApi && !isCockpitPage) {
+  // 1. If not a protected page or protected API, pass through
+  if (!isProtectedApi && !isProtectedPage) {
     return NextResponse.next();
   }
 
-  // 2. Public API allowlist
+  // 2. Public API allowlist & Claim Token APIs
   if (PUBLIC_API_ALLOWLIST.includes(pathname)) {
+    const res = NextResponse.next();
+    res.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    return res;
+  }
+
+  // Dossier reading and claiming endpoints validate their own cryptographic claim_token
+  if (CLAIM_TOKEN_API_PREFIXES.some(prefix => pathname.startsWith(prefix))) {
     const res = NextResponse.next();
     res.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
     return res;
@@ -204,6 +224,13 @@ export async function middleware(req: NextRequest) {
   // 4. API Endpoints: Strictly reject unauthenticated requests
   if (isProtectedApi) {
     if (!isAuthenticated) {
+      logSecurityEvent({
+        type: 'UNAUTHORIZED_ACCESS',
+        path: pathname,
+        method: req.method,
+        ip: req.headers.get('x-forwarded-for') || undefined,
+        reason: 'Attempted access to protected API without valid credentials',
+      });
       const errRes = NextResponse.json(
         { success: false, error: 'Unauthorized: Valid authentication token required.' },
         { status: 401 }
@@ -216,13 +243,13 @@ export async function middleware(req: NextRequest) {
     return apiRes;
   }
 
-  // 5. Cockpit Page: Allow client-side CockpitAuthGate to render login if unauthenticated,
-  // but guarantee zero search engine indexing via HTTP headers.
+  // 5. Protected Administrative / Partner Pages:
+  // Render login gate if unauthenticated, but guarantee zero search engine indexing
   const pageRes = NextResponse.next();
   pageRes.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
   return pageRes;
 }
 
 export const config = {
-  matcher: ['/cockpit/:path*', '/api/portal/:path*', '/api/cockpit/:path*'],
+  matcher: ['/cockpit/:path*', '/portal/:path*', '/api/portal/:path*', '/api/cockpit/:path*'],
 };

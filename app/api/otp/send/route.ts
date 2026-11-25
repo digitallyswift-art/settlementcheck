@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { randomInt } from 'crypto'
 import { supabase } from '@/lib/supabase'
 import { resend } from '@/lib/resend'
+import { rateLimitRequest, getRateLimitHeaders } from '@/lib/security/rate-limiter'
+import { logSecurityEvent } from '@/lib/security/security-logger'
 
 function generateCode(): string {
   return randomInt(100000, 1000000).toString()
@@ -9,6 +11,30 @@ function generateCode(): string {
 
 export async function POST(req: NextRequest) {
   try {
+    // ── 1. IP-level sliding-window rate limit (5 requests / 15 mins / IP) ────
+    const ipCheck = rateLimitRequest(req, {
+      endpoint: 'otp-send-ip',
+      limit: 5,
+      windowMs: 15 * 60 * 1000,
+    })
+
+    if (!ipCheck.allowed) {
+      logSecurityEvent({
+        type: 'RATE_LIMIT_EXCEEDED',
+        path: '/api/otp/send',
+        method: 'POST',
+        ip: ipCheck.ip,
+        reason: 'Too many OTP requests from IP address',
+      })
+      return NextResponse.json(
+        { error: 'Too many verification code requests from your network. Please wait 15 minutes before trying again.' },
+        {
+          status: 429,
+          headers: getRateLimitHeaders(5, ipCheck.remaining, ipCheck.resetMs),
+        }
+      )
+    }
+
     const body = await req.json()
     const { email, form_type, website_hp } = body
 

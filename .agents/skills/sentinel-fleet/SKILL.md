@@ -34,3 +34,10 @@ node scripts/watchdog/sla-watchdog.mjs --daemon --interval=60
 Both background agents are exposed as secure serverless cron endpoints:
 - `GET /api/cron/serp-sentinel/` (Bearer `<CRON_SECRET>`)
 - `GET /api/cron/sla-watchdog/` (Bearer `<CRON_SECRET>`)
+
+## 4. Drop-Recovery Verification Runbook
+
+When diagnosing a ranking or click drop:
+1. Inspect `docs/incidents/` (e.g., `2026-11-18-critical_drop.md`) and `data/serp-actions/applied-actions.json`.
+2. Check `lib/agentic-engine/workers/seo-degradation-watchdog-worker.ts` and latest GSC snapshots (`npm run cro:data` / `npm run sentinel:serp`) to verify whether post-fix CTR and impressions recovered.
+3. Verify affected routes still have `title: { absolute: '...' }`, valid canonicals, zero `noindex`/sitemap conflicts, and recent IndexNow/Google Indexing submission.

@@ -69,11 +69,13 @@
     }
 
     get theme() {
-      return this.getAttribute('theme') || 'light';
+      const val = this.getAttribute('theme');
+      return val === 'dark' ? 'dark' : 'light';
     }
 
     get primaryColor() {
-      return this.getAttribute('primary-color') || '#D9603B';
+      const val = this.getAttribute('primary-color') || '#D9603B';
+      return /^#[0-9a-fA-F]{3,8}$|^rgba?\([0-9, .%]+\)$/.test(val.trim()) ? val.trim() : '#D9603B';
     }
 
     get partnerId() {

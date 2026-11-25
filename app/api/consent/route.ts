@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 import { supabase } from '@/lib/supabase'
+import { rateLimitRequest, getRateLimitHeaders } from '@/lib/security/rate-limiter'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,7 +15,7 @@ function hashClientIp(req: NextRequest): string | null {
 
   const salt =
     process.env.CONSENT_HASH_SALT ||
-    process.env.SUPABASE_SERVICE_ROLE_KEY?.slice(0, 16) ||
+    (process.env.SUPABASE_SERVICE_ROLE_KEY ? crypto.createHash('sha256').update(process.env.SUPABASE_SERVICE_ROLE_KEY).digest('hex').slice(0, 16) : null) ||
     'sc-consent-audit-v1'
 
   return crypto.createHash('sha256').update(`${salt}:${rawIp}`).digest('hex')
@@ -29,6 +30,23 @@ function sanitizePath(rawPath: unknown): string | null {
 
 export async function POST(req: NextRequest) {
   try {
+    // ── 1. Sliding-window IP Rate Limiter (30 requests / min / IP) ─────────
+    const rateCheck = rateLimitRequest(req, {
+      endpoint: 'consent-log',
+      limit: 30,
+      windowMs: 60 * 1000,
+    })
+
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded for consent updates' },
+        {
+          status: 429,
+          headers: getRateLimitHeaders(30, rateCheck.remaining, rateCheck.resetMs),
+        }
+      )
+    }
+
     const body = await req.json()
     const {
       consent_id,

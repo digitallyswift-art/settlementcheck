@@ -39,7 +39,7 @@ if (toArg) {
 // ── 2. Query Experiment Telemetry ───────────────────────────────────────────
 async function generateExperimentDigest() {
   const experimentId = 'calc_ux_v2'
-  const adminToken = process.env.EXPERIMENT_ADMIN_TOKEN || 'secure_sc_experiment_admin_token_2026'
+  const adminToken = process.env.EXPERIMENT_ADMIN_TOKEN || (process.env.NODE_ENV === 'development' ? 'dev_sc_experiment_admin_token' : '')
   const domain = process.env.NEXT_PUBLIC_SITE_URL || 'https://settlementcheck.co.uk'
 
   let events = []

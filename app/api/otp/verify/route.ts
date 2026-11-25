@@ -1,9 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { generateOtpSessionToken, timingSafeEqualStrings } from '@/lib/security/otp-tokens'
+import { rateLimitRequest, getRateLimitHeaders } from '@/lib/security/rate-limiter'
+import { logSecurityEvent } from '@/lib/security/security-logger'
 
 export async function POST(req: NextRequest) {
   try {
+    // ── 1. IP Sliding-window rate limit (15 verify attempts / 15 mins / IP) ──
+    const ipCheck = rateLimitRequest(req, {
+      endpoint: 'otp-verify-ip',
+      limit: 15,
+      windowMs: 15 * 60 * 1000,
+    })
+
+    if (!ipCheck.allowed) {
+      logSecurityEvent({
+        type: 'RATE_LIMIT_EXCEEDED',
+        path: '/api/otp/verify',
+        method: 'POST',
+        ip: ipCheck.ip,
+        reason: 'Too many OTP verification attempts from IP address',
+      })
+      return NextResponse.json(
+        { success: false, message: 'Too many verification attempts from your network. Please wait 15 minutes before retrying.' },
+        {
+          status: 429,
+          headers: getRateLimitHeaders(15, ipCheck.remaining, ipCheck.resetMs),
+        }
+      )
+    }
+
     const { email, code, form_type } = await req.json()
 
     if (!email || !code || !form_type) {

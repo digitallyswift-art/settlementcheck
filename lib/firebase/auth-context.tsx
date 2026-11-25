@@ -53,7 +53,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const token = await fbUser.getIdToken();
       cachedTokenRef.current = token;
       if (typeof document !== 'undefined' && token) {
-        document.cookie = `sc_cockpit_auth=${token}; path=/; SameSite=Lax`;
+        const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+        const secureFlag = isHttps ? '; Secure' : '';
+        document.cookie = `sc_cockpit_auth=${token}; path=/; max-age=3600; SameSite=Lax${secureFlag}`;
       }
       return token;
     } catch (err) {
@@ -147,13 +149,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signInWithDevPasskey = async (passkey: string) => {
-    // Allows administrator access while awaiting Firebase credential deployment
+    // Passkey authentication is strictly restricted to development environments
+    if (process.env.NODE_ENV !== 'development') {
+      return { success: false, error: 'Passkey authentication is disabled in production. Please sign in with Firebase credentials.' };
+    }
     const clean = passkey.trim();
     if (clean === 'admin2026' || clean === '568912' || clean === 'settlementcheck') {
       cachedTokenRef.current = 'dev-passkey-admin2026';
       if (typeof window !== 'undefined') {
         sessionStorage.setItem(DEV_AUTH_STORAGE_KEY, 'true');
-        document.cookie = 'sc_cockpit_auth=dev-passkey-admin2026; path=/; SameSite=Lax';
+        const isHttps = window.location.protocol === 'https:';
+        const secureFlag = isHttps ? '; Secure' : '';
+        document.cookie = `sc_cockpit_auth=dev-passkey-admin2026; path=/; max-age=3600; SameSite=Lax${secureFlag}`;
       }
       setUser({
         uid: 'dev-admin-uid',
@@ -175,7 +182,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (cachedTokenRef.current) {
       return cachedTokenRef.current;
     }
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
       const devAuth = sessionStorage.getItem(DEV_AUTH_STORAGE_KEY);
       if (devAuth === 'true') {
         return 'dev-passkey-admin2026';
@@ -196,7 +203,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem(DEV_AUTH_STORAGE_KEY);
-      document.cookie = 'sc_cockpit_auth=; path=/; max-age=0; SameSite=Lax';
+      const isHttps = window.location.protocol === 'https:';
+      const secureFlag = isHttps ? '; Secure' : '';
+      document.cookie = `sc_cockpit_auth=; path=/; max-age=0; SameSite=Lax${secureFlag}`;
     }
     setUser(null);
   };

@@ -35,7 +35,7 @@
   {
     "id": "SC-E-CLM-004",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 38,
+    "lineNumber": 37,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "q: 'What is the average settlement agreement payout in the UK?',",
@@ -46,10 +46,10 @@
   {
     "id": "SC-E-CLM-005",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 68,
+    "lineNumber": 67,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
-    "context": "headline: 'Average Settlement Agreement Payout UK 2026: What is a Normal Offer?',",
+    "context": "headline: 'Average Settlement Agreement Payout UK 2026: What Is a Normal Offer?',",
     "riskReason": "Implies statistically verified average across UK settlements without published sample data.",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
@@ -57,10 +57,10 @@
   {
     "id": "SC-E-CLM-006",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 157,
+    "lineNumber": 137,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
-    "context": "Settlement Agreement Payouts UK 2026: Benchmark Ranges &amp; Average Settlement Guide",
+    "context": "Average Settlement Agreement Payout UK (2026)",
     "riskReason": "Implies statistically verified average across UK settlements without published sample data.",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
@@ -68,7 +68,29 @@
   {
     "id": "SC-E-CLM-007",
     "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
-    "lineNumber": 185,
+    "lineNumber": 157,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "subtitle=\"Compare your employer's offer against your calculated statutory baseline and illustrative 1 to 3 months gross commercial ranges.\"",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-008",
+    "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
+    "lineNumber": 161,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 Months",
+    "context": "{ label: 'Commercial Range', value: '1 to 3 Months Gross', statute: 'Observed Norm' },",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-009",
+    "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
+    "lineNumber": 182,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "What is the average settlement agreement payout in the UK?",
@@ -77,20 +99,64 @@
     "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-008",
-    "file": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
-    "lineNumber": 148,
+    "id": "SC-E-CLM-010",
+    "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
+    "lineNumber": 185,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 months",
-    "context": "subtitle=\"Compare your employer's opening offer against the statutory redundancy floor and observed 1 to 3 months commercial negotiation ben",
+    "context": "Private settlement agreements are confidential, so there is no official national average. Illustrative UK commercial ranges and Ministry of ",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-009",
+    "id": "SC-E-CLM-011",
+    "file": "app/guides/average-settlement-agreement-payout-uk/page.tsx",
+    "lineNumber": 192,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "<span className=\"text-muted text-[12px]\">1 to 3 months gross ex-gratia</span>",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-012",
+    "file": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
+    "lineNumber": 61,
+    "pattern": "most employers",
+    "matchedText": "Most employers",
+    "context": "a: 'Yes. Under UK contract law, making a counter-proposal rejects the original offer, so your employer can legally withdraw it before anythi",
+    "riskReason": "Broad, unproven collective assertion about employer conduct or offer values.",
+    "severity": "P2",
+    "recommendedAction": "Qualify or rephrase \"Most employers\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-013",
+    "file": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
+    "lineNumber": 133,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "subtitle=\"Compare your employer's opening figure against your calculated statutory baseline and typical 1 to 3 months gross commercial range",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-014",
+    "file": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
+    "lineNumber": 137,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 Months",
+    "context": "{ label: 'Commercial Range', value: '1 to 3 Months Gross', statute: 'Observed Norm' },",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-015",
     "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
-    "lineNumber": 32,
+    "lineNumber": 31,
     "pattern": "average settlement",
     "matchedText": "average settlement",
     "context": "q: 'What is the average settlement agreement payout in the UK?',",
@@ -99,9 +165,31 @@
     "recommendedAction": "Qualify or rephrase \"average settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-010",
+    "id": "SC-E-CLM-016",
     "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
-    "lineNumber": 396,
+    "lineNumber": 32,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "a: 'There is no single UK average because every package starts from a different calculated statutory baseline. Your baseline depends on leng",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-017",
+    "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
+    "lineNumber": 156,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "subtitle=\"Compare your employer's figure against your calculated statutory baseline and typical 1 to 3 months gross commercial ranges.\"",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-018",
+    "file": "app/guides/is-my-settlement-offer-fair/page.tsx",
+    "lineNumber": 425,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payouts UK (2026)',",
@@ -110,7 +198,7 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-011",
+    "id": "SC-E-CLM-019",
     "file": "app/guides/page.tsx",
     "lineNumber": 154,
     "pattern": "average settlement",
@@ -121,31 +209,53 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-012",
-    "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
-    "lineNumber": 53,
+    "id": "SC-E-CLM-020",
+    "file": "app/guides/protected-conversations-without-prejudice/page.tsx",
+    "lineNumber": 161,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 months",
-    "context": "a: 'A standard commercial settlement offer typically exceeds calculated statutory redundancy pay plus contractual notice pay (subject to eli",
+    "context": "subtitle=\"Compare your employer's opening figure against your calculated statutory baseline and typical 1 to 3 months gross commercial range",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-013",
+    "id": "SC-E-CLM-021",
     "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
-    "lineNumber": 189,
+    "lineNumber": 54,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 months",
-    "context": "A settlement agreement should always pay more than statutory redundancy. At minimum, the offer must cover your <strong>Statutory Redundancy ",
+    "context": "a: 'A commercial settlement offer typically exceeds calculated statutory redundancy pay and contractual notice pay (subject to eligibility).",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-014",
+    "id": "SC-E-CLM-022",
     "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
-    "lineNumber": 211,
+    "lineNumber": 170,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "subtitle=\"Calculate your statutory redundancy baseline (£751/week cap) alongside typical 1 to 3 months gross commercial ranges.\"",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-023",
+    "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
+    "lineNumber": 198,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "A commercial settlement agreement typically exceeds your <strong>Statutory Redundancy Pay (capped at £751/week, subject to eligibility under",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-024",
+    "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
+    "lineNumber": 220,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 Months",
     "context": "<span className=\"font-bold text-ink text-sm\">1 to 3 Months Salary</span>",
@@ -154,75 +264,174 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-015",
+    "id": "SC-E-CLM-025",
     "file": "app/guides/redundancy-vs-settlement-agreement/page.tsx",
-    "lineNumber": 275,
+    "lineNumber": 280,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 Months",
-    "context": "Settlement Target = Statutory Redundancy Pay + Full Notice Pay + Ex-Gratia Premium (Illustrative 1 to 3 Months Commercial Benchmark)",
+    "context": "Total Package = Statutory Redundancy Pay + Notice Pay (or Garden Leave) + Ex-Gratia Sum (Illustrative 1 to 3 Months Gross)",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-016",
+    "id": "SC-E-CLM-026",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 197,
+    "lineNumber": 38,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
-    "context": "In standard commercial redundancy or capability exits, employers often propose an ex-gratia starting point of one to three months of gross s",
+    "context": "a: 'In straightforward commercial exits, opening offers often include one to three months of gross salary as an ex-gratia payment, plus noti",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-017",
+    "id": "SC-E-CLM-027",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 205,
+    "lineNumber": 180,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "subtitle=\"Enter your salary and service length to see your calculated statutory baseline and illustrative 1 to 3 months gross commercial ran",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-028",
+    "file": "app/guides/settlement-agreement-how-much/page.tsx",
+    "lineNumber": 184,
     "pattern": "1 to 3 months",
     "matchedText": "1 to 3 Months",
-    "context": "<span className=\"font-bold text-ink text-sm\">1 to 3 Months' Gross Pay</span>",
+    "context": "{ label: 'Commercial Range', value: '1 to 3 Months Gross', statute: 'Observed Norm' },",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-018",
+    "id": "SC-E-CLM-029",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 302,
+    "lineNumber": 208,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
-    "context": "This is the discretionary compensation offered in exchange for signing away your right to take your employer to an employment tribunal. In s",
+    "context": "In straightforward redundancy or capability exits, employers often propose an ex-gratia sum of one to three months of gross salary on top of",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-019",
+    "id": "SC-E-CLM-030",
     "file": "app/guides/settlement-agreement-how-much/page.tsx",
-    "lineNumber": 376,
+    "lineNumber": 215,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 Months",
+    "context": "<span className=\"font-bold text-ink text-sm\">1 to 3 Months&apos; Gross Pay</span>",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-031",
+    "file": "app/guides/settlement-agreement-how-much/page.tsx",
+    "lineNumber": 284,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
-    "context": "Tribunal proceedings also take 9 to 18 months and demand hours of management time. Offering an ex-gratia payment of one to three months of g",
+    "context": "This is the discretionary sum offered in exchange for waiving employment tribunal claims. In straightforward exits, opening figures often si",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-020",
+    "id": "SC-E-CLM-032",
+    "file": "app/guides/settlement-agreement-how-much/page.tsx",
+    "lineNumber": 502,
+    "pattern": "average settlement",
+    "matchedText": "Average Settlement",
+    "context": "title: 'Average Settlement Agreement Payout UK (2026)',",
+    "riskReason": "Implies statistically verified average across UK settlements without published sample data.",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-033",
     "file": "app/guides/settlement-agreement-instead-of-pip/page.tsx",
-    "lineNumber": 529,
+    "lineNumber": 48,
     "pattern": "1 to 3 months",
     "matchedText": "one to three months",
-    "context": "desc: 'As an illustrative commercial negotiation starting point (not a statutory entitlement), one to three months of gross pay to reflect c",
+    "context": "a: 'A typical package includes full contractual notice pay, accrued holiday pay, and one to three months of gross salary as tax-free ex-grat",
     "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
     "severity": "P1",
     "recommendedAction": "Qualify or rephrase \"one to three months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-021",
+    "id": "SC-E-CLM-034",
+    "file": "app/guides/settlement-agreement-instead-of-pip/page.tsx",
+    "lineNumber": 146,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "subtitle=\"Compare your employer's opening figure against your calculated statutory baseline and typical 1 to 3 months gross commercial range",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-035",
+    "file": "app/guides/settlement-agreement-instead-of-pip/page.tsx",
+    "lineNumber": 184,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 Months",
+    "context": "<span className=\"font-bold text-ink text-sm\">Notice + 1 to 3 Months Pay</span>",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-036",
+    "file": "app/guides/settlement-agreement-instead-of-pip/page.tsx",
+    "lineNumber": 511,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "desc: 'Commercial sum (often 1 to 3 months gross pay, not a statutory right) reflecting capability time saved. Tax-free up to £30,000 under ",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-037",
+    "file": "app/guides/settlement-agreement-vs-tribunal-claim/page.tsx",
+    "lineNumber": 156,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "subtitle=\"Compare your employer's opening figure against your calculated statutory baseline and typical 1 to 3 months gross commercial range",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-038",
     "file": "app/guides/what-is-a-fair-settlement-agreement/page.tsx",
-    "lineNumber": 554,
+    "lineNumber": 125,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "subtitle=\"Compare your employer's figure against your calculated statutory baseline and typical 1 to 3 months gross commercial ranges.\"",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-039",
+    "file": "app/guides/what-is-a-fair-settlement-agreement/page.tsx",
+    "lineNumber": 168,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 Months",
+    "context": "<span className=\"font-bold text-ink text-sm\">1 to 3 Months Gross</span>",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 Months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-040",
+    "file": "app/guides/what-is-a-fair-settlement-agreement/page.tsx",
+    "lineNumber": 594,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payouts UK (2026)',",
@@ -231,7 +440,18 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-022",
+    "id": "SC-E-CLM-041",
+    "file": "app/page.tsx",
+    "lineNumber": 182,
+    "pattern": "1 to 3 months",
+    "matchedText": "1 to 3 months",
+    "context": "text: 'In standard commercial redundancy or capability exits, employers often propose an illustrative ex-gratia starting point of 1 to 3 mon",
+    "riskReason": "Informal HR rule-of-thumb presented as an authoritative legal benchmark (CAP Code 3.7).",
+    "severity": "P1",
+    "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
+  },
+  {
+    "id": "SC-E-CLM-042",
     "file": "app/page.tsx",
     "lineNumber": 262,
     "pattern": "average settlement",
@@ -242,7 +462,7 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-023",
+    "id": "SC-E-CLM-043",
     "file": "app/regulatory-framework/page.tsx",
     "lineNumber": 170,
     "pattern": "almost always",
@@ -253,7 +473,7 @@
     "recommendedAction": "Qualify or rephrase \"almost always\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-024",
+    "id": "SC-E-CLM-044",
     "file": "app/reports/uk-settlement-index-2026/page.tsx",
     "lineNumber": 156,
     "pattern": "1 to 3 months",
@@ -264,9 +484,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-025",
+    "id": "SC-E-CLM-045",
     "file": "app/settlement-agreement-tax-calculator/page.tsx",
-    "lineNumber": 262,
+    "lineNumber": 264,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "label: 'Average Settlement Agreement Payouts UK',",
@@ -275,7 +495,7 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-026",
+    "id": "SC-E-CLM-046",
     "file": "app/sitemap/page.tsx",
     "lineNumber": 232,
     "pattern": "average settlement",
@@ -286,7 +506,7 @@
     "recommendedAction": "Qualify or rephrase \"Average Settlement\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-027",
+    "id": "SC-E-CLM-047",
     "file": "components/EmbeddedCalculatorCard.tsx",
     "lineNumber": 204,
     "pattern": "1 to 3 months",
@@ -297,7 +517,7 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-028",
+    "id": "SC-E-CLM-048",
     "file": "components/FaqAccordion.tsx",
     "lineNumber": 25,
     "pattern": "1 to 3 months",
@@ -308,9 +528,9 @@
     "recommendedAction": "Qualify or rephrase \"1 to 3 months\" to cite specific statutory terms or empirical telemetry."
   },
   {
-    "id": "SC-E-CLM-029",
+    "id": "SC-E-CLM-049",
     "file": "components/Nav.tsx",
-    "lineNumber": 64,
+    "lineNumber": 72,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "label: 'Average Settlement Agreement Payouts',",

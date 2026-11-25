@@ -9,9 +9,11 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Settlement Agreement on Sick Leave: UK Rights & Pay (2026)',
+  title: {
+    absolute: 'Settlement Agreement & Sick Leave UK 2026 | SettlementCheck',
+  },
   description:
-    'Off sick and offered a settlement? Check 2026 UK statutory pay rights, notice pay rules, £30,000 tax exemptions, and employer legal fee contributions.',
+    'Off sick and offered a settlement? Check 2026 UK sick pay, notice rules, £30,000 tax-free exemption, and solicitor fee norms in 60 seconds.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-sick-leave/',
   },

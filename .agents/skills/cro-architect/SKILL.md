@@ -108,6 +108,11 @@ No CRO change may ship without passing the **dual-agent compliance gate** (`@leg
 | **Friction** | Validation / Secondary tools | `intake_validation_error` (`field`), `results_secondary_tab_click` (`tab`) |
 | **Conversion** | `POST /api/lead/` | `generate_lead`, `lead_submitted` (reconciled with Supabase `leads`) |
 
+> **GTM & GA4 Architecture (`GTM-PC9K5T4B` → `G-V5D87PYF67`):**
+> - `ga4 tag` initializes `G-V5D87PYF67` on all pages; `GA4 - Event - Funnel & Calculator` forwards funnel/step events (`{{Event}}` with `step_number`, `cohort_type`, `offer_bracket`, `verdict`, `currency`, `value`) via a single regex Custom Event trigger. Do not add a second `Google Analytics G-V5D87PYF67` config tag.
+> - `generate_lead` is configured as a GA4 **Key Event** (*Create with code*, *Once per session*).
+> - `app/layout.tsx`'s `window.gtag` shim already pushes `{ event, ...params }` to `window.dataLayer` — always dispatch via `Ga4TelemetryClient` or `trackClientEvent` (never call both `gtag()` and `dataLayer.push()` for the same event).
+
 ---
 
 ## 6. Key Commands

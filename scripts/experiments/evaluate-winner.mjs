@@ -40,7 +40,7 @@ function normalCdf(x) {
 
 async function runAutonomousEvaluation() {
   const experimentId = 'calc_ux_v2'
-  const adminToken = process.env.EXPERIMENT_ADMIN_TOKEN || 'secure_sc_experiment_admin_token_2026'
+  const adminToken = process.env.EXPERIMENT_ADMIN_TOKEN || (process.env.NODE_ENV === 'development' ? 'dev_sc_experiment_admin_token' : '')
   const domain = 'https://settlementcheck.co.uk'
   const TARGET_SESSIONS = 1520
   const TARGET_DAYS = 14

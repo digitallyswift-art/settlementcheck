@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { rateLimitRequest, getRateLimitHeaders } from '@/lib/security/rate-limiter'
 
 export const dynamic = 'force-dynamic'
 
@@ -67,6 +68,23 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    // ── 1. Sliding-window IP Rate Limiter (10 outcomes / hr / IP) ───────────
+    const rateCheck = rateLimitRequest(req, {
+      endpoint: 'settlement-outcome',
+      limit: 10,
+      windowMs: 60 * 60 * 1000,
+    })
+
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded for telemetry submissions' },
+        {
+          status: 429,
+          headers: getRateLimitHeaders(10, rateCheck.remaining, rateCheck.resetMs),
+        }
+      )
+    }
+
     const body = await req.json()
     const {
       dispute_category,

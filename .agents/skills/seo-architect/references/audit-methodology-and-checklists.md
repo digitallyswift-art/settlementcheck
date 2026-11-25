@@ -38,7 +38,7 @@ Check for 6 core trust signals:
 
 ## Step 4: Title & Meta Calibration
 
-- **Title Tag**: Strictly **50 to 60 characters** (including ` | SettlementCheck`). Must include year (`2026`) or numeric anchor (`£751`).
+- **Title Tag**: Strictly **50 to 60 characters** (including ` | SettlementCheck`). Must include year (`2026`) or numeric anchor (`£751`), and use `title: { absolute: '...' }` in Next.js `metadata` when `| SettlementCheck` is included to prevent `%s | SettlementCheck` double-branding. Verify pixel width via `lib/agentic-engine/tools/serp-pixel-calculator.ts`.
 - **Meta Description**: Strictly **140 to 155 characters**. Must lead with Answer-First fact, include clear value proposition, and end with an empowering action.
 
 ---

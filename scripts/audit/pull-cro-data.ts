@@ -102,10 +102,10 @@ async function main() {
     console.log(`\n── 4. TOP 15 GSC LANDING PAGES (${fmt(start)} to ${fmt(end)}) ──`);
     console.table(
       gscPages.map((row: any) => ({
-        Page: (row.keys?.[0] || '').replace('https://settlementcheck.co.uk', ''),
+        Page: (row.page || row.query || '').replace('https://settlementcheck.co.uk', '') || '/',
         Clicks: row.clicks,
         Impr: row.impressions,
-        'CTR%': `${Math.round((row.ctr || 0) * 1000) / 10}%`,
+        'CTR%': `${row.ctr ?? 0}%`,
         Pos: Math.round((row.position || 0) * 10) / 10,
       }))
     );

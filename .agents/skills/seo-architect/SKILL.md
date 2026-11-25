@@ -62,3 +62,5 @@ npm run test:evals
 6. **No Corporate SERP Jargon**: Never use administrative jargon in titles or meta descriptions (`Triage`, `Platform`, `Intake`, `Dossier`, `Audit`).
 7. **Interactive Tool Titling Invariant**: Interactive tools must always include `Calculator` or `Calculate` in the title. Never reduce an interactive tool snippet to a static statutory cap descriptor (e.g. avoid `Redundancy Pay Cap 2026 (£751/wk)` on `/redundancy-calculator/`).
 8. **Closed Learning Loop**: All algorithmic changes to core money pages must pass the 72-Hour GSC Degradation Watchdog. If a change causes >15% CTR degradation over 3 days, it must trigger an automatic rollback.
+9. **Next.js Absolute Title Rule**: Whenever a route title includes `| SettlementCheck`, define `title: { absolute: '...' }` in `metadata` to prevent root-layout `%s | SettlementCheck` double-branding overflow.
+10. **Post-Bulk-Edit SEO Regression Gate**: After any multi-page copy or UX rewrite, run `npm run check:links`, verify title/meta char and pixel budgets (`lib/agentic-engine/tools/serp-pixel-calculator.ts`), confirm `sitemap.ts` vs `robots` (`noindex`) parity, and trigger re-indexation.

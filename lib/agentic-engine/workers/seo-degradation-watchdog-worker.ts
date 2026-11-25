@@ -136,12 +136,15 @@ export class SeoDegradationWatchdog {
       Math.floor((Date.now() - appliedDate.getTime()) / (1000 * 60 * 60 * 24))
     );
 
+    const hasRankImprovedSignificantly = positionDropPercent <= -15;
+
     const isSevereRegression =
       positionDropPercent >= this.AUTO_ROLLBACK_RANK_DROP_PCT ||
-      impressionDropPercent >= this.AUTO_ROLLBACK_IMPR_DROP_PCT;
+      (!hasRankImprovedSignificantly && impressionDropPercent >= this.AUTO_ROLLBACK_IMPR_DROP_PCT);
 
     const isModerateRegression =
-      positionDropPercent >= this.ALERT_RANK_DROP_PCT || impressionDropPercent >= 20;
+      positionDropPercent >= this.ALERT_RANK_DROP_PCT ||
+      (!hasRankImprovedSignificantly && impressionDropPercent >= 20);
 
     // 1. Severe Regression -> Auto-Rollback (if sustained >= 7 days or simulated test)
     if (isSevereRegression && (daysSinceApplied >= this.MIN_OBSERVATION_DAYS_FOR_ROLLBACK || Boolean(simulated))) {

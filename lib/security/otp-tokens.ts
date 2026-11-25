@@ -10,12 +10,18 @@ export interface OtpSessionTokenPayload {
 export const OTP_SESSION_TOKEN_TTL_MS = 15 * 60 * 1000 // 15 minutes
 
 function getOtpSecret(): string {
-  return (
+  const secret =
     process.env.OTP_TOKEN_SECRET ||
     process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.CRON_SECRET ||
-    'settlementcheck-otp-token-hmac-sha256-secret-fallback'
-  )
+    process.env.CRON_SECRET
+
+  if (secret) return secret
+
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('Fatal: Security configuration error. No token signing secret configured in production.')
+  }
+
+  return 'settlementcheck-otp-token-hmac-sha256-secret-fallback'
 }
 
 /**

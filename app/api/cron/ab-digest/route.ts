@@ -28,7 +28,7 @@ async function handleDigest(req: NextRequest) {
     }
 
     const experimentId = 'calc_ux_v2'
-    const adminToken = process.env.EXPERIMENT_ADMIN_TOKEN || 'secure_sc_experiment_admin_token_2026'
+    const adminToken = process.env.EXPERIMENT_ADMIN_TOKEN || (process.env.NODE_ENV === 'development' ? 'dev_sc_experiment_admin_token' : '')
     const baseUrl = 'https://settlementcheck.co.uk'
 
     const stats = await getExperimentStats(experimentId)

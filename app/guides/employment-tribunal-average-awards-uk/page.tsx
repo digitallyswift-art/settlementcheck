@@ -11,7 +11,9 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Employment Tribunal Average Awards 2026 | SettlementCheck',
+  title: {
+    absolute: 'Employment Tribunal Average Awards 2026 | SettlementCheck',
+  },
   description:
     'Official MoJ tribunal compensation tables 2026. Unfair dismissal (£7,564 median), discrimination, £123,543 cap, and how settlement offers compare.',
   alternates: {

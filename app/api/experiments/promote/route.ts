@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { promoteExperimentWinner, getExperimentStats } from '@/lib/experiments/experiment-service'
+import { constantTimeEqual } from '@/lib/security/otp-tokens'
+import { logSecurityEvent } from '@/lib/security/security-logger'
 
 export const dynamic = 'force-dynamic'
 
-const EXPECTED_TOKEN = process.env.EXPERIMENT_ADMIN_TOKEN || 'secure_sc_experiment_admin_token_2026'
+function getExpectedToken(): string | null {
+  const token = (process.env.EXPERIMENT_ADMIN_TOKEN || '').trim()
+  if (token) return token
+  if (process.env.NODE_ENV === 'development') {
+    return 'dev_sc_experiment_admin_token'
+  }
+  return null
+}
 
 /**
  * GET Handler: Renders the confirmation preview gate.
@@ -16,7 +25,15 @@ export async function GET(req: NextRequest) {
   const winner = searchParams.get('winner')
   const token = searchParams.get('token')
 
-  if (!token || token !== EXPECTED_TOKEN) {
+  const expectedToken = getExpectedToken()
+  if (!expectedToken || !token || !constantTimeEqual(token, expectedToken)) {
+    logSecurityEvent({
+      type: 'AUTH_FAILURE',
+      path: '/api/experiments/promote',
+      method: 'GET',
+      ip: req.headers.get('x-forwarded-for') || undefined,
+      reason: 'Invalid or missing experiment promotion admin token',
+    })
     return new NextResponse('Unauthorized access token', { status: 401 })
   }
 
@@ -200,6 +217,29 @@ export async function GET(req: NextRequest) {
  * POST Handler: Executes the actual state mutation upon deliberate confirmation.
  */
 export async function POST(req: NextRequest) {
+  // CSRF Defense: Validate Origin / Referer against host origin
+  const origin = req.headers.get('origin')
+  const referer = req.headers.get('referer')
+  const host = req.headers.get('host') || ''
+  
+  if (origin) {
+    try {
+      const originHost = new URL(origin).host
+      if (originHost !== host && !originHost.endsWith('settlementcheck.co.uk') && !originHost.startsWith('localhost')) {
+        logSecurityEvent({
+          type: 'CSRF_BLOCKED',
+          path: '/api/experiments/promote',
+          method: 'POST',
+          ip: req.headers.get('x-forwarded-for') || undefined,
+          reason: `Origin mismatch: ${origin} vs host ${host}`,
+        })
+        return new NextResponse('Forbidden: Cross-origin submission rejected', { status: 403 })
+      }
+    } catch {
+      return new NextResponse('Forbidden: Malformed origin header', { status: 403 })
+    }
+  }
+
   let experimentId = 'calc_ux_v2'
   let winner: string | null = null
   let token: string | null = null
@@ -221,7 +261,15 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  if (!token || token !== EXPECTED_TOKEN) {
+  const expectedToken = getExpectedToken()
+  if (!expectedToken || !token || !constantTimeEqual(token, expectedToken)) {
+    logSecurityEvent({
+      type: 'AUTH_FAILURE',
+      path: '/api/experiments/promote',
+      method: 'POST',
+      ip: req.headers.get('x-forwarded-for') || undefined,
+      reason: 'Unauthorized token on state mutation POST',
+    })
     return new NextResponse('Unauthorized access token', { status: 401 })
   }
 

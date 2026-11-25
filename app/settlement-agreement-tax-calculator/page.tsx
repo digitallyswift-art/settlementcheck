@@ -11,7 +11,9 @@ import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Employment Settlement Tax Calculator UK | SettlementCheck',
+  title: {
+    absolute: 'Employment Settlement Tax Calculator UK | SettlementCheck',
+  },
   description:
     'Calculate tax on employment settlements in 2026. Calculate your £30,000 tax exemption, taxable notice pay (PILON), and net take-home figure. Free check.',
   alternates: {
