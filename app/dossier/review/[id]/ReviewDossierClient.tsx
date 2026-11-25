@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { SolicitorPreFlightDossier } from '@/lib/agentic-engine/types';
-import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers';
+import { STATUTORY_RATES_2026_27, VENTO_BANDS_2026_27 } from '@/lib/statutory-rates';
 import { getSandboxMatterOverrides, setSandboxMatterOverride } from '@/lib/portal-sandbox';
 
 interface ConflictCheckMeta {
@@ -27,7 +27,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
   const [isClaimed, setIsClaimed] = useState(false);
   const [isReleased, setIsReleased] = useState(false);
   const [secondsRemaining, setSecondsRemaining] = useState(15 * 60);
-  const [activeTab, setActiveTab] = useState<'overview' | 'statutory' | 'threat' | 'clauses' | 'telemetry' | 'pms'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'statutory' | 'threat' | 'clauses' | 'caps' | 'pms'>('overview');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [claimToken, setClaimToken] = useState<string | null>(null);
   const [isDemo, setIsDemo] = useState(false);
@@ -82,7 +82,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
   // 2. Countdown timer for 15-minute SLA watchdog
   useEffect(() => {
-    if (isClaimed) return;
+    if (isClaimed || isReleased) return;
     const interval = setInterval(() => {
       setSecondsRemaining(prev => {
         if (prev <= 1) {
@@ -93,11 +93,11 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [isClaimed]);
+  }, [isClaimed, isReleased]);
 
   // 3. Handle Matter Claim
   const handleClaim = async () => {
-    if (isClaimed) return;
+    if (isClaimed || isReleased) return;
     setClaiming(true);
     setClaimError(null);
     try {
@@ -137,7 +137,6 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
     }
   };
 
-  // Clipboard helper
   const copyToClipboard = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
     setCopiedKey(key);
@@ -155,7 +154,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
         <div className="w-12 h-12 border-4 border-[#0B1F3A]/20 border-t-[#D9603B] rounded-full animate-spin mb-5" />
         <h2 className="text-2xl font-bold font-serif">Compiling Pre-Flight Legal Dossier...</h2>
         <p className="text-base text-[#0B1F3A]/75 mt-2 max-w-md leading-relaxed">
-          Evaluating ERA 1996 statutory invariants and Section 203 compliance.
+          Evaluating ERA 1996 statutory baselines, ITEPA 2003 tax split, and Section 203(3) terms.
         </p>
       </div>
     );
@@ -164,7 +163,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
   if (!dossier) {
     return (
       <div className="min-h-screen bg-[#F7F4EE] flex flex-col items-center justify-center p-6 text-[#0B1F3A]">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-[#0B1F3A]/10 max-w-md w-full text-center">
+        <div className="bg-white p-8 rounded-2xl shadow-sm border border-[#E2DCCE] max-w-md w-full text-center">
           <h1 className="text-2xl font-bold font-serif mb-3">Dossier Unavailable</h1>
           <p className="text-base text-[#0B1F3A]/75 mb-6 leading-relaxed">
             This matter may have expired or the claim token provided is invalid.
@@ -182,48 +181,52 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
   const { matterSummary, statutoryAnalysis, threatAssessment, contractAudit, marketNegotiationBrief, crmPayload } = dossier;
 
-  const verdictStyles: Record<string, { bg: string; text: string; label: string }> = {
-    CRITICAL_STATUTORY_DEFICIT: { bg: 'bg-[#D9603B]/10 text-[#D9603B] border-[#D9603B]/30', text: 'text-[#D9603B]', label: 'Critical Statutory Deficit' },
-    BELOW_MARKET_BENCHMARK: { bg: 'bg-[#B5802A]/10 text-[#8A5D16] border-[#B5802A]/30', text: 'text-[#8A5D16]', label: 'Below Market Benchmark' },
-    FAIR_MARKET_RANGE: { bg: 'bg-[#0B1F3A]/10 text-[#0B1F3A] border-[#0B1F3A]/30', text: 'text-[#0B1F3A]', label: 'Fair Market Range' },
-    ABOVE_MARKET_STANDARD: { bg: 'bg-[#0B1F3A]/10 text-[#0B1F3A] border-[#0B1F3A]/30', text: 'text-[#0B1F3A]', label: 'Above Market Standard' },
-  };
+  const isDeadlineUrgent =
+    Boolean(conflictCheck?.signingDeadlineLabel) &&
+    conflictCheck?.signingDeadlineLabel !== 'Completed' &&
+    conflictCheck?.signingDeadlineLabel !== 'Signed';
 
-  const activeVerdict = verdictStyles[matterSummary.strategicVerdict] || verdictStyles.BELOW_MARKET_BENCHMARK;
+  const offerHeadroom = matterSummary.keyFigures.employerOffer - matterSummary.keyFigures.statutoryMinimum;
+  const employerClass1ANic = Math.round(
+    statutoryAnalysis.taxableTerminationPortion * STATUTORY_RATES_2026_27.employerClass1ANICRate
+  );
 
   return (
     <div className="min-h-screen bg-[#F7F4EE] text-[#0B1F3A] pb-24">
-      {/* ── Top SLA Watchdog Sentinel Bar ──────────────────────────────────── */}
-      <div className="sticky top-0 z-50 bg-[#0B1F3A] border-b border-white/10 text-white shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-start sm:items-center gap-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#D9603B] animate-pulse shrink-0 mt-1.5 sm:mt-0" />
-            <div className="text-sm sm:text-base leading-snug">
-              <span className="font-semibold text-white">
-                {isDemo ? 'Interactive Sandbox Preview:' : 'SRA Territorial Instruction:'}
-              </span>{' '}
-              <span className="text-[#F7F4EE]/85">
-                {isClaimed
-                  ? isDemo
-                    ? 'Synthetic Matter Claimed (Sandbox Only)'
-                    : 'Instruction Claimed & Matter Locked to Your Firm'
-                  : `15-Min Exclusivity Window: ${timerFormatted} remaining`}
+      {/* ── Compact Sticky Top Action Bar ──────────────────────────────────── */}
+      <header className="sticky top-0 z-50 bg-[#0B1F3A] border-b border-white/10 text-white shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <div className="flex items-center justify-between sm:justify-start gap-3">
+            <Link
+              href={portalHref}
+              className="inline-flex items-center gap-1.5 min-h-[40px] text-sm font-medium text-white/85 hover:text-white transition-colors"
+            >
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+              Portal
+            </Link>
+            <span className="text-white/25" aria-hidden="true">|</span>
+            <div className="flex items-center gap-2 text-xs sm:text-sm">
+              <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse shrink-0" />
+              <span className="font-medium text-white/90 truncate">
+                {isReleased
+                  ? 'Released (Zero Penalty)'
+                  : isClaimed
+                    ? isDemo
+                      ? 'Sandbox · Claimed'
+                      : 'Instruction Claimed'
+                    : `15m Hold: ${timerFormatted}`}
               </span>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5">
-            <Link
-              href={portalHref}
-              className="inline-flex items-center min-h-[44px] px-2 text-sm text-white/85 hover:text-white underline underline-offset-4"
-            >
-              ← Portal
-            </Link>
+          <div className="grid grid-cols-2 sm:flex items-center gap-2">
             {!isReleased && (
               <button
                 type="button"
                 onClick={handleReleaseConflict}
-                className="min-h-[44px] px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors"
+                className="min-h-[42px] px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors"
               >
                 Release (Conflict)
               </button>
@@ -231,65 +234,61 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
             <button
               onClick={handleClaim}
               disabled={isClaimed || isReleased || claiming}
-              className={`flex-1 sm:flex-none min-h-[44px] px-5 py-2.5 rounded-xl text-sm sm:text-base font-semibold transition-all ${
+              className={`min-h-[42px] px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
                 isReleased
-                  ? 'bg-white/10 text-white/80 cursor-default border border-white/20'
+                  ? 'col-span-2 bg-white/10 text-white/75 cursor-default border border-white/15'
                   : isClaimed
                     ? 'bg-white/10 text-white cursor-default border border-white/20'
-                    : 'bg-[#D9603B] text-white hover:bg-[#D9603B]/90 shadow-sm active:scale-[0.99]'
+                    : 'bg-[#D9603B] text-white hover:bg-[#D9603B]/90 shadow-sm'
               }`}
             >
               {isReleased
-                ? 'Matter Released (Zero Penalty)'
+                ? 'Matter Released'
                 : isClaimed
                   ? 'Instruction Claimed'
                   : claiming
-                    ? 'Securing Matter...'
-                    : 'Hold & Confirm Instruction'}
+                    ? 'Holding...'
+                    : 'Hold & Confirm'}
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-5 sm:pt-7">
         {claimError && (
-          <div role="alert" className="mb-6 rounded-xl bg-[#FEF5F3] border border-[#D9603B]/40 p-4 text-sm sm:text-base text-[#D9603B] font-medium">
+          <div role="alert" className="mb-5 rounded-xl bg-[#FEF5F3] border border-[#D9603B]/40 p-4 text-sm text-[#D9603B] font-medium">
             {claimError}
           </div>
         )}
 
         {isDemo && (
-          <div className="mb-6 rounded-xl bg-white border border-[#D9603B]/30 p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-start gap-3">
-              <span className="text-xs font-mono uppercase tracking-wider px-2.5 py-1 rounded bg-[#D9603B]/10 text-[#D9603B] font-semibold self-start shrink-0">
-                Sandbox Mode
+          <div className="mb-5 rounded-xl bg-white border border-[#E2DCCE] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 text-sm text-[#0B1F3A]/80">
+              <span className="text-xs font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#0B1F3A]/10 text-[#0B1F3A] font-semibold shrink-0">
+                Sandbox
               </span>
-              <p className="text-sm sm:text-base text-[#0B1F3A]/85 leading-relaxed">
-                This is a synthetic sample dossier for solicitor partner evaluation. No real client data is displayed, and claiming or exporting here does not affect live SRA instructions.
-              </p>
+              <span>Synthetic sample dossier for partner evaluation. No live SRA matter is affected.</span>
             </div>
             <Link
               href="/for-solicitors/?from=dossier-demo"
-              className="inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-lg bg-[#0B1F3A] text-white text-sm font-semibold hover:bg-[#0B1F3A]/90 transition-colors whitespace-nowrap shrink-0"
+              className="text-sm font-semibold text-[#D9603B] hover:underline whitespace-nowrap shrink-0"
             >
-              Apply for live panel access →
+              Apply for panel access →
             </Link>
           </div>
         )}
 
-        {/* ── Matter Header Card ────────────────────────────────────────────── */}
-        <div className="bg-white rounded-2xl p-5 sm:p-8 shadow-sm border border-[#0B1F3A]/10 mb-6 sm:mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-5 mb-6 pb-6 border-b border-[#0B1F3A]/10">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-mono uppercase tracking-wider px-2.5 py-1 rounded bg-[#0B1F3A]/5 text-[#0B1F3A]/80 font-semibold">
+        {/* ── Structured Legal Matter Sheet Card ────────────────────────────── */}
+        <section className="bg-white rounded-2xl border border-[#E2DCCE] shadow-sm overflow-hidden mb-6">
+          {/* Top Matter Identity Row */}
+          <div className="p-5 sm:p-7 border-b border-[#E2DCCE] flex flex-col md:flex-row md:items-start justify-between gap-4">
+            <div className="space-y-1.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#0B1F3A]/65 font-semibold">
                   DOSSIER #{dossier.dossierId.slice(-8).toUpperCase()}
                 </span>
-                <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${activeVerdict.bg}`}>
-                  {activeVerdict.label}
-                </span>
                 {threatAssessment.hasCaptiveSteering && (
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/30 inline-flex items-center gap-1.5">
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-md bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/25 inline-flex items-center gap-1.5">
                     <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
                       <path d="M12 9v4" />
@@ -299,139 +298,165 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                   </span>
                 )}
               </div>
-
-              <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-[#0B1F3A]">
+              <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-[#0B1F3A] m-0">
                 {matterSummary.clientName}
               </h1>
-
-              {/* SRA Conflict Check & Triage Context Strip */}
-              {conflictCheck && (
-                <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
-                  {conflictCheck.employerName ? (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1F3A]/5 border border-[#0B1F3A]/15 text-[#0B1F3A] font-medium">
-                      <span className="font-semibold">Counterparty:</span> {conflictCheck.employerName}
-                      {conflictCheck.employerNameSource && (
-                        <span className="text-xs font-mono text-[#0B1F3A]/65">
-                          ({conflictCheck.employerNameSource === 'draft_extracted' ? 'Draft' : 'Pre-disclosed'})
-                        </span>
-                      )}
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
-                      <span className="font-semibold">SRA Conflict Check:</span> Confirm employer on first call
-                    </span>
-                  )}
-                  {conflictCheck.signingDeadlineLabel && (
-                    <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#D9603B]/10 border border-[#D9603B]/25 text-[#D9603B] font-medium">
-                      Deadline: {conflictCheck.signingDeadlineLabel}
-                    </span>
-                  )}
-                  <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
-                    {conflictCheck.hasDraftAgreement ? 'Draft Agreement Ready' : 'Offer Only (No Draft)'}
-                  </span>
-                </div>
-              )}
-
-              {/* Actionable Contact Strip for Mobile & Desktop */}
-              <div className="flex flex-wrap items-center gap-2.5 pt-1 text-sm sm:text-base">
-                <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#0B1F3A]/10 text-[#0B1F3A] font-medium">
-                  Postcode: <strong className="ml-1.5 font-mono">{matterSummary.clientContact.postcode}</strong>
-                </span>
-                <a
-                  href={`tel:${matterSummary.clientContact.phone}`}
-                  className="inline-flex items-center gap-2 min-h-[44px] px-3.5 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#D9603B]/30 text-[#D9603B] hover:bg-[#D9603B]/10 font-semibold transition-colors"
-                >
-                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                  </svg>
-                  {matterSummary.clientContact.phone}
-                </a>
-                <a
-                  href={`mailto:${matterSummary.clientContact.email}`}
-                  className="inline-flex items-center gap-2 min-h-[44px] px-3.5 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#0B1F3A]/15 text-[#0B1F3A] hover:border-[#D9603B] hover:text-[#D9603B] font-medium transition-colors break-all"
-                >
-                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                  </svg>
-                  {matterSummary.clientContact.email}
-                </a>
-              </div>
+              <p className="text-sm text-[#0B1F3A]/70 m-0">
+                Routed to <strong className="text-[#0B1F3A]">{dossier.territorialRouting?.matchedFirmName || 'SRA Designated Partner'}</strong>
+                {dossier.territorialRouting?.adminDistrict ? ` · ${dossier.territorialRouting.adminDistrict}` : ''}
+              </p>
             </div>
 
-            <div className="lg:text-right bg-[#F7F4EE] lg:bg-transparent p-4 lg:p-0 rounded-xl border border-[#0B1F3A]/5 lg:border-0 shrink-0">
-              <span className="text-xs uppercase tracking-wider font-semibold text-[#0B1F3A]/65 block">Territory SLA Watchdog</span>
-              <span className="text-base font-semibold text-[#0B1F3A] block mt-0.5">
-                {dossier.territorialRouting?.matchedFirmName || 'SRA Designated Partner'}
+            {/* Uniform 2-Button Contact Action Bar */}
+            <div className="grid grid-cols-2 gap-2.5 md:w-auto shrink-0">
+              <a
+                href={`tel:${matterSummary.clientContact.phone}`}
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 rounded-xl bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white text-sm font-semibold transition-colors"
+              >
+                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                Call Client
+              </a>
+              <a
+                href={`mailto:${matterSummary.clientContact.email}`}
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 rounded-xl bg-[#F7F4EE] hover:bg-[#EFEAE0] border border-[#E2DCCE] text-[#0B1F3A] text-sm font-semibold transition-colors"
+              >
+                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+                Email Client
+              </a>
+            </div>
+          </div>
+
+          {/* Uniform 2x2 / 4-Col Structured Matter Metadata Grid (Replaces Pill Soup) */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-[#E2DCCE] bg-[#F7F4EE]/60 border-b border-[#E2DCCE]">
+            <div className="p-4">
+              <span className="block text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/60">
+                Counterparty (SRA 6.2)
               </span>
-              <span className="text-sm text-[#0B1F3A]/75 block mt-0.5">
-                {dossier.territorialRouting?.adminDistrict || 'United Kingdom'}{' '}
-                {dossier.territorialRouting?.distanceMiles ? `(${dossier.territorialRouting.distanceMiles} mi)` : ''}
+              <span className="block text-sm font-semibold text-[#0B1F3A] mt-1 leading-snug">
+                {conflictCheck?.employerName || 'Confirm on first call'}
+              </span>
+              {conflictCheck?.employerNameSource && (
+                <span className="block text-xs text-[#0B1F3A]/60 mt-0.5">
+                  {conflictCheck.employerNameSource === 'draft_extracted' ? 'Extracted from draft' : 'Pre-disclosed by client'}
+                </span>
+              )}
+            </div>
+
+            <div className="p-4">
+              <span className="block text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/60">
+                Signing Deadline
+              </span>
+              <span className={`block text-sm font-semibold mt-1 leading-snug ${isDeadlineUrgent ? 'text-[#D9603B]' : 'text-[#0B1F3A]'}`}>
+                {conflictCheck?.signingDeadlineLabel || 'Not specified'}
+              </span>
+              <span className="block text-xs text-[#0B1F3A]/60 mt-0.5">
+                {conflictCheck?.clientGoal || 'Standard review'}
+              </span>
+            </div>
+
+            <div className="p-4">
+              <span className="block text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/60">
+                Document Status
+              </span>
+              <span className="block text-sm font-semibold text-[#0B1F3A] mt-1 leading-snug">
+                {conflictCheck?.hasDraftAgreement ? 'Draft Agreement Ready' : 'Offer Only (No Draft)'}
+              </span>
+              <span className="block text-xs text-[#0B1F3A]/60 mt-0.5">
+                Section 203(3) ERA 1996
+              </span>
+            </div>
+
+            <div className="p-4">
+              <span className="block text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/60">
+                Client Contact
+              </span>
+              <span className="block text-sm font-mono font-semibold text-[#0B1F3A] mt-1 leading-snug">
+                {matterSummary.clientContact.postcode}
+              </span>
+              <span className="block text-xs text-[#0B1F3A]/65 mt-0.5 truncate">
+                {matterSummary.clientContact.phone}
               </span>
             </div>
           </div>
 
-          {/* ── Key Figures 4-Pillar Grid ─────────────────────────────────── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
-              <span className="text-sm font-medium text-[#0B1F3A]/75 block mb-1">Gross Annual Salary</span>
-              <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
+          {/* Uniform 4-Pillar Financial Summary (100% Deterministic Statute & Tax) */}
+          <div className="p-5 sm:p-7 grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+            <div className="p-4 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE] flex flex-col justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/65 block">
+                Gross Salary
+              </span>
+              <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums mt-1.5">
                 £{matterSummary.keyFigures.salary.toLocaleString('en-GB')}
               </span>
-              <span className="text-sm text-[#0B1F3A]/70 block mt-1.5">
-                {matterSummary.keyFigures.tenureYears} yrs service ({matterSummary.keyFigures.age} yrs old)
+              <span className="text-xs sm:text-sm text-[#0B1F3A]/70 block mt-1.5">
+                {matterSummary.keyFigures.tenureYears} yrs service · Age {matterSummary.keyFigures.age}
               </span>
             </div>
 
-            <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
-              <span className="text-sm font-medium text-[#0B1F3A]/75 block mb-1">Current Employer Offer</span>
-              <span className="text-2xl sm:text-3xl font-serif font-bold text-[#D9603B] tabular-nums">
+            <div className="p-4 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE] flex flex-col justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/65 block">
+                Employer Offer
+              </span>
+              <span className={`text-2xl sm:text-3xl font-serif font-bold tabular-nums mt-1.5 ${statutoryAnalysis.isOfferBelowStatutoryMinimum ? 'text-[#D9603B]' : 'text-[#0B1F3A]'}`}>
                 £{matterSummary.keyFigures.employerOffer.toLocaleString('en-GB')}
               </span>
-              <span className="text-sm text-[#0B1F3A]/70 block mt-1.5">
-                Legal Fee Offered: £{matterSummary.keyFigures.employerLegalFeeOffered} + VAT
+              <span className="text-xs sm:text-sm text-[#0B1F3A]/70 block mt-1.5">
+                Fee offered: £{matterSummary.keyFigures.employerLegalFeeOffered} + VAT
               </span>
             </div>
 
-            <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
-              <span className="text-sm font-medium text-[#0B1F3A]/75 block mb-1">ERA 1996 Statutory Floor</span>
-              <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
+            <div className="p-4 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE] flex flex-col justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/65 block">
+                ERA 1996 Floor
+              </span>
+              <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums mt-1.5">
                 £{matterSummary.keyFigures.statutoryMinimum.toLocaleString('en-GB')}
               </span>
-              <span className={`text-sm font-semibold block mt-1.5 ${statutoryAnalysis.isOfferBelowStatutoryMinimum ? 'text-[#D9603B]' : 'text-[#0B1F3A]/80'}`}>
+              <span className={`text-xs sm:text-sm font-semibold block mt-1.5 ${statutoryAnalysis.isOfferBelowStatutoryMinimum ? 'text-[#D9603B]' : 'text-[#0B1F3A]/75'}`}>
                 {statutoryAnalysis.isOfferBelowStatutoryMinimum
-                  ? `Deficit: -£${statutoryAnalysis.statutoryShortfallDelta.toLocaleString('en-GB')}`
-                  : 'Offer clears statutory floor'}
+                  ? `Shortfall: -£${statutoryAnalysis.statutoryShortfallDelta.toLocaleString('en-GB')}`
+                  : `+£${offerHeadroom.toLocaleString('en-GB')} above floor`}
               </span>
             </div>
 
-            <div className="p-4 sm:p-5 rounded-xl bg-[#0B1F3A] text-white">
-              <span className="text-sm font-medium text-[#F7F4EE]/80 block mb-1">Market Counter Target</span>
-              <span className="text-2xl sm:text-3xl font-serif font-bold text-white tabular-nums">
-                £{matterSummary.keyFigures.targetSettlement.toLocaleString('en-GB')}
+            <div className="p-4 rounded-xl bg-[#0B1F3A] text-white flex flex-col justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-white/70 block">
+                Tax-Free (s.403)
               </span>
-              <span className="text-sm text-[#F7F4EE]/90 font-medium block mt-1.5">
-                Legal Fee Demand: <strong className="text-[#D9603B]">£{matterSummary.keyFigures.recommendedLegalFeeDemand} + VAT</strong>
+              <span className="text-2xl sm:text-3xl font-serif font-bold text-white tabular-nums mt-1.5">
+                £{statutoryAnalysis.taxFreeTerminationPortion.toLocaleString('en-GB')}
+              </span>
+              <span className="text-xs sm:text-sm text-white/80 block mt-1.5">
+                {statutoryAnalysis.taxableTerminationPortion > 0
+                  ? `£${statutoryAnalysis.taxableTerminationPortion.toLocaleString('en-GB')} excess (15% Class 1A)`
+                  : 'Within £30k s.403 limit'}
               </span>
             </div>
           </div>
-        </div>
 
-        {/* ── Mandatory Regulatory & Common Law Disclaimers ─────────────────── */}
-        <MandatoryLegalDisclaimers className="mb-6" />
+          {/* Concise B2B Solicitor Triage Notice (Replaces B2C Employee Tips) */}
+          <div className="px-5 sm:px-7 py-3 bg-[#F7F4EE] border-t border-[#E2DCCE] text-xs text-[#0B1F3A]/75 leading-relaxed">
+            <strong>Solicitor Pre-Flight Triage Notice:</strong> Deterministic calculation based on client-supplied parameters and April 2026 UK statutory limits. Verify employment contract, termination date, notice entitlement, and ERA 1996 s.141 eligibility prior to advising.
+          </div>
+        </section>
 
-        {/* ── Navigation Tabs ──────────────────────────────────────────────── */}
+        {/* ── Clean 2-Col Mobile / Inline Desktop Tab Grid (Zero Scrollbar) ── */}
         <div
           role="tablist"
           aria-label="Dossier analysis sections"
-          className="flex items-center gap-2.5 overflow-x-auto pb-3 mb-6 border-b border-[#0B1F3A]/10"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap gap-2 mb-6"
         >
           {[
             { id: 'overview', label: '1. Executive Brief' },
-            { id: 'statutory', label: '2. Statutory Floor (ERA 1996)' },
-            { id: 'threat', label: '3. Captive Threat Sentinel' },
-            { id: 'clauses', label: '4. S.203 Contract Audit' },
-            { id: 'telemetry', label: '5. Market Telemetry' },
+            { id: 'statutory', label: '2. ERA 1996 Floor' },
+            { id: 'threat', label: '3. Steering Check' },
+            { id: 'clauses', label: '4. S.203 Clauses' },
+            { id: 'caps', label: '5. Statutory Caps' },
             { id: 'pms', label: '6. PMS Export' },
           ].map(tab => (
             <button
@@ -439,10 +464,10 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
               role="tab"
               aria-selected={activeTab === tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`min-h-[44px] px-4 py-2.5 rounded-xl text-sm sm:text-base whitespace-nowrap transition-colors ${
+              className={`min-h-[44px] px-3.5 py-2.5 rounded-xl text-sm font-semibold text-left sm:text-center transition-colors ${
                 activeTab === tab.id
-                  ? 'bg-[#0B1F3A] text-white font-semibold shadow-sm'
-                  : 'bg-white text-[#0B1F3A]/80 hover:text-[#0B1F3A] border border-[#0B1F3A]/15 font-medium'
+                  ? 'bg-[#0B1F3A] text-white shadow-sm'
+                  : 'bg-white text-[#0B1F3A]/80 hover:text-[#0B1F3A] border border-[#E2DCCE]'
               }`}
             >
               {tab.label}
@@ -454,29 +479,32 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
         {activeTab === 'overview' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
-              <div className="bg-white rounded-2xl p-5 sm:p-7 border border-[#0B1F3A]/10 shadow-sm">
-                <h2 className="font-serif font-bold text-xl sm:text-2xl mb-3 text-[#0B1F3A]">Matter Strategy &amp; Case Overview</h2>
+              <div className="bg-white rounded-2xl p-5 sm:p-7 border border-[#E2DCCE] shadow-sm">
+                <h2 className="font-serif font-bold text-xl sm:text-2xl mb-3 text-[#0B1F3A]">Matter Strategy &amp; Statutory Summary</h2>
                 <p className="text-base text-[#0B1F3A]/85 leading-relaxed mb-5 max-w-prose">
-                  The client has received a formal settlement agreement offer of £{matterSummary.keyFigures.employerOffer.toLocaleString('en-GB')}. Based on continuous employment tenure of {matterSummary.keyFigures.tenureYears} years and gross annual remuneration of £{matterSummary.keyFigures.salary.toLocaleString('en-GB')}, the statutory minimum floor is calculated at £{matterSummary.keyFigures.statutoryMinimum.toLocaleString('en-GB')} under ERA 1996 ss.86 &amp; 162.
+                  The client has received a settlement offer of £{matterSummary.keyFigures.employerOffer.toLocaleString('en-GB')} with £{matterSummary.keyFigures.employerLegalFeeOffered} + VAT offered towards independent legal advice. Based on {matterSummary.keyFigures.tenureYears} completed years of service and gross annual salary of £{matterSummary.keyFigures.salary.toLocaleString('en-GB')}, the deterministic statutory floor is £{matterSummary.keyFigures.statutoryMinimum.toLocaleString('en-GB')} under ERA 1996 ss.86 &amp; 162.
                 </p>
 
                 {statutoryAnalysis.isOfferBelowStatutoryMinimum ? (
                   <div className="p-4 sm:p-5 rounded-xl bg-[#D9603B]/10 border border-[#D9603B]/30 mb-5">
-                    <h3 className="text-xs font-bold text-[#D9603B] uppercase tracking-wider mb-1.5">Statutory Baseline Comparison</h3>
-                    <p className="text-sm sm:text-base text-[#0B1F3A] leading-relaxed">
-                      The recorded employer offer sits <strong>£{statutoryAnalysis.statutoryShortfallDelta.toLocaleString('en-GB')}</strong> below the calculated statutory redundancy and notice baseline (subject to eligibility under ERA 1996 s.141 and absence of summary dismissal for gross misconduct).
+                    <h3 className="text-xs font-bold text-[#D9603B] uppercase tracking-wider mb-1.5">Statutory Shortfall Identified</h3>
+                    <p className="text-sm sm:text-base text-[#0B1F3A] leading-relaxed m-0">
+                      The employer offer sits <strong>£{statutoryAnalysis.statutoryShortfallDelta.toLocaleString('en-GB')}</strong> below the calculated statutory redundancy and notice baseline (subject to eligibility under ERA 1996 s.141 and absence of summary dismissal for gross misconduct).
                     </p>
                   </div>
                 ) : (
-                  <div className="p-4 sm:p-5 rounded-xl bg-[#0B1F3A]/5 border border-[#0B1F3A]/15 mb-5">
-                    <h3 className="text-xs font-bold text-[#0B1F3A] uppercase tracking-wider mb-1.5">Commercial Negotiation Opportunity</h3>
-                    <p className="text-sm sm:text-base text-[#0B1F3A]/85 leading-relaxed">
-                      While the offer satisfies the statutory floor, comparable matters in this category typically settle between £{marketNegotiationBrief.typicalSettlementRange.low.toLocaleString('en-GB')} and £{marketNegotiationBrief.typicalSettlementRange.high.toLocaleString('en-GB')}.
+                  <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE] mb-5">
+                    <h3 className="text-xs font-bold text-[#0B1F3A] uppercase tracking-wider mb-1.5">Statutory &amp; Tax Structuring Summary</h3>
+                    <p className="text-sm sm:text-base text-[#0B1F3A]/85 leading-relaxed m-0">
+                      The offer clears the calculated ERA 1996 baseline by <strong>£{offerHeadroom.toLocaleString('en-GB')}</strong>. Under ITEPA 2003 s.403, £{statutoryAnalysis.taxFreeTerminationPortion.toLocaleString('en-GB')} falls within the £30,000 exemption
+                      {statutoryAnalysis.taxableTerminationPortion > 0
+                        ? ` and £${statutoryAnalysis.taxableTerminationPortion.toLocaleString('en-GB')} is taxable excess (attracting approx. £${employerClass1ANic.toLocaleString('en-GB')} Employer Class 1A NIC at 15.0% unless structured via pension).`
+                        : '.'}
                     </p>
                   </div>
                 )}
 
-                <h3 className="text-sm font-bold uppercase tracking-wider text-[#0B1F3A]/75 mb-3">Key Tactical Action Items</h3>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#0B1F3A]/70 mb-3">Statutory &amp; Contractual Review Points</h3>
                 <ul className="space-y-3 text-sm sm:text-base text-[#0B1F3A]/85 leading-relaxed">
                   {marketNegotiationBrief.tacticalNegotiationPoints.map((pt, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
@@ -487,8 +515,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                 </ul>
               </div>
 
-              {/* SRA Compliance & Disclaimer */}
-              <div className="bg-[#0B1F3A]/5 rounded-xl p-5 border border-[#0B1F3A]/10 text-sm text-[#0B1F3A]/80 leading-relaxed">
+              <div className="bg-white rounded-xl p-5 border border-[#E2DCCE] text-sm text-[#0B1F3A]/80 leading-relaxed">
                 <strong className="text-[#0B1F3A] block mb-1">SRA Independence Statement:</strong>
                 {dossier.sraComplianceStatement}
               </div>
@@ -496,12 +523,12 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
             {/* Right Quick Actions Panel */}
             <div className="space-y-6">
-              <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#0B1F3A]/10 shadow-sm">
+              <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#E2DCCE] shadow-sm">
                 <h2 className="font-serif font-bold text-lg mb-4 text-[#0B1F3A]">Quick Adviser Actions</h2>
                 <div className="space-y-3">
                   <button
                     onClick={() => copyToClipboard(threatAssessment.counterNoticeDraft || '', 'parity-notice')}
-                    className="w-full min-h-[48px] text-left px-4 py-3 rounded-xl border border-[#0B1F3A]/15 hover:border-[#D9603B] transition-colors text-sm sm:text-base font-semibold text-[#0B1F3A] flex items-center justify-between gap-2"
+                    className="w-full min-h-[48px] text-left px-4 py-3 rounded-xl border border-[#E2DCCE] hover:border-[#D9603B] transition-colors text-sm font-semibold text-[#0B1F3A] flex items-center justify-between gap-2"
                   >
                     <span className="inline-flex items-center gap-2.5">
                       <svg className="w-4 h-4 text-[#0B1F3A]/70 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -515,7 +542,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
                   <button
                     onClick={() => copyToClipboard(JSON.stringify(crmPayload.clioMatterPayload, null, 2), 'clio-json')}
-                    className="w-full min-h-[48px] text-left px-4 py-3 rounded-xl border border-[#0B1F3A]/15 hover:border-[#D9603B] transition-colors text-sm sm:text-base font-semibold text-[#0B1F3A] flex items-center justify-between gap-2"
+                    className="w-full min-h-[48px] text-left px-4 py-3 rounded-xl border border-[#E2DCCE] hover:border-[#D9603B] transition-colors text-sm font-semibold text-[#0B1F3A] flex items-center justify-between gap-2"
                   >
                     <span className="inline-flex items-center gap-2.5">
                       <svg className="w-4 h-4 text-[#0B1F3A]/70 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -530,7 +557,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
                   <button
                     onClick={() => window.print()}
-                    className="w-full min-h-[48px] text-left px-4 py-3 rounded-xl border border-[#0B1F3A]/15 hover:border-[#0B1F3A] transition-colors text-sm sm:text-base font-semibold text-[#0B1F3A] flex items-center justify-between gap-2"
+                    className="w-full min-h-[48px] text-left px-4 py-3 rounded-xl border border-[#E2DCCE] hover:border-[#0B1F3A] transition-colors text-sm font-semibold text-[#0B1F3A] flex items-center justify-between gap-2"
                   >
                     <span className="inline-flex items-center gap-2.5">
                       <svg className="w-4 h-4 text-[#0B1F3A]/70 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -545,14 +572,14 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#0B1F3A]/10 shadow-sm">
-                <h2 className="text-sm font-bold uppercase tracking-wider text-[#0B1F3A]/75 mb-3">Red Flags Detected</h2>
+              <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#E2DCCE] shadow-sm">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-[#0B1F3A]/70 mb-3">Clause Flags Detected</h2>
                 <div className="space-y-3">
                   {contractAudit.redFlags.length === 0 ? (
                     <span className="text-sm text-[#0B1F3A]/75">Zero high-risk contractual clauses identified.</span>
                   ) : (
                     contractAudit.redFlags.map((rf, idx) => (
-                      <div key={idx} className="p-3.5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
+                      <div key={idx} className="p-3.5 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]">
                         <span className={`text-xs font-bold block uppercase tracking-wide ${rf.severity === 'high' ? 'text-[#D9603B]' : 'text-[#8A5D16]'}`}>
                           {rf.category.replace(/_/g, ' ')} ({rf.severity})
                         </span>
@@ -568,7 +595,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
         {/* ── Tab 2: Statutory Floor (ERA 1996) ────────────────────────────── */}
         {activeTab === 'statutory' && (
-          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
+          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#E2DCCE] shadow-sm space-y-6">
             <div>
               <h2 className="font-serif font-bold text-xl sm:text-2xl text-[#0B1F3A]">Statutory Entitlement Breakdown (ERA 1996)</h2>
               <p className="text-sm sm:text-base text-[#0B1F3A]/80 mt-2 leading-relaxed max-w-prose">
@@ -579,13 +606,13 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
             <div className="overflow-x-auto -mx-5 sm:mx-0 px-5 sm:px-0">
               <table className="w-full min-w-[540px] text-sm sm:text-base border-collapse">
                 <thead>
-                  <tr className="border-b border-[#0B1F3A]/15 text-left text-xs uppercase tracking-wider text-[#0B1F3A]/70">
+                  <tr className="border-b border-[#E2DCCE] text-left text-xs uppercase tracking-wider text-[#0B1F3A]/70">
                     <th className="py-3 pr-4">Statutory Component</th>
                     <th className="py-3 pr-4">Governing Statute</th>
                     <th className="py-3 text-right">Statutory Value</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#0B1F3A]/10">
+                <tbody className="divide-y divide-[#E2DCCE]">
                   <tr>
                     <td className="py-4 pr-4 font-semibold text-[#0B1F3A]">Statutory Redundancy Pay (SRP)</td>
                     <td className="py-4 pr-4 text-[#0B1F3A]/75 text-sm">ERA 1996 s.162 (Age-weighted multiplier)</td>
@@ -608,7 +635,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                   </tr>
                   <tr>
                     <td className="py-4 pr-4 font-semibold text-[#0B1F3A]">Taxable Termination Portion</td>
-                    <td className="py-4 pr-4 text-[#0B1F3A]/75 text-sm">Subject to marginal income tax &amp; employer Class 1A NIC</td>
+                    <td className="py-4 pr-4 text-[#0B1F3A]/75 text-sm">Subject to marginal income tax &amp; 15.0% Employer Class 1A NIC</td>
                     <td className="py-4 text-right font-semibold tabular-nums">£{statutoryAnalysis.taxableTerminationPortion.toLocaleString('en-GB')}</td>
                   </tr>
                   <tr>
@@ -624,15 +651,15 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
         {/* ── Tab 3: Captive Threat Sentinel ────────────────────────────────── */}
         {activeTab === 'threat' && (
-          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
+          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#E2DCCE] shadow-sm space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="font-serif font-bold text-xl sm:text-2xl text-[#0B1F3A]">Captive Steering &amp; Independence Sentinel</h2>
+                <h2 className="font-serif font-bold text-xl sm:text-2xl text-[#0B1F3A]">Captive Steering &amp; Independence Check</h2>
                 <p className="text-sm sm:text-base text-[#0B1F3A]/75 mt-1">
                   Section 203(3) ERA 1996 &amp; SRA Code of Conduct Rule 2.1 compliance check.
                 </p>
               </div>
-              <span className={`text-xs font-bold px-3.5 py-1.5 rounded-full border ${threatAssessment.hasCaptiveSteering ? 'bg-[#D9603B]/10 text-[#D9603B] border-[#D9603B]/30' : 'bg-[#0B1F3A]/5 text-[#0B1F3A] border-[#0B1F3A]/20'}`}>
+              <span className={`text-xs font-bold px-3.5 py-1.5 rounded-full border ${threatAssessment.hasCaptiveSteering ? 'bg-[#D9603B]/10 text-[#D9603B] border-[#D9603B]/30' : 'bg-[#F7F4EE] text-[#0B1F3A] border-[#E2DCCE]'}`}>
                 {threatAssessment.hasCaptiveSteering ? 'CAPTIVE STEERING DETECTED' : 'CLEAR: INDEPENDENT SELECTION PERMITTED'}
               </span>
             </div>
@@ -657,13 +684,13 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                   </h3>
                   <button
                     onClick={() => copyToClipboard(threatAssessment.counterNoticeDraft || '', 'notice-tab')}
-                    className="min-h-[44px] px-4 py-2 text-sm font-semibold bg-[#D9603B] text-white rounded-lg hover:bg-[#D9603B]/90 transition-colors"
+                    className="min-h-[44px] px-4 py-2 text-sm font-semibold bg-[#D9603B] text-white rounded-xl hover:bg-[#D9603B]/90 transition-colors"
                   >
-                    {copiedKey === 'notice-tab' ? '✓ Copied to Clipboard' : 'Copy Notice Text'}
+                    {copiedKey === 'notice-tab' ? 'Copied to Clipboard' : 'Copy Notice Text'}
                   </button>
                 </div>
 
-                <pre className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10 text-sm font-mono whitespace-pre-wrap text-[#0B1F3A] leading-relaxed overflow-x-auto">
+                <pre className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE] text-sm font-mono whitespace-pre-wrap text-[#0B1F3A] leading-relaxed overflow-x-auto">
                   {threatAssessment.counterNoticeDraft}
                 </pre>
               </div>
@@ -673,7 +700,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
         {/* ── Tab 4: S.203 Contract Risk Audit ─────────────────────────────── */}
         {activeTab === 'clauses' && (
-          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
+          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#E2DCCE] shadow-sm space-y-6">
             <div>
               <h2 className="font-serif font-bold text-xl sm:text-2xl text-[#0B1F3A]">Section 203 ERA 1996 Contract Schedule &amp; Risk Register</h2>
               <p className="text-sm sm:text-base text-[#0B1F3A]/80 mt-1.5 leading-relaxed">
@@ -683,7 +710,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
             <div className="space-y-4">
               {contractAudit.redFlags.map((flag, idx) => (
-                <div key={idx} className="p-4 sm:p-5 rounded-xl border border-[#0B1F3A]/10 bg-[#F7F4EE]/60 space-y-3">
+                <div key={idx} className="p-4 sm:p-5 rounded-xl border border-[#E2DCCE] bg-[#F7F4EE]/60 space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="text-sm sm:text-base font-bold uppercase tracking-wide text-[#0B1F3A]">
                       {idx + 1}. {flag.category.replace(/_/g, ' ')}
@@ -693,7 +720,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                     </span>
                   </div>
                   <p className="text-sm sm:text-base text-[#0B1F3A]/85 leading-relaxed">{flag.issueDescription}</p>
-                  <div className="p-3.5 sm:p-4 bg-white rounded-lg border border-[#0B1F3A]/10">
+                  <div className="p-3.5 sm:p-4 bg-white rounded-lg border border-[#E2DCCE]">
                     <span className="font-bold block text-xs text-[#0B1F3A]/70 uppercase tracking-wider mb-1.5">Recommended Amendment Clause</span>
                     <span className="font-mono text-sm text-[#0B1F3A] leading-relaxed block">{flag.recommendedAmendment}</span>
                   </div>
@@ -703,41 +730,68 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
           </div>
         )}
 
-        {/* ── Tab 5: Market Telemetry ──────────────────────────────────────── */}
-        {activeTab === 'telemetry' && (
-          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
+        {/* ── Tab 5: Verified Statutory Caps & Vento Exposure (2026/27) ────── */}
+        {activeTab === 'caps' && (
+          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#E2DCCE] shadow-sm space-y-6">
             <div>
-              <h2 className="font-serif font-bold text-xl sm:text-2xl text-[#0B1F3A]">SettlementCheck Telemetry Intelligence</h2>
-              <p className="text-sm sm:text-base text-[#0B1F3A]/80 mt-1.5 leading-relaxed">
-                Aggregated settlement multiplier benchmarks based on {marketNegotiationBrief.sampleSize} UK matters in this category.
+              <span className="text-xs font-mono uppercase tracking-wider font-semibold text-[#D9603B]">
+                Effective 6 April 2026 · Legislation.gov.uk &amp; Presidential Guidance
+              </span>
+              <h2 className="font-serif font-bold text-xl sm:text-2xl text-[#0B1F3A] mt-1">
+                Statutory Tribunal Exposure &amp; Tax Limits
+              </h2>
+              <p className="text-sm sm:text-base text-[#0B1F3A]/80 mt-1.5 leading-relaxed max-w-prose">
+                Verifiable statutory ceilings for Without Prejudice correspondence. Zero unattributed market multipliers.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
-                <span className="text-sm font-medium text-[#0B1F3A]/75 block mb-1">Median Settlement Multiplier</span>
-                <span className="text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
-                  {marketNegotiationBrief.medianSettlementMultiplier}x
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/65 block">Weekly Pay Cap (GB / NI)</span>
+                <span className="text-2xl font-serif font-bold text-[#0B1F3A] tabular-nums block mt-1">
+                  £{STATUTORY_RATES_2026_27.weeklyCapGB} / £{STATUTORY_RATES_2026_27.weeklyCapNI}
                 </span>
-                <span className="text-sm text-[#0B1F3A]/70 block mt-1.5">Monthly gross salary equivalent</span>
+                <span className="text-xs text-[#0B1F3A]/70 block mt-1">ERA 1996 s.227 (2026/27 Order)</span>
               </div>
 
-              <div className="p-5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
-                <span className="text-sm font-medium text-[#0B1F3A]/75 block mb-1">Upper Quartile Multiplier</span>
-                <span className="text-3xl font-serif font-bold text-[#D9603B] tabular-nums">
-                  {marketNegotiationBrief.upperQuartileMultiplier}x
+              <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/65 block">Unfair Dismissal Cap (GB)</span>
+                <span className="text-2xl font-serif font-bold text-[#0B1F3A] tabular-nums block mt-1">
+                  £{STATUTORY_RATES_2026_27.compensatoryAwardLimitGB.toLocaleString('en-GB')}
                 </span>
-                <span className="text-sm text-[#0B1F3A]/70 block mt-1.5">75th percentile negotiated exit</span>
+                <span className="text-xs text-[#0B1F3A]/70 block mt-1">Or 52 weeks&apos; gross pay (ERA 1996 s.124)</span>
               </div>
 
-              <div className="p-5 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10">
-                <span className="text-sm font-medium text-[#0B1F3A]/75 block mb-1">Typical Negotiated Settlement</span>
-                <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
-                  £{marketNegotiationBrief.typicalSettlementRange.low.toLocaleString('en-GB')} – £{marketNegotiationBrief.typicalSettlementRange.high.toLocaleString('en-GB')}
+              <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/65 block">Tax Exemption &amp; Class 1A NIC</span>
+                <span className="text-2xl font-serif font-bold text-[#0B1F3A] tabular-nums block mt-1">
+                  £{STATUTORY_RATES_2026_27.taxFreeLimit.toLocaleString('en-GB')} / 15.0%
                 </span>
-                <span className="text-sm text-[#0B1F3A]/70 block mt-1.5">
-                  {marketNegotiationBrief.typicalSettlementRange.uncapped ? 'Uncapped statutory compensation' : 'Standard compensatory bounds'}
+                <span className="text-xs text-[#0B1F3A]/70 block mt-1">ITEPA 2003 s.403 (0% employee NIC)</span>
+              </div>
+
+              <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/65 block">Vento Lower Band</span>
+                <span className="text-xl font-serif font-bold text-[#0B1F3A] tabular-nums block mt-1">
+                  £{VENTO_BANDS_2026_27.lowerMin.toLocaleString('en-GB')} - £{VENTO_BANDS_2026_27.lowerMax.toLocaleString('en-GB')}
                 </span>
+                <span className="text-xs text-[#0B1F3A]/70 block mt-1">Ninth Addendum (Equality Act 2010)</span>
+              </div>
+
+              <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/65 block">Vento Middle Band</span>
+                <span className="text-xl font-serif font-bold text-[#0B1F3A] tabular-nums block mt-1">
+                  £{VENTO_BANDS_2026_27.middleMin.toLocaleString('en-GB')} - £{VENTO_BANDS_2026_27.middleMax.toLocaleString('en-GB')}
+                </span>
+                <span className="text-xs text-[#0B1F3A]/70 block mt-1">Serious non-upper cases</span>
+              </div>
+
+              <div className="p-4 sm:p-5 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/65 block">Vento Upper Band</span>
+                <span className="text-xl font-serif font-bold text-[#D9603B] tabular-nums block mt-1">
+                  £{VENTO_BANDS_2026_27.upperMin.toLocaleString('en-GB')} - £{VENTO_BANDS_2026_27.upperMax.toLocaleString('en-GB')}+
+                </span>
+                <span className="text-xs text-[#0B1F3A]/70 block mt-1">Most serious / exceptional cases</span>
               </div>
             </div>
           </div>
@@ -745,8 +799,8 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
         {/* ── Tab 6: PMS Integration & Export (SC-B-027) ──────────────────────── */}
         {activeTab === 'pms' && (
-          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#0B1F3A]/10 pb-4">
+          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#E2DCCE] shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2DCCE] pb-4">
               <div>
                 <span className="text-xs font-mono uppercase tracking-wider text-[#D9603B] font-semibold block mb-1">
                   1-Click Practice Management Export (SC-B-027)
@@ -755,18 +809,16 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                   Clio &amp; LEAP Legal Software Intake Integration
                 </h2>
               </div>
-              <span className="text-xs font-mono bg-[#0B1F3A]/5 text-[#0B1F3A] px-3 py-1.5 rounded self-start sm:self-center">
+              <span className="text-xs font-mono bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A] px-3 py-1.5 rounded self-start sm:self-center">
                 REST / Webhook / CSV
               </span>
             </div>
 
             <p className="text-sm sm:text-base text-[#0B1F3A]/80 leading-relaxed max-w-prose">
-              Eliminate manual case re-typing. Export verified settlement dossier payloads directly into Clio Grow/Manage, LEAP, or PracticeEvolve to maintain 15-minute SLA intake compliance.
+              Export verified settlement dossier payloads directly into Clio Grow/Manage, LEAP, or PracticeEvolve to eliminate manual intake re-typing.
             </p>
 
-            {/* 1-Click Action Buttons Strip */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-              {/* Clio 1-Click Download */}
               <button
                 type="button"
                 onClick={() => {
@@ -780,7 +832,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                 }}
                 className="min-h-[48px] px-4 py-3 bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white rounded-xl text-sm sm:text-base font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
@@ -788,15 +840,13 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                 Export Clio Intake (JSON)
               </button>
 
-              {/* LEAP CSV 1-Click Download */}
               <button
                 type="button"
                 onClick={() => {
                   const headers = [
                     'Matter ID', 'Lead Source', 'Client Name', 'Client Email', 'Client Phone', 'Client Postcode',
                     'Tenure Years', 'Age', 'Gross Salary', 'Employer Offer', 'Statutory Minimum Floor',
-                    'Target Settlement', 'Employer Legal Fee Offered', 'Recommended Legal Fee Demand',
-                    'Strategic Verdict', 'SRA s203 Review Required'
+                    'Tax-Free s403 Portion', 'Employer Legal Fee Offered', 'SRA s203 Review Required'
                   ];
                   const row = [
                     dossierId,
@@ -810,10 +860,8 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                     matterSummary.keyFigures.salary,
                     matterSummary.keyFigures.employerOffer,
                     matterSummary.keyFigures.statutoryMinimum,
-                    matterSummary.keyFigures.targetSettlement,
+                    statutoryAnalysis.taxFreeTerminationPortion,
                     matterSummary.keyFigures.employerLegalFeeOffered,
-                    matterSummary.keyFigures.recommendedLegalFeeDemand,
-                    matterSummary.strategicVerdict,
                     'YES'
                   ].map(v => `"${String(v).replace(/"/g, '""')}"`);
                   const csvContent = `${headers.map(h => `"${h}"`).join(',')}\n${row.join(',')}`;
@@ -827,7 +875,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                 }}
                 className="min-h-[48px] px-4 py-3 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white rounded-xl text-sm sm:text-base font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
@@ -835,17 +883,16 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                 Export LEAP Intake (CSV)
               </button>
 
-              {/* Copy Full Webhook Payload */}
               <button
                 type="button"
                 onClick={() => copyToClipboard(JSON.stringify(crmPayload.clioMatterPayload, null, 2), 'pms-tab')}
-                className="min-h-[48px] px-4 py-3 bg-white border border-[#0B1F3A]/20 hover:border-[#0B1F3A] text-[#0B1F3A] rounded-xl text-sm sm:text-base font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="min-h-[48px] px-4 py-3 bg-white border border-[#E2DCCE] hover:border-[#0B1F3A] text-[#0B1F3A] rounded-xl text-sm sm:text-base font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 {copiedKey === 'pms-tab' ? (
-                  <><span>✓</span> Copied JSON Payload</>
+                  <>Copied JSON Payload</>
                 ) : (
                   <>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                     </svg>
@@ -855,7 +902,6 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
               </button>
             </div>
 
-            {/* Code Preview */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-sm font-mono font-semibold text-[#0B1F3A]/75">
