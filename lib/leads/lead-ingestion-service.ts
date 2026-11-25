@@ -120,9 +120,11 @@ export async function verifyPartnerId(partnerId: string | null | undefined): Pro
 }
 
 interface EmailGuideLink {
+  kicker: string
   title: string
   summary: string
   path: string
+  iconFile: string
 }
 
 function selectRecommendedGuides(params: {
@@ -137,74 +139,96 @@ function selectRecommendedGuides(params: {
   // 1. Situation-specific guide
   if (hasDiscrimination) {
     guides.push({
+      kicker: 'Your situation',
       title: 'Discrimination settlement agreements',
       summary: 'How injury to feelings (Vento bands) and discrimination claims affect payout leverage.',
       path: '/guides/discrimination-settlement-agreements/',
+      iconFile: 'guide-situation.png',
     })
   } else if (disputeReason === 'redundancy_collective') {
     guides.push({
+      kicker: 'Your situation',
       title: 'Protective awards & collective redundancy',
       summary: 'What happens if your employer skips the 30- or 45-day collective consultation.',
       path: '/guides/protective-award/',
+      iconFile: 'guide-situation.png',
     })
   } else if (disputeReason === 'redundancy') {
     guides.push({
+      kicker: 'Your situation',
       title: 'Redundancy vs settlement agreement',
       summary: 'Why statutory redundancy is only the floor and what extras you can ask for.',
       path: '/guides/redundancy-vs-settlement-agreement/',
+      iconFile: 'guide-situation.png',
     })
   } else if (disputeReason === 'constructive') {
     guides.push({
+      kicker: 'Your situation',
       title: 'Constructive dismissal settlement agreements',
       summary: 'Key evidence, grievance timing, and how resignation risk affects your terms.',
       path: '/guides/constructive-dismissal-settlement-agreements/',
+      iconFile: 'guide-situation.png',
     })
   } else if (disputeReason === 'dismissal') {
     guides.push({
+      kicker: 'Your situation',
       title: 'Unfair dismissal settlement agreements',
       summary: 'How tribunal compensation caps and notice pay shape a fair exit package.',
       path: '/guides/unfair-dismissal-settlement-agreements/',
+      iconFile: 'guide-situation.png',
     })
   } else if (disputeReason === 'resignation' || disputeReason === 'mutual') {
     guides.push({
+      kicker: 'Your situation',
       title: 'Protected conversations & without prejudice',
       summary: 'What your employer can and cannot say when proposing a mutual exit.',
       path: '/guides/protected-conversations-without-prejudice/',
+      iconFile: 'guide-situation.png',
     })
   } else {
     guides.push({
+      kicker: 'Your situation',
       title: 'What is a fair settlement agreement?',
       summary: 'The core financial and non-financial terms every UK agreement should cover.',
       path: '/guides/what-is-a-fair-settlement-agreement/',
+      iconFile: 'guide-situation.png',
     })
   }
 
   // 2. Offer / salary-calibrated guide
   if (verdict === 'BELOW_MINIMUM' || verdict === 'BELOW_TYPICAL') {
     guides.push({
+      kicker: 'Offer strategy',
       title: 'How to negotiate a settlement agreement',
       summary: 'Practical counter-offer steps when your initial offer sits below benchmark.',
       path: '/guides/how-to-negotiate-a-settlement-agreement/',
+      iconFile: 'guide-negotiate.png',
     })
   } else if (salaryNum != null && salaryNum >= 100000) {
     guides.push({
+      kicker: 'Senior exit',
       title: 'Executive settlement agreements',
       summary: 'Bonus, LTIP, garden leave, and restrictive covenant points for senior exits.',
       path: '/guides/executive-settlement-agreements/',
+      iconFile: 'guide-negotiate.png',
     })
   } else {
     guides.push({
+      kicker: 'Offer check',
       title: 'Is my settlement offer fair?',
       summary: 'How to weigh tax-free lump sums, notice pay, and reference terms.',
       path: '/guides/is-my-settlement-offer-fair/',
+      iconFile: 'guide-negotiate.png',
     })
   }
 
   // 3. Universal call-prep guide (tax split)
   const taxGuide: EmailGuideLink = {
+    kicker: 'Tax exemption',
     title: 'The £30,000 tax-free settlement rule',
     summary: 'How termination payments are separated from taxable notice pay (PILON).',
     path: '/guides/tax-free-settlement-30000/',
+    iconFile: 'guide-tax.png',
   }
   if (!guides.some((g) => g.path === taxGuide.path)) {
     guides.push(taxGuide)
@@ -590,14 +614,28 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
 
       const guidesHtmlRows = recommendedGuides
         .map((g, idx) => {
-          const borderTop = idx === 0 ? '' : 'border-top: 1px solid #E2DCCE;'
           const guideUrl = escapeHtml(`${baseAppUrl}${g.path}?${utmQuery}`)
+          const iconUrl = escapeHtml(`${baseAppUrl}/email-icons/${g.iconFile}`)
+          const marginBottom = idx === recommendedGuides.length - 1 ? '0' : '10px'
           return `
                       <tr>
-                        <td style="padding: 12px 0; ${borderTop}">
-                          <a href="${guideUrl}" style="display: block; text-decoration: none; color: #0B1F3A;">
-                            <span style="display: block; font-size: 14px; font-weight: 600; color: #0B1F3A; line-height: 1.4; margin-bottom: 3px;">${escapeHtml(g.title)} <span style="color: #D9603B;">&rarr;</span></span>
-                            <span style="display: block; font-size: 13px; color: #5B6577; line-height: 1.5;">${escapeHtml(g.summary)}</span>
+                        <td style="padding-bottom: ${marginBottom};">
+                          <a href="${guideUrl}" style="display: block; text-decoration: none; background-color: #F7F4EE; border: 1px solid #E2DCCE; border-radius: 10px; padding: 14px 16px;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                              <tr>
+                                <td style="width: 48px; vertical-align: top; padding-right: 12px;">
+                                  <img src="${iconUrl}" width="36" height="36" alt="" style="display: block; width: 36px; height: 36px; border-radius: 9px; border: 0;" />
+                                </td>
+                                <td style="vertical-align: top;">
+                                  <span style="display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #D9603B; line-height: 1.2; margin-bottom: 3px;">${escapeHtml(g.kicker)}</span>
+                                  <span style="display: block; font-size: 14px; font-weight: 700; color: #0B1F3A; line-height: 1.35; margin-bottom: 4px;">${escapeHtml(g.title)}</span>
+                                  <span style="display: block; font-size: 13px; color: #5B6577; line-height: 1.45;">${escapeHtml(g.summary)}</span>
+                                </td>
+                                <td style="width: 20px; vertical-align: middle; text-align: right; padding-left: 8px;">
+                                  <span style="font-size: 16px; font-weight: 700; color: #D9603B;">&rarr;</span>
+                                </td>
+                              </tr>
+                            </table>
                           </a>
                         </td>
                       </tr>`
