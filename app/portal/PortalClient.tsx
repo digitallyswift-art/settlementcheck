@@ -19,6 +19,7 @@ interface MockMatter {
 
 export default function PortalClient() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isDemoMode, setIsDemoMode] = useState<boolean>(false);
   const [authStep, setAuthStep] = useState<'credentials' | 'totp'>('credentials');
   const [workEmail, setWorkEmail] = useState('partner@bristolemploymentlaw.co.uk');
   const [password, setPassword] = useState('••••••••••••');
@@ -28,6 +29,12 @@ export default function PortalClient() {
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('demo') === 'true') {
+        setIsDemoMode(true);
+        setIsAuthenticated(true);
+        return;
+      }
       const auth = sessionStorage.getItem('sc_partner_mfa_auth');
       if (auth === 'true') {
         setIsAuthenticated(true);
@@ -57,6 +64,7 @@ export default function PortalClient() {
 
   const handleSignOut = () => {
     setIsAuthenticated(false);
+    setIsDemoMode(false);
     setAuthStep('credentials');
     setTotpCode('');
     if (typeof window !== 'undefined') {
@@ -181,6 +189,22 @@ export default function PortalClient() {
               >
                 Continue to Authenticator Verification →
               </button>
+
+              <div className="pt-3 border-t border-[#E2DCCE] text-center space-y-2">
+                <p className="text-[11px] text-[#0B1F3A]/60">
+                  Considering joining the SettlementCheck panel?
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsDemoMode(true);
+                    setIsAuthenticated(true);
+                  }}
+                  className="w-full py-2.5 bg-[#F7F4EE] hover:bg-[#EFEAE0] text-[#0B1F3A] border border-[#C9C0AC] font-semibold text-xs rounded-lg transition-colors cursor-pointer"
+                >
+                  Explore Interactive Partner Demo (No Login Required) →
+                </button>
+              </div>
             </form>
           ) : (
             <form onSubmit={handleVerifyTotp} className="space-y-4">
@@ -248,6 +272,27 @@ export default function PortalClient() {
 
   return (
     <div className="min-h-screen bg-[#F7F4EE] text-[#0B1F3A] pb-24">
+      {isDemoMode && (
+        <div className="bg-[#D9603B] text-white px-4 py-2.5 text-xs">
+          <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded bg-[#0B1F3A] text-white font-mono text-[10px] font-bold uppercase tracking-wider">
+                Demo Sandbox
+              </span>
+              <span className="font-medium">
+                Sample Partner View: explore exclusive postcode routing, pre-flight dossiers, and PMS webhooks.
+              </span>
+            </div>
+            <Link
+              href="/for-solicitors/"
+              className="px-3 py-1 rounded bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white font-semibold text-[11px] transition-colors shrink-0"
+            >
+              Apply to Join the Panel →
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* ── Partner Portal Header ────────────────────────────────────────── */}
       <header className="bg-[#0B1F3A] text-white border-b border-[#0B1F3A]">
         <div className="max-w-6xl mx-auto px-4 py-6 flex flex-wrap items-center justify-between gap-4">
@@ -264,10 +309,11 @@ export default function PortalClient() {
 
           <div className="flex items-center gap-3 text-xs">
             <span className="hidden sm:inline-block text-white/70">
-              Logged in as: <strong className="text-white font-medium">Bristol Employment Law Specialists LLP</strong> (SRA-649201)
+              {isDemoMode ? 'Sample Firm: ' : 'Logged in as: '}
+              <strong className="text-white font-medium">Bristol Employment Law Specialists LLP</strong> (SRA-649201)
             </span>
             <span className="px-2.5 py-1 rounded bg-[#D9603B]/20 text-[#D9603B] font-mono text-[11px] border border-[#D9603B]/30 font-semibold flex items-center gap-1">
-              <span>🔒</span> MFA Active
+              {isDemoMode ? 'DEMO SANDBOX' : <><span>🔒</span> MFA Active</>}
             </span>
             <span className="px-2.5 py-1 rounded bg-white/10 text-white font-mono text-[11px] border border-white/10">
               CHARTER PANEL
@@ -276,7 +322,7 @@ export default function PortalClient() {
               onClick={handleSignOut}
               className="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white text-[11px] transition-colors cursor-pointer"
             >
-              Lock / Sign Out
+              {isDemoMode ? 'Exit Demo' : 'Lock / Sign Out'}
             </button>
           </div>
         </div>

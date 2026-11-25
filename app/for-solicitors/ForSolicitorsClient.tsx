@@ -1593,22 +1593,40 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
                 <span style={{ fontSize: 12, fontWeight: 600, color: C.navy }}>Matter Status: </span>
                 <span style={{ fontSize: 12, color: C.muted }}>{currentDossier.urgency} · {currentDossier.readiness}</span>
               </div>
-              <button
-                onClick={() => onStartApplication()}
-                style={{
-                  background: C.navy,
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: 6,
-                  padding: '9px 18px',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  fontFamily: SANS,
-                }}
-              >
-                Receive Mandates Like This →
-              </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                <a
+                  href="/portal/?demo=true"
+                  style={{
+                    background: C.bgCard,
+                    color: C.navy,
+                    border: `1.5px solid ${C.borderStrong}`,
+                    borderRadius: 6,
+                    padding: '8px 14px',
+                    fontSize: 13,
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    fontFamily: SANS,
+                  }}
+                >
+                  Preview Live Partner Portal →
+                </a>
+                <button
+                  onClick={() => onStartApplication()}
+                  style={{
+                    background: C.navy,
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: 6,
+                    padding: '9px 18px',
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    fontFamily: SANS,
+                  }}
+                >
+                  Receive Mandates Like This →
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -2621,25 +2639,46 @@ function SuccessSlide({ name }: { name: string }) {
       >
         We have received your firm&apos;s details. Our team will verify your SRA registration and configure your exclusive territorial routing within 1 business day.
       </p>
-      <a
-        href="/"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 8,
-          background: C.navy,
-          color: '#fff',
-          borderRadius: 8,
-          padding: '12px 24px',
-          fontSize: 14,
-          fontWeight: 600,
-          textDecoration: 'none',
-          fontFamily: SANS,
-          letterSpacing: '-0.01em',
-        }}
-      >
-        Return to Homepage
-      </a>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
+        <a
+          href="/portal/?demo=true"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            background: C.accent,
+            color: '#fff',
+            borderRadius: 8,
+            padding: '12px 24px',
+            fontSize: 14,
+            fontWeight: 600,
+            textDecoration: 'none',
+            fontFamily: SANS,
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Preview Your Partner Portal Demo →
+        </a>
+        <a
+          href="/"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            background: C.navy,
+            color: '#fff',
+            borderRadius: 8,
+            padding: '12px 24px',
+            fontSize: 14,
+            fontWeight: 600,
+            textDecoration: 'none',
+            fontFamily: SANS,
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Return to Homepage
+        </a>
+      </div>
     </div>
   )
 }
