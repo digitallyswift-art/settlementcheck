@@ -10,7 +10,9 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'NHS Settlement & MARS Calculator 2026 | SettlementCheck',
+  title: {
+    absolute: 'NHS Settlement & MARS Calculator 2026 | SettlementCheck',
+  },
   description:
     'Calculate NHS settlement and MARS redundancy payouts under Agenda for Change. HM Treasury rules, £100k cap, pension terms, and £30,000 tax exemptions.',
   alternates: {

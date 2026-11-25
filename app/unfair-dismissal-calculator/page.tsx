@@ -12,7 +12,9 @@ import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Unfair Dismissal Calculator UK 2026 | SettlementCheck',
+  title: {
+    absolute: 'Unfair Dismissal Calculator UK 2026 | SettlementCheck',
+  },
   description:
     'Estimate your unfair dismissal basic and compensatory award using April 2026 statutory rates (£123,543 cap). Check where your offer stands in 60 seconds.',
   alternates: {
