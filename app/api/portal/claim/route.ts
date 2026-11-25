@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { getSandboxDossierFixture } from '@/lib/portal-sandbox';
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,11 +22,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const isDemoMatter = dossierId.startsWith('dossier_live_') || dossierId.startsWith('demo_');
-    const isDemoToken = token === 'demo_partner_token' || token.startsWith('demo_') || token.startsWith('claim_demo_');
-    const isDevDemo = process.env.NODE_ENV === 'development' && isDemoMatter && isDemoToken;
+    // 0. Isolated Sandbox Mode: short-circuit before any database read or write
+    const sandboxFixture = getSandboxDossierFixture(dossierId, token);
+    if (sandboxFixture) {
+      return NextResponse.json({
+        success: true,
+        isDemo: true,
+        dossierId,
+        status: 'claimed',
+        claimedAt: new Date().toISOString(),
+        message: 'Sandbox preview: instruction claimed locally (no live matter modified).',
+      });
+    }
 
-    // 1. Verify claim from database if table exists
+    // 1. Verify claim from database
     let existingClaim = null;
     try {
       const { data, error } = await supabase
@@ -42,8 +52,8 @@ export async function POST(req: NextRequest) {
       console.warn('Database lead_claims query non-fatal fallback:', dbErr);
     }
 
-    // Reject unauthorized requests where no matching claim exists and not in dev demo mode
-    if (!existingClaim && !isDevDemo) {
+    // Reject unauthorized requests where no matching claim exists
+    if (!existingClaim) {
       return NextResponse.json(
         {
           success: false,

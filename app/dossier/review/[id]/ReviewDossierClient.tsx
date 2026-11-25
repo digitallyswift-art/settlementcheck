@@ -18,6 +18,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
   const [activeTab, setActiveTab] = useState<'overview' | 'statutory' | 'threat' | 'clauses' | 'telemetry' | 'pms'>('overview');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [claimToken, setClaimToken] = useState<string | null>(null);
+  const [isDemo, setIsDemo] = useState(false);
 
   // 1. Fetch dossier data on mount
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
         if (data.success && data.dossier) {
           setDossier(data.dossier);
+          setIsDemo(Boolean(data.isDemo));
           if (data.claimStatus) {
             setIsClaimed(Boolean(data.claimStatus.isClaimed));
             if (data.claimStatus.expiresAt) {
@@ -147,10 +149,14 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-[#D9603B] animate-pulse" />
             <div className="text-xs sm:text-sm">
-              <span className="font-semibold text-white">SRA Territorial Instruction:</span>{' '}
+              <span className="font-semibold text-white">
+                {isDemo ? 'Interactive Sandbox Preview:' : 'SRA Territorial Instruction:'}
+              </span>{' '}
               <span className="text-[#F7F4EE]/80">
                 {isClaimed
-                  ? 'Instruction Claimed & Matter Locked to Your Firm'
+                  ? isDemo
+                    ? 'Synthetic Matter Claimed (Sandbox Only)'
+                    : 'Instruction Claimed & Matter Locked to Your Firm'
                   : `15-Min Exclusivity Window: ${timerFormatted} remaining`}
               </span>
             </div>
@@ -179,6 +185,25 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
       </div>
 
       <div className="max-w-6xl mx-auto px-4 pt-8">
+        {isDemo && (
+          <div className="mb-6 rounded-xl bg-white border border-[#D9603B]/30 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+            <div className="flex items-start gap-3">
+              <span className="text-xs font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#D9603B]/10 text-[#D9603B] font-semibold shrink-0 mt-0.5">
+                Sandbox Mode
+              </span>
+              <p className="text-xs sm:text-sm text-[#0B1F3A]/80 leading-relaxed">
+                This is a synthetic sample dossier for solicitor partner evaluation. No real client data is displayed, and claiming or exporting here does not affect live SRA instructions.
+              </p>
+            </div>
+            <Link
+              href="/for-solicitors/"
+              className="text-xs font-semibold text-[#D9603B] hover:underline whitespace-nowrap shrink-0"
+            >
+              Apply for live panel access →
+            </Link>
+          </div>
+        )}
+
         {/* ── Matter Header Card ────────────────────────────────────────────── */}
         <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#0B1F3A]/10 mb-8">
           <div className="flex flex-wrap items-start justify-between gap-4 mb-6 pb-6 border-b border-[#0B1F3A]/10">

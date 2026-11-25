@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { AgenticOrchestrator } from '@/lib/agentic-engine';
+import { getSandboxDossierFixture, SANDBOX_DEMO_TOKEN } from '@/lib/portal-sandbox';
 
 export async function GET(
   req: NextRequest,
@@ -9,10 +10,10 @@ export async function GET(
   try {
     const dossierId = params.id;
     const { searchParams } = new URL(req.url);
-    const token = searchParams.get('token');
+    const token = searchParams.get('token')?.trim() || '';
 
     // SC-B-002 / SC-E-SEC-004: Enforce mandatory claimToken validation to eliminate BOLA
-    if (!token || typeof token !== 'string' || token.trim() === '') {
+    if (!token) {
       return NextResponse.json(
         {
           success: false,
@@ -22,10 +23,26 @@ export async function GET(
       );
     }
 
-    const isDemoMatter = dossierId.startsWith('dossier_live_') || dossierId.startsWith('demo_');
-    const isDemoToken = token === 'demo_partner_token' || token.startsWith('demo_') || token.startsWith('claim_demo_');
+    // 0. Isolated Sandbox Mode: strictly allowlisted synthetic IDs only, zero DB access
+    const sandboxFixture = getSandboxDossierFixture(dossierId, token);
+    if (sandboxFixture) {
+      const dossier = await AgenticOrchestrator.executeCaseDossier(sandboxFixture.matterContext);
+      return NextResponse.json({
+        success: true,
+        isDemo: true,
+        dossierId,
+        dossier,
+        claimStatus: {
+          isLocked: sandboxFixture.status === 'locked',
+          isClaimed: sandboxFixture.status === 'claimed',
+          expiresAt: new Date(Date.now() + 12 * 60 * 1000).toISOString(),
+          token: SANDBOX_DEMO_TOKEN,
+          panelFirm: dossier.territorialRouting?.matchedFirmName || 'SRA Designated Partner (Sandbox)',
+        },
+      });
+    }
 
-    // 1. Check claim record in database if available
+    // 1. Live Production Mode: require a matching claim record in Supabase
     let claimRecord: any = null;
     try {
       const { data } = await supabase
@@ -41,7 +58,7 @@ export async function GET(
     }
 
     // Reject unauthorized requests where no matching claim exists
-    if (!claimRecord && !(process.env.NODE_ENV === 'development' && isDemoMatter && isDemoToken)) {
+    if (!claimRecord) {
       return NextResponse.json(
         {
           success: false,
@@ -100,6 +117,7 @@ BETWEEN:
 
     return NextResponse.json({
       success: true,
+      isDemo: false,
       dossierId,
       dossier,
       claimStatus: {
