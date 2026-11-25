@@ -478,6 +478,7 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
         : 'Run a settlement calculation'
 
       const safeFirstName = escapeHtml(firstName)
+      const safeContactDisplay = escapeHtml(safeContactTime)
       const safeContactLabel = escapeHtml(safeContactTime.toLowerCase())
       const safeCalcUrl = escapeHtml(calculationUrl)
 
@@ -538,30 +539,54 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
 
           <!-- Main Body -->
           <tr>
-            <td style="padding-top: 28px;">
-              <h1 style="font-size: 23px; font-weight: 700; color: #0B1F3A; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.25;">Your details are with us</h1>
-              <p style="color: #1A2F4E; font-size: 15px; line-height: 1.65; margin: 0 0 14px;">Hi ${safeFirstName},</p>
-              <p style="color: #1A2F4E; font-size: 15px; line-height: 1.65; margin: 0 0 26px;">We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (<strong>${safeContactLabel}</strong>).</p>
+            <td style="padding-top: 32px;">
+              <h1 style="font-size: 24px; font-weight: 700; color: #0B1F3A; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.25;">Your details are with us</h1>
+              <p style="color: #1A2F4E; font-size: 16px; line-height: 1.6; margin: 0 0 24px;">Hi ${safeFirstName}, we have received your request and are matching you with a vetted employment solicitor.</p>
 
-              <!-- Primary CTA -->
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px;">
+              <!-- Scannable Callback Summary -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #F7F4EE; border: 1px solid #E2DCCE; border-radius: 10px; margin-bottom: 32px;">
                 <tr>
-                  <td style="background-color: #D9603B; border-radius: 8px;">
-                    <a href="${safeCalcUrl}"
-                       style="display: inline-block; padding: 13px 22px; font-size: 15px; font-weight: 700; color: #ffffff !important; text-decoration: none; letter-spacing: -0.01em; border-radius: 8px;">
-                      <span style="color: #ffffff;">${ctaLabel} &rarr;</span>
-                    </a>
+                  <td style="padding: 16px 20px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size: 14px; line-height: 1.5;">
+                      <tr>
+                        <td style="padding: 4px 0; color: #5B6577; width: 48%;">Expected call</td>
+                        <td style="padding: 4px 0; color: #0B1F3A; font-weight: 600; text-align: right;">Within 24 hours</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0 4px; color: #5B6577; border-top: 1px solid #E2DCCE;">Preferred time</td>
+                        <td style="padding: 8px 0 4px; color: #0B1F3A; font-weight: 600; text-align: right; border-top: 1px solid #E2DCCE;">${safeContactDisplay}</td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
-              <p style="color: #5B6577; font-size: 13px; line-height: 1.5; margin: 0 0 28px;">Review or adjust your figures any time before your call.</p>
+
+              <!-- Centered Primary CTA -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 32px;">
+                <tr>
+                  <td align="center">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" style="background-color: #D9603B; border-radius: 8px;">
+                          <a href="${safeCalcUrl}"
+                             style="display: inline-block; padding: 14px 28px; font-size: 15px; font-weight: 700; color: #ffffff !important; text-decoration: none; letter-spacing: -0.01em; border-radius: 8px;">
+                            <span style="color: #ffffff;">${ctaLabel} &rarr;</span>
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    <p style="color: #5B6577; font-size: 13px; line-height: 1.5; margin: 12px 0 0; text-align: center;">Review or adjust your figures any time before your call.</p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
           <!-- Statutory Fee Note -->
           <tr>
-            <td style="padding-top: 22px; border-top: 1px solid #E2DCCE;">
-              <p style="color: #5B6577; font-size: 13px; line-height: 1.65; margin: 0 0 20px;">Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically &pound;350 to &pound;500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor&apos;s terms.</p>
+            <td style="padding-top: 24px; border-top: 1px solid #E2DCCE;">
+              <p style="color: #0B1F3A; font-size: 13px; font-weight: 600; line-height: 1.4; margin: 0 0 8px;">How legal fees work (Section 203(3) ERA 1996)</p>
+              <p style="color: #5B6577; font-size: 14px; line-height: 1.6; margin: 0 0 24px;">Independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically &pound;350 to &pound;500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor&apos;s terms.</p>
             </td>
           </tr>
 
