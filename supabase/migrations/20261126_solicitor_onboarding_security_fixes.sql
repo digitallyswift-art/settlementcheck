@@ -112,24 +112,28 @@ do $$
 declare
   fk_name text;
 begin
-  select c.conname
-  into fk_name
-  from pg_constraint c
-  join pg_attribute a
-    on a.attrelid = c.conrelid
-   and a.attnum = any(c.conkey)
-  where c.conrelid = 'lead_claims'::regclass
-    and c.contype = 'f'
-    and a.attname = 'panel_firm_id'
-  limit 1;
+  if to_regclass('public.lead_claims') is not null then
+    select c.conname
+    into fk_name
+    from pg_constraint c
+    join pg_attribute a
+      on a.attrelid = c.conrelid
+     and a.attnum = any(c.conkey)
+    where c.conrelid = 'public.lead_claims'::regclass
+      and c.contype = 'f'
+      and a.attname = 'panel_firm_id'
+    limit 1;
 
-  if fk_name is not null then
-    execute format('alter table lead_claims drop constraint %I', fk_name);
+    if fk_name is not null then
+      execute format('alter table public.lead_claims drop constraint %I', fk_name);
+    end if;
+
+    if to_regclass('public.solicitor_panel') is not null then
+      alter table public.lead_claims
+        add constraint lead_claims_panel_firm_id_fkey
+        foreign key (panel_firm_id)
+        references public.solicitor_panel(id)
+        on delete restrict;
+    end if;
   end if;
-
-  alter table lead_claims
-    add constraint lead_claims_panel_firm_id_fkey
-    foreign key (panel_firm_id)
-    references solicitor_panel(id)
-    on delete restrict;
 end $$;
