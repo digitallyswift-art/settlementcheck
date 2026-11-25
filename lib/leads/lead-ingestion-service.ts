@@ -502,39 +502,82 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
         to: normalizedEmail,
         subject: 'We have received your details - SettlementCheck',
         text: employeeText,
-        html: `
-          <!-- Hidden Preheader -->
-          <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
-            We are matching you with an SRA-regulated employment solicitor. Expect a call within 24 hours (${safeContactLabel}).
-          </div>
+        html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
+</head>
+<body style="margin: 0; padding: 0; background-color: #ffffff; -webkit-text-size-adjust: 100%;">
+  <!-- Preheader -->
+  <div style="display: none; font-size: 1px; color: #ffffff; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+    We are matching you with an SRA-regulated employment solicitor. Expect a call within 24 hours (${safeContactLabel}).
+  </div>
 
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 520px; margin: 0 auto; padding: 36px 24px; background-color: #ffffff; color: #0B1F3A;">
-            <div style="margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid #E2DCCE;">
-              <span style="font-size: 18px; font-weight: 700; color: #0B1F3A; letter-spacing: -0.015em;">SettlementCheck</span>
-            </div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff;">
+    <tr>
+      <td align="center" style="padding: 32px 20px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 520px; text-align: left; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+          <!-- Header Lockup -->
+          <tr>
+            <td style="padding-bottom: 24px; border-bottom: 1px solid #E2DCCE;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align: middle; padding-right: 10px;">
+                    <img src="https://settlementcheck.co.uk/email-logo.png" width="28" height="28" alt="" style="display: block; width: 28px; height: 28px; border-radius: 6px; border: 0;" />
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <span style="font-size: 17px; font-weight: 700; color: #0B1F3A; letter-spacing: -0.015em;">SettlementCheck</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-            <h1 style="font-size: 24px; font-weight: 700; color: #0B1F3A; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.25;">Your details are with us</h1>
-            <p style="color: #1A2F4E; font-size: 15px; line-height: 1.6; margin: 0 0 14px;">Hi ${safeFirstName},</p>
-            <p style="color: #1A2F4E; font-size: 15px; line-height: 1.6; margin: 0 0 24px;">We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (<strong>${safeContactLabel}</strong>).</p>
+          <!-- Main Body -->
+          <tr>
+            <td style="padding-top: 28px;">
+              <h1 style="font-size: 23px; font-weight: 700; color: #0B1F3A; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.25;">Your details are with us</h1>
+              <p style="color: #1A2F4E; font-size: 15px; line-height: 1.65; margin: 0 0 14px;">Hi ${safeFirstName},</p>
+              <p style="color: #1A2F4E; font-size: 15px; line-height: 1.65; margin: 0 0 26px;">We have received your request and are matching you with a vetted employment solicitor. You should expect a call within 24 hours during your preferred time (<strong>${safeContactLabel}</strong>).</p>
 
-            <div style="background-color: #F7F4EE; border: 1px solid #E2DCCE; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
-              <p style="font-size: 13px; font-weight: 600; color: #0B1F3A; margin: 0 0 12px; line-height: 1.5;">Want to review or adjust your figures before your call?</p>
-              <a href="${safeCalcUrl}"
-                 style="display: inline-block; background-color: #D9603B; color: #ffffff; font-size: 15px; font-weight: 700; padding: 13px 22px; border-radius: 8px; text-decoration: none; letter-spacing: -0.01em;">
-                ${ctaLabel} &rarr;
-              </a>
-            </div>
+              <!-- Primary CTA -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px;">
+                <tr>
+                  <td style="background-color: #D9603B; border-radius: 8px;">
+                    <a href="${safeCalcUrl}"
+                       style="display: inline-block; padding: 13px 22px; font-size: 15px; font-weight: 700; color: #ffffff !important; text-decoration: none; letter-spacing: -0.01em; border-radius: 8px;">
+                      <span style="color: #ffffff;">${ctaLabel} &rarr;</span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="color: #5B6577; font-size: 13px; line-height: 1.5; margin: 0 0 28px;">Review or adjust your figures any time before your call.</p>
+            </td>
+          </tr>
 
-            <p style="color: #5B6577; font-size: 14px; line-height: 1.6; margin: 0 0 24px;">Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor&apos;s terms.</p>
+          <!-- Statutory Fee Note -->
+          <tr>
+            <td style="padding-top: 22px; border-top: 1px solid #E2DCCE;">
+              <p style="color: #5B6577; font-size: 13px; line-height: 1.65; margin: 0 0 20px;">Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically &pound;350 to &pound;500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor&apos;s terms.</p>
+            </td>
+          </tr>
 
-            <div style="background-color: #F7F4EE; border-radius: 8px; padding: 14px 16px;">
-              <p style="color: #5B6577; font-size: 12px; margin: 0; line-height: 1.6;">SettlementCheck is an introduction service, not a law firm. We connect you with SRA-regulated solicitors. We do not provide legal advice.</p>
-            </div>
-            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #E2DCCE;">
-              <p style="font-size: 11px; color: #8A93A3; margin: 0;">SettlementCheck &bull; United Kingdom &bull; team@settlementcheck.co.uk</p>
-            </div>
-          </div>
-        `,
+          <!-- Regulatory Footer -->
+          <tr>
+            <td style="padding-top: 16px; border-top: 1px solid #E2DCCE;">
+              <p style="color: #8A93A3; font-size: 12px; line-height: 1.6; margin: 0 0 8px;">SettlementCheck is an introduction service, not a law firm. We connect you with SRA-regulated solicitors. We do not provide legal advice.</p>
+              <p style="color: #8A93A3; font-size: 11px; line-height: 1.5; margin: 0;">SettlementCheck &bull; United Kingdom &bull; team@settlementcheck.co.uk</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`,
       })
     } catch (emailErr) {
       console.error('Employee confirmation email failed (non-fatal):', emailErr)
