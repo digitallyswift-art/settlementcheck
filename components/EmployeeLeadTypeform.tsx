@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import PostcodeInput from '@/components/PostcodeInput'
 import { PostcodeLookup } from '@/lib/postcodes'
 import { Ga4TelemetryClient } from '@/components/telemetry/Ga4TelemetryClient'
+import PostSubmitConflictCard from '@/components/PostSubmitConflictCard'
 
 // ── Brand tokens ──────────────────────────────────────────────────────────────
 const C = {
@@ -212,6 +213,7 @@ export default function EmployeeLeadTypeform({
   const [otpVerifying, setOtpVerifying]   = useState(false)
   const [resendCooldown, setResendCooldown] = useState(0)
   const [submitting, setSubmitting]       = useState(false)
+  const [submittedLeadId, setSubmittedLeadId] = useState<string | undefined>(undefined)
   const [consentSol, setConsentSol]       = useState(false)
   const [consentGdpr, setConsentGdpr]     = useState(false)
 
@@ -393,6 +395,12 @@ export default function EmployeeLeadTypeform({
         }),
       })
       if (!res.ok) throw new Error()
+      try {
+        const resData = await res.json()
+        if (typeof resData?.leadId === 'string') setSubmittedLeadId(resData.leadId)
+      } catch {
+        // Non-fatal
+      }
       Ga4TelemetryClient.trackLeadCompleted(true)
       advance()
     } catch {
@@ -721,6 +729,11 @@ export default function EmployeeLeadTypeform({
                 {form.contactTime.toLowerCase()} preferred.{' '}
                 Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion.
               </p>
+              <PostSubmitConflictCard
+                leadId={submittedLeadId}
+                email={form.email.trim().toLowerCase()}
+                source="employee_lead_typeform"
+              />
             </div>
           )}
 

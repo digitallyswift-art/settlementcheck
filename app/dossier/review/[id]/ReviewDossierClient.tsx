@@ -4,6 +4,15 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { SolicitorPreFlightDossier } from '@/lib/agentic-engine/types';
 import MandatoryLegalDisclaimers from '@/components/MandatoryLegalDisclaimers';
+import { getSandboxMatterOverrides, setSandboxMatterOverride } from '@/lib/portal-sandbox';
+
+interface ConflictCheckMeta {
+  employerName?: string | null;
+  employerNameSource?: 'draft_extracted' | 'employee_provided' | null;
+  signingDeadlineLabel?: string | null;
+  hasDraftAgreement?: boolean;
+  clientGoal?: string | null;
+}
 
 interface ReviewDossierClientProps {
   dossierId: string;
@@ -11,10 +20,12 @@ interface ReviewDossierClientProps {
 
 export default function ReviewDossierClient({ dossierId }: ReviewDossierClientProps) {
   const [dossier, setDossier] = useState<SolicitorPreFlightDossier | null>(null);
+  const [conflictCheck, setConflictCheck] = useState<ConflictCheckMeta | null>(null);
   const [loading, setLoading] = useState(true);
   const [claiming, setClaiming] = useState(false);
   const [claimError, setClaimError] = useState<string | null>(null);
   const [isClaimed, setIsClaimed] = useState(false);
+  const [isReleased, setIsReleased] = useState(false);
   const [secondsRemaining, setSecondsRemaining] = useState(15 * 60);
   const [activeTab, setActiveTab] = useState<'overview' | 'statutory' | 'threat' | 'clauses' | 'telemetry' | 'pms'>('overview');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -34,9 +45,23 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
 
         if (data.success && data.dossier) {
           setDossier(data.dossier);
-          setIsDemo(Boolean(data.isDemo));
-          if (data.claimStatus) {
+          const demoFlag = Boolean(data.isDemo);
+          setIsDemo(demoFlag);
+          if (data.conflictCheck) {
+            setConflictCheck(data.conflictCheck);
+          }
+
+          const sandboxOverride = demoFlag ? getSandboxMatterOverrides()[dossierId] : undefined;
+          if (sandboxOverride?.status === 'released') {
+            setIsReleased(true);
+            setIsClaimed(false);
+          } else if (sandboxOverride?.status === 'claimed' || sandboxOverride?.status === 'completed') {
+            setIsClaimed(true);
+          } else if (data.claimStatus) {
             setIsClaimed(Boolean(data.claimStatus.isClaimed));
+          }
+
+          if (data.claimStatus) {
             if (data.claimStatus.expiresAt) {
               const diffSec = Math.max(0, Math.floor((new Date(data.claimStatus.expiresAt).getTime() - Date.now()) / 1000));
               setSecondsRemaining(diffSec);
@@ -87,6 +112,10 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
       const data = await res.json();
       if (data.success) {
         setIsClaimed(true);
+        setIsReleased(false);
+        if (isDemo) {
+          setSandboxMatterOverride(dossierId, { status: 'claimed', stage: 'conflict_cleared' });
+        }
       } else {
         setClaimError(data.message || data.error || 'Failed to claim instruction. Please refresh and try again.');
       }
@@ -94,6 +123,17 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
       setClaimError('Network error while claiming instruction. Please check your connection and retry.');
     } finally {
       setClaiming(false);
+    }
+  };
+
+  const handleReleaseConflict = () => {
+    setIsReleased(true);
+    setIsClaimed(false);
+    if (isDemo) {
+      setSandboxMatterOverride(dossierId, {
+        status: 'released',
+        releaseReason: 'SRA Conflict of Interest',
+      });
     }
   };
 
@@ -172,23 +212,40 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
             <Link
               href={portalHref}
               className="inline-flex items-center min-h-[44px] px-2 text-sm text-white/85 hover:text-white underline underline-offset-4"
             >
               ← Portal
             </Link>
+            {!isReleased && (
+              <button
+                type="button"
+                onClick={handleReleaseConflict}
+                className="min-h-[44px] px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors"
+              >
+                Release (Conflict)
+              </button>
+            )}
             <button
               onClick={handleClaim}
-              disabled={isClaimed || claiming}
+              disabled={isClaimed || isReleased || claiming}
               className={`flex-1 sm:flex-none min-h-[44px] px-5 py-2.5 rounded-xl text-sm sm:text-base font-semibold transition-all ${
-                isClaimed
-                  ? 'bg-white/10 text-white cursor-default border border-white/20'
-                  : 'bg-[#D9603B] text-white hover:bg-[#D9603B]/90 shadow-sm active:scale-[0.99]'
+                isReleased
+                  ? 'bg-white/10 text-white/80 cursor-default border border-white/20'
+                  : isClaimed
+                    ? 'bg-white/10 text-white cursor-default border border-white/20'
+                    : 'bg-[#D9603B] text-white hover:bg-[#D9603B]/90 shadow-sm active:scale-[0.99]'
               }`}
             >
-              {isClaimed ? '✓ Instruction Claimed' : claiming ? 'Securing Matter...' : '⚡ One-Click Claim Instruction'}
+              {isReleased
+                ? 'Matter Released (Zero Penalty)'
+                : isClaimed
+                  ? 'Instruction Claimed'
+                  : claiming
+                    ? 'Securing Matter...'
+                    : 'Hold & Confirm Instruction'}
             </button>
           </div>
         </div>
@@ -232,8 +289,13 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                   {activeVerdict.label}
                 </span>
                 {threatAssessment.hasCaptiveSteering && (
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/30 inline-flex items-center gap-1">
-                    ⚠️ Captive Steering Flagged
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/30 inline-flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                      <path d="M12 9v4" />
+                      <path d="M12 17h.01" />
+                    </svg>
+                    Captive Steering Flagged
                   </span>
                 )}
               </div>
@@ -242,6 +304,34 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                 {matterSummary.clientName}
               </h1>
 
+              {/* SRA Conflict Check & Triage Context Strip */}
+              {conflictCheck && (
+                <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+                  {conflictCheck.employerName ? (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1F3A]/5 border border-[#0B1F3A]/15 text-[#0B1F3A] font-medium">
+                      <span className="font-semibold">Counterparty:</span> {conflictCheck.employerName}
+                      {conflictCheck.employerNameSource && (
+                        <span className="text-xs font-mono text-[#0B1F3A]/65">
+                          ({conflictCheck.employerNameSource === 'draft_extracted' ? 'Draft' : 'Pre-disclosed'})
+                        </span>
+                      )}
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
+                      <span className="font-semibold">SRA Conflict Check:</span> Confirm employer on first call
+                    </span>
+                  )}
+                  {conflictCheck.signingDeadlineLabel && (
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#D9603B]/10 border border-[#D9603B]/25 text-[#D9603B] font-medium">
+                      Deadline: {conflictCheck.signingDeadlineLabel}
+                    </span>
+                  )}
+                  <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
+                    {conflictCheck.hasDraftAgreement ? 'Draft Agreement Ready' : 'Offer Only (No Draft)'}
+                  </span>
+                </div>
+              )}
+
               {/* Actionable Contact Strip for Mobile & Desktop */}
               <div className="flex flex-wrap items-center gap-2.5 pt-1 text-sm sm:text-base">
                 <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#0B1F3A]/10 text-[#0B1F3A] font-medium">
@@ -249,15 +339,22 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                 </span>
                 <a
                   href={`tel:${matterSummary.clientContact.phone}`}
-                  className="inline-flex items-center min-h-[44px] px-3.5 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#D9603B]/30 text-[#D9603B] hover:bg-[#D9603B]/10 font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 min-h-[44px] px-3.5 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#D9603B]/30 text-[#D9603B] hover:bg-[#D9603B]/10 font-semibold transition-colors"
                 >
-                  📞 {matterSummary.clientContact.phone}
+                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                  {matterSummary.clientContact.phone}
                 </a>
                 <a
                   href={`mailto:${matterSummary.clientContact.email}`}
-                  className="inline-flex items-center min-h-[44px] px-3.5 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#0B1F3A]/15 text-[#0B1F3A] hover:border-[#D9603B] hover:text-[#D9603B] font-medium transition-colors break-all"
+                  className="inline-flex items-center gap-2 min-h-[44px] px-3.5 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#0B1F3A]/15 text-[#0B1F3A] hover:border-[#D9603B] hover:text-[#D9603B] font-medium transition-colors break-all"
                 >
-                  ✉️ {matterSummary.clientContact.email}
+                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+                  {matterSummary.clientContact.email}
                 </a>
               </div>
             </div>
@@ -406,7 +503,13 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                     onClick={() => copyToClipboard(threatAssessment.counterNoticeDraft || '', 'parity-notice')}
                     className="w-full min-h-[48px] text-left px-4 py-3 rounded-xl border border-[#0B1F3A]/15 hover:border-[#D9603B] transition-colors text-sm sm:text-base font-semibold text-[#0B1F3A] flex items-center justify-between gap-2"
                   >
-                    <span>📋 Copy Fee Parity Notice</span>
+                    <span className="inline-flex items-center gap-2.5">
+                      <svg className="w-4 h-4 text-[#0B1F3A]/70 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                      </svg>
+                      Copy Fee Parity Notice
+                    </span>
                     <span className="text-xs font-bold text-[#D9603B] shrink-0">{copiedKey === 'parity-notice' ? 'Copied!' : 'Copy'}</span>
                   </button>
 
@@ -414,7 +517,14 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                     onClick={() => copyToClipboard(JSON.stringify(crmPayload.clioMatterPayload, null, 2), 'clio-json')}
                     className="w-full min-h-[48px] text-left px-4 py-3 rounded-xl border border-[#0B1F3A]/15 hover:border-[#D9603B] transition-colors text-sm sm:text-base font-semibold text-[#0B1F3A] flex items-center justify-between gap-2"
                   >
-                    <span>📁 Export Clio / LEAP JSON</span>
+                    <span className="inline-flex items-center gap-2.5">
+                      <svg className="w-4 h-4 text-[#0B1F3A]/70 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                      </svg>
+                      Export Clio / LEAP JSON
+                    </span>
                     <span className="text-xs font-bold text-[#D9603B] shrink-0">{copiedKey === 'clio-json' ? 'Copied!' : 'Copy'}</span>
                   </button>
 
@@ -422,7 +532,14 @@ export default function ReviewDossierClient({ dossierId }: ReviewDossierClientPr
                     onClick={() => window.print()}
                     className="w-full min-h-[48px] text-left px-4 py-3 rounded-xl border border-[#0B1F3A]/15 hover:border-[#0B1F3A] transition-colors text-sm sm:text-base font-semibold text-[#0B1F3A] flex items-center justify-between gap-2"
                   >
-                    <span>🖨️ Print Dossier PDF</span>
+                    <span className="inline-flex items-center gap-2.5">
+                      <svg className="w-4 h-4 text-[#0B1F3A]/70 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="6 9 6 2 18 2 18 9" />
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                        <rect width="12" height="8" x="6" y="14" />
+                      </svg>
+                      Print Dossier PDF
+                    </span>
                     <span className="text-xs font-semibold text-[#0B1F3A]/70 shrink-0">Print</span>
                   </button>
                 </div>

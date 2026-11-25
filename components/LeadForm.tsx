@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Ga4TelemetryClient } from '@/components/telemetry/Ga4TelemetryClient'
+import PostSubmitConflictCard from '@/components/PostSubmitConflictCard'
 
 interface Props {
   verdict: string
@@ -12,6 +13,7 @@ interface Props {
 
 export default function LeadForm({ verdict, offer, salary, years }: Props) {
   const [submitted, setSubmitted] = useState(false)
+  const [leadId, setLeadId] = useState<string | undefined>(undefined)
   const [loading, setLoading] = useState(false)
   const [contact, setContact] = useState('morning')
   const [form, setForm] = useState({ firstName: '', email: '', phone: '', consent: false, gdprArticle9Consent: false })
@@ -63,6 +65,12 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
         }),
       })
       if (!res.ok) throw new Error('submit_failed')
+      try {
+        const resData = await res.json()
+        if (typeof resData?.leadId === 'string') setLeadId(resData.leadId)
+      } catch {
+        // Non-fatal
+      }
       Ga4TelemetryClient.trackLeadCompleted(true)
       setSubmitted(true)
     } catch {
@@ -89,6 +97,13 @@ export default function LeadForm({ verdict, offer, salary, years }: Props) {
         <p className="text-body text-muted">
           Check your email. We have sent you a confirmation with next steps.
         </p>
+        <div className="max-w-lg mx-auto">
+          <PostSubmitConflictCard
+            leadId={leadId}
+            email={form.email.trim().toLowerCase()}
+            source="lead_form_standard"
+          />
+        </div>
       </div>
     )
   }

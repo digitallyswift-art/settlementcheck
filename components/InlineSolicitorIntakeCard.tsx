@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Ga4TelemetryClient } from '@/components/telemetry/Ga4TelemetryClient'
 import { trackClientEvent } from '@/lib/telemetry'
+import PostSubmitConflictCard from '@/components/PostSubmitConflictCard'
 
 interface Props {
   verdict?: string
@@ -89,6 +90,7 @@ export default function InlineSolicitorIntakeCard({
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [triageId, setTriageId] = useState<string | null>(null)
+  const [leadId, setLeadId] = useState<string | undefined>(undefined)
   const [error, setError] = useState<string | null>(null)
   const [honeypot, setHoneypot] = useState('')
 
@@ -224,6 +226,7 @@ export default function InlineSolicitorIntakeCard({
 
       const assignedTriageId = data.triageId || 'SC-TR-' + Math.floor(1000 + Math.random() * 9000)
       setTriageId(assignedTriageId)
+      if (typeof data.leadId === 'string') setLeadId(data.leadId)
       setSubmitted(true)
 
       const contactMethod = trimmedPhone ? 'phone' : 'email_only'
@@ -304,6 +307,12 @@ export default function InlineSolicitorIntakeCard({
                 </p>
               </div>
             </div>
+
+            <PostSubmitConflictCard
+              leadId={leadId}
+              email={email}
+              source="inline_solicitor_intake_card"
+            />
 
             <div className="mt-5 pt-4 border-t border-[#EFEAE0]">
               <h4 className="font-serif text-[17px] font-bold text-[#0B1F3A] m-0 mb-2.5">

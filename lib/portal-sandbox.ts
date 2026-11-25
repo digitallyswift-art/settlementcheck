@@ -2,9 +2,26 @@ import { EmployeeMatterContext } from '@/lib/agentic-engine/types';
 
 export const SANDBOX_DEMO_TOKEN = 'demo_partner_token';
 
+export type MatterStage =
+  | 'conflict_cleared'
+  | 'client_called'
+  | 'advice_issued'
+  | 'signed_billed';
+
+export interface SandboxMatterOverride {
+  status?: 'locked' | 'claimed' | 'released' | 'completed';
+  releaseReason?: string;
+  stage?: MatterStage;
+}
+
 export interface SandboxDossierFixture {
   dossierId: string;
   status: 'locked' | 'claimed';
+  employerName?: string;
+  employerNameSource?: 'draft_extracted' | 'employee_provided';
+  signingDeadlineLabel: string;
+  hasDraftAgreement: boolean;
+  clientGoal: 'Negotiate Higher' | 'Fast s.203 Sign-Off';
   matterContext: EmployeeMatterContext;
 }
 
@@ -17,6 +34,11 @@ export const SANDBOX_DOSSIERS: Readonly<Record<string, SandboxDossierFixture>> =
   dossier_live_bristol_01: {
     dossierId: 'dossier_live_bristol_01',
     status: 'locked',
+    employerName: 'Apex Technology UK Limited',
+    employerNameSource: 'draft_extracted',
+    signingDeadlineLabel: '4 days left (ACAS 10-day)',
+    hasDraftAgreement: true,
+    clientGoal: 'Negotiate Higher',
     matterContext: {
       matterId: 'dossier_live_bristol_01',
       firstName: 'Sarah',
@@ -45,6 +67,12 @@ BETWEEN:
   dossier_live_london_02: {
     dossierId: 'dossier_live_london_02',
     status: 'claimed',
+    // Intentionally omitted to demonstrate honest SRA "Confirm on first call" state
+    employerName: undefined,
+    employerNameSource: undefined,
+    signingDeadlineLabel: '48 hrs urgent',
+    hasDraftAgreement: false,
+    clientGoal: 'Negotiate Higher',
     matterContext: {
       matterId: 'dossier_live_london_02',
       firstName: 'Marcus',
@@ -73,6 +101,11 @@ BETWEEN:
   dossier_live_clifton_03: {
     dossierId: 'dossier_live_clifton_03',
     status: 'claimed',
+    employerName: 'Severn Engineering Group PLC',
+    employerNameSource: 'employee_provided',
+    signingDeadlineLabel: 'Completed',
+    hasDraftAgreement: true,
+    clientGoal: 'Fast s.203 Sign-Off',
     matterContext: {
       matterId: 'dossier_live_clifton_03',
       firstName: 'David H.',
@@ -111,4 +144,37 @@ export function getSandboxDossierFixture(
     return null;
   }
   return SANDBOX_DOSSIERS[dossierId];
+}
+
+const SANDBOX_STATE_KEY = 'sc_sandbox_matter_states_v1';
+
+export function getSandboxMatterOverrides(): Record<string, SandboxMatterOverride> {
+  if (typeof window === 'undefined') return {};
+  try {
+    const raw = sessionStorage.getItem(SANDBOX_STATE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+export function setSandboxMatterOverride(
+  dossierId: string,
+  patch: SandboxMatterOverride
+): Record<string, SandboxMatterOverride> {
+  if (typeof window === 'undefined') return {};
+  const current = getSandboxMatterOverrides();
+  const next = {
+    ...current,
+    [dossierId]: {
+      ...(current[dossierId] || {}),
+      ...patch,
+    },
+  };
+  try {
+    sessionStorage.setItem(SANDBOX_STATE_KEY, JSON.stringify(next));
+  } catch {
+    // Ignore storage quota errors
+  }
+  return next;
 }

@@ -1,22 +1,183 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { trackClientEvent } from '@/lib/telemetry';
+import { STATUTORY_RATES_2026_27, VENTO_BANDS_2026_27 } from '@/lib/statutory-rates';
+import {
+  getSandboxMatterOverrides,
+  setSandboxMatterOverride,
+  MatterStage,
+} from '@/lib/portal-sandbox';
 
-interface MockMatter {
+interface PortalMatter {
   id: string;
   clientName: string;
+  phone: string;
   postcode: string;
+  cityArea: string;
+  employerName?: string;
+  employerNameSource?: 'draft_extracted' | 'employee_provided';
+  signingDeadlineLabel: string;
+  isUrgentDeadline: boolean;
+  hasDraftAgreement: boolean;
+  clientGoal: 'Negotiate Higher' | 'Fast s.203 Sign-Off';
   disputeReason: string;
   salary: number;
   employerOffer: number;
   statutoryFloor: number;
   targetSettlement: number;
-  status: 'locked' | 'claimed' | 'completed';
+  employerLegalFee: number;
+  recommendedLegalFee: number;
+  captiveSteering: boolean;
+  status: 'locked' | 'claimed' | 'released' | 'completed';
+  releaseReason?: string;
+  stage?: MatterStage;
   timeRemainingSec?: number;
   receivedAt: string;
 }
+
+const INITIAL_MATTERS: PortalMatter[] = [
+  {
+    id: 'dossier_live_bristol_01',
+    clientName: 'Sarah Jenkins',
+    phone: '07700 900342',
+    postcode: 'BS8 1TH',
+    cityArea: 'Clifton, Bristol',
+    employerName: 'Apex Technology UK Limited',
+    employerNameSource: 'draft_extracted',
+    signingDeadlineLabel: '4 days left (ACAS 10-day)',
+    isUrgentDeadline: true,
+    hasDraftAgreement: true,
+    clientGoal: 'Negotiate Higher',
+    disputeReason: 'Redundancy with Nominated Firm Fee Penalty',
+    salary: 58000,
+    employerOffer: 6500,
+    statutoryFloor: 11402,
+    targetSettlement: 19500,
+    employerLegalFee: 500,
+    recommendedLegalFee: 1250,
+    captiveSteering: true,
+    status: 'locked',
+    timeRemainingSec: 742,
+    receivedAt: '8 mins ago',
+  },
+  {
+    id: 'dossier_live_london_02',
+    clientName: 'Marcus Vance',
+    phone: '07700 900418',
+    postcode: 'BS1 4PB',
+    cityArea: 'Harbourside, Bristol',
+    employerName: undefined,
+    employerNameSource: undefined,
+    signingDeadlineLabel: '48 hrs urgent',
+    isUrgentDeadline: true,
+    hasDraftAgreement: false,
+    clientGoal: 'Negotiate Higher',
+    disputeReason: 'Unfair Dismissal / PIP Exit',
+    salary: 72000,
+    employerOffer: 12000,
+    statutoryFloor: 8400,
+    targetSettlement: 24000,
+    employerLegalFee: 500,
+    recommendedLegalFee: 1000,
+    captiveSteering: false,
+    status: 'claimed',
+    stage: 'conflict_cleared',
+    receivedAt: '2 hours ago',
+  },
+  {
+    id: 'dossier_live_clifton_03',
+    clientName: 'David H. Miller',
+    phone: '07700 900519',
+    postcode: 'BS6 6TP',
+    cityArea: 'Redland, Bristol',
+    employerName: 'Severn Engineering Group PLC',
+    employerNameSource: 'employee_provided',
+    signingDeadlineLabel: 'Signed',
+    isUrgentDeadline: false,
+    hasDraftAgreement: true,
+    clientGoal: 'Fast s.203 Sign-Off',
+    disputeReason: 'Senior Redundancy Compromise',
+    salary: 95000,
+    employerOffer: 32000,
+    statutoryFloor: 28500,
+    targetSettlement: 48000,
+    employerLegalFee: 750,
+    recommendedLegalFee: 1500,
+    captiveSteering: false,
+    status: 'completed',
+    stage: 'signed_billed',
+    receivedAt: 'Yesterday',
+  },
+];
+
+const STAGE_OPTIONS: Array<{ id: MatterStage; label: string }> = [
+  { id: 'conflict_cleared', label: '1. Conflict Cleared' },
+  { id: 'client_called', label: '2. Client Spoken To' },
+  { id: 'advice_issued', label: '3. Advice Issued' },
+  { id: 'signed_billed', label: '4. Signed & Billed' },
+];
+
+const RELEASE_REASONS = [
+  'SRA Conflict of Interest',
+  'At Capacity Today',
+  'Outside Specialism',
+];
+
+const STATUTORY_WP_CARDS = [
+  {
+    id: 'era_caps',
+    title: 'ERA 1996 Statutory Caps (2026/27)',
+    citation: 'Employment Rights Act 1996 ss.86, 162, 124',
+    metrics: [
+      { label: 'Weekly Pay Cap (GB)', value: `£${STATUTORY_RATES_2026_27.weeklyCapGB}/wk` },
+      { label: 'Weekly Pay Cap (NI)', value: `£${STATUTORY_RATES_2026_27.weeklyCapNI}/wk` },
+      { label: 'Max Basic Award / SRP', value: `£${STATUTORY_RATES_2026_27.maxBasicAwardGB.toLocaleString('en-GB')}` },
+      { label: 'Compensatory Cap (GB)', value: `£${STATUTORY_RATES_2026_27.compensatoryAwardLimitGB.toLocaleString('en-GB')}` },
+    ],
+    wpClause: `For the avoidance of doubt, under the Employment Rights (Increase of Limits) Order effective 6 April 2026, the statutory weekly pay cap is £${STATUTORY_RATES_2026_27.weeklyCapGB} (GB), the maximum basic award / statutory redundancy payment is £${STATUTORY_RATES_2026_27.maxBasicAwardGB.toLocaleString('en-GB')}, and the unfair dismissal compensatory award cap is £${STATUTORY_RATES_2026_27.compensatoryAwardLimitGB.toLocaleString('en-GB')}. Any settlement offer must reflect these statutory baselines alongside accrued contractual notice under ERA 1996 s.86.`,
+  },
+  {
+    id: 'vento_bands',
+    title: 'Equality Act 2010 Vento Bands (2026/27)',
+    citation: 'Presidential Guidance (Ninth Addendum, 6 April 2026)',
+    metrics: [
+      { label: 'Lower Band', value: `£${VENTO_BANDS_2026_27.lowerMin.toLocaleString('en-GB')} - £${VENTO_BANDS_2026_27.lowerMax.toLocaleString('en-GB')}` },
+      { label: 'Middle Band', value: `£${VENTO_BANDS_2026_27.middleMin.toLocaleString('en-GB')} - £${VENTO_BANDS_2026_27.middleMax.toLocaleString('en-GB')}` },
+      { label: 'Upper Band', value: `£${VENTO_BANDS_2026_27.upperMin.toLocaleString('en-GB')} - £${VENTO_BANDS_2026_27.upperMax.toLocaleString('en-GB')}` },
+      { label: 'Exceptional Cases', value: `£${VENTO_BANDS_2026_27.exceptionalMin.toLocaleString('en-GB')}+` },
+    ],
+    wpClause: `Should this matter proceed to the Employment Tribunal under the Equality Act 2010, compensation is uncapped and injury to feelings is assessed under the Presidential Guidance Ninth Addendum (applicable from 6 April 2026): Lower Band £${VENTO_BANDS_2026_27.lowerMin.toLocaleString('en-GB')} to £${VENTO_BANDS_2026_27.lowerMax.toLocaleString('en-GB')}, Middle Band £${VENTO_BANDS_2026_27.middleMin.toLocaleString('en-GB')} to £${VENTO_BANDS_2026_27.middleMax.toLocaleString('en-GB')}, and Upper Band £${VENTO_BANDS_2026_27.upperMin.toLocaleString('en-GB')} to £${VENTO_BANDS_2026_27.upperMax.toLocaleString('en-GB')}.`,
+  },
+  {
+    id: 'itepa_tax',
+    title: 'Termination Tax & Employer NIC (ITEPA 2003)',
+    citation: 'ITEPA 2003 ss.402D (PENP) & 403',
+    metrics: [
+      { label: 'Tax-Free Exemption', value: `£${STATUTORY_RATES_2026_27.taxFreeLimit.toLocaleString('en-GB')}` },
+      { label: 'Employer Class 1A NIC', value: `${(STATUTORY_RATES_2026_27.employerClass1ANICRate * 100).toFixed(1)}% (>£30k)` },
+      { label: 'Employee NIC (>£30k)', value: '0% (Exempt)' },
+      { label: 'PILON / PENP Tax', value: '100% Taxable' },
+    ],
+    wpClause: `Under ITEPA 2003 s.403, genuinely ex-gratia termination compensation up to £${STATUTORY_RATES_2026_27.taxFreeLimit.toLocaleString('en-GB')} may be paid free of income tax and NIC, whereas Post-Employment Notice Pay (PENP) under s.402D must be separated and taxed as earnings. Termination payments above £30,000 attract Employer Class 1A NIC at ${(STATUTORY_RATES_2026_27.employerClass1ANICRate * 100).toFixed(1)}%, making employer pension contributions an efficient structuring option where agreed.`,
+  },
+  {
+    id: 's203_fee_parity',
+    title: 'Section 203(3) Advice & ACAS 10-Day Rule',
+    citation: 'ERA 1996 s.203(3) & ACAS Code of Practice (Para 12)',
+    metrics: [
+      { label: 'Statutory Requirement', value: 'Independent Adviser' },
+      { label: 'ACAS Guideline Window', value: '10 Calendar Days' },
+      { label: 'ACAS Uplift Exposure', value: 'Up to 25% (TULRCA)' },
+      { label: 'SRA Rule', value: 'Rule 2.1 Independence' },
+    ],
+    wpClause: `To satisfy Section 203(3) of the Employment Rights Act 1996, our client must receive advice from a relevant independent adviser of their own choosing. We also note paragraph 12 of the ACAS Code of Practice on Settlement Agreements, which recommends a minimum of 10 calendar days to consider formal written terms. Please confirm parity of the employer legal fee contribution and confirm a reasonable extension for review.`,
+  },
+];
+
+type PortalTab = 'pipeline' | 'territory' | 'telemetry' | 'settings';
+type StatusFilter = 'all' | 'locked' | 'claimed' | 'completed';
 
 export default function PortalClient() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -28,20 +189,65 @@ export default function PortalClient() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
 
-  React.useEffect(() => {
+  const [activeTab, setActiveTab] = useState<PortalTab>('pipeline');
+  const [matters, setMatters] = useState<PortalMatter[]>(INITIAL_MATTERS);
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [claimingId, setClaimingId] = useState<string | null>(null);
+  const [releasingId, setReleasingId] = useState<string | null>(null);
+  const [copiedClauseId, setCopiedClauseId] = useState<string | null>(null);
+
+  const [webhookUrl, setWebhookUrl] = useState('https://app.clio.com/api/v4/webhooks/sc_intake');
+  const [isSaved, setIsSaved] = useState(false);
+  const [slaAlertsEnabled, setSlaAlertsEnabled] = useState(true);
+
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       if (params.get('demo') === 'true') {
         setIsDemoMode(true);
         setIsAuthenticated(true);
-        return;
+      } else {
+        const auth = sessionStorage.getItem('sc_partner_mfa_auth');
+        if (auth === 'true') {
+          setIsAuthenticated(true);
+        }
       }
-      const auth = sessionStorage.getItem('sc_partner_mfa_auth');
-      if (auth === 'true') {
-        setIsAuthenticated(true);
+
+      // Sync sandbox overrides (claimed / released / stage) across Portal & Dossier
+      const overrides = getSandboxMatterOverrides();
+      if (Object.keys(overrides).length > 0) {
+        setMatters(prev =>
+          prev.map(m => {
+            const ov = overrides[m.id];
+            if (!ov) return m;
+            return {
+              ...m,
+              status: ov.status ?? m.status,
+              releaseReason: ov.releaseReason ?? m.releaseReason,
+              stage: ov.stage ?? m.stage,
+              timeRemainingSec: ov.status && ov.status !== 'locked' ? undefined : m.timeRemainingSec,
+            };
+          })
+        );
       }
     }
   }, []);
+
+  // Live 1-second SLA countdown ticker for locked matters
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    const interval = setInterval(() => {
+      setMatters(prev =>
+        prev.map(m =>
+          m.status === 'locked' && typeof m.timeRemainingSec === 'number' && m.timeRemainingSec > 0
+            ? { ...m, timeRemainingSec: m.timeRemainingSec - 1 }
+            : m
+        )
+      );
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isAuthenticated]);
 
   const handleVerifyTotp = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,9 +261,13 @@ export default function PortalClient() {
           sessionStorage.setItem('sc_partner_mfa_auth', 'true');
         }
       } else if (process.env.NODE_ENV !== 'development') {
-        setAuthError('Partner Portal direct web authentication is currently undergoing scheduled maintenance. Please access assigned instructions using your secure direct email claim links.');
+        setAuthError(
+          'Live partner accounts sign in via direct encrypted dossier links sent to your firm email. To preview the full workspace now, use the Interactive Partner Sandbox below.'
+        );
       } else {
-        setAuthError('Invalid 6-digit authenticator code. Enter the code from your authenticator app or use dev demo code: 568912.');
+        setAuthError(
+          'Invalid 6-digit authenticator code. Enter the code from your authenticator app or use dev demo code: 568912.'
+        );
       }
       setIsVerifying(false);
     }, 350);
@@ -73,49 +283,61 @@ export default function PortalClient() {
     }
   };
 
-  const [activeTab, setActiveTab] = useState<'pipeline' | 'territory' | 'telemetry' | 'settings'>('pipeline');
-  const [webhookUrl, setWebhookUrl] = useState('https://app.clio.com/api/v4/webhooks/sc_intake');
-  const [isSaved, setIsSaved] = useState(false);
+  const handleQuickClaim = async (matterId: string) => {
+    setClaimingId(matterId);
+    try {
+      const res = await fetch('/api/portal/claim/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dossierId: matterId,
+          claimToken: 'demo_partner_token',
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSandboxMatterOverride(matterId, { status: 'claimed', stage: 'conflict_cleared' });
+        setMatters(prev =>
+          prev.map(m =>
+            m.id === matterId
+              ? { ...m, status: 'claimed', stage: 'conflict_cleared', timeRemainingSec: undefined }
+              : m
+          )
+        );
+      }
+    } catch {
+      // Non-fatal in sandbox
+    } finally {
+      setClaimingId(null);
+    }
+  };
 
-  const mockMatters: MockMatter[] = [
-    {
-      id: 'dossier_live_bristol_01',
-      clientName: 'Sarah Jenkins',
-      postcode: 'BS8 1TH',
-      disputeReason: 'Redundancy (Nominated Firm Steering)',
-      salary: 58000,
-      employerOffer: 6500,
-      statutoryFloor: 11402,
-      targetSettlement: 19500,
-      status: 'locked',
-      timeRemainingSec: 742,
-      receivedAt: '8 mins ago',
-    },
-    {
-      id: 'dossier_live_london_02',
-      clientName: 'Marcus Vance',
-      postcode: 'BS1 4PB',
-      disputeReason: 'Unfair Dismissal / PIP Exit',
-      salary: 72000,
-      employerOffer: 12000,
-      statutoryFloor: 8400,
-      targetSettlement: 24000,
-      status: 'claimed',
-      receivedAt: '2 hours ago',
-    },
-    {
-      id: 'dossier_live_clifton_03',
-      clientName: 'David H. Miller',
-      postcode: 'BS6 6TP',
-      disputeReason: 'Redundancy Compromise',
-      salary: 95000,
-      employerOffer: 32000,
-      statutoryFloor: 28500,
-      targetSettlement: 48000,
-      status: 'completed',
-      receivedAt: 'Yesterday',
-    },
-  ];
+  const handleReleaseMatter = (matterId: string, reason: string) => {
+    setSandboxMatterOverride(matterId, { status: 'released', releaseReason: reason });
+    setMatters(prev =>
+      prev.map(m =>
+        m.id === matterId
+          ? { ...m, status: 'released', releaseReason: reason, timeRemainingSec: undefined }
+          : m
+      )
+    );
+    setReleasingId(null);
+    trackClientEvent('portal_matter_released', { matter_id: matterId, reason });
+  };
+
+  const handleStageChange = (matterId: string, stage: MatterStage) => {
+    const nextStatus = stage === 'signed_billed' ? 'completed' : 'claimed';
+    setSandboxMatterOverride(matterId, { status: nextStatus, stage });
+    setMatters(prev =>
+      prev.map(m => (m.id === matterId ? { ...m, stage, status: nextStatus } : m))
+    );
+  };
+
+  const handleCopyClause = (id: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedClauseId(id);
+    setTimeout(() => setCopiedClauseId(null), 2200);
+  };
 
   const handleSaveWebhook = (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,11 +345,96 @@ export default function PortalClient() {
     setTimeout(() => setIsSaved(false), 3000);
   };
 
+  const formatCountdown = (sec?: number) => {
+    const safe = Math.max(0, sec ?? 0);
+    const m = Math.floor(safe / 60);
+    const s = safe % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  };
+
+  const lockedCount = useMemo(() => matters.filter(m => m.status === 'locked').length, [matters]);
+  const claimedCount = useMemo(() => matters.filter(m => m.status === 'claimed').length, [matters]);
+  const completedCount = useMemo(() => matters.filter(m => m.status === 'completed').length, [matters]);
+  const activeFeePotential = useMemo(
+    () =>
+      matters
+        .filter(m => m.status === 'locked' || m.status === 'claimed')
+        .reduce((sum, m) => sum + m.recommendedLegalFee, 0),
+    [matters]
+  );
+  const urgentDeadlineCount = useMemo(
+    () => matters.filter(m => (m.status === 'locked' || m.status === 'claimed') && m.isUrgentDeadline).length,
+    [matters]
+  );
+
+  const filteredMatters = useMemo(() => {
+    return matters.filter(m => {
+      if (statusFilter === 'all' && m.status === 'released') return true;
+      if (statusFilter !== 'all' && m.status !== statusFilter) return false;
+      if (!searchQuery.trim()) return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        m.clientName.toLowerCase().includes(q) ||
+        (m.employerName || '').toLowerCase().includes(q) ||
+        m.postcode.toLowerCase().includes(q) ||
+        m.disputeReason.toLowerCase().includes(q) ||
+        m.cityArea.toLowerCase().includes(q)
+      );
+    });
+  }, [matters, statusFilter, searchQuery]);
+
+  const navItems: Array<{ id: PortalTab; label: string; shortLabel: string; badge?: number; icon: React.ReactNode }> = [
+    {
+      id: 'pipeline',
+      label: 'Instruction Queue',
+      shortLabel: 'Queue',
+      badge: lockedCount > 0 ? lockedCount : undefined,
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 12h-6l-2 3h-4l-2-3H2" />
+          <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'territory',
+      label: 'Territory & SLA',
+      shortLabel: 'Territory',
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+      ),
+    },
+    {
+      id: 'telemetry',
+      label: 'Statutory & Vento',
+      shortLabel: 'Statutes',
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+        </svg>
+      ),
+    },
+    {
+      id: 'settings',
+      label: 'PMS & Alerts',
+      shortLabel: 'Settings',
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+    },
+  ];
+
+  // ── Login Gate ─────────────────────────────────────────────────────────────
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[#F7F4EE] flex flex-col justify-center items-center px-4 py-8">
         <div className="w-full max-w-md bg-white border border-[#E2DCCE] rounded-2xl p-6 sm:p-8 shadow-sm">
-          {/* Brand Header */}
           <div className="text-center mb-6">
             <Link href="/" className="font-serif text-2xl sm:text-3xl font-bold tracking-tight inline-block mb-3">
               <span className="text-[#D9603B]">Settlement</span>
@@ -140,7 +447,7 @@ export default function PortalClient() {
               </span>
             </div>
             <h1 className="text-2xl font-serif font-bold text-[#0B1F3A] leading-tight">
-              Solicitor Command Centre Login
+              Solicitor Command Centre
             </h1>
             <p className="text-sm text-[#0B1F3A]/75 mt-2 leading-relaxed">
               Protected by mandatory Multi-Factor Authentication (MFA / TOTP)
@@ -149,78 +456,66 @@ export default function PortalClient() {
 
           {authStep === 'credentials' ? (
             <form
-              onSubmit={(e) => {
+              onSubmit={e => {
                 e.preventDefault();
                 setAuthError(null);
                 setAuthStep('totp');
               }}
-              className="space-y-5"
+              className="space-y-4"
             >
               <div>
-                <label className="block text-sm font-semibold text-[#0B1F3A] mb-1.5">
-                  Firm Work Email
-                </label>
+                <label className="block text-sm font-semibold text-[#0B1F3A] mb-1.5">Firm Work Email</label>
                 <input
                   type="email"
                   required
                   value={workEmail}
-                  onChange={(e) => setWorkEmail(e.target.value)}
-                  className="w-full min-h-[48px] px-3.5 py-3 border border-[#E2DCCE] rounded-lg text-base text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                  onChange={e => setWorkEmail(e.target.value)}
+                  className="w-full min-h-[48px] px-3.5 py-3 border border-[#E2DCCE] rounded-xl text-base text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-[#0B1F3A] mb-1.5">
-                  Partner Password / Passkey
-                </label>
+                <label className="block text-sm font-semibold text-[#0B1F3A] mb-1.5">Partner Password / Passkey</label>
                 <input
                   type="password"
                   required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full min-h-[48px] px-3.5 py-3 border border-[#E2DCCE] rounded-lg text-base text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                  onChange={e => setPassword(e.target.value)}
+                  className="w-full min-h-[48px] px-3.5 py-3 border border-[#E2DCCE] rounded-xl text-base text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
                 />
-              </div>
-
-              <div className="bg-[#F0F5FA] border border-[#C4D8EC] p-4 rounded-lg text-sm text-[#0B1F3A] leading-relaxed">
-                <strong>SRA Cybersecurity Invariant:</strong> In compliance with SRA Code of Conduct and UK GDPR data protection rules for confidential settlement dossiers, an authenticator app (TOTP) is required.
               </div>
 
               <button
                 type="submit"
-                className="w-full min-h-[48px] px-4 py-3 bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white font-semibold text-base rounded-lg transition-colors cursor-pointer shadow-sm"
+                className="w-full min-h-[48px] px-4 py-3 bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white font-semibold text-base rounded-xl transition-colors cursor-pointer shadow-sm"
               >
-                Continue to Authenticator Verification →
+                Continue to Authenticator →
               </button>
 
               <div className="pt-4 border-t border-[#E2DCCE] text-center space-y-3">
-                <p className="text-sm text-[#0B1F3A]/75">
-                  Considering joining the SettlementCheck panel?
-                </p>
+                <p className="text-sm text-[#0B1F3A]/75">Evaluating the panel for your employment team?</p>
                 <button
                   type="button"
                   onClick={() => {
                     setIsDemoMode(true);
                     setIsAuthenticated(true);
                   }}
-                  className="w-full min-h-[48px] px-4 py-3 bg-[#F7F4EE] hover:bg-[#EFEAE0] text-[#0B1F3A] border border-[#C9C0AC] font-semibold text-base rounded-lg transition-colors cursor-pointer"
+                  className="w-full min-h-[48px] px-4 py-3 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white font-semibold text-base rounded-xl transition-colors cursor-pointer shadow-sm"
                 >
-                  Explore Interactive Partner Demo →
+                  Launch Interactive Partner Sandbox →
                 </button>
               </div>
             </form>
           ) : (
             <form onSubmit={handleVerifyTotp} className="space-y-5">
-              <div className="text-center p-3.5 bg-[#F7F4EE] rounded-lg border border-[#E2DCCE]">
+              <div className="text-center p-3.5 bg-[#F7F4EE] rounded-xl border border-[#E2DCCE]">
                 <span className="text-xs uppercase tracking-wider font-semibold text-[#0B1F3A]/70 block mb-1">Partner Account</span>
                 <span className="text-sm font-mono font-bold text-[#0B1F3A] break-all">{workEmail}</span>
               </div>
 
               <div>
                 <div className="flex flex-wrap justify-between items-center gap-2 mb-1.5">
-                  <label className="block text-sm font-semibold text-[#0B1F3A]">
-                    6-Digit Authenticator Code (TOTP)
-                  </label>
+                  <label className="block text-sm font-semibold text-[#0B1F3A]">6-Digit Authenticator Code</label>
                   <button
                     type="button"
                     onClick={() => setTotpCode('568912')}
@@ -236,29 +531,36 @@ export default function PortalClient() {
                   placeholder="000000"
                   autoFocus
                   value={totpCode}
-                  onChange={(e) => setTotpCode(e.target.value.replace(/[^0-9]/g, ''))}
-                  className="w-full min-h-[52px] p-3.5 border border-[#E2DCCE] rounded-lg text-center font-mono text-2xl tracking-[0.3em] font-bold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                  onChange={e => setTotpCode(e.target.value.replace(/[^0-9]/g, ''))}
+                  className="w-full min-h-[52px] p-3.5 border border-[#E2DCCE] rounded-xl text-center font-mono text-2xl tracking-[0.3em] font-bold text-[#0B1F3A] bg-[#F7F4EE] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
                 />
-                <p className="text-sm text-[#0B1F3A]/75 mt-2 text-center leading-relaxed">
-                  Enter the 6-digit code from Google Authenticator, Microsoft Authenticator, or 1Password.
-                </p>
               </div>
 
               {authError && (
-                <div role="alert" className="p-3.5 bg-[#FEF5F3] border border-[#F3C4B8] rounded-lg text-sm text-[#D9603B] font-medium leading-relaxed">
-                  {authError}
+                <div role="alert" className="p-3.5 bg-[#FEF5F3] border border-[#F3C4B8] rounded-xl text-sm text-[#D9603B] font-medium leading-relaxed space-y-2">
+                  <p className="m-0">{authError}</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsDemoMode(true);
+                      setIsAuthenticated(true);
+                    }}
+                    className="inline-flex items-center font-semibold underline text-[#0B1F3A] cursor-pointer"
+                  >
+                    Open Interactive Partner Sandbox →
+                  </button>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={isVerifying || totpCode.trim().length === 0}
-                className="w-full min-h-[48px] px-4 py-3 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white font-semibold text-base rounded-lg transition-colors cursor-pointer shadow-sm disabled:opacity-50"
+                className="w-full min-h-[48px] px-4 py-3 bg-[#D9603B] hover:bg-[#D9603B]/90 text-white font-semibold text-base rounded-xl transition-colors cursor-pointer shadow-sm disabled:opacity-50"
               >
-                {isVerifying ? 'Verifying TOTP Code...' : 'Verify & Launch Command Centre →'}
+                {isVerifying ? 'Verifying TOTP Code...' : 'Verify & Open Command Centre →'}
               </button>
 
-              <div className="text-center pt-1">
+              <div className="text-center">
                 <button
                   type="button"
                   onClick={() => setAuthStep('credentials')}
@@ -274,347 +576,699 @@ export default function PortalClient() {
     );
   }
 
+  // ── Modern Mobile-First App Shell ──────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#F7F4EE] text-[#0B1F3A] pb-24">
-      {isDemoMode && (
-        <div className="bg-[#D9603B] text-white px-4 py-3">
-          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2.5 text-sm sm:text-base leading-snug">
-              <span className="px-2.5 py-0.5 rounded bg-[#0B1F3A] text-white font-mono text-xs font-bold uppercase tracking-wider shrink-0">
-                Demo Sandbox
+    <div className="min-h-screen bg-[#F7F4EE] text-[#0B1F3A] flex flex-col lg:flex-row">
+      {/* ── Desktop Left Sidebar (lg+) ───────────────────────────────────── */}
+      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-[#0B1F3A] text-white border-r border-white/10 z-40">
+        <div className="p-5 border-b border-white/10">
+          <Link href="/" className="font-serif text-2xl font-bold tracking-tight block">
+            <span className="text-[#D9603B]">Settlement</span>
+            <span className="text-white">Check</span>
+          </Link>
+          <span className="text-xs font-mono uppercase tracking-widest text-white/60 block mt-1">
+            Solicitor Portal
+          </span>
+        </div>
+
+        {/* Firm Identity Card */}
+        <div className="px-4 py-4 border-b border-white/10">
+          <div className="rounded-xl bg-white/5 border border-white/10 p-3.5 space-y-1.5">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#D9603B] font-semibold">
+                {isDemoMode ? 'Sandbox Firm' : 'Charter Panel'}
               </span>
-              <span className="font-medium">
-                Sample Partner View: explore exclusive postcode routing, pre-flight dossiers, and PMS webhooks.
-              </span>
+              <span className="text-xs font-mono text-white/60">SRA-649201</span>
             </div>
-            <Link
-              href="/for-solicitors/?from=portal-demo"
-              onClick={() => trackClientEvent('solicitor_demo_to_apply', { source: 'portal_demo_banner' })}
-              className="inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-lg bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white font-semibold text-sm transition-colors shrink-0 text-center"
-            >
-              Apply to Join the Panel →
-            </Link>
+            <p className="text-sm font-semibold text-white leading-snug">
+              Bristol Employment Law Specialists LLP
+            </p>
+            <p className="text-xs text-white/65">Exclusive BS Cluster · 30 mi</p>
           </div>
         </div>
-      )}
 
-      {/* ── Partner Portal Header ────────────────────────────────────────── */}
-      <header className="bg-[#0B1F3A] text-white border-b border-[#0B1F3A]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-3">
-            <Link href="/" className="font-serif text-2xl font-bold tracking-tight">
+        {/* Primary Navigation */}
+        <nav aria-label="Partner portal sections" className="flex-1 px-3 py-4 space-y-1.5">
+          {navItems.map(item => {
+            const isActive = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`w-full min-h-[46px] px-3.5 py-2.5 rounded-xl flex items-center justify-between text-sm font-medium transition-colors ${
+                  isActive
+                    ? 'bg-white/15 text-white font-semibold'
+                    : 'text-white/75 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                <span className="flex items-center gap-3">
+                  <span className={isActive ? 'text-[#D9603B]' : 'text-white/60'}>{item.icon}</span>
+                  {item.label}
+                </span>
+                {item.badge !== undefined && (
+                  <span className="px-2 py-0.5 rounded-full bg-[#D9603B] text-white text-xs font-bold tabular-nums">
+                    {item.badge}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Bottom Demo CTA + Sign Out */}
+        <div className="p-4 border-t border-white/10 space-y-2.5">
+          {isDemoMode && (
+            <Link
+              href="/for-solicitors/?from=portal-demo"
+              onClick={() => trackClientEvent('solicitor_demo_to_apply', { source: 'portal_sidebar_cta' })}
+              className="flex items-center justify-center w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-[#D9603B] hover:bg-[#D9603B]/90 text-white text-sm font-semibold transition-colors text-center"
+            >
+              Apply to Join Panel →
+            </Link>
+          )}
+          <button
+            onClick={handleSignOut}
+            className="w-full min-h-[42px] px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-sm font-medium transition-colors"
+          >
+            {isDemoMode ? 'Exit Sandbox' : 'Sign Out'}
+          </button>
+        </div>
+      </aside>
+
+      {/* ── Mobile Compact Top App Bar (< lg) ────────────────────────────── */}
+      <header className="lg:hidden sticky top-0 z-40 bg-[#0B1F3A] text-white border-b border-white/10">
+        <div className="px-4 h-14 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <Link href="/" className="font-serif text-lg font-bold tracking-tight shrink-0">
               <span className="text-[#D9603B]">Settlement</span>
               <span className="text-white">Check</span>
             </Link>
-            <span className="text-white/30 text-lg font-light" aria-hidden="true">/</span>
-            <span className="text-xs sm:text-sm uppercase font-mono tracking-widest text-[#D9603B] font-semibold">
-              Partner Portal
-            </span>
+            {isDemoMode && (
+              <span className="px-2 py-0.5 rounded bg-[#D9603B]/20 border border-[#D9603B]/40 text-white text-xs font-mono font-semibold shrink-0">
+                Sandbox
+              </span>
+            )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 text-sm">
-            <span className="w-full sm:w-auto text-white/80">
-              {isDemoMode ? 'Sample Firm: ' : 'Firm: '}
-              <strong className="text-white font-semibold">Bristol Employment Law Specialists LLP</strong>{' '}
-              <span className="text-white/70 font-mono text-xs">(SRA-649201)</span>
-            </span>
-            <span className="px-2.5 py-1 rounded bg-[#D9603B]/20 text-white font-mono text-xs border border-[#D9603B]/40 font-semibold inline-flex items-center gap-1.5">
-              {isDemoMode ? 'DEMO SANDBOX' : <><span>🔒</span> MFA Active</>}
-            </span>
-            <span className="px-2.5 py-1 rounded bg-white/10 text-white font-mono text-xs border border-white/15">
-              CHARTER PANEL
-            </span>
+          <div className="flex items-center gap-2 shrink-0">
+            {isDemoMode && (
+              <Link
+                href="/for-solicitors/?from=portal-demo"
+                onClick={() => trackClientEvent('solicitor_demo_to_apply', { source: 'portal_mobile_topbar' })}
+                className="inline-flex items-center justify-center min-h-[36px] px-3 py-1.5 rounded-lg bg-[#D9603B] text-white text-xs font-semibold"
+              >
+                Join Panel
+              </Link>
+            )}
             <button
               onClick={handleSignOut}
-              className="min-h-[40px] px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center min-h-[36px] px-2.5 py-1.5 rounded-lg bg-white/10 text-white text-xs font-medium"
             >
-              {isDemoMode ? 'Exit Demo' : 'Sign Out'}
+              {isDemoMode ? 'Exit' : 'Lock'}
             </button>
           </div>
         </div>
-
-        {/* Scrollable Navigation Tabs */}
-        <nav aria-label="Partner portal sections" className="max-w-6xl mx-auto px-4 sm:px-6 border-t border-white/10 overflow-x-auto">
-          <div className="flex gap-6 sm:gap-8 min-w-max">
-            {[
-              { id: 'pipeline', label: 'Instruction Pipeline' },
-              { id: 'territory', label: 'Territory & Postcodes' },
-              { id: 'telemetry', label: 'Settlement Telemetry' },
-              { id: 'settings', label: 'PMS Webhook & Settings' },
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`min-h-[48px] py-3.5 text-sm sm:text-base whitespace-nowrap transition-colors border-b-2 ${
-                  activeTab === tab.id
-                    ? 'border-[#D9603B] text-white font-semibold'
-                    : 'border-transparent text-white/75 hover:text-white font-medium'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </nav>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8">
-        {/* ── Tab 1: Instruction Pipeline ─────────────────────────────────── */}
-        {activeTab === 'pipeline' && (
-          <div className="space-y-6">
-            {/* Top KPI Metrics */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-white p-5 rounded-xl border border-[#0B1F3A]/10 shadow-sm">
-                <span className="text-sm font-medium text-[#0B1F3A]/70 block mb-1">Active Instructions</span>
-                <span className="text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">3</span>
-                <span className="text-sm text-[#0B1F3A]/70 block mt-1">1 reserved under 15m SLA</span>
-              </div>
-              <div className="bg-white p-5 rounded-xl border border-[#0B1F3A]/10 shadow-sm">
-                <span className="text-sm font-medium text-[#0B1F3A]/70 block mb-1">Total Matters Claimed</span>
-                <span className="text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">42</span>
-                <span className="text-sm text-[#0B1F3A]/70 block mt-1">Lifetime territory allocations</span>
-              </div>
-              <div className="bg-white p-5 rounded-xl border border-[#0B1F3A]/10 shadow-sm">
-                <span className="text-sm font-medium text-[#0B1F3A]/70 block mb-1">Avg Pre-Flight Time Saved</span>
-                <span className="text-3xl font-serif font-bold text-[#D9603B] tabular-nums">70 min</span>
-                <span className="text-sm text-[#0B1F3A]/70 block mt-1">From 90 min down to 20 min</span>
-              </div>
-              <div className="bg-white p-5 rounded-xl border border-[#0B1F3A]/10 shadow-sm">
-                <span className="text-sm font-medium text-[#0B1F3A]/70 block mb-1">SLA Response Speed</span>
-                <span className="text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">11.4 min</span>
-                <span className="text-sm text-[#0B1F3A]/70 block mt-1">15-minute target benchmark</span>
-              </div>
-            </div>
-
-            {/* Instruction List Card */}
-            <div className="bg-white rounded-2xl border border-[#0B1F3A]/10 shadow-sm overflow-hidden">
-              <div className="p-5 sm:p-6 border-b border-[#0B1F3A]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      {/* ── Main Workspace Content ───────────────────────────────────────── */}
+      <main className="flex-1 lg:pl-64 pb-24 lg:pb-12">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8">
+          {/* ── TAB 1: INSTRUCTION QUEUE ─────────────────────────────────── */}
+          {activeTab === 'pipeline' && (
+            <div className="space-y-5">
+              {/* Compact Workspace Header */}
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1F3A]">Exclusive Matter Queue</h1>
-                  <p className="text-sm sm:text-base text-[#0B1F3A]/75 mt-1 leading-relaxed">
-                    Pre-qualified employee instructions geocoded to your exclusive BS postcode cluster.
-                  </p>
+                  <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#0B1F3A]/70">
+                    <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse" />
+                    <span>BS Postcode Cluster · SRA Conflict Ready</span>
+                  </div>
+                  <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] mt-1">
+                    Instruction Queue
+                  </h1>
                 </div>
-                <span className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#0B1F3A]/75 bg-[#F7F4EE] px-3 py-1.5 rounded-full border border-[#0B1F3A]/10 self-start sm:self-center shrink-0">
-                  <span className="w-2 h-2 rounded-full bg-[#D9603B]" />
-                  Live Sync Active
-                </span>
+
+                <div className="hidden sm:flex items-center gap-3 text-sm text-[#0B1F3A]/75">
+                  <span>
+                    Exclusivity Window: <strong className="text-[#0B1F3A]">15m</strong>
+                  </span>
+                  <span aria-hidden="true">·</span>
+                  <span>
+                    Conflict Release: <strong className="text-[#0B1F3A]">Zero SLA Penalty</strong>
+                  </span>
+                </div>
               </div>
 
-              <div className="divide-y divide-[#0B1F3A]/10">
-                {mockMatters.map(m => {
-                  const isBelowFloor = m.employerOffer < m.statutoryFloor;
-                  return (
-                    <div
-                      key={m.id}
-                      className="p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-5 hover:bg-[#F7F4EE]/40 transition-colors"
-                    >
-                      <div className="space-y-3 flex-1 min-w-0">
-                        {/* Client Name + Status Badges */}
-                        <div className="flex flex-wrap items-center gap-2">
-                          <h2 className="font-serif font-bold text-lg sm:text-xl text-[#0B1F3A]">{m.clientName}</h2>
-                          <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded bg-[#0B1F3A]/5 text-[#0B1F3A]">
-                            {m.postcode}
-                          </span>
-                          {m.status === 'locked' && (
-                            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/30">
-                              ⚡ 15-Min Exclusivity Lock: {Math.floor((m.timeRemainingSec || 0) / 60)}m left
-                            </span>
-                          )}
-                          {m.status === 'claimed' && (
-                            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#0B1F3A]/10 text-[#0B1F3A]">
-                              ✓ Claimed &amp; Active
-                            </span>
-                          )}
-                          {m.status === 'completed' && (
-                            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#0B1F3A]/5 text-[#0B1F3A]/75">
-                              Settlement Discharged
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Dispute Summary */}
-                        <p className="text-sm sm:text-base text-[#0B1F3A]/80 leading-snug">
-                          {m.disputeReason} <span className="text-[#0B1F3A]/50">·</span>{' '}
-                          <span className="text-sm text-[#0B1F3A]/70">Arrived {m.receivedAt}</span>
-                        </p>
-
-                        {/* Scannable Financial Strip */}
-                        <div className="grid grid-cols-3 gap-2.5 sm:gap-4 max-w-xl pt-1">
-                          <div className="rounded-lg bg-[#F7F4EE] px-3 py-2 border border-[#0B1F3A]/5">
-                            <span className="block text-xs font-medium text-[#0B1F3A]/70">Salary</span>
-                            <span className="block text-base sm:text-lg font-serif font-bold text-[#0B1F3A] tabular-nums">
-                              £{m.salary.toLocaleString('en-GB')}
-                            </span>
-                          </div>
-                          <div className="rounded-lg bg-[#F7F4EE] px-3 py-2 border border-[#0B1F3A]/5">
-                            <span className="block text-xs font-medium text-[#0B1F3A]/70">Offer</span>
-                            <span className={`block text-base sm:text-lg font-serif font-bold tabular-nums ${isBelowFloor ? 'text-[#D9603B]' : 'text-[#0B1F3A]'}`}>
-                              £{m.employerOffer.toLocaleString('en-GB')}
-                            </span>
-                          </div>
-                          <div className="rounded-lg bg-[#F7F4EE] px-3 py-2 border border-[#0B1F3A]/5">
-                            <span className="block text-xs font-medium text-[#0B1F3A]/70">Stat. Floor</span>
-                            <span className="block text-base sm:text-lg font-serif font-bold text-[#0B1F3A] tabular-nums">
-                              £{m.statutoryFloor.toLocaleString('en-GB')}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Primary Action CTA */}
-                      <div className="w-full lg:w-auto shrink-0">
-                        <Link
-                          href={`/dossier/review/${m.id}/?token=demo_partner_token`}
-                          className={`inline-flex items-center justify-center w-full lg:w-auto min-h-[48px] px-5 py-3 rounded-xl text-sm sm:text-base font-semibold text-center transition-all ${
-                            m.status === 'locked'
-                              ? 'bg-[#D9603B] text-white hover:bg-[#D9603B]/90 shadow-sm'
-                              : 'bg-[#0B1F3A] text-white hover:bg-[#0B1F3A]/90'
-                          }`}
-                        >
-                          {m.status === 'locked' ? '⚡ Claim & Review Dossier →' : 'Open Pre-Flight Dossier →'}
-                        </Link>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── Tab 2: Territory & Postcodes ─────────────────────────────────── */}
-        {activeTab === 'territory' && (
-          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
-            <div>
-              <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1F3A]">Territorial Exclusivity Mapping</h1>
-              <p className="text-base text-[#0B1F3A]/80 mt-2 max-w-prose leading-relaxed">
-                Your law firm holds exclusive first-right routing on all employee instructions originating within these postal clusters.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-5 sm:p-6 rounded-xl bg-[#F7F4EE] border border-[#0B1F3A]/10 space-y-4">
-                <h2 className="text-sm font-bold uppercase tracking-wider text-[#0B1F3A]/75">Assigned Outward Postcodes</h2>
-                <div className="flex flex-wrap gap-2">
-                  {['BS8', 'BS1', 'BS2', 'BS3', 'BS6', 'BS7', 'BS9', 'BS10', 'BS16', 'BS20'].map(code => (
-                    <span key={code} className="px-3.5 py-1.5 bg-white border border-[#0B1F3A]/15 rounded-lg text-sm font-mono font-bold text-[#0B1F3A]">
-                      {code}
+              {/* Honest Operational 4-Stat Strip (2x2 on mobile, 4-col on desktop) */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                <div className="bg-white px-4 py-3.5 rounded-xl border border-[#E2DCCE] shadow-sm">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#D9603B] block">
+                    Priority Lock
+                  </span>
+                  <div className="flex items-baseline justify-between mt-1">
+                    <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
+                      {lockedCount}
                     </span>
+                    <span className="text-xs text-[#0B1F3A]/70 font-medium">15m hold</span>
+                  </div>
+                </div>
+
+                <div className="bg-white px-4 py-3.5 rounded-xl border border-[#E2DCCE] shadow-sm">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/70 block">
+                    Active Files
+                  </span>
+                  <div className="flex items-baseline justify-between mt-1">
+                    <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
+                      {claimedCount}
+                    </span>
+                    <span className="text-xs text-[#0B1F3A]/70 font-medium">In progress</span>
+                  </div>
+                </div>
+
+                <div className="bg-white px-4 py-3.5 rounded-xl border border-[#E2DCCE] shadow-sm">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/70 block">
+                    Active Fee Pool
+                  </span>
+                  <div className="flex items-baseline justify-between mt-1">
+                    <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
+                      £{activeFeePotential.toLocaleString('en-GB')}
+                    </span>
+                    <span className="text-xs text-[#0B1F3A]/70 font-medium">+ VAT</span>
+                  </div>
+                </div>
+
+                <div className="bg-white px-4 py-3.5 rounded-xl border border-[#E2DCCE] shadow-sm">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#0B1F3A]/70 block">
+                    Urgent Deadlines
+                  </span>
+                  <div className="flex items-baseline justify-between mt-1">
+                    <span className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] tabular-nums">
+                      {urgentDeadlineCount}
+                    </span>
+                    <span className="text-xs text-[#0B1F3A]/70 font-medium">This week</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Filter Bar + Instant Search */}
+              <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                  {[
+                    { id: 'all' as const, label: `All (${matters.length})` },
+                    { id: 'locked' as const, label: `Urgent (${lockedCount})` },
+                    { id: 'claimed' as const, label: `Claimed (${claimedCount})` },
+                    { id: 'completed' as const, label: `Completed (${completedCount})` },
+                  ].map(f => (
+                    <button
+                      key={f.id}
+                      onClick={() => setStatusFilter(f.id)}
+                      className={`min-h-[40px] px-3.5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-colors ${
+                        statusFilter === f.id
+                          ? 'bg-[#0B1F3A] text-white'
+                          : 'bg-white text-[#0B1F3A]/80 border border-[#E2DCCE] hover:border-[#0B1F3A]/30'
+                      }`}
+                    >
+                      {f.label}
+                    </button>
                   ))}
                 </div>
-                <p className="text-sm sm:text-base text-[#0B1F3A]/80 pt-1">
-                  Coverage Radius: <strong>30 miles</strong> from office hub (BS8 1TH, Bristol).
+
+                <div className="relative sm:w-64">
+                  <input
+                    type="search"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    placeholder="Filter client, employer, postcode..."
+                    aria-label="Filter matters by client, employer, or postcode"
+                    className="w-full min-h-[44px] pl-3.5 pr-3 py-2 rounded-xl bg-white border border-[#E2DCCE] text-base sm:text-sm text-[#0B1F3A] placeholder:text-[#0B1F3A]/50 focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                  />
+                </div>
+              </div>
+
+              {/* Actionable Matter Cards */}
+              <div className="space-y-4">
+                {filteredMatters.length === 0 ? (
+                  <div className="bg-white rounded-2xl border border-[#E2DCCE] p-8 text-center">
+                    <p className="text-base font-semibold text-[#0B1F3A]">No matching instructions</p>
+                    <p className="text-sm text-[#0B1F3A]/70 mt-1">Try clearing your search or switching status filters.</p>
+                  </div>
+                ) : (
+                  filteredMatters.map(m => {
+                    const isBelowFloor = m.employerOffer < m.statutoryFloor;
+                    const shortfall = Math.max(0, m.statutoryFloor - m.employerOffer);
+                    const offerPct = Math.min(100, Math.round((m.employerOffer / m.targetSettlement) * 100));
+                    const floorPct = Math.min(100, Math.round((m.statutoryFloor / m.targetSettlement) * 100));
+
+                    return (
+                      <article
+                        key={m.id}
+                        className={`bg-white rounded-2xl border shadow-sm overflow-hidden transition-all ${
+                          m.status === 'locked'
+                            ? 'border-[#D9603B]/50 ring-1 ring-[#D9603B]/15'
+                            : m.status === 'released'
+                              ? 'border-[#E2DCCE] opacity-75'
+                              : 'border-[#E2DCCE]'
+                        }`}
+                      >
+                        {/* Live Urgency Strip for Locked Matters */}
+                        {m.status === 'locked' && (
+                          <div className="bg-[#D9603B]/10 border-b border-[#D9603B]/20 px-4 sm:px-6 py-2.5 flex items-center justify-between gap-2">
+                            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#D9603B]">
+                              <span className="w-2 h-2 rounded-full bg-[#D9603B] animate-pulse" />
+                              15-Min Provisional Territorial Hold
+                            </span>
+                            <span className="font-mono text-sm sm:text-base font-bold text-[#D9603B] tabular-nums">
+                              {formatCountdown(m.timeRemainingSec)} left
+                            </span>
+                          </div>
+                        )}
+
+                        {m.status === 'released' && (
+                          <div className="bg-[#F7F4EE] border-b border-[#E2DCCE] px-4 sm:px-6 py-2.5 flex items-center justify-between gap-2 text-xs sm:text-sm text-[#0B1F3A]/80">
+                            <span>
+                              Released back to panel pool ({m.releaseReason || 'Conflict / Capacity'}) · Zero SLA penalty
+                            </span>
+                          </div>
+                        )}
+
+                        <div className="p-4 sm:p-6 space-y-4">
+                          {/* Row 1: Client Identity + Status + Time */}
+                          <div className="flex flex-wrap items-start justify-between gap-3">
+                            <div className="space-y-1.5">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <h2 className="font-serif font-bold text-xl text-[#0B1F3A]">{m.clientName}</h2>
+                                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]">
+                                  {m.postcode}
+                                </span>
+                                {m.captiveSteering && (
+                                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#D9603B]/10 text-[#D9603B] border border-[#D9603B]/25">
+                                    Captive Steering
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-sm sm:text-base text-[#0B1F3A]/80 m-0">
+                                {m.disputeReason} <span className="text-[#0B1F3A]/40">·</span>{' '}
+                                <span className="text-sm text-[#0B1F3A]/70">{m.cityArea}</span>
+                              </p>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              {m.status === 'claimed' && (
+                                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#0B1F3A] text-white">
+                                  ✓ Claimed
+                                </span>
+                              )}
+                              {m.status === 'completed' && (
+                                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/75">
+                                  Signed &amp; Billed
+                                </span>
+                              )}
+                              <span className="text-xs text-[#0B1F3A]/65">{m.receivedAt}</span>
+                            </div>
+                          </div>
+
+                          {/* Row 1.5: SRA Conflict Check + Solicitor Triage Pills */}
+                          <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+                            {m.employerName ? (
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1F3A]/5 border border-[#0B1F3A]/15 text-[#0B1F3A] font-medium">
+                                <span className="font-semibold">Counterparty:</span> {m.employerName}
+                                <span className="text-xs font-mono text-[#0B1F3A]/65">
+                                  ({m.employerNameSource === 'draft_extracted' ? 'Draft' : 'Pre-disclosed'})
+                                </span>
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
+                                <span className="font-semibold">Conflict Check:</span> Confirm on first call
+                              </span>
+                            )}
+
+                            <span
+                              className={`inline-flex items-center px-3 py-1.5 rounded-lg font-medium border ${
+                                m.isUrgentDeadline && m.status !== 'completed'
+                                  ? 'bg-[#D9603B]/10 border-[#D9603B]/25 text-[#D9603B]'
+                                  : 'bg-[#F7F4EE] border-[#E2DCCE] text-[#0B1F3A]/80'
+                              }`}
+                            >
+                              Deadline: {m.signingDeadlineLabel}
+                            </span>
+
+                            <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
+                              {m.hasDraftAgreement ? 'Draft Agreement Ready' : 'Offer Only (No Draft)'}
+                            </span>
+
+                            <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#F7F4EE] border border-[#E2DCCE] text-[#0B1F3A]/85 font-medium">
+                              Goal: {m.clientGoal}
+                            </span>
+                          </div>
+
+                          {/* Row 2: Visual Offer vs Statutory Floor vs Target Meter */}
+                          <div className="rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]/80 p-3.5 sm:p-4 space-y-3">
+                            <div className="grid grid-cols-3 gap-2 sm:gap-4">
+                              <div>
+                                <span className="block text-xs font-medium text-[#0B1F3A]/70">Employer Offer</span>
+                                <span className={`block text-lg sm:text-xl font-serif font-bold tabular-nums ${isBelowFloor ? 'text-[#D9603B]' : 'text-[#0B1F3A]'}`}>
+                                  £{m.employerOffer.toLocaleString('en-GB')}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="block text-xs font-medium text-[#0B1F3A]/70">Statutory Floor</span>
+                                <span className="block text-lg sm:text-xl font-serif font-bold text-[#0B1F3A] tabular-nums">
+                                  £{m.statutoryFloor.toLocaleString('en-GB')}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="block text-xs font-medium text-[#0B1F3A]/70">Counter Target</span>
+                                <span className="block text-lg sm:text-xl font-serif font-bold text-[#0B1F3A] tabular-nums">
+                                  £{m.targetSettlement.toLocaleString('en-GB')}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="space-y-1.5">
+                              <div className="relative h-2.5 w-full rounded-full bg-[#E2DCCE] overflow-hidden">
+                                <div
+                                  className={`h-full rounded-full ${isBelowFloor ? 'bg-[#D9603B]' : 'bg-[#0B1F3A]'}`}
+                                  style={{ width: `${offerPct}%` }}
+                                />
+                                <div
+                                  className="absolute top-0 bottom-0 w-0.5 bg-[#0B1F3A]"
+                                  style={{ left: `${floorPct}%` }}
+                                  title="ERA 1996 Statutory Floor"
+                                />
+                              </div>
+                              <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-[#0B1F3A]/75">
+                                <span>
+                                  {isBelowFloor ? (
+                                    <strong className="text-[#D9603B]">
+                                      £{shortfall.toLocaleString('en-GB')} below statutory floor
+                                    </strong>
+                                  ) : (
+                                    <span>Clears statutory floor · Salary £{m.salary.toLocaleString('en-GB')}</span>
+                                  )}
+                                </span>
+                                <span className="font-medium text-[#0B1F3A]">
+                                  Legal Fee: £{m.employerLegalFee} → <strong>£{m.recommendedLegalFee} + VAT</strong>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Inline Release Reason Picker (Zero SLA Penalty) */}
+                          {releasingId === m.id && (
+                            <div className="rounded-xl bg-[#FEF5F3] border border-[#D9603B]/30 p-4 space-y-3">
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="text-sm font-bold text-[#0B1F3A]">
+                                  Release matter back to panel pool (Zero SLA penalty for conflicts)
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => setReleasingId(null)}
+                                  className="text-xs font-semibold text-[#0B1F3A]/70 hover:text-[#0B1F3A] underline cursor-pointer"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {RELEASE_REASONS.map(reason => (
+                                  <button
+                                    key={reason}
+                                    type="button"
+                                    onClick={() => handleReleaseMatter(m.id, reason)}
+                                    className="min-h-[40px] px-3.5 py-2 rounded-lg bg-white border border-[#D9603B]/35 hover:bg-[#D9603B] hover:text-white text-sm font-semibold text-[#0B1F3A] transition-colors cursor-pointer"
+                                  >
+                                    {reason}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Row 3: Action Strip (Different for Locked vs Claimed vs Completed) */}
+                          {m.status !== 'released' && (
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                              <div className="flex flex-wrap items-center gap-2">
+                                {(m.status === 'locked' || m.status === 'claimed') && releasingId !== m.id && (
+                                  <button
+                                    type="button"
+                                    onClick={() => setReleasingId(m.id)}
+                                    className="min-h-[44px] px-3.5 py-2 rounded-xl bg-white border border-[#E2DCCE] hover:border-[#D9603B] text-sm font-medium text-[#0B1F3A]/80 hover:text-[#D9603B] transition-colors cursor-pointer"
+                                  >
+                                    Release (Conflict / Capacity)
+                                  </button>
+                                )}
+
+                                {m.status === 'claimed' && (
+                                  <select
+                                    aria-label={`Matter stage for ${m.clientName}`}
+                                    value={m.stage || 'conflict_cleared'}
+                                    onChange={e => handleStageChange(m.id, e.target.value as MatterStage)}
+                                    className="min-h-[44px] px-3 py-2 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE] text-sm font-semibold text-[#0B1F3A] focus:outline-none focus:ring-2 focus:ring-[#0B1F3A]"
+                                  >
+                                    {STAGE_OPTIONS.map(opt => (
+                                      <option key={opt.id} value={opt.id}>
+                                        {opt.label}
+                                      </option>
+                                    ))}
+                                  </select>
+                                )}
+                              </div>
+
+                              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                                {m.status === 'claimed' && (
+                                  <a
+                                    href={`tel:${m.phone}`}
+                                    className="inline-flex items-center justify-center gap-2 min-h-[46px] px-4 py-2.5 rounded-xl bg-white border border-[#D9603B]/40 text-[#D9603B] hover:bg-[#D9603B]/10 text-sm sm:text-base font-semibold transition-colors"
+                                  >
+                                    <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                    </svg>
+                                    Call Client
+                                  </a>
+                                )}
+                                {m.status === 'locked' && (
+                                  <button
+                                    type="button"
+                                    onClick={() => handleQuickClaim(m.id)}
+                                    disabled={claimingId === m.id}
+                                    className="min-h-[46px] px-4 py-2.5 rounded-xl bg-white border border-[#0B1F3A]/20 hover:border-[#0B1F3A] text-[#0B1F3A] text-sm sm:text-base font-semibold transition-colors cursor-pointer"
+                                  >
+                                    {claimingId === m.id ? 'Holding Matter...' : 'Hold & Run Conflict Check'}
+                                  </button>
+                                )}
+                                <Link
+                                  href={`/dossier/review/${m.id}/?token=demo_partner_token`}
+                                  className={`inline-flex items-center justify-center min-h-[46px] px-5 py-2.5 rounded-xl text-sm sm:text-base font-semibold transition-colors text-center ${
+                                    m.status === 'locked'
+                                      ? 'bg-[#D9603B] hover:bg-[#D9603B]/90 text-white shadow-sm'
+                                      : 'bg-[#0B1F3A] hover:bg-[#0B1F3A]/90 text-white'
+                                  }`}
+                                >
+                                  {m.status === 'locked' ? 'Review Pre-Flight Dossier →' : 'Open Dossier →'}
+                                </Link>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </article>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* ── TAB 2: TERRITORY & SLA ───────────────────────────────────── */}
+          {activeTab === 'territory' && (
+            <div className="space-y-5">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A]">Territory &amp; Exclusivity</h1>
+                <p className="text-base text-[#0B1F3A]/80 mt-1.5 max-w-prose leading-relaxed">
+                  Your firm holds exclusive first-right routing on every verified settlement instruction originating inside these outward postcode zones.
                 </p>
               </div>
 
-              <div className="p-5 sm:p-6 rounded-xl bg-[#0B1F3A] text-white space-y-4">
-                <h2 className="text-sm font-bold uppercase tracking-wider text-[#D9603B]">The 15-Minute Exclusivity Lock</h2>
-                <p className="text-base text-[#F7F4EE]/90 leading-relaxed">
-                  When an employee inside your outward postcode zone completes our settlement agreement review, the instruction is locked exclusively to your firm for 15 minutes. It is never broadcast to multiple law firms simultaneously.
-                </p>
-                <div className="pt-2 text-sm text-white/80">
-                  Panel Compliance Status: <strong className="text-white">SRA Regulatory Adherence</strong>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#E2DCCE] shadow-sm space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-sm font-bold uppercase tracking-wider text-[#0B1F3A]/75">Assigned Outward Postcodes</h2>
+                    <span className="text-xs font-mono font-semibold text-[#D9603B]">10 Active Zones</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {['BS8', 'BS1', 'BS2', 'BS3', 'BS6', 'BS7', 'BS9', 'BS10', 'BS16', 'BS20'].map(code => (
+                      <span
+                        key={code}
+                        className="px-3.5 py-2 bg-[#F7F4EE] border border-[#E2DCCE] rounded-xl text-sm font-mono font-bold text-[#0B1F3A]"
+                      >
+                        {code}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-sm text-[#0B1F3A]/80 pt-1">
+                    Coverage radius: <strong>30 miles</strong> from Bristol hub (BS8 1TH).
+                  </p>
+                </div>
+
+                <div className="p-5 sm:p-6 rounded-2xl bg-[#0B1F3A] text-white space-y-4">
+                  <h2 className="text-sm font-bold uppercase tracking-wider text-[#D9603B]">SRA Conflict-Safe 15-Min Hold</h2>
+                  <p className="text-base text-[#F7F4EE]/90 leading-relaxed">
+                    Instructions in your postcode zone are held exclusively for your firm for 15 minutes and never broadcast simultaneously. If an SRA Code 6.2 conflict surfaces on review or first call, releasing the matter carries zero SLA penalty.
+                  </p>
+                  <div className="pt-2 border-t border-white/10 text-sm text-white/80 flex items-center justify-between">
+                    <span>SRA Code of Conduct</span>
+                    <strong className="text-white">Independent Panel</strong>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ── Tab 3: Settlement Telemetry ──────────────────────────────────── */}
-        {activeTab === 'telemetry' && (
-          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
-            <div>
-              <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1F3A]">SettlementCheck Telemetry Intelligence</h1>
-              <p className="text-base text-[#0B1F3A]/80 mt-2 max-w-prose leading-relaxed">
-                Illustrative UK settlement multiplier benchmarks to support negotiation letters when challenging low employer ex-gratia offers.
-              </p>
-            </div>
-
-            <div className="overflow-x-auto -mx-5 sm:mx-0 px-5 sm:px-0">
-              <table className="w-full min-w-[640px] text-sm sm:text-base border-collapse">
-                <thead>
-                  <tr className="border-b border-[#0B1F3A]/15 text-left text-xs uppercase tracking-wider text-[#0B1F3A]/70">
-                    <th className="py-3 pr-4">Dispute Category</th>
-                    <th className="py-3 pr-4">Median Multiplier</th>
-                    <th className="py-3 pr-4">Upper Quartile</th>
-                    <th className="py-3 pr-4">Employer Legal Fee</th>
-                    <th className="py-3">Typical Resolution</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#0B1F3A]/10">
-                  <tr>
-                    <td className="py-4 pr-4 font-semibold text-[#0B1F3A]">Redundancy / Structural Exit</td>
-                    <td className="py-4 pr-4 tabular-nums">2.8x monthly salary</td>
-                    <td className="py-4 pr-4 text-[#D9603B] font-semibold tabular-nums">4.2x monthly salary</td>
-                    <td className="py-4 pr-4 tabular-nums">£650 + VAT</td>
-                    <td className="py-4 text-[#0B1F3A]/80">2.4 weeks</td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 pr-4 font-semibold text-[#0B1F3A]">Performance Plan (PIP) Exit</td>
-                    <td className="py-4 pr-4 tabular-nums">3.2x monthly salary</td>
-                    <td className="py-4 pr-4 text-[#D9603B] font-semibold tabular-nums">4.8x monthly salary</td>
-                    <td className="py-4 pr-4 tabular-nums">£750 + VAT</td>
-                    <td className="py-4 text-[#0B1F3A]/80">3.1 weeks</td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 pr-4 font-semibold text-[#0B1F3A]">Discrimination / Detriment (Equality Act)</td>
-                    <td className="py-4 pr-4 tabular-nums">4.5x monthly salary</td>
-                    <td className="py-4 pr-4 text-[#D9603B] font-semibold tabular-nums">7.2x (Uncapped)</td>
-                    <td className="py-4 pr-4 tabular-nums">£1,250 + VAT</td>
-                    <td className="py-4 text-[#0B1F3A]/80">5.6 weeks</td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 pr-4 font-semibold text-[#0B1F3A]">Constructive Dismissal</td>
-                    <td className="py-4 pr-4 tabular-nums">3.0x monthly salary</td>
-                    <td className="py-4 pr-4 text-[#D9603B] font-semibold tabular-nums">4.6x monthly salary</td>
-                    <td className="py-4 pr-4 tabular-nums">£650 + VAT</td>
-                    <td className="py-4 text-[#0B1F3A]/80">3.8 weeks</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* ── Tab 4: PMS Webhook & Settings ────────────────────────────────── */}
-        {activeTab === 'settings' && (
-          <div className="bg-white rounded-2xl p-5 sm:p-8 border border-[#0B1F3A]/10 shadow-sm space-y-6">
-            <div>
-              <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#0B1F3A]">Practice Management System (PMS) Webhooks</h1>
-              <p className="text-base text-[#0B1F3A]/80 mt-2 max-w-prose leading-relaxed">
-                Configure automated intake dispatch into Clio Manage, LEAP, or PracticeEvolve with zero manual data entry.
-              </p>
-            </div>
-
-            <form onSubmit={handleSaveWebhook} className="space-y-5 max-w-xl">
+          {/* ── TAB 3: STATUTORY & VENTO QUICK-REFERENCE (2026/27) ───────── */}
+          {activeTab === 'telemetry' && (
+            <div className="space-y-5">
               <div>
-                <label className="block text-sm font-semibold text-[#0B1F3A] mb-2">
-                  Incoming Webhook URL (Clio / LEAP / PracticeEvolve)
-                </label>
-                <input
-                  type="url"
-                  value={webhookUrl}
-                  onChange={e => setWebhookUrl(e.target.value)}
-                  className="w-full min-h-[48px] px-3.5 py-3 rounded-lg border border-[#0B1F3A]/20 text-base font-mono text-[#0B1F3A] focus:outline-none focus:ring-2 focus:ring-[#D9603B]"
-                  placeholder="https://app.clio.com/api/v4/webhooks/..."
-                  required
-                />
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold text-[#D9603B]">
+                  Effective 6 April 2026 · Verified UK Statutory Constants
+                </span>
+                <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A] mt-1">
+                  Statutory &amp; Vento Quick-Reference
+                </h1>
+                <p className="text-base text-[#0B1F3A]/80 mt-1.5 max-w-prose leading-relaxed">
+                  Pocket reference for calls and Without Prejudice correspondence. Tap any card to copy a legally citable statutory paragraph straight into your negotiation letter.
+                </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-4">
-                <button
-                  type="submit"
-                  className="min-h-[48px] px-6 py-3 bg-[#0B1F3A] text-white text-base font-semibold rounded-xl hover:bg-[#0B1F3A]/90 transition-colors cursor-pointer"
-                >
-                  Save Webhook Configuration
-                </button>
-                {isSaved && <span className="text-sm sm:text-base text-[#0B1F3A] font-semibold">✓ Saved successfully</span>}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {STATUTORY_WP_CARDS.map(card => (
+                  <div key={card.id} className="bg-white rounded-2xl border border-[#E2DCCE] p-5 shadow-sm flex flex-col justify-between gap-4">
+                    <div className="space-y-3">
+                      <div>
+                        <h2 className="font-serif font-bold text-lg text-[#0B1F3A] m-0">{card.title}</h2>
+                        <span className="text-xs font-mono text-[#0B1F3A]/65 block mt-0.5">{card.citation}</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        {card.metrics.map(metric => (
+                          <div key={metric.label} className="rounded-xl bg-[#F7F4EE] p-3">
+                            <span className="text-xs text-[#0B1F3A]/70 block">{metric.label}</span>
+                            <span className="text-sm sm:text-base font-bold text-[#0B1F3A] tabular-nums block mt-0.5">
+                              {metric.value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleCopyClause(card.id, card.wpClause)}
+                      className="w-full min-h-[44px] px-4 py-2.5 rounded-xl bg-[#F7F4EE] hover:bg-[#0B1F3A] hover:text-white text-[#0B1F3A] border border-[#E2DCCE] text-sm font-semibold transition-colors cursor-pointer"
+                    >
+                      {copiedClauseId === card.id ? '✓ Copied Statutory WP Clause' : 'Copy Without Prejudice Clause'}
+                    </button>
+                  </div>
+                ))}
               </div>
-            </form>
-          </div>
-        )}
+            </div>
+          )}
+
+          {/* ── TAB 4: PMS & ALERTS ──────────────────────────────────────── */}
+          {activeTab === 'settings' && (
+            <div className="space-y-5">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F3A]">PMS Webhooks &amp; SLA Alerts</h1>
+                <p className="text-base text-[#0B1F3A]/80 mt-1.5 max-w-prose leading-relaxed">
+                  Push claimed dossiers directly into Clio Manage, LEAP, or PracticeEvolve and manage 15-minute SLA mobile notifications.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-5 sm:p-7 border border-[#E2DCCE] shadow-sm space-y-6 max-w-2xl">
+                <form onSubmit={handleSaveWebhook} className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-semibold text-[#0B1F3A] mb-2">
+                      Incoming Webhook URL (Clio / LEAP / PracticeEvolve)
+                    </label>
+                    <input
+                      type="url"
+                      value={webhookUrl}
+                      onChange={e => setWebhookUrl(e.target.value)}
+                      className="w-full min-h-[48px] px-3.5 py-3 rounded-xl border border-[#E2DCCE] bg-[#F7F4EE] focus:bg-white text-base font-mono text-[#0B1F3A] focus:outline-none focus:ring-2 focus:ring-[#D9603B]"
+                      placeholder="https://app.clio.com/api/v4/webhooks/..."
+                      required
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between gap-4 p-4 rounded-xl bg-[#F7F4EE] border border-[#E2DCCE]">
+                    <div>
+                      <span className="text-sm sm:text-base font-semibold text-[#0B1F3A] block">
+                        Instant SMS &amp; Email SLA Alerts
+                      </span>
+                      <span className="text-sm text-[#0B1F3A]/75 block">
+                        Notify duty solicitor immediately when a BS postcode matter enters the 15-minute hold.
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={slaAlertsEnabled}
+                      onClick={() => setSlaAlertsEnabled(v => !v)}
+                      className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors cursor-pointer ${
+                        slaAlertsEnabled ? 'bg-[#D9603B]' : 'bg-[#0B1F3A]/25'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${
+                          slaAlertsEnabled ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-4">
+                    <button
+                      type="submit"
+                      className="min-h-[48px] px-6 py-3 bg-[#0B1F3A] text-white text-base font-semibold rounded-xl hover:bg-[#0B1F3A]/90 transition-colors cursor-pointer"
+                    >
+                      Save Configuration
+                    </button>
+                    {isSaved && <span className="text-sm sm:text-base text-[#0B1F3A] font-semibold">✓ Saved successfully</span>}
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+        </div>
       </main>
+
+      {/* ── Mobile Fixed Bottom Navigation Bar (< lg) ────────────────────── */}
+      <nav
+        aria-label="Mobile partner portal navigation"
+        className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white border-t border-[#E2DCCE] shadow-[0_-4px_12px_rgba(11,31,58,0.06)]"
+      >
+        <div className="grid grid-cols-4 h-16">
+          {navItems.map(item => {
+            const isActive = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`relative flex flex-col items-center justify-center gap-1 text-xs font-semibold transition-colors ${
+                  isActive ? 'text-[#D9603B]' : 'text-[#0B1F3A]/70 hover:text-[#0B1F3A]'
+                }`}
+              >
+                {isActive && <span className="absolute top-0 inset-x-3 h-0.5 bg-[#D9603B] rounded-b-full" />}
+                <span className="relative">
+                  {item.icon}
+                  {item.badge !== undefined && (
+                    <span className="absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#D9603B] text-white text-xs font-bold flex items-center justify-center tabular-nums">
+                      {item.badge}
+                    </span>
+                  )}
+                </span>
+                <span>{item.shortLabel}</span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }

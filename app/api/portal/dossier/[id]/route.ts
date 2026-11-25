@@ -32,6 +32,13 @@ export async function GET(
         isDemo: true,
         dossierId,
         dossier,
+        conflictCheck: {
+          employerName: sandboxFixture.employerName || null,
+          employerNameSource: sandboxFixture.employerNameSource || null,
+          signingDeadlineLabel: sandboxFixture.signingDeadlineLabel,
+          hasDraftAgreement: sandboxFixture.hasDraftAgreement,
+          clientGoal: sandboxFixture.clientGoal,
+        },
         claimStatus: {
           isLocked: sandboxFixture.status === 'locked',
           isClaimed: sandboxFixture.status === 'claimed',
@@ -115,11 +122,19 @@ BETWEEN:
     const isClaimed = claimRecord ? claimRecord.status === 'claimed' : false;
     const expiresAt = claimRecord?.expires_at || new Date(Date.now() + 12 * 60 * 1000).toISOString();
 
+    const leadConflict = leadRecord?.benchmark_data?.conflict_check;
     return NextResponse.json({
       success: true,
       isDemo: false,
       dossierId,
       dossier,
+      conflictCheck: {
+        employerName: leadConflict?.employer_name || null,
+        employerNameSource: leadConflict?.employer_name ? 'employee_provided' : null,
+        signingDeadlineLabel: leadConflict?.signing_deadline || leadRecord?.benchmark_data?.signing_urgency || null,
+        hasDraftAgreement: Boolean(leadConflict?.has_draft_agreement),
+        clientGoal: null,
+      },
       claimStatus: {
         isLocked,
         isClaimed,
