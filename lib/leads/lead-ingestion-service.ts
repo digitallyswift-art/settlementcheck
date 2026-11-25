@@ -119,6 +119,100 @@ export async function verifyPartnerId(partnerId: string | null | undefined): Pro
   return { verified: false }
 }
 
+interface EmailGuideLink {
+  title: string
+  summary: string
+  path: string
+}
+
+function selectRecommendedGuides(params: {
+  disputeReason?: string | null
+  verdict?: string | null
+  hasDiscrimination?: boolean | null
+  salaryNum?: number | null
+}): EmailGuideLink[] {
+  const { disputeReason, verdict, hasDiscrimination, salaryNum } = params
+  const guides: EmailGuideLink[] = []
+
+  // 1. Situation-specific guide
+  if (hasDiscrimination) {
+    guides.push({
+      title: 'Discrimination settlement agreements',
+      summary: 'How injury to feelings (Vento bands) and discrimination claims affect payout leverage.',
+      path: '/guides/discrimination-settlement-agreements/',
+    })
+  } else if (disputeReason === 'redundancy_collective') {
+    guides.push({
+      title: 'Protective awards & collective redundancy',
+      summary: 'What happens if your employer skips the 30- or 45-day collective consultation.',
+      path: '/guides/protective-award/',
+    })
+  } else if (disputeReason === 'redundancy') {
+    guides.push({
+      title: 'Redundancy vs settlement agreement',
+      summary: 'Why statutory redundancy is only the floor and what extras you can ask for.',
+      path: '/guides/redundancy-vs-settlement-agreement/',
+    })
+  } else if (disputeReason === 'constructive') {
+    guides.push({
+      title: 'Constructive dismissal settlement agreements',
+      summary: 'Key evidence, grievance timing, and how resignation risk affects your terms.',
+      path: '/guides/constructive-dismissal-settlement-agreements/',
+    })
+  } else if (disputeReason === 'dismissal') {
+    guides.push({
+      title: 'Unfair dismissal settlement agreements',
+      summary: 'How tribunal compensation caps and notice pay shape a fair exit package.',
+      path: '/guides/unfair-dismissal-settlement-agreements/',
+    })
+  } else if (disputeReason === 'resignation' || disputeReason === 'mutual') {
+    guides.push({
+      title: 'Protected conversations & without prejudice',
+      summary: 'What your employer can and cannot say when proposing a mutual exit.',
+      path: '/guides/protected-conversations-without-prejudice/',
+    })
+  } else {
+    guides.push({
+      title: 'What is a fair settlement agreement?',
+      summary: 'The core financial and non-financial terms every UK agreement should cover.',
+      path: '/guides/what-is-a-fair-settlement-agreement/',
+    })
+  }
+
+  // 2. Offer / salary-calibrated guide
+  if (verdict === 'BELOW_MINIMUM' || verdict === 'BELOW_TYPICAL') {
+    guides.push({
+      title: 'How to negotiate a settlement agreement',
+      summary: 'Practical counter-offer steps when your initial offer sits below benchmark.',
+      path: '/guides/how-to-negotiate-a-settlement-agreement/',
+    })
+  } else if (salaryNum != null && salaryNum >= 100000) {
+    guides.push({
+      title: 'Executive settlement agreements',
+      summary: 'Bonus, LTIP, garden leave, and restrictive covenant points for senior exits.',
+      path: '/guides/executive-settlement-agreements/',
+    })
+  } else {
+    guides.push({
+      title: 'Is my settlement offer fair?',
+      summary: 'How to weigh tax-free lump sums, notice pay, and reference terms.',
+      path: '/guides/is-my-settlement-offer-fair/',
+    })
+  }
+
+  // 3. Universal call-prep guide (tax split)
+  const taxGuide: EmailGuideLink = {
+    title: 'The £30,000 tax-free settlement rule',
+    summary: 'How termination payments are separated from taxable notice pay (PILON).',
+    path: '/guides/tax-free-settlement-30000/',
+  }
+  if (!guides.some((g) => g.path === taxGuide.path)) {
+    guides.push(taxGuide)
+  }
+
+  return guides.slice(0, 3)
+}
+
 /**
  * Unified Lead Ingestion Service:
  * Handles validation, SRA triage evaluation, Supabase storage with schema fallbacks,
@@ -482,6 +576,34 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
       const safeContactLabel = escapeHtml(safeContactTime.toLowerCase())
       const safeCalcUrl = escapeHtml(calculationUrl)
 
+      const recommendedGuides = selectRecommendedGuides({
+        disputeReason: input.disputeReason,
+        verdict,
+        hasDiscrimination: input.hasDiscrimination,
+        salaryNum,
+      })
+      const utmQuery = 'utm_source=email&utm_medium=lead_confirmation&utm_campaign=call_prep'
+
+      const guidesTextBlock = recommendedGuides
+        .map((g) => `- ${g.title}: ${baseAppUrl}${g.path}?${utmQuery}`)
+        .join('\n')
+
+      const guidesHtmlRows = recommendedGuides
+        .map((g, idx) => {
+          const borderTop = idx === 0 ? '' : 'border-top: 1px solid #E2DCCE;'
+          const guideUrl = escapeHtml(`${baseAppUrl}${g.path}?${utmQuery}`)
+          return `
+                      <tr>
+                        <td style="padding: 12px 0; ${borderTop}">
+                          <a href="${guideUrl}" style="display: block; text-decoration: none; color: #0B1F3A;">
+                            <span style="display: block; font-size: 14px; font-weight: 600; color: #0B1F3A; line-height: 1.4; margin-bottom: 3px;">${escapeHtml(g.title)} <span style="color: #D9603B;">&rarr;</span></span>
+                            <span style="display: block; font-size: 13px; color: #5B6577; line-height: 1.5;">${escapeHtml(g.summary)}</span>
+                          </a>
+                        </td>
+                      </tr>`
+        })
+        .join('')
+
       const employeeText = [
         `Hi ${firstName},`,
         '',
@@ -490,7 +612,10 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
         '',
         `${ctaLabel}: ${calculationUrl}`,
         '',
-        'Under Section 203(3) ERA 1996, independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor\'s terms.',
+        'Prepare for your call:',
+        guidesTextBlock,
+        '',
+        'How legal fees work (Section 203(3) ERA 1996): Independent advice is required for your agreement to be binding. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion. If you choose not to sign or instructions exceed the cap, fees remain subject to your solicitor\'s terms.',
         '',
         '---',
         'SettlementCheck • United Kingdom • team@settlementcheck.co.uk',
@@ -578,6 +703,17 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
                     <p style="color: #5B6577; font-size: 13px; line-height: 1.5; margin: 12px 0 0; text-align: center;">Review or adjust your figures any time before your call.</p>
                   </td>
                 </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Contextual Reading Recommendations -->
+          <tr>
+            <td style="padding-top: 24px; border-top: 1px solid #E2DCCE;">
+              <p style="color: #5B6577; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 4px;">Prepare for your call</p>
+              <p style="color: #1A2F4E; font-size: 14px; line-height: 1.5; margin: 0 0 8px;">Short guides matched to your situation:</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 20px;">
+                ${guidesHtmlRows}
               </table>
             </td>
           </tr>
