@@ -1,32 +1,3 @@
 {
-  "crons": [
-    {
-      "path": "/api/cron/serp-sentinel/",
-      "schedule": "0 3 * * *"
-    },
-    {
-      "path": "/api/cron/ab-digest/",
-      "schedule": "0 8 * * *"
-    },
-    {
-      "path": "/api/cron/evaluate-ab-winner/",
-      "schedule": "0 9 * * *"
-    },
-    {
-      "path": "/api/cron/sla-watchdog/",
-      "schedule": "0 4 * * *"
-    },
-    {
-      "path": "/api/cron/sra-watchdog/",
-      "schedule": "0 5 * * *"
-    },
-    {
-      "path": "/api/cron/statutory-drift/",
-      "schedule": "0 6 * * 1"
-    },
-    {
-      "path": "/api/cron/supply-balancer/",
-      "schedule": "0 7 * * *"
-    }
-  ]
+  "crons": []
 }

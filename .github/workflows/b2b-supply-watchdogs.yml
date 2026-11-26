@@ -1,0 +1,39 @@
+name: B2B Supply-Side Watchdogs
+
+on:
+  schedule:
+    # Daily at 05:00 UTC
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run SRA watchdog in dry-run mode (true/false)'
+        required: false
+        default: 'false'
+
+jobs:
+  run-b2b-watchdogs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Run SRA & Practising Status Watchdog
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "CRON_SECRET is not set in GitHub Actions secrets."
+            exit 1
+          fi
+          curl -sS --fail-with-body -X POST \
+            "https://settlementcheck.co.uk/api/cron/sra-watchdog/?dryRun=${DRY_RUN}" \
+            -H "Authorization: Bearer ${CRON_SECRET}"
+
+      - name: Run Territorial Supply-Demand Balancer
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          curl -sS --fail-with-body -X POST \
+            "https://settlementcheck.co.uk/api/cron/supply-balancer/" \
+            -H "Authorization: Bearer ${CRON_SECRET}"
