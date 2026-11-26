@@ -13,12 +13,12 @@ export const metadata: Metadata = {
     absolute: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
   },
   description:
-    'Offered a settlement instead of a PIP? Check April 2026 rates (£751/wk), Section 111A limits, tax splits, and employer legal fee contributions.',
+    'Offered a settlement agreement instead of a PIP? Check your rights and compensation payout under UK law. Free check. SRA solicitor advice contribution.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/settlement-agreement-instead-of-pip/',
   },
   openGraph: {
-    title: 'Settlement Agreement Instead of a PIP 2026 | SettlementCheck',
+    title: 'Settlement Agreement Instead of PIP (2026) | SettlementCheck',
     description:
       'Offered a settlement instead of a PIP? Check April 2026 rates (£751/wk), Section 111A limits, tax splits, and employer legal fee contributions.',
     url: 'https://settlementcheck.co.uk/guides/settlement-agreement-instead-of-pip/',

@@ -9,9 +9,9 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'Average Employment Settlement Payout UK | SettlementCheck',
+  title: 'Average Settlement Payout UK 2026 | SettlementCheck',
   description:
-    'Free UK settlement agreement payout guide. Illustrative ranges (£5,000 to £25,000) and April 2026 redundancy pay caps (£751/wk). No email required.',
+    'See official UK settlement agreement benchmarks and statutory redundancy caps (£751/wk). Free 2-minute valuation. SRA solicitor review guidance.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/',
   },

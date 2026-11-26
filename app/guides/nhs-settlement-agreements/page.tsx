@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     absolute: 'NHS Settlement & MARS Calculator 2026 | SettlementCheck',
   },
   description:
-    'Calculate NHS settlement and MARS redundancy payouts under Agenda for Change. HM Treasury rules, £100k cap, pension terms, and £30,000 tax exemptions.',
+    'Check your NHS settlement agreement or MARS payout under UK employment law. Free confidential check. See tax exemptions and SRA solicitor review terms.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/nhs-settlement-agreements/',
   },
   openGraph: {
-    title: 'NHS Settlement & MARS Calculator 2026 | SettlementCheck',
+    title: 'NHS Settlement Agreements & MARS (2026) | SettlementCheck',
     description:
       'Calculate NHS settlement and MARS redundancy payouts under Agenda for Change. HM Treasury rules, £100k cap, pension terms, and £30,000 tax exemptions.',
     url: 'https://settlementcheck.co.uk/guides/nhs-settlement-agreements/',
