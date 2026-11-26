@@ -41,18 +41,20 @@ export default function PostcodeInput({
   variant = 'typeform',
   initialValidLabel,
 }: Props) {
+  const isInitiallyValid = Boolean(initialValidLabel && value.trim())
   const [state, setState] = useState<ValidationState>(
-    initialValidLabel && value.trim() ? 'valid' : 'idle'
+    isInitiallyValid ? 'valid' : 'idle'
   )
   const [locationLabel, setLocationLabel] = useState(
-    initialValidLabel && value.trim() ? initialValidLabel : ''
+    isInitiallyValid && initialValidLabel ? initialValidLabel : ''
   )
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const latestValue = useRef(value)
+  const inFlightLookup = useRef<string>('')
   const onValidatedRef = useRef(onValidated)
   const onFallbackValidRef = useRef(onFallbackValid)
   const lastValidatedNormed = useRef<string>(
-    initialValidLabel && value.trim() ? normalisePostcode(value) : ''
+    isInitiallyValid ? normalisePostcode(value) : ''
   )
 
   useEffect(() => {
@@ -63,21 +65,45 @@ export default function PostcodeInput({
     onFallbackValidRef.current = onFallbackValid
   }, [onFallbackValid])
 
-  const runLookup = useCallback(async (raw: string) => {
-    const normed = normalisePostcode(raw)
+  // Synchronize when initialValidLabel is provided by parent before live lookup
+  useEffect(() => {
+    if (initialValidLabel && value.trim()) {
+      const normed = normalisePostcode(value)
+      if (!lastValidatedNormed.current) {
+        lastValidatedNormed.current = normed
+        setState('valid')
+        setLocationLabel(initialValidLabel)
+      }
+    }
+  }, [initialValidLabel, value])
+
+  const runLookup = useCallback(async (normed: string) => {
     if (!isPlausibleUkPostcode(normed)) {
       lastValidatedNormed.current = ''
+      inFlightLookup.current = ''
       setState('invalid')
       setLocationLabel('')
       onValidatedRef.current(null)
       return
     }
+
+    if (inFlightLookup.current === normed) return
+    inFlightLookup.current = normed
+
     setState('checking')
     const result = await lookupPostcode(normed)
+
     // Ignore stale responses if input changed while we were fetching
-    if (normalisePostcode(latestValue.current) !== normed) return
+    if (normalisePostcode(latestValue.current) !== normed) {
+      if (inFlightLookup.current === normed) inFlightLookup.current = ''
+      return
+    }
+
+    inFlightLookup.current = ''
+
     if (result) {
-      lastValidatedNormed.current = normalisePostcode(result.postcode)
+      const canonicalNormed = normalisePostcode(result.postcode)
+      lastValidatedNormed.current = canonicalNormed
       setState('valid')
       const parts = [result.admin_district, result.region].filter(Boolean)
       setLocationLabel(parts.join(', '))
@@ -96,43 +122,89 @@ export default function PostcodeInput({
     }
   }, [])
 
-  // Debounce lookup on value change only
+  // Debounce lookup on value change only when plausible format is entered
   useEffect(() => {
     latestValue.current = value
     if (timerRef.current) clearTimeout(timerRef.current)
+
     if (!value.trim()) {
       lastValidatedNormed.current = ''
       setState('idle')
       setLocationLabel('')
       return
     }
+
     const normed = normalisePostcode(value)
+
+    // If already validated for this normalised postcode, do not re-run
     if (lastValidatedNormed.current && lastValidatedNormed.current === normed) {
       return
     }
-    timerRef.current = setTimeout(() => runLookup(value), debounceMs)
-    return () => { if (timerRef.current) clearTimeout(timerRef.current) }
+
+    // If already in flight for this exact postcode, do not re-schedule
+    if (inFlightLookup.current === normed) {
+      return
+    }
+
+    // Incomplete while typing -> stay in idle state, DO NOT flicker or trigger lookup
+    if (!isPlausibleUkPostcode(normed)) {
+      setState((prev) => (prev !== 'idle' ? 'idle' : prev))
+      return
+    }
+
+    // Full plausible UK postcode format entered: schedule debounced lookup
+    timerRef.current = setTimeout(() => {
+      runLookup(normed)
+    }, debounceMs)
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+    }
   }, [value, debounceMs, runLookup])
 
   // Format on change: uppercase, allow letters/digits/single space
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const raw = e.target.value.toUpperCase().replace(/[^A-Z0-9 ]/g, '').replace(/\s+/g, ' ')
-    lastValidatedNormed.current = ''
-    setState('idle')
-    setLocationLabel('')
-    onValidatedRef.current(null)
+    latestValue.current = raw
+    const normed = normalisePostcode(raw)
+
+    if (lastValidatedNormed.current && normed !== lastValidatedNormed.current) {
+      lastValidatedNormed.current = ''
+      setState('idle')
+      setLocationLabel('')
+      onValidatedRef.current(null)
+    } else if (!lastValidatedNormed.current) {
+      if (state !== 'idle') setState('idle')
+      if (locationLabel) setLocationLabel('')
+    }
     onChange(raw)
   }
 
   // On blur: normalise and trigger lookup immediately if not already validated
   function handleBlur() {
-    if (!value.trim()) return
+    if (!value.trim()) {
+      setState('idle')
+      setLocationLabel('')
+      return
+    }
     const normed = normalisePostcode(value)
     latestValue.current = normed
+
     if (lastValidatedNormed.current === normed) {
       if (normed !== value) onChange(normed)
       return
     }
+
+    if (!isPlausibleUkPostcode(normed)) {
+      if (timerRef.current) clearTimeout(timerRef.current)
+      lastValidatedNormed.current = ''
+      setState('invalid')
+      setLocationLabel('')
+      onValidatedRef.current(null)
+      if (normed !== value) onChange(normed)
+      return
+    }
+
     if (normed !== value) onChange(normed)
     if (timerRef.current) clearTimeout(timerRef.current)
     runLookup(normed)

@@ -20,6 +20,7 @@ Always combine the right specialist skill for the layer you are auditing or buil
 | **Time-to-Value** | `onboarding` + [minimum-path-to-value.md](../onboarding/references/minimum-path-to-value.md) | Minimum Path to Value (MPTV), momentum, zero premature gates |
 | **Scientific Audit** | `cro-methodology` + `cro-architect` | Clarity, relevance, friction, anxiety, live GA4/GSC telemetry (`npm run cro:data`) |
 | **Funnel Orchestration** | `conversion-optimization` | 7-phase diagnostic & experiment logging for leaking flows |
+| **Tracking & UTMs** | `tracking-analytics` | Outbound UTMs (`lib/utm.ts`), B2C vs B2B lead separation, GA4 events |
 | **Compliance Gate** | `legal-compliance-auditor` + `claims-privacy-auditor` | SRA Rule 5.1, DMCC Act 2024, UK GDPR Art. 9, EBIAP (`AGENTS.md` §4.6) |
 
 ---

@@ -256,12 +256,18 @@ export default function GetMatchedClient() {
     if (typeof w.gtag === 'function') {
       w.gtag('event', 'lead_form_step', {
         event_category: 'employee_lead',
+        audience_role: 'Employee Client',
         step_id: currentSlide,
         step_number: stepNum,
       })
-    }
-    if (Array.isArray(w.dataLayer)) {
-      w.dataLayer.push({ event: 'lead_form_step', stepId: currentSlide, stepNumber: stepNum })
+    } else if (Array.isArray(w.dataLayer)) {
+      w.dataLayer.push({
+        event: 'lead_form_step',
+        event_category: 'employee_lead',
+        audience_role: 'Employee Client',
+        stepId: currentSlide,
+        stepNumber: stepNum,
+      })
     }
   }, [currentSlide, stepNum])
 
@@ -421,13 +427,13 @@ export default function GetMatchedClient() {
       // Fire conversion event (standard GA4 generate_lead, qualify_lead + custom lead_submitted)
       const w = window as any
       if (typeof w.gtag === 'function') {
-        w.gtag('event', 'lead_submitted', { event_category: 'employee_lead', verdict })
-        w.gtag('event', 'generate_lead', { event_category: 'employee_lead', verdict, currency: 'GBP', value: 150 })
-        w.gtag('event', 'qualify_lead', { event_category: 'employee_lead', verdict, currency: 'GBP', value: 150 })
+        w.gtag('event', 'lead_submitted', { event_category: 'employee_lead', audience_role: 'Employee Client', verdict })
+        w.gtag('event', 'generate_lead', { event_category: 'employee_lead', audience_role: 'Employee Client', verdict, currency: 'GBP', value: 150 })
+        w.gtag('event', 'qualify_lead', { event_category: 'employee_lead', audience_role: 'Employee Client', verdict, currency: 'GBP', value: 150 })
       } else if (Array.isArray(w.dataLayer)) {
-        w.dataLayer.push({ event: 'lead_submitted', verdict })
-        w.dataLayer.push({ event: 'generate_lead', verdict, currency: 'GBP', value: 150 })
-        w.dataLayer.push({ event: 'qualify_lead', verdict, currency: 'GBP', value: 150 })
+        w.dataLayer.push({ event: 'lead_submitted', event_category: 'employee_lead', audience_role: 'Employee Client', verdict })
+        w.dataLayer.push({ event: 'generate_lead', event_category: 'employee_lead', audience_role: 'Employee Client', verdict, currency: 'GBP', value: 150 })
+        w.dataLayer.push({ event: 'qualify_lead', event_category: 'employee_lead', audience_role: 'Employee Client', verdict, currency: 'GBP', value: 150 })
       }
 
       // Dispatch experiment lead submission telemetry
@@ -653,6 +659,7 @@ export default function GetMatchedClient() {
                   <Hint>We use this to match you with a solicitor who covers your area.</Hint>
                   <PostcodeInput
                     value={form.postcode}
+                    initialValidLabel={form.postcode_region || undefined}
                     onChange={v => { updateField('postcode', v); setPostcodeValid(false) }}
                     onValidated={lookup => {
                       if (lookup) {

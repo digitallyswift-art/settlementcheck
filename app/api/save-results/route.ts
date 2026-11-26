@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { resend } from '@/lib/resend'
 import { rateLimitRequest, getRateLimitHeaders } from '@/lib/security/rate-limiter'
+import { buildTrackedUrl, buildUtmQuery } from '@/lib/utm'
 
 export async function POST(req: NextRequest) {
   try {
@@ -115,7 +116,26 @@ export async function POST(req: NextRequest) {
     returnParams.set('email', safeEmail)
     returnParams.set('focus', 'intake')
     const returnQuery = returnParams.toString()
-    const oneClickMatchUrl = `https://settlementcheck.co.uk/results/?${returnQuery}#solicitor-intake-card`
+    const saveResultsUtmBase = {
+      utm_source: 'email',
+      utm_medium: 'email',
+      utm_campaign: 'employee_save_results',
+    } as const
+    const headerLogoUtm = buildUtmQuery({
+      ...saveResultsUtmBase,
+      utm_content: 'header_logo',
+    })
+    const oneClickMatchUtm = buildUtmQuery({
+      ...saveResultsUtmBase,
+      utm_content: 'primary_cta_solicitor_match',
+    })
+    const oneClickMatchUrl = buildTrackedUrl(
+      `https://settlementcheck.co.uk/results/?${returnQuery}#solicitor-intake-card`,
+      {
+        ...saveResultsUtmBase,
+        utm_content: 'primary_cta_solicitor_match',
+      }
+    )
 
     const textBody = [
       'SettlementCheck - Your Settlement Figures & Solicitor Checklist',
@@ -157,16 +177,18 @@ export async function POST(req: NextRequest) {
 
         <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#fff;">
           <div style="margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid #E2DCCE;">
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td style="vertical-align:middle;padding-right:10px;">
-                  <img src="https://settlementcheck.co.uk/email-logo.png" width="28" height="28" alt="" style="display:block;width:28px;height:28px;border-radius:6px;border:0;" />
-                </td>
-                <td style="vertical-align:middle;">
-                  <span style="font-size:17px;font-weight:700;color:#0B1F3A;letter-spacing:-0.015em;">SettlementCheck</span>
-                </td>
-              </tr>
-            </table>
+            <a href="https://settlementcheck.co.uk/?${headerLogoUtm}" style="display:inline-block;text-decoration:none;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align:middle;padding-right:10px;">
+                    <img src="https://settlementcheck.co.uk/email-logo.png" width="28" height="28" alt="SettlementCheck" style="display:block;width:28px;height:28px;border-radius:6px;border:0;" />
+                  </td>
+                  <td style="vertical-align:middle;">
+                    <span style="font-size:17px;font-weight:700;color:#0B1F3A;letter-spacing:-0.015em;">SettlementCheck</span>
+                  </td>
+                </tr>
+              </table>
+            </a>
           </div>
 
           <h1 style="font-size:22px;font-weight:700;color:#0B1F3A;margin:0 0 8px;letter-spacing:-0.02em;">Your settlement figures &amp; checklist</h1>
@@ -206,7 +228,7 @@ export async function POST(req: NextRequest) {
             </ol>
           </div>
 
-          <a href="https://settlementcheck.co.uk/results/?${returnQuery}#solicitor-intake-card"
+          <a href="https://settlementcheck.co.uk/results/?${returnQuery}&${oneClickMatchUtm}#solicitor-intake-card"
              style="display:inline-block;background:#D9603B;color:#fff;font-size:15px;font-weight:700;padding:14px 24px;border-radius:8px;text-decoration:none;letter-spacing:-0.01em;">
             Speak with an SRA solicitor (details pre-filled) &rarr;
           </a>

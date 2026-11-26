@@ -46,6 +46,7 @@ function trackFormStep(stepId: string, stepNumber: number) {
   } catch {}
   trackClientEvent('solicitor_form_step', {
     event_category: 'solicitor_application',
+    audience_role: 'Solicitor Partner',
     step_id: stepId,
     step_number: stepNumber,
   })
@@ -137,6 +138,7 @@ export default function ForSolicitorsClient() {
     fee_shield_agreed:     false,
   })
   const [officePostcodeValid, setOfficePostcodeValid] = useState(false)
+  const [heroPreselectedTerritory, setHeroPreselectedTerritory] = useState<{ region: string; postcode: string } | null>(null)
   const [nonEwCountry, setNonEwCountry] = useState('')
   const [fieldError, setFieldError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -209,6 +211,7 @@ export default function ForSolicitorsClient() {
       if (lookup.country && !['England', 'Wales'].includes(lookup.country)) {
         setNonEwCountry(lookup.country)
         setOfficePostcodeValid(false)
+        setHeroPreselectedTerritory(null)
         setForm((f) => ({
           ...f,
           office_postcode: lookup.postcode,
@@ -228,7 +231,13 @@ export default function ForSolicitorsClient() {
           office_region: lookup.admin_district,
         }))
         setOfficePostcodeValid(true)
+        setHeroPreselectedTerritory({
+          region: lookup.admin_district,
+          postcode: lookup.postcode,
+        })
       }
+    } else {
+      setHeroPreselectedTerritory(null)
     }
     setDir(1)
     setSlideIndex(1)
@@ -327,6 +336,8 @@ export default function ForSolicitorsClient() {
         throw new Error(detail)
       }
       trackEvent('solicitor_application_submitted', {
+        event_category: 'solicitor_application',
+        audience_role: 'Solicitor Partner',
         coverage_radius: form.coverage_radius_miles ?? 'national',
         has_district: Boolean(form.office_region),
         source: entrySource,
@@ -539,12 +550,20 @@ export default function ForSolicitorsClient() {
                   <Step1TerritorySlide
                     form={form}
                     officePostcodeValid={officePostcodeValid}
+                    heroPreselectedTerritory={heroPreselectedTerritory}
                     error={fieldError}
                     onPostcodeChange={(v) => {
                       setFieldError('')
                       setNonEwCountry('')
-                      setOfficePostcodeValid(false)
-                      setForm((f) => ({ ...f, office_postcode: v, office_lat: null, office_lng: null, office_region: '' }))
+                      const normed = normalisePostcode(v)
+                      setForm((f) => {
+                        const prevNormed = normalisePostcode(f.office_postcode)
+                        if (prevNormed && normed !== prevNormed) {
+                          setOfficePostcodeValid(false)
+                          return { ...f, office_postcode: v, office_lat: null, office_lng: null, office_region: '' }
+                        }
+                        return { ...f, office_postcode: v }
+                      })
                     }}
                     onPostcodeValidated={(lookup: PostcodeLookup | null) => {
                       if (lookup) {
@@ -686,6 +705,8 @@ function SolicitorSalesPage({ onStartApplication }: SalesPageProps) {
         setDemandResult(data as SolicitorDemandResult)
         setPostcodeStatus('available')
         trackEvent('solicitor_postcode_checked', {
+          event_category: 'solicitor_application',
+          audience_role: 'Solicitor Partner',
           district: data.admin_district || 'unknown',
           territory_available: Boolean(data.territoryAvailable),
           has_k_anon_demand: typeof data.activeDemandCount === 'number',
@@ -2080,6 +2101,7 @@ const labelStyle: React.CSSProperties = {
 interface Step1Props {
   form: FormData
   officePostcodeValid: boolean
+  heroPreselectedTerritory?: { region: string; postcode: string } | null
   error: string
   onPostcodeChange: (v: string) => void
   onPostcodeValidated: (lookup: PostcodeLookup | null) => void
@@ -2092,6 +2114,7 @@ interface Step1Props {
 function Step1TerritorySlide({
   form,
   officePostcodeValid,
+  heroPreselectedTerritory,
   error,
   onPostcodeChange,
   onPostcodeValidated,
@@ -2153,7 +2176,8 @@ function Step1TerritorySlide({
         Select your office location and coverage radius so we can route local employee instructions exclusively to your firm.
       </p>
 
-      {officePostcodeValid && form.office_region && (
+      {heroPreselectedTerritory &&
+       normalisePostcode(form.office_postcode) === normalisePostcode(heroPreselectedTerritory.postcode) && (
         <div
           style={{
             background: C.successLight,
@@ -2167,7 +2191,7 @@ function Step1TerritorySlide({
             fontFamily: SANS,
           }}
         >
-          ✓ Territory pre-selected: {form.office_region} ({form.office_postcode})
+          ✓ Territory pre-selected: {heroPreselectedTerritory.region} ({heroPreselectedTerritory.postcode})
         </div>
       )}
 
@@ -2184,7 +2208,7 @@ function Step1TerritorySlide({
           onValidated={onPostcodeValidated}
           onFallbackValid={onPostcodeFallbackValid}
           placeholder="e.g. M2 5PF"
-          initialValidLabel={officePostcodeValid && form.office_region ? form.office_region : undefined}
+          initialValidLabel={form.office_region || (heroPreselectedTerritory?.region ?? undefined)}
         />
       </div>
 

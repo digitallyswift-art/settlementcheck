@@ -38,4 +38,11 @@ Strict operational rules for all AI coding and architecting in SettlementCheck:
 - **Banned Consumer-Facing Jargon**: Never use administrative/corporate terms in SERP titles or meta descriptions: "Triage", "Platform", "Intake", "Dossier", "Workflow", "Audit".
 - **Interactive Tool Standard**: Any interactive calculation tool (e.g., `/redundancy-calculator/`, `/settlement-agreement-tax-calculator/`) MUST explicitly include "Calculator" or "Calculate" in its `<title>` and `<h1>` to avoid zero-click informational abandonment. Never reduce a tool title to a static statutory descriptor (e.g., NEVER use "Redundancy Pay Cap 2026 (£751/wk)").
 
+## 8. Form, Shared-Input & Sample-Data Invariants
+- **No Unstable Callbacks in Fetch Effects**: Never put callback props (`onValidated`, `onChange`) directly in a `useEffect` dependency array that triggers network requests or debounced lookups. Store them in a `useRef` and track the last validated normalised value to prevent infinite fetch loops or redundant re-fetches when sibling fields change.
+- **Inspect Shared Inputs Before Passing Copy or Styles**: Before passing `placeholder` or helper text to a shared component (e.g. `PostcodeInput`), read the component to verify it does not prepend `e.g.` or duplicate the placeholder, and match its visual variant (`boxed` vs `typeform`) to sibling inputs in the same card.
+- **Semantic Form & Keyboard Accessibility**: Wrap every form step in `<form onSubmit>` with a `type="submit"` primary CTA so `Enter` works; pair every `<label>` with `htmlFor`/`id`; use `<fieldset>`/`<legend>` and `aria-pressed` for button-based radio/option groups.
+- **Truthful Progress Bars**: Compute progress from actual completed fields or completed steps (never display `50% complete` on an empty Step 1).
+- **Zero Hand-Estimated Statutory Examples**: Every worked example or B2B sample dossier showing statutory redundancy or tax splits MUST be verified against ERA 1996 s.162 (exact age-band multipliers `0.5× / 1.0× / 1.5×`, April 2026 £751/wk cap) and ITEPA 2003 s.402D/s.403 (PILON is always taxable as earnings and never uses the £30,000 s.403 exemption).
+
 

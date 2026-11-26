@@ -7,6 +7,9 @@ export interface PostcodeLookup {
   country: string
 }
 
+// In-memory lookup cache to prevent redundant network fetches
+const postcodeCache = new Map<string, PostcodeLookup | null>()
+
 // Format check — avoids hitting the API on obviously invalid input.
 // Covers all valid UK postcode shapes: AN, ANN, AAN, AANN, ANA, AANA (outward)
 // followed by NAA (inward). Case-insensitive. Spaces optional.
@@ -23,14 +26,26 @@ export function normalisePostcode(raw: string): string {
 
 // Fetch from postcodes.io. Returns null on 404 (invalid postcode) or network error.
 export async function lookupPostcode(raw: string): Promise<PostcodeLookup | null> {
-  const encoded = encodeURIComponent(raw.replace(/\s+/g, ''))
+  const clean = raw.toUpperCase().replace(/\s+/g, '')
+  if (!clean) return null
+  if (postcodeCache.has(clean)) {
+    return postcodeCache.get(clean) ?? null
+  }
+
+  const encoded = encodeURIComponent(clean)
   try {
     const res = await fetch(`https://api.postcodes.io/postcodes/${encoded}`)
-    if (!res.ok) return null
+    if (!res.ok) {
+      if (res.status === 404) postcodeCache.set(clean, null)
+      return null
+    }
     const data = await res.json()
-    if (data.status !== 200 || !data.result) return null
+    if (data.status !== 200 || !data.result) {
+      postcodeCache.set(clean, null)
+      return null
+    }
     const r = data.result
-    return {
+    const lookup: PostcodeLookup = {
       postcode:      r.postcode,
       latitude:      r.latitude,
       longitude:     r.longitude,
@@ -38,6 +53,8 @@ export async function lookupPostcode(raw: string): Promise<PostcodeLookup | null
       admin_district: r.admin_district ?? '',
       country:       r.country ?? '',
     }
+    postcodeCache.set(clean, lookup)
+    return lookup
   } catch {
     return null
   }

@@ -18,6 +18,8 @@ Component catalog, URL search param contracts, CRO layout rules, and user intera
 | `components/Nav.tsx` | Sticky nav, desktop links, mobile hamburger |
 | `components/Footer.tsx` | Footer with statutory legal disclaimer |
 | `components/FaqAccordion.tsx` | Accessible FAQ accordion (homepage and how-it-works page) |
+| `components/PostcodeInput.tsx` | UK postcode lookup (`postcodes.io`); supports `id`, `variant` (`typeform` \| `boxed`), `initialValidLabel` |
+| `app/for-solicitors/ForSolicitorsClient.tsx` | B2B solicitor panel sales page, sample statutory dossiers, and 2-step SRA registration wizard |
 | `lib/calculations.ts` | `getVerdict()` - all calculator logic (do not duplicate) |
 
 ---
@@ -39,7 +41,7 @@ The calculator submits to `/results/` with these query parameters:
 4. **Lead Form Simplicity**: Maximum 5 fields (first name, email, phone, preferred contact time, consent checkbox).
 5. **Zero Lead Form on Homepage**: Lead capture is reserved for `/results/` after the user has received initial value.
 6. **Factual Urgency**: 10-day ACAS reasonable timeframe referenced in subtext; no artificial countdown timers.
-7. **Trust Signals Above Fold**: ★★★★★ 4.9/5 · 2,400+ helped · SRA-regulated panel · £0 cost to employee.
+7. **Trust Signals Above Fold**: Statutory and regulatory anchors only (SRA-regulated panel · April 2026 statutory rates · Employer fee contribution standard under ERA 1996 s.203(3)). Never hardcode fabricated review scores or user-count vanity metrics.
 
 ---
 
@@ -70,3 +72,14 @@ bg-card       #FFFFFF  — Card interiors
 | `BELOW_TYPICAL` | `amber-tint` | `amber` | Worth reviewing |
 | `WITHIN_RANGE` | `sage-tint` | `sage` | Looks reasonable |
 | `ABOVE_TYPICAL` | `sage-tint` | `sage` | Strong offer |
+
+---
+
+## 7. Shared Input & Form Contracts
+
+- **`PostcodeInput`**:
+  - Use `variant="boxed"` inside standard card forms (e.g. `/for-solicitors/`) and `variant="typeform"` (default) inside Typeform slides (`/get-matched/`, `EmployeeLeadTypeform`).
+  - Always pass `id` paired with `<label htmlFor="...">`, and pass `initialValidLabel` when mounting with a pre-validated postcode so it renders as valid without re-fetching.
+  - Keep `placeholder` concise (`e.g. M2 5PF`); never duplicate the example in helper text below the input.
+  - Callback props (`onValidated`) are stored in refs internally to avoid infinite `postcodes.io` lookup loops.
+- **Multi-Step Forms**: Wrap each step in `<form onSubmit>` with a `type="submit"` primary button, use `<fieldset>`/`<legend>` + `aria-pressed` for button option groups, and compute progress bar percentages from actual completed required fields.

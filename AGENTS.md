@@ -20,6 +20,7 @@ In your chat canvas:
   - `@web-typography` — Invokes typographic scale, line-height rhythm, readable measure, and responsive text legibility rules.
   - `@ux-heuristics` — Invokes Nielsen's 10 heuristics, Krug's usability laws, cognitive load reduction, and WCAG accessibility audits.
   - `@journey-architect` — Invokes end-to-end funnel continuity, context preservation, and personalised form journey rules.
+  - `@tracking-analytics` — Invokes GA4 event schema, Consent Mode v2, outbound UTM taxonomy, and B2C vs B2B lead separation audits.
   - `@cro-methodology` — Invokes the scientific CRE conversion audit methodology (`wondelai/skills`).
   - `@conversion-optimization` — Invokes the 7-phase leaking-funnel orchestrator (`wondelai/skills`).
   - `@cro` — Invokes page & lead-form CRO (`coreyhaines31/marketingskills`, including `references/form.md`).
@@ -195,6 +196,14 @@ Creates, audits, or refactors Antigravity Agent Skills in `.agents/skills/` with
 - `create skill [purpose]` — Designs a lean, non-overlapping skill after checking `.agents/skills/` and `.agents/rules/`.
 - `skillify` — Extracts a repeatable skill from the current session's tools, steps, and user corrections.
 - `audit skill [name]` — Trims bloated `SKILL.md` files into `references/`/`resources/` without weakening compliance guardrails.
+
+### S. `tracking-analytics`
+Specialist in uniform outbound UTM naming conventions, GA4 event contracts, UK PECR Consent Mode v2, and strict separation between Employee Client Leads (`generate_lead`) and Solicitor Onboarding Leads (`solicitor_application_submitted`).
+
+**Key Commands to prompt the agent with:**
+- `audit tracking` — Runs `node .agents/skills/tracking-analytics/scripts/audit-tracking.mjs` and checks UTM/event compliance.
+- `utm [channel] [campaign] [destination]` — Generates validated lowercase `snake_case` UTM URLs for outbound emails, social, ads, and partners.
+- `event [name]` — Designs or reviews GA4 `trackClientEvent()` payloads with `audience_role` separation and zero PII.
 
 ---
 

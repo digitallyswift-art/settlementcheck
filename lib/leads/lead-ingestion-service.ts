@@ -8,6 +8,7 @@ import {
 } from '@/lib/leads/triage-contract'
 import { AgenticOrchestrator } from '@/lib/agentic-engine'
 import { escapeHtml, isSafeIdentifier } from '@/lib/security/html-sanitizer'
+import { buildTrackedUrl, guideUtmContent } from '@/lib/utm'
 
 export interface UnifiedLeadInput {
   firstName?: string
@@ -572,7 +573,7 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
         (salaryNum != null && salaryNum > 0 && offerNum != null && offerNum > 0)
       )
 
-      const calculationUrl = (() => {
+      const rawCalculationUrl = (() => {
         if (sourceUrl && sourceUrl.includes('/results/?')) {
           if (sourceUrl.startsWith('https://settlementcheck.co.uk')) return sourceUrl
           if (sourceUrl.startsWith('/')) return `${baseAppUrl}${sourceUrl}`
@@ -591,6 +592,22 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
         return `${baseAppUrl}/calculator/`
       })()
 
+      const emailUtmBase = {
+        utm_source: 'email',
+        utm_medium: 'email',
+        utm_campaign: 'employee_call_prep',
+      } as const
+
+      const headerLogoUrl = buildTrackedUrl('/', {
+        ...emailUtmBase,
+        utm_content: 'header_logo',
+      })
+
+      const calculationUrl = buildTrackedUrl(rawCalculationUrl, {
+        ...emailUtmBase,
+        utm_content: hasCalcParams ? 'primary_cta_revisit_calc' : 'primary_cta_run_calc',
+      })
+
       const ctaLabel = hasCalcParams
         ? 'Revisit your calculation'
         : 'Run a settlement calculation'
@@ -599,6 +616,7 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
       const safeContactDisplay = escapeHtml(safeContactTime)
       const safeContactLabel = escapeHtml(safeContactTime.toLowerCase())
       const safeCalcUrl = escapeHtml(calculationUrl)
+      const safeHeaderLogoUrl = escapeHtml(headerLogoUrl)
 
       const recommendedGuides = selectRecommendedGuides({
         disputeReason: input.disputeReason,
@@ -606,15 +624,25 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
         hasDiscrimination: input.hasDiscrimination,
         salaryNum,
       })
-      const utmQuery = 'utm_source=email&utm_medium=lead_confirmation&utm_campaign=call_prep'
 
       const guidesTextBlock = recommendedGuides
-        .map((g) => `- ${g.title}: ${baseAppUrl}${g.path}?${utmQuery}`)
+        .map((g) => {
+          const url = buildTrackedUrl(g.path, {
+            ...emailUtmBase,
+            utm_content: guideUtmContent(g.path),
+          })
+          return `- ${g.title}: ${url}`
+        })
         .join('\n')
 
       const guidesHtmlRows = recommendedGuides
         .map((g, idx) => {
-          const guideUrl = escapeHtml(`${baseAppUrl}${g.path}?${utmQuery}`)
+          const guideUrl = escapeHtml(
+            buildTrackedUrl(g.path, {
+              ...emailUtmBase,
+              utm_content: guideUtmContent(g.path),
+            })
+          )
           const iconUrl = escapeHtml(`${baseAppUrl}/email-icons/${g.iconFile}`)
           const marginBottom = idx === recommendedGuides.length - 1 ? '0' : '10px'
           return `
@@ -687,16 +715,18 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
           <!-- Header Lockup -->
           <tr>
             <td style="padding-bottom: 24px; border-bottom: 1px solid #E2DCCE;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td style="vertical-align: middle; padding-right: 10px;">
-                    <img src="https://settlementcheck.co.uk/email-logo.png" width="28" height="28" alt="" style="display: block; width: 28px; height: 28px; border-radius: 6px; border: 0;" />
-                  </td>
-                  <td style="vertical-align: middle;">
-                    <span style="font-size: 17px; font-weight: 700; color: #0B1F3A; letter-spacing: -0.015em;">SettlementCheck</span>
-                  </td>
-                </tr>
-              </table>
+              <a href="${safeHeaderLogoUrl}" style="display: inline-block; text-decoration: none;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="vertical-align: middle; padding-right: 10px;">
+                      <img src="https://settlementcheck.co.uk/email-logo.png" width="28" height="28" alt="SettlementCheck" style="display: block; width: 28px; height: 28px; border-radius: 6px; border: 0;" />
+                    </td>
+                    <td style="vertical-align: middle;">
+                      <span style="font-size: 17px; font-weight: 700; color: #0B1F3A; letter-spacing: -0.015em;">SettlementCheck</span>
+                    </td>
+                  </tr>
+                </table>
+              </a>
             </td>
           </tr>
 

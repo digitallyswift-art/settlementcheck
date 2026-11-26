@@ -232,11 +232,13 @@ export default function InlineSolicitorIntakeCard({
       const contactMethod = trimmedPhone ? 'phone' : 'email_only'
       Ga4TelemetryClient.trackLeadCompleted(true, {
         event_category: 'employee_lead',
+        audience_role: 'Employee Client',
         verdict,
         contact_method: contactMethod,
       })
       trackClientEvent('lead_submitted', {
         event_category: 'employee_lead',
+        audience_role: 'Employee Client',
         verdict,
         contact_method: contactMethod,
       })

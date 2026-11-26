@@ -540,6 +540,7 @@ export default function EmployeeLeadTypeform({
               <Hint>Helps us match you with a solicitor who covers your area.</Hint>
               <PostcodeInput
                 value={form.postcode}
+                initialValidLabel={form.postcode_region || undefined}
                 onChange={v => { updateField('postcode', v); setPostcodeValid(false) }}
                 onValidated={lookup => {
                   if (lookup) {

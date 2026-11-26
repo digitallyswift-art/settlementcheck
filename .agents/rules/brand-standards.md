@@ -46,7 +46,7 @@ The reader is an employee who has just received a settlement agreement or redund
      - ❌ *"You should ask for £X"* -> ✅ *"Calculated illustrative negotiation range: £X"*
      - ❌ *"The current offer is £0"* -> ✅ *"No employer offer recorded"* (strictly suppress negotiation templates when offer is £0)
      - ❌ *"Do not accept this offer"* / *"Do not sign"* -> ✅ *"Offer is below the calculated statutory baseline"*
-     - ❌ *"Your employer is required to pay £500"* / *"Employer covers legal fees under s.203"* -> ✅ *"Employers standardly provide a capped contribution (typically £350 to £500+ +VAT) toward legal fees upon completion"*
+     - ❌ *"Your employer is required to pay £500"* / *"Employer covers legal fees under s.203"* -> ✅ *"Employers standardly provide a capped contribution (typically £350 to £500 + VAT, or higher) toward legal fees upon completion"*
      - ❌ *"Without Prejudice Proposal"* -> ✅ *"Solicitor Discussion Agenda / Summary of Figures"*
    - **The 5 Adversarial Invariants**:
      1. *Offer Revocation & Deadlines (Routledge v Grant)*: Never state that employees have an unconditional right to 10 days. Clarify that ACAS Code 4 recommends 10 calendar days, but employers can set binding deadlines or withdraw offers prior to acceptance.
@@ -96,6 +96,7 @@ The reader is an employee who has just received a settlement agreement or redund
 - **Semicolons**: Avoid. Use two separate sentences instead.
 - **Quotation marks**: Single quotes in UI, double quotes in body copy.
 - **En dashes in ranges**: Yes. "£350 to £750" is preferred over "£350-£750" in body copy.
+- **No double-plus VAT typos**: Never write `£500+ + VAT` or `£350 to £750+ + VAT`. Write `£500 + VAT or higher` or `£350 to £750 + VAT`.
 - **Em dashes**: Banned everywhere.
 
 ---

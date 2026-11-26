@@ -24,6 +24,7 @@ Mathematical formulas, statutory rates, Supabase table definitions, and OTP veri
   - 1 month to 2 years = 1 week
   - 2 to 12 years = 1 week per full year of service
   - 12+ years = capped at 12 weeks
+- **Worked Examples & Sample Dossiers (Hard Rule)**: Never hand-estimate statutory redundancy or tax splits in UI examples (such as `/for-solicitors/` sample dossiers). Always calculate exact age-band years (`<22: 0.5×`, `22–40: 1.0×`, `41+: 1.5×`) at £751/week and treat contractual PILON as 100% taxable earnings under ITEPA 2003 s.402D — never absorb PILON into the £30,000 s.403 exemption.
 
 ---
 
