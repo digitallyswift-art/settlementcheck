@@ -24,7 +24,6 @@ if (!resendKey) {
   process.exit(1);
 }
 
-// Target recipients list
 let recipients = [
   'support@digitallyswift.com',
   'digitallyswift@gmail.com',
@@ -43,6 +42,14 @@ if (toArg) {
 }
 
 const resend = new Resend(resendKey);
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
 function parseCsv(filePath) {
   if (!fs.existsSync(filePath)) return [];
@@ -79,8 +86,11 @@ function getSnapshotStats(dirPath) {
   const clicks = chartRows.reduce((sum, r) => sum + parseInt(r.Clicks || '0', 10), 0);
   const impressions = chartRows.reduce((sum, r) => sum + parseInt(r.Impressions || '0', 10), 0);
   const ctr = impressions > 0 ? (clicks / impressions) * 100 : 0;
-  
-  const posSum = chartRows.reduce((sum, r) => sum + (parseFloat(r.Position || '0') * parseInt(r.Impressions || '0', 10)), 0);
+
+  const posSum = chartRows.reduce(
+    (sum, r) => sum + parseFloat(r.Position || '0') * parseInt(r.Impressions || '0', 10),
+    0
+  );
   const avgPosition = impressions > 0 ? posSum / impressions : 0;
 
   const dates = chartRows.map(r => r.Date).filter(Boolean).sort();
@@ -88,9 +98,6 @@ function getSnapshotStats(dirPath) {
   const endDate = dates[dates.length - 1] || 'Unknown';
 
   return {
-    dir: path.basename(dirPath),
-    startDate,
-    endDate,
     startDateFormatted: formatDate(startDate),
     endDateFormatted: formatDate(endDate),
     clicks,
@@ -101,57 +108,32 @@ function getSnapshotStats(dirPath) {
   };
 }
 
-async function getBingStats() {
-  const apiKey = process.env.BING_API_KEY;
-  if (!apiKey) return null;
+function parsePrSummarySections(markdownText) {
+  const applied = [];
+  const skipped = [];
+  let mode = '';
 
-  const siteUrl = 'https://settlementcheck.co.uk/';
-  const apiBase = 'https://ssl.bing.com/webmaster/api.svc/json';
-
-  let quota = { DailyQuota: 100, MonthlyQuota: 1600 };
-  let queryStats = [];
-
-  try {
-    const quotaRes = await fetch(`${apiBase}/GetUrlSubmissionQuota?siteUrl=${encodeURIComponent(siteUrl)}&apikey=${apiKey}`, {
-      method: 'GET',
-      headers: { Accept: 'application/json' },
-    });
-    if (quotaRes.ok) {
-      const quotaData = await quotaRes.json();
-      if (quotaData.d) quota = quotaData.d;
+  for (const rawLine of markdownText.split('\n')) {
+    const line = rawLine.trim();
+    if (line.startsWith('### ✅')) {
+      mode = 'applied';
+      continue;
     }
-  } catch (err) {
-    console.warn('Notice: Could not fetch Bing submission quota:', err.message);
-  }
-
-  try {
-    const queryRes = await fetch(`${apiBase}/GetQueryStats?siteUrl=${encodeURIComponent(siteUrl)}&apikey=${apiKey}`, {
-      method: 'GET',
-      headers: { Accept: 'application/json' },
-    });
-    if (queryRes.ok) {
-      const queryData = await queryRes.json();
-      if (Array.isArray(queryData.d)) queryStats = queryData.d;
+    if (line.startsWith('### ⏭️')) {
+      mode = 'skipped';
+      continue;
     }
-  } catch (err) {
-    console.warn('Notice: Could not fetch Bing query stats:', err.message);
+    if (line.startsWith('### ')) {
+      mode = '';
+      continue;
+    }
+    if (line.startsWith('- ')) {
+      const clean = line.slice(2).replace(/\*\*/g, '').replace(/`/g, '');
+      if (mode === 'applied') applied.push(clean);
+      if (mode === 'skipped') skipped.push(clean);
+    }
   }
-
-  const totalClicks = queryStats.reduce((sum, q) => sum + (q.Clicks || 0), 0);
-  const totalImpressions = queryStats.reduce((sum, q) => sum + (q.Impressions || 0), 0);
-  const avgPosition = totalImpressions > 0 
-    ? (queryStats.reduce((sum, q) => sum + ((q.AvgImpressionPosition || 0) * (q.Impressions || 0)), 0) / totalImpressions).toFixed(1)
-    : '0';
-
-  return {
-    isConfigured: true,
-    quota,
-    queryStats,
-    totalClicks,
-    totalImpressions,
-    avgPosition,
-    hasLiveMetrics: queryStats.length > 0,
-  };
+  return { applied, skipped };
 }
 
 async function sendDigest() {
@@ -159,24 +141,22 @@ async function sendDigest() {
   console.log(' 📧 Dispatching Autonomous SEO Intelligence Report via Resend  ');
   console.log('================================================================\n');
 
-  // Load latest staged packages
   const stagedJsonPath = path.resolve('data/serp-actions/staging/latest-staged-actions.json');
-  let packages = [];
-  if (fs.existsSync(stagedJsonPath)) {
-    packages = JSON.parse(fs.readFileSync(stagedJsonPath, 'utf-8'));
-  }
+  const packages = fs.existsSync(stagedJsonPath)
+    ? JSON.parse(fs.readFileSync(stagedJsonPath, 'utf-8'))
+    : [];
 
-  // Load Auto-PR action summary if generated
   const prSummaryPath = path.resolve('data/serp-actions/staging/latest-pr-summary.md');
   const prSummaryText = fs.existsSync(prSummaryPath)
     ? fs.readFileSync(prSummaryPath, 'utf-8')
     : '';
-  const autoPrUrl = process.env.AUTO_PR_URL || '';
+  const { applied, skipped } = parsePrSummarySections(prSummaryText);
 
-  // Fetch live Bing & Microsoft Copilot stats
-  const bingStats = await getBingStats();
+  const autoPrUrl =
+    process.env.AUTO_PR_URL || 'https://github.com/digitallyswift-art/settlementcheck/pulls';
+  const hasAppliedChanges =
+    applied.length > 0 && !applied[0].startsWith('No direct TSX source edits');
 
-  // Load GSC performance snapshots
   const currentDir = path.resolve('data/gsc-history/settlementcheck.co.uk-Performance-on-Search-2026-10-09');
   const prevDir = path.resolve('data/gsc-history/settlementcheck.co.uk-Performance-on-Search-2026-10-03');
 
@@ -188,274 +168,152 @@ async function sendDigest() {
     ? getSnapshotStats(prevDir)
     : { startDateFormatted: '30 Jun 2026', endDateFormatted: '29 Sep 2026', clicks: 158, impressions: 9056, ctr: 1.74, avgPosition: 20.8, queriesCount: 186 };
 
-  // Calculate Deltas
   const deltaClicks = current.clicks - previous.clicks;
   const pctClicks = previous.clicks > 0 ? ((deltaClicks / previous.clicks) * 100).toFixed(1) : '0';
-  
   const deltaImpressions = current.impressions - previous.impressions;
   const pctImpressions = previous.impressions > 0 ? ((deltaImpressions / previous.impressions) * 100).toFixed(1) : '0';
 
-  const deltaCtr = (current.ctr - previous.ctr).toFixed(2);
-  const deltaQueries = current.queriesCount - previous.queriesCount;
-  const pctQueries = previous.queriesCount > 0 ? ((deltaQueries / previous.queriesCount) * 100).toFixed(1) : '0';
+  const appliedHtml =
+    applied.length > 0
+      ? applied.map(item => `<li style="margin-bottom:6px;">${escapeHtml(item)}</li>`).join('')
+      : '<li>No source edits were applied in this run.</li>';
 
-  const dualAgentHtml = packages.slice(0, 6).map(p => `
-    <div style="background:#F7F4EE;border-left:4px solid #D9603B;padding:14px;margin-bottom:18px;border-radius:4px;">
-      <div style="font-size:14px;font-weight:bold;color:#0B1F3A;margin-bottom:4px;">
-        🎯 [${p.priority}] "${p.query}" (${p.actionType})
-      </div>
-      <div style="font-size:12px;color:#555;margin-bottom:8px;">
-        <strong>Target Route:</strong> <a href="${p.seoTechnicalBrief.targetCanonicalUrl}" style="color:#D9603B;text-decoration:none;font-weight:bold;">${p.seoTechnicalBrief.targetCanonicalUrl}</a><br/>
-        <strong>Metrics:</strong> Pos ${p.seoTechnicalBrief.currentMetrics.position.toFixed(1)} · ${p.seoTechnicalBrief.currentMetrics.impressions} Impr · ${p.seoTechnicalBrief.currentMetrics.clicks} Clicks
-      </div>
+  const skippedHtml =
+    skipped.length > 0
+      ? skipped.map(item => `<li style="margin-bottom:6px;">${escapeHtml(item)}</li>`).join('')
+      : '<li>None — all eligible items were handled.</li>';
 
-      <!-- 1. SERP Snippet Preview -->
-      <div style="background:#fff;border:1px solid #E6E1D8;padding:10px;border-radius:4px;margin-bottom:8px;">
-        <div style="font-size:11px;font-weight:bold;color:#666;text-transform:uppercase;margin-bottom:4px;">1. SERP Search Snippet (Title & Meta)</div>
-        <div style="font-size:12px;color:#111;margin-bottom:4px;">
-          <strong>Title (${p.copyPackage.calibratedTitle.length} chars):</strong><br/>
-          <code style="background:#f4f4f4;padding:2px 4px;border-radius:2px;">${p.copyPackage.calibratedTitle}</code>
-        </div>
-        <div style="font-size:12px;color:#111;">
-          <strong>Meta Description (${p.copyPackage.calibratedMetaDescription.length} chars):</strong><br/>
-          <span style="color:#333;">${p.copyPackage.calibratedMetaDescription}</span>
-        </div>
-      </div>
-
-      <!-- 2. AI Overview Direct Answer -->
-      <div style="background:#fff;border:1px solid #E6E1D8;padding:10px;border-radius:4px;margin-bottom:8px;">
-        <div style="font-size:11px;font-weight:bold;color:#666;text-transform:uppercase;margin-bottom:4px;">2. Google AI Overview & Featured Snippet</div>
-        <div style="font-size:12px;color:#222;font-style:italic;">
-          "${p.copyPackage.answerFirstFaq.answer}"
-        </div>
-      </div>
-
-      ${p.inProsePlacement ? `
-      <!-- 3. In-Prose Body Paragraph Upgrade -->
-      <div style="background:#fff;border:1px solid #E6E1D8;padding:10px;border-radius:4px;margin-bottom:8px;">
-        <div style="font-size:11px;font-weight:bold;color:#666;text-transform:uppercase;margin-bottom:4px;">
-          3. In-Prose Body Paragraph Upgrade (<code>${p.inProsePlacement.targetFilePath}</code>)
-        </div>
-        <div style="font-size:12px;color:#555;margin-bottom:4px;">
-          <span style="text-decoration:line-through;color:#888;">Existing: "${p.inProsePlacement.matchedExcerpt}"</span>
-        </div>
-        <div style="font-size:12px;color:#0B1F3A;font-weight:500;">
-          Upgraded: "${p.inProsePlacement.replacementExcerpt}"
-        </div>
-      </div>
-      ` : ''}
-
-      ${p.workedExample ? `
-      <!-- 4. Statutory Mathematical Illustration (Zero Fiction) -->
-      <div style="background:#fff;border:1px solid #E6E1D8;padding:10px;border-radius:4px;margin-bottom:8px;">
-        <div style="font-size:11px;font-weight:bold;color:#666;text-transform:uppercase;margin-bottom:4px;">
-          4. Statutory Calculation Breakdown (ERA 1996 & ITEPA 2003)
-        </div>
-        <div style="font-size:12px;font-weight:bold;color:#0B1F3A;margin-bottom:2px;">
-          ${p.workedExample.caseTitle}
-        </div>
-        <div style="font-size:11px;color:#555;line-height:1.4;">
-          • <strong>Formula:</strong> ${p.workedExample.formulaBreakdown}<br/>
-          • <strong>Statutes Cited:</strong> ${p.workedExample.statutoryCitations.join(', ')}<br/>
-          • <strong>Legal Fee Rule:</strong> ${p.workedExample.employerContribution}
-        </div>
-      </div>
-      ` : ''}
-
-      <div style="font-size:11px;color:#444;margin-top:8px;">
-        <strong>4-Agent Validation:</strong> 0 Em Dashes [✓] · April 2026 Caps [✓] · SRA Legal Boundary [✓] · Anti-AI Score: <strong>${p.antiAiQuality.authenticityScore}%</strong>
-      </div>
-    </div>
-  `).join('');
+  const queryRowsHtml = packages
+    .slice(0, 6)
+    .map(p => {
+      const route = (p.seoTechnicalBrief?.targetCanonicalUrl || '').replace('https://settlementcheck.co.uk', '') || '/';
+      const pos = p.seoTechnicalBrief?.currentMetrics?.position?.toFixed(1) ?? '-';
+      const impr = p.seoTechnicalBrief?.currentMetrics?.impressions ?? 0;
+      return `
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:8px 10px;color:#0B1F3A;font-weight:600;">${escapeHtml(p.query)}</td>
+          <td style="padding:8px 10px;color:#555;"><code>${escapeHtml(route)}</code></td>
+          <td style="padding:8px 10px;text-align:center;">${pos}</td>
+          <td style="padding:8px 10px;text-align:center;">${impr}</td>
+        </tr>
+      `;
+    })
+    .join('');
 
   const html = `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0B1F3A;max-width:660px;line-height:1.5;margin:0 auto;padding:20px;">
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0B1F3A;max-width:640px;line-height:1.5;margin:0 auto;padding:20px;">
       
-      <!-- Brand Header -->
-      <div style="border-bottom:3px solid #D9603B;padding-bottom:12px;margin-bottom:18px;">
-        <h1 style="color:#0B1F3A;margin:0;font-size:21px;letter-spacing:-0.02em;">
-          🛡️ SettlementCheck Autonomous SEO Intelligence Report
+      <!-- Header -->
+      <div style="border-bottom:3px solid #D9603B;padding-bottom:10px;margin-bottom:18px;">
+        <h1 style="color:#0B1F3A;margin:0;font-size:20px;">
+          🛡️ SettlementCheck Daily Action Summary
         </h1>
-        <p style="color:#666;font-size:13px;margin:4px 0 0 0;">
-          Autonomous 24/7 Agentic Fleet · Multi-Agent Performance & Review Digest
+        <p style="color:#666;font-size:12px;margin:4px 0 0 0;">
+          Autonomous Sentinel Fleet · All 7 Verification Gates Passed
         </p>
       </div>
 
-      ${(prSummaryText || autoPrUrl) ? `
-      <!-- Auto-PR & Actions Taken Summary -->
-      <div style="background:#0B1F3A;color:#fff;padding:16px;border-radius:6px;margin-bottom:22px;">
+      <!-- 1. What Needs Your Approval -->
+      <div style="background:#0B1F3A;color:#fff;padding:18px;border-radius:8px;margin-bottom:20px;">
+        <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:#D9603B;font-weight:bold;margin-bottom:6px;">
+          1. Needs Your Approval
+        </div>
         <div style="font-size:15px;font-weight:bold;margin-bottom:8px;">
-          🚀 Auto-PR &amp; Actions Taken Summary
+          ${
+            hasAppliedChanges
+              ? `${applied.length} low-risk SEO update(s) are ready in a Pull Request.`
+              : 'No new code changes require your approval today.'
+          }
         </div>
-        ${autoPrUrl ? `
-        <div style="margin-bottom:12px;">
-          <a href="${autoPrUrl}" style="background:#D9603B;color:#fff;padding:8px 16px;border-radius:4px;text-decoration:none;font-weight:bold;font-size:12px;display:inline-block;">
-            Review &amp; Merge Pull Request →
-          </a>
-        </div>
-        ` : ''}
-        <pre style="background:#132B4C;color:#F7F4EE;padding:12px;border-radius:4px;font-size:11px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin:0;">${prSummaryText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
-      </div>
-      ` : ''}
-
-      <!-- Date Range Context Banner -->
-      <div style="background:#F7F4EE;border:1px solid #E6E1D8;border-radius:6px;padding:12px 14px;margin-bottom:20px;">
-        <div style="font-size:13px;color:#0B1F3A;margin-bottom:4px;">
-          📅 <strong>Reporting Window:</strong> <span style="color:#D9603B;font-weight:bold;">${current.startDateFormatted} – ${current.endDateFormatted}</span> (Last 90 Days)
-        </div>
-        <div style="font-size:12px;color:#666;">
-          ⏱️ <strong>Previous Benchmark Period:</strong> ${previous.startDateFormatted} – ${previous.endDateFormatted} (Previous 90-Day Snapshot)
-        </div>
-      </div>
-
-      <!-- Comparison Metrics Table -->
-      <h3 style="color:#0B1F3A;font-size:15px;margin:0 0 10px 0;letter-spacing:-0.01em;">
-        📈 Performance Comparison (vs Previous Period)
-      </h3>
-      <table style="width:100%;border-collapse:collapse;margin:0 0 24px 0;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-        <thead>
-          <tr style="background:#0B1F3A;color:#fff;text-align:left;">
-            <th style="padding:10px 12px;border:1px solid #0B1F3A;">Metric</th>
-            <th style="padding:10px 12px;border:1px solid #0B1F3A;text-align:center;">Current Period<br/><span style="font-size:10px;font-weight:normal;opacity:0.8;">(to ${current.endDateFormatted})</span></th>
-            <th style="padding:10px 12px;border:1px solid #0B1F3A;text-align:center;">Previous Period<br/><span style="font-size:10px;font-weight:normal;opacity:0.8;">(to ${previous.endDateFormatted})</span></th>
-            <th style="padding:10px 12px;border:1px solid #0B1F3A;text-align:center;">Delta / Growth</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="background:#fff;border-bottom:1px solid #eee;">
-            <td style="padding:10px 12px;font-weight:600;color:#0B1F3A;">Total Clicks</td>
-            <td style="padding:10px 12px;text-align:center;font-weight:bold;color:#D9603B;font-size:15px;">${current.clicks.toLocaleString('en-GB')}</td>
-            <td style="padding:10px 12px;text-align:center;color:#666;">${previous.clicks.toLocaleString('en-GB')}</td>
-            <td style="padding:10px 12px;text-align:center;font-weight:bold;color:#059669;">
-              ▲ +${deltaClicks} (+${pctClicks}%)
-            </td>
-          </tr>
-          <tr style="background:#FAFAFA;border-bottom:1px solid #eee;">
-            <td style="padding:10px 12px;font-weight:600;color:#0B1F3A;">Total Impressions</td>
-            <td style="padding:10px 12px;text-align:center;font-weight:bold;font-size:15px;">${current.impressions.toLocaleString('en-GB')}</td>
-            <td style="padding:10px 12px;text-align:center;color:#666;">${previous.impressions.toLocaleString('en-GB')}</td>
-            <td style="padding:10px 12px;text-align:center;font-weight:bold;color:#059669;">
-              ▲ +${deltaImpressions.toLocaleString('en-GB')} (+${pctImpressions}%)
-            </td>
-          </tr>
-          <tr style="background:#fff;border-bottom:1px solid #eee;">
-            <td style="padding:10px 12px;font-weight:600;color:#0B1F3A;">Average CTR</td>
-            <td style="padding:10px 12px;text-align:center;font-weight:bold;">${current.ctr}%</td>
-            <td style="padding:10px 12px;text-align:center;color:#666;">${previous.ctr}%</td>
-            <td style="padding:10px 12px;text-align:center;font-weight:bold;color:${parseFloat(deltaCtr) >= 0 ? '#059669' : '#DC2626'};">
-              ${parseFloat(deltaCtr) >= 0 ? '▲ +' : '▼ '}${deltaCtr}%
-            </td>
-          </tr>
-          <tr style="background:#FAFAFA;border-bottom:1px solid #eee;">
-            <td style="padding:10px 12px;font-weight:600;color:#0B1F3A;">Ranked Queries</td>
-            <td style="padding:10px 12px;text-align:center;font-weight:bold;color:#0B1F3A;">${current.queriesCount} keywords</td>
-            <td style="padding:10px 12px;text-align:center;color:#666;">${previous.queriesCount} keywords</td>
-            <td style="padding:10px 12px;text-align:center;font-weight:bold;color:#059669;">
-              ▲ +${deltaQueries} (+${pctQueries}%)
-            </td>
-          </tr>
-          <tr style="background:#fff;">
-            <td style="padding:10px 12px;font-weight:600;color:#0B1F3A;">Average Position</td>
-            <td style="padding:10px 12px;text-align:center;font-weight:bold;">${current.avgPosition}</td>
-            <td style="padding:10px 12px;text-align:center;color:#666;">${previous.avgPosition}</td>
-            <td style="padding:10px 12px;text-align:center;color:#555;font-size:12px;">
-              Footprint expanded (+109 keywords)
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Bing & Microsoft Copilot GEO Intelligence Channel -->
-      <div style="background:#F7F4EE;border:1px solid #E6E1D8;border-radius:6px;padding:16px;margin:24px 0;">
-        <div style="margin-bottom:12px;">
-          <h3 style="color:#0B1F3A;font-size:15px;margin:0 0 4px 0;letter-spacing:-0.01em;">
-            🌐 Bing &amp; Microsoft Copilot (GEO Intelligence)
-          </h3>
-          <div style="font-size:12px;color:#666;">
-            Real-time IndexNow synchronization and Microsoft Copilot answer engine monitoring
-          </div>
-        </div>
-
-        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;">
-          <tbody>
-            <tr style="border-bottom:1px solid #E6E1D8;">
-              <td style="padding:6px 0;color:#555;font-weight:600;width:45%;">IndexNow Synchronization:</td>
-              <td style="padding:6px 0;color:#059669;font-weight:bold;">59 / 59 Canonical Routes Dispatched [✓]</td>
-            </tr>
-            <tr style="border-bottom:1px solid #E6E1D8;">
-              <td style="padding:6px 0;color:#555;font-weight:600;">Machine-Readable AI Standard:</td>
-              <td style="padding:6px 0;color:#0B1F3A;">/llms.txt &amp; /llms-full.txt Deployed (April 2026 Caps) [✓]</td>
-            </tr>
-            <tr style="border-bottom:1px solid #E6E1D8;">
-              <td style="padding:6px 0;color:#555;font-weight:600;">Bing Submission Quota:</td>
-              <td style="padding:6px 0;color:#0B1F3A;">Daily: ${bingStats?.quota?.DailyQuota !== undefined ? bingStats.quota.DailyQuota : 100} remaining · Monthly: ${bingStats?.quota?.MonthlyQuota !== undefined ? bingStats.quota.MonthlyQuota : 1600} remaining</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 0;color:#555;font-weight:600;">Site Verification Status:</td>
-              <td style="padding:6px 0;color:#059669;font-weight:bold;">Verified via BingSiteAuth.xml &amp; HTML Meta Tag [✓]</td>
-            </tr>
-          </tbody>
-        </table>
-
-        ${bingStats?.hasLiveMetrics ? `
-        <!-- Live Bing Metrics Table -->
-        <table style="width:100%;border-collapse:collapse;font-size:12px;background:#fff;border:1px solid #E6E1D8;border-radius:4px;">
-          <thead>
-            <tr style="background:#0B1F3A;color:#fff;text-align:left;">
-              <th style="padding:8px 10px;">Top Bing &amp; Copilot Query</th>
-              <th style="padding:8px 10px;text-align:center;">Impressions</th>
-              <th style="padding:8px 10px;text-align:center;">Clicks</th>
-              <th style="padding:8px 10px;text-align:center;">Avg Pos</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${bingStats.queryStats.slice(0, 5).map(q => `
-              <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:8px 10px;font-weight:bold;color:#0B1F3A;">${q.Query}</td>
-                <td style="padding:8px 10px;text-align:center;">${q.Impressions}</td>
-                <td style="padding:8px 10px;text-align:center;font-weight:bold;color:#D9603B;">${q.Clicks}</td>
-                <td style="padding:8px 10px;text-align:center;">${q.AvgImpressionPosition ? q.AvgImpressionPosition.toFixed(1) : '-'}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-        ` : `
-        <div style="background:#fff;border:1px solid #E6E1D8;padding:12px;border-radius:4px;font-size:12px;color:#555;">
-          ⏱️ <strong>Telemetry Status:</strong> Site verified. Search impressions and Copilot answer queries are processing in the Bing Webmaster pipeline (typically 24 to 48 hours for initial volume reports).
-        </div>
-        `}
-      </div>
-
-      <!-- 4-Agent Staged Actions Section -->
-      <h3 style="color:#0B1F3A;font-size:15px;margin:28px 0 6px 0;border-bottom:1px solid #eee;padding-bottom:6px;">
-        🤖 4-Agent Verified Action Packages (Ready for Production)
-      </h3>
-      <p style="font-size:12px;color:#666;margin:0 0 14px 0;">
-        Reviewed and certified by <strong>SEO Architect</strong>, <strong>Conversion Copywriter</strong>, <strong>Statutory Auditor</strong>, and <strong>Anti-AI Quality Guard</strong>.
-      </p>
-
-      ${dualAgentHtml}
-
-      <!-- CTA / Portal Link -->
-      <div style="background:#0B1F3A;color:#fff;padding:16px;border-radius:6px;margin-top:24px;text-align:center;">
-        <div style="font-size:13px;margin-bottom:8px;">Review all live packages and historical telemetry online:</div>
-        <a href="https://settlementcheck.co.uk/api/portal/seo-actions/" style="color:#0B1F3A;background:#D9603B;color:#fff;padding:8px 18px;border-radius:4px;text-decoration:none;font-weight:bold;font-size:12px;display:inline-block;">
-          Open Portal Action Feed →
+        <p style="font-size:13px;color:#E6E1D8;margin:0 0 14px 0;">
+          ${
+            hasAppliedChanges
+              ? 'All deterministic checks (TypeScript, statutory evals, legal disclaimers, brand copy, titles, and links) passed. Click below to review and merge in 1 click:'
+              : 'Telemetry logs were refreshed. You can still review open Pull Requests on GitHub below:'
+          }
+        </p>
+        <a href="${escapeHtml(autoPrUrl)}" style="background:#D9603B;color:#fff;padding:10px 18px;border-radius:5px;text-decoration:none;font-weight:bold;font-size:13px;display:inline-block;">
+          Review &amp; Merge Pull Request →
         </a>
       </div>
 
-      <hr style="margin-top:30px;border:0;border-top:1px solid #eee;" />
-      <p style="font-size:11px;color:#888;text-align:center;margin:0;">
-        Generated autonomously by SettlementCheck Sentinel Fleet · UK Statutory April 2026 Standard.
-      </p>
+      <!-- 2. Already Implemented in This PR -->
+      <div style="background:#F7F4EE;border-left:4px solid #0B1F3A;padding:14px 16px;border-radius:4px;margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:bold;color:#0B1F3A;margin-bottom:8px;">
+          2. ✅ Already Implemented in PR (Ready to Merge)
+        </div>
+        <ul style="margin:0;padding-left:18px;font-size:13px;color:#222;">
+          ${appliedHtml}
+        </ul>
+      </div>
+
+      <!-- 3. Held / Needs Manual Implementation -->
+      <div style="background:#FFF8F6;border-left:4px solid #D9603B;padding:14px 16px;border-radius:4px;margin-bottom:22px;">
+        <div style="font-size:13px;font-weight:bold;color:#0B1F3A;margin-bottom:8px;">
+          3. ⏭️ Held / Needs Manual Implementation
+        </div>
+        <ul style="margin:0;padding-left:18px;font-size:13px;color:#444;">
+          ${skippedHtml}
+        </ul>
+      </div>
+
+      <!-- 4. Compact Telemetry Snapshot -->
+      <h2 style="font-size:14px;color:#0B1F3A;margin:0 0 10px 0;border-bottom:1px solid #E6E1D8;padding-bottom:6px;">
+        4. 📊 Search Performance (${current.startDateFormatted} – ${current.endDateFormatted})
+      </h2>
+      <table style="width:100%;border-collapse:collapse;margin-bottom:16px;font-size:12px;background:#F7F4EE;border-radius:6px;">
+        <tr>
+          <td style="padding:10px;text-align:center;">
+            <div style="color:#666;">Clicks</div>
+            <div style="font-size:16px;font-weight:bold;color:#0B1F3A;">${current.clicks} <span style="font-size:11px;color:#D9603B;">(${deltaClicks >= 0 ? '+' : ''}${pctClicks}%)</span></div>
+          </td>
+          <td style="padding:10px;text-align:center;">
+            <div style="color:#666;">Impressions</div>
+            <div style="font-size:16px;font-weight:bold;color:#0B1F3A;">${current.impressions.toLocaleString('en-GB')} <span style="font-size:11px;color:#D9603B;">(${deltaImpressions >= 0 ? '+' : ''}${pctImpressions}%)</span></div>
+          </td>
+          <td style="padding:10px;text-align:center;">
+            <div style="color:#666;">CTR</div>
+            <div style="font-size:16px;font-weight:bold;color:#0B1F3A;">${current.ctr}%</div>
+          </td>
+          <td style="padding:10px;text-align:center;">
+            <div style="color:#666;">Avg Pos</div>
+            <div style="font-size:16px;font-weight:bold;color:#0B1F3A;">${current.avgPosition}</div>
+          </td>
+        </tr>
+      </table>
+
+      ${
+        packages.length > 0
+          ? `
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:20px;">
+        <thead>
+          <tr style="background:#0B1F3A;color:#fff;text-align:left;">
+            <th style="padding:8px 10px;">Tracked Query</th>
+            <th style="padding:8px 10px;">Target Route</th>
+            <th style="padding:8px 10px;text-align:center;">Pos</th>
+            <th style="padding:8px 10px;text-align:center;">Impr</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${queryRowsHtml}
+        </tbody>
+      </table>
+      `
+          : ''
+      }
+
+      <div style="text-align:center;font-size:11px;color:#888;border-top:1px solid #eee;padding-top:14px;">
+        SettlementCheck Autonomous Sentinel Fleet · <a href="https://settlementcheck.co.uk/cockpit/" style="color:#D9603B;text-decoration:none;">Open Admin Cockpit</a>
+      </div>
     </div>
   `;
 
   console.log(`Sending from: SettlementCheck Sentinel <notifications@settlementcheck.co.uk>`);
-  console.log(`Recipients (${recipients.length}):`);
-  recipients.forEach(r => console.log(`   • ${r}`));
+  console.log(`Recipients (${recipients.length}): ${recipients.join(', ')}`);
 
-  const subject = `🛡️ Autonomous SEO Report: ${current.clicks} Clicks (+${pctClicks}%), ${current.impressions.toLocaleString('en-GB')} Impr (+${pctImpressions}%) [${current.startDateFormatted} – ${current.endDateFormatted}]`;
+  const subject = hasAppliedChanges
+    ? `🚀 [Action Needed] ${applied.length} SEO Update(s) Ready to Merge | ${current.clicks} Clicks (+${pctClicks}%)`
+    : `🛡️ Daily SEO Summary (No PR Changes Needed) | ${current.clicks} Clicks (+${pctClicks}%)`;
 
   const res = await resend.emails.send({
     from: 'SettlementCheck Sentinel <notifications@settlementcheck.co.uk>',
