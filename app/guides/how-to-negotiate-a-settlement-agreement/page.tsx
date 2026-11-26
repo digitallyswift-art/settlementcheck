@@ -191,6 +191,14 @@ export default function HowToNegotiateGuide() {
                   </ul>
                 </div>
               </div>
+
+              <p className="guide-body">
+                If you have been offered an exit package instead of a performance improvement plan, our guide on{' '}
+                <Link href="/guides/settlement-agreement-instead-of-pip/" className="text-coral underline underline-offset-2 hover:text-ink">
+                  PIP settlement
+                </Link>{' '}
+                agreements explains what room you have to negotiate before a formal capability process begins.
+              </p>
             </div>
 
             {/* Section 2 */}
@@ -327,6 +335,22 @@ export default function HowToNegotiateGuide() {
                   </span>
                 </li>
               </ul>
+
+              <p className="guide-body">
+                Before responding to HR, run your figures through our{' '}
+                <Link href="/" className="text-coral underline underline-offset-2 hover:text-ink">
+                  settlement agreement calculator
+                </Link>{' '}
+                or read our guide on the{' '}
+                <Link href="/guides/average-settlement-agreement-payout-uk/" className="text-coral underline underline-offset-2 hover:text-ink">
+                  average settlement agreement amount UK
+                </Link>{' '}
+                employees see when comparing statutory baselines and notice pay. If you work in the health service, scheme caps may apply instead of open-ended negotiation. See our{' '}
+                <Link href="/guides/nhs-settlement-agreements/" className="text-coral underline underline-offset-2 hover:text-ink">
+                  NHS MARS calculator
+                </Link>{' '}
+                and settlement guide for how Mutually Agreed Resignation Scheme rules work.
+              </p>
             </div>
 
             {/* Section 5 */}
