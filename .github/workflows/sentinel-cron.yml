@@ -50,7 +50,7 @@ jobs:
         run: |
           npm run verify
 
-      - name: Open or Update 1-Click Merge Auto-PR
+      - name: Open & Auto-Merge Verified Low-Risk PR
         id: auto_pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -62,7 +62,15 @@ jobs:
           if git diff --staged --quiet; then
             echo "No staged SEO, link, copy, or log changes to open a PR for."
             echo "pr_url=" >> "$GITHUB_OUTPUT"
+            echo "auto_merged=false" >> "$GITHUB_OUTPUT"
             exit 0
+          fi
+
+          # Safety guard: ensure only allowlisted low-risk paths were modified
+          DISALLOWED=$(git diff --cached --name-only | grep -vE '^(data/serp-actions/|app/guides/|app/sectors/|app/scenarios/)' || true)
+          if [ -n "$DISALLOWED" ]; then
+            echo "Non-allowlisted paths detected; holding PR for manual review:"
+            echo "$DISALLOWED"
           fi
 
           BRANCH_NAME="sentinel/auto-seo-pr"
@@ -83,8 +91,16 @@ jobs:
             PR_URL=$(gh pr create --base main --head "$BRANCH_NAME" --title "chore(sentinel): autonomous low-risk SEO & copy updates" --body-file "$PR_BODY_FILE")
           fi
 
-          echo "Auto-PR ready: $PR_URL"
           echo "pr_url=$PR_URL" >> "$GITHUB_OUTPUT"
+
+          if [ -z "$DISALLOWED" ]; then
+            gh pr merge "$PR_URL" --squash --delete-branch
+            echo "Auto-PR merged into main: $PR_URL"
+            echo "auto_merged=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Auto-PR held for manual review: $PR_URL"
+            echo "auto_merged=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Dispatch Action Summary Email Digest
         env:
@@ -92,6 +108,7 @@ jobs:
           BING_API_KEY: ${{ secrets.BING_API_KEY }}
           SEO_ALERT_EMAILS: ${{ secrets.SEO_ALERT_EMAILS }}
           AUTO_PR_URL: ${{ steps.auto_pr.outputs.pr_url }}
+          AUTO_MERGED: ${{ steps.auto_pr.outputs.auto_merged }}
         run: |
           if [ -n "$RESEND_API_KEY" ]; then
             npm run sentinel:email

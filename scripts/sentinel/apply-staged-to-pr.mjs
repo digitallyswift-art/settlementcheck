@@ -98,7 +98,7 @@ function tryApplyInProseUpgrade(pkg) {
     applied: true,
     file: relPath,
     type: 'In-Prose Copy & Internal Link',
-    detail: `Upgraded prose in \`${relPath}\` with internal link \`${placement.anchorText}\`.`,
+    detail: `Updated a sentence in \`${relPath}\` to link readers directly to \`${placement.anchorText}\`.`,
   };
 }
 
@@ -166,8 +166,8 @@ function tryApplyMetadataUpgrade(pkg) {
   return {
     applied: true,
     file: relPath,
-    type: 'Metadata Title & Description',
-    detail: `Updated \`title\` (${newTitle.length}ch) and \`description\` (${newDesc.length}ch) in \`${relPath}\`.`,
+    type: 'Google Search Headline & Summary',
+    detail: `Updated Google search headline (${newTitle.length} chars) and 2-line Google summary (${newDesc.length} chars) for \`${relPath}\` (page layout unchanged).`,
   };
 }
 

@@ -154,6 +154,7 @@ async function sendDigest() {
 
   const autoPrUrl =
     process.env.AUTO_PR_URL || 'https://github.com/digitallyswift-art/settlementcheck/pulls';
+  const autoMerged = process.env.AUTO_MERGED === 'true';
   const hasAppliedChanges =
     applied.length > 0 && !applied[0].startsWith('No direct TSX source edits');
 
@@ -213,34 +214,38 @@ async function sendDigest() {
         </p>
       </div>
 
-      <!-- 1. What Needs Your Approval -->
+      <!-- 1. Status & Action Required -->
       <div style="background:#0B1F3A;color:#fff;padding:18px;border-radius:8px;margin-bottom:20px;">
         <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:#D9603B;font-weight:bold;margin-bottom:6px;">
-          1. Needs Your Approval
+          ${autoMerged ? '1. Deployed Automatically (No Action Needed)' : '1. Needs Your Approval'}
         </div>
         <div style="font-size:15px;font-weight:bold;margin-bottom:8px;">
           ${
-            hasAppliedChanges
-              ? `${applied.length} low-risk SEO update(s) are ready in a Pull Request.`
-              : 'No new code changes require your approval today.'
+            autoMerged
+              ? `${applied.length} low-risk SEO update(s) passed all checks and went live automatically.`
+              : hasAppliedChanges
+                ? `${applied.length} low-risk SEO update(s) are ready in a Pull Request.`
+                : 'No new code changes needed today.'
           }
         </div>
         <p style="font-size:13px;color:#E6E1D8;margin:0 0 14px 0;">
           ${
-            hasAppliedChanges
-              ? 'All deterministic checks (TypeScript, statutory evals, legal disclaimers, brand copy, titles, and links) passed. Click below to review and merge in 1 click:'
-              : 'Telemetry logs were refreshed. You can still review open Pull Requests on GitHub below:'
+            autoMerged
+              ? 'All 7 safety checks (TypeScript, calculator math, legal disclaimers, brand copy, titles, and links) passed. The PR was automatically merged into main and Vercel is deploying it now.'
+              : hasAppliedChanges
+                ? 'All 7 safety checks passed. Click below to review and merge in 1 click:'
+                : 'Telemetry logs were refreshed. No website changes were required.'
           }
         </p>
         <a href="${escapeHtml(autoPrUrl)}" style="background:#D9603B;color:#fff;padding:10px 18px;border-radius:5px;text-decoration:none;font-weight:bold;font-size:13px;display:inline-block;">
-          Review &amp; Merge Pull Request →
+          ${autoMerged ? 'View Merged Pull Request →' : 'Review &amp; Merge Pull Request →'}
         </a>
       </div>
 
-      <!-- 2. Already Implemented in This PR -->
+      <!-- 2. Already Implemented -->
       <div style="background:#F7F4EE;border-left:4px solid #0B1F3A;padding:14px 16px;border-radius:4px;margin-bottom:16px;">
         <div style="font-size:13px;font-weight:bold;color:#0B1F3A;margin-bottom:8px;">
-          2. ✅ Already Implemented in PR (Ready to Merge)
+          ${autoMerged ? '2. ✅ Automatically Deployed to Live Site' : '2. ✅ Already Implemented in PR (Ready to Merge)'}
         </div>
         <ul style="margin:0;padding-left:18px;font-size:13px;color:#222;">
           ${appliedHtml}
@@ -311,9 +316,11 @@ async function sendDigest() {
   console.log(`Sending from: SettlementCheck Sentinel <notifications@settlementcheck.co.uk>`);
   console.log(`Recipients (${recipients.length}): ${recipients.join(', ')}`);
 
-  const subject = hasAppliedChanges
-    ? `🚀 [Action Needed] ${applied.length} SEO Update(s) Ready to Merge | ${current.clicks} Clicks (+${pctClicks}%)`
-    : `🛡️ Daily SEO Summary (No PR Changes Needed) | ${current.clicks} Clicks (+${pctClicks}%)`;
+  const subject = autoMerged
+    ? `✅ [Auto-Deployed] ${applied.length} Low-Risk SEO Update(s) Live | ${current.clicks} Clicks (+${pctClicks}%)`
+    : hasAppliedChanges
+      ? `🚀 [Action Needed] ${applied.length} SEO Update(s) Ready to Merge | ${current.clicks} Clicks (+${pctClicks}%)`
+      : `🛡️ Daily SEO Summary (No Changes Needed) | ${current.clicks} Clicks (+${pctClicks}%)`;
 
   const res = await resend.emails.send({
     from: 'SettlementCheck Sentinel <notifications@settlementcheck.co.uk>',
