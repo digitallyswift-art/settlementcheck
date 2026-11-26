@@ -87,11 +87,14 @@ jobs:
           echo "pr_url=$PR_URL" >> "$GITHUB_OUTPUT"
 
       - name: Dispatch Action Summary Email Digest
-        if: ${{ secrets.RESEND_API_KEY != '' }}
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           BING_API_KEY: ${{ secrets.BING_API_KEY }}
           SEO_ALERT_EMAILS: ${{ secrets.SEO_ALERT_EMAILS }}
           AUTO_PR_URL: ${{ steps.auto_pr.outputs.pr_url }}
         run: |
-          npm run sentinel:email
+          if [ -n "$RESEND_API_KEY" ]; then
+            npm run sentinel:email
+          else
+            echo "RESEND_API_KEY not configured; skipping email digest."
+          fi
