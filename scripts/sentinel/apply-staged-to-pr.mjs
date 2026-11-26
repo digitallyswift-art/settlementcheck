@@ -61,33 +61,70 @@ function toJsxProse(text, hasNextLinkImport) {
   });
 }
 
+function formatPageName(relPath) {
+  const slug = relPath
+    .replace(/^app\//, '')
+    .replace(/\/page\.tsx$/, '')
+    .split('/')
+    .pop();
+  if (!slug || slug === 'app') return 'Home page';
+  return slug
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
 function tryApplyInProseUpgrade(pkg) {
   const placement = pkg.inProsePlacement;
   if (!placement || !placement.targetFilePath || !placement.matchedExcerpt || !placement.replacementExcerpt) {
-    return { applied: false, reason: 'No in-prose placement payload provided.' };
+    return { status: 'SKIPPED_NO_ACTION', reason: 'No link update needed.' };
   }
 
   const relPath = placement.targetFilePath.replace(/\\/g, '/');
+  const pageName = formatPageName(relPath);
   if (!isAllowlistedFile(relPath)) {
-    return { applied: false, reason: `Path \`${relPath}\` is outside the low-risk auto-edit allowlist.` };
+    return {
+      status: 'NEEDS_ATTENTION',
+      reason: `On the "${pageName}" page, review adding a link for "${placement.anchorText}" (this page is protected from automatic edits).`,
+    };
   }
 
   const absPath = path.resolve(relPath);
   if (!fs.existsSync(absPath)) {
-    return { applied: false, reason: `Target file \`${relPath}\` does not exist.` };
+    return { status: 'SKIPPED_NO_ACTION', reason: `Page "${pageName}" does not exist.` };
   }
 
   const content = fs.readFileSync(absPath, 'utf-8');
-  const occurrences = content.split(placement.matchedExcerpt).length - 1;
-  if (occurrences === 0) {
-    return { applied: false, reason: `Matched excerpt not found in \`${relPath}\` (may already be updated).` };
-  }
-  if (occurrences > 1) {
-    return { applied: false, reason: `Matched excerpt appears ${occurrences} times in \`${relPath}\` (ambiguous).` };
-  }
-
   const hasNextLink = /import\s+Link\s+from\s+['"]next\/link['"]/.test(content);
   const jsxReplacement = toJsxProse(placement.replacementExcerpt, hasNextLink);
+
+  // Check deterministically if the target link or upgraded text is already live on the page
+  const targetRoute = normalizeTrailingSlash(pkg.seoTechnicalBrief?.internalLinkGraph?.destinationRoute || '/');
+  const linkAlreadyPresent =
+    content.includes(jsxReplacement) ||
+    content.includes(`href="${targetRoute}"`) ||
+    content.includes(`href='${targetRoute}'`);
+
+  const occurrences = content.split(placement.matchedExcerpt).length - 1;
+  if (occurrences === 0) {
+    if (linkAlreadyPresent) {
+      return {
+        status: 'ALREADY_LIVE',
+        reason: `"${pageName}" guide already links to "${targetRoute}" (no action needed).`,
+      };
+    }
+    return {
+      status: 'NEEDS_ATTENTION',
+      reason: `On the "${pageName}" guide, please ask your developer/agent to add a link to "${targetRoute}" using the phrase "${placement.anchorText}" (the exact sentence wasn't found automatically).`,
+    };
+  }
+  if (occurrences > 1) {
+    return {
+      status: 'NEEDS_ATTENTION',
+      reason: `On the "${pageName}" guide, the phrase "${placement.anchorText}" appears ${occurrences} times—choose which one should link to "${targetRoute}".`,
+    };
+  }
+
   const updated = content.replace(placement.matchedExcerpt, jsxReplacement);
 
   if (!DRY_RUN) {
@@ -95,10 +132,11 @@ function tryApplyInProseUpgrade(pkg) {
   }
 
   return {
+    status: 'APPLIED',
     applied: true,
     file: relPath,
-    type: 'In-Prose Copy & Internal Link',
-    detail: `Updated a sentence in \`${relPath}\` to link readers directly to \`${placement.anchorText}\`.`,
+    type: 'Guide Link & Copy',
+    detail: `Updated a sentence on the "${pageName}" guide so readers can click "${placement.anchorText}" to go straight to the calculator.`,
   };
 }
 
@@ -183,7 +221,8 @@ function main() {
 
   const packages = JSON.parse(fs.readFileSync(STAGED_JSON_PATH, 'utf-8'));
   const appliedActions = [];
-  const skippedActions = [];
+  const needsAttention = [];
+  const alreadyUpToDate = [];
 
   for (const pkg of packages) {
     const isLowRisk = pkg.deploymentRisk === 'LOW_RISK';
@@ -193,18 +232,20 @@ function main() {
       pkg.antiAiQuality?.isLowEffort === false;
 
     if (!isLowRisk || !isCompliant) {
-      skippedActions.push({
+      needsAttention.push({
         query: pkg.query,
-        reason: `Held for manual review (risk=${pkg.deploymentRisk}, compliant=${isCompliant}).`,
+        reason: `Held for manual review because this change is marked ${pkg.deploymentRisk} or needs a compliance check.`,
       });
       continue;
     }
 
     const proseRes = tryApplyInProseUpgrade(pkg);
-    if (proseRes.applied) {
+    if (proseRes.status === 'APPLIED') {
       appliedActions.push({ query: pkg.query, priority: pkg.priority, ...proseRes });
-    } else {
-      skippedActions.push({ query: pkg.query, reason: `Prose: ${proseRes.reason}` });
+    } else if (proseRes.status === 'ALREADY_LIVE') {
+      alreadyUpToDate.push({ query: pkg.query, reason: proseRes.reason });
+    } else if (proseRes.status === 'NEEDS_ATTENTION') {
+      needsAttention.push({ query: pkg.query, reason: proseRes.reason });
     }
 
     const metaRes = tryApplyMetadataUpgrade(pkg);
@@ -220,21 +261,22 @@ function main() {
     `- **Run Timestamp (UTC):** ${timestamp}`,
     `- **Mode:** ${DRY_RUN ? 'Dry Run (no files modified)' : 'Auto-PR Branch'}`,
     `- **Packages Evaluated:** ${packages.length}`,
-    `- **Source Fixes Applied:** ${appliedActions.length}`,
-    `- **Held / Skipped:** ${skippedActions.length}`,
+    `- **Updates Applied Automatically:** ${appliedActions.length}`,
+    `- **Already Up to Date:** ${alreadyUpToDate.length}`,
+    `- **Needs Your Attention:** ${needsAttention.length}`,
     ``,
     `### ✅ Actions Applied`,
     appliedActions.length > 0
-      ? appliedActions.map((a) => `- **[${a.priority}] "${a.query}"** (${a.type}): ${a.detail}`).join('\n')
-      : `- No direct TSX source edits were needed (staged telemetry & \`data/serp-actions/\` logs updated).`,
+      ? appliedActions.map((a) => `- **${a.type} ("${a.query}")**: ${a.detail}`).join('\n')
+      : `- No new website edits were needed today (everything is already up to date).`,
     ``,
     `### ⏭️ Skipped / Held for Review`,
-    skippedActions.length > 0
-      ? skippedActions.map((s) => `- **"${s.query}"**: ${s.reason}`).join('\n')
-      : `- None.`,
+    needsAttention.length > 0
+      ? needsAttention.map((s) => `- **For "${s.query}"**: ${s.reason}`).join('\n')
+      : `- Nothing needed from you today — all checks passed and eligible updates are already live.`,
     ``,
     `### 🛡️ Deterministic Quality Gates`,
-    `- \`npm run verify\` (\`tsc\`, \`evals\`, \`audit:legal\`, \`audit:copy\`, \`audit:titles\`, \`check:links\`, \`lint:audit\`) must pass before this PR is ready for 1-click merge.`,
+    `- \`npm run verify\` (\`tsc\`, \`evals\`, \`audit:legal\`, \`audit:copy\`, \`audit:titles\`, \`check:links\`, \`lint:audit\`) must pass.`,
     ``,
   ];
 

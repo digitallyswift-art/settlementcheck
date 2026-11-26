@@ -252,10 +252,10 @@ async function sendDigest() {
         </ul>
       </div>
 
-      <!-- 3. Held / Needs Manual Implementation -->
+      <!-- 3. Action Needed From You -->
       <div style="background:#FFF8F6;border-left:4px solid #D9603B;padding:14px 16px;border-radius:4px;margin-bottom:22px;">
         <div style="font-size:13px;font-weight:bold;color:#0B1F3A;margin-bottom:8px;">
-          3. ⏭️ Held / Needs Manual Implementation
+          3. 📋 Action Needed From You
         </div>
         <ul style="margin:0;padding-left:18px;font-size:13px;color:#444;">
           ${skippedHtml}
