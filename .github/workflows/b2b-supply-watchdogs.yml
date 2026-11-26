@@ -35,5 +35,5 @@ jobs:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
           curl -sS --fail-with-body -X POST \
-            "https://settlementcheck.co.uk/api/cron/supply-balancer/" \
+            "https://settlementcheck.co.uk/api/cron/supply-balancer/?dispatchOutreach=true" \
             -H "Authorization: Bearer ${CRON_SECRET}"

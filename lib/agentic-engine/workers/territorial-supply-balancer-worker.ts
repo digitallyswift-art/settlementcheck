@@ -20,7 +20,10 @@ import {
 const LOOKBACK_DAYS = 30;
 const K_ANONYMITY_THRESHOLD = 3;
 const DEFAULT_COVERAGE_RADIUS_MILES = 25;
-const DEFAULT_OPS_ALERT_EMAIL = process.env.OPS_ALERT_EMAIL || 'ops@settlementcheck.co.uk';
+const DEFAULT_OPS_ALERT_EMAIL =
+  process.env.OPS_ALERT_EMAIL ||
+  process.env.NOTIFICATION_EMAIL ||
+  'ops@settlementcheck.co.uk';
 
 interface LeadDemandRow {
   id: string;

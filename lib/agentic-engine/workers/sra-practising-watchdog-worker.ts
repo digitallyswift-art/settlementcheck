@@ -15,7 +15,10 @@ import {
 } from '../types';
 
 const REQUEST_TIMEOUT_MS = 8000;
-const DEFAULT_OPS_ALERT_EMAIL = process.env.OPS_ALERT_EMAIL || 'ops@settlementcheck.co.uk';
+const DEFAULT_OPS_ALERT_EMAIL =
+  process.env.OPS_ALERT_EMAIL ||
+  process.env.NOTIFICATION_EMAIL ||
+  'ops@settlementcheck.co.uk';
 
 interface PanelFirmComplianceRow {
   id: string;
