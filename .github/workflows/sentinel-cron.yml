@@ -12,6 +12,7 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout Repository
@@ -36,21 +37,61 @@ jobs:
           GSC_SITE_URL: ${{ secrets.GSC_SITE_URL || 'sc-domain:settlementcheck.co.uk' }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           npm run sentinel:act
 
-      - name: Commit & Push Persistent Change Log
+      - name: Apply Low-Risk Staged Fixes for Auto-PR
+        run: |
+          npm run sentinel:apply
+
+      - name: Run Deterministic Quality Gates (Verify)
+        run: |
+          npm run verify
+
+      - name: Open or Update 1-Click Merge Auto-PR
+        id: auto_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "SettlementCheck Sentinel Fleet"
           git config --global user.email "sentinel@settlementcheck.co.uk"
-          git add data/serp-actions/
+
+          git add data/serp-actions/ app/
           if git diff --staged --quiet; then
-            echo "No change log updates to commit."
-          else
-            git commit -m "chore(sentinel): autonomous SEO 4-agent run digest"
-            git pull --rebase origin main
-            git push --no-verify origin main
+            echo "No staged SEO, link, copy, or log changes to open a PR for."
+            echo "pr_url=" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+
+          BRANCH_NAME="sentinel/auto-seo-pr"
+          git checkout -B "$BRANCH_NAME"
+          git commit -m "chore(sentinel): autonomous low-risk SEO & copy updates"
+          git push --force-with-lease origin "$BRANCH_NAME"
+
+          PR_BODY_FILE="data/serp-actions/staging/latest-pr-summary.md"
+          if [ ! -f "$PR_BODY_FILE" ]; then
+            echo "Autonomous Sentinel SEO & copy updates verified by \`npm run verify\`." > "$PR_BODY_FILE"
+          fi
+
+          EXISTING_PR=$(gh pr list --head "$BRANCH_NAME" --base main --state open --json url --jq '.[0].url')
+          if [ -n "$EXISTING_PR" ]; then
+            gh pr edit "$EXISTING_PR" --title "chore(sentinel): autonomous low-risk SEO & copy updates" --body-file "$PR_BODY_FILE"
+            PR_URL="$EXISTING_PR"
+          else
+            PR_URL=$(gh pr create --base main --head "$BRANCH_NAME" --title "chore(sentinel): autonomous low-risk SEO & copy updates" --body-file "$PR_BODY_FILE")
+          fi
+
+          echo "Auto-PR ready: $PR_URL"
+          echo "pr_url=$PR_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Dispatch Action Summary Email Digest
+        if: ${{ secrets.RESEND_API_KEY != '' }}
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          BING_API_KEY: ${{ secrets.BING_API_KEY }}
+          SEO_ALERT_EMAILS: ${{ secrets.SEO_ALERT_EMAILS }}
+          AUTO_PR_URL: ${{ steps.auto_pr.outputs.pr_url }}
+        run: |
+          npm run sentinel:email

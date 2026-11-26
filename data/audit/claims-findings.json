@@ -486,7 +486,7 @@
   {
     "id": "SC-E-CLM-045",
     "file": "app/settlement-agreement-tax-calculator/page.tsx",
-    "lineNumber": 264,
+    "lineNumber": 272,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "label: 'Average Settlement Agreement Payouts UK',",
@@ -497,7 +497,7 @@
   {
     "id": "SC-E-CLM-046",
     "file": "app/sitemap/page.tsx",
-    "lineNumber": 232,
+    "lineNumber": 268,
     "pattern": "average settlement",
     "matchedText": "Average Settlement",
     "context": "title: 'Average Settlement Agreement Payout in the UK',",

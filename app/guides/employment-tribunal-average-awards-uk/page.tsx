@@ -58,6 +58,10 @@ const FAQS = [
     a: 'HMCTS tribunal data shows full merit hearings typically take 12 to 18 months. For settlement agreements, Paragraph 12 of ACAS Code of Practice 4 recommends 10 calendar days as general guidance rather than a binding legal right. Under contract law (Hyde v Wrench), making a counter-proposal rejects the original offer, so speak to an independent solicitor before replying to HR to protect legal privilege.',
   },
   {
+    q: 'How are workplace harassment and discrimination awards calculated?',
+    a: 'Under Section 124 of the Equality Act 2010, compensation for unlawful discrimination or harassment is uncapped and combines proven financial loss with an injury-to-feelings award. From 6 April 2026, the Vento bands are £1,300 to £12,600 (Lower Band), £12,600 to £37,700 (Middle Band), and £37,700 to £62,900+ (Upper Band), with up to £30,000 of qualifying termination compensation tax-free under ITEPA 2003 s.403.',
+  },
+  {
     q: 'Who pays the legal fees and how are awards taxed?',
     a: 'In a tribunal, legal costs are rarely recoverable. For a settlement agreement, employers standardly offer a capped fee contribution (typically £350 to £500+ plus VAT) upon completion, with excess or abortive work subject to your solicitor engagement terms. Tribunal awards for lost earnings are taxable, whereas up to £30,000 of genuine termination compensation under a settlement agreement is usually tax-free under ITEPA 2003 s.403.',
   },
@@ -304,6 +308,22 @@ export default function TribunalAverageAwardsGuide() {
               <p className="text-[14px] text-muted">
                 Source: Ministry of Justice Employment Tribunal Statistics Table E.1 (Annual Series). Statutory limits reflect SI 2026/310 (effective 6 April 2026).
               </p>
+              <div className="bg-paper-2 border border-rule rounded-lg px-4 py-3 text-[14px] text-ink flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <span>
+                  Averages do not reflect your salary, tax split, or notice pay. Calculate your own statutory baseline in 60 seconds.
+                </span>
+                <div className="flex flex-wrap gap-3 shrink-0 font-medium">
+                  <Link href="/calculator/" className="text-coral hover:text-ink underline">
+                    Check my settlement →
+                  </Link>
+                  <Link href="/unfair-dismissal-calculator/" className="text-ink hover:text-coral underline">
+                    Unfair dismissal calculator →
+                  </Link>
+                  <Link href="/harassment-discrimination-calculator/" className="text-ink hover:text-coral underline">
+                    Vento &amp; harassment calculator →
+                  </Link>
+                </div>
+              </div>
             </div>
 
             {/* Vento Bands 2026/27 */}
@@ -353,8 +373,8 @@ export default function TribunalAverageAwardsGuide() {
                 <div className="border border-rule rounded-lg p-5 bg-paper-2/40">
                   <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-3">Employment Tribunal Hearing</h3>
                   <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
-                    <li>Typically takes 12 to 18+ months to reach a full hearing.</li>
-                    <li>Legal costs (£5,000 to £15,000+) are rarely recoverable.</li>
+                    <li>Typically takes ~10 to 18 months (310 to 540 days across GB hearing centres) to reach a full hearing.</li>
+                    <li>Legal representation costs are rarely recoverable even if you win.</li>
                     <li>Lost earnings awards are reduced pound-for-pound by new job income.</li>
                     <li>Hearings are public and judgments are indexed online.</li>
                   </ul>
@@ -363,7 +383,7 @@ export default function TribunalAverageAwardsGuide() {
                   <h3 className="font-sans text-[14px] font-semibold text-ink uppercase tracking-wider mb-3">Settlement Agreement</h3>
                   <ul className="list-disc pl-4 text-[14px] text-muted space-y-2">
                     <li>Concluded in days or weeks; ACAS Code 4 suggests 10 calendar days as guidance.</li>
-                    <li>Employers standardly contribute £350 to £500+ plus VAT upon completion.</li>
+                    <li>Employers standardly contribute £350 to £500+ plus VAT upon completion (extra or abortive work subject to solicitor terms).</li>
                     <li>First £30,000 of genuine compensation is usually tax-free (ITEPA 2003 s.403).</li>
                     <li>Can include an agreed job reference, garden leave terms, and shorter non-compete clauses.</li>
                   </ul>
@@ -382,12 +402,12 @@ export default function TribunalAverageAwardsGuide() {
                   <tbody className="divide-y divide-rule text-ink">
                     <tr className="hover:bg-paper/50">
                       <td className="p-3.5 sm:p-4 font-medium">Resolution Timeline</td>
-                      <td className="p-3.5 sm:p-4 text-muted">12 to 18+ months of litigation</td>
-                      <td className="p-3.5 sm:p-4 font-semibold">Typically 10 to 21 days</td>
+                      <td className="p-3.5 sm:p-4 text-muted">~10 to 18 months of litigation</td>
+                      <td className="p-3.5 sm:p-4 font-semibold">Subject to agreement (ACAS Code 4 suggests 10 calendar days as guidance)</td>
                     </tr>
                     <tr className="hover:bg-paper/50">
                       <td className="p-3.5 sm:p-4 font-medium">Employee Legal Costs</td>
-                      <td className="p-3.5 sm:p-4 text-crimson">£5,000 to £15,000+ (rarely recoverable)</td>
+                      <td className="p-3.5 sm:p-4 text-crimson">Rarely recoverable if represented</td>
                       <td className="p-3.5 sm:p-4 font-semibold">
                         Capped contribution (£350 to £500+ plus VAT upon completion; extra or abortive work subject to solicitor terms)
                       </td>
@@ -458,7 +478,7 @@ export default function TribunalAverageAwardsGuide() {
                 <div className="border border-rule rounded-lg p-5 bg-white">
                   <h3 className="text-base font-semibold text-ink mb-1">4. Protect legal privilege before replying</h3>
                   <p className="guide-body">
-                    Sending written counter-proposals directly to HR can waive legal privilege. Speak with an independent SRA-regulated solicitor before sending any formal response.
+                    Important Privilege Notice: Do not send unreviewed financial proposals directly to HR; unreviewed correspondence can inadvertently waive legal privilege or compromise your position. Speak with an independent SRA-regulated solicitor before sending any formal response.
                   </p>
                 </div>
                 <div className="border border-rule rounded-lg p-5 bg-white">

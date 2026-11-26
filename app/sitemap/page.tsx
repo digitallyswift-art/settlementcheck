@@ -93,9 +93,45 @@ const sitemapData: SitemapCategory[] = [
         badge: 'New Tool',
       },
       {
-        title: 'Post-Employment Notice Pay (PENP) Calculator',
+        title: 'PILON & Post-Employment Notice Pay (PENP) Calculator',
         href: '/penp-calculator/',
         description: 'Statutory calculation of Post-Employment Notice Pay under ITEPA 2003 s.402D and partitioning of £30,000 tax-free termination compensation.',
+        badge: 'New Tool',
+      },
+      {
+        title: 'NHS MARS & Redundancy Calculator 2026',
+        href: '/nhs-mars-calculator/',
+        description: 'Calculate NHS Mutually Agreed Resignation Scheme (MARS) and Agenda for Change Section 16 redundancy payouts for 2026.',
+        badge: 'New Tool',
+      },
+      {
+        title: 'TUPE Redundancy Calculator 2026',
+        href: '/tupe-redundancy-calculator/',
+        description: 'Calculate TUPE redundancy pay with combined continuous service, ETO dismissal checks, and April 2026 statutory caps.',
+        badge: 'New Tool',
+      },
+      {
+        title: 'Ill-Health Dismissal Calculator 2026',
+        href: '/ill-health-dismissal-calculator/',
+        description: 'Estimate statutory notice pay (ERA 1996 s.87), disability & Vento band baselines, and £30,000 tax-free exits.',
+        badge: 'New Tool',
+      },
+      {
+        title: 'Executive Settlement Calculator 2026',
+        href: '/executive-settlement-calculator/',
+        description: 'Model packages above £30,000 with 40%/45% tax, s.408 pension savings, Class 1A NIC, and City/Canary Wharf exit clauses.',
+        badge: 'New Tool',
+      },
+      {
+        title: 'Harassment & Discrimination Calculator 2026',
+        href: '/harassment-discrimination-calculator/',
+        description: 'Estimate illustrative Equality Act 2010 compensation using April 2026 Vento bands (£1,300 to £62,900+) and £30,000 tax rules.',
+        badge: 'New Tool',
+      },
+      {
+        title: 'Settlement Negotiation Calculator 2026',
+        href: '/negotiate-settlement-calculator/',
+        description: 'Compare your employer offer against April 2026 statutory baselines, MoJ tribunal averages, and ACAS Code 4 guidance.',
         badge: 'New Tool',
       },
       {

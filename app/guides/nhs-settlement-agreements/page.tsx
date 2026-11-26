@@ -261,6 +261,12 @@ export default function NhsSettlementAgreements() {
             {/* Interactive NHS / MARS Calculator */}
             <div id="mars-calculator" className="my-2 scroll-mt-24">
               <NhsMarsCalculator />
+              <p className="text-xs text-muted mt-3">
+                Prefer the standalone tool? Open our dedicated{' '}
+                <Link href="/nhs-mars-calculator/" className="text-coral underline hover:text-ink font-medium">
+                  NHS MARS &amp; Redundancy Calculator 2026 →
+                </Link>
+              </p>
             </div>
 
             {/* Emotional Grounding & Reassurance Card */}
@@ -488,7 +494,7 @@ export default function NhsSettlementAgreements() {
                 </Link>
               </div>
               <p className="text-white/60 text-[12px] mt-4">
-                Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion
+                Free, confidential, no email required · Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion (excess or abortive work subject to solicitor engagement terms)
               </p>
             </div>
 

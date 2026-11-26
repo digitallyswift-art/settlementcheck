@@ -10,21 +10,29 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 import { SETTLEMENT_CHECK_PUBLISHER } from '@/lib/seo/schema-constants'
 
 const STATIC_METADATA: Metadata = {
+  metadataBase: new URL('https://settlementcheck.co.uk'),
   title: {
-    absolute: 'PENP Calculator UK: Post-Employment Notice Pay (2026)',
+    absolute: 'PILON & PENP Notice Pay Calculator 2026 | SettlementCheck',
   },
   description:
-    'Calculate Post-Employment Notice Pay under ITEPA 2003 s.402D. Partition taxable notice pay from £30,000 tax-free termination compensation.',
+    'Calculate PILON, notice pay, and Post-Employment Notice Pay (PENP) under ITEPA 2003 s.402D. Split taxable notice pay from your £30,000 tax-free sum.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/penp-calculator/',
   },
   openGraph: {
-    title: 'PENP Calculator UK: Post-Employment Notice Pay (2026)',
+    title: 'PILON & PENP Notice Pay Calculator 2026 | SettlementCheck',
     description:
-      'Calculate Post-Employment Notice Pay under ITEPA 2003 s.402D. Partition taxable notice pay from £30,000 tax-free termination compensation.',
+      'Calculate PILON, notice pay, and Post-Employment Notice Pay (PENP) under ITEPA 2003 s.402D. Split taxable notice pay from your £30,000 tax-free sum.',
     url: 'https://settlementcheck.co.uk/penp-calculator/',
     type: 'website',
+    locale: 'en_GB',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PILON & PENP Notice Pay Calculator 2026 | SettlementCheck',
+    description:
+      'Calculate PILON, notice pay, and Post-Employment Notice Pay (PENP) under ITEPA 2003 s.402D. Split taxable notice pay from your £30,000 tax-free sum.',
   },
 }
 
@@ -92,7 +100,7 @@ const penpSchema = {
           name: 'Does my employer pay for my solicitor to check the PENP clause?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Yes. Under Section 203(3) of the Employment Rights Act 1996, settlement agreements are only legally binding once certified by an independent SRA-regulated solicitor. Employers standardly contribute between £350 and £750 plus VAT directly to your solicitor to cover this advice.',
+            text: 'Under Section 203(3) of the Employment Rights Act 1996, settlement agreements are only legally binding once certified by an independent SRA-regulated solicitor. Employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement, while excess or abortive work remains subject to your solicitor engagement terms.',
           },
         },
       ],
@@ -161,7 +169,7 @@ export default function PenpCalculatorPage() {
             HMRC Statutory Tax Rules • ITEPA 2003 s.402D
           </div>
           <h1 className="text-3xl sm:text-4xl font-serif text-[#0B1F3A] font-bold mb-3">
-            Post-Employment Notice Pay (PENP) Calculator
+            PILON &amp; Post-Employment Notice Pay (PENP) Calculator
           </h1>
           <p className="text-base sm:text-lg text-[#0B1F3A]/80 max-w-2xl mx-auto leading-relaxed">
             Statutory partitioning of UK settlement payments into 100% taxable notice pay and genuine £30,000 tax-free ex-gratia compensation under HMRC rules.

@@ -16,14 +16,14 @@ const STATIC_METADATA: Metadata = {
     absolute: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
   },
   description:
-    'Calculate statutory redundancy pay with April 2026 UK rates (£751/wk cap) plus enhanced settlement & tax-free net pay. Free instant check, no email.',
+    'Calculate statutory redundancy pay with April 2026 UK rates (£751/wk GB, £783/wk NI, up to £22,530) plus net take-home pay. Free instant check, no email.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/redundancy-calculator/',
   },
   openGraph: {
     title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate statutory redundancy pay with April 2026 UK rates (£751/wk cap) plus enhanced settlement & tax-free net pay. Free instant check, no email.',
+      'Calculate statutory redundancy pay with April 2026 UK rates (£751/wk GB, £783/wk NI, up to £22,530) plus net take-home pay. Free instant check, no email.',
     url: 'https://settlementcheck.co.uk/redundancy-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -33,7 +33,7 @@ const STATIC_METADATA: Metadata = {
     card: 'summary_large_image',
     title: 'Redundancy Pay Calculator UK 2026 | SettlementCheck',
     description:
-      'Calculate statutory redundancy pay with April 2026 UK rates (£751/wk cap) plus enhanced settlement & tax-free net pay. Free instant check, no email.',
+      'Calculate statutory redundancy pay with April 2026 UK rates (£751/wk GB, £783/wk NI, up to £22,530) plus net take-home pay. Free instant check, no email.',
   },
 }
 
@@ -70,11 +70,11 @@ const REDUNDANCY_FAQS: FaqItem[] = [
   },
   {
     q: 'Something feels off about my redundancy. Could it actually be unfair dismissal?',
-    a: 'This is one of the most important questions to ask before you sign anything. Redundancy is a potentially fair reason for dismissal, but the process your employer follows must be fair too. If the selection process was not transparent, if you were not properly consulted, if the role is being advertised again shortly after, or if you suspect the real reason for your selection was something personal, a solicitor will look at whether a tribunal claim for unfair dismissal is available alongside your redundancy pay. Getting advice at this stage costs nothing and could make a significant difference to what you walk away with.',
+    a: 'This is one of the most important questions to ask before you sign anything. Redundancy is a potentially fair reason for dismissal, but the process your employer follows must be fair too. If the selection process was not transparent, if you were not properly consulted, if the role is being advertised again shortly after, or if you suspect the real reason for your selection was something personal, a solicitor will look at whether a tribunal claim for unfair dismissal is available alongside your redundancy pay. Employers standardly contribute £350 to £500+ plus VAT toward independent legal advice upon completion, with excess or abortive work subject to your solicitor engagement terms.',
   },
   {
     q: 'Can I negotiate a higher redundancy payment?',
-    a: 'Statutory redundancy pay is the legal floor, not the final word. Many employers offer enhanced pay, and where you are signing a settlement agreement that includes waiving the right to bring tribunal claims, the total package should reflect that. If there are circumstances around your redundancy that give rise to other claims, that can affect the value of a negotiated settlement. A solicitor can advise you on whether the offer is reasonable before you commit to anything.',
+    a: 'Calculated statutory redundancy pay is the statutory baseline (subject to eligibility, including 2 years of service and not unreasonably refusing suitable alternative work under ERA 1996 s.141), not the final word. Many employers offer enhanced pay, and where you are signing a settlement agreement that includes waiving the right to bring tribunal claims, the total package should reflect that. If there are circumstances around your redundancy that give rise to other claims, that can affect the value of a negotiated settlement. A solicitor can advise you on whether the offer is reasonable before you commit to anything.',
   },
   {
     q: 'Is redundancy pay taxable?',
@@ -82,7 +82,11 @@ const REDUNDANCY_FAQS: FaqItem[] = [
   },
   {
     q: 'Do I need a solicitor to sign a redundancy settlement agreement?',
-    a: 'Yes, if your employer is asking you to sign a settlement agreement. Under ERA 1996 s.203, a settlement agreement is only legally valid if you have received independent legal advice from a qualified, SRA-regulated solicitor who is named in the agreement. Importantly, employers customarily contribute to the cost of that advice, typically between £350 and £750, which often covers the full fee. This ensures you understand the terms before waiving statutory claims.',
+    a: 'Yes, if your employer is asking you to sign a settlement agreement. Under ERA 1996 s.203, a settlement agreement is only legally valid if you have received independent legal advice from a qualified, SRA-regulated solicitor who is named in the agreement. In practice, employers standardly provide a capped contribution (typically £350 to £500+ plus VAT) directly to your solicitor upon completion of the agreement, while work exceeding the cap or abortive work remains subject to the solicitor engagement terms.',
+  },
+  {
+    q: 'How do employers and HR calculate statutory redundancy, and how can I check their figures?',
+    a: 'Employers calculate statutory redundancy pay using your age, complete years of service (capped at 20), and gross weekly pay (capped at £751 in Great Britain or £783 in Northern Ireland from 6 April 2026, up to a £22,530 GB maximum). To verify whether HR has applied the right cap, 12-week variable-pay average, or notice rules, enter your details into the calculator above before speaking with a solicitor.',
   },
   {
     q: 'What counts as a week\'s pay for redundancy purposes?',
@@ -229,7 +233,7 @@ export default function RedundancyCalculatorPage() {
             detail: 'Calculated statutory redundancy pay forms the statutory baseline (subject to eligibility under s.141 ERA 1996). Based on your age, salary, and length of service at April 2026 rates, the calculator shows your baseline before you consult a solicitor.',
           },
           {
-            label: 'Check whether your offer is fair',
+            label: 'Compare your offer against statutory baselines',
             detail: 'Many employers offer exactly the statutory minimum and no more. If you are also signing away the right to bring a tribunal claim, the total package should reflect that.',
           },
           {
@@ -267,8 +271,12 @@ export default function RedundancyCalculatorPage() {
             label: 'Redundancy Pay Cap 2026 Explained',
           },
           {
-            href: '/guides/nhs-settlement-agreements/',
+            href: '/nhs-mars-calculator/',
             label: 'NHS Redundancy & MARS Calculator',
+          },
+          {
+            href: '/tupe-redundancy-calculator/',
+            label: 'TUPE Redundancy Calculator',
           },
           {
             href: '/protective-award-calculator/',

@@ -12,17 +12,17 @@ import { resolveDynamicSeoMetadata } from '@/lib/seo/dynamic-metadata'
 const STATIC_METADATA: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
   title: {
-    absolute: 'Employment Settlement Tax Calculator UK | SettlementCheck',
+    absolute: 'Settlement Agreement Tax Calculator 2026 | SettlementCheck',
   },
   description:
-    'Calculate tax on employment settlements in 2026. Calculate your £30,000 tax exemption, taxable notice pay (PILON), and net take-home figure. Free check.',
+    'Calculate tax on UK settlement agreements in 2026. Split your £30,000 tax-free ex-gratia exemption from taxable PILON & PENP notice pay. Free instant check.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/settlement-agreement-tax-calculator/',
   },
   openGraph: {
-    title: 'Employment Settlement Tax Calculator UK | SettlementCheck',
+    title: 'Settlement Agreement Tax Calculator 2026 | SettlementCheck',
     description:
-      'Calculate tax on employment settlements in 2026. Calculate your £30,000 tax exemption, taxable notice pay (PILON), and net take-home figure. Free check.',
+      'Calculate tax on UK settlement agreements in 2026. Split your £30,000 tax-free ex-gratia exemption from taxable PILON & PENP notice pay. Free instant check.',
     url: 'https://settlementcheck.co.uk/settlement-agreement-tax-calculator/',
     type: 'website',
     locale: 'en_GB',
@@ -30,9 +30,9 @@ const STATIC_METADATA: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Employee Settlement Tax Calculator UK 2026 | SettlementCheck',
+    title: 'Settlement Agreement Tax Calculator 2026 | SettlementCheck',
     description:
-      'Calculate tax on your employee settlement in 2026. Calculate your £30,000 tax exemption, taxable notice pay (PILON), and net take-home figure. Free check.',
+      'Calculate tax on UK settlement agreements in 2026. Split your £30,000 tax-free ex-gratia exemption from taxable PILON & PENP notice pay. Free instant check.',
   },
 }
 
@@ -73,11 +73,19 @@ const TAX_FAQS: FaqItem[] = [
   },
   {
     q: 'Can I put part of my settlement into a pension to avoid 40% tax?',
-    a: 'Yes. Pension sacrifice (also known as a pension contribution or employer pension top-up) is one of the most effective ways to protect your settlement from higher-rate tax. You can request that your employer pays a portion of the taxable settlement directly into your registered pension scheme before tax is deducted.',
+    a: 'Yes. Under Section 408 of ITEPA 2003, an employer contribution made directly into your registered pension scheme as part of termination arrangements can avoid income tax on amounts above £30,000, subject to your £60,000 annual allowance (tapered down to £10,000 for adjusted income above £260,000) and carry-forward rules.',
   },
   {
     q: 'Why does my settlement agreement include a tax indemnity clause?',
     a: 'Almost every settlement agreement contains a tax indemnity. This clause states that if HMRC determines that more tax is owed on your settlement payment than was deducted at source, you are personally liable to repay that tax to your employer. A specialist employment solicitor will review this clause to ensure it is drafted fairly and does not expose you to unexpected penalties.',
+  },
+  {
+    q: 'Are settlement agreements taxable, and what counts as an ex-gratia payment?',
+    a: 'Under Section 403 of ITEPA 2003, up to £30,000 of genuine ex-gratia compensation for loss of employment is free of income tax and employee National Insurance. Contractual payments such as notice pay (PILON/PENP), accrued holiday, and earned bonuses remain taxable as earnings.',
+  },
+  {
+    q: 'When do you need to declare a settlement agreement to HMRC?',
+    a: 'If your employer deducts tax at source via PAYE before issuing your P45, no separate HMRC return is usually needed unless you already complete Self Assessment or owe higher-rate tax on an amount over £30,000. Check your P45 and settlement breakdown with an independent solicitor or accountant if your total payout exceeds £30,000.',
   },
   {
     q: 'Who pays the solicitor legal fees to check my settlement agreement?',
@@ -223,7 +231,7 @@ export default function SettlementTaxCalculatorPage() {
           },
           {
             label: 'Employer legal fee contribution',
-            detail: 'Under Section 203(3) ERA 1996, independent legal advice is a statutory condition for a valid settlement agreement. In practice, employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your solicitor upon completion.',
+            detail: 'Under Section 203(3) ERA 1996, independent legal advice is a statutory condition for a valid settlement agreement. In practice, employers standardly provide a capped contribution (£350 to £500+ plus VAT) directly to your solicitor upon completion, while excess or abortive work remains subject to your solicitor engagement terms.',
           },
         ]}
         steps={TAX_STEPS}

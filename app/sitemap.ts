@@ -46,6 +46,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/protective-award-calculator/`,                    lastModified: getLastMod(`${base}/protective-award-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/pip-settlement-calculator/`,                      lastModified: getLastMod(`${base}/pip-settlement-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/penp-calculator/`,                                lastModified: getLastMod(`${base}/penp-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/nhs-mars-calculator/`,                            lastModified: getLastMod(`${base}/nhs-mars-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/tupe-redundancy-calculator/`,                    lastModified: getLastMod(`${base}/tupe-redundancy-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/ill-health-dismissal-calculator/`,               lastModified: getLastMod(`${base}/ill-health-dismissal-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/executive-settlement-calculator/`,                lastModified: getLastMod(`${base}/executive-settlement-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/harassment-discrimination-calculator/`,           lastModified: getLastMod(`${base}/harassment-discrimination-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/negotiate-settlement-calculator/`,                lastModified: getLastMod(`${base}/negotiate-settlement-calculator/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/statutory-rates-history/`,                        lastModified: getLastMod(`${base}/statutory-rates-history/`), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/tribunal-backlog-tracker/`,                       lastModified: getLastMod(`${base}/tribunal-backlog-tracker/`), changeFrequency: 'monthly', priority: 0.9 },
 

@@ -1,0 +1,617 @@
+{
+  "runAt": "2026-11-26T19:29:54.248Z",
+  "dataSource": "GSC_LIVE_API (Direct Service Account Connection)",
+  "totalTrackedQueries": 1278,
+  "totalImpressions": 18049,
+  "totalClicks": 226,
+  "topMovers": [
+    {
+      "query": "redundancy pay calculator",
+      "prevPos": 99,
+      "curPos": 10.935162094763092,
+      "change": 88.1,
+      "clicks": 3,
+      "impr": 802,
+      "ctr": 0.37
+    },
+    {
+      "query": "redundancy calculator",
+      "prevPos": 99,
+      "curPos": 10.443378119001919,
+      "change": 88.6,
+      "clicks": 0,
+      "impr": 521,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement calculator",
+      "prevPos": 78.49,
+      "curPos": 5.166311300639659,
+      "change": 73.3,
+      "clicks": 11,
+      "impr": 469,
+      "ctr": 2.35
+    },
+    {
+      "query": "settlement agreement calculator gov",
+      "prevPos": 99,
+      "curPos": 5.932142857142857,
+      "change": 93.1,
+      "clicks": 21,
+      "impr": 280,
+      "ctr": 7.5
+    },
+    {
+      "query": "calculate settlement agreement",
+      "prevPos": 61.75,
+      "curPos": 6.007380073800738,
+      "change": 55.7,
+      "clicks": 17,
+      "impr": 271,
+      "ctr": 6.27
+    },
+    {
+      "query": "acas settlement agreement calculator",
+      "prevPos": 99,
+      "curPos": 3.9431818181818183,
+      "change": 95.1,
+      "clicks": 20,
+      "impr": 264,
+      "ctr": 7.58
+    },
+    {
+      "query": "settlement agreement calculator uk",
+      "prevPos": 63.89,
+      "curPos": 2.0043103448275863,
+      "change": 61.9,
+      "clicks": 14,
+      "impr": 232,
+      "ctr": 6.03
+    },
+    {
+      "query": "settlement calculator",
+      "prevPos": 68.89,
+      "curPos": 10.416289592760181,
+      "change": 58.5,
+      "clicks": 19,
+      "impr": 221,
+      "ctr": 8.6
+    },
+    {
+      "query": "settlement calculator uk",
+      "prevPos": 67.14,
+      "curPos": 5.782805429864253,
+      "change": 61.4,
+      "clicks": 14,
+      "impr": 221,
+      "ctr": 6.33
+    },
+    {
+      "query": "settlement agreement calculator",
+      "prevPos": 78.49,
+      "curPos": 30.504761904761907,
+      "change": 48,
+      "clicks": 0,
+      "impr": 210,
+      "ctr": 0
+    },
+    {
+      "query": "redundancy payment calculator",
+      "prevPos": 99,
+      "curPos": 13.11111111111111,
+      "change": 85.9,
+      "clicks": 1,
+      "impr": 189,
+      "ctr": 0.53
+    },
+    {
+      "query": "calculate my redundancy pay",
+      "prevPos": 99,
+      "curPos": 10.10828025477707,
+      "change": 88.9,
+      "clicks": 1,
+      "impr": 157,
+      "ctr": 0.64
+    },
+    {
+      "query": "settlement agreement calculator",
+      "prevPos": 78.49,
+      "curPos": 52.47741935483871,
+      "change": 26,
+      "clicks": 0,
+      "impr": 155,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement calculator",
+      "prevPos": 78.49,
+      "curPos": 82.64335664335664,
+      "change": -4.2,
+      "clicks": 0,
+      "impr": 143,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement calculator",
+      "prevPos": 78.49,
+      "curPos": 81.68571428571428,
+      "change": -3.2,
+      "clicks": 0,
+      "impr": 140,
+      "ctr": 0
+    },
+    {
+      "query": "fair work agency",
+      "prevPos": 99,
+      "curPos": 30.81294964028777,
+      "change": 68.2,
+      "clicks": 1,
+      "impr": 139,
+      "ctr": 0.72
+    },
+    {
+      "query": "nhs mars calculator",
+      "prevPos": 99,
+      "curPos": 6.409090909090909,
+      "change": 92.6,
+      "clicks": 2,
+      "impr": 132,
+      "ctr": 1.52
+    },
+    {
+      "query": "employment settlement calculator",
+      "prevPos": 99,
+      "curPos": 3.9770992366412212,
+      "change": 95,
+      "clicks": 1,
+      "impr": 131,
+      "ctr": 0.76
+    },
+    {
+      "query": "pip settlement",
+      "prevPos": 99,
+      "curPos": 19.875,
+      "change": 79.1,
+      "clicks": 0,
+      "impr": 104,
+      "ctr": 0
+    },
+    {
+      "query": "settlement agreement calculator",
+      "prevPos": 78.49,
+      "curPos": 30.93069306930693,
+      "change": 47.6,
+      "clicks": 0,
+      "impr": 101,
+      "ctr": 0
+    },
+    {
+      "query": "settlement calculator uk",
+      "prevPos": 67.14,
+      "curPos": 19.12,
+      "change": 48,
+      "clicks": 6,
+      "impr": 100,
+      "ctr": 6
+    },
+    {
+      "query": "settlement calculator",
+      "prevPos": 68.89,
+      "curPos": 13.373737373737374,
+      "change": 55.5,
+      "clicks": 14,
+      "impr": 99,
+      "ctr": 14.14
+    },
+    {
+      "query": "settlement calculator",
+      "prevPos": 68.89,
+      "curPos": 34.333333333333336,
+      "change": 34.6,
+      "clicks": 3,
+      "impr": 99,
+      "ctr": 3.03
+    },
+    {
+      "query": "negotiate settlement agreement",
+      "prevPos": 99,
+      "curPos": 72.44897959183673,
+      "change": 26.6,
+      "clicks": 0,
+      "impr": 98,
+      "ctr": 0
+    },
+    {
+      "query": "redundancy calculator uk",
+      "prevPos": 99,
+      "curPos": 10.404255319148936,
+      "change": 88.6,
+      "clicks": 0,
+      "impr": 94,
+      "ctr": 0
+    }
+  ],
+  "emergingKeywords": [
+    {
+      "query": "average unfair dismissal award",
+      "impr": 55,
+      "pos": 14.872727272727273
+    },
+    {
+      "query": "calculate unfair dismissal compensation",
+      "impr": 48,
+      "pos": 15.666666666666666
+    },
+    {
+      "query": "harassment compensation calculator uk",
+      "impr": 57,
+      "pos": 17.45614035087719
+    },
+    {
+      "query": "average payout for unfair dismissal uk",
+      "impr": 36,
+      "pos": 19
+    },
+    {
+      "query": "fair work agency",
+      "impr": 139,
+      "pos": 30.81294964028777
+    },
+    {
+      "query": "pip settlement agreement",
+      "impr": 56,
+      "pos": 13.714285714285714
+    },
+    {
+      "query": "redundancy payment calculator",
+      "impr": 189,
+      "pos": 13.11111111111111
+    },
+    {
+      "query": "statutory redundancy pay calculator",
+      "impr": 34,
+      "pos": 13.029411764705882
+    },
+    {
+      "query": "are settlement agreements taxable",
+      "impr": 67,
+      "pos": 59.35820895522388
+    },
+    {
+      "query": "average discrimination settlement uk",
+      "impr": 31,
+      "pos": 74.09677419354838
+    },
+    {
+      "query": "average discrimination settlement uk",
+      "impr": 40,
+      "pos": 20.45
+    },
+    {
+      "query": "average payout for unfair dismissal",
+      "impr": 38,
+      "pos": 18.789473684210527
+    },
+    {
+      "query": "average settlement compromise agreement",
+      "impr": 38,
+      "pos": 40.18421052631579
+    },
+    {
+      "query": "average unfair dismissal payout",
+      "impr": 43,
+      "pos": 19.58139534883721
+    },
+    {
+      "query": "basic award calculator unfair dismissal",
+      "impr": 28,
+      "pos": 12.678571428571429
+    }
+  ],
+  "aiOverviewCandidates": [
+    {
+      "query": "acas settlement agreement calculator",
+      "curPos": 3.9431818181818183,
+      "cited": true
+    },
+    {
+      "query": "settlement agreement calculator acas",
+      "curPos": 3.3,
+      "cited": true
+    },
+    {
+      "query": "how to calculate settlement amount employee",
+      "curPos": 5.666666666666667,
+      "cited": true
+    },
+    {
+      "query": "acas 10 days settlement agreement",
+      "curPos": 97.5,
+      "cited": false
+    },
+    {
+      "query": "acas 10 days settlement agreement",
+      "curPos": 94.5,
+      "cited": false
+    },
+    {
+      "query": "acas 10 days settlement agreement",
+      "curPos": 37,
+      "cited": false
+    },
+    {
+      "query": "acas code of practice settlement agreements",
+      "curPos": 93.5,
+      "cited": false
+    },
+    {
+      "query": "acas code of practice settlement agreements",
+      "curPos": 45.6,
+      "cited": false
+    },
+    {
+      "query": "acas code settlement agreements",
+      "curPos": 92.75,
+      "cited": false
+    },
+    {
+      "query": "acas code settlement agreements",
+      "curPos": 44.25,
+      "cited": false
+    },
+    {
+      "query": "acas cot3 form",
+      "curPos": 84,
+      "cited": false
+    },
+    {
+      "query": "acas probationary period",
+      "curPos": 81,
+      "cited": false
+    },
+    {
+      "query": "acas protective award",
+      "curPos": 8,
+      "cited": true
+    },
+    {
+      "query": "acas redundancy calculator",
+      "curPos": 10.466666666666667,
+      "cited": false
+    },
+    {
+      "query": "acas settlement",
+      "curPos": 90.5,
+      "cited": false
+    }
+  ],
+  "autonomousActions": [
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement calculator",
+      "rank": 13.373737373737374,
+      "impressions": 99,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "settlement agreement calculator",
+      "rank": 5.166311300639659,
+      "impressions": 469,
+      "ctr": 2.35,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "average unfair dismissal award",
+      "rank": 14.872727272727273,
+      "impressions": 55,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement calculator uk",
+      "rank": 19.12,
+      "impressions": 100,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "harassment compensation calculator uk",
+      "rank": 17.45614035087719,
+      "impressions": 57,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "redundancy pay calculator",
+      "rank": 10.935162094763092,
+      "impressions": 802,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement agreement calculator gov",
+      "rank": 11.890625,
+      "impressions": 64,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "nhs mars calculator",
+      "rank": 6.409090909090909,
+      "impressions": 132,
+      "ctr": 1.52,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "protective award claim calculator",
+      "rank": 5.655172413793103,
+      "impressions": 58,
+      "ctr": 3.45,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "protective award claim calculator",
+      "rank": 3.7413793103448274,
+      "impressions": 58,
+      "ctr": 3.45,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "settlement agreement calculator acas",
+      "rank": 3.3,
+      "impressions": 80,
+      "ctr": 2.5,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "employment settlement calculator",
+      "rank": 3.9770992366412212,
+      "impressions": 131,
+      "ctr": 0.76,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "pip settlement agreement",
+      "rank": 13.714285714285714,
+      "impressions": 56,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "redundancy payment calculator",
+      "rank": 13.11111111111111,
+      "impressions": 189,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "compromise agreement calculator",
+      "rank": 4.630434782608695,
+      "impressions": 92,
+      "ctr": 0,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "employment settlement agreement calculator",
+      "rank": 4.404761904761905,
+      "impressions": 42,
+      "ctr": 0,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "employment settlement agreement calculator uk",
+      "rank": 3.897727272727273,
+      "impressions": 88,
+      "ctr": 0,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "nhs settlement agreements",
+      "rank": 18.783333333333335,
+      "impressions": 60,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "pip settlement",
+      "rank": 19.875,
+      "impressions": 104,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "redundancy calculator for employers",
+      "rank": 13.95,
+      "impressions": 60,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "redundancy pay calculator uk",
+      "rank": 12.661016949152541,
+      "impressions": 59,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement agreement calculator uk",
+      "rank": 17.733333333333334,
+      "impressions": 60,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "settlement agreement tax",
+      "rank": 18.22222222222222,
+      "impressions": 90,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "statutory redundancy calculator",
+      "rank": 12.75,
+      "impressions": 60,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "tupe redundancy calculator",
+      "rank": 18.352941176470587,
+      "impressions": 68,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "unfair dismissal claim calculator uk",
+      "rank": 10.634615384615385,
+      "impressions": 52,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "unfair dismissal compensation calculator",
+      "rank": 14.333333333333334,
+      "impressions": 60,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "META_RECALIBRATION",
+      "query": "what is the average award made for sexual harassment at an employment tribunal?",
+      "rank": 2.761904761904762,
+      "impressions": 42,
+      "ctr": 0,
+      "action": "Recalibrate <title> and meta description with statutory guarantee to raise CTR."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "what is the average payout for unfair dismissal uk",
+      "rank": 17.517241379310345,
+      "impressions": 58,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "what would my redundancy pay be",
+      "rank": 10.88,
+      "impressions": 75,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    },
+    {
+      "type": "INTERNAL_LINK_BOOST",
+      "query": "work out my redundancy pay",
+      "rank": 10.875,
+      "impressions": 64,
+      "action": "Add 2 contextual internal links from top guide pillars to push into Google Top 10."
+    }
+  ]
+}

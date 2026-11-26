@@ -166,6 +166,13 @@ async function sendDigest() {
     packages = JSON.parse(fs.readFileSync(stagedJsonPath, 'utf-8'));
   }
 
+  // Load Auto-PR action summary if generated
+  const prSummaryPath = path.resolve('data/serp-actions/staging/latest-pr-summary.md');
+  const prSummaryText = fs.existsSync(prSummaryPath)
+    ? fs.readFileSync(prSummaryPath, 'utf-8')
+    : '';
+  const autoPrUrl = process.env.AUTO_PR_URL || '';
+
   // Fetch live Bing & Microsoft Copilot stats
   const bingStats = await getBingStats();
 
@@ -273,6 +280,23 @@ async function sendDigest() {
           Autonomous 24/7 Agentic Fleet · Multi-Agent Performance & Review Digest
         </p>
       </div>
+
+      ${(prSummaryText || autoPrUrl) ? `
+      <!-- Auto-PR & Actions Taken Summary -->
+      <div style="background:#0B1F3A;color:#fff;padding:16px;border-radius:6px;margin-bottom:22px;">
+        <div style="font-size:15px;font-weight:bold;margin-bottom:8px;">
+          🚀 Auto-PR &amp; Actions Taken Summary
+        </div>
+        ${autoPrUrl ? `
+        <div style="margin-bottom:12px;">
+          <a href="${autoPrUrl}" style="background:#D9603B;color:#fff;padding:8px 16px;border-radius:4px;text-decoration:none;font-weight:bold;font-size:12px;display:inline-block;">
+            Review &amp; Merge Pull Request →
+          </a>
+        </div>
+        ` : ''}
+        <pre style="background:#132B4C;color:#F7F4EE;padding:12px;border-radius:4px;font-size:11px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin:0;">${prSummaryText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+      </div>
+      ` : ''}
 
       <!-- Date Range Context Banner -->
       <div style="background:#F7F4EE;border:1px solid #E6E1D8;border-radius:6px;padding:12px 14px;margin-bottom:20px;">

@@ -218,7 +218,7 @@ export default function NhsMarsCalculator() {
               Match with an NHS specialist solicitor →
             </Link>
             <p className="text-[11px] text-center text-muted leading-tight">
-              Your NHS trust pays £350 to £750 + VAT directly to your solicitor. Free independent review to you.
+              NHS trusts standardly contribute £350 to £500+ plus VAT toward independent advice upon completion; excess or abortive work depends on solicitor terms.
             </p>
           </div>
         </div>
