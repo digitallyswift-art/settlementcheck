@@ -26,7 +26,6 @@ export * from './workers/seo-opportunity-worker';
 export * from './workers/seo-copy-worker';
 export * from './workers/legal-compliance-worker';
 export * from './workers/seo-actuator-worker';
-export * from './workers/statutory-drift-worker';
 
 // Orchestrators
 export * from './orchestrator/engine';
