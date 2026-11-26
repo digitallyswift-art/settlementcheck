@@ -18,12 +18,15 @@ export * from './workers/benchmark-worker';
 export * from './workers/crm-dispatch-worker';
 export * from './workers/sla-watchdog-worker';
 export * from './workers/unclaimed-matter-alert-worker';
+export * from './workers/sra-practising-watchdog-worker';
+export * from './workers/territorial-supply-balancer-worker';
 
 // Autonomous SEO & Actuation Workers (Phase 4)
 export * from './workers/seo-opportunity-worker';
 export * from './workers/seo-copy-worker';
 export * from './workers/legal-compliance-worker';
 export * from './workers/seo-actuator-worker';
+export * from './workers/statutory-drift-worker';
 
 // Orchestrators
 export * from './orchestrator/engine';

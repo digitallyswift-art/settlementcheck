@@ -15,6 +15,18 @@
     {
       "path": "/api/cron/sla-watchdog/",
       "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/sra-watchdog/",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/statutory-drift/",
+      "schedule": "0 6 * * 1"
+    },
+    {
+      "path": "/api/cron/supply-balancer/",
+      "schedule": "0 7 * * *"
     }
   ]
 }

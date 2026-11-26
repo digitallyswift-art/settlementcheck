@@ -259,6 +259,76 @@ export interface UnclaimedMatterAlertReport {
   summary: string;
 }
 
+export type SraComplianceStatus = 'authorised' | 'lapsed' | 'intervened' | 'unknown';
+export type CompaniesHouseStatus = 'active' | 'dissolved' | 'liquidation' | 'insolvency' | 'unknown';
+
+export interface PanelComplianceCheckResult {
+  firmId: string;
+  firmName: string;
+  sraNumber: string;
+  companiesHouseNumber?: string;
+  sraStatus: SraComplianceStatus;
+  companiesHouseStatus: CompaniesHouseStatus;
+  actionTaken: 'NONE' | 'SUSPENDED' | 'FLAGGED_FOR_REVIEW';
+  reason?: string;
+  checkedAt: string;
+}
+
+export interface SraPractisingWatchdogReport {
+  runId: string;
+  timestamp: string;
+  firmsChecked: number;
+  compliantCount: number;
+  suspendedCount: number;
+  flaggedCount: number;
+  results: PanelComplianceCheckResult[];
+  alertSent: boolean;
+  summary: string;
+}
+
+export interface RegionSupplyDemandBottleneck {
+  region: string;
+  practiceArea: string;
+  recentLeadCount: number;
+  expiredClaimsCount: number;
+  activePanelFirms: number;
+  totalWeeklyCapacity: number;
+  demandToCapacityRatio: number;
+  severity: 'CRITICAL' | 'HIGH' | 'MODERATE';
+  brief: string;
+}
+
+export interface RoutingWeightAdjustmentRecommendation {
+  firmId: string;
+  firmName: string;
+  region: string;
+  currentWeight: number;
+  recommendedWeight: number;
+  reason: string;
+  applied: boolean;
+}
+
+export interface SolicitorOutreachTrigger {
+  region: string;
+  practiceArea: string;
+  targetChannel: 'ops_digest' | 'pending_applicants';
+  recipientCount: number;
+  subject: string;
+  dispatched: boolean;
+}
+
+export interface TerritorialSupplyBalancerReport {
+  runId: string;
+  timestamp: string;
+  leadsAnalyzed: number;
+  expiredClaimsAnalyzed: number;
+  activePanelFirms: number;
+  bottlenecks: RegionSupplyDemandBottleneck[];
+  weightAdjustments: RoutingWeightAdjustmentRecommendation[];
+  outreachTriggers: SolicitorOutreachTrigger[];
+  summary: string;
+}
+
 // ── Track 2: Dual-Agent SEO & Conversion Workflow Types ───────────────────────
 
 export type SeoSearchIntent =

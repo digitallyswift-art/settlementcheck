@@ -70,6 +70,7 @@ interface FormData {
   office_region:         string
   coverage_radius_miles: number | null | undefined
   sra_number:            string
+  companies_house_number: string
   fee_shield_agreed:     boolean
 }
 
@@ -135,6 +136,7 @@ export default function ForSolicitorsClient() {
     office_region:         '',
     coverage_radius_miles: undefined,
     sra_number:            '',
+    companies_house_number: '',
     fee_shield_agreed:     false,
   })
   const [officePostcodeValid, setOfficePostcodeValid] = useState(false)
@@ -304,6 +306,12 @@ export default function ForSolicitorsClient() {
       setFieldError('Please enter a valid 5 to 7 digit SRA firm number.')
       return
     }
+    const cleanChNumber = form.companies_house_number.trim().toUpperCase().replace(/\s+/g, '')
+    if (cleanChNumber && !/^(?:\d{8}|[A-Z]{2}\d{6})$/.test(cleanChNumber)) {
+      submittingRef.current = false
+      setFieldError('Please enter a valid 8-character Companies House number (e.g. 01234567 or OC123456), or leave blank if not incorporated.')
+      return
+    }
     if (!form.fee_shield_agreed) {
       submittingRef.current = false
       setFieldError('Please confirm the SC-B-024 Fee Shield and SRA Rule 5.1 partner terms.')
@@ -326,6 +334,7 @@ export default function ForSolicitorsClient() {
           office_region:         form.office_region,
           coverage_radius_miles: form.coverage_radius_miles ?? null,
           sra_number:            form.sra_number.trim(),
+          companies_house_number: cleanChNumber || null,
           sra_confirmed:         true,
           fee_shield_agreed:     form.fee_shield_agreed,
         }),
@@ -2470,6 +2479,36 @@ function Step2ComplianceSlide({ form, submitting, error, onUpdateField, onSubmit
         </div>
         <p style={{ margin: '6px 0 0', fontSize: 12, color: C.muted, fontFamily: SANS }}>
           Checked manually against the SRA Digital Register within 1 business day.
+        </p>
+      </div>
+
+      {/* 3b. Companies House Number (Optional) */}
+      <div style={{ marginBottom: 20 }}>
+        <label htmlFor="sc-companies-house-number" style={labelStyle}>
+          Companies House Number <span style={{ fontWeight: 400, color: C.muted }}>(Optional, for Ltd / LLP firms)</span>
+        </label>
+        <input
+          id="sc-companies-house-number"
+          type="text"
+          maxLength={8}
+          value={form.companies_house_number}
+          onChange={(e) =>
+            onUpdateField(
+              'companies_house_number',
+              e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8)
+            )
+          }
+          placeholder="e.g. 01234567 or OC123456"
+          style={{
+            ...inputStyle,
+            fontFamily: MONO,
+            borderColor: /^(?:\d{8}|[A-Z]{2}\d{6})$/.test(form.companies_house_number.trim())
+              ? C.navy
+              : C.borderStrong,
+          }}
+        />
+        <p style={{ margin: '6px 0 0', fontSize: 12, color: C.muted, fontFamily: SANS }}>
+          Used for automated corporate status verification alongside your SRA authorisation.
         </p>
       </div>
 

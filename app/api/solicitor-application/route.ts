@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
       office_region,
       coverage_radius_miles,
       sra_number,
+      companies_house_number,
       sra_confirmed,
       fee_shield_agreed,
     } = body
@@ -54,6 +55,10 @@ export async function POST(req: NextRequest) {
     const cleanContactName = sanitizeString(contact_name, 200)
     const normalizedEmail = typeof email === 'string' ? email.trim().toLowerCase() : ''
     const cleanSraNumber = typeof sra_number === 'string' ? sra_number.trim() : ''
+    const cleanCompaniesHouseNumber =
+      typeof companies_house_number === 'string'
+        ? companies_house_number.trim().toUpperCase().replace(/\s+/g, '')
+        : ''
     const cleanPhone = typeof phone === 'string' ? sanitizeString(phone, 40) : ''
 
     if (!cleanFirmName || !cleanContactName || !normalizedEmail) {
@@ -67,6 +72,16 @@ export async function POST(req: NextRequest) {
     if (!SRA_NUMBER_REGEX.test(cleanSraNumber)) {
       return NextResponse.json(
         { error: 'Please enter a valid 5 to 7 digit SRA firm number.' },
+        { status: 400 }
+      )
+    }
+
+    if (
+      cleanCompaniesHouseNumber &&
+      !/^(?:\d{8}|[A-Z]{2}\d{6})$/.test(cleanCompaniesHouseNumber)
+    ) {
+      return NextResponse.json(
+        { error: 'Please enter a valid 8-character Companies House number (e.g. 01234567 or OC123456).' },
         { status: 400 }
       )
     }
@@ -126,6 +141,7 @@ export async function POST(req: NextRequest) {
       office_region:                 typeof office_region === 'string' ? sanitizeString(office_region, 120) || null : null,
       coverage_radius_miles:         typeof coverage_radius_miles === 'number' && Number.isFinite(coverage_radius_miles) ? coverage_radius_miles : null,
       sra_number:                    cleanSraNumber,
+      companies_house_number:        cleanCompaniesHouseNumber || null,
       sra_regulated:                 true,
       fee_shield_agreed:             true,
       email_verified:                false,
