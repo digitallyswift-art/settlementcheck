@@ -9,9 +9,9 @@ import { safeJsonLdStringify } from '@/lib/seo/safe-json-ld'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://settlementcheck.co.uk'),
-  title: 'What Is the Fair Work Agency? Guide | SettlementCheck',
+  title: 'Fair Work Agency UK (2026) | SettlementCheck',
   description:
-    'The Fair Work Agency is a new UK enforcement body under the Employment Rights Bill. Learn its remit, enforcement powers, and impact on settlement talks.',
+    'Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.',
   alternates: {
     canonical: 'https://settlementcheck.co.uk/guides/fair-work-agency/',
   },

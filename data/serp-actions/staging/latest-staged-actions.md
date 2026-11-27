@@ -1,5 +1,5 @@
 # 🛡️ Autonomous SEO Actuator — Multi-Route Staged Review Digest
-**Generated At**: 2026-11-26T23:08:55.463Z
+**Generated At**: 2026-11-27T12:59:05.529Z
 **Compliance**: 100% BRAND.md, April 2026 Statutory Invariants & Zero-Fabrication Standard
 
 ### 🎯 "settlement agreement calculator" [CRITICAL]
@@ -50,7 +50,7 @@
 - **Anti-AI Score**: 96% (Burstiness: 84)
 
 ---
-### 🎯 "settlement calculator uk" [CRITICAL]
+### 🎯 "settlement calculator uk" [HIGH]
 - **Target Canonical**: [https://settlementcheck.co.uk/settlement-agreement-tax-calculator/](https://settlementcheck.co.uk/settlement-agreement-tax-calculator/)
 - **SERP Title** (58 chars): `Settlement Agreement Tax Calculator 2026 | SettlementCheck`
 - **SERP Meta** (148 chars): `Calculate tax on your UK settlement agreement. See your £30,000 statutory tax exemption (ITEPA 2003). Free check. SRA solicitor advice contribution.`
@@ -82,14 +82,14 @@
 - **Anti-AI Score**: 96% (Burstiness: 84)
 
 ---
-### 🎯 "pip settlement" [CRITICAL]
-- **Target Canonical**: [https://settlementcheck.co.uk/guides/settlement-agreement-instead-of-pip/](https://settlementcheck.co.uk/guides/settlement-agreement-instead-of-pip/)
-- **SERP Title** (60 chars): `Settlement Agreement Instead of PIP (2026) | SettlementCheck`
-- **SERP Meta** (151 chars): `Offered a settlement agreement instead of a PIP? Check your rights and compensation payout under UK law. Free check. SRA solicitor advice contribution.`
-- **AI Overview Direct Answer**: Under Section 162 of the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Notice pay (PILON) remains taxable under s.402D.
+### 🎯 "fair work agency" [CRITICAL]
+- **Target Canonical**: [https://settlementcheck.co.uk/guides/fair-work-agency/](https://settlementcheck.co.uk/guides/fair-work-agency/)
+- **SERP Title** (44 chars): `Fair Work Agency UK (2026) | SettlementCheck`
+- **SERP Meta** (150 chars): `Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.`
+- **AI Overview Direct Answer**: Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.
 - **In-Prose Body Paragraph Upgrade** (`app/guides/how-to-negotiate-a-settlement-agreement/page.tsx`):
   - *Existing*: "Before accepting an initial exit offer, employees should research typical settlement figures for their industry."
-  - *Upgraded*: "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [pip settlement](/guides/settlement-agreement-instead-of-pip/)."
+  - *Upgraded*: "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [fair work agency](/guides/fair-work-agency/)."
 - **Statutory Mathematical Illustration** (Pure formula, zero fiction):
   - *Title*: 3-Tier Statutory Settlement Structure (ERA 1996 & ITEPA 2003)
   - *Formula Basis*: Tier 1 Statutory Redundancy (£6,759) + Tier 2 Contractual Notice (£12,000) + Tier 3 Ex-Gratia (£23,241). Up to £30,000 is tax-free.
