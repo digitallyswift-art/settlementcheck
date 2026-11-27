@@ -1,6 +1,6 @@
 [
   {
-    "id": "pkg_actuator_1795734535462_1",
+    "id": "pkg_actuator_1795784345529_1",
     "query": "settlement agreement calculator",
     "priority": "CRITICAL",
     "actionType": "CONTENT_DEPTH_UPGRADE",
@@ -13,15 +13,15 @@
       "critiquePoints": [
         "Homepage route protected under Anti-Decoupling Law. Full title overwrite converted to ADDITIVE_CONTENT_AND_LINKS."
       ],
-      "evaluatedAt": "2026-11-26T23:08:55.462Z"
+      "evaluatedAt": "2026-11-27T12:59:05.529Z"
     },
     "seoTechnicalBrief": {
       "query": "settlement agreement calculator",
       "currentMetrics": {
-        "impressions": 469,
+        "impressions": 480,
         "clicks": 11,
-        "position": 5.2,
-        "ctr": 2.35
+        "position": 5.3,
+        "ctr": 2.29
       },
       "searchIntent": "TRANSACTIONAL_CALCULATOR",
       "targetCanonicalUrl": "https://settlementcheck.co.uk/",
@@ -177,10 +177,10 @@
     },
     "stagedDiffSummary": "Pre-audited multi-layer optimization for settlement agreement calculator on /",
     "status": "VALIDATED",
-    "timestamp": "2026-11-26T23:08:55.462Z"
+    "timestamp": "2026-11-27T12:59:05.529Z"
   },
   {
-    "id": "pkg_actuator_1795734535463_2",
+    "id": "pkg_actuator_1795784345529_2",
     "query": "nhs mars calculator",
     "priority": "CRITICAL",
     "actionType": "META_RECALIBRATION",
@@ -193,15 +193,15 @@
       "critiquePoints": [
         "Substituted high-authority statutory citation answer for Google AI Overviews."
       ],
-      "evaluatedAt": "2026-11-26T23:08:55.463Z"
+      "evaluatedAt": "2026-11-27T12:59:05.529Z"
     },
     "seoTechnicalBrief": {
       "query": "nhs mars calculator",
       "currentMetrics": {
-        "impressions": 132,
+        "impressions": 135,
         "clicks": 2,
         "position": 6.4,
-        "ctr": 1.52
+        "ctr": 1.48
       },
       "searchIntent": "NHS_SETTLEMENT_MARS",
       "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/nhs-settlement-agreements/",
@@ -357,10 +357,10 @@
     },
     "stagedDiffSummary": "Pre-audited multi-layer optimization for nhs mars calculator on /guides/nhs-settlement-agreements/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-26T23:08:55.463Z"
+    "timestamp": "2026-11-27T12:59:05.529Z"
   },
   {
-    "id": "pkg_actuator_1795734535463_3",
+    "id": "pkg_actuator_1795784345529_3",
     "query": "redundancy pay calculator",
     "priority": "CRITICAL",
     "actionType": "CONTENT_DEPTH_UPGRADE",
@@ -371,14 +371,14 @@
       "deploymentRisk": "LOW_RISK",
       "executiveSummary": "Approved. Preserves canonical route contracts and complies with April 2026 statutory rates (£751/wk cap).",
       "critiquePoints": [],
-      "evaluatedAt": "2026-11-26T23:08:55.463Z"
+      "evaluatedAt": "2026-11-27T12:59:05.529Z"
     },
     "seoTechnicalBrief": {
       "query": "redundancy pay calculator",
       "currentMetrics": {
-        "impressions": 802,
+        "impressions": 821,
         "clicks": 3,
-        "position": 10.9,
+        "position": 10.8,
         "ctr": 0.37
       },
       "searchIntent": "REDUNDANCY_STATUTORY_CAP",
@@ -536,12 +536,12 @@
     },
     "stagedDiffSummary": "Pre-audited multi-layer optimization for redundancy pay calculator on /redundancy-calculator/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-26T23:08:55.463Z"
+    "timestamp": "2026-11-27T12:59:05.529Z"
   },
   {
-    "id": "pkg_actuator_1795734535463_4",
+    "id": "pkg_actuator_1795784345529_4",
     "query": "settlement calculator uk",
-    "priority": "CRITICAL",
+    "priority": "HIGH",
     "actionType": "STATUTORY_COMPARISON_TABLE",
     "actuationScope": "FULL_META_AND_FAQ",
     "deploymentRisk": "LOW_RISK",
@@ -552,15 +552,15 @@
       "critiquePoints": [
         "Substituted high-authority statutory citation answer for Google AI Overviews."
       ],
-      "evaluatedAt": "2026-11-26T23:08:55.463Z"
+      "evaluatedAt": "2026-11-27T12:59:05.529Z"
     },
     "seoTechnicalBrief": {
       "query": "settlement calculator uk",
       "currentMetrics": {
-        "impressions": 100,
+        "impressions": 96,
         "clicks": 6,
-        "position": 19.1,
-        "ctr": 6
+        "position": 19.6,
+        "ctr": 6.25
       },
       "searchIntent": "TAX_STATUTORY_EXEMPTION",
       "targetCanonicalUrl": "https://settlementcheck.co.uk/settlement-agreement-tax-calculator/",
@@ -716,10 +716,10 @@
     },
     "stagedDiffSummary": "Pre-audited multi-layer optimization for settlement calculator uk on /settlement-agreement-tax-calculator/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-26T23:08:55.463Z"
+    "timestamp": "2026-11-27T12:59:05.529Z"
   },
   {
-    "id": "pkg_actuator_1795734535463_5",
+    "id": "pkg_actuator_1795784345529_5",
     "query": "average settlement agreement amount uk",
     "priority": "HIGH",
     "actionType": "DIGITAL_PR_PITCH",
@@ -730,15 +730,15 @@
       "deploymentRisk": "LOW_RISK",
       "executiveSummary": "Approved. Preserves canonical route contracts and complies with April 2026 statutory rates (£751/wk cap).",
       "critiquePoints": [],
-      "evaluatedAt": "2026-11-26T23:08:55.463Z"
+      "evaluatedAt": "2026-11-27T12:59:05.529Z"
     },
     "seoTechnicalBrief": {
       "query": "average settlement agreement amount uk",
       "currentMetrics": {
-        "impressions": 90,
+        "impressions": 93,
         "clicks": 3,
-        "position": 22.8,
-        "ctr": 3.33
+        "position": 22.9,
+        "ctr": 3.23
       },
       "searchIntent": "VALUATION_BENCHMARK",
       "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/average-settlement-agreement-payout-uk/",
@@ -894,34 +894,32 @@
     },
     "stagedDiffSummary": "Pre-audited multi-layer optimization for average settlement agreement amount uk on /guides/average-settlement-agreement-payout-uk/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-26T23:08:55.463Z"
+    "timestamp": "2026-11-27T12:59:05.529Z"
   },
   {
-    "id": "pkg_actuator_1795734535463_6",
-    "query": "pip settlement",
+    "id": "pkg_actuator_1795784345529_6",
+    "query": "fair work agency",
     "priority": "CRITICAL",
     "actionType": "CONTENT_DEPTH_UPGRADE",
     "actuationScope": "FULL_META_AND_FAQ",
     "deploymentRisk": "LOW_RISK",
     "adversarialReview": {
-      "verdict": "COUNTER_PLAN_RECOMMENDED",
+      "verdict": "APPROVED_AS_IS",
       "deploymentRisk": "LOW_RISK",
-      "executiveSummary": "Pre-audited with 1 automatic counter-plan adjustment(s) applied to protect route contracts and statutory precision.",
-      "critiquePoints": [
-        "Substituted high-authority statutory citation answer for Google AI Overviews."
-      ],
-      "evaluatedAt": "2026-11-26T23:08:55.463Z"
+      "executiveSummary": "Approved. Preserves canonical route contracts and complies with April 2026 statutory rates (£751/wk cap).",
+      "critiquePoints": [],
+      "evaluatedAt": "2026-11-27T12:59:05.529Z"
     },
     "seoTechnicalBrief": {
-      "query": "pip settlement",
+      "query": "fair work agency",
       "currentMetrics": {
-        "impressions": 104,
-        "clicks": 0,
-        "position": 19.9,
-        "ctr": 0
+        "impressions": 229,
+        "clicks": 1,
+        "position": 21.8,
+        "ctr": 0.44
       },
-      "searchIntent": "PIP_EXIT_NEGOTIATION",
-      "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/settlement-agreement-instead-of-pip/",
+      "searchIntent": "TRANSACTIONAL_CALCULATOR",
+      "targetCanonicalUrl": "https://settlementcheck.co.uk/guides/fair-work-agency/",
       "characterBudgets": {
         "titleMin": 45,
         "titleMax": 60,
@@ -936,31 +934,31 @@
         "protectiveAwardDays": 90
       },
       "schemaSpecification": {
-        "type": "FinancialProduct",
-        "primarySubject": "pip settlement",
-        "targetFaqQuestion": "How is a UK settlement agreement calculated under 2026 statutory rates?"
+        "type": "WebApplication",
+        "primarySubject": "fair work agency",
+        "targetFaqQuestion": "How is a settlement agreement payout calculated under UK employment law?"
       },
       "internalLinkGraph": {
         "sourceRoutes": [
           "/guides/how-to-negotiate-a-settlement-agreement/"
         ],
-        "destinationRoute": "/guides/settlement-agreement-instead-of-pip/",
-        "exactAnchorText": "pip settlement"
+        "destinationRoute": "/guides/fair-work-agency/",
+        "exactAnchorText": "fair work agency"
       }
     },
     "copyPackage": {
-      "calibratedTitle": "Settlement Agreement Instead of PIP (2026) | SettlementCheck",
-      "calibratedMetaDescription": "Offered a settlement agreement instead of a PIP? Check your rights and compensation payout under UK law. Free check. SRA solicitor advice contribution.",
+      "calibratedTitle": "Fair Work Agency UK (2026) | SettlementCheck",
+      "calibratedMetaDescription": "Calculate your UK settlement agreement payout under 2026 statutory rates (£751/wk cap). Free 2-minute check. SRA solicitor review advice contribution.",
       "answerFirstFaq": {
-        "question": "How is a UK settlement agreement calculated under 2026 statutory rates?",
-        "answer": "Under Section 162 of the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003. Notice pay (PILON) remains taxable under s.402D.",
-        "characterCount": 236
+        "question": "How is a settlement agreement payout calculated under UK employment law?",
+        "answer": "Under UK employment law and the Employment Rights Act 1996, statutory redundancy is capped at £751 per week, while genuine compensation up to £30,000 is tax-free under Section 403 of ITEPA 2003.",
+        "characterCount": 194
       },
       "contextualInternalLinkBlock": {
         "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-        "targetRoute": "/guides/settlement-agreement-instead-of-pip/",
-        "anchorText": "pip settlement",
-        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [pip settlement](/guides/settlement-agreement-instead-of-pip/) before negotiating."
+        "targetRoute": "/guides/fair-work-agency/",
+        "anchorText": "fair work agency",
+        "surroundingText": "If you have received an exit proposal, verify where you stand against official statutory baselines using our [fair work agency](/guides/fair-work-agency/) before negotiating."
       },
       "ctaText": "Calculate my estimate →",
       "brandComplianceReport": {
@@ -1043,9 +1041,9 @@
     "inProsePlacement": {
       "targetFilePath": "app/guides/how-to-negotiate-a-settlement-agreement/page.tsx",
       "sourceRoute": "/guides/how-to-negotiate-a-settlement-agreement/",
-      "anchorText": "pip settlement",
+      "anchorText": "fair work agency",
       "matchedExcerpt": "Before accepting an initial exit offer, employees should research typical settlement figures for their industry.",
-      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [pip settlement](/guides/settlement-agreement-instead-of-pip/)."
+      "replacementExcerpt": "Before accepting an initial exit offer, check official UK settlement benchmarks and calculate where your package sits against 2026 statutory rates using our [fair work agency](/guides/fair-work-agency/)."
     },
     "statutoryAudit": {
       "isCompliant": true,
@@ -1072,8 +1070,8 @@
       "roboticMarkersFound": [],
       "humanTouchImprovements": []
     },
-    "stagedDiffSummary": "Pre-audited multi-layer optimization for pip settlement on /guides/settlement-agreement-instead-of-pip/",
+    "stagedDiffSummary": "Pre-audited multi-layer optimization for fair work agency on /guides/fair-work-agency/",
     "status": "VALIDATED",
-    "timestamp": "2026-11-26T23:08:55.463Z"
+    "timestamp": "2026-11-27T12:59:05.529Z"
   }
 ]
