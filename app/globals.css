@@ -3,8 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --text-body: clamp(18px, 1.1vw + 5px, 19px);
-  --text-body-sm: 15.5px;
+  --text-body: 16.5px;
+  --text-prose: 17.5px;
+  --text-body-sm: 14px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --text-body: 16px;
+  }
 }
 
 @layer base {
@@ -46,9 +53,9 @@
   /* Type */
   .sc-h1 {
     font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
-    font-weight: 550;
-    font-size: clamp(36px, 4.4vw, 56px);
-    line-height: 1.06;
+    font-weight: 600;
+    font-size: clamp(32px, 3.6vw, 48px);
+    line-height: 1.08;
     letter-spacing: -0.025em;
     color: #0B1F3A;
     margin: 0;
@@ -56,9 +63,9 @@
 
   .sc-h2 {
     font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
-    font-weight: 550;
-    font-size: clamp(28px, 3.2vw, 40px);
-    line-height: 1.12;
+    font-weight: 600;
+    font-size: clamp(26px, 2.8vw, 36px);
+    line-height: 1.14;
     letter-spacing: -0.02em;
     color: #0B1F3A;
     margin: 0;
@@ -67,8 +74,8 @@
   .sc-h3 {
     font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
     font-weight: 600;
-    font-size: clamp(20px, 1.6vw, 22px);
-    line-height: 1.24;
+    font-size: 20px;
+    line-height: 1.25;
     letter-spacing: -0.012em;
     color: #0B1F3A;
     margin: 0;
@@ -84,8 +91,8 @@
   }
 
   .sc-lead {
-    font-size: clamp(18.5px, 1.5vw, 20.5px);
-    line-height: 1.54;
+    font-size: clamp(16.5px, 1.2vw + 12px, 18px);
+    line-height: 1.55;
     color: #1E2D42;
   }
 
@@ -93,9 +100,9 @@
      Clearly anchors sections above body copy */
   .sc-section-h2 {
     font-family: var(--font-serif), 'Source Serif 4', Georgia, serif;
-    font-weight: 550;
-    font-size: clamp(26px, 2.8vw, 36px);
-    line-height: 1.14;
+    font-weight: 600;
+    font-size: clamp(26px, 2.5vw, 34px);
+    line-height: 1.15;
     letter-spacing: -0.02em;
     color: #0B1F3A;
     margin: 0;
@@ -120,8 +127,8 @@
   }
 
   .guide-body {
-    font-size: var(--text-body);
-    line-height: 1.65;
+    font-size: var(--text-prose);
+    line-height: 1.68;
     color: #243247;
   }
 
@@ -132,8 +139,8 @@
     justify-content: center;
     gap: 8px;
     padding: 13px 20px;
-    border-radius: 6px;
-    font-size: 15.5px;
+    border-radius: 8px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: -0.005em;
     border: 1px solid #0B1F3A;
@@ -153,8 +160,8 @@
     justify-content: center;
     gap: 8px;
     padding: 13px 20px;
-    border-radius: 6px;
-    font-size: 15.5px;
+    border-radius: 8px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: -0.005em;
     border: 1px solid #C24D29;
@@ -174,8 +181,8 @@
     justify-content: center;
     gap: 8px;
     padding: 13px 20px;
-    border-radius: 6px;
-    font-size: 15.5px;
+    border-radius: 8px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: -0.005em;
     border: 1px solid #C9C0AC;

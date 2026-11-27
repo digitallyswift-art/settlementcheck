@@ -79,7 +79,7 @@ module.exports = {
       fontSize: {
         body:      ['var(--text-body)', { lineHeight: '1.58' }],
         'body-sm': ['var(--text-body-sm)', { lineHeight: '1.5' }],
-        stat:      ['44px', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '550' }],
+        stat:      ['34px', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '600' }],
       },
     },
   },

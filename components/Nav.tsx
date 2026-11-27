@@ -161,7 +161,7 @@ export default function Nav() {
               href="/calculators/"
               aria-haspopup="true"
               aria-expanded={calculatorsOpen}
-              className="flex items-center gap-1 text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
+              className="flex items-center gap-1 text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
             >
               Calculators
               <svg
@@ -219,7 +219,7 @@ export default function Nav() {
           {/* UK Employment Tribunal Backlog Tracker */}
           <Link
             href="/tribunal-backlog-tracker/"
-            className="text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
+            className="text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
           >
             Tribunal Tracker
           </Link>
@@ -240,7 +240,7 @@ export default function Nav() {
               href="/guides/"
               aria-haspopup="true"
               aria-expanded={guidesOpen}
-              className="flex items-center gap-1 text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
+              className="flex items-center gap-1 text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
             >
               Guides
               <svg
@@ -297,14 +297,14 @@ export default function Nav() {
 
           <Link
             href="/how-it-works/"
-            className="text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
+            className="text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
           >
             How it works
           </Link>
 
           <Link
             href="/for-solicitors/"
-            className="text-[13px] xl:text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
+            className="text-[14px] font-medium text-muted hover:text-ink transition-colors duration-[160ms] whitespace-nowrap py-1"
           >
             For Solicitors
           </Link>
@@ -322,7 +322,7 @@ export default function Nav() {
           ) : (
             <Link
               href="/calculator/"
-              className="btn-accent text-[14px] xl:text-[15px] px-4 py-2.5 xl:px-5 font-bold whitespace-nowrap shrink-0"
+              className="btn-primary text-[14px] px-4 py-2.5 xl:px-5 rounded-[8px] font-semibold whitespace-nowrap shrink-0"
             >
               Check my offer →
             </Link>

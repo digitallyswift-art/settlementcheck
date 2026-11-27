@@ -12,8 +12,8 @@ import Link from 'next/link'
 
 export function LegalFeeAnnouncementBar() {
   return (
-    <div className="bg-[#0B1F3A] text-[#F7F4EE] border-b border-[#0B1F3A] py-2 px-4 text-[13px] leading-[1.4] font-sans">
-      <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+    <div className="bg-[#0B1F3A] text-[#F7F4EE] border-b border-[#0B1F3A] py-2 text-[12px] sm:text-[13px] leading-[1.4] font-sans">
+      <div className="sc-container px-4 sm:px-6 xl:px-8 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="flex items-center justify-center w-4 h-4 rounded-full bg-[#D9603B]/20 text-[#D9603B] flex-shrink-0" aria-hidden="true">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

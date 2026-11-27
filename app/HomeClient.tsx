@@ -140,15 +140,12 @@ export default function HomeClient({
                 {alertBanner}
               </div>
             )}
-            <div className="hero-grid grid gap-6 sm:gap-8 md:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
+            <div className="hero-grid grid gap-6 sm:gap-8 md:gap-12 lg:gap-14 items-center lg:grid-cols-[1.05fr_1fr]">
               <div className="flex flex-col min-w-0">
                 {/* Hero Pill / Statutory Rates & SRA Network Badge */}
-                <div className="flex flex-wrap items-center gap-2.5 mb-5">
-                  <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-3 py-1 sm:px-3.5 sm:py-1.5 text-[12px] font-medium text-ink bg-white/75 shadow-sm backdrop-blur-sm">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-coral"></span>
-                    </span>
+                <div className="flex flex-wrap items-center gap-2 mb-4">
+                  <div className="inline-flex items-center gap-2 border border-coral/30 rounded-full px-2.5 py-1 text-[12px] whitespace-nowrap font-medium text-ink bg-white/75 shadow-sm backdrop-blur-sm">
+                    <span className="inline-flex h-2 w-2 rounded-full bg-coral shrink-0" />
                     <span className="sm:hidden">
                       <strong className="text-ink font-semibold">April 2026</strong> UK rates · £751/wk cap
                     </span>
@@ -156,13 +153,13 @@ export default function HomeClient({
                       Updated for <strong className="text-ink font-semibold">April 2026</strong> UK statutory rates
                     </span>
                   </div>
-                  <span className="hidden sm:inline-flex items-center gap-1.5 border border-rule-strong rounded-full px-3 py-1.5 text-[12px] font-medium text-muted bg-white/40">
+                  <span className="hidden sm:inline-flex items-center gap-1.5 border border-rule-strong rounded-full px-2.5 py-1 text-[12px] whitespace-nowrap font-medium text-muted bg-white/40">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
                     SRA-Regulated Panel Network
                   </span>
-                  <span className="hidden sm:inline-flex items-center gap-1.5 text-[12px] font-medium text-muted pl-1">
+                  <span className="hidden sm:inline-flex items-center gap-1.5 text-[12px] whitespace-nowrap font-medium text-muted pl-0.5">
                     Independent · Free to use
                   </span>
                 </div>
@@ -264,11 +261,11 @@ export default function HomeClient({
                   <span className="sc-eyebrow hidden lg:block mb-4">
                     Free calculator
                   </span>
-                  <p className="hidden lg:block font-serif font-semibold text-[25px] leading-[1.2] tracking-[-0.015em] text-ink m-0 mb-2">
+                  <p className="hidden lg:block font-serif font-semibold text-[22px] leading-[1.24] tracking-[-0.015em] text-ink m-0 mb-2">
                     See how your offer compares.{' '}
                     <em className="italic text-coral-ink">Measure it against April 2026 UK statute.</em>
                   </p>
-                  <p className="hidden lg:block text-[16.5px] leading-[1.52] text-[#243247] mt-0 mb-6">
+                  <p className="hidden lg:block text-[15px] leading-[1.55] text-[#243247] mt-0 mb-6">
                     For draft offers, active exit talks, or redundancy notices. Seven questions, 60 seconds, no email required.
                   </p>
 
@@ -283,7 +280,7 @@ export default function HomeClient({
                         <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(217,96,59,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <Check />
                         </div>
-                        <span className="text-[15px] text-ink-2 leading-snug">{label}</span>
+                        <span className="text-[14px] text-ink-2 leading-[1.45]">{label}</span>
                       </div>
                     ))}
                   </div>
@@ -311,7 +308,7 @@ export default function HomeClient({
                   <div id="hero-primary-cta" className="order-2 mb-5 lg:mb-3">
                     <Link
                       href={ctaHref}
-                      className="btn-accent w-full min-h-[52px] py-3.5 px-6 rounded-[10px] text-[16px] font-bold shadow-sm"
+                      className="btn-accent w-full min-h-[52px] py-3.5 px-6 rounded-[8px] text-[16px] font-semibold shadow-sm"
                     >
                       {ctaLabel}
                     </Link>
@@ -319,18 +316,18 @@ export default function HomeClient({
 
                   {/* Secondary path (now cleanly visible above the fold on mobile) */}
                   <div className="order-3 pt-3 border-t border-[#0B1F3A]/[0.08] lg:pt-3 lg:mb-3 text-center">
-                    <span className="text-[14.5px] lg:text-[14px] text-muted lg:block lg:mb-1 mr-1.5 lg:mr-0">
+                    <span className="text-[14px] text-muted lg:block lg:mb-1 mr-1.5 lg:mr-0">
                       Have a written draft?
                     </span>
                     <Link
                       href="/settlement-agreement-review/"
-                      className="inline-flex items-center gap-1 whitespace-nowrap py-2 lg:py-0 text-[14.5px] lg:text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
+                      className="inline-flex items-center gap-1 whitespace-nowrap py-2 lg:py-0 text-[14px] font-semibold text-coral-ink hover:text-ink underline underline-offset-2 transition-colors"
                     >
                       60-second clause checklist →
                     </Link>
                   </div>
 
-                  <p className="hidden lg:block order-3 text-[13.5px] text-muted text-center m-0 leading-[1.45]">
+                  <p className="hidden lg:block order-3 text-[12px] text-muted text-center m-0 leading-[1.45]">
                     No data sold. No calls unless you ask.
                   </p>
                 </div>
@@ -347,12 +344,18 @@ export default function HomeClient({
                 <div
                   key={i}
                   className={`flex flex-col py-4 md:py-2 border-rule ${
-                    i % 2 !== 0 ? 'border-l pl-4 pr-0 md:px-5' : 'pl-0 pr-4 md:px-5'
+                    i % 2 !== 0 ? 'border-l pl-4 pr-0' : 'pl-0 pr-4'
+                  } ${
+                    i === 0
+                      ? 'md:pl-0 md:pr-6'
+                      : i === STATS.length - 1
+                        ? 'md:pl-6 md:pr-0'
+                        : 'md:px-6'
                   } ${i >= 2 ? 'border-t md:border-t-0' : ''} md:border-l-0 ${i > 0 ? 'md:border-l' : ''}`}
                 >
                   <span
-                    className="font-serif text-ink text-[28px] sm:text-[34px] md:text-[40px] leading-none tracking-[-0.02em]"
-                    style={{ fontWeight: 550 }}
+                    className="font-serif text-ink text-[28px] sm:text-[34px] md:text-[34px] leading-none tracking-[-0.02em]"
+                    style={{ fontWeight: 600 }}
                   >
                     {s.n}
                   </span>
@@ -379,8 +382,8 @@ export default function HomeClient({
                   className="bg-card border border-rule rounded-xl p-5 sm:p-6 md:p-8 hover:border-rule-strong transition-colors duration-[160ms]"
                 >
                   <div
-                    className="font-serif text-coral text-[30px] md:text-[40px] leading-none tracking-[-0.03em]"
-                    style={{ fontWeight: 550 }}
+                    className="font-serif text-coral text-[30px] md:text-[34px] leading-none tracking-[-0.03em]"
+                    style={{ fontWeight: 600 }}
                   >
                     {s.n}
                   </div>
@@ -419,7 +422,7 @@ export default function HomeClient({
                     Inspect active open caseloads published by the Ministry of Justice and HMCTS across major hearing centres including London Central, Watford, Midlands West, Manchester, and Scotland.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-rule text-[13.5px] font-sans font-medium text-muted">
+                <div className="mt-4 pt-3 border-t border-rule text-[12px] font-sans font-medium text-muted">
                   Source: MoJ &amp; HMCTS Quarterly Statistics
                 </div>
               </div>
@@ -434,7 +437,7 @@ export default function HomeClient({
                     Compare average days to preliminary and final merits hearings by region, from 270 days up to 540 days in London Central, to understand realistic tribunal timelines.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-rule text-[13.5px] font-sans font-medium text-muted">
+                <div className="mt-4 pt-3 border-t border-rule text-[12px] font-sans font-medium text-muted">
                   Coverage: 10 Great Britain Hearing Centres
                 </div>
               </div>
@@ -449,7 +452,7 @@ export default function HomeClient({
                     Review illustrative employer legal defence cost ranges alongside regional backlog pressure ratings to prepare informed questions for your independent SRA-regulated solicitor.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-rule text-[13.5px] font-sans font-medium text-muted">
+                <div className="mt-4 pt-3 border-t border-rule text-[12px] font-sans font-medium text-muted">
                   Interactive Regional Pressure Map
                 </div>
               </div>
@@ -484,7 +487,7 @@ export default function HomeClient({
                 <p className="sc-lead">The headline figure on your draft is rarely what lands in your bank. Checking the tax split shows you what is actually yours.</p>
                 <p className="sc-body">A £20,000 offer does not mean £20,000 in your bank if notice pay is bundled in. Split taxable PILON from your £30,000 tax-free allowance before payday.</p>
                 <div className="border-l-2 border-coral pl-4 mt-1">
-                  <p className="sc-h3 text-[19px] mb-1.5">What is PILON?</p>
+                  <p className="sc-h3 mb-1.5">What is PILON?</p>
                   <p className="sc-body">PILON stands for <em>Payment in Lieu of Notice</em>. It is the lump sum your employer pays instead of letting you work out your notice period. Unlike redundancy pay, PILON is always taxed as normal income.</p>
                 </div>
               </div>
@@ -553,7 +556,7 @@ export default function HomeClient({
                 <p className="sc-lead">Clear answers before you calculate your estimate.</p>
 
                 <div className="mt-4 p-6 rounded-xl border border-rule bg-card flex flex-col gap-3">
-                  <div className="sc-h3 text-[19px]">
+                  <div className="sc-h3">
                     Need guidance on your specific situation?
                   </div>
                   <p className="sc-body">
@@ -706,7 +709,7 @@ export default function HomeClient({
                 </ul>
                 {pageLinks.length > 5 && (
                   <details className="group mt-3">
-                    <summary className="list-none cursor-pointer inline-flex items-center gap-2 min-h-[44px] py-2 text-[14.5px] font-semibold text-coral-ink select-none">
+                    <summary className="list-none cursor-pointer inline-flex items-center gap-2 min-h-[44px] py-2 text-[14px] font-semibold text-coral-ink select-none">
                       <span>Show all {pageLinks.length} calculators &amp; guides</span>
                       <span className="transition-transform duration-150 group-open:rotate-180" aria-hidden="true">▾</span>
                     </summary>
