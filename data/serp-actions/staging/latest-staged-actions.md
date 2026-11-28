@@ -1,5 +1,5 @@
 # 🛡️ Autonomous SEO Actuator — Multi-Route Staged Review Digest
-**Generated At**: 2026-11-27T12:59:05.529Z
+**Generated At**: 2026-11-28T12:12:08.270Z
 **Compliance**: 100% BRAND.md, April 2026 Statutory Invariants & Zero-Fabrication Standard
 
 ### 🎯 "settlement agreement calculator" [CRITICAL]
@@ -50,7 +50,7 @@
 - **Anti-AI Score**: 96% (Burstiness: 84)
 
 ---
-### 🎯 "settlement calculator uk" [HIGH]
+### 🎯 "settlement calculator" [HIGH]
 - **Target Canonical**: [https://settlementcheck.co.uk/settlement-agreement-tax-calculator/](https://settlementcheck.co.uk/settlement-agreement-tax-calculator/)
 - **SERP Title** (58 chars): `Settlement Agreement Tax Calculator 2026 | SettlementCheck`
 - **SERP Meta** (148 chars): `Calculate tax on your UK settlement agreement. See your £30,000 statutory tax exemption (ITEPA 2003). Free check. SRA solicitor advice contribution.`
