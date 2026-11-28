@@ -48,6 +48,9 @@ export async function POST(req: NextRequest) {
       monthsService,
       dispute_reason,
       disputeReason,
+      has_discrimination,
+      hasDiscrimination,
+      discrimination,
       signing_urgency,
       signingUrgency,
       urgency,
@@ -69,6 +72,8 @@ export async function POST(req: NextRequest) {
       verification_token,
       verificationToken,
       token,
+      is_test,
+      isTest,
     } = body
 
     const leadFirstName = (firstName || first_name || '').trim()
@@ -141,6 +146,11 @@ export async function POST(req: NextRequest) {
       salary,
       monthsService: monthsService ?? months_service,
       disputeReason: disputeReason ?? dispute_reason,
+      hasDiscrimination: Boolean(
+        hasDiscrimination ??
+          has_discrimination ??
+          (discrimination === 'yes' || discrimination === true)
+      ),
       signingUrgency: signingUrgency ?? signing_urgency ?? urgency,
       intakeStage: intakeStage ?? intake_stage,
       leadId: leadId ?? lead_id,
@@ -153,6 +163,7 @@ export async function POST(req: NextRequest) {
       sourceUrl: sourceUrl ?? source_url,
       benchmarkData: benchmarkData ?? benchmark_data,
       emailVerified: isOtpVerified,
+      isTest: Boolean(isTest ?? is_test),
     })
 
     return NextResponse.json({
@@ -160,6 +171,8 @@ export async function POST(req: NextRequest) {
       triageId: result.triageId,
       leadId: result.leadId,
       phoneProvided: result.phoneProvided,
+      dbPersisted: result.dbPersisted,
+      isTest: result.isTest,
       triage: {
         matterTier: result.triage.matterTier,
         tenureClassification: result.triage.employment.tenureClassification,

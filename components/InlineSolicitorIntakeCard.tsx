@@ -203,6 +203,7 @@ export default function InlineSolicitorIntakeCard({
         salary: salaryNum > 0 ? salaryNum : null,
         monthsService: yearsNum > 0 ? yearsNum * 12 : null,
         disputeReason,
+        hasDiscrimination: saveParams?.discrimination === 'yes',
         consent: true,
         gdpr_consent: true,
         sourceUrl: effectiveSourceUrl,

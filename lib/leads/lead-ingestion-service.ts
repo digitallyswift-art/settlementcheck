@@ -49,6 +49,7 @@ export interface UnifiedLeadInput {
   signingUrgency?: string | null
   intakeStage?: string | null
   leadId?: string | null
+  isTest?: boolean
 }
 
 export interface UnifiedLeadResult {
@@ -56,6 +57,8 @@ export interface UnifiedLeadResult {
   triageId: string
   leadId?: string
   phoneProvided: boolean
+  dbPersisted: boolean
+  isTest: boolean
   triage: SraTriageDossier
   clioPayload?: any
   leapPayload?: any
@@ -128,7 +131,7 @@ interface EmailGuideLink {
   iconFile: string
 }
 
-function selectRecommendedGuides(params: {
+export function selectRecommendedGuides(params: {
   disputeReason?: string | null
   verdict?: string | null
   hasDiscrimination?: boolean | null
@@ -354,6 +357,11 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
   }
 
   // ── 6. Persist to Supabase with Schema Resilience ─────────────────────────
+  const isTest = Boolean(input.isTest)
+  const effectiveBenchmarkData = isTest
+    ? { ...(typeof benchmarkData === 'object' && benchmarkData !== null ? benchmarkData : {}), is_test: true, canary_run: true }
+    : benchmarkData
+
   const insertPayload: any = {
     first_name: firstName,
     email: normalizedEmail,
@@ -364,7 +372,7 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
     salary: salaryNum,
     months_service: monthsNum,
     consent: true,
-    status: 'new',
+    status: isTest ? 'canary_test' : 'new',
     email_verified: Boolean(input.emailVerified ?? input.email_verified ?? true),
     postcode,
     postcode_region: postcodeRegion,
@@ -372,7 +380,7 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
     postcode_lng: postcodeLng,
     partner_id: partnerId,
     source_url: sourceUrl,
-    benchmark_data: benchmarkData,
+    benchmark_data: effectiveBenchmarkData,
   }
 
   let leadId: string | undefined = input.leadId?.trim() || undefined
@@ -449,12 +457,22 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
     leadId = insertedRow?.id
   }
 
+  const dbPersisted = Boolean(leadId && !leadId.startsWith('lead_offline_'))
+
+  if (isTest && dbPersisted && leadId) {
+    try {
+      await supabase.from('leads').delete().eq('id', leadId)
+    } catch (cleanupErr) {
+      console.warn('Canary test lead cleanup warning:', cleanupErr)
+    }
+  }
+
   // ── 7. Notification Dispatch ──────────────────────────────────────────────
   const targetEmail = partnerCheck.verified && partnerCheck.targetEmail
     ? partnerCheck.targetEmail
     : process.env.NOTIFICATION_EMAIL
 
-  if (targetEmail && resend) {
+  if (!isTest && targetEmail && resend) {
     const verdictLabel: Record<string, string> = {
       BELOW_MINIMUM: 'Below notice + redundancy figures',
       BELOW_TYPICAL: 'Below typical range',
@@ -565,12 +583,12 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
   }
 
   // ── Confirmation to employee (Non-fatal) ──────────────────────────────────
-  if (resend) {
+  if (!isTest && resend) {
     try {
       const baseAppUrl = 'https://settlementcheck.co.uk'
       const hasCalcParams = Boolean(
         (sourceUrl && sourceUrl.includes('/results/?')) ||
-        (salaryNum != null && salaryNum > 0 && offerNum != null && offerNum > 0)
+        (salaryNum != null && salaryNum > 0 && offerNum != null && offerNum >= 0)
       )
 
       const rawCalculationUrl = (() => {
@@ -578,7 +596,7 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
           if (sourceUrl.startsWith('https://settlementcheck.co.uk')) return sourceUrl
           if (sourceUrl.startsWith('/')) return `${baseAppUrl}${sourceUrl}`
         }
-        if (salaryNum != null && salaryNum > 0 && offerNum != null && offerNum > 0) {
+        if (salaryNum != null && salaryNum > 0 && offerNum != null && offerNum >= 0) {
           const params = new URLSearchParams()
           params.set('salary', String(salaryNum))
           if (monthsNum != null && monthsNum >= 0) {
@@ -618,10 +636,14 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
       const safeCalcUrl = escapeHtml(calculationUrl)
       const safeHeaderLogoUrl = escapeHtml(headerLogoUrl)
 
+      const effectiveHasDiscrimination = Boolean(
+        input.hasDiscrimination || (sourceUrl && sourceUrl.includes('discrimination=yes'))
+      )
+
       const recommendedGuides = selectRecommendedGuides({
         disputeReason: input.disputeReason,
         verdict,
-        hasDiscrimination: input.hasDiscrimination,
+        hasDiscrimination: effectiveHasDiscrimination,
         salaryNum,
       })
 
@@ -821,6 +843,8 @@ export async function ingestLead(input: UnifiedLeadInput): Promise<UnifiedLeadRe
     triageId: triage.triageId,
     leadId,
     phoneProvided,
+    dbPersisted,
+    isTest,
     triage,
     clioPayload,
     leapPayload,
