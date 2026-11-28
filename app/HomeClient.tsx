@@ -5,9 +5,9 @@ import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion'
 
 /* ── Data ────────────────────────────────────────────────────────── */
 const STATS = [
-  { n: '10 days', l: 'ACAS recommended review window (guidance)' },
+  { n: '10 days', l: 'ACAS review window (guidance)' },
   { n: '£751',    l: 'Weekly pay cap 2026/27' },
-  { n: '£0',      l: 'To check your rights (no email required)' },
+  { n: '£0',      l: 'To calculate your statutory baseline' },
   { n: 'Net pay', l: 'PILON and £30k exemption split' },
 ]
 
@@ -159,9 +159,6 @@ export default function HomeClient({
                     </svg>
                     SRA-Regulated Panel Network
                   </span>
-                  <span className="hidden sm:inline-flex items-center gap-1.5 text-[12px] whitespace-nowrap font-medium text-muted pl-0.5">
-                    Independent · Free to use
-                  </span>
                 </div>
 
                 {/* SEO keyword eyebrow: shown on desktop; hidden on mobile to eliminate pre-H1 vertical stack and early link leak */}
@@ -262,19 +259,18 @@ export default function HomeClient({
                     Free calculator
                   </span>
                   <p className="hidden lg:block font-serif font-semibold text-[22px] leading-[1.24] tracking-[-0.015em] text-ink m-0 mb-2">
-                    See how your offer compares.{' '}
-                    <em className="italic text-coral-ink">Measure it against April 2026 UK statute.</em>
+                    See how your offer compares. Statutory pay, notice, and tax split.
                   </p>
                   <p className="hidden lg:block text-[15px] leading-[1.55] text-[#243247] mt-0 mb-6">
-                    For draft offers, active exit talks, or redundancy notices. Seven questions, 60 seconds, no email required.
+                    For draft offers, active exit talks, or redundancy notices. Seven questions, takes 60 seconds.
                   </p>
 
-                  {/* Desktop checklist (unchanged) */}
+                  {/* Desktop checklist */}
                   <div className="hidden lg:flex lg:order-1 flex-col gap-3 mb-7">
                     {[
                       'Check privately on any device with no email required',
-                      'April 2026 statutory baselines (£751/wk cap) built in',
-                      'No law firm behind the maths, and no calls unless you ask',
+                      'April 2026 rates (£751/wk cap) built in',
+                      'Independent maths - no law firm behind your result',
                     ].map(label => (
                       <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                         <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(217,96,59,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -328,7 +324,7 @@ export default function HomeClient({
                   </div>
 
                   <p className="hidden lg:block order-3 text-[12px] text-muted text-center m-0 leading-[1.45]">
-                    No data sold. No calls unless you ask.
+                    Private and confidential. No calls unless you ask.
                   </p>
                 </div>
               </div>
@@ -371,7 +367,7 @@ export default function HomeClient({
           <div className="sc-container">
             <div className="flex flex-col gap-3.5 max-w-[640px]">
               <span className="sc-eyebrow">How it works</span>
-              <h2 className="sc-section-h2">{howItWorksTitle}</h2>
+              <h2 className="sc-section-h2 text-balance">{howItWorksTitle}</h2>
               <p className="sc-lead">{howItWorksLead}</p>
             </div>
 
