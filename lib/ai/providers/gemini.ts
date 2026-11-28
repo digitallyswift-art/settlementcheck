@@ -2,7 +2,7 @@ import { AIMessage, AIServiceRequest, AIServiceResponse } from '../types';
 
 /**
  * Google Gemini Provider Adapter
- * Works directly with Gemini REST API (gemini-2.5-flash, gemini-2.5-pro, etc.)
+ * Works directly with Gemini REST API (gemini-3.5-flash-lite, gemini-2.5-pro, etc.)
  */
 export async function callGemini(request: AIServiceRequest): Promise<AIServiceResponse> {
   const startTime = Date.now();
@@ -14,7 +14,7 @@ export async function callGemini(request: AIServiceRequest): Promise<AIServiceRe
 
   const model = request.tier === 'frontier' 
     ? (process.env.GEMINI_FRONTIER_MODEL || 'gemini-2.5-pro')
-    : (process.env.GEMINI_FAST_MODEL || 'gemini-2.5-flash');
+    : (process.env.GEMINI_FAST_MODEL || 'gemini-3.5-flash-lite');
 
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
